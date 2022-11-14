@@ -2,8 +2,13 @@
 
 namespace App\Models\Ticket;
 
+use App\Models\Channel\Channel;
+use App\Models\Channel\Order;
+use App\Models\User\User;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Date;
 
 /**
@@ -16,9 +21,32 @@ use Illuminate\Support\Facades\Date;
  * @property Date $deadline
  * @property Datetime $created_at
  * @property Datetime $updated_at
+ *
+ * @property Thread[] $threads
+ * @property Channel $channel
+ * @property Order $order
+ * @property User $user
  */
 
 class Ticket extends Model
 {
+    public function threads(): HasMany
+    {
+        return $this->hasMany(Thread::class);
+    }
 
+    public function channel(): BelongsTo
+    {
+        return $this->belongsTo(Channel::class);
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
