@@ -4,19 +4,21 @@ namespace App\Models\Ticket;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use League\CommonMark\Node\Inline\Text;
 
 /**
  * @property int $id
  * @property int $thread_id
  * @property int $user_id
- * @property string $channel_message_number
- * @property string $author_type
- * @property boolean $private
+ * @property Text $content
+ * @property boolean $displayed
+ * @property string $type
  * @property Datetime $created_at
  * @property Datetime $updated_at
  */
 
-class Message extends Model
+class Comment extends Model
 {
-    protected $table = 'ticket_threads_messages';
+
+    protected $table = 'ticket_comments';
 }

@@ -18,9 +18,11 @@ return new class extends Migration
             $table->foreignId('channel_id')->constrained('channels');
             $table->foreignId('order_id')->constrained('orders');
             $table->foreignId('user_id')->constrained('users');
-            $table->string('state'); // table annexe pour mettre les différents status ??
-            $table->string('priority'); // pareil qu'en haut
+            $table->string('state');
+            $table->string('priority');
             $table->date('deadline');
+            $table->date('delivery_date')->nullable();
+            $table->string('direct_customer_email')->nullable();
             $table->timestamps();
         });
     }

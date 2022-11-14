@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_threads', function (Blueprint $table) {
+        Schema::create('ticket_comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ticket_id')->constrained('tickets');
-            $table->string('channel_thread_number')->nullable(true);
-            $table->string('name');
-            $table->string('customer_issue');
+            $table->foreignId("thread_id")->constrained('ticket_threads');
+            $table->foreignId('user_id')->constrained('users');
+            $table->text('content');
+            $table->boolean('displayed');
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ticket_threads');
+        Schema::dropIfExists('ticket_comments');
     }
 };

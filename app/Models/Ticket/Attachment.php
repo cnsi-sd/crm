@@ -2,6 +2,7 @@
 
 namespace App\Models\Ticket;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,4 +15,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attachment extends Model
 {
+    protected $table = 'ticket_threads_messages_attachments';
+
 }
