@@ -33,12 +33,12 @@ class Order extends Model
      * @param string $orderId
      * @return Order
      */
-    private function createOrder(string $orderId): Order
+    public static function createOrder(string $orderId, $channelId): Order
     {
         return Order::firstOrCreate([
             'channel_order_number' => $orderId,
         ], [
-            'channel_id' => $this->channelId,
+            'channel_id' => $channelId,
             'channel_order_number' => $orderId,
         ]);
     }

@@ -41,16 +41,7 @@ class ShowRoomPriveeImportMessages extends Command
         return $this->client;
     }
 
-    private function ifIsShopUser($type): bool
-    {
-        if (self::FROM_SHOP_TYPE === $type) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    protected function getMarketplaceOrderIdFromThreadEntities($entityIterator)
+   protected function getMarketplaceOrderIdFromThreadEntities($entityIterator)
     {
         if ($entityIterator->current()->getType() == 'MMP_ORDER')
             return $entityIterator->current()->getId();
@@ -93,7 +84,8 @@ class ShowRoomPriveeImportMessages extends Command
                 foreach ($messages as $message) {
                     $imported_id = $message->getId();
                     if (!$this->isMessagesImported($imported_id)) {
-                        $this->convertApiResponseToModel($message, $thread->getId());
+                        //$this->convertApiResponseToModel($message, $thread->getId());
+                        Message::convertApiResponseToModel($message, $thread->getId());
                         $this->addImportedMessageChannelNumber($imported_id);
                     }
                 }
@@ -109,7 +101,6 @@ class ShowRoomPriveeImportMessages extends Command
     {
 
         foreach ($messages as $message) {
-            //print_r(strip_tags($message->getBody()). "\n");
             $imported_id = $message->getId();
             if (!$this->isMessagesImported($imported_id)) {
                 //$this->convertApiResponseToModel($message, $thread->id);
@@ -147,7 +138,7 @@ class ShowRoomPriveeImportMessages extends Command
         foreach ($threads as $thread) {
             try {
                 $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($thread->getEntities()->getIterator());
-                $order = Order::createOrder($mpOrderId);
+                $order = Order::createOrder($mpOrderId, $this->channelId);
                 //$order = $this->creatOrder($mpOrderId);
                 //$ticket = $this->createTicket($order, $this->channelId, "waiting customer", "P1", "2022-11-09", 1);
                 $ticket = Ticket::createTicket($order, $this->channelId, "waiting customer", "P1", "2022-11-09", 1);
@@ -172,33 +163,6 @@ class ShowRoomPriveeImportMessages extends Command
         }
     }
 
-    /**
-     * @param string $orderId
-     * @return Order
-     */
-    private function creatOrder(string $orderId)
-    {
-        return Order::firstOrCreate([
-            'channel_order_number' => $orderId,
-        ], [
-            'channel_id' => $this->channelId,
-            'channel_order_number' => $orderId,
-        ]);
-    }
-
-    private function createTicket(Order $order, int $channelId, string $state, string $priority, $deadline, int $user)
-    {
-        return Ticket::firstOrCreate([
-            'order_id' => $order->id,
-        ], [
-            'channel_id' => $channelId,
-            'order_id' => $order->id,
-            'state' => $state,
-            'priority' => $priority,
-            'deadline' => $deadline,
-            'user_id' => $user
-        ]);
-    }
 
     private function isMessagesImported(string $channel_message_number): bool
     {
@@ -220,31 +184,6 @@ class ShowRoomPriveeImportMessages extends Command
         self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
     }
 
-    /**
-     * @param ThreadMessage $api_message
-     * @param $mp_order_id
-     * @param $thread_id
-     * @return Message
-     */
-    protected function convertApiResponseToModel($api_message, $thread_id): Message
-    {
-        $isShop_User = $this->ifIsShopUser($api_message->getFrom()->getType());
-
-        $message = new Message();
-        if (!$isShop_User) {
-            $message = Message::firstOrCreate([
-                'channel_message_number' => $api_message->getId(),
-            ], [
-                'thread_id' => $thread_id,
-                'user_id' => 1,
-                'channel_message_number' => $api_message->getId(),
-                'author_type' => 'client',
-                'content' => strip_tags($api_message->getBody()),
-                'created_at' => $api_message->getDateCreated()->format('Y-m-d H:i:s'),
-            ]);
-        }
-        return $message;
-    }
 
     /**
      * Execute the console command.

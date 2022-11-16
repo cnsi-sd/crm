@@ -43,7 +43,7 @@ class Message extends Model
       'updated_at'
     ];
 
-    private function ifIsShopUser($type): bool
+    private static function ifIsShopUser($type): bool
     {
         if (self::FROM_SHOP_TYPE === $type) {
             return false;
@@ -57,9 +57,9 @@ class Message extends Model
      * @param $thread_id
      * @return Message
      */
-    protected function convertApiResponseToModel($api_message, $thread_id): Message
+    public static function convertApiResponseToModel($api_message, $thread_id): Message
     {
-        $isShop_User = $this->ifIsShopUser($api_message->getFrom()->getType());
+        $isShop_User = self::ifIsShopUser($api_message->getFrom()->getType());
 
         $message = new Message();
         if (!$isShop_User) {
@@ -76,6 +76,7 @@ class Message extends Model
         }
         return $message;
     }
+
 
     public function thread(): BelongsTo
     {

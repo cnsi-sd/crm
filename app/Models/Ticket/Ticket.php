@@ -41,7 +41,7 @@ class Ticket extends Model
         'updated_at'
     ];
 
-    private function createTicket(Order $order, int $channelId, string $state, string $priority, $deadline, int $user)
+    public static function createTicket(Order $order, int $channelId, string $state, string $priority, $deadline, int $user)
     {
         return Ticket::firstOrCreate([
             'order_id' => $order->id,
