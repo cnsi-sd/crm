@@ -25,6 +25,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class User extends Model
 {
+    protected $fillable = [
+        'role_id',
+        'name',
+        'email',
+        'password',
+        'active',
+        'created_at',
+        'updated_at'
+    ];
+
     public function threads(): HasMany
     {
         return $this->hasMany(Thread::class);

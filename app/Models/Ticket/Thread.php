@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $ticket_id
  * @property string $channel_thread_number
  * @property string $name
+ * @property string $customer_issue
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
@@ -23,6 +24,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Thread extends Model
 {
     protected $table = 'ticket_threads';
+
+    protected $fillable = [
+        'ticket_id',
+        'channel_thread_number',
+        'name',
+        'customer_issue',
+        'created_at',
+        'updated_at'
+    ];
 
     public function comments(): HasMany
     {

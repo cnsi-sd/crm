@@ -15,6 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attachment extends Model
 {
+    protected $fillable = [
+        'message_id',
+        'filename',
+        'created_at',
+        'updated_at'
+    ];
     protected $table = 'ticket_threads_messages_attachments';
 
 }

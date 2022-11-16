@@ -23,6 +23,15 @@ use League\CommonMark\Node\Inline\Text;
 class Comment extends Model
 {
     protected $table = 'ticket_comments';
+    protected $fillable = [
+      'thread_id',
+      'user_id',
+      'content',
+      'displayed',
+      'type',
+      'created_at',
+      'updated_at'
+    ];
 
     public function thread(): BelongsTo
     {

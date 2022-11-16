@@ -30,6 +30,31 @@ use Illuminate\Support\Facades\Date;
 
 class Ticket extends Model
 {
+    protected $fillable = [
+        'channel_id',
+        'order_id',
+        'user_id',
+        'state',
+        'priority',
+        'deadline',
+        'created_at',
+        'updated_at'
+    ];
+
+    private function createTicket(Order $order, int $channelId, string $state, string $priority, $deadline, int $user)
+    {
+        return Ticket::firstOrCreate([
+            'order_id' => $order->id,
+        ], [
+            'channel_id' => $channelId,
+            'order_id' => $order->id,
+            'state' => $state,
+            'priority' => $priority,
+            'deadline' => $deadline,
+            'user_id' => $user
+        ]);
+    }
+
     public function threads(): HasMany
     {
         return $this->hasMany(Thread::class);

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('ticket_threads', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ticket_id')->constrained('tickets');
-            $table->string('channel_thread_number')->nullable(true);
+            $table->string('channel_thread_number')->nullable();
             $table->string('name');
             $table->string('customer_issue');
             $table->timestamps();

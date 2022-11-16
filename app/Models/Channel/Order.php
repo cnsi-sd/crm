@@ -21,6 +21,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
+
+    protected $fillable = [
+        'channel_id',
+        'channel_order_number',
+        'created_at',
+        'updated_at'
+        ];
+
+    /**
+     * @param string $orderId
+     * @return Order
+     */
+    private function createOrder(string $orderId): Order
+    {
+        return Order::firstOrCreate([
+            'channel_order_number' => $orderId,
+        ], [
+            'channel_id' => $this->channelId,
+            'channel_order_number' => $orderId,
+        ]);
+    }
+
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);

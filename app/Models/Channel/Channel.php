@@ -19,6 +19,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Channel extends Model
 {
+    protected $fillable = [
+        'name',
+        'created_at',
+        'updated_at'
+    ];
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);

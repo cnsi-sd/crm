@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('ticket_threads_messages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('thread_id')->constrained('ticket_threads');
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('channel_message_number');
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->string('channel_message_number')->nullable();
             $table->string('author_type');
-            $table->boolean('private');
+            $table->text('content');
+            //$table->boolean('private'); //a retirer
             $table->timestamps();
         });
     }
