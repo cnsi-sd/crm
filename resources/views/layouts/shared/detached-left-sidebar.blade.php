@@ -3,7 +3,7 @@
 
     <div class="leftbar-user">
         <a href="javascript: void(0);">
-            <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="user-image" height="42" class="rounded-circle shadow-sm">
+            <img src="{{asset('assets/images/users/avatar.png')}}" alt="user-image" height="42" class="rounded-circle shadow-sm">
             <span class="leftbar-user-name">Dominic Keller</span>
         </a>
     </div>
@@ -21,12 +21,6 @@
             </a>
             <div class="collapse" id="sidebarDashboards">
                 <ul class="side-nav-second-level">
-                    <li>
-                        <a href="{{route('second', ['dashboard', 'analytics'])}}">Analytics</a>
-                    </li>
-                    <li>
-                        <a href="{{route('second', ['dashboard', 'crm'])}}">CRM</a>
-                    </li>
                     <li>
                         <a href="{{route('any', 'index')}}">Ecommerce</a>
                     </li>

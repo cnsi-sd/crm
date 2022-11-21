@@ -101,7 +101,7 @@
                         <div class="pt-2 pb-2">
                             <div class="row align-items-center">
                                 <div class="col-auto">
-                                    <img src="{{asset('assets/images/users/avatar-2.jpg')}}" class="avatar-xs rounded" alt="file-image">
+                                    <img src="{{asset('assets/images/users/avatar.png')}}" class="avatar-xs rounded" alt="file-image">
                                 </div>
                                 <div class="col ps-0">
                                     <a href="javascript:void(0);" class="text-muted fw-bold">Coderthemes</a>

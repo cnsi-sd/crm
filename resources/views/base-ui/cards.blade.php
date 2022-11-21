@@ -26,7 +26,6 @@
 
             <!-- Simple card -->
             <div class="card d-block">
-                <img class="card-img-top" src="{{asset('assets/images/small/small-1.jpg')}}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make
@@ -38,7 +37,6 @@
 
         <div class="col-md-6 col-lg-3">
             <div class="card d-block">
-                <img class="card-img-top" src="{{asset('assets/images/small/small-2.jpg')}}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card..</p>
@@ -55,7 +53,6 @@
 
         <div class="col-md-6 col-lg-3">
             <div class="card d-block">
-                <img class="card-img-top" src="{{asset('assets/images/small/small-3.jpg')}}" alt="Card image cap">
                 <div class="card-body">
                     <p class="card-text">Some quick example text to build on the card title and make
                         up the bulk of the card's content. Some quick example text to build on the card title and make up.</p>
@@ -71,7 +68,6 @@
                     <h5 class="card-title">Card title</h5>
                     <h6 class="card-subtitle text-muted">Support card subtitle</h6>
                 </div>
-                <img class="img-fluid" src="{{asset('assets/images/small/small-4.jpg')}}" alt="Card image cap">
                 <div class="card-body">
                     <p class="card-text">Some quick example text to build on the card title and make
                         up the bulk of the card's content.</p>
@@ -294,7 +290,6 @@
             <div class="card">
                 <div class="row g-0 align-items-center">
                     <div class="col-md-4">
-                        <img src="{{asset('assets/images/small/small-4.jpg')}}" class="card-img" alt="...">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -317,7 +312,6 @@
                         </div> <!-- end card-body -->
                     </div> <!-- end col -->
                     <div class="col-md-4">
-                        <img src="{{asset('assets/images/small/small-1.jpg')}}" class="card-img" alt="...">
                     </div> <!-- end col -->
                 </div> <!-- end row-->
             </div> <!-- end card -->
@@ -335,7 +329,6 @@
     <div class="row">
         <div class="col-md-6 col-lg-3">
             <div class="card">
-                <img src="{{asset('assets/images/small/small-2.jpg')}}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Card with stretched link</h5>
                     <a href="#" class="btn btn-primary mt-2 stretched-link">Go somewhere</a>
@@ -344,7 +337,6 @@
         </div> <!-- end col-->
         <div class="col-md-6 col-lg-3">
             <div class="card">
-                <img src="{{asset('assets/images/small/small-3.jpg')}}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><a href="#" class="text-success stretched-link">Card with stretched link</a></h5>
                     <p class="card-text">
@@ -355,7 +347,6 @@
         </div> <!-- end col-->
         <div class="col-md-6 col-lg-3">
             <div class="card">
-                <img src="{{asset('assets/images/small/small-4.jpg')}}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Card with stretched link</h5>
                     <a href="#" class="btn btn-info mt-2 stretched-link">Go somewhere</a>
@@ -364,7 +355,6 @@
         </div> <!-- end col-->
         <div class="col-md-6 col-lg-3">
             <div class="card">
-                <img src="{{asset('assets/images/small/small-1.jpg')}}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><a href="#" class="stretched-link">Card with stretched link</a></h5>
                     <p class="card-text">
@@ -387,7 +377,6 @@
         <div class="col-12">
             <div class="card-group">
                 <div class="card d-block">
-                    <img class="card-img-top" src="{{asset('assets/images/small/small-1.jpg')}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">This is a wider card with supporting text below as a
@@ -399,7 +388,6 @@
                     </div>
                 </div>
                 <div class="card d-block">
-                    <img class="card-img-top" src="{{asset('assets/images/small/small-2.jpg')}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">This card has supporting text below as a natural
@@ -410,7 +398,6 @@
                     </div>
                 </div>
                 <div class="card d-block">
-                    <img class="card-img-top" src="{{asset('assets/images/small/small-3.jpg')}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">This is a wider card with supporting text below as a
@@ -438,7 +425,6 @@
             <div class="row row-cols-1 row-cols-md-3 g-3">
                 <div class="col">
                     <div class="card">
-                        <img src="{{asset('assets/images/small/small-4.jpg')}}" class="card-img-top" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This is a longer card with supporting text below as
@@ -452,7 +438,6 @@
                 </div>
                 <div class="col">
                     <div class="card">
-                        <img src="{{asset('assets/images/small/small-1.jpg')}}" class="card-img-top" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This card has supporting text below as a natural
@@ -465,7 +450,6 @@
                 </div>
                 <div class="col">
                     <div class="card">
-                        <img src="{{asset('assets/images/small/small-2.jpg')}}" class="card-img-top" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This is a wider card with supporting text below as
@@ -594,14 +578,14 @@
                                                                             &lt;a href=&quot;#&quot; data-bs-toggle=&quot;remove&quot;&gt;&lt;i class=&quot;mdi mdi-close&quot;&gt;&lt;/i&gt;&lt;/a&gt;
                                                                         &lt;/div&gt;
                                                                         &lt;h5 class=&quot;card-title mb-0&quot;&gt;Card title&lt;/h5&gt;
-                                
+
                                                                         &lt;div id=&quot;cardCollpase1&quot; class=&quot;collapse pt-3 show&quot;&gt;
                                                                             ...
                                                                         &lt;/div&gt;
                                                                     &lt;/div&gt;
                                                                 &lt;/div&gt; &lt;!-- end card--&gt;
                                                             &lt;/div&gt;&lt;!-- end col --&gt;
-                                
+
                                                             &lt;div class=&quot;col-md-4&quot;&gt;
                                                                 &lt;!-- Portlet card --&gt;
                                                                 &lt;div class=&quot;card bg-primary text-white mb-md-0 mb-3&quot;&gt;
@@ -612,14 +596,14 @@
                                                                             &lt;a href=&quot;#&quot; data-bs-toggle=&quot;remove&quot;&gt;&lt;i class=&quot;mdi mdi-close&quot;&gt;&lt;/i&gt;&lt;/a&gt;
                                                                         &lt;/div&gt;
                                                                         &lt;h5 class=&quot;card-title mb-0&quot;&gt;Card title&lt;/h5&gt;
-                                
+
                                                                         &lt;div id=&quot;cardCollpase2&quot; class=&quot;collapse pt-3 show&quot;&gt;
                                                                             ...
                                                                         &lt;/div&gt;
                                                                     &lt;/div&gt;
                                                                 &lt;/div&gt; &lt;!-- end card--&gt;
                                                             &lt;/div&gt;&lt;!-- end col --&gt;
-                                
+
                                                             &lt;div class=&quot;col-md-4&quot;&gt;
                                                                 &lt;!-- Portlet card --&gt;
                                                                 &lt;div class=&quot;card bg-success text-white mb-0&quot;&gt;
@@ -630,7 +614,7 @@
                                                                             &lt;a href=&quot;#&quot; data-bs-toggle=&quot;remove&quot;&gt;&lt;i class=&quot;mdi mdi-close&quot;&gt;&lt;/i&gt;&lt;/a&gt;
                                                                         &lt;/div&gt;
                                                                         &lt;h5 class=&quot;card-title mb-0&quot;&gt;Card title&lt;/h5&gt;
-                                
+
                                                                         &lt;div id=&quot;cardCollpase3&quot; class=&quot;collapse pt-3 show&quot;&gt;
                                                                             ...
                                                                         &lt;/div&gt;
@@ -638,7 +622,7 @@
                                                                 &lt;/div&gt; &lt;!-- end card--&gt;
                                                             &lt;/div&gt;&lt;!-- end col --&gt;
                                                         &lt;/div&gt;
-                                                        &lt;!-- end row --&gt;  
+                                                        &lt;!-- end row --&gt;
                                                     </span>
                                                 </pre> <!-- end highlight-->
                         </div> <!-- end preview code-->

@@ -380,7 +380,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-2.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Risa D. Pearson
                                             </td>
                                             <td>AC336 508 2157</td>
@@ -392,7 +392,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-3.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Ann C. Thompson
                                             </td>
                                             <td>SB646 473 2057</td>
@@ -404,7 +404,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-4.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Paul J. Friend
                                             </td>
                                             <td>DL281 308 0793</td>
@@ -416,7 +416,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-5.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Sean C. Nguyen
                                             </td>
                                             <td>CA269 714 6825</td>
@@ -446,7 +446,7 @@
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Risa D. Pearson
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;AC336 508 2157&lt;/td&gt;
@@ -458,7 +458,7 @@
                                                                 &lt;/tr&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-3.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Ann C. Thompson
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;SB646 473 2057&lt;/td&gt;
@@ -470,7 +470,7 @@
                                                                 &lt;/tr&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-4.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Paul J. Friend
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;DL281 308 0793&lt;/td&gt;
@@ -482,7 +482,7 @@
                                                                 &lt;/tr&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-5.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Sean C. Nguyen
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;CA269 714 6825&lt;/td&gt;
@@ -933,7 +933,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-6.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Risa D. Pearson
                                             </td>
                                             <td>AC336 508 2157</td>
@@ -944,7 +944,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-7.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Ann C. Thompson
                                             </td>
                                             <td>SB646 473 2057</td>
@@ -955,7 +955,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-8.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Paul J. Friend
                                             </td>
                                             <td>DL281 308 0793</td>
@@ -966,7 +966,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-9.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Sean C. Nguyen
                                             </td>
                                             <td>CA269 714 6825</td>
@@ -995,7 +995,7 @@
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-6.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Risa D. Pearson
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;AC336 508 2157&lt;/td&gt;
@@ -1006,7 +1006,7 @@
                                                                 &lt;/tr&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-7.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Ann C. Thompson
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;SB646 473 2057&lt;/td&gt;
@@ -1017,7 +1017,7 @@
                                                                 &lt;/tr&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-8.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Paul J. Friend
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;DL281 308 0793&lt;/td&gt;
@@ -1028,7 +1028,7 @@
                                                                 &lt;/tr&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-9.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Sean C. Nguyen
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;CA269 714 6825&lt;/td&gt;
@@ -1083,7 +1083,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-6.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Risa D. Pearson
                                             </td>
                                             <td>AC336 508 2157</td>
@@ -1094,7 +1094,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-7.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Ann C. Thompson
                                             </td>
                                             <td>SB646 473 2057</td>
@@ -1105,7 +1105,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-8.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Paul J. Friend
                                             </td>
                                             <td>DL281 308 0793</td>
@@ -1116,7 +1116,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-user">
-                                                <img src="{{asset('assets/images/users/avatar-9.jpg')}}" alt="table-user" class="me-2 rounded-circle" />
+                                                <img src="{{asset('assets/images/users/avatar.png')}}" alt="table-user" class="me-2 rounded-circle" />
                                                 Sean C. Nguyen
                                             </td>
                                             <td>CA269 714 6825</td>
@@ -1145,7 +1145,7 @@
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-6.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Risa D. Pearson
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;AC336 508 2157&lt;/td&gt;
@@ -1156,7 +1156,7 @@
                                                                 &lt;/tr&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-7.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Ann C. Thompson
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;SB646 473 2057&lt;/td&gt;
@@ -1167,7 +1167,7 @@
                                                                 &lt;/tr&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-8.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Paul J. Friend
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;DL281 308 0793&lt;/td&gt;
@@ -1178,7 +1178,7 @@
                                                                 &lt;/tr&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td class=&quot;table-user&quot;&gt;
-                                                                        &lt;img src=&quot;assets/images/users/avatar-9.jpg&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
+                                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;table-user&quot; class=&quot;me-2 rounded-circle&quot; /&gt;
                                                                         Sean C. Nguyen
                                                                     &lt;/td&gt;
                                                                     &lt;td&gt;CA269 714 6825&lt;/td&gt;

@@ -24,7 +24,7 @@
                         <div class="card-body p-4">
 
                             <div class="text-center w-75 m-auto">
-                                <img src="{{asset('assets/images/users/avatar-1.jpg')}}" height="64" alt="user-image" class="rounded-circle shadow">
+                                <img src="{{asset('assets/images/users/avatar.png')}}" height="64" alt="user-image" class="rounded-circle shadow">
                                 <h4 class="text-dark-50 text-center mt-3 fw-bold">Hi ! Michael </h4>
                                 <p class="text-muted mb-4">Enter your password to access the admin.</p>
                             </div>

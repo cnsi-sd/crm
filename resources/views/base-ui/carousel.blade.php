@@ -48,13 +48,10 @@
                             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-1.jpg')}}" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-2.jpg')}}" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-3.jpg')}}" alt="Third slide">
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +72,7 @@
                                                                     &lt;img class=&quot;d-block img-fluid&quot; src=&quot;assets/images/small/small-3.jpg&quot; alt=&quot;Third slide&quot;&gt;
                                                                 &lt;/div&gt;
                                                             &lt;/div&gt;
-                                                        &lt;/div&gt;  
+                                                        &lt;/div&gt;
                                                     </span>
                                                 </pre> <!-- end highlight-->
                         </div> <!-- end preview code-->
@@ -109,13 +106,10 @@
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-4.jpg')}}" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-1.jpg')}}" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-2.jpg')}}" alt="Third slide">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
@@ -195,13 +189,10 @@
                                 </ol>
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-3.jpg')}}" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-2.jpg')}}" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-1.jpg')}}" alt="Third slide">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
@@ -276,21 +267,18 @@
                             <div id="carouselExampleCaption" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
-                                        <img src="{{asset('assets/images/small/small-1.jpg')}}" alt="..." class="d-block img-fluid">
                                         <div class="carousel-caption d-none d-md-block">
                                             <h3 class="text-white">First slide label</h3>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                         </div>
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="{{asset('assets/images/small/small-3.jpg')}}" alt="..." class="d-block img-fluid">
                                         <div class="carousel-caption d-none d-md-block">
                                             <h3 class="text-white">Second slide label</h3>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                         </div>
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="{{asset('assets/images/small/small-2.jpg')}}" alt="..." class="d-block img-fluid">
                                         <div class="carousel-caption d-none d-md-block">
                                             <h3 class="text-white">Third slide label</h3>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -380,13 +368,10 @@
                             <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-1.jpg')}}" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-2.jpg')}}" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block img-fluid" src="{{asset('assets/images/small/small-3.jpg')}}" alt="Third slide">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
@@ -456,13 +441,10 @@
                             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active" data-bs-interval="1000">
-                                        <img src="{{asset('assets/images/small/small-4.jpg')}}" class="img-fluid d-block w-100" alt="First slide">
                                     </div>
                                     <div class="carousel-item" data-bs-interval="2000">
-                                        <img src="{{asset('assets/images/small/small-2.jpg')}}" class="img-fluid d-block w-100" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="{{asset('assets/images/small/small-1.jpg')}}" class="img-fluid d-block w-100" alt="Third slide">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-bs-slide="prev">

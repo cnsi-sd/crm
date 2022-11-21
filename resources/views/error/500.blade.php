@@ -23,8 +23,6 @@
                         <div class="card-body p-4">
 
                             <div class="text-center">
-                                <img src="{{asset('assets/images/startman.svg')}}" height="120" alt="File not found Image">
-
                                 <h1 class="text-error mt-4">500</h1>
                                 <h4 class="text-uppercase text-danger mt-3">Internal Server Error</h4>
                                 <p class="text-muted mt-3">Why not try refreshing your page? or you can contact <a href="" class="text-muted"><b>Support</b></a></p>

@@ -153,7 +153,7 @@
                                                                     &lt;/div&gt; &lt;!-- end card-body--&gt;
                                                                 &lt;/div&gt; &lt;!-- end card--&gt;
                                                             &lt;/div&gt; &lt;!-- end col--&gt;
-                
+
                                                             &lt;div class=&quot;col-md-4&quot;&gt;
                                                                 &lt;div class=&quot;card mb-0 mt-3 bg-secondary text-white&quot;&gt;
                                                                     &lt;div class=&quot;card-body&quot;&gt;
@@ -165,8 +165,8 @@
                                                                         &lt;/blockquote&gt;
                                                                     &lt;/div&gt; &lt;!-- end card-body--&gt;
                                                                 &lt;/div&gt; &lt;!-- end card--&gt;
-                                                            &lt;/div&gt; &lt;!-- end col--&gt;                    
-                                
+                                                            &lt;/div&gt; &lt;!-- end col--&gt;
+
                                                             &lt;div class=&quot;col-md-4&quot;&gt;
                                                                 &lt;div class=&quot;card mb-0 mt-3 text-white bg-success&quot;&gt;
                                                                     &lt;div class=&quot;card-body&quot;&gt;
@@ -178,8 +178,8 @@
                                                                         &lt;/blockquote&gt;
                                                                     &lt;/div&gt; &lt;!-- end card-body--&gt;
                                                                 &lt;/div&gt; &lt;!-- end card--&gt;
-                                                            &lt;/div&gt; &lt;!-- end col--&gt;   
-                                                            
+                                                            &lt;/div&gt; &lt;!-- end col--&gt;
+
                                                             &lt;div class=&quot;col-md-4&quot;&gt;
                                                                 &lt;div class=&quot;card mb-0 mt-3 text-white bg-info text-xs-center&quot;&gt;
                                                                     &lt;div class=&quot;card-body&quot;&gt;
@@ -192,7 +192,7 @@
                                                                     &lt;/div&gt; &lt;!-- end card-body--&gt;
                                                                 &lt;/div&gt; &lt;!-- end card--&gt;
                                                             &lt;/div&gt; &lt;!-- end col--&gt;
-                                
+
                                                             &lt;div class=&quot;col-md-4&quot;&gt;
                                                                 &lt;div class=&quot;card mb-0 mt-3 text-white bg-warning text-xs-center&quot;&gt;
                                                                     &lt;div class=&quot;card-body&quot;&gt;
@@ -205,7 +205,7 @@
                                                                     &lt;/div&gt; &lt;!-- end card-body--&gt;
                                                                 &lt;/div&gt; &lt;!-- end card--&gt;
                                                             &lt;/div&gt; &lt;!-- end col--&gt;
-                                
+
                                                             &lt;div class=&quot;col-md-4&quot;&gt;
                                                                 &lt;div class=&quot;card mb-0 mt-3 text-white bg-danger text-xs-center&quot;&gt;
                                                                     &lt;div class=&quot;card-body&quot;&gt;
@@ -217,7 +217,7 @@
                                                                         &lt;/blockquote&gt;
                                                                     &lt;/div&gt; &lt;!-- end card-body--&gt;
                                                                 &lt;/div&gt; &lt;!-- end card--&gt;
-                                                            &lt;/div&gt; &lt;!-- end col--&gt; 
+                                                            &lt;/div&gt; &lt;!-- end col--&gt;
                                                         &lt;/div&gt;
                                                         &lt;!-- end row--&gt;
                                                     </span>
@@ -265,7 +265,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-0">Louis K. Bond</h5>
                                                             <p> Founder & CEO </p>
@@ -280,7 +280,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-2.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-0">Dennis N. Cloutier</h5>
                                                             <p> Software Engineer </p>
@@ -295,7 +295,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-3.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-0">Susan J. Sander</h5>
                                                             <p> Web Designer </p>
@@ -319,7 +319,7 @@
 
                                                 <div class="card-body p-3">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-4.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-0">James M. Short</h5>
                                                             <p> Web Developer </p>
@@ -334,7 +334,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body p-3">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-5.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-0">Gabriel J. Snyder</h5>
                                                             <p> Business Analyst </p>
@@ -349,7 +349,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body p-3">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-6.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-0">Louie C. Mason</h5>
                                                             <p>Human Resources</p>
@@ -385,11 +385,11 @@
                                                                 &lt;div class=&quot;bg-dragula p-2 p-lg-4&quot;&gt;
                                                                     &lt;h5 class=&quot;mt-0&quot;&gt;Part 1&lt;/h5&gt;
                                                                     &lt;div id=&quot;company-list-left&quot; class=&quot;py-2&quot;&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-1.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-0&quot;&gt;Louis K. Bond&lt;/h5&gt;
                                                                                         &lt;p&gt; Founder &amp; CEO &lt;/p&gt;
@@ -400,11 +400,11 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-0&quot;&gt;Dennis N. Cloutier&lt;/h5&gt;
                                                                                         &lt;p&gt; Software Engineer &lt;/p&gt;
@@ -415,11 +415,11 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-3.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-0&quot;&gt;Susan J. Sander&lt;/h5&gt;
                                                                                         &lt;p&gt; Web Designer &lt;/p&gt;
@@ -430,20 +430,20 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                                                                        
+
                                                                     &lt;/div&gt; &lt;!-- end company-list-1--&gt;
                                                                 &lt;/div&gt; &lt;!-- end div.bg-light--&gt;
                                                             &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                             &lt;div class=&quot;col-md-6&quot;&gt;
                                                                 &lt;div class=&quot;bg-dragula p-2 p-lg-4&quot;&gt;
                                                                     &lt;h5 class=&quot;mt-0&quot;&gt;Part 2&lt;/h5&gt;
                                                                     &lt;div id=&quot;company-list-right&quot; class=&quot;py-2&quot;&gt;
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
-                
+
                                                                             &lt;div class=&quot;card-body p-3&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-4.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-0&quot;&gt;James M. Short&lt;/h5&gt;
                                                                                         &lt;p&gt; Web Developer &lt;/p&gt;
@@ -454,11 +454,11 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body p-3&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-5.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-0&quot;&gt;Gabriel J. Snyder&lt;/h5&gt;
                                                                                         &lt;p&gt; Business Analyst &lt;/p&gt;
@@ -469,11 +469,11 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body p-3&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-6.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-0&quot;&gt;Louie C. Mason&lt;/h5&gt;
                                                                                         &lt;p&gt;Human Resources&lt;/p&gt;
@@ -484,12 +484,12 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                                                                        
+
                                                                     &lt;/div&gt; &lt;!-- end company-list-2--&gt;
                                                                 &lt;/div&gt; &lt;!-- end div.bg-light--&gt;
                                                             &lt;/div&gt; &lt;!-- end col --&gt;
-                
-                                                        &lt;/div&gt; &lt;!-- end row --&gt; 
+
+                                                        &lt;/div&gt; &lt;!-- end row --&gt;
                                                     </span>
                                                 </pre> <!-- end highlight-->
                         </div> <!-- end preview code-->
@@ -535,7 +535,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-7.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-1">Louis K. Bond</h5>
                                                             <p class="mb-0"> Founder & CEO </p>
@@ -548,7 +548,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-8.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-1">Dennis N. Cloutier</h5>
                                                             <p class="mb-0"> Software Engineer </p>
@@ -561,7 +561,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-9.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-1">Susan J. Sander</h5>
                                                             <p class="mb-0"> Web Designer </p>
@@ -596,7 +596,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body p-3">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-5.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-1">Gabriel J. Snyder</h5>
                                                             <p class="mb-0"> Business Analyst </p>
@@ -609,7 +609,7 @@
                                             <div class="card mb-0 mt-2">
                                                 <div class="card-body p-3">
                                                     <div class="d-flex align-items-start">
-                                                        <img src="{{asset('assets/images/users/avatar-3.jpg')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                                         <div class="w-100 overflow-hidden">
                                                             <h5 class="mb-1 mt-1">Louie C. Mason</h5>
                                                             <p class="mb-0">Human Resources</p>
@@ -643,11 +643,11 @@
                                                                 &lt;div class=&quot;bg-dragula p-2 p-lg-4&quot;&gt;
                                                                     &lt;h5 class=&quot;mt-0&quot;&gt;Part 1&lt;/h5&gt;
                                                                     &lt;div id=&quot;handle-dragula-left&quot; class=&quot;py-2&quot;&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-7.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-1&quot;&gt;Louis K. Bond&lt;/h5&gt;
                                                                                         &lt;p class=&quot;mb-0&quot;&gt; Founder &amp; CEO &lt;/p&gt;
@@ -656,11 +656,11 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-8.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-1&quot;&gt;Dennis N. Cloutier&lt;/h5&gt;
                                                                                         &lt;p class=&quot;mb-0&quot;&gt; Software Engineer &lt;/p&gt;
@@ -669,11 +669,11 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-9.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-1&quot;&gt;Susan J. Sander&lt;/h5&gt;
                                                                                         &lt;p class=&quot;mb-0&quot;&gt; Web Designer &lt;/p&gt;
@@ -682,17 +682,17 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                                                                        
+
                                                                     &lt;/div&gt; &lt;!-- end company-list-1--&gt;
                                                                 &lt;/div&gt; &lt;!-- end div.bg-light--&gt;
                                                             &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                             &lt;div class=&quot;col-md-6&quot;&gt;
                                                                 &lt;div class=&quot;bg-dragula p-2 p-lg-4&quot;&gt;
                                                                     &lt;h5 class=&quot;mt-0&quot;&gt;Part 2&lt;/h5&gt;
                                                                     &lt;div id=&quot;handle-dragula-right&quot; class=&quot;py-2&quot;&gt;
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
-                
+
                                                                             &lt;div class=&quot;card-body p-3&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
                                                                                     &lt;img src=&quot;assets/images/users/avatar-10.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
@@ -704,11 +704,11 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body p-3&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-5.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-1&quot;&gt;Gabriel J. Snyder&lt;/h5&gt;
                                                                                         &lt;p class=&quot;mb-0&quot;&gt; Business Analyst &lt;/p&gt;
@@ -717,11 +717,11 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                                         &lt;div class=&quot;card mb-0 mt-2&quot;&gt;
                                                                             &lt;div class=&quot;card-body p-3&quot;&gt;
                                                                                 &lt;div class=&quot;d-flex align-items-start&quot;&gt;
-                                                                                    &lt;img src=&quot;assets/images/users/avatar-3.jpg&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
+                                                                                    &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;me-3 d-none d-sm-block avatar-sm rounded-circle&quot;&gt;
                                                                                     &lt;div class=&quot;w-100 overflow-hidden&quot;&gt;
                                                                                         &lt;h5 class=&quot;mb-1 mt-1&quot;&gt;Louie C. Mason&lt;/h5&gt;
                                                                                         &lt;p class=&quot;mb-0&quot;&gt;Human Resources&lt;/p&gt;
@@ -730,11 +730,11 @@
                                                                                 &lt;/div&gt; &lt;!-- end d-flex --&gt;
                                                                             &lt;/div&gt; &lt;!-- end card-body --&gt;
                                                                         &lt;/div&gt; &lt;!-- end col --&gt;
-                                                                        
+
                                                                     &lt;/div&gt; &lt;!-- end company-list-2--&gt;
                                                                 &lt;/div&gt; &lt;!-- end div.bg-light--&gt;
                                                             &lt;/div&gt; &lt;!-- end col --&gt;
-                
+
                                                         &lt;/div&gt; &lt;!-- end row --&gt;
                                                     </span>
                                                 </pre> <!-- end highlight-->

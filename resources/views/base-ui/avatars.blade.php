@@ -48,31 +48,31 @@
                         <div class="tab-pane show active" id="sizing-images-preview">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <img src="{{asset('assets/images/users/avatar-2.jpg')}}" alt="image" class="img-fluid avatar-xs rounded">
+                                    <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="img-fluid avatar-xs rounded">
                                     <p>
                                         <code>.avatar-xs</code>
                                     </p>
-                                    <img src="{{asset('assets/images/users/avatar-3.jpg')}}" alt="image" class="img-fluid avatar-sm rounded mt-2">
+                                    <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="img-fluid avatar-sm rounded mt-2">
                                     <p class="mb-2 mb-sm-0">
                                         <code>.avatar-sm</code>
                                     </p>
                                 </div>
                                 <div class="col-md-3">
-                                    <img src="{{asset('assets/images/users/avatar-4.jpg')}}" alt="image" class="img-fluid avatar-md rounded" />
+                                    <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="img-fluid avatar-md rounded" />
                                     <p>
                                         <code>.avatar-md</code>
                                     </p>
                                 </div>
 
                                 <div class="col-md-3">
-                                    <img src="{{asset('assets/images/users/avatar-5.jpg')}}" alt="image" class="img-fluid avatar-lg rounded" />
+                                    <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="img-fluid avatar-lg rounded" />
                                     <p>
                                         <code>.avatar-lg</code>
                                     </p>
                                 </div>
 
                                 <div class="col-md-3">
-                                    <img src="{{asset('assets/images/users/avatar-6.jpg')}}" alt="image" class="img-fluid avatar-xl rounded" />
+                                    <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="img-fluid avatar-xl rounded" />
                                     <p class="mb-0">
                                         <code>.avatar-xl</code>
                                     </p>
@@ -84,19 +84,19 @@
                             <pre class="mb-0">
                                                     <span class="html escape">
                                                             &lt;!-- Avatar Extra Small --&gt;
-                                                            &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-xs&quot;&gt;
-                                                            
+                                                            &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-xs&quot;&gt;
+
                                                             &lt;!-- Avatar Small --&gt;
-                                                            &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-sm&quot;&gt;
-                                                            
+                                                            &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-sm&quot;&gt;
+
                                                             &lt;!-- Avatar Medium --&gt;
-                                                            &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-md&quot;&gt;
-                                                            
+                                                            &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-md&quot;&gt;
+
                                                             &lt;!-- Avatar Large --&gt;
-                                                            &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-lg&quot;&gt;
-                                                            
+                                                            &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-lg&quot;&gt;
+
                                                             &lt;!-- Avatar Extra Large --&gt;
-                                                            &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-xl&quot;&gt;
+                                                            &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-xl&quot;&gt;
                                                     </span>
                                                 </pre> <!-- end highlight-->
                         </div> <!-- end preview code-->
@@ -130,21 +130,21 @@
                         <div class="tab-pane show active" id="rounded-images-preview">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <img src="{{asset('assets/images/users/avatar-7.jpg')}}" alt="image" class="img-fluid avatar-md rounded-circle" />
+                                    <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="img-fluid avatar-md rounded-circle" />
                                     <p class="mt-1">
                                         <code>.avatar-md .rounded-circle</code>
                                     </p>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <img src="{{asset('assets/images/users/avatar-8.jpg')}}" alt="image" class="img-fluid avatar-lg rounded-circle" />
+                                    <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="img-fluid avatar-lg rounded-circle" />
                                     <p>
                                         <code>.avatar-lg .rounded-circle</code>
                                     </p>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <img src="{{asset('assets/images/users/avatar-9.jpg')}}" alt="image" class="img-fluid avatar-xl rounded-circle" />
+                                    <img src="{{asset('assets/images/users/avatar.png')}}" alt="image" class="img-fluid avatar-xl rounded-circle" />
                                     <p class="mb-0">
                                         <code>.avatar-xl .rounded-circle</code>
                                     </p>
@@ -156,13 +156,13 @@
                             <pre class="mb-0">
                                                     <span class="html escape">
                                                         &lt;!-- Avatar Medium --&gt;
-                                                        &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-md rounded-circle&quot;&gt;
-                                                        
+                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-md rounded-circle&quot;&gt;
+
                                                         &lt;!-- Avatar Large --&gt;
-                                                        &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-lg rounded-circle&quot;&gt;
-                                                        
+                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-lg rounded-circle&quot;&gt;
+
                                                         &lt;!-- Avatar Extra Large --&gt;
-                                                        &lt;img src=&quot;assets/images/users/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-xl rounded-circle&quot;&gt;
+                                                        &lt;img src=&quot;assets/images/users/avatar.png&quot; alt=&quot;image&quot; class=&quot;img-fluid avatar-xl rounded-circle&quot;&gt;
                                                     </span>
                                                 </pre> <!-- end highlight-->
                         </div> <!-- end preview code-->
@@ -267,28 +267,28 @@
                                                                 xs
                                                             &lt;/span&gt;
                                                         &lt;/div&gt;
-                                                        
+
                                                         &lt;!-- Avatar Small --&gt;
                                                         &lt;div class=&quot;avatar-sm&quot;&gt;
                                                             &lt;span class=&quot;avatar-title bg-success rounded&quot;&gt;
                                                                 sm
                                                             &lt;/span&gt;
                                                         &lt;/div&gt;
-                                                        
+
                                                         &lt;!-- Avatar Medium --&gt;
                                                         &lt;div class=&quot;avatar-md&quot;&gt;
                                                             &lt;span class=&quot;avatar-title bg-success rounded&quot;&gt;
                                                                 md
                                                             &lt;/span&gt;
                                                         &lt;/div&gt;
-                                                        
+
                                                         &lt;!-- Avatar Large --&gt;
                                                         &lt;div class=&quot;avatar-lg&quot;&gt;
                                                             &lt;span class=&quot;avatar-title bg-success rounded&quot;&gt;
                                                                 lg
                                                             &lt;/span&gt;
                                                         &lt;/div&gt;
-                                                        
+
                                                         &lt;!-- Avatar Extra Small --&gt;
                                                         &lt;div class=&quot;avatar-xl&quot;&gt;
                                                             &lt;span class=&quot;avatar-title bg-success rounded&quot;&gt;
@@ -374,14 +374,14 @@
                                                                 md
                                                             &lt;/span&gt;
                                                         &lt;/div&gt;
-                                                        
+
                                                         &lt;!-- Avatar Large --&gt;
                                                         &lt;div class=&quot;avatar-lg&quot;&gt;
                                                             &lt;span class=&quot;avatar-title bg-success rounded-circle&quot;&gt;
                                                                 lg
                                                             &lt;/span&gt;
                                                         &lt;/div&gt;
-                                                        
+
                                                         &lt;!-- Avatar Extra Small --&gt;
                                                         &lt;div class=&quot;avatar-xl&quot;&gt;
                                                             &lt;span class=&quot;avatar-title bg-success rounded-circle&quot;&gt;
@@ -425,39 +425,6 @@
                     <div class="tab-content">
                         <div class="tab-pane show active" id="images-shape-preview">
                             <div class="row">
-                                <div class="col-sm-2">
-                                    <img src="{{asset('assets/images/small/small-2.jpg')}}" alt="image" class="img-fluid rounded" width="200" />
-                                    <p class="mb-0">
-                                        <code>.rounded</code>
-                                    </p>
-                                </div>
-
-                                <div class="col-sm-2 text-center">
-                                    <img src="{{asset('assets/images/users/avatar-6.jpg')}}" alt="image" class="img-fluid rounded" width="120" />
-                                    <p class="mb-0">
-                                        <code>.rounded</code>
-                                    </p>
-                                </div>
-
-                                <div class="col-sm-2 text-center">
-                                    <img src="{{asset('assets/images/users/avatar-7.jpg')}}" alt="image" class="img-fluid rounded-circle" width="120" />
-                                    <p class="mb-0">
-                                        <code>.rounded-circle</code>
-                                    </p>
-                                </div>
-
-                                <div class="col-sm-2">
-                                    <img src="{{asset('assets/images/small/small-3.jpg')}}" alt="image" class="img-fluid img-thumbnail" width="200" />
-                                    <p class="mb-0">
-                                        <code>.img-thumbnail</code>
-                                    </p>
-                                </div>
-                                <div class="col-sm-2">
-                                    <img src="{{asset('assets/images/users/avatar-8.jpg')}}" alt="image" class="img-fluid rounded-circle img-thumbnail" width="120" />
-                                    <p class="mb-0">
-                                        <code>.rounded-circle .img-thumbnail</code>
-                                    </p>
-                                </div>
                             </div> <!-- end row-->
                         </div> <!-- end preview-->
 
@@ -466,13 +433,13 @@
                                                     <span class="html escape">
                                                         &lt;!-- Rounded --&gt;
                                                         &lt;img src=&quot;assets/images/small/small-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid rounded&quot; width=&quot;200&quot;/&gt;
-                                                        
+
                                                         &lt;!-- Rounded Circle--&gt;
                                                         &lt;img src=&quot;assets/images/user/avatar-1.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid rounded-circle&quot; width=&quot;120&quot;/&gt;
-                                                        
+
                                                         &lt;!-- Thumbnail--&gt;
                                                         &lt;img src=&quot;assets/images/small/small-3.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid img-thumbnail&quot; width=&quot;200&quot;/&gt;
-                                                        
+
                                                         &lt;!-- Thumbnail Circle--&gt;
                                                         &lt;img src=&quot;assets/images/user/avatar-2.jpg&quot; alt=&quot;image&quot; class=&quot;img-fluid img-thumbnail rounded-circle&quot; width=&quot;120&quot;/&gt;
                                                     </span>

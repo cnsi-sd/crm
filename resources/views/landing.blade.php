@@ -84,7 +84,6 @@
                 </div>
                 <div class="col-md-5 offset-md-2">
                     <div class="text-md-end mt-3 mt-md-0">
-                        <img src="{{asset('assets/images/startup.svg')}}" alt="" class="img-fluid" />
                     </div>
                 </div>
             </div>
@@ -217,20 +216,17 @@
             <div class="row mt-4">
                 <div class="col-lg-4">
                     <div class="demo-box text-center">
-                        <img src="{{asset('assets/images/layouts/layout-1.png')}}" alt="demo-img" class="img-fluid shadow-sm rounded">
                         <h5 class="mt-3 f-17">Vertical Layout</h5>
                     </div>
                 </div>
 
                 <div class="col-lg-4">
                     <div class="demo-box text-center mt-3 mt-lg-0">
-                        <img src="{{asset('assets/images/layouts/layout-2.png')}}" alt="demo-img" class="img-fluid shadow-sm rounded">
                         <h5 class="mt-3 f-17">Horizontal Layout</h5>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="demo-box text-center mt-3 mt-lg-0">
-                        <img src="{{asset('assets/images/layouts/layout-3.png')}}" alt="demo-img" class="img-fluid shadow-sm rounded">
                         <h5 class="mt-3 f-17">Detached Layout</h5>
                     </div>
                 </div>
@@ -240,20 +236,17 @@
 
                 <div class="col-lg-4">
                     <div class="demo-box text-center">
-                        <img src="{{asset('assets/images/layouts/layout-5.png')}}" alt="demo-img" class="img-fluid shadow-sm rounded">
                         <h5 class="mt-3 f-17">Light Sidenav Layout</h5>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="demo-box text-center mt-3 mt-lg-0">
-                        <img src="{{asset('assets/images/layouts/layout-6.png')}}" alt="demo-img" class="img-fluid shadow-sm rounded">
                         <h5 class="mt-3 f-17">Boxed Layout</h5>
                     </div>
                 </div>
 
                 <div class="col-lg-4">
                     <div class="demo-box text-center mt-3 mt-lg-0">
-                        <img src="{{asset('assets/images/layouts/layout-4.png')}}" alt="demo-img" class="img-fluid shadow-sm rounded">
                         <h5 class="mt-3 f-17">Semi Dark Layout</h5>
                     </div>
                 </div>
@@ -278,7 +271,6 @@
             </div>
             <div class="row mt-2 py-5 align-items-center">
                 <div class="col-lg-5">
-                    <img src="{{asset('assets/images/features-1.svg')}}" class="img-fluid" alt="">
                 </div>
                 <div class="col-lg-6 offset-lg-1">
                     <h3 class="fw-normal">Inbuilt applications and pages</h3>
@@ -312,7 +304,6 @@
 
                 </div>
                 <div class="col-lg-5 offset-lg-1">
-                    <img src="{{asset('assets/images/features-2.svg')}}" class="img-fluid" alt="">
                 </div>
             </div>
 
