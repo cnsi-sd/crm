@@ -26,37 +26,35 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
 
-            <li class="side-nav-title side-nav-item">Navigation</li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
-                    <i class="uil-home-alt"></i>
-                    <span> Tableau de bord </span>
-                </a>
-                <div class="collapse" id="sidebarDashboards">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{route('any', 'index')}}">Accueil</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="side-nav-title side-nav-item">Paramètres</li>
-
-            <li class="side-nav-item">
-                <a href="{{route('users')}}" class="side-nav-link">
-                    <i class="uil-cog"></i>
-                    <span> Utilisateurs </span>
-                </a>
-            </li>
-
-            <li class="side-nav-item">
-                <a href="{{route('roles')}}" class="side-nav-link">
-                    <i class="uil-cog"></i>
-                    <span> Rôles </span>
-                </a>
-            </li>
+            @foreach(\App\Helpers\Menu::main() as $item)
+                <li class="@if(array_key_exists('is_title', $item)) side-nav-title @endif side-nav-item">
+                    @if(array_key_exists('is_title', $item))
+                        {{$item['text']}}
+                    @elseif(array_key_exists('sub_items', $item))
+                        <a data-bs-toggle="collapse" href="#{{$item['ref']}}" aria-expanded="false" aria-controls="{{$item['ref']}}" class="side-nav-link">
+                            @if(array_key_exists('icon', $item)) <i class="{{$item['icon']}}"></i> @endif
+                            <span>{{$item['text']}}</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse @if(strpos(\Illuminate\Support\Facades\Request::url(), $item['ref'])) show @endif" id="{{$item['ref']}}">
+                            <ul class="side-nav-second-level">
+                                @foreach($item['sub_items'] as $sub_item)
+                                    @if(isset($sub_item['route']))
+                                        <li @if(strpos(\Illuminate\Support\Facades\Request::url(), $sub_item['ref'])) class="menuitem-active" @endif>
+                                            <a href="{{$sub_item['route']}}" @if(strpos(\Illuminate\Support\Facades\Request::url(), $sub_item['ref'])) class="active" @endif>{{$sub_item['text']}}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                    @else
+                        <a href="{{$item['route']}}" class="side-nav-link">
+                            @if(array_key_exists('icon', $item)) <i class="{{$item['icon']}}"></i> @endif
+                            <span>{{$item['text']}}</span>
+                        </a>
+                    @endif
+                </li>
+            @endforeach
 
         </ul>
 
