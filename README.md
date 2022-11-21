@@ -7,6 +7,65 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+# PHP8.1 install
+```bash
+sudo apt install php8.1 php8.1-dom php8.1-curl php8.1-bcmath php8.1-xml php8.1-mysql php8.1-gd php8.1-fpm php8.1-soap
+```
+
+# Clone project
+```bash
+cd /var/www/html/
+git clone ssh://git@git.cnsi-sd.net:2222/RoyalPriceTeam/crm.git
+```
+
+# Database setup
+```bash
+sudo mysql
+```
+```mysql
+create database `crm` character set UTF8mb4 collate utf8mb4_general_ci;
+exit;
+```
+
+# Environment setup
+```bash
+cp .env.example .env
+nano .env
+```
+- Set your DB_USERNAME
+- Set your DB_PASSWORD
+
+# Project setup
+```bash
+# Télécharger composer.phar via https://getcomposer.org/download/
+php8.1 composer.phar install
+php8.1 artisan key:generate
+npm install
+php8.1 artisan migrate
+php8.1 artisan serve
+```
+
+# Git
+Dans le fichier suivant `.git/config` remplacer `filemode = true` par `filemode = false`
+
+# Mailhog
+Outil qui fait un faux serveur SMTP en local
+
+## Debian / Ubuntu Go < v1.18
+```bash
+sudo apt-get -y install golang-go
+go get github.com/mailhog/MailHog
+```
+
+## Go >= v1.17 (Debian Bookworm)
+```bash
+sudo apt-get -y install golang-go
+go install github.com/mailhog/MailHog@latest
+```
+
+Commande pour lancer le serveur SMTP : `~/go/bin/MailHog`.
+Visualisation des mails sur http://127.0.0.1:8025/
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
