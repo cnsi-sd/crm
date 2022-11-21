@@ -45,14 +45,14 @@
             <li class="side-nav-title side-nav-item">Paramètres</li>
 
             <li class="side-nav-item">
-                <a href="{{route('third', ['apps', 'calendar', 'calendar'])}}" class="side-nav-link">
+                <a href="{{route('users')}}" class="side-nav-link">
                     <i class="uil-cog"></i>
                     <span> Utilisateurs </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
-                <a href="{{route('third', ['apps', 'chat', 'chat'])}}" class="side-nav-link">
+                <a href="{{route('roles')}}" class="side-nav-link">
                     <i class="uil-cog"></i>
                     <span> Rôles </span>
                 </a>
