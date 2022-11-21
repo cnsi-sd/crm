@@ -2,8 +2,12 @@
 
 namespace App\Models\User;
 
+use App\Helpers\Builder\Table\TableColumnBuilder;
+use App\Enums\ColumnTypeEnum;
+use App\Enums\FixedWidthEnum;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,4 +58,66 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public static function getTableColumns(): array
+    {
+        $columns = [];
+
+        $columns[] = TableColumnBuilder::id()
+            ->setSearchable(false)
+            ->setSortable(false);
+
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.user.name'))
+            ->setType(ColumnTypeEnum::TEXT)
+            ->setKey('name')
+            ->setSortable(false);
+
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.user.email'))
+            ->setType(ColumnTypeEnum::TEXT)
+            ->setKey('email')
+            ->setSortable(false);
+
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(trans_choice('app.role.role', 2))
+            ->setType(ColumnTypeEnum::SELECT)
+            ->setOptions(Role::getRolesNames())
+            ->setCallback(function (User $user) {
+                return $user->role->name;
+            })
+            ->setKey('role_id')
+            ->setSortable(false);
+
+        $columns[] = TableColumnBuilder::boolean()
+            ->setFixedWidth(FixedWidthEnum::XL)
+            ->setLabel(__('app.user.active'))
+            ->setKey('active')
+            ->setSortable(false);
+
+        $columns[] = TableColumnBuilder::actions()
+            ->setCallback(function (User $user) {
+                return view('settings.permissions.users.inline_table_actions')
+                    ->with('user', $user);
+            });
+
+        return $columns;
+    }
+
+    public function isAdmin(): bool
+    {
+        /** get the user role */
+        $role = Role::getById($this->role_id);
+
+        if ($role->name == "admin") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
