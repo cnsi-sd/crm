@@ -10,28 +10,19 @@ use App\Models\Ticket\Ticket;
 use DateTime;
 use Exception;
 use Illuminate\Console\Command;
-use Mirakl\MMP\Common\Domain\Collection\Message\Thread\ThreadRecipientCollection;
 use Mirakl\MMP\Common\Domain\Message\Thread\Thread;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
-use Mirakl\MMP\Common\Domain\Message\Thread\ThreadRecipient;
-use Mirakl\MMP\Common\Domain\Message\Thread\ThreadReplyMessageInput;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadTopic;
-use Mirakl\MMP\Common\Request\Message\ThreadReplyRequest;
 use Mirakl\MMP\OperatorShop\Request\Message\GetThreadsRequest;
 use Mirakl\MMP\Shop\Client\ShopApiClient;
 
-class ShowRoomPriveeImportMessages extends Command
+abstract class MiraklImportMessage extends Command
 {
 
-    private ShopApiClient $client;
+    public ShopApiClient $client;
 
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
-
-    protected $signature = 'showroom:import:messages';
-    protected $description = 'import ShowRoom privée message';
-
-    protected $channelId = 1;
 
     protected static $_alreadyImportedMessages;
 
@@ -78,17 +69,6 @@ class ShowRoomPriveeImportMessages extends Command
         }
     }
 
-    private function initApiClient(): ShopApiClient
-    {
-        $this->client = new ShopApiClient(
-            env('SHOWROOM_API_URL'),
-            env('SHOWROOM_API_KEY'),
-            env('SHOWROOM_API_SHOP_ID'),
-        );
-        $this->client->addOption('connect_timeout', self::HTTP_CONNECT_TIMEOUT);
-        return $this->client;
-    }
-
     private function getMarketplaceOrderIdFromThreadEntities($entityIterator)
     {
         if ($entityIterator->current()->getType() == 'MMP_ORDER')
@@ -133,13 +113,13 @@ class ShowRoomPriveeImportMessages extends Command
             $message = Message::firstOrCreate([
                 'channel_message_number' => $api_message->getId(),
             ],
-            [
-                'thread_id' => $thread_id,
-                'user_id' => 1, // TODO : null
-                'channel_message_number' => $api_message->getId(),
-                'author_type' => TicketMessageAuthorType::MESSAGE_OPERATEUR, // TODO : à faire (opérateur / client)
-                'content' => strip_tags($api_message->getBody()),
-            ],
+                [
+                    'thread_id' => $thread_id,
+                    'user_id' => 1, // TODO : null
+                    'channel_message_number' => $api_message->getId(),
+                    'author_type' => TicketMessageAuthorType::MESSAGE_OPERATEUR, // TODO : à faire (opérateur / client)
+                    'content' => strip_tags($api_message->getBody()),
+                ],
             );
         }
         return $message;
@@ -164,4 +144,5 @@ class ShowRoomPriveeImportMessages extends Command
     {
         self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
     }
+
 }
