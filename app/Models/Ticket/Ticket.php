@@ -54,8 +54,8 @@ class Ticket extends Model
             [
                 'channel_id' => $channel->id,
                 'order_id' => $order->id,
-                'state' => TicketState::STATE_ATTENTE_ADMIN,
-                'priority' => TicketPriority::TICKET_PRIORITE_1,
+                'state' => TicketState::WAIT_ADMIN,
+                'priority' => TicketPriority::PRIORITY_1,
                 'deadline' => Carbon::now()->addHours(24), // TODO : JJ ou J+1
                 'user_id' => User::getUserByChannel($channel)->user_id,
             ],
