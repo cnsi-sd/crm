@@ -6,7 +6,7 @@ use App\Enums\AbstractEnum;
 
 abstract class TicketState extends AbstractEnum
 {
-    const STATE_ATTENTE_CLIENT      = "attente client";
-    const STATE_ATTENTE_ADMIN       = "attente admin";
-    const STATE_FERME               = "fermé";
+    const STATE_ATTENTE_CLIENT      = "ATTENTE CLIENT";
+    const STATE_ATTENTE_ADMIN       = "ATTENTE ADMIN";
+    const STATE_FERME               = "FERMÉE";
 }

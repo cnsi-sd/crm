@@ -6,9 +6,9 @@ use App\Enums\AbstractEnum;
 
 abstract class TicketMessageAuthorType extends AbstractEnum
 {
-    const MESSAGE_ADMIN         = "admin";
-    const MESSAGE_OPERATEUR     = "operateur";
-    const MESSAGE_CLIENT        = "client";
-    const MESSAGE_SYSTEME       = "systeme";
-    const MESSAGE_API           = "api";
+    const MESSAGE_ADMIN         = "ADMIN";
+    const MESSAGE_OPERATEUR     = "OPERATEUR";
+    const MESSAGE_CLIENT        = "CLIENT";
+    const MESSAGE_SYSTEME       = "SYSTEME";
+    const MESSAGE_API           = "API";
 }

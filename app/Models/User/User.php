@@ -5,10 +5,12 @@ namespace App\Models\User;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Enums\ColumnTypeEnum;
 use App\Enums\FixedWidthEnum;
+use App\Models\Channel\Channel;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -68,6 +70,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function channel_users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
     public static function getTableColumns(): array
     {
         $columns = [];
@@ -123,5 +130,15 @@ class User extends Authenticatable
         } else {
             return false;
         }
+    }
+
+    public static function getUserByChannel(Channel $channel): User
+    {
+        //TODO : mapping Channel X User
+        return User::query()
+            ->select('user_id')
+            ->join('channel_users', 'channel_users.user_id', 'users.id')
+            ->where('channel_users.channel_id', $channel->id)
+            ->first();
     }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Models\Ticket;
 
+use App\Enums\Ticket\TicketPriority;
+use App\Enums\Ticket\TicketState;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\User\User;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -41,18 +44,22 @@ class Ticket extends Model
         'updated_at'
     ];
 
-    public static function createTicket(Order $order, int $channelId, string $state, string $priority, $deadline, int $user)
+    public static function getTicket(Order $order, Channel $channel)
     {
-        return Ticket::firstOrCreate([
-            'order_id' => $order->id,
-        ], [
-            'channel_id' => $channelId,
-            'order_id' => $order->id,
-            'state' => $state,
-            'priority' => $priority,
-            'deadline' => $deadline,
-            'user_id' => $user
-        ]);
+        return Ticket::firstOrCreate(
+            [
+                'order_id' => $order->id,
+                'channel_id' => $channel->id,
+            ],
+            [
+                'channel_id' => $channel->id,
+                'order_id' => $order->id,
+                'state' => TicketState::STATE_ATTENTE_ADMIN,
+                'priority' => TicketPriority::TICKET_PRIORITE_1,
+                'deadline' => Carbon::now()->addHours(24), // TODO : JJ ou J+1
+                'user_id' => User::getUserByChannel($channel)->user_id,
+            ],
+        );
     }
 
     public function threads(): HasMany

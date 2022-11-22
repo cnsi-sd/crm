@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('state');
             $table->string('priority');
-            $table->date('deadline');
-            $table->date('delivery_date')->nullable();
+            $table->dateTime('deadline');
+            $table->dateTime('delivery_date')->nullable();
             $table->string('direct_customer_email')->nullable();
             $table->timestamps();
         });

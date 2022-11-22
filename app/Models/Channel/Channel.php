@@ -4,6 +4,7 @@ namespace App\Models\Channel;
 
 
 use App\Models\Ticket\Ticket;
+use App\Models\User\Channel_Users;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -32,5 +33,10 @@ class Channel extends Model
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function channel_users(): HasMany
+    {
+        return $this->hasMany(Channel_Users::class);
     }
 }

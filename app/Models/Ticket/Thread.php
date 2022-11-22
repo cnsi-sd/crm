@@ -34,6 +34,25 @@ class Thread extends Model
         'updated_at'
     ];
 
+    public static function getThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue)
+    {
+        return Thread::query()
+            ->join('tickets', 'tickets.id', 'ticket_threads.ticket_id')
+            ->where('ticket_threads.channel_thread_number', $channel_thread_number)
+            ->where('tickets.channel_id', $ticket->channel_id)
+            ->firstOrCreate(
+                [
+                    'channel_thread_number' => $channel_thread_number,
+                ],
+                [
+                    'ticket_id' => $ticket->id,
+                    'channel_thread_number' => $channel_thread_number,
+                    'name'=> $name,
+                    'customer_issue' => $customer_issue,
+                ],
+            );
+    }
+
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);

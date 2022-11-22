@@ -35,6 +35,9 @@ Artisan::command('inspire', function () {
     $channel = new App\Models\Channel\Channel();
     $channel->name = "showroomprivee.com";
     $channel->save();
+    $channel2 = new App\Models\Channel\Channel();
+    $channel2->name = "laposte.fr";
+    $channel2->save();
     $channel1 = \App\Models\Channel\Channel::find(1);
 
     /*$order = new App\Models\Channel\Order();
