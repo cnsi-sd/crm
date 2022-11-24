@@ -14,9 +14,9 @@
 
             <div class="content-page">
                 <div class="content">
-                    
+
                     @include('layouts.shared/horizontal-nav')
-                    
+                    @include('layouts.parts.breadcrumb')
                     @yield('content')
 
                 </div>

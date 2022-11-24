@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "Dashboard"])
+@extends('layouts.horizontal', ["page_title"=> "Dashboard"])
 
 @section('css')
 <!-- third party css -->

@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> trans_choice('app.user.user', 2) ])
+@extends('layouts.horizontal', ["page_title"=> trans_choice('app.user.user', 2) ])
 
 @section('content')
     <div class="container-fluid">

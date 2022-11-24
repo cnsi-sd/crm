@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "Datatables"])
+@extends('layouts.horizontal', ["page_title"=> "Datatables"])
 
 @section('css')
 <!-- third party css -->
@@ -568,8 +568,8 @@
                                                                     &lt;th&gt;Salary&lt;/th&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/thead&gt;
-                                                        
-                                                        
+
+
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td&gt;Tiger Nixon&lt;/td&gt;
@@ -1136,8 +1136,8 @@
                                                                     &lt;th&gt;Salary&lt;/th&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/thead&gt;
-                                                        
-                                                        
+
+
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td&gt;Tiger Nixon&lt;/td&gt;
@@ -1699,8 +1699,8 @@
                                                                     &lt;th&gt;Salary&lt;/th&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/thead&gt;
-                                                        
-                                                        
+
+
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td&gt;Tiger Nixon&lt;/td&gt;
@@ -2244,7 +2244,7 @@
                                                                     &lt;th&gt;Salary&lt;/th&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/thead&gt;
-                                                        
+
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td&gt;Tiger Nixon&lt;/td&gt;
@@ -2789,8 +2789,8 @@
                                                                     &lt;th&gt;Salary&lt;/th&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/thead&gt;
-                                                        
-                                                        
+
+
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td&gt;Tiger Nixon&lt;/td&gt;
@@ -3533,7 +3533,7 @@
                                                                     &lt;td&gt;g.winters@datatables.net&lt;/td&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/tbody&gt;
-                                                        &lt;/table&gt; 
+                                                        &lt;/table&gt;
                                                     </span>
                                                 </pre> <!-- end highlight-->
                         </div> <!-- end preview code-->
@@ -4073,7 +4073,7 @@
                                                                     &lt;th&gt;E-mail&lt;/th&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/thead&gt;
-                                                        
+
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td&gt;Tiger Nixon&lt;/td&gt;
@@ -4626,7 +4626,7 @@
                                                                     &lt;th&gt;Salary&lt;/th&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/thead&gt;
-                                                        
+
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td&gt;Tiger Nixon&lt;/td&gt;
@@ -4645,7 +4645,7 @@
                                                                     &lt;td&gt;$170,750&lt;/td&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/tbody&gt;
-                                                        &lt;/table&gt;  
+                                                        &lt;/table&gt;
                                                     </span>
                                                 </pre> <!-- end highlight-->
                         </div> <!-- end preview code-->
@@ -5170,7 +5170,7 @@
                                                                     &lt;th&gt;Salary&lt;/th&gt;
                                                                 &lt;/tr&gt;
                                                             &lt;/thead&gt;
-                                                        
+
                                                             &lt;tbody&gt;
                                                                 &lt;tr&gt;
                                                                     &lt;td&gt;Tiger Nixon&lt;/td&gt;

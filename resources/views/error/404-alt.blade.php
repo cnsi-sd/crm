@@ -1,4 +1,4 @@
-@extends('layouts.vertical', ["page_title"=> "Error 404"])
+@extends('layouts.horizontal', ["page_title"=> "Error 404"])
 
 @section('content')
 
