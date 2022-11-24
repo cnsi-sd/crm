@@ -6,6 +6,9 @@ use App\Models\Settings\ProductConfiguration;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
+Breadcrumbs::for('any', function (BreadcrumbTrail $trail) {
+});
+
 Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.home'), route('home'));
 });
