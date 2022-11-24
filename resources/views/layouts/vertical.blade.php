@@ -18,7 +18,7 @@
         <div class="content-page">
             <div class="content">
                 @include('layouts.shared/topbar')
-
+                @include('layouts.parts.breadcrumb')
                 @yield('content')
 
             </div>
