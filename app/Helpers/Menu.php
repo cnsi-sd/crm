@@ -13,7 +13,7 @@ abstract class Menu
                 'icon' => 'uil-home-alt',
             ],
             [
-                'text' => __('app.navbar.advanced'),
+                'text' => __('app.navbar.settings'),
                 'icon' => 'uil-cog',
                 'ref' => 'advanced',
                 'sub_items' => [
