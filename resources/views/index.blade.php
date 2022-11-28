@@ -1,10 +1,7 @@
 @extends('layouts.horizontal', ["page_title"=> "Dashboard"])
 
 @section('css')
-<!-- third party css -->
-<link href="{{asset('assets/libs/admin-resources/admin-resources.min.css')}}" rel="stylesheet" type="text/css">
-</link>
-<!-- third party css end -->
+
 @endsection
 
 @section('content')
@@ -26,12 +23,5 @@
 @endsection
 
 @section('script-bottom')
-<!-- third party js -->
-<script src="{{asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
-<script src="{{asset('assets/libs/admin-resources/admin-resources.min.js')}}"></script>
-<!-- third party js ends -->
 
-<!-- demo app -->
-<script src="{{asset('assets/js/pages/demo.dashboard.js')}}"></script>
-<!-- end demo js-->
 @endsection

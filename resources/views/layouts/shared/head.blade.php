@@ -10,5 +10,5 @@
 @yield('css')
 
 <!-- App css -->
-<link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style" />
+<link href="{{ Vite::asset('resources/scss/icons.scss') }}" rel="stylesheet" type="text/css" />
+<link href="{{ Vite::asset('resources/scss/app.scss') }}" rel="stylesheet" type="text/css" id="light-style" />

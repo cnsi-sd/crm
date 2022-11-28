@@ -5,10 +5,10 @@
         <!-- LOGO -->
         <a href="" class="topnav-logo">
             <span class="topnav-logo-lg">
-                <img src="{{asset('assets/images/logo-light.png')}}" alt="" height="16">
+                <img src="{{ Vite::asset('resources/images/logo-light.png') }}" alt="" height="16">
             </span>
             <span class="topnav-logo-sm">
-                <img src="{{asset('assets/images/logo_sm_dark.png')}}" alt="" height="16">
+                <img src="{{ Vite::asset('resources/images/logo_sm_dark.png') }}" alt="" height="16">
             </span>
         </a>
 
@@ -34,7 +34,7 @@
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <span class="account-user-avatar">
-                        <img src="{{asset('assets/images/users/avatar.png')}}" alt="user-image" class="rounded-circle">
+                        <img src="{{ Vite::asset('resources/images/users/avatar.png') }}" alt="user-image" class="rounded-circle">
                     </span>
                     <span>
                     <span class="account-user-name">{{ Auth::user()->name }}</span>
