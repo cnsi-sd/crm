@@ -1,7 +1,7 @@
 <?php
 return [
     /** Global */
-    
+
     'yes' => 'Oui',
     'no' => 'Non',
     'home' => 'Accueil',
@@ -9,6 +9,16 @@ return [
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'logout' => 'Déconnexion',
+    'search' => 'Rechercher',
+    'username' => 'Nom d\'utilisateur',
+    'password' => 'Mot de passe',
+    'enter_email' => 'Saisir votre email',
+    'enter_password' => 'Saisir votre mot de passe',
+    'enter_username' => 'Saisir votre identifiant',
+    'password_confirmation' => 'Confirmation du mot de passe',
+    'enter_password_confirmation' => 'Confirmer votre mot de passe',
+    'email' => 'Email',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -51,6 +61,26 @@ return [
         'password_help' => 'Longueur minimum : 8 - Caractères requis : Majuscule, Minuscule, Chiffre, Symbole',
         'my_account' => 'Mon compte',
         'my_informations' => 'Mes informations',
+    ],
+
+    'login' => [
+        'login' => 'Connexion',
+        'sign_in' => 'Identification',
+        'enter_email_and_password' => 'Saisir votre adresse email et votre mot de passe pour vous connecter.',
+        'forgot_your_password' => 'Mot de passe oublié ?',
+        'remember_me' => 'Se souvenir de moi',
+    ],
+
+    'recover_password' => [
+        'recover_password' => 'Récupérer mot de passe',
+        'reset_password' => 'Réinitialiser le mot de passe',
+        'enter_email_reset_password' => 'Saisir votre adresse email afin de recevoir les instructions pour réinitialiser votre mot de passe',
+        'back_to' => 'Revenir à la',
+        'login' => 'Connexion',
+    ],
+
+    'reset_password' => [
+        'reset_password' => 'Réinitialiser mot de passe',
     ],
 
 ];

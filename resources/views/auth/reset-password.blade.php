@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('layouts.shared/head', ["page_title"=> "Reset Password"] )
+    @include('layouts.shared/head', ["page_title"=> __('app.reset_password.reset_password')] )
 </head>
 
 <body class="loading authentication-bg" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
@@ -41,14 +41,14 @@
                                 <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
                                 <div class="mb-3">
-                                    <label for="emailaddress" class="form-label">Email Address</label>
-                                    <input class="form-control" type="email" name="email" id="emailaddress" required placeholder="Enter your email">
+                                    <label for="emailaddress" class="form-label">{{__('app.email')}}</label>
+                                    <input class="form-control" type="email" name="email" id="emailaddress" required placeholder="{{__('app.enter_email')}}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
+                                    <label for="password" class="form-label">{{__('app.password')}}</label>
                                     <div class="input-group input-group-merge">
-                                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password">
+                                        <input type="password" id="password" name="password" class="form-control" placeholder="{{__('app.enter_password')}}">
                                         <div class="input-group-text" data-password="false">
                                             <span class="password-eye"></span>
                                         </div>
@@ -56,18 +56,19 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="password_confirmation" class="form-label">Password Confirmation</label>
+                                    <label for="password_confirmation" class="form-label">{{__('app.password_confirmation')}}</label>
                                     <div class="input-group input-group-merge">
-                                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Enter your password confirmation">
+                                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="{{__('app.enter_password_confirmation')}}">
                                         <div class="input-group-text" data-password="false">
                                             <span class="password-eye"></span>
                                         </div>
                                     </div>
+                                    <div class="form-text">{{ __('app.user.password_help') }}</div>
                                 </div>
 
 
                                 <div class="mb-3 text-center">
-                                    <button class="btn btn-primary" type="submit"> Reset Password </button>
+                                    <button class="btn btn-primary" type="submit">{{__('app.reset_password.reset_password')}}</button>
                                 </div>
 
                             </form>
@@ -82,8 +83,6 @@
         <!-- end container -->
     </div>
     <!-- end page -->
-
-    @include('layouts.shared/footer-3')
 
     @include('layouts.shared/footer-script')
 

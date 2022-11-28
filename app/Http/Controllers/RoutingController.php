@@ -19,7 +19,6 @@ class RoutingController extends Controller
      */
     public function index()
     {
-        return view('landing');
     }
 
     /**
