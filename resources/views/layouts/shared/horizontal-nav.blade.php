@@ -16,7 +16,7 @@
 
             <li class="dropdown notification-list d-xl-none">
                 <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="dripicons-search noti-icon"></i>
+                    <i class="uil-search noti-icon"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
                     <form class="p-3">
@@ -27,7 +27,7 @@
 
             <li class="notification-list">
                 <a class="nav-link end-bar-toggle" href="javascript: void(0);">
-                    <i class="dripicons-gear noti-icon"></i>
+                    <i class="uil-cog noti-icon"></i>
                 </a>
             </li>
 

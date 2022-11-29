@@ -3,7 +3,7 @@
 
     <div class="rightbar-title">
         <a href="javascript:void(0);" class="end-bar-toggle float-end">
-            <i class="dripicons-cross noti-icon"></i>
+            <i class="uil-times noti-icon"></i>
         </a>
         <h5 class="m-0">Settings</h5>
     </div>
