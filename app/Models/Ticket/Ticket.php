@@ -2,8 +2,8 @@
 
 namespace App\Models\Ticket;
 
-use App\Enums\Ticket\TicketPriority;
-use App\Enums\Ticket\TicketState;
+use App\Enums\Ticket\TicketPriorityEnum;
+use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\User\User;
@@ -33,6 +33,8 @@ use Illuminate\Support\Facades\Date;
 
 class Ticket extends Model
 {
+    protected $table = 'tickets';
+
     protected $fillable = [
         'channel_id',
         'order_id',
@@ -54,10 +56,10 @@ class Ticket extends Model
             [
                 'channel_id' => $channel->id,
                 'order_id' => $order->id,
-                'state' => TicketState::WAIT_ADMIN,
-                'priority' => TicketPriority::PRIORITY_1,
+                'state' => TicketStateEnum::WAITING_ADMIN,
+                'priority' => TicketPriorityEnum::P1,
                 'deadline' => Carbon::now()->addHours(24), // TODO : JJ ou J+1
-                'user_id' => User::getUserByChannel($channel)->user_id,
+                'user_id' => $channel->user_id,
             ],
         );
     }

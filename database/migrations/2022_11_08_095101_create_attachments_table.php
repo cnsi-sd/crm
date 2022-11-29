@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_threads_messages_attachments', function (Blueprint $table) {
+        Schema::create('ticket_thread_message_attachments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('message_id')->constrained('ticket_threads_messages');
+            $table->foreignId('message_id')->constrained('ticket_thread_messages');
             $table->string('filename');
             $table->timestamps();
         });
@@ -28,6 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ticket_threads_messages_attachments');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('ticket_thread_message_attachments');
     }
 };

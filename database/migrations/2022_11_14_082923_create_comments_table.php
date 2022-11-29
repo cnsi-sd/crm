@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_comments', function (Blueprint $table) {
+        Schema::create('ticket_thread_comments', function (Blueprint $table) {
             $table->id();
             $table->foreignId("thread_id")->constrained('ticket_threads');
             $table->foreignId('user_id')->constrained('users');
@@ -31,6 +31,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ticket_comments');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('ticket_thread_comments');
     }
 };

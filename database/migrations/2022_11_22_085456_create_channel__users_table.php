@@ -28,6 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('channel__users');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('channel_users');
     }
 };

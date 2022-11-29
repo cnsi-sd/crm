@@ -29,7 +29,7 @@ class Message extends Model
     /**
      * @var false|mixed
      */
-    protected $table = 'ticket_threads_messages';
+    protected $table = 'ticket_thread_messages';
 
     protected $fillable = [
       'thread_id',

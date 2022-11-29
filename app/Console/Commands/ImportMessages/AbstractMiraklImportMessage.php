@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\ImportMessages;
 
-use App\Enums\Ticket\TicketMessageAuthorType;
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
@@ -10,21 +10,27 @@ use App\Models\Ticket\Ticket;
 use DateTime;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\Thread;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadTopic;
 use Mirakl\MMP\OperatorShop\Request\Message\GetThreadsRequest;
 use Mirakl\MMP\Shop\Client\ShopApiClient;
 
-abstract class MiraklImportMessage extends Command
+abstract class AbstractMiraklImportMessage extends Command
 {
-
     public ShopApiClient $client;
 
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
 
     protected static $_alreadyImportedMessages;
+
+    protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
+    protected $description = 'Importing competing offers from Mirakl.';
+
+    abstract protected function getChannelName(): string;
+    abstract protected function getCredentials(): array;
 
     public function handle()
     {
@@ -47,12 +53,13 @@ abstract class MiraklImportMessage extends Command
             $request->setPageToken($nextToken);
         } while ($nextToken);
 
-
         /** @var Thread $miraklThread */
         foreach ($threads as $miraklThread) {
             try {
+                DB::beginTransaction();
+
                 $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
-                $channel = Channel::find(1);
+                $channel = Channel::getByName($this->getChannelName());
                 $order = Order::getOrder($mpOrderId, $channel);
                 $ticket = Ticket::getTicket($order, $channel);
 
@@ -63,10 +70,31 @@ abstract class MiraklImportMessage extends Command
                 $thread = \App\Models\Ticket\Thread::getThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue(), '');
 
                 $this->importMessageByThread($thread, $messages);
+
+                DB::commit();
             } catch (Exception $e) {
-                echo 'Error : ' . $e->getMessage() . "\n";
+                $errorOutput = 'An error has occurred. Rolling back';
+                $this->error($errorOutput);
+                DB::rollBack();
+                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+                return;
             }
         }
+    }
+
+    /**
+     * @return ShopApiClient
+     */
+    protected function initApiClient(): ShopApiClient
+    {
+        $credentials = $this->getCredentials();
+        $this->client = new ShopApiClient(
+            $credentials['API_URL'],
+            $credentials['API_KEY'],
+            $credentials['API_SHOP_ID'],
+        );
+        $this->client->addOption('connect_timeout', self::HTTP_CONNECT_TIMEOUT);
+        return $this->client;
     }
 
     private function getMarketplaceOrderIdFromThreadEntities($entityIterator)
@@ -82,18 +110,26 @@ abstract class MiraklImportMessage extends Command
 
     const FROM_SHOP_TYPE = 'SHOP_USER';
 
-    private static function isShopUser($type): bool
+    /**
+     * @param string $type
+     * @return bool
+     */
+    private static function isNotShopUser(string $type): bool
     {
         return self::FROM_SHOP_TYPE !== $type;
     }
 
-
+    /**
+     * @param \App\Models\Ticket\Thread $thread
+     * @param  $messages
+     * @return void
+     */
     private function importMessageByThread(\App\Models\Ticket\Thread $thread, $messages)
     {
         foreach ($messages as $message) {
             $imported_id = $message->getId();
             if (!$this->isMessagesImported($imported_id)) {
-                $this->convertApiResponseToModel($message, $thread->id);
+                $this->convertApiResponseToMessage($message, $thread);
                 $this->addImportedMessageChannelNumber($imported_id);
             }
         }
@@ -101,23 +137,25 @@ abstract class MiraklImportMessage extends Command
 
     /**
      * @param ThreadMessage $api_message
-     * @param $thread_id
+     * @param \App\Models\Ticket\Thread $thread
      * @return Message
      */
-    public static function convertApiResponseToModel($api_message, $thread_id): Message
+    public static function convertApiResponseToMessage(ThreadMessage $api_message, \App\Models\Ticket\Thread $thread): Message
     {
-        $isShopUser = self::isShopUser($api_message->getFrom()->getType());
+        $authorType = $api_message->getFrom()->getType();
+
+        $isShopUser = self::isNotShopUser($authorType);
 
         $message = new Message();
-        if (!$isShopUser) {
+        if ($isShopUser) {
             $message = Message::firstOrCreate([
                 'channel_message_number' => $api_message->getId(),
             ],
                 [
-                    'thread_id' => $thread_id,
-                    'user_id' => 1, // TODO : null
+                    'thread_id' => $thread->id,
+                    'user_id' => null,
                     'channel_message_number' => $api_message->getId(),
-                    'author_type' => TicketMessageAuthorType::MESSAGE_OPERATEUR, // TODO : à faire (opérateur / client)
+                    'author_type' => self::getAuthorType($authorType),
                     'content' => strip_tags($api_message->getBody()),
                 ],
             );
@@ -125,14 +163,30 @@ abstract class MiraklImportMessage extends Command
         return $message;
     }
 
+    private static function getAuthorType(string $authorType){
+        switch ($authorType){
+            case('CUSTOMER_USER'):
+                return TicketMessageAuthorTypeEnum::CUSTOMER;
+                break;
+            default:
+                return TicketMessageAuthorTypeEnum::OPERATEUR;
+                break;
+        }
+    }
+
+    /**
+     * @param string $channel_message_number
+     * @return bool
+     * @throws \Exception
+     */
     private function isMessagesImported(string $channel_message_number): bool
     {
         if (!self::$_alreadyImportedMessages) {
             self::$_alreadyImportedMessages = Message::query()
                 ->select('channel_message_number')
-                ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_threads_messages.thread_id') // thread
+                ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
                 ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
-                ->where('channel_id', $this->channelId)
+                ->where('channel_id', Channel::getByName($this->getChannelName())->id)
                 ->get()
                 ->pluck('channel_message_number', 'channel_message_number')
                 ->toArray();
@@ -140,6 +194,10 @@ abstract class MiraklImportMessage extends Command
         return isset(self::$_alreadyImportedMessages[$channel_message_number]);
     }
 
+    /**
+     * @param string $channel_message_number
+     * @return void
+     */
     private function addImportedMessageChannelNumber(string $channel_message_number)
     {
         self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;

@@ -5,13 +5,12 @@ namespace App\Models\Ticket;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use League\CommonMark\Node\Inline\Text;
 
 /**
  * @property int $id
  * @property int $thread_id
  * @property int $user_id
- * @property Text $content
+ * @property string $content
  * @property boolean $displayed
  * @property string $type
  * @property Datetime $created_at
@@ -22,7 +21,8 @@ use League\CommonMark\Node\Inline\Text;
 
 class Comment extends Model
 {
-    protected $table = 'ticket_comments';
+    protected $table = 'ticket_thread_comments';
+
     protected $fillable = [
       'thread_id',
       'user_id',
