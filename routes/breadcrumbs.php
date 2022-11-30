@@ -19,11 +19,18 @@ Breadcrumbs::for('settings', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.settings.settings'));
 });
 
+/** Configuration */
+Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('app.configuration.configuration'));
+});
+
 /** Advanced */
 Breadcrumbs::for('permissions', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
     $trail->push(__('app.navbar.permissions'));
 });
+
 
 /** Roles */
 Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
@@ -51,4 +58,10 @@ Breadcrumbs::for('create_user', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('edit_user', function (BreadcrumbTrail $trail) {
     $trail->parent('users');
     $trail->push(trans_choice('app.user.edit', 2));
+});
+
+/** defaultAnswers */
+Breadcrumbs::for('defaultAnswers', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(__('app.configuration.defaultAnswer'));
 });

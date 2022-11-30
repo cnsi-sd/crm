@@ -24,6 +24,7 @@ return [
         'dashboard' => 'Tableau de bord',
         'settings' => 'Paramètres',
         'permissions' => 'Permissions',
+        'config' => 'Configurations'
     ],
 
     /** Settings */
@@ -69,6 +70,11 @@ return [
         'enter_email_and_password' => 'Saisir votre adresse email et votre mot de passe pour vous connecter.',
         'forgot_your_password' => 'Mot de passe oublié ?',
         'remember_me' => 'Se souvenir de moi',
+    ],
+
+    'configuration' => [
+        'defaultAnswer' => 'Message par défault',
+        'configuration' => 'Configuration',
     ],
 
     'recover_password' => [

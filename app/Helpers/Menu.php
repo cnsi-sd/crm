@@ -29,6 +29,19 @@ abstract class Menu
                     ],
                 ],
             ],
+            [
+                'text' => __('app.navbar.config'),
+                'icon' => 'uil-cog',
+                'ref' => 'advanced',
+                'sub_items' => [
+                    [
+                        'text' => trans_choice('app.configuration.defaultAnswer', 2),
+                        'route' => route('defaultAnswers'),
+                        'ref' => 'defaultAnswers'
+
+                    ]
+                ]
+            ],
         ];
 
         return $menu;
