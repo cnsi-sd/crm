@@ -13,26 +13,16 @@ class TicketCommentTypeEnum extends AbstractEnum
     const INFO_IMPORTANT    = "info_important";
     const SUMMARY           = "summary";
 
-    public function getColor(string $params){
-        switch ($params){
-            case(self::OTHERS):
-                return 'gray';
-                break;
-            case(self::EXTERNAL_CONTACT):
-                return 'green';
-                break;
-            case(self::RESPONSIBLE_INFO):
-                return 'purple';
-                break;
-            case(self::PROCESS_TO_FOLLOW):
-                return 'blue';
-                break;
-            case(self::INFO_IMPORTANT):
-                return 'red';
-                break;
-            case(self::SUMMARY):
-                return 'orange';
-                break;
-        }
+    public function getColor(string $params)
+    {
+        return match ($params)
+            {
+                self::OTHERS            => 'gray',
+                self::EXTERNAL_CONTACT  => 'green',
+                self::RESPONSIBLE_INFO  => 'purple',
+                self::PROCESS_TO_FOLLOW => 'blue',
+                self::INFO_IMPORTANT    => 'red',
+                self::SUMMARY           => 'orange'
+            };
     }
 }

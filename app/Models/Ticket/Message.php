@@ -16,7 +16,7 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
  * @property int $user_id
  * @property string $channel_message_number
  * @property string $author_type
- * @property Text $content
+ * @property string $content
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *

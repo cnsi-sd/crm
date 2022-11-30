@@ -6,6 +6,8 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Enums\ColumnTypeEnum;
 use App\Enums\FixedWidthEnum;
 use App\Models\Channel\Channel;
+use App\Models\Ticket\Message;
+use App\Models\Ticket\Thread;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
