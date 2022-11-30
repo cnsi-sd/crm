@@ -12,6 +12,12 @@
 sudo apt install php8.1 php8.1-dom php8.1-curl php8.1-bcmath php8.1-xml php8.1-mysql php8.1-gd php8.1-fpm php8.1-soap
 ```
 
+# Node.js v18.x install
+```bash
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
+sudo apt-get install -y nodejs
+```
+
 # Clone project
 ```bash
 cd /var/www/html/
