@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_threads_messages_attachments', function (Blueprint $table) {
+        Schema::create('ticket_thread_comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('message_id')->constrained('ticket_threads_messages');
-            $table->string('filename');
+            $table->foreignId("thread_id")->constrained('ticket_threads');
+            $table->foreignId('user_id')->constrained('users');
+            $table->text('content');
+            $table->boolean('displayed');
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ticket_threads_messages_attachments');
+        Schema::dropIfExists('ticket_thread_comments');
     }
 };
