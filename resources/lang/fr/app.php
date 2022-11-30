@@ -83,4 +83,8 @@ return [
         'reset_password' => 'Réinitialiser mot de passe',
     ],
 
+    'mail' => [
+        'process_error' => 'Echec d\'un processus',
+    ],
+
 ];
