@@ -1,4 +1,4 @@
-// 
+//
 // horizontal-nav.scss
 //
 
@@ -185,7 +185,7 @@ body[data-layout="topnav"] {
             display: block
         }
     }
-    
+
     .dropdown.active > a.dropdown-item {
         color: $dropdown-link-active-color;
         @include gradient-bg($dropdown-link-active-bg);
@@ -195,7 +195,7 @@ body[data-layout="topnav"] {
 @include media-breakpoint-up(xxl) {
     body[data-layout="topnav"] {
         .container-fluid {
-            max-width: 85%;
+            max-width: 100%;
         }
     }
 }
@@ -243,7 +243,7 @@ body[data-layout="topnav"] {
             .dropdown {
                 .dropdown-item {
                     color: rgba($white, 0.5);
-    
+
                     &.active, &:active {
                         color: $white;
                     }

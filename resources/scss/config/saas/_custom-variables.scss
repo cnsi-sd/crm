@@ -6,7 +6,7 @@
 $bg-leftbar: linear-gradient(135deg, #8f75da 0%, #727cf5 60%);
 $bg-leftbar-light: #ffffff;
 $bg-leftbar-dark: #313a46;
-$bg-topnav: #313a46;
+$bg-topnav: #fffff;
 
 // Deatched left sidenav
 $bg-detached-leftbar: #ffffff;
@@ -102,7 +102,7 @@ $chat-secondary-user-bg: #f1f3fa;
 
 // User authentication Background
 $auth-bg: #ffffff;
-$auth-bg-pattern-img: url("/assets/images/bg-pattern-light.svg");
+$auth-bg-pattern-img: url("/resources/images/bg-pattern-light.svg");
 
 // Apex chart
 $apex-grid-color: #f9f9fd;

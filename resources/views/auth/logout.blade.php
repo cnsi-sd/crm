@@ -18,7 +18,7 @@
                         <!-- Logo -->
                         <div class="card-header pt-4 pb-4 text-center bg-primary">
                             <a href="{{route('any', 'index')}}">
-                                <span><img src="{{asset('assets/images/logo.png')}}" alt="" height="18"></span>
+                                <span><img src="{{ Vite::asset('resources/images/logo.png') }}" alt="" height="18"></span>
                             </a>
                         </div>
 
@@ -59,7 +59,6 @@
         <!-- end container -->
     </div>
     <!-- end page -->
-    @include('layouts.shared/footer-3')
 
     @include('layouts.shared/footer-script')
 
