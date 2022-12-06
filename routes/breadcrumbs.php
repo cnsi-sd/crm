@@ -64,3 +64,7 @@ Breadcrumbs::for('all_tickets', function (BreadcrumbTrail $trail) {
     $trail->parent('tickets');
     $trail->push(trans_choice('app.ticket.all_tickets',2));
 });
+Breadcrumbs::for('user_tickets', function (BreadcrumbTrail $trail) {
+    $trail->parent('tickets');
+    $trail->push(trans_choice('app.ticket.my_tickets',2));
+});

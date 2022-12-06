@@ -2,10 +2,14 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Auth;
+
 abstract class Menu
 {
     public static function main()
     {
+        $user = Auth::user();
+
         $menu = [
             [
                 'text' => __('app.navbar.dashboard'),
@@ -21,7 +25,12 @@ abstract class Menu
                         'text' => __('app.ticket.all_tickets'),
                         'route' => route('all_tickets'),
                         'ref' => 'all_tickets',
-                    ]
+                    ],
+                    [
+                        'text' => __('app.ticket.my_tickets'),
+                        'route' => route('user_tickets',[$user->id]),
+                        'ref' => 'user_tickets',
+                    ],
                 ]
             ],
             [

@@ -87,7 +87,7 @@ class Ticket extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function getTableColumns(): array
+    public static function getTableColumns($mode = 'all'): array
     {
         $columns = [];
 
@@ -101,25 +101,29 @@ class Ticket extends Model
             ->setKey('deadline')
             ->setSortable(true);
 
-        $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.ticket.owner'))
-            ->setType(ColumnTypeEnum::SELECT)
-            ->setOptions(User::getUsersNames())
-            ->setCallback(function (Ticket $ticket) {
-                return $ticket->user->name;
-            })
-            ->setKey('user_id')
-            ->setSortable(true);
+        if ($mode != 'user') {
+            $columns[] = (new TableColumnBuilder())
+                ->setLabel(__('app.ticket.owner'))
+                ->setType(ColumnTypeEnum::SELECT)
+                ->setOptions(User::getUsersNames())
+                ->setCallback(function (Ticket $ticket) {
+                    return $ticket->user->name;
+                })
+                ->setKey('user_id')
+                ->setSortable(true);
+        }
 
-        $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.ticket.state'))
-            ->setType(ColumnTypeEnum::SELECT)
-            ->setOptions(TicketStateEnum::getTranslatedList())
-            ->setKey('state')
-            ->setSortable(true)
-            ->setCallback(function (Ticket $ticket) {
-                return TicketStateEnum::getMessage($ticket->state);
-            });
+        if ($mode != 'user') {
+            $columns[] = (new TableColumnBuilder())
+                ->setLabel(__('app.ticket.state'))
+                ->setType(ColumnTypeEnum::SELECT)
+                ->setOptions(TicketStateEnum::getTranslatedList())
+                ->setKey('state')
+                ->setSortable(true)
+                ->setCallback(function (Ticket $ticket) {
+                    return TicketStateEnum::getMessage($ticket->state);
+                });
+        }
 
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.priority'))
