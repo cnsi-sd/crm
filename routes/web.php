@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
+use App\Http\Controllers\Tickets\TicketController;
 use App\Models\User\Role;
 use App\Models\User\User;
+use App\Models\Ticket\Ticket;
 
 
 /*
@@ -26,6 +28,9 @@ Route::get('/home', function () {
 require __DIR__ . '/auth.php';
 
 Route::middleware('checkActive')->group(function() {
+    Route::prefix('tickets')->group(function() {
+       Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
+    });
     Route::prefix('settings')->group(function () {
         Route::prefix('permissions')->group(function () {
             Route::prefix('roles')->group(function () {

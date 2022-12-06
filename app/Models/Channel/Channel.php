@@ -27,6 +27,14 @@ class Channel extends Model
         'created_at',
         'updated_at'
     ];
+
+    public static function getChannelsNames(): array
+    {
+        return self::query()->orderBy('name', 'ASC')
+            ->pluck('name', 'id')
+            ->toArray();
+    }
+
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);

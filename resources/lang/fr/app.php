@@ -11,6 +11,7 @@ return [
     'edit' => 'Modifier',
     'logout' => 'Déconnexion',
     'search' => 'Rechercher',
+    'no_result' => 'Aucun résultat.',
     'username' => 'Nom d\'utilisateur',
     'password' => 'Mot de passe',
     'enter_email' => 'Saisir votre email',
@@ -19,6 +20,12 @@ return [
     'password_confirmation' => 'Confirmation du mot de passe',
     'enter_password_confirmation' => 'Confirmer votre mot de passe',
     'email' => 'Email',
+    'date' => 'Date',
+    'second' => 'seconde|secondes',
+    'minute' => 'minute|minutes',
+    'hour' => 'heure|heures',
+    'from' => 'du',
+    'to' => 'au',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -61,6 +68,17 @@ return [
         'password_help' => 'Longueur minimum : 8 - Caractères requis : Majuscule, Minuscule, Chiffre, Symbole',
         'my_account' => 'Mon compte',
         'my_informations' => 'Mes informations',
+    ],
+
+    'ticket' => [
+        'ticket' => 'Ticket|Tickets',
+        'deadline' => 'Deadline',
+        'owner' => 'Responsable',
+        'state' => 'Statut',
+        'priority' => 'Priorité',
+        'created_at' => 'Date d\'ouverture',
+        'all_tickets' => 'Tous les tickets',
+        'channel' => 'Canal de diffusion',
     ],
 
     'login' => [

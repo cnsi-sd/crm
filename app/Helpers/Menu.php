@@ -13,9 +13,21 @@ abstract class Menu
                 'icon' => 'uil-home-alt',
             ],
             [
+                'text' => trans_choice('app.ticket.ticket',2),
+                'icon' => 'uil-comment-message',
+                'ref' => 'tickets',
+                'sub_items' => [
+                    [
+                        'text' => __('app.ticket.all_tickets'),
+                        'route' => route('all_tickets'),
+                        'ref' => 'all_tickets',
+                    ]
+                ]
+            ],
+            [
                 'text' => __('app.navbar.settings'),
                 'icon' => 'uil-cog',
-                'ref' => 'advanced',
+                'ref' => 'settings',
                 'sub_items' => [
                     [
                         'text' => trans_choice('app.user.user', 2),
