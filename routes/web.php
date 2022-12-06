@@ -31,6 +31,7 @@ Route::middleware('checkActive')->group(function() {
     Route::prefix('tickets')->group(function() {
        Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
        Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
+       Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'ticket'])->name('ticket')->can('read', Ticket::class);
     });
     Route::prefix('settings')->group(function () {
         Route::prefix('permissions')->group(function () {

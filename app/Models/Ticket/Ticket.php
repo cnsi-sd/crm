@@ -148,7 +148,10 @@ class Ticket extends Model
             ->setKey('created_at')
             ->setSortable(true);
 
-        $columns[] = TableColumnBuilder::actions();
+        $columns[] = TableColumnBuilder::actions()->setCallback(function (Ticket $ticket) {
+            return view('tickets.inline_table_actions')
+                ->with('ticket', $ticket);
+        });
 
         return $columns;
     }

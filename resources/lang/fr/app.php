@@ -9,6 +9,7 @@ return [
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'display' => 'Afficher',
     'logout' => 'Déconnexion',
     'search' => 'Rechercher',
     'no_result' => 'Aucun résultat.',
