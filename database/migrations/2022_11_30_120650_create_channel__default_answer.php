@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('channel_DefaultAnswer', function (Blueprint $table) {
+        Schema::create('channel_default_answer', function (Blueprint $table) {
             $table->id();
             $table->foreignId('channel_id')->constrained('channels');
             $table->foreignId('default_answer_id')->constrained('default_answers');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('channel_DefaultAnswer');
+        Schema::dropIfExists('channel_default_answer');
     }
 };

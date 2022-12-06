@@ -75,6 +75,15 @@ return [
     'configuration' => [
         'defaultAnswer' => 'Message par défault',
         'configuration' => 'Configuration',
+        'channel' => 'Channel'
+    ],
+
+    'defaultAnswer' => [
+        'save' => 'Enregistrer le message',
+        'name' => 'Nom du message',
+        'content' => 'Contenu du message',
+        'channel' => 'Selection le(s) channel(s)',
+        'create' => 'Création de message par default',
     ],
 
     'recover_password' => [

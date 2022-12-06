@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
+ * @property DefaultAnswer $defaultAnswer
  * @property Ticket[] $tickets
  * @property Order[] $orders
  */
@@ -27,6 +28,11 @@ class Channel extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function defaultAnswer(){
+        return $this->hasMany(DefaultAnswer::class);
+    }
+
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);

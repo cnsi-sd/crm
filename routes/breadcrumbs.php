@@ -65,3 +65,13 @@ Breadcrumbs::for('defaultAnswers', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
     $trail->push(__('app.configuration.defaultAnswer'));
 });
+
+Breadcrumbs::for('create_defaultAnswer', function (BreadcrumbTrail $trail) {
+    $trail->parent('defaultAnswers');
+    $trail->push(__('app.defaultAnswer.create'));
+});
+
+Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail) {
+    $trail->parent('defaultAnswers');
+    $trail->push(__('app.defaultAnswer.create'));
+});

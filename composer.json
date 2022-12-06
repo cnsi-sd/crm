@@ -14,7 +14,8 @@
         "realrashid/sweet-alert": "^5.1.0",
         "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "^6.1",
-        "diglactic/laravel-breadcrumbs": "8.0.1"
+        "diglactic/laravel-breadcrumbs": "8.0.1",
+        "cnsi/logger": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -66,5 +67,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "ssh://git@git.cnsi-sd.net:2222/packages/logger.git"
+        }
+    ]
 }
