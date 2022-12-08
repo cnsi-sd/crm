@@ -81,6 +81,7 @@ return [
         'all_tickets' => 'Tous les tickets',
         'my_tickets' => 'Mes tickets',
         'channel' => 'Canal de diffusion',
+        'subjects' => 'Sujets',
     ],
 
     'login' => [

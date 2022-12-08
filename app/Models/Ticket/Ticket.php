@@ -113,6 +113,19 @@ class Ticket extends Model
                 ->setSortable(true);
         }
 
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.ticket.subjects'))
+            ->setType(ColumnTypeEnum::TEXT)
+            ->setCallback(function (Ticket $ticket) {
+                $displayThreads = '';
+                foreach ($ticket->threads as $thread) {
+                    $displayThreads .= $thread->name . "\n";
+                }
+                return $displayThreads;
+            })
+            ->setKey('deadline')
+            ->setSortable(true);
+
         if ($mode != 'user') {
             $columns[] = (new TableColumnBuilder())
                 ->setLabel(__('app.ticket.state'))
