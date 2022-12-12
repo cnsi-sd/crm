@@ -22,7 +22,6 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         User::class => UserPolicy::class,
         Ticket::class => TicketPolicy::class,
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**

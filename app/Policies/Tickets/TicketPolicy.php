@@ -2,7 +2,6 @@
 
 namespace App\Policies\Tickets;
 
-//use App\Enums\PermissionEnum;
 use App\Models\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

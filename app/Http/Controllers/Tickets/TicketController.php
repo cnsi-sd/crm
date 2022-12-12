@@ -16,7 +16,7 @@ class TicketController extends Controller
     public function all_tickets(Request $request): View
     {
         $query = Ticket::query();
-        $table = (new TableBuilder('tickets', $request))
+        $table = (new TableBuilder('all_tickets', $request))
             ->setColumns(Ticket::getTableColumns())
             ->setExportable(false)
             ->setQuery($query);
@@ -27,8 +27,11 @@ class TicketController extends Controller
 
     public function user_tickets(Request $request, ?User $user): View
     {
-        $query = Ticket::query()->where('user_id', $user->id)->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER]);
-        $table = (new TableBuilder('tickets', $request))
+        $query = Ticket::query()
+            ->where('user_id', $user->id)
+            ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER]);
+
+        $table = (new TableBuilder('user_tickets', $request))
             ->setColumns(Ticket::getTableColumns('user'))
             ->setExportable(false)
             ->setQuery($query);
