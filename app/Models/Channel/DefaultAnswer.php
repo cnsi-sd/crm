@@ -33,6 +33,10 @@ class DefaultAnswer extends Model
         'deleted_at'
     ];
 
+    public function isChannelSelected(Channel $channel) {
+        return $this->channels->keyBy('id')->has($channel->id);
+    }
+
     public function channels(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Channel::class, 'channel_default_answer', 'default_answer_id','channel_id');
@@ -45,21 +49,18 @@ class DefaultAnswer extends Model
         $columns[] = TableColumnBuilder::id()
             ->setSearchable(false)
             ->setSortable(false);
-
         $columns[] = (new TableColumnBuilder())
-            ->setLabel('name')
+            ->setLabel(__('app.defaultAnswer.name'))
             ->setType(ColumnTypeEnum::TEXT)
             ->setKey('name')
             ->setSortable(false);
-
         $columns[] = (new TableColumnBuilder())
-            ->setLabel('content')
+            ->setLabel(__('app.defaultAnswer.content'))
             ->setType(ColumnTypeEnum::TEXT)
             ->setKey('content')
             ->setSortable(false);
-
         $columns[] = (new TableColumnBuilder())
-            ->setLabel('channel')
+            ->setLabel(__('app.defaultAnswer.channel'))
             ->setType(ColumnTypeEnum::SELECT)
             ->setCallback(function (DefaultAnswer $defaultAnswer){
                 $channels = $defaultAnswer->channels;
@@ -71,14 +72,22 @@ class DefaultAnswer extends Model
             })
             ->setKey('name')
             ->setSortable(false);
-
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (DefaultAnswer $defaultAnswer) {
                 return view('configuration.defaultAnswer.inline_table_actions')
                     ->with('defaultAnswer', $defaultAnswer);
             });
+        $columns[] = TableColumnBuilder::actions()
+            ->setCallback(function (DefaultAnswer $defaultAnswer) {
+                return view('configuration.defaultAnswer.inline_table_actions_delete')
+                    ->with('defaultAnswer', $defaultAnswer);
+            });
 
         return $columns;
+    }
+
+    public function softDeleted(){
+        return $this->delete();
     }
 
 }

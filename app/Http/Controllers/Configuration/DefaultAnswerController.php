@@ -38,12 +38,6 @@ class DefaultAnswerController extends Controller
         return view('configuration.defaultAnswer.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Routing\Redirector|RedirectResponse
-     */
     public function store(Request $request)
     {
         DefaultAnswer::create([
@@ -53,23 +47,13 @@ class DefaultAnswerController extends Controller
         return redirect('/configuration/default_response');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     public function edit(Request $request, ?DefaultAnswer $defaultAnswer)
     {
         if (!$defaultAnswer)
             $defaultAnswer = new DefaultAnswer();
 
-        if ($request->exists('save_default_answer')) {
+        if ($request->exists('save_default_answer'))
+        {
             $this->save_default_answer($request, $defaultAnswer);
             alert::toastSuccess(__('app.defaultAnswer.save'));
             return redirect()->route('defaultAnswers');
@@ -93,23 +77,27 @@ class DefaultAnswerController extends Controller
 
         // Save
         $default_Answer->save();
-
         $defaultAnswerScript = $request->toArray()['channel'];
+        $defaultAnswerDb = [];
 
-        foreach ($default_Answer->channels as $channel){
+        foreach ($default_Answer->channels as $channel)
+        {
             $defaultAnswerDb[] = $channel->id;
         }
 
         $deleteAnswers = array_diff($defaultAnswerDb, $defaultAnswerScript);
         $insertAnswers = array_diff($defaultAnswerScript, $defaultAnswerDb);
 
-        foreach ($deleteAnswers as $delete){
+        foreach ($deleteAnswers as $delete)
+        {
             DB::table('channel_default_answer')
                 ->where('channel_id', $delete)
+                ->where('default_answer_id', $default_Answer->id)
                 ->delete();
         }
 
-        foreach ($insertAnswers as $insert){
+        foreach ($insertAnswers as $insert)
+        {
             DB::table('channel_default_answer')
                 ->insert([
                     "channel_id" => $insert,
@@ -118,28 +106,14 @@ class DefaultAnswerController extends Controller
                     "updated_at" => now(),
                 ]);
         }
-    } //
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete(Request $request, ?DefaultAnswer $defaultAnswer)
     {
-        //
+        if($defaultAnswer->softDeleted()){
+            alert::toastSuccess(__('app.defaultAnswer.delete'));
+        }
+        return redirect()->route('defaultAnswers');
     }
+
 }

@@ -9,7 +9,7 @@
 
                 {{--@can('edit', \App\Models\Channel\Default_Answer::class)--}}
                     <a href="{{ route('create_defaultAnswer') }}" class="btn btn-outline-primary btn-sm float-end">
-                        {{ 'new'}}
+                        {{ trans_choice('app.configuration.new', 2) }}
                     </a>
                 {{--@endcan--}}
 
@@ -19,4 +19,5 @@
             </div>
         </div>
     </div>
+
 @endsection

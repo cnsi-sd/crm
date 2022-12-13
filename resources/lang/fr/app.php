@@ -73,17 +73,22 @@ return [
     ],
 
     'configuration' => [
-        'defaultAnswer' => 'Message par défault',
+        'defaultAnswer' => 'Messages par défaut',
         'configuration' => 'Configuration',
-        'channel' => 'Channel'
+        'channel' => 'Channel',
+        'new' => 'Nouveau'
     ],
 
     'defaultAnswer' => [
         'save' => 'Enregistrer le message',
         'name' => 'Nom du message',
         'content' => 'Contenu du message',
-        'channel' => 'Selection le(s) channel(s)',
+        'select_channel' => 'Selection du(des) cannal(aux)',
+        'channel' => 'Cannal(aux)',
         'create' => 'Création de message par default',
+        'edit' => 'Modification de message par default',
+        'delete' => 'Suppression',
+        'messageNb' => 'Message '
     ],
 
     'recover_password' => [

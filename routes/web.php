@@ -50,6 +50,7 @@ Route::middleware('checkActive')->group(function (){
             Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_defaultAnswer');
             Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_defaultAnswer');
             Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('defaultAnswers');
+            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers');
         });
     });
 });

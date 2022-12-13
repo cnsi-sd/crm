@@ -63,7 +63,7 @@ Breadcrumbs::for('edit_user', function (BreadcrumbTrail $trail) {
 /** defaultAnswers */
 Breadcrumbs::for('defaultAnswers', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(__('app.configuration.defaultAnswer'));
+    $trail->push(__('app.configuration.defaultAnswer'), route('defaultAnswers'));
 });
 
 Breadcrumbs::for('create_defaultAnswer', function (BreadcrumbTrail $trail) {
@@ -73,5 +73,5 @@ Breadcrumbs::for('create_defaultAnswer', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail) {
     $trail->parent('defaultAnswers');
-    $trail->push(__('app.defaultAnswer.create'));
+    $trail->push(__('app.defaultAnswer.edit'));
 });
