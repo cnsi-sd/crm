@@ -79,3 +79,7 @@ File: Main Css File
 @import "vendor/jquery.toast.min";
 @import "vendor/bootstrap-timepicker.min";
 @import "vendor/jquery.bootstrap-touchspin.min";
+
+.required_field {
+    color : red;
+}

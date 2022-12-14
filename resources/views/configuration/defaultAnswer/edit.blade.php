@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    {{ isset($defaultAnswer->id) ? trans_choice('app.defaultAnswer.messageNb', 1) . " #$defaultAnswer->id" : "" }}
+                    {{ isset($defaultAnswer->id) ? trans_choice('app.defaultAnswer.message', 1) . " #$defaultAnswer->id" : trans_choice('app.defaultAnswer.message', 1) }}
                 </div>
                 <div class="card-body">
                     <form

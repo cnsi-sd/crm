@@ -7,11 +7,11 @@
                 {{ trans_choice('app.configuration.defaultAnswer', 2) }}
                 {!! $table->getLinesCountBadge() !!}
 
-                {{--@can('edit', \App\Models\Channel\Default_Answer::class)--}}
+                @can('edit', App\Models\User\User::class)
                     <a href="{{ route('create_defaultAnswer') }}" class="btn btn-outline-primary btn-sm float-end">
                         {{ trans_choice('app.configuration.new', 2) }}
                     </a>
-                {{--@endcan--}}
+                @endcan
 
             </div>
             <div class="card-body">

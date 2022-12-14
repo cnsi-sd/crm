@@ -14,9 +14,9 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
 });
 
 /** Settings */
-Breadcrumbs::for('settings', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('admin', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push(__('app.settings.settings'));
+    $trail->push(__('app.navbar.admin'));
 });
 
 /** Configuration */
@@ -27,14 +27,14 @@ Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
 
 /** Advanced */
 Breadcrumbs::for('permissions', function (BreadcrumbTrail $trail) {
-    $trail->parent('settings');
+    $trail->parent('admin');
     $trail->push(__('app.navbar.permissions'));
 });
 
 
 /** Roles */
 Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
-    $trail->parent('permissions');
+    $trail->parent('admin');
     $trail->push(trans_choice('app.role.role', 2));
 });
 Breadcrumbs::for('create_role', function (BreadcrumbTrail $trail) {
@@ -48,7 +48,7 @@ Breadcrumbs::for('edit_role', function (BreadcrumbTrail $trail) {
 
 /** Users */
 Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {
-    $trail->parent('permissions');
+    $trail->parent('admin');
     $trail->push(trans_choice('app.user.user', 2));
 });
 Breadcrumbs::for('create_user', function (BreadcrumbTrail $trail) {
@@ -71,7 +71,10 @@ Breadcrumbs::for('create_defaultAnswer', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.defaultAnswer.create'));
 });
 
-Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail, \App\Models\Channel\DefaultAnswer $defaultAnswer) {
     $trail->parent('defaultAnswers');
+    $trail->push($defaultAnswer->id);
     $trail->push(__('app.defaultAnswer.edit'));
 });
+
+

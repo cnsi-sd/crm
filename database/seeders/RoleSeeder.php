@@ -2,14 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Role\RoleEnum;
+use App\Enums\PermissionEnum;
 use App\Models\User\Role;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
     public function run(){
-        foreach (RoleEnum::getList() as $value)
-            Role::firstOrCreate(['name' => $value]);
+        /** @var Role $admin_role */
+        $admin_role = Role::firstOrNew([
+            'name' => 'admin',
+        ]);
+        $admin_role->permissions = implode(';', PermissionEnum::getList());
+        $admin_role->save();
     }
 }

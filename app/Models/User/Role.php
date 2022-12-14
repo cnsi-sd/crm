@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property string $name
+ * @property string $permissions
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
@@ -23,6 +24,7 @@ class Role extends Model
 {
     protected $fillable = [
         'name',
+        'permissions',
         'created_at',
         'updated_at'
     ];
@@ -50,7 +52,7 @@ class Role extends Model
 
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Role $role) {
-                return view('settings.permissions.roles.inline_table_actions')
+                return view('admin.roles.inline_table_actions')
                     ->with('role', $role);
             });
 

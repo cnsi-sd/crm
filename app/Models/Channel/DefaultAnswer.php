@@ -60,7 +60,7 @@ class DefaultAnswer extends Model
             ->setKey('content')
             ->setSortable(false);
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.defaultAnswer.channel'))
+            ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setType(ColumnTypeEnum::SELECT)
             ->setCallback(function (DefaultAnswer $defaultAnswer){
                 $channels = $defaultAnswer->channels;
@@ -75,11 +75,6 @@ class DefaultAnswer extends Model
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (DefaultAnswer $defaultAnswer) {
                 return view('configuration.defaultAnswer.inline_table_actions')
-                    ->with('defaultAnswer', $defaultAnswer);
-            });
-        $columns[] = TableColumnBuilder::actions()
-            ->setCallback(function (DefaultAnswer $defaultAnswer) {
-                return view('configuration.defaultAnswer.inline_table_actions_delete')
                     ->with('defaultAnswer', $defaultAnswer);
             });
 

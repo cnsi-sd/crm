@@ -60,7 +60,7 @@
         };
 
 
-        /** 
+        /**
          * Initlizes the select2
         */
         AdvanceFormApp.prototype.initSelect2 = function () {
@@ -68,7 +68,7 @@
             $('[data-toggle="select2"]').select2();
         },
 
-            /** 
+            /**
              * Initlized mask
             */
             AdvanceFormApp.prototype.initMask = function () {
@@ -169,7 +169,7 @@
                 });
             },
 
-            /** 
+            /**
              * Initilize
             */
             AdvanceFormApp.prototype.init = function () {
@@ -201,10 +201,10 @@
          * @param {*} loaderBgColor loader background color
          * @param {*} icon icon which needs to be displayed
          * @param {*} hideAfter automatically hide after seconds
-         * @param {*} stack 
+         * @param {*} stack
          */
         NotificationApp.prototype.send = function (heading, body, position, loaderBgColor, icon, hideAfter, stack, showHideTransition) {
-            // default      
+            // default
             if (!hideAfter)
                 hideAfter = 3000;
             if (!stack)
@@ -448,7 +448,7 @@
             },
 
             /**
-             * clear the saved layout related settings
+             * clear the saved layout related admin
              */
             App.prototype.clearSavedConfig = function () {
                 $.LayoutThemeApp.clearSavedConfig();
@@ -505,12 +505,12 @@
 
 
                 //Pop Overs
-                
+
                 var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
                 var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
                     return new bootstrap.Popover(popoverTriggerEl);
                 });
-                
+
 
                 //Tooltips
 
@@ -521,7 +521,7 @@
                         new bootstrap.Tooltip(element).show();
                     });
                 });
-  
+
 
                 // offcanvas
                 var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
@@ -542,7 +542,7 @@
                         toastPlacement.className = toastPlacement.dataset.originalClass + " " + this.value;
                     });
                 }
-    
+
                 var toastElList = [].slice.call(document.querySelectorAll('.toast'))
                 var toastList = toastElList.map(function (toastEl) {
                     return new bootstrap.Toast(toastEl)

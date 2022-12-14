@@ -6,12 +6,12 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Enums\ColumnTypeEnum;
 use App\Enums\FixedWidthEnum;
 use App\Models\Channel\Channel;
+use App\Models\User\Role;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -115,7 +115,7 @@ class User extends Authenticatable
 
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (User $user) {
-                return view('settings.permissions.users.inline_table_actions')
+                return view('admin.users.inline_table_actions')
                     ->with('user', $user);
             });
 
@@ -132,6 +132,17 @@ class User extends Authenticatable
         } else {
             return false;
         }
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        /** get the user role */
+        $role = Role::getById($this->role_id);
+
+        /** get the user authorizations */
+        $user_permissions = explode(';', $role->permissions);
+
+        return in_array($permission, $user_permissions);
     }
 
     public static function getUserByChannel(Channel $channel): User
