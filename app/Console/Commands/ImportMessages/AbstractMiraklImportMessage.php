@@ -3,10 +3,12 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
+use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Ticket;
+use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
 use Illuminate\Console\Command;
@@ -19,6 +21,9 @@ use Mirakl\MMP\Shop\Client\ShopApiClient;
 
 abstract class AbstractMiraklImportMessage extends Command
 {
+    protected Logger $logger;
+    protected string $log_path;
+
     public ShopApiClient $client;
 
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
@@ -34,6 +39,7 @@ abstract class AbstractMiraklImportMessage extends Command
 
     public function handle()
     {
+        $this->logger = new Logger($this->log_path);
         $date_time = new DateTime();
         $date_time->modify(self::FROM_DATE_TRANSFORMATOR);
 
@@ -57,7 +63,7 @@ abstract class AbstractMiraklImportMessage extends Command
         foreach ($threads as $miraklThread) {
             try {
                 DB::beginTransaction();
-
+                $this->logger->info("begin Transaction");
                 $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
                 $channel = Channel::getByName($this->getChannelName());
                 $order = Order::getOrder($mpOrderId, $channel);
@@ -69,10 +75,11 @@ abstract class AbstractMiraklImportMessage extends Command
                 /** @var ThreadTopic $topic */
                 $thread = \App\Models\Ticket\Thread::getThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue(), '');
 
-                $this->importMessageByThread($thread, $messages);
+                $this->importMessageByThread($ticket, $thread, $messages);
 
                 DB::commit();
             } catch (Exception $e) {
+                $this->logger->error("Error", $e);
                 $errorOutput = 'An error has occurred. Rolling back';
                 $this->error($errorOutput);
                 DB::rollBack();
@@ -124,12 +131,12 @@ abstract class AbstractMiraklImportMessage extends Command
      * @param  $messages
      * @return void
      */
-    private function importMessageByThread(\App\Models\Ticket\Thread $thread, $messages)
+    private function importMessageByThread(Ticket $ticket,\App\Models\Ticket\Thread $thread, $messages)
     {
         foreach ($messages as $message) {
             $imported_id = $message->getId();
             if (!$this->isMessagesImported($imported_id)) {
-                $this->convertApiResponseToMessage($message, $thread);
+                $this->convertApiResponseToMessage($ticket, $message, $thread);
                 $this->addImportedMessageChannelNumber($imported_id);
             }
         }
@@ -140,7 +147,7 @@ abstract class AbstractMiraklImportMessage extends Command
      * @param \App\Models\Ticket\Thread $thread
      * @return Message
      */
-    public static function convertApiResponseToMessage(ThreadMessage $api_message, \App\Models\Ticket\Thread $thread): Message
+    public static function convertApiResponseToMessage(Ticket $ticket, ThreadMessage $api_message, \App\Models\Ticket\Thread $thread): Message
     {
         $authorType = $api_message->getFrom()->getType();
 
@@ -148,6 +155,11 @@ abstract class AbstractMiraklImportMessage extends Command
 
         $message = new Message();
         if ($isShopUser) {
+            if($ticket->state !== TicketStateEnum::WAITING_ADMIN){
+                DB::table('tickets')
+                    ->where('id',$ticket->id)
+                    ->update(['state' => TicketStateEnum::WAITING_ADMIN]);
+            }
             $message = Message::firstOrCreate([
                 'channel_message_number' => $api_message->getId(),
             ],
