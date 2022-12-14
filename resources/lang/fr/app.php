@@ -22,21 +22,14 @@ return [
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
-        'admin' => 'Administration',
+        'settings' => 'Paramètres',
         'permissions' => 'Permissions',
         'config' => 'Configurations'
     ],
 
     /** Settings */
-    'admin' => [
-        'admin' => 'Paramètres',
-    ],
-
-    /** Permission */
-    'permission' =>[
-      'user' => 'Utilisateur',
-        'role' => 'Role',
-        'default_message_answer' => 'Message par défaut'
+    'settings' => [
+        'settings' => 'Paramètres',
     ],
 
     'role' => [
@@ -90,11 +83,12 @@ return [
         'save' => 'Enregistrer le message',
         'name' => 'Nom du message',
         'content' => 'Contenu du message',
-        'select_channel' => 'Cannaux sélectioner',
-        'create' => 'Création',
-        'edit' => 'Modification',
+        'select_channel' => 'Selection du(des) cannal(aux)',
+        'channel' => 'Cannal(aux)',
+        'create' => 'Création de message par default',
+        'edit' => 'Modification de message par default',
         'delete' => 'Suppression',
-        'message' => 'Message '
+        'messageNb' => 'Message '
     ],
 
     'recover_password' => [
