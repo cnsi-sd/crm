@@ -27,6 +27,9 @@ return [
     'hour' => 'heure|heures',
     'from' => 'du',
     'to' => 'au',
+    'attachment' => 'Pièce jointe|Pièces jointes',
+    'customer' => 'Client',
+    'operator' => 'Opérateur',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -82,6 +85,16 @@ return [
         'my_tickets' => 'Mes tickets',
         'channel' => 'Canal de diffusion',
         'subjects' => 'Sujets',
+        'state' => 'Statut',
+        'mapping' => 'Association',
+        'order' => 'Commande',
+        'base_information' => 'Informations de base',
+        'customer_mail' => 'Email client',
+        'delivery_date' => 'Date de livraison',
+        'admin_thread' => 'Administration fil de discussion',
+        'customer_issue' => 'Problématique client',
+        'private_comments' => 'Commentaires privés',
+        'default_replies' => 'Réponses par défaut',
     ],
 
     'login' => [

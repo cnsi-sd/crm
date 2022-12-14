@@ -1,4 +1,4 @@
-@extends('layouts.horizontal', ["page_title"=> trans_choice('app.ticket.all_tickets', 2) ])
+@extends('layouts.horizontal', ["page_title"=> __('app.ticket.all_tickets') ])
 
 @section('content')
 <div class="container-fluid">

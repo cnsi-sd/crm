@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Tickets;
 
 use App\Helpers\Builder\Table\TableBuilder;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket\Ticket;
+use App\Models\Ticket\Thread;
+use App\Models\Ticket\Message;
+use App\Models\Ticket\Comment;
+use App\Models\Channel\Channel;
 use App\Models\User\User;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Enums\Ticket\TicketPriorityEnum;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function view;
@@ -38,6 +44,47 @@ class TicketController extends Controller
 
         return view('tickets.all_tickets')
             ->with('table', $table);
+    }
+
+    public function redirectTicket(Request $request, ?Ticket $ticket)
+    {
+        //todo : utiliser last_thread_displayed pour afficher le dernier thread chargé
+        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->first()->toArray();
+        return redirect()->route('ticket_thread', [$ticket,$queryThreads['id']]);
+    }
+
+    public function ticket(Request $request, ?Ticket $ticket, ?Thread $thread): View
+    {
+        $queryTicket = Ticket::query()
+            ->where('id', $ticket->id)
+            ->first()
+            ->toArray();
+        $queryThread = Thread::query()
+            ->where('id', $thread->id)
+            ->first()
+            ->toArray();
+
+        $queryUsers = User::query()->get()->toArray();
+
+        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get()->toArray();
+        $threads = [];
+        foreach ($queryThreads as $thread) {
+            $threads[] = $thread['id'];
+        }
+        $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
+        $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->get()->toArray();
+        $queryChannels = Channel::query()->get()->toArray();
+
+        return view('tickets.ticket')
+            ->with('ticket',$queryTicket)
+            ->with('activeThread',$queryThread)
+            ->with('users', $queryUsers)
+            ->with('threads', $queryThreads)
+            ->with('messages', $queryMessages)
+            ->with('comments', $queryComments)
+            ->with('ticketStateEnum', TicketStateEnum::getList())
+            ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
+            ->with('channels', $queryChannels);
     }
 
 }

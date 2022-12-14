@@ -38,11 +38,11 @@ Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('create_role', function (BreadcrumbTrail $trail) {
     $trail->parent('roles');
-    $trail->push(trans_choice('app.role.new', 2), route('create_role'));
+    $trail->push(__('app.role.new'), route('create_role'));
 });
 Breadcrumbs::for('edit_role', function (BreadcrumbTrail $trail, $role) {
     $trail->parent('roles');
-    $trail->push(trans_choice('app.role.edit', 2), route('edit_role', $role));
+    $trail->push(__('app.role.edit'), route('edit_role', $role));
 });
 
 /** Users */
@@ -52,19 +52,27 @@ Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('create_user', function (BreadcrumbTrail $trail) {
     $trail->parent('users');
-    $trail->push(trans_choice('app.user.new', 2), route('create_user'));
+    $trail->push(__('app.user.new'), route('create_user'));
 });
 Breadcrumbs::for('edit_user', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('users');
-    $trail->push(trans_choice('app.user.edit', 2), route('edit_user', $user));
+    $trail->push(__('app.user.edit'), route('edit_user', $user));
 });
 
 /** Tickets */
 Breadcrumbs::for('all_tickets', function (BreadcrumbTrail $trail) {
     $trail->parent('tickets');
-    $trail->push(trans_choice('app.ticket.all_tickets',2), route('all_tickets'));
+    $trail->push(__('app.ticket.all_tickets'), route('all_tickets'));
 });
 Breadcrumbs::for('user_tickets', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('tickets');
-    $trail->push(trans_choice('app.ticket.my_tickets',2), route('user_tickets', $user));
+    $trail->push(__('app.ticket.my_tickets'), route('user_tickets', $user));
+});
+Breadcrumbs::for('ticket', function (BreadcrumbTrail $trail, $ticket) {
+    $trail->parent('tickets');
+    $trail->push(trans_choice('app.ticket.ticket',1), route('ticket', $ticket));
+});
+Breadcrumbs::for('ticket_thread', function (BreadcrumbTrail $trail, $ticket) {
+    $trail->parent('tickets');
+    $trail->push(trans_choice('app.ticket.ticket',1), route('ticket', $ticket));
 });
