@@ -55,6 +55,40 @@ class TicketController extends Controller
 
     public function ticket(Request $request, ?Ticket $ticket, ?Thread $thread): View
     {
+        if ($request->input()){
+            //$request->validate();
+            $ticket->state = $request->input('ticket-state');
+            $ticket->priority = $request->input('ticket-priority');
+            $ticket->user_id = $request->input('ticket-user_id');
+            $ticket->deadline = $request->input('ticket-deadline');
+            $ticket->channel_id = $request->input('ticket-channel');
+            $ticket->order_id = $request->input('ticket-order_id');
+            $ticket->direct_customer_email = $request->input('ticket-customer_email');
+            $ticket->delivery_date = $request->input('ticket-delivery_date');
+            $ticket->save();
+
+            $thread->customer_issue = $request->input('ticket-thread-customer_issue');
+            $thread->save();
+
+            if($request->input('ticket-thread-messages-content')) {
+                Message::firstOrCreate([
+                    'thread_id' => $thread->id,
+                    'user_id' => $request->user()->id,
+                    'author_type' => 'operator',
+                    'content' => $request->input('ticket-thread-messages-content'),
+                ]);
+            }
+            if($request->input('ticket-thread-comments-content')) {
+                Comment::firstOrCreate([
+                    'thread_id' => $thread->id,
+                    'user_id' => $request->user()->id,
+                    'content' => $request->input('ticket-thread-comments-content'),
+                    'displayed' => 1,
+                    'type' => 'responsible_info',
+                ]);
+            }
+        }
+
         $queryTicket = Ticket::query()
             ->where('id', $ticket->id)
             ->first()
@@ -72,7 +106,7 @@ class TicketController extends Controller
             $threads[] = $thread['id'];
         }
         $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
-        $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->get()->toArray();
+        $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
         $queryChannels = Channel::query()->get()->toArray();
 
         return view('tickets.ticket')

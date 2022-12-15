@@ -30,6 +30,11 @@ return [
     'attachment' => 'Pièce jointe|Pièces jointes',
     'customer' => 'Client',
     'operator' => 'Opérateur',
+    'send_message' => 'Envoyer un message',
+    'send_comment' => 'Envoyer un commentaire',
+    'order_info' => 'Info commande',
+    'product_return' => 'Retour produits',
+    'customer_service_process' => 'Procédure SAV',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',

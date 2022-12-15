@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Date;
  * @property string $state
  * @property string $priority
  * @property Date $deadline
+ * @property Date $delivery_date
+ * @property string $direct_customer_email
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
