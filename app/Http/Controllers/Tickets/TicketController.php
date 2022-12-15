@@ -74,7 +74,7 @@ class TicketController extends Controller
                 Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
-                    'author_type' => 'operator',
+                    'author_type' => 'admin',
                     'content' => $request->input('ticket-thread-messages-content'),
                 ]);
             }
