@@ -3,6 +3,7 @@
 namespace App\Models\Channel;
 
 
+use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use DateTime;
 use Exception;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $updated_at
  *
  * @property DefaultAnswer $defaultAnswers
+ * @property Revival $revival
  * @property Ticket[] $tickets
  * @property Order[] $orders
  */
@@ -31,6 +33,11 @@ class Channel extends Model
     public function defaultAnswers(): HasMany
     {
         return $this->hasMany(DefaultAnswer::class);
+    }
+
+    public function revival(): HasMany
+    {
+        return $this->hasMany(Revival::class);
     }
 
     public function tickets(): HasMany

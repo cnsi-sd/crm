@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('end_default_answer_id')->constrained('default_answers');
             $table->string('end_state');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

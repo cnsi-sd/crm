@@ -2,10 +2,13 @@
 
 namespace App\Models\Ticket\Revival;
 
+use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int $id
@@ -17,9 +20,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Datetime $updated_at
  *
  * @property DefaultAnswer $defaultAnswer
+ * @property Channel[] $channels
  */
 class Revival extends Model
 {
+
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -35,5 +41,10 @@ class Revival extends Model
     public function default_answer(): BelongsTo
     {
         return $this->belongsTo(DefaultAnswer::class);
+    }
+
+    public function channels(): BelongsToMany
+    {
+        return $this->belongsToMany(Channel::class, 'channel_default_answer', 'default_answer_id','channel_id');
     }
 }
