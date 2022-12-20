@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('revivals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('role_id')->constrained('roles');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->boolean('active');
-            $table->rememberToken();
+            $table->integer('frequency');
+            $table->foreignId('default_answer_id')->constrained('default_answers');
+            $table->integer('max_revival');
+            $table->foreignId('end_default_answer_id')->constrained('default_answers');
+            $table->string('end_state');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('revivals');
     }
 };
