@@ -8,7 +8,6 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/hyper.js',
                 'resources/js/layout.js',
-                'resources/js/configuration/defaultAnswer.js',
                 'resources/scss/app.scss',
                 'resources/scss/icons.scss',
             ],

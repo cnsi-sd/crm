@@ -127,7 +127,7 @@ class User extends Authenticatable
         $role = Role::getById($this->role_id);
 
         /** get the user authorizations */
-        $user_permissions = explode(';', $role->permissions);
+        $user_permissions = $role->getPermission();
 
         return in_array($permission, $user_permissions);
     }

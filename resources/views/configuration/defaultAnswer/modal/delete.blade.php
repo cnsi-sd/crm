@@ -8,7 +8,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="text-center">Are you sure you want to delete {{ $defaultAnswer->name }} ?</h4>
+                    <h4 class="text-center">Are you sure you want to delete : {{ $defaultAnswer->name }} ?</h4>
                     <button
                         type="button"
                         class="close"
@@ -24,9 +24,9 @@
                         class="btn btn-secondary"
                         onclick="$('#ModalDelete{{ $defaultAnswer->id }}').modal('hide');"
                     >
-                        {{__('app.defaultAnswer.close')}}
+                        {{__('app.no')}}
                     </button>
-                    <button type="submit" class="btn btn-danger">{{__('app.defaultAnswer.delete')}}</button>
+                    <button type="submit" class="btn btn-danger">{{__('app.yes')}}</button>
                 </div>
             </div>
         </div>

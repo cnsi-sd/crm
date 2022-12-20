@@ -1,4 +1,4 @@
-@extends('layouts.horizontal', ["page_title"=> isset($defaultAnswer->id) ? trans_choice('app.defaultAnswer.edit', 1) : trans_choice('app.defaultAnswer.create', 1)])
+@extends('layouts.horizontal', ["page_title"=> isset($defaultAnswer->id) ? trans_choice('app.edit', 1) : trans_choice('app.create', 1)])
 
 @section('content')
     <form
@@ -78,8 +78,4 @@
             </button>
         </div>
     </form>
-@endsection
-
-@section('script-bottom')
-    <script src="{{ Vite::asset('resources/js/configuration/defaultAnswer.js') }}"></script>
 @endsection

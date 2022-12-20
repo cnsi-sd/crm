@@ -9,6 +9,7 @@ return [
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'new' => 'Nouveau',
     'logout' => 'Déconnexion',
     'username' => 'Nom d\'utilisateur',
     'password' => 'Mot de passe',
@@ -82,7 +83,6 @@ return [
     'configuration' => [
         'configuration' => 'Configuration',
         'channel' => 'Channel',
-        'new' => 'Nouveau'
     ],
 
     'defaultAnswer' => [

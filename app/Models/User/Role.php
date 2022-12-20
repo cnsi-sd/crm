@@ -64,4 +64,9 @@ class Role extends Model
         return self::query()->where('id', $role_id)->firstOrFail();
     }
 
+    public function getPermission(): array
+    {
+        return explode(';', $this->permissions);
+    }
+
 }

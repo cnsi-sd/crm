@@ -35,7 +35,7 @@ class RoleController extends Controller
         }
 
         /** get the role authorizations*/
-        $permissions = explode(';', $role->permissions);
+        $permissions = $role->getPermission();
 
         return view('admin.roles.edit')
             ->with('role', $role)
