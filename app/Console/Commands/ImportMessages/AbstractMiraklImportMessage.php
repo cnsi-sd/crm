@@ -35,6 +35,7 @@ abstract class AbstractMiraklImportMessage extends Command
     protected $description = 'Importing competing offers from Mirakl.';
 
     abstract protected function getChannelName(): string;
+
     abstract protected function getCredentials(): array;
 
     public function handle()
@@ -131,7 +132,7 @@ abstract class AbstractMiraklImportMessage extends Command
      * @param  $messages
      * @return void
      */
-    private function importMessageByThread(Ticket $ticket,\App\Models\Ticket\Thread $thread, $messages)
+    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages)
     {
         foreach ($messages as $message) {
             $imported_id = $message->getId();
@@ -145,20 +146,17 @@ abstract class AbstractMiraklImportMessage extends Command
     /**
      * @param ThreadMessage $api_message
      * @param \App\Models\Ticket\Thread $thread
-     * @return Message
      */
-    public static function convertApiResponseToMessage(Ticket $ticket, ThreadMessage $api_message, \App\Models\Ticket\Thread $thread): Message
+    public static function convertApiResponseToMessage(Ticket $ticket, ThreadMessage $api_message, \App\Models\Ticket\Thread $thread)
     {
         $authorType = $api_message->getFrom()->getType();
 
-        $isShopUser = self::isNotShopUser($authorType);
+        $isNotShopUser = self::isNotShopUser($authorType);
 
-        $message = new Message();
-        if ($isShopUser) {
-            if($ticket->state !== TicketStateEnum::WAITING_ADMIN){
-                $ticket->state = TicketStateEnum::WAITING_ADMIN;
-            }
-            $message = Message::firstOrCreate([
+        if ($isNotShopUser) {
+            $ticket->state = TicketStateEnum::WAITING_ADMIN;
+            $ticket->save();
+            Message::firstOrCreate([
                 'channel_message_number' => $api_message->getId(),
             ],
                 [
@@ -170,18 +168,14 @@ abstract class AbstractMiraklImportMessage extends Command
                 ],
             );
         }
-        return $message;
     }
 
-    private static function getAuthorType(string $authorType){
-        switch ($authorType){
-            case('CUSTOMER_USER'):
-                return TicketMessageAuthorTypeEnum::CUSTOMER;
-                break;
-            default:
-                return TicketMessageAuthorTypeEnum::OPERATEUR;
-                break;
-        }
+    private static function getAuthorType(string $authorType): string
+    {
+        return match ($authorType) {
+            'CUSTOMER_USER' => TicketMessageAuthorTypeEnum::CUSTOMER,
+            default => TicketMessageAuthorTypeEnum::OPERATEUR,
+        };
     }
 
     /**

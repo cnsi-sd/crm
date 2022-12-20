@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
-use App\Models\Channel\DefaultAnswers;
+use App\Models\Channel\DefaultAnswer;
 use App\Models\User\Role;
 use App\Models\User\User;
 use App\Policies\Configuration\Permission\DefaultAnswerPolicy;
@@ -21,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Role::class => RolePolicy::class,
         User::class => UserPolicy::class,
-        DefaultAnswers::class => DefaultAnswerPolicy::class
+        DefaultAnswer::class => DefaultAnswerPolicy::class
     ];
 
     /**

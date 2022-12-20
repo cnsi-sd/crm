@@ -4,7 +4,6 @@ namespace App\Models\Channel;
 
 
 use App\Models\Ticket\Ticket;
-use App\Models\User\Channel_Users;
 use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
- * @property DefaultAnswers $defaultAnswers
+ * @property DefaultAnswer $defaultAnswers
  * @property Ticket[] $tickets
  * @property Order[] $orders
  */
@@ -31,7 +30,7 @@ class Channel extends Model
 
     public function defaultAnswers(): HasMany
     {
-        return $this->hasMany(DefaultAnswers::class);
+        return $this->hasMany(DefaultAnswer::class);
     }
 
     public function tickets(): HasMany
@@ -44,11 +43,6 @@ class Channel extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function channel_users(): HasMany
-    {
-        return $this->hasMany(Channel_Users::class);
-    }
-
     public static function getByName(string $name, bool $filter_active = true) : Channel
     {
         /** @var Channel $channel */
@@ -57,5 +51,12 @@ class Channel extends Model
             throw new Exception('Channel `' . $name . '` does not exists');
 
         return $channel;
+    }
+
+    public static function getChannelNames(): array
+    {
+        return self::query()->orderBy('name', 'ASC')
+            ->pluck('name', 'id')
+            ->toArray();
     }
 }

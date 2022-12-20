@@ -10,7 +10,6 @@ return [
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
     'logout' => 'Déconnexion',
-    'search' => 'Rechercher',
     'username' => 'Nom d\'utilisateur',
     'password' => 'Mot de passe',
     'enter_email' => 'Saisir votre email',
@@ -92,11 +91,11 @@ return [
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Cannaux sélectioner',
-        'create' => 'Création',
+        /*'create' => 'Création',
         'edit' => 'Modification',
         'delete' => 'Suppression',
         'close' => 'Fermer',
-        'message' => 'Message '
+        'message' => 'Message '*/
     ],
 
     'recover_password' => [

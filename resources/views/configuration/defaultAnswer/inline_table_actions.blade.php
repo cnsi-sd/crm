@@ -1,4 +1,4 @@
-@can('edit', App\Models\Channel\DefaultAnswers::class)
+@can('edit', App\Models\Channel\DefaultAnswer::class)
     <a
             href="{{ route('edit_defaultAnswer', ['defaultAnswer' => $defaultAnswer]) }}"
             class="btn btn-secondary btn-sm"
@@ -7,7 +7,7 @@
         <i class="uil-edit"></i>
     </a>
 @endcan
-@can('edit', App\Models\Channel\DefaultAnswers::class)
+@can('edit', App\Models\Channel\DefaultAnswer::class)
 
     <a
             data-bs-toggle="modal"

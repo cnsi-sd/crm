@@ -5,7 +5,7 @@ use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
-use App\Models\Channel\DefaultAnswers;
+use App\Models\Channel\DefaultAnswer;
 use App\Models\User\Role;
 use App\Models\User\User;
 
@@ -45,10 +45,10 @@ Route::middleware('checkActive')->group(function() {
 Route::middleware('checkActive')->group(function (){
     Route::prefix('configuration')->group(function(){
         Route::prefix('default_answer')->group(function(){
-            Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_defaultAnswer')->can('edit', DefaultAnswers::class);
-            Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_defaultAnswer')->can('edit', DefaultAnswers::class);
-            Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('defaultAnswers')->can('read', DefaultAnswers::class);
-            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswers::class);
+            Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_defaultAnswer')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_defaultAnswer')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('defaultAnswers')->can('read', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswer::class);
         });
     });
 });

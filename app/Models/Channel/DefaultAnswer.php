@@ -13,16 +13,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string $name
  * @property string $content
- * @property Channel[] $channels
- *
  * @property DateTime $created_at
  * @property DateTime $updated_at
  * @property DateTime $deleted_at
+ *
+ * @property Channel[] $channels
  */
-class DefaultAnswers extends Model
+class DefaultAnswer extends Model
 {
     use SoftDeletes;
-    protected $table = 'answers';
 
     protected $fillable = [
         'name',
@@ -49,27 +48,21 @@ class DefaultAnswers extends Model
             ->setSearchable(false);
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.name'))
-            ->setKey('name')
-            ->setSortable(false);
+            ->setKey('name');
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.content'))
-            ->setKey('content')
-            ->setSortable(false);
+            ->setKey('content');
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.select_channel'))
-            ->setType(ColumnTypeEnum::SELECT)
-            ->setCallback(function (DefaultAnswers $defaultAnswer){
-                $channels = $defaultAnswer->channels;
-                $Channel = [];
-                foreach ($channels as $channel){
-                    $Channel[] = $channel->name;
-                }
-                return implode(", ", $Channel);
+            ->setCallback(function (DefaultAnswer $defaultAnswer){
+                $channels = $defaultAnswer->channels->pluck('name')->toArray();
+                return implode(", ", $channels);
             })
             ->setKey('channels')
-            ->setSortable(false);
+            ->setSortable(false)
+            ->setSearchable(false);
         $columns[] = TableColumnBuilder::actions()
-            ->setCallback(function (DefaultAnswers $defaultAnswer) {
+            ->setCallback(function (DefaultAnswer $defaultAnswer) {
                 return view('configuration.defaultAnswer.inline_table_actions')
                     ->with('defaultAnswer', $defaultAnswer);
             });
