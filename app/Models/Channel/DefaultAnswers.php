@@ -4,11 +4,10 @@ namespace App\Models\Channel;
 
 use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
-use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DateTime;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
@@ -20,10 +19,10 @@ use Illuminate\Support\Facades\DB;
  * @property DateTime $updated_at
  * @property DateTime $deleted_at
  */
-class DefaultAnswer extends Model
+class DefaultAnswers extends Model
 {
     use SoftDeletes;
-    protected $table = 'default_answers';
+    protected $table = 'answers';
 
     protected $fillable = [
         'name',
@@ -37,7 +36,7 @@ class DefaultAnswer extends Model
         return $this->channels->keyBy('id')->has($channel->id);
     }
 
-    public function channels(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class, 'channel_default_answer', 'default_answer_id','channel_id');
     }
@@ -47,33 +46,30 @@ class DefaultAnswer extends Model
         $columns = [];
 
         $columns[] = TableColumnBuilder::id()
-            ->setSearchable(false)
-            ->setSortable(false);
+            ->setSearchable(false);
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.name'))
-            ->setType(ColumnTypeEnum::TEXT)
             ->setKey('name')
             ->setSortable(false);
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.content'))
-            ->setType(ColumnTypeEnum::TEXT)
             ->setKey('content')
             ->setSortable(false);
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setType(ColumnTypeEnum::SELECT)
-            ->setCallback(function (DefaultAnswer $defaultAnswer){
+            ->setCallback(function (DefaultAnswers $defaultAnswer){
                 $channels = $defaultAnswer->channels;
-                $renderChannel = "";
+                $Channel = [];
                 foreach ($channels as $channel){
-                    $renderChannel = $renderChannel . $channel->name .", " ;
+                    $Channel[] = $channel->name;
                 }
-                return $renderChannel;
+                return implode(", ", $Channel);
             })
-            ->setKey('name')
+            ->setKey('channels')
             ->setSortable(false);
         $columns[] = TableColumnBuilder::actions()
-            ->setCallback(function (DefaultAnswer $defaultAnswer) {
+            ->setCallback(function (DefaultAnswers $defaultAnswer) {
                 return view('configuration.defaultAnswer.inline_table_actions')
                     ->with('defaultAnswer', $defaultAnswer);
             });

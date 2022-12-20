@@ -156,9 +156,7 @@ abstract class AbstractMiraklImportMessage extends Command
         $message = new Message();
         if ($isShopUser) {
             if($ticket->state !== TicketStateEnum::WAITING_ADMIN){
-                DB::table('tickets')
-                    ->where('id',$ticket->id)
-                    ->update(['state' => TicketStateEnum::WAITING_ADMIN]);
+                $ticket->state = TicketStateEnum::WAITING_ADMIN;
             }
             $message = Message::firstOrCreate([
                 'channel_message_number' => $api_message->getId(),

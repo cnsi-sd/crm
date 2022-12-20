@@ -121,19 +121,6 @@ class User extends Authenticatable
 
         return $columns;
     }
-
-    public function isAdmin(): bool
-    {
-        /** get the user role */
-        $role = Role::getById($this->role_id);
-
-        if ($role->name == "admin") {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function hasPermission(string $permission): bool
     {
         /** get the user role */

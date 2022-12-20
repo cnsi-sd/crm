@@ -32,3 +32,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+/*$(document).ready(function() {
+    // Enable select2 for all selects that do not have the "no-select2" class
+    $('select:not(".no-select2"):not(".swal2-select")').select2({
+        sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
+    });
+
+    // Autofocus the select2 search field on open
+    $(document).on('select2:open', () => {
+        document.querySelector('.select2-container--open .select2-search__field').focus();
+    });
+});*/

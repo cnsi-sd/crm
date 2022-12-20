@@ -41,7 +41,7 @@ abstract class Menu
                 'ref' => 'advanced',
                 'sub_items' => [
                     [
-                        'text' => trans_choice('app.configuration.defaultAnswer', 2),
+                        'text' => trans_choice('app.defaultAnswer.defaultAnswer', 2),
                         'route' => route('defaultAnswers'),
                         'ref' => 'defaultAnswers',
                         'permission' => PermissionEnum::DEFAULT_ANSWER_READ

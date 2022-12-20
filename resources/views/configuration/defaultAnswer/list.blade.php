@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                {{ trans_choice('app.configuration.defaultAnswer', 2) }}
+                {{ trans_choice('app.defaultAnswer.defaultAnswer', 2) }}
                 {!! $table->getLinesCountBadge() !!}
 
                 @can('edit', App\Models\User\User::class)

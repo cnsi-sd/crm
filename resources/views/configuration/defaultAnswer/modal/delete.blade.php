@@ -15,7 +15,7 @@
                         onclick="$('#ModalDelete{{ $defaultAnswer->id }}').modal('hide');"
                         aria-label="Close"
                     >
-                        &times;
+                        x
                     </button>
                 </div>
                 <div class="modal-footer">
@@ -24,9 +24,9 @@
                         class="btn btn-secondary"
                         onclick="$('#ModalDelete{{ $defaultAnswer->id }}').modal('hide');"
                     >
-                        Cancel
+                        {{__('app.defaultAnswer.close')}}
                     </button>
-                    <button type="submit" class="btn btn-danger">Yes, Delete Project</button>
+                    <button type="submit" class="btn btn-danger">{{__('app.defaultAnswer.delete')}}</button>
                 </div>
             </div>
         </div>

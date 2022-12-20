@@ -35,21 +35,21 @@ Breadcrumbs::for('permissions', function (BreadcrumbTrail $trail) {
 /** Roles */
 Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
-    $trail->push(trans_choice('app.role.role', 2));
+    $trail->push(trans_choice('app.role.role', 2), route('roles'));
 });
 Breadcrumbs::for('create_role', function (BreadcrumbTrail $trail) {
     $trail->parent('roles');
-    $trail->push(trans_choice('app.role.new', 2));
+    $trail->push(__('app.role.new'));
 });
 Breadcrumbs::for('edit_role', function (BreadcrumbTrail $trail) {
     $trail->parent('roles');
-    $trail->push(trans_choice('app.role.edit', 2));
+    $trail->push(__('app.role.edit'));
 });
 
 /** Users */
 Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
-    $trail->push(trans_choice('app.user.user', 2));
+    $trail->push(trans_choice('app.user.user', 2), route('users'));
 });
 Breadcrumbs::for('create_user', function (BreadcrumbTrail $trail) {
     $trail->parent('users');
@@ -63,7 +63,7 @@ Breadcrumbs::for('edit_user', function (BreadcrumbTrail $trail) {
 /** defaultAnswers */
 Breadcrumbs::for('defaultAnswers', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(__('app.configuration.defaultAnswer'), route('defaultAnswers'));
+    $trail->push(trans_choice('app.defaultAnswer.defaultAnswer', 2), route('defaultAnswers'));
 });
 
 Breadcrumbs::for('create_defaultAnswer', function (BreadcrumbTrail $trail) {
@@ -71,7 +71,7 @@ Breadcrumbs::for('create_defaultAnswer', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.defaultAnswer.create'));
 });
 
-Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail, \App\Models\Channel\DefaultAnswer $defaultAnswer) {
+Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail, \App\Models\Channel\DefaultAnswers $defaultAnswer) {
     $trail->parent('defaultAnswers');
     $trail->push($defaultAnswer->id);
     $trail->push(__('app.defaultAnswer.edit'));

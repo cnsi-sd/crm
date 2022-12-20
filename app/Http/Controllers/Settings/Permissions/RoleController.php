@@ -56,11 +56,9 @@ class RoleController extends Controller
         $permissions_inputs = $request->except( ['name', '_token', 'save_role']);
 
         /** Save the setting */
-        $permissions = '';
-        foreach ($permissions_inputs as $key => $value)
-        {
-            $permissions = $permissions . $key . ';';
-        }
+        $permissions = array_keys($permissions_inputs);
+
+        $permissions = implode(';', $permissions);
         $role->permissions = $permissions;
 
         // Enregistrement

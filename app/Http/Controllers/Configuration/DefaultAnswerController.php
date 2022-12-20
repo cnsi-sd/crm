@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Configuration;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Controller;
-use App\Models\Channel\DefaultAnswer;
+use App\Models\Channel\DefaultAnswers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,9 +16,9 @@ class DefaultAnswerController extends Controller
 {
     public function list(Request $request): View
     {
-        $query = DefaultAnswer::query();
+        $query = DefaultAnswers::query();
         $table = (new TableBuilder('defaultAnswers', $request))
-            ->setColumns(DefaultAnswer::getTableColumns())
+            ->setColumns(DefaultAnswers::getTableColumns())
             ->setExportable(false)
             ->setQuery($query);
 
@@ -28,7 +28,7 @@ class DefaultAnswerController extends Controller
 
     public function index()
     {
-        $defaultAnswer = DefaultAnswer::all();
+        $defaultAnswer = DefaultAnswers::all();
 
         return view('configuration.defaultAnswer.list', ['allAnswer' => $defaultAnswer]);
     }
@@ -40,17 +40,17 @@ class DefaultAnswerController extends Controller
 
     public function store(Request $request)
     {
-        DefaultAnswer::create([
+        DefaultAnswers::create([
             'name' => $request->get('name'),
             'content' => $request->get('content'),
         ]);
         return redirect('/configuration/default_response');
     }
 
-    public function edit(Request $request, ?DefaultAnswer $defaultAnswer)
+    public function edit(Request $request, ?DefaultAnswers $defaultAnswer)
     {
         if (!$defaultAnswer)
-            $defaultAnswer = new DefaultAnswer();
+            $defaultAnswer = new DefaultAnswers();
 
         if ($request->exists('save_default_answer'))
         {
@@ -63,7 +63,7 @@ class DefaultAnswerController extends Controller
             ->with('defaultAnswer', $defaultAnswer);
     }
 
-    public function save_default_answer(Request $request, DefaultAnswer $default_Answer)
+    public function save_default_answer(Request $request, DefaultAnswers $defaultAnswer)
     {
         // Validate request
         $request->validate([
@@ -72,43 +72,17 @@ class DefaultAnswerController extends Controller
         ]);
 
         // Set name, content
-        $default_Answer->name = $request->input('name');
-        $default_Answer->content = $request->input('content');
+        $defaultAnswer->name = $request->input('name');
+        $defaultAnswer->content = $request->input('content');
 
         // Save
-        $default_Answer->save();
-        $defaultAnswerScript = $request->toArray()['channel'];
-        $defaultAnswerDb = [];
+        $defaultAnswer->save();
 
-        foreach ($default_Answer->channels as $channel)
-        {
-            $defaultAnswerDb[] = $channel->id;
-        }
-
-        $deleteAnswers = array_diff($defaultAnswerDb, $defaultAnswerScript);
-        $insertAnswers = array_diff($defaultAnswerScript, $defaultAnswerDb);
-
-        foreach ($deleteAnswers as $delete)
-        {
-            DB::table('channel_default_answer')
-                ->where('channel_id', $delete)
-                ->where('default_answer_id', $default_Answer->id)
-                ->delete();
-        }
-
-        foreach ($insertAnswers as $insert)
-        {
-            DB::table('channel_default_answer')
-                ->insert([
-                    "channel_id" => $insert,
-                    "default_answer_id" => $default_Answer->id,
-                    "created_at" => now(),
-                    "updated_at" => now(),
-                ]);
-        }
+        $channelSelected = $request->toArray()['channel'];
+        $defaultAnswer->channels()->sync($channelSelected);
     }
 
-    public function delete(Request $request, ?DefaultAnswer $defaultAnswer)
+    public function delete(Request $request, ?DefaultAnswers $defaultAnswer)
     {
         if($defaultAnswer->softDeleted()){
             alert::toastSuccess(__('app.defaultAnswer.delete'));
