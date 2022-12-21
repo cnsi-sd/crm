@@ -9,8 +9,8 @@ return [
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'new' => 'Nouveau',
     'logout' => 'Déconnexion',
-    'search' => 'Rechercher',
     'username' => 'Nom d\'utilisateur',
     'password' => 'Mot de passe',
     'enter_email' => 'Saisir votre email',
@@ -24,11 +24,20 @@ return [
         'dashboard' => 'Tableau de bord',
         'settings' => 'Paramètres',
         'permissions' => 'Permissions',
+        'config' => 'Configurations',
+        'admin' => 'Administration'
     ],
 
     /** Settings */
-    'settings' => [
-        'settings' => 'Paramètres',
+    'admin' => [
+        'admin' => 'Paramètres',
+    ],
+
+    /** Permission */
+    'permission' =>[
+        'user' => 'Utilisateur',
+        'role' => 'Role',
+        'default_message_answer' => 'Message par défaut'
     ],
 
     'role' => [
@@ -69,6 +78,24 @@ return [
         'enter_email_and_password' => 'Saisir votre adresse email et votre mot de passe pour vous connecter.',
         'forgot_your_password' => 'Mot de passe oublié ?',
         'remember_me' => 'Se souvenir de moi',
+    ],
+
+    'configuration' => [
+        'configuration' => 'Configuration',
+        'channel' => 'Channel',
+    ],
+
+    'defaultAnswer' => [
+        'defaultAnswer' => 'Réponse par défaut|Réponses par défaut',
+        'save' => 'Enregistrer la réponse',
+        'name' => 'Nom de la réponse',
+        'content' => 'Contenu de la réponse',
+        'select_channel' => 'Cannaux sélectioner',
+        /*'create' => 'Création',
+        'edit' => 'Modification',
+        'delete' => 'Suppression',
+        'close' => 'Fermer',
+        'message' => 'Message '*/
     ],
 
     'recover_password' => [
