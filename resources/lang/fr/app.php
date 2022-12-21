@@ -9,6 +9,7 @@ return [
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'create' => 'Création',
     'new' => 'Nouveau',
     'logout' => 'Déconnexion',
     'username' => 'Nom d\'utilisateur',
@@ -91,11 +92,7 @@ return [
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Cannaux sélectioner',
-        /*'create' => 'Création',
-        'edit' => 'Modification',
-        'delete' => 'Suppression',
-        'close' => 'Fermer',
-        'message' => 'Message '*/
+        'message' => 'Message '
     ],
 
     'recover_password' => [
