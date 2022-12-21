@@ -3,6 +3,7 @@
 namespace App\Models\Ticket\Revival;
 
 use App\Enums\ColumnTypeEnum;
+use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
@@ -21,8 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property DateTime $created_at
  * @property Datetime $updated_at
  *
- * @property DefaultAnswer $default_answer_id
- * @property DefaultAnswer end_default_answer_id
+ * @property DefaultAnswer $default_answer
+ * @property DefaultAnswer $end_default_answer
  * @property Channel[] $channels
  */
 class Revival extends Model
@@ -41,8 +42,24 @@ class Revival extends Model
         'updated_at'
     ];
 
-    public function isChannelSelected(Channel $channel) {
+    public function isChannelSelected(Channel $channel)
+    {
         return $this->channels->keyBy('id')->has($channel->id);
+    }
+
+    public function isAnswerSelected(DefaultAnswer $defaultAnswer): bool
+    {
+        return $this->default_answer->id === $defaultAnswer->id;
+    }
+
+    public function isEndAnswerSelected(DefaultAnswer $defaultAnswer): bool
+    {
+        return $this->end_default_answer->id === $defaultAnswer->id;
+    }
+
+    public function isStateSelected($state): bool
+    {
+        return $this->end_state === $state;
     }
 
     public function default_answer(): BelongsTo
@@ -50,9 +67,14 @@ class Revival extends Model
         return $this->belongsTo(DefaultAnswer::class);
     }
 
+    public function end_default_answer(): BelongsTo
+    {
+        return $this->belongsTo(DefaultAnswer::class);
+    }
+
     public function channels(): BelongsToMany
     {
-        return $this->belongsToMany(Channel::class, 'channel_revivals', 'revival_id','channel_id');
+        return $this->belongsToMany(Channel::class, 'channel_revivals', 'revival_id', 'channel_id');
     }
 
     public static function getTableColumns(): array
@@ -69,7 +91,7 @@ class Revival extends Model
             ->setKey('frequency');
         $columns[] = (new TableColumnBuilder())
             ->setLabel(trans_choice('app.revival.channel', 1))
-            ->setCallback(function (Revival $revival ){
+            ->setCallback(function (Revival $revival) {
                 $channels = $revival->channels->pluck('name')->toArray();
                 return implode(", ", $channels);
             })
@@ -80,14 +102,14 @@ class Revival extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.default_answer'))
             ->setType(ColumnTypeEnum::TEXT)
-            ->setCallback(function(Revival $revival){
-                return $revival->default_answer_id;
+            ->setCallback(function (Revival $revival) {
+                return $revival->default_answer->name;
             })
             ->setKey('default_answer_id');
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.end_default_answer'))
-            ->setCallback(function(Revival $revival){
-                return $revival->end_default_answer_id;
+            ->setCallback(function (Revival $revival) {
+                return $revival->end_default_answer->name;
             })
             ->setKey('end_default_answer_id');
         $columns[] = (new TableColumnBuilder())
@@ -100,5 +122,9 @@ class Revival extends Model
             });
 
         return $columns;
+    }
+
+    public function softDeleted(){
+        return $this->delete();
     }
 }

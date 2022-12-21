@@ -96,7 +96,7 @@
                                 </option>
                                 @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                     <option value="{{$answer->id}}"
-                                        {{--@if($revival->isChannelSelected($channel)) selected @endif--}}>
+                                        @if($revival->isAnswerSelected($answer)) selected @endif>
                                         {{$answer->name}}
                                     </option>
                                 @endforeach
@@ -115,16 +115,16 @@
                             >
                                 <option value="">-- {{trans_choice('app.revival.choose_end_default_answer', 1)}} --
                                 </option>
-                                @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
+                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                     <option value="{{$answer->id}}"
-                                        {{--@if($revival->isChannelSelected($channel)) selected @endif--}}>
+                                          @if($revival->isEndAnswerSelected($answer)) selected @endif>
                                         {{$answer->name}}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="m-2">
-                            <label for="name">{{trans_choice('app.revival.end_default_answer', 1)}}
+                            <label for="name">{{trans_choice('app.revival.end_state', 1)}}
 
                                 <span class="required_field">*</span>
                             </label>
@@ -134,12 +134,12 @@
                                 class="form-control form-control-sm form-select"
                                 required
                             >
-                                <option value="">-- {{trans_choice('app.revival.choose_end_default_answer', 1)}} --
+                                <option value="">-- {{trans_choice('app.revival.end_state', 1)}} --
                                 </option>
-                                @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
-                                    <option value="{{$answer->id}}"
-                                        {{--@if($revival->isChannelSelected($channel)) selected @endif--}}>
-                                        {{$answer->name}}
+                                @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $key => $value)
+                                    <option value="{{ $key }}"
+                                        @if($revival->isStateSelected($key)) selected @endif>
+                                        {{ $value }}
                                     </option>
                                 @endforeach
                             </select>

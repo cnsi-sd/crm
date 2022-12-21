@@ -88,3 +88,9 @@ Breadcrumbs::for('create_revival', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.create'));
 });
 
+Breadcrumbs::for('edit_revival', function (BreadcrumbTrail $trail) {
+    $trail->parent('revival');
+    $trail->push(__('app.edit'));
+});
+
+

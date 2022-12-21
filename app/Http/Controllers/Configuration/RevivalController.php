@@ -70,5 +70,12 @@ class RevivalController extends Controller
         $revival->channels()->sync($channelSelected);
     }
 
+    public function delete(Request $request, ?Revival $revival)
+    {
+        if($revival->softDeleted()){
+            alert::toastSuccess(__('app.delete'));
+        }
+        return redirect()->route('revival');
+    }
 
 }

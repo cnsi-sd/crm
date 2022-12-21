@@ -10,6 +10,7 @@ return [
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
     'create' => 'Création',
+    'delete' => 'Suppression',
     'new' => 'Nouveau',
     'no_result' => 'Aucun résultat',
     'logout' => 'Déconnexion',
