@@ -77,4 +77,10 @@ Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail, \App\Mo
     $trail->push(__('app.edit'));
 });
 
+/** Revival */
+Breadcrumbs::for('revival', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.revival.revival', 2), route('revival'));
+});
+
 

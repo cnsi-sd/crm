@@ -8,6 +8,7 @@ use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\User\Role;
 use App\Models\User\User;
+use App\Http\Controllers\Configuration\RevivalController;
 
 
 /*
@@ -50,8 +51,16 @@ Route::middleware('checkActive')->group(function (){
             Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('defaultAnswers')->can('read', DefaultAnswer::class);
             Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswer::class);
         });
+
+        Route::prefix('revival')->group(function(){
+            Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival');
+            Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival');
+            Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival');
+            Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival');
+        });
     });
 });
+
 
 Route::group(['prefix' => '/'], function () {
     Route::get('', function () {

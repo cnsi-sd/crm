@@ -10,6 +10,7 @@ return [
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
     'new' => 'Nouveau',
+    'no_result' => 'Aucun résultat',
     'logout' => 'Déconnexion',
     'username' => 'Nom d\'utilisateur',
     'password' => 'Mot de passe',
@@ -91,11 +92,15 @@ return [
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Cannaux sélectioner',
-        /*'create' => 'Création',
-        'edit' => 'Modification',
-        'delete' => 'Suppression',
-        'close' => 'Fermer',
-        'message' => 'Message '*/
+    ],
+
+    'revival' => [
+        'revival' => 'Relance automatique|Relances automatiques',
+        'name' => 'Nom de la relance automatique',
+        'frequency' => "fréquence d'envoie",
+        'max_revival' => "Nombre d'envoie de relance",
+        'end_default_answer' => 'Message envoyer à la fin du cycle de relance',
+        'end_state' => 'Statut final'
     ],
 
     'recover_password' => [

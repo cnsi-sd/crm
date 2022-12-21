@@ -45,7 +45,12 @@ abstract class Menu
                         'route' => route('defaultAnswers'),
                         'ref' => 'defaultAnswers',
                         'permission' => PermissionEnum::DEFAULT_ANSWER_READ
-                    ]
+                    ],
+                    [
+                        'text' => trans_choice('app.revival.revival', 2),
+                        'route' => route('revival'),
+                        'ref' => 'revival'
+                    ],
                 ]
             ],
 

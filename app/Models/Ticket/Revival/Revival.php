@@ -2,6 +2,7 @@
 
 namespace App\Models\Ticket\Revival;
 
+use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use DateTime;
@@ -46,5 +47,37 @@ class Revival extends Model
     public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class, 'channel_default_answer', 'default_answer_id','channel_id');
+    }
+
+    public static function getTableColumns(): array
+    {
+        $columns = [];
+
+        $columns[] = TableColumnBuilder::id()
+            ->setSearchable(false);
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.revival.name'))
+            ->setKey('name');
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.revival.frequency'))
+            ->setKey('frequency');
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(trans_choice('app.defaultAnswer.defaultAnswer', 1))
+            ->setCallback(function (Revival $revival ){
+                $channels = $revival->defaultAnswer->pluck('name')->toArray();
+                return implode(", ", $channels);
+            })
+            ->setKey('default_answer');
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.revival.max_revival'))
+            ->setKey('max_revival');
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.revival.end_default_answer'))
+            ->setKey('end_default_answer');
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.revival.end_state'))
+            ->setKey('end_state');
+
+        return $columns;
     }
 }
