@@ -43,7 +43,7 @@ class DefaultAnswer extends Model
         return $this->belongsToMany(Channel::class, 'channel_default_answer', 'default_answer_id','channel_id');
     }
 
-    public function revival(): HasMany
+    public function revivals(): HasMany
     {
         return $this->hasMany(Revival::class);
     }

@@ -83,4 +83,8 @@ Breadcrumbs::for('revival', function (BreadcrumbTrail $trail) {
     $trail->push(trans_choice('app.revival.revival', 2), route('revival'));
 });
 
+Breadcrumbs::for('create_revival', function (BreadcrumbTrail $trail) {
+    $trail->parent('revival');
+    $trail->push(__('app.create'));
+});
 

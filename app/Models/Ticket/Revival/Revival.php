@@ -2,6 +2,7 @@
 
 namespace App\Models\Ticket\Revival;
 
+use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
@@ -20,7 +21,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property DateTime $created_at
  * @property Datetime $updated_at
  *
- * @property DefaultAnswer $defaultAnswer
+ * @property DefaultAnswer $default_answer_id
+ * @property DefaultAnswer end_default_answer_id
  * @property Channel[] $channels
  */
 class Revival extends Model
@@ -39,6 +41,10 @@ class Revival extends Model
         'updated_at'
     ];
 
+    public function isChannelSelected(Channel $channel) {
+        return $this->channels->keyBy('id')->has($channel->id);
+    }
+
     public function default_answer(): BelongsTo
     {
         return $this->belongsTo(DefaultAnswer::class);
@@ -46,7 +52,7 @@ class Revival extends Model
 
     public function channels(): BelongsToMany
     {
-        return $this->belongsToMany(Channel::class, 'channel_default_answer', 'default_answer_id','channel_id');
+        return $this->belongsToMany(Channel::class, 'channel_revivals', 'revival_id','channel_id');
     }
 
     public static function getTableColumns(): array
@@ -62,9 +68,9 @@ class Revival extends Model
             ->setLabel(__('app.revival.frequency'))
             ->setKey('frequency');
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(trans_choice('app.defaultAnswer.defaultAnswer', 1))
+            ->setLabel(trans_choice('app.revival.channel', 1))
             ->setCallback(function (Revival $revival ){
-                $channels = $revival->defaultAnswer->pluck('name')->toArray();
+                $channels = $revival->channels->pluck('name')->toArray();
                 return implode(", ", $channels);
             })
             ->setKey('default_answer');
@@ -72,8 +78,18 @@ class Revival extends Model
             ->setLabel(__('app.revival.max_revival'))
             ->setKey('max_revival');
         $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.revival.default_answer'))
+            ->setType(ColumnTypeEnum::TEXT)
+            ->setCallback(function(Revival $revival){
+                return $revival->default_answer_id;
+            })
+            ->setKey('default_answer_id');
+        $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.end_default_answer'))
-            ->setKey('end_default_answer');
+            ->setCallback(function(Revival $revival){
+                return $revival->end_default_answer_id;
+            })
+            ->setKey('end_default_answer_id');
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.end_state'))
             ->setKey('end_state');

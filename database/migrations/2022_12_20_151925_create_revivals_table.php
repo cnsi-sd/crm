@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('frequency');
-            $table->foreignId('default_answer_id')->constrained('default_answers');
+            $table->foreignId('default_answer_id')->constrained();
             $table->integer('max_revival');
             $table->foreignId('end_default_answer_id')->constrained('default_answers');
             $table->string('end_state');

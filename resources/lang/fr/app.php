@@ -101,8 +101,12 @@ return [
         'name' => 'Nom de la relance automatique',
         'frequency' => "fréquence d'envoie",
         'max_revival' => "Nombre d'envoie de relance",
+        'default_answer' => 'Message envoyer',
         'end_default_answer' => 'Message envoyer à la fin du cycle de relance',
-        'end_state' => 'Statut final'
+        'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
+        'choose_answer' => 'Choisir le message à envoyer',
+        'end_state' => 'Statut final',
+        'channel' => "Cannaux d'aplication"
     ],
 
     'recover_password' => [
