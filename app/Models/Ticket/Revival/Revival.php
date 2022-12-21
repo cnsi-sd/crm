@@ -93,6 +93,11 @@ class Revival extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.end_state'))
             ->setKey('end_state');
+        $columns[] = TableColumnBuilder::actions()
+            ->setCallback(function (Revival $revival) {
+                return view('configuration.revival.inline_table_actions')
+                    ->with('revival', $revival);
+            });
 
         return $columns;
     }

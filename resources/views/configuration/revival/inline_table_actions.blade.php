@@ -1,4 +1,4 @@
-@can('edit', \App\Models\Ticket\Revival\Revival::class)
+{{--@can('edit', \App\Models\Ticket\Revival\Revival::class)--}}
     <a
             href="{{ route('edit_revival', ['revival' => $revival]) }}"
             class="btn btn-secondary btn-sm"
@@ -6,8 +6,8 @@
     >
         <i class="uil-edit"></i>
     </a>
-@endcan
-@can('edit', \App\Models\Ticket\Revival\Revival::class)
+{{--@endcan
+@can('edit', \App\Models\Ticket\Revival\Revival::class)--}}
 
     <a
             data-bs-toggle="modal"
@@ -17,6 +17,8 @@
     >
         <i class="uil-trash-alt"></i>
     </a>
-    @include('configuration.defaultAnswer.modal.delete')
+    @include('configuration.revival.modal.delete')
+{{--
 
 @endcan
+--}}
