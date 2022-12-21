@@ -9,6 +9,7 @@ return [
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'create' => 'Création',
     'new' => 'Nouveau',
     'no_result' => 'Aucun résultat',
     'logout' => 'Déconnexion',
@@ -92,6 +93,7 @@ return [
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Cannaux sélectioner',
+        'message' => 'Message '
     ],
 
     'revival' => [
