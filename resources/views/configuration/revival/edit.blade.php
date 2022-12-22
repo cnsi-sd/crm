@@ -41,7 +41,7 @@
                                 />
                             </div>
                             <div class="form-group mb-3">
-                                <label for="name">{{__('app.revival.max_revival')}} (en jours)
+                                <label for="name">{{__('app.revival.max_revival')}}
                                     <span class="required_field">*</span>
                                 </label>
                                 <input
@@ -137,8 +137,8 @@
                                 <option value="">-- {{trans_choice('app.revival.end_state', 1)}} --
                                 </option>
                                 @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $key => $value)
-                                    <option value="{{ $key }}"
-                                        @if($revival->isStateSelected($key)) selected @endif>
+                                    <option value="{{ $value }}"
+                                        @if($revival->isStateSelected($value)) selected @endif>
                                         {{ $value }}
                                     </option>
                                 @endforeach

@@ -49,12 +49,18 @@ class Revival extends Model
 
     public function isAnswerSelected(DefaultAnswer $defaultAnswer): bool
     {
-        return $this->default_answer->id === $defaultAnswer->id;
+        if (isset($this->default_answer->id))
+            return $this->default_answer->id === $defaultAnswer->id;
+
+        return false;
     }
 
     public function isEndAnswerSelected(DefaultAnswer $defaultAnswer): bool
     {
-        return $this->end_default_answer->id === $defaultAnswer->id;
+        if (isset($this->end_default_answer->id))
+            return $this->end_default_answer->id === $defaultAnswer->id;
+
+        return false;
     }
 
     public function isStateSelected($state): bool
@@ -87,15 +93,15 @@ class Revival extends Model
             ->setLabel(__('app.revival.name'))
             ->setKey('name');
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.revival.frequency'))
-            ->setKey('frequency');
-        $columns[] = (new TableColumnBuilder())
             ->setLabel(trans_choice('app.revival.channel', 1))
             ->setCallback(function (Revival $revival) {
                 $channels = $revival->channels->pluck('name')->toArray();
                 return implode(", ", $channels);
             })
             ->setKey('default_answer');
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.revival.frequency'))
+            ->setKey('frequency');
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.max_revival'))
             ->setKey('max_revival');
@@ -114,6 +120,8 @@ class Revival extends Model
             ->setKey('end_default_answer_id');
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.end_state'))
+            ->setType(ColumnTypeEnum::SELECT)
+            ->setOptions(TicketStateEnum::getList())
             ->setKey('end_state');
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Revival $revival) {

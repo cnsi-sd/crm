@@ -40,7 +40,8 @@ return [
     'permission' =>[
         'user' => 'Utilisateur',
         'role' => 'Role',
-        'default_message_answer' => 'Message par défaut'
+        'default_message_answer' => 'Message par défaut',
+        'revival' => 'Relance automatique'
     ],
 
     'role' => [

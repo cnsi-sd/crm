@@ -6,8 +6,6 @@
     >
         <i class="uil-edit"></i>
     </a>
-@endcan
-@can('edit', App\Models\Channel\DefaultAnswer::class)
 
     <a
             data-bs-toggle="modal"

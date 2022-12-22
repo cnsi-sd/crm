@@ -32,13 +32,15 @@ class RevivalController extends Controller
 
     public function edit(Request $request, ?Revival $revival)
     {
-        if (!$revival)
+        /*dd($revival);*/
+        if (!$revival){
             $revival = new Revival();
+        }
 
         if ($request->exists('save_default_answer'))
         {
             $this->save_revival($request, $revival);
-            alert::toastSuccess(__('app.defaultAnswer.save'));
+            alert::toastSuccess(__('app.save'));
             return redirect()->route('revival');
         }
 

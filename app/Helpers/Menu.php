@@ -49,7 +49,8 @@ abstract class Menu
                     [
                         'text' => trans_choice('app.revival.revival', 2),
                         'route' => route('revival'),
-                        'ref' => 'revival'
+                        'ref' => 'revival',
+                        'permission' => PermissionEnum::REVIVAL_READ
                     ],
                 ]
             ],

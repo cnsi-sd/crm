@@ -45,6 +45,18 @@ abstract class Permission
                     ],
                 ],
             ],
+            [
+                'title' => trans_choice('app.permission.revival', 2),
+                'sub_sections' => [
+                    [
+                        'title' => trans_choice('app.permission.revival',2),
+                        'items' => [
+                            PermissionEnum::REVIVAL_READ,
+                            PermissionEnum::REVIVAL_EDIT,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 
