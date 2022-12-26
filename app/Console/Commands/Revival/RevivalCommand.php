@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands\Revival;
 
+use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Jobs\SendMessage\ButSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Revival\Revival;
@@ -158,6 +160,12 @@ class RevivalCommand extends Command
         $messageBD->content = $message->content;
         $messageBD->save();
         $this->logger->info('Message save in DB');
+
+        $channel = $thread->ticket->channel->name;
+        match ($channel){
+            ChannelEnum::BUT_FR => ButSendMessage::dispatch($messageBD),
+        };
+
         return $messageBD;
     }
 
