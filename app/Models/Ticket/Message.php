@@ -58,48 +58,6 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getCredentials ($channel){
-        switch($channel){
-            case(ChannelEnum::BUT_FR):
-                return [
-                    'API_URL' => env('BUT_API_URL'),
-                    'API_KEY' => env('BUT_API_KEY'),
-                    'API_SHOP_ID' => env('BUT_API_SHOP_ID'),
-                ];
-                break;
-        }
-    }
-
-    public function sendReplyRevival($channel,Thread $thread,Revival $revival, $message, $sendTo){
-        $this->getCredentials($channel);
-        $client = $this->initApiClient();
-
-        // send on the MP link api
-        $recipients = new ThreadRecipientCollection();
-        foreach ( $sendTo as $type){
-            $rec = new ThreadRecipient();
-            $rec->setType($type);
-            $recipients->add($rec);
-        }
-
-        $messageToAnswer = new ThreadReplyMessageInput();
-        $messageToAnswer->setTo($recipients);
-        $messageToAnswer->setBody($message->content);
-
-        $request = new ThreadReplyRequest($thread->id, $messageToAnswer);
-
-        // save local send to display on thread
-        $messageBD = new Message();
-        $messageBD->thread_id = $thread->id;
-        $messageBD->user_id = null;
-        $messageBD->channel_message_number = null; // todo : definir comment recuperer
-        $messageBD->author_type = self::getAuthorType(TicketMessageAuthorTypeEnum::ADMIN);
-        $messageBD->content = $message->content;
-
-        $messageBD->save();
-        $client->replyToThread($request);
-    }
-
 
 }
 

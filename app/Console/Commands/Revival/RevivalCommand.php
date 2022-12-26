@@ -24,57 +24,39 @@ class RevivalCommand extends Command
     public function handle()
     {
         $this->logger = new Logger('Ticket/revival', true, true);
-        $this->logger->info('----------------------------------');
-        $this->logger->info('--------------[ START ]-----------');
-        $this->logger->info('----------------------------------');
-        $this->logger->info('----------[ LOADING Ticket]-------');
-        $this->logger->info("----------------------------------\n");
+        $this->logger->info('----[ START ]----');
         try {
             $tickets = Ticket::all();
-            $this->logger->info('All ticket is loading');
-            $this->logger->info('----');
-            foreach ($tickets as $ticket) {
-                $this->logger->info('-- Processing ticket ...');
-
-                $this->processTicket($ticket);
+            $threads = Thread::query()->where('revival_id', '!=', null)->get();
+            $this->logger->info('All ticket with revival are loaded');
+            foreach ($threads as $thread) {
+                $ticket_id = $thread->ticket_id;
+                $ticket = Ticket::find($ticket_id);
+                $this->logger->info('-- Processing thread ');
+                $this->logger->info('Running revival for thread N.' . $thread->id);
+                $this->logger->info('Loading revival N.' . $thread->revival->id);
+                $revival = $thread->revival;
+                try {
+                    $this->logger->info('Checking if ticket is allowable for revival');
+                    $this->isAllowableForRevival($thread, $ticket, $revival);
+                    if ($thread->revival_message_count >= $revival->max_revival) {
+                        $this->logger->info('--- Max count : stop revival');
+                        $this->performLastRevivalAction($thread, $ticket, $revival);
+                    } else {
+                        $this->logger->info('Sending revival message');
+                        $this->sendMessageOfRevival($ticket, $thread, $revival);
+                    }
+                } catch (Exception $exception) {
+                    $this->logger->error($exception->getMessage());
+                }
             }
-            $this->logger->info("|| SCRIPT TERMINATED ||\n");
-            $this->logger->info('----------------------------------');
-            $this->logger->info('---------------[ END ]------------');
-            $this->logger->info('----------------------------------');
+            $this->logger->info('----[ DONE ]----');
         } catch (Exception $e) {
             $this->logger->error($e->getMessage());
             return $e;
         }
     }
 
-    private function processTicket(Ticket $ticket)
-    {
-        $log_indentation = '---- ';
-        $threads = $ticket->threads;
-        foreach ($threads as $thread) {
-            if ($thread->revival !== null) {
-                $this->logger->info('Running revival for thread N.' . $thread->id . ' ...');
-                $this->logger->info('-- Loading revival N.' . $thread->revival->id . ' ---');
-                $revival = $thread->revival;
-                try {
-                    $this->logger->info($log_indentation . 'Checking if ticket is allowable for revival ...');
-                    $this->isAllowableForRevival($thread, $ticket, $revival);
-                    if ($thread->revival_message_count >= $revival->max_revival) {
-                        $this->logger->info($log_indentation . 'Performing last revival action ...');
-                        $this->performLastRevivalAction($thread, $ticket, $revival);
-                    } else {
-                        $this->logger->info($log_indentation . 'Sending revival message ...');
-                        $this->sendMessageOfRevival($ticket, $thread, $revival);
-                    }
-                } catch (Exception $exception) {
-                    $this->logger->error($log_indentation . $exception->getMessage());
-                }
-
-            }
-        }
-
-    }
 
     public function isAllowableForRevival(Thread $thread, Ticket $ticket, $revival = null, $check_date = true)
     {
@@ -112,47 +94,50 @@ class RevivalCommand extends Command
 
     private function performLastRevivalAction(Thread $thread, Ticket $ticket, Revival $revival)
     {
-        $log_indentation = '------ ';
         //todo : make tag action
 
         $endReply = $revival->end_default_answer;
         if (!empty($endReply)) {
-            $this->logger->info($log_indentation . 'Sending response name : ' . $endReply->name);
-            $this->sendEndMessageOfRevival($ticket, $thread, $endReply);
+            $this->logger->info('Sending response name : ' . $endReply->name);
+            $this->sendEndMessageOfRevival($thread, $endReply);
         }
 
         $newStatus = $revival->end_state;
         if (!$newStatus) {
-            $this->logger->info($log_indentation . "Updating the status's ticket " . $ticket->state . " to : " . $newStatus);
+            $this->logger->info("Updating the status's ticket " . $ticket->state . " to : " . $newStatus);
             $ticket->state = $newStatus;
         }
 
         $deadLine = date('Y-m-d H:i:s', time() + (24 * 3600));
-        $this->logger->info($log_indentation . "Updating deadline's ticket " . $ticket->deadline->format('Y-m-d H:i:s') . " to : " . $deadLine);
+        $this->logger->info("Updating deadline's ticket " . $ticket->deadline->format('Y-m-d H:i:s') . " to : " . $deadLine);
         $ticket->deadline = $deadLine;
 
-        $this->logger->info($log_indentation . 'Save ticket modification ...');
+        $this->logger->info('Save ticket modification ...');
         $ticket->save();
 
-        $this->logger->info($log_indentation . 'Stopping ticket revival ...');
+        $this->logger->info('Stopping ticket revival ...');
         $this->stopThreadRevival($thread);
     }
 
-    private function sendEndMessageOfRevival(Ticket $ticket, Thread $thread, $revival)
+    private function sendEndMessageOfRevival(Thread $thread, $revival): void
     {
         $message = $revival->end_default_answer;
-        return $this->sendRevivalMessage($ticket, $thread, $message);
+        $this->sendRevivalMessage($thread, $message);
     }
 
-    private function sendMessageOfRevival(Ticket $ticket, Thread $thread, $revival)
+    private function sendMessageOfRevival(Ticket $ticket, Thread $thread, $revival): void
     {
         $ticket->state = TicketStateEnum::WAITING_CUSTOMER;
         $thread->revival_message_count = ++$thread->revival_message_count;
         $ticket->deadline = date('Y-m-d H:i:s', time() + $this->getFrequencyInSecond($revival));
 
+        $this->logger->info('Save in DB of Ticket and Thread');
+        $ticket->save();
+        $thread->save();
+
 
         $message = $revival->default_answer;
-        return $this->sendRevivalMessage($ticket, $thread, $message);
+        $this->sendRevivalMessage($thread, $message);
     }
 
     private function stopThreadRevival(Thread $thread)
@@ -163,11 +148,19 @@ class RevivalCommand extends Command
         $thread->save();
     }
 
-    private function sendRevivalMessage(Ticket $ticket, Thread $thread, Revival $revival)
+    private function sendRevivalMessage(Thread $thread, DefaultAnswer $message)
     {
-        $channel = $ticket->channel->name;
-        return Message::sendReplyRevival($channel, $thread, $revival);
+        $messageBD = new Message();
+        $messageBD->thread_id = $thread->id;
+        $messageBD->user_id = null;
+        $messageBD->channel_message_number = null; // todo : definir comment recuperer
+        $messageBD->author_type = TicketMessageAuthorTypeEnum::ADMIN;
+        $messageBD->content = $message->content;
+        $messageBD->save();
+        $this->logger->info('Message save in DB');
+        return $messageBD;
     }
+
 
     private function getFrequencyInSecond(Revival $revival)
     {
