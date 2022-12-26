@@ -40,7 +40,7 @@ abstract class AbstractMiraklImportMessage extends Command
 
     public function handle()
     {
-        $this->logger = new Logger($this->log_path);
+        /*$this->logger = new Logger($this->log_path);*/
         $date_time = new DateTime();
         $date_time->modify(self::FROM_DATE_TRANSFORMATOR);
 
@@ -64,7 +64,7 @@ abstract class AbstractMiraklImportMessage extends Command
         foreach ($threads as $miraklThread) {
             try {
                 DB::beginTransaction();
-                $this->logger->info("begin Transaction");
+                /*$this->logger->info("begin Transaction");*/
                 $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
                 $channel = Channel::getByName($this->getChannelName());
                 $order = Order::getOrder($mpOrderId, $channel);

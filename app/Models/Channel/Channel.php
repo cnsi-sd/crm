@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $updated_at
  *
  * @property DefaultAnswer $defaultAnswers
- * @property Revival $revival
+ * @property Revival[] $revivals
  * @property Ticket[] $tickets
  * @property Order[] $orders
  */
@@ -35,7 +35,7 @@ class Channel extends Model
         return $this->hasMany(DefaultAnswer::class);
     }
 
-    public function revival(): HasMany
+    public function revivals(): HasMany
     {
         return $this->hasMany(Revival::class);
     }

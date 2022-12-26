@@ -35,7 +35,7 @@
                                     type="number"
                                     name="frequency"
                                     class="form-control form-control-sm"
-                                    min="0"
+                                    min="1"
                                     value="{{ old('name', $revival->frequency ?? '') }}"
                                     required
                                 />
@@ -47,7 +47,7 @@
                                 <input
                                     type="number"
                                     name="max_revival"
-                                    min="0"
+                                    min="1"
                                     class="form-control form-control-sm"
                                     value="{{ old('name', $revival->max_revival ?? '') }}"
                                     required

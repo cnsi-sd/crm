@@ -7,10 +7,12 @@ use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
+use App\Models\Ticket\Thread;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -25,6 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property DefaultAnswer $default_answer
  * @property DefaultAnswer $end_default_answer
  * @property Channel[] $channels
+ * @property Thread[] $threads
  */
 class Revival extends Model
 {
@@ -49,18 +52,12 @@ class Revival extends Model
 
     public function isAnswerSelected(DefaultAnswer $defaultAnswer): bool
     {
-        if (isset($this->default_answer->id))
-            return $this->default_answer->id === $defaultAnswer->id;
-
-        return false;
+        return $this->default_answer_id === $defaultAnswer->id;
     }
 
     public function isEndAnswerSelected(DefaultAnswer $defaultAnswer): bool
     {
-        if (isset($this->end_default_answer->id))
-            return $this->end_default_answer->id === $defaultAnswer->id;
-
-        return false;
+        return $this->end_default_answer_id === $defaultAnswer->id;
     }
 
     public function isStateSelected($state): bool
@@ -81,6 +78,11 @@ class Revival extends Model
     public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class, 'channel_revivals', 'revival_id', 'channel_id');
+    }
+
+    public function threads(): HasMany
+    {
+        return $this->hasMany(Thread::class);
     }
 
     public static function getTableColumns(): array
@@ -132,7 +134,8 @@ class Revival extends Model
         return $columns;
     }
 
-    public function softDeleted(){
+    public function softDeleted()
+    {
         return $this->delete();
     }
 }

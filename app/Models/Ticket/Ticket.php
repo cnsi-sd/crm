@@ -12,7 +12,6 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Date;
 
 /**
  * @property int $id
@@ -21,7 +20,7 @@ use Illuminate\Support\Facades\Date;
  * @property int $user_id
  * @property string $state
  * @property string $priority
- * @property Date $deadline
+ * @property Datetime $deadline
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *

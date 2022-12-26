@@ -11,6 +11,7 @@ return [
     'edit' => 'Modifier',
     'create' => 'Création',
     'delete' => 'Suppression',
+    'deleteExpression' => 'Êtes vous sûr de vouloir supprimer : ',
     'new' => 'Nouveau',
     'no_result' => 'Aucun résultat',
     'logout' => 'Déconnexion',

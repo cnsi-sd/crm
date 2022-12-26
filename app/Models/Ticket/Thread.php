@@ -2,6 +2,7 @@
 
 namespace App\Models\Ticket;
 
+use App\Models\Ticket\Revival\Revival;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property int $ticket_id
+ * @property DateTime $revival_start_date
+ * @property int $revival_message_count
  * @property string $channel_thread_number
  * @property string $name
  * @property string $customer_issue
@@ -19,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Comment[] $comments
  * @property Ticket $ticket
  * @property Message[] $messages
+ * @property Revival $revival
  */
 
 class Thread extends Model
@@ -27,6 +31,9 @@ class Thread extends Model
 
     protected $fillable = [
         'ticket_id',
+        'revival_id',
+        'revival_start_date',
+        'revival_message_count',
         'channel_thread_number',
         'name',
         'customer_issue',
@@ -67,4 +74,11 @@ class Thread extends Model
     {
         return $this->belongsTo(Ticket::class);
     }
+
+    public function revival(): BelongsTo
+    {
+        return $this->belongsTo(Revival::class);
+    }
+
+
 }

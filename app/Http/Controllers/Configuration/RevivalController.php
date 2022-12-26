@@ -32,7 +32,6 @@ class RevivalController extends Controller
 
     public function edit(Request $request, ?Revival $revival)
     {
-        /*dd($revival);*/
         if (!$revival){
             $revival = new Revival();
         }
@@ -52,8 +51,8 @@ class RevivalController extends Controller
         // Validate request
         $request->validate([
             'name' => 'required',
-            'frequency' => 'required',
-            'max_revival' => 'required',
+            'frequency' => ['required', 'min:1'],
+            'max_revival' => ['required', 'min:1'],
             'end_state' => 'required'
         ]);
 

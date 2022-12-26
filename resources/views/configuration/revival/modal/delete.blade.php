@@ -8,7 +8,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="text-center">Are you sure you want to delete : {{ $revival->name }} ?</h4>
+                    <h4 class="text-center">{{  __('app.deleteExpression') . $revival->name }} ?</h4>
                     <button
                         type="button"
                         class="close"
