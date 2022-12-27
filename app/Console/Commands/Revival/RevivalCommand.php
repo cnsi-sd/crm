@@ -5,7 +5,18 @@ namespace App\Console\Commands\Revival;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Jobs\SendMessage\CarrefourSendMessage;
+use App\Jobs\SendMessage\ConforamaSendMesssage;
+use App\Jobs\SendMessage\DartySendMessage;
+use App\Jobs\SendMessage\IntermarcheSendMessage;
+use App\Jobs\SendMessage\LaposteSendMessage;
+use App\Jobs\SendMessage\AbstractMiraklSendMessage;
 use App\Jobs\SendMessage\ButSendMessage;
+use App\Jobs\SendMessage\LeclercSendMessage;
+use App\Jobs\SendMessage\MetroSendMessage;
+use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\ShowroomSendMessage;
+use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Revival\Revival;
@@ -40,7 +51,7 @@ class RevivalCommand extends Command
                 $revival = $thread->revival;
                 try {
                     $this->logger->info('Checking if ticket is allowable for revival');
-                    $this->isAllowableForRevival($thread, $ticket, $revival);
+                    //$this->isAllowableForRevival($thread, $ticket, $revival);
                     if ($thread->revival_message_count >= $revival->max_revival) {
                         $this->logger->info('--- Max count : stop revival');
                         $this->performLastRevivalAction($thread, $ticket, $revival);
@@ -81,7 +92,7 @@ class RevivalCommand extends Command
                 throw new Exception('Le ticket doit être en Attente client');
 
         } catch (Exception $exception) {
-            throw new Exception('Relance automatique non applicable au ticket N.' . $thread->id . ' : ' . $exception->getMessage());
+            throw new Exception('Relance automatique non applicable au thread #' . $thread->id . ' : ' . $exception->getMessage());
         }
     }
 
@@ -121,16 +132,15 @@ class RevivalCommand extends Command
         $this->stopThreadRevival($thread);
     }
 
-    private function sendEndMessageOfRevival(Thread $thread, $revival): void
+    private function sendEndMessageOfRevival(Thread $thread, $endReply): void
     {
-        $message = $revival->end_default_answer;
-        $this->sendRevivalMessage($thread, $message);
+        $this->sendRevivalMessage($thread, $endReply);
     }
 
     private function sendMessageOfRevival(Ticket $ticket, Thread $thread, $revival): void
     {
         $ticket->state = TicketStateEnum::WAITING_CUSTOMER;
-        $thread->revival_message_count = ++$thread->revival_message_count;
+        //$thread->revival_message_count = ++$thread->revival_message_count;
         $ticket->deadline = date('Y-m-d H:i:s', time() + $this->getFrequencyInSecond($revival));
 
         $this->logger->info('Save in DB of Ticket and Thread');
@@ -161,10 +171,22 @@ class RevivalCommand extends Command
         $messageBD->save();
         $this->logger->info('Message save in DB');
 
+        $this->logger->info('Message send on API');
         $channel = $thread->ticket->channel->name;
         match ($channel){
             ChannelEnum::BUT_FR => ButSendMessage::dispatch($messageBD),
+            ChannelEnum::CARREFOUR_FR => CarrefourSendMessage::dispatch($messageBD),
+            ChannelEnum::CONFORAMA_FR => ConforamaSendMesssage::dispatch($messageBD),
+            ChannelEnum::DARTY_COM => DartySendMessage::dispatch($messageBD),
+            ChannelEnum::INTERMARCHE_FR => IntermarcheSendMessage::dispatch($messageBD),
+            ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($messageBD),
+            ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($messageBD),
+            ChannelEnum::METRO_FR => MetroSendMessage::dispatch($messageBD),
+            ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($messageBD),
+            ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($messageBD),
+            ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($messageBD),
         };
+
 
         return $messageBD;
     }

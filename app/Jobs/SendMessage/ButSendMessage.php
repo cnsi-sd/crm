@@ -2,12 +2,8 @@
 
 namespace App\Jobs\SendMessage;
 
-class ButSendMessage extends AbstractSendMessage
+class ButSendMessage extends AbstractMiraklSendMessage
 {
-    public function __construct()
-    {
-        return parent::__construct($this->message);
-    }
     protected function getCredentials(): array
     {
         return [
