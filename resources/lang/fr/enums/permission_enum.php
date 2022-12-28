@@ -9,4 +9,5 @@ return [
     'DEFAULT_ANSWER_EDIT' => 'Modifier un message par défaut',
     'REVIVAL_READ' => 'Consulter la liste des relances automatiques',
     'REVIVAL_EDIT' => 'Modifier une relance automatique',
+    'TICKET_READ' => 'Consulter la liste des tickets',
 ];

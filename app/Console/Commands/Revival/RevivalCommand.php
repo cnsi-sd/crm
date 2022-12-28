@@ -51,7 +51,7 @@ class RevivalCommand extends Command
                 $revival = $thread->revival;
                 try {
                     $this->logger->info('Checking if ticket is allowable for revival');
-                    //$this->isAllowableForRevival($thread, $ticket, $revival);
+                    $thread->isAllowableForRevival($revival);
                     if ($thread->revival_message_count >= $revival->max_revival) {
                         $this->logger->info('--- Max count : stop revival');
                         $this->performLastRevivalAction($thread, $ticket, $revival);
@@ -70,40 +70,6 @@ class RevivalCommand extends Command
         }
     }
 
-
-    public function isAllowableForRevival(Thread $thread, Ticket $ticket, $revival = null, $check_date = true)
-    {
-        try {
-            if (is_null($revival))
-                $revival = $thread->revival;
-
-            $defaultReply = $revival->default_answer->id;
-            if (empty($defaultReply))
-                throw new Exception('Configuration de la relance auto incomplète : le champs `Réponse par défaut` es invalide');
-
-            if ($revival->frequency <= 0)
-                throw new Exception('Configuration de la relance auto incomplète : le champs `Fréquence des relances` es invalide');
-
-            $lastMessage = $this->getLastMessage($thread);
-            if (!$lastMessage || !$lastMessage->id || $lastMessage->author_type !== TicketMessageAuthorTypeEnum::ADMIN)
-                throw new Exception('Le dernier message doit être écrit par un administrateur');
-
-            if ($ticket->state !== TicketStateEnum::WAITING_CUSTOMER)
-                throw new Exception('Le ticket doit être en Attente client');
-
-        } catch (Exception $exception) {
-            throw new Exception('Relance automatique non applicable au thread #' . $thread->id . ' : ' . $exception->getMessage());
-        }
-    }
-
-    public function getLastMessage($thread): ?Message
-    {
-        // todo : voir tri object
-        return Message::query()
-            ->where('thread_id', $thread->id)
-            ->orderBy('created_at', 'DESC')
-            ->first();
-    }
 
     private function performLastRevivalAction(Thread $thread, Ticket $ticket, Revival $revival)
     {
@@ -194,7 +160,7 @@ class RevivalCommand extends Command
 
     private function getFrequencyInSecond(Revival $revival)
     {
-        return $revival->frequency * 24 * 3600;
+        return $revival->frequency * (24 * 3600);
     }
 
 }

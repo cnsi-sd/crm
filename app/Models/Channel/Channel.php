@@ -8,6 +8,7 @@ use App\Models\Ticket\Ticket;
 use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $updated_at
  *
  * @property DefaultAnswer $defaultAnswers
- * @property Revival[] $revivals
+ * @property Revival $revivals
  * @property Ticket[] $tickets
  * @property Order[] $orders
  */
@@ -30,14 +31,16 @@ class Channel extends Model
         'updated_at'
     ];
 
-    public function defaultAnswers(): HasMany
+    public function defaultAnswers(): BelongsToMany
     {
-        return $this->hasMany(DefaultAnswer::class);
+        return $this->belongsToMany(DefaultAnswer::class);
     }
 
-    public function revivals(): HasMany
+    public function revivals(): BelongsToMany
     {
-        return $this->hasMany(Revival::class);
+        return $this->belongsToMany(Revival::class);
+    }
+
     public static function getChannelsNames(): array
     {
         return self::query()->orderBy('name', 'ASC')
@@ -65,10 +68,4 @@ class Channel extends Model
         return $channel;
     }
 
-    public static function getChannelNames(): array
-    {
-        return self::query()->orderBy('name', 'ASC')
-            ->pluck('name', 'id')
-            ->toArray();
-    }
 }

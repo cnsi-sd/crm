@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tickets;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
+use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Message;
@@ -13,6 +14,7 @@ use App\Models\Channel\Channel;
 use App\Models\User\User;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function view;
@@ -67,7 +69,10 @@ class TicketController extends Controller
             $ticket->delivery_date = $request->input('ticket-delivery_date');
             $ticket->save();
 
+
             $thread->customer_issue = $request->input('ticket-thread-customer_issue');
+            $thread->revival_id = $request->input('ticket-revival');
+            $thread->revival_start_date = $request->input('revival-delivery_date');
             $thread->save();
 
             if($request->input('ticket-thread-messages-content')) {
@@ -102,15 +107,18 @@ class TicketController extends Controller
 
         $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get()->toArray();
         $threads = [];
-        foreach ($queryThreads as $thread) {
-            $threads[] = $thread['id'];
+        foreach ($queryThreads as $thread2) {
+            $threads[] = $thread2['id'];
         }
         $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
         $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
         $queryChannels = Channel::query()->get()->toArray();
 
+        $revivalError = $thread->throwableRevival($thread->revival);
+
         return view('tickets.ticket')
             ->with('ticket',$queryTicket)
+            ->with('thread', $thread)
             ->with('activeThread',$queryThread)
             ->with('users', $queryUsers)
             ->with('threads', $queryThreads)
@@ -118,7 +126,8 @@ class TicketController extends Controller
             ->with('comments', $queryComments)
             ->with('ticketStateEnum', TicketStateEnum::getList())
             ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
-            ->with('channels', $queryChannels);
+            ->with('channels', $queryChannels)
+            ->with('revivalError', $revivalError);
     }
 
 }

@@ -13,11 +13,8 @@ return [
     'delete' => 'Suppression',
     'deleteExpression' => 'Êtes vous sûr de vouloir supprimer : ',
     'new' => 'Nouveau',
-    'no_result' => 'Aucun résultat',
-    'logout' => 'Déconnexion',
     'display' => 'Afficher',
     'logout' => 'Déconnexion',
-    'search' => 'Rechercher',
     'no_result' => 'Aucun résultat.',
     'username' => 'Nom d\'utilisateur',
     'password' => 'Mot de passe',
@@ -60,7 +57,8 @@ return [
         'user' => 'Utilisateur',
         'role' => 'Role',
         'default_message_answer' => 'Message par défaut',
-        'revival' => 'Relance automatique'
+        'revival' => 'Relance automatique',
+        'ticket'=> 'Ticket'
     ],
 
     'role' => [
@@ -106,7 +104,6 @@ return [
         'my_tickets' => 'Mes tickets',
         'channel' => 'Canal de diffusion',
         'subjects' => 'Sujets',
-        'state' => 'Statut',
         'mapping' => 'Association',
         'order' => 'Commande',
         'base_information' => 'Informations de base',
@@ -116,6 +113,11 @@ return [
         'customer_issue' => 'Problématique client',
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
+        'revival' => 'Relance automatique',
+        'start_revival' => 'Date de début de la relance automatique',
+        'select_revival' => 'relance automatique selectionnées',
+        'frequency' => "Fréquence d'envoie : ",
+        'MaxRevival' => "Nombre de relance effectuer : "
     ],
 
     'login' => [

@@ -8,6 +8,7 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Thread;
+use App\Models\Ticket\Ticket;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -65,6 +66,10 @@ class Revival extends Model
         return $this->end_state === $state;
     }
 
+    public function isRevivalSelected($revival_id) {
+        return $this->threads->keyBy('revival_id')->has($revival_id);
+    }
+
     public function default_answer(): BelongsTo
     {
         return $this->belongsTo(DefaultAnswer::class);
@@ -77,7 +82,7 @@ class Revival extends Model
 
     public function channels(): BelongsToMany
     {
-        return $this->belongsToMany(Channel::class, 'channel_revivals', 'revival_id', 'channel_id');
+        return $this->belongsToMany(Channel::class, 'channel_revival', 'revival_id', 'channel_id');
     }
 
     public function threads(): HasMany

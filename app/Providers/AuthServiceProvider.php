@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         User::class => UserPolicy::class,
         DefaultAnswer::class => DefaultAnswerPolicy::class,
-        Revival::class => RevivalPolicy::class
+        Revival::class => RevivalPolicy::class,
         Ticket::class => TicketPolicy::class,
     ];
 

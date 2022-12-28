@@ -57,6 +57,17 @@ abstract class Permission
                     ],
                 ],
             ],
+            [
+                'title' => trans_choice('app.permission.ticket', 2),
+                'sub_sections' => [
+                    [
+                        'title' => trans_choice('app.permission.ticket',2),
+                        'items' => [
+                            PermissionEnum::TICKET_READ,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

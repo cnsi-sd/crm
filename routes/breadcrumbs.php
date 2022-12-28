@@ -31,10 +31,6 @@ Breadcrumbs::for('permissions', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.navbar.permissions'));
 });
 
-
-/** Roles */
-Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin');
 /** Tickets */
 Breadcrumbs::for('tickets', function (BreadcrumbTrail $trail) {
    $trail->parent('home');
@@ -43,9 +39,10 @@ Breadcrumbs::for('tickets', function (BreadcrumbTrail $trail) {
 
 /** Roles */
 Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
-    $trail->parent('permissions');
+    $trail->parent('admin');
     $trail->push(trans_choice('app.role.role', 2), route('roles'));
 });
+
 Breadcrumbs::for('create_role', function (BreadcrumbTrail $trail) {
     $trail->parent('roles');
     $trail->push(__('app.role.new'), route('create_role'));
