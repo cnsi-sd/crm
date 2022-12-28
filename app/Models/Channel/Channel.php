@@ -38,6 +38,11 @@ class Channel extends Model
     public function revivals(): HasMany
     {
         return $this->hasMany(Revival::class);
+    public static function getChannelsNames(): array
+    {
+        return self::query()->orderBy('name', 'ASC')
+            ->pluck('name', 'id')
+            ->toArray();
     }
 
     public function tickets(): HasMany

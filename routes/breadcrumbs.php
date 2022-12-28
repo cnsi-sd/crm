@@ -25,7 +25,7 @@ Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.configuration.configuration'));
 });
 
-/** Advanced */
+/** Permissions */
 Breadcrumbs::for('permissions', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push(__('app.navbar.permissions'));
@@ -35,15 +35,24 @@ Breadcrumbs::for('permissions', function (BreadcrumbTrail $trail) {
 /** Roles */
 Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
+/** Tickets */
+Breadcrumbs::for('tickets', function (BreadcrumbTrail $trail) {
+   $trail->parent('home');
+   $trail->push(trans_choice('app.ticket.ticket',2));
+});
+
+/** Roles */
+Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
+    $trail->parent('permissions');
     $trail->push(trans_choice('app.role.role', 2), route('roles'));
 });
 Breadcrumbs::for('create_role', function (BreadcrumbTrail $trail) {
     $trail->parent('roles');
-    $trail->push(__('app.role.new'));
+    $trail->push(__('app.role.new'), route('create_role'));
 });
-Breadcrumbs::for('edit_role', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('edit_role', function (BreadcrumbTrail $trail, $role) {
     $trail->parent('roles');
-    $trail->push(__('app.role.edit'));
+    $trail->push(__('app.role.edit'), route('edit_role', $role));
 });
 
 /** Users */
@@ -53,11 +62,29 @@ Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('create_user', function (BreadcrumbTrail $trail) {
     $trail->parent('users');
-    $trail->push(trans_choice('app.user.new', 2));
+    $trail->push(__('app.user.new'), route('create_user'));
 });
-Breadcrumbs::for('edit_user', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('edit_user', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('users');
-    $trail->push(trans_choice('app.user.edit', 2));
+    $trail->push(__('app.user.edit'), route('edit_user', $user));
+});
+
+/** Tickets */
+Breadcrumbs::for('all_tickets', function (BreadcrumbTrail $trail) {
+    $trail->parent('tickets');
+    $trail->push(__('app.ticket.all_tickets'), route('all_tickets'));
+});
+Breadcrumbs::for('user_tickets', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('tickets');
+    $trail->push(__('app.ticket.my_tickets'), route('user_tickets', $user));
+});
+Breadcrumbs::for('ticket', function (BreadcrumbTrail $trail, $ticket) {
+    $trail->parent('tickets');
+    $trail->push(trans_choice('app.ticket.ticket',1), route('ticket', $ticket));
+});
+Breadcrumbs::for('ticket_thread', function (BreadcrumbTrail $trail, $ticket) {
+    $trail->parent('tickets');
+    $trail->push(trans_choice('app.ticket.ticket',1), route('ticket', $ticket));
 });
 
 /** defaultAnswers */
