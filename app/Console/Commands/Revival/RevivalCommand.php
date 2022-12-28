@@ -140,7 +140,7 @@ class RevivalCommand extends Command
     private function sendMessageOfRevival(Ticket $ticket, Thread $thread, $revival): void
     {
         $ticket->state = TicketStateEnum::WAITING_CUSTOMER;
-        //$thread->revival_message_count = ++$thread->revival_message_count;
+        $thread->revival_message_count = ++$thread->revival_message_count;
         $ticket->deadline = date('Y-m-d H:i:s', time() + $this->getFrequencyInSecond($revival));
 
         $this->logger->info('Save in DB of Ticket and Thread');
