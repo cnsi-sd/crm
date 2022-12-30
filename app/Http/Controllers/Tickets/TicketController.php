@@ -55,6 +55,9 @@ class TicketController extends Controller
         return redirect()->route('ticket_thread', [$ticket,$queryThreads['id']]);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function ticket(Request $request, ?Ticket $ticket, ?Thread $thread): View
     {
         if ($request->input()){
@@ -114,8 +117,6 @@ class TicketController extends Controller
         $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
         $queryChannels = Channel::query()->get()->toArray();
 
-        $revivalError = $thread->throwableRevival($thread->revival);
-
         return view('tickets.ticket')
             ->with('ticket',$queryTicket)
             ->with('thread', $thread)
@@ -126,8 +127,7 @@ class TicketController extends Controller
             ->with('comments', $queryComments)
             ->with('ticketStateEnum', TicketStateEnum::getList())
             ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
-            ->with('channels', $queryChannels)
-            ->with('revivalError', $revivalError);
+            ->with('channels', $queryChannels);
     }
 
 }

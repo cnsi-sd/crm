@@ -80,7 +80,7 @@ abstract class AbstractMiraklImportMessage extends Command
 
                 DB::commit();
             } catch (Exception $e) {
-                $this->logger->error("Error", $e);
+                $this->logger->error($e->getMessage());
                 $errorOutput = 'An error has occurred. Rolling back';
                 $this->error($errorOutput);
                 DB::rollBack();

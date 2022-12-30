@@ -5,13 +5,12 @@ namespace App\Console\Commands\Revival;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
 use App\Jobs\SendMessage\ConforamaSendMesssage;
 use App\Jobs\SendMessage\DartySendMessage;
 use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
-use App\Jobs\SendMessage\AbstractMiraklSendMessage;
-use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
 use App\Jobs\SendMessage\MetroSendMessage;
 use App\Jobs\SendMessage\RueDuCommerceSendMessage;
@@ -19,66 +18,65 @@ use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
-use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Thread;
-use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class RevivalCommand extends Command
 {
+    protected $signature = 'ticket:revival:send';
+    protected $description = 'Send revival on eligible threads';
 
-    protected $signature = 'revival:message:ticket';
-    protected $description = 'Releance automatique de message';
-
-    protected $logger;
+    protected Logger $logger;
 
     public function handle()
     {
-        $this->logger = new Logger('Ticket/revival', true, true);
+        $this->logger = new Logger('ticket/revival/revival.log', true, true);
         $this->logger->info('----[ START ]----');
+
         try {
-            $tickets = Ticket::all();
-            $threads = Thread::query()->where('revival_id', '!=', null)->get();
+            DB::beginTransaction();
+            /** @var Thread[] $threads */
+            $threads = Thread::query()->whereNotNull('revival_id')->get();
             $this->logger->info('All ticket with revival are loaded');
+
             foreach ($threads as $thread) {
-                $ticket_id = $thread->ticket_id;
-                $ticket = Ticket::find($ticket_id);
-                $this->logger->info('-- Processing thread ');
-                $this->logger->info('Running revival for thread N.' . $thread->id);
-                $this->logger->info('Loading revival N.' . $thread->revival->id);
-                $revival = $thread->revival;
-                try {
-                    $this->logger->info('Checking if ticket is allowable for revival');
-                    $thread->isAllowableForRevival($revival);
-                    if ($thread->revival_message_count >= $revival->max_revival) {
-                        $this->logger->info('--- Max count : stop revival');
-                        $this->performLastRevivalAction($thread, $ticket, $revival);
-                    } else {
-                        $this->logger->info('Sending revival message');
-                        $this->sendMessageOfRevival($ticket, $thread, $revival);
-                    }
-                } catch (Exception $exception) {
-                    $this->logger->error($exception->getMessage());
+                $this->logger->info('-- Processing thread #' . $thread->id);
+                $this->logger->info('Loading revival #' . $thread->revival->id);
+
+                $this->logger->info('Checking if ticket is allowable for revival');
+                if ($revivalError = $thread->getThreadRevivalError()) {
+                    $this->logger->error($revivalError);
+                } elseif ($thread->revival_message_count >= $thread->revival->max_revival) {
+                    $this->logger->info('--- Max count : stop revival');
+                    $this->performLastRevivalAction($thread);
+                } else {
+                    $this->logger->info('Sending revival message');
+                    $this->sendMessageOfRevival($thread);
                 }
             }
+            DB::commit();
             $this->logger->info('----[ DONE ]----');
         } catch (Exception $e) {
             $this->logger->error($e->getMessage());
-            return $e;
+            $this->logger->error('An error has occurred. Rolling back');
+            DB::rollBack();
+            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
         }
     }
 
-
-    private function performLastRevivalAction(Thread $thread, Ticket $ticket, Revival $revival)
+    private function performLastRevivalAction(Thread $thread)
     {
         //todo : make tag action
+        $ticket = $thread->ticket;
+        $revival = $thread->revival;
 
         $endReply = $revival->end_default_answer;
         if (!empty($endReply)) {
             $this->logger->info('Sending response name : ' . $endReply->name);
-            $this->sendEndMessageOfRevival($thread, $endReply);
+            $this->sendRevivalMessage($thread, $endReply);
         }
 
         $newStatus = $revival->end_state;
@@ -98,27 +96,27 @@ class RevivalCommand extends Command
         $this->stopThreadRevival($thread);
     }
 
-    private function sendEndMessageOfRevival(Thread $thread, $endReply): void
+    private function sendMessageOfRevival(Thread $thread): void
     {
-        $this->sendRevivalMessage($thread, $endReply);
-    }
+        $revival = $thread->revival;
 
-    private function sendMessageOfRevival(Ticket $ticket, Thread $thread, $revival): void
-    {
+        $this->logger->info('Save ticket and Thread');
+
+        // Update ticket
+        $ticket = $thread->ticket;
         $ticket->state = TicketStateEnum::WAITING_CUSTOMER;
-        $thread->revival_message_count = ++$thread->revival_message_count;
-        $ticket->deadline = date('Y-m-d H:i:s', time() + $this->getFrequencyInSecond($revival));
-
-        $this->logger->info('Save in DB of Ticket and Thread');
+        $ticket->deadline = date('Y-m-d H:i:s', time() + $thread->getFrequencyInSeconds($revival));
         $ticket->save();
-        $thread->save();
 
+        // Update thread
+        $thread->revival_message_count = ++$thread->revival_message_count;
+        $thread->save();
 
         $message = $revival->default_answer;
         $this->sendRevivalMessage($thread, $message);
     }
 
-    private function stopThreadRevival(Thread $thread)
+    private function stopThreadRevival(Thread $thread): void
     {
         $thread->revival = null;
         $thread->revival_message_count = 0;
@@ -126,20 +124,20 @@ class RevivalCommand extends Command
         $thread->save();
     }
 
-    private function sendRevivalMessage(Thread $thread, DefaultAnswer $message)
+    private function sendRevivalMessage(Thread $thread, DefaultAnswer $message): void
     {
+        $this->logger->info('Save message in DB');
         $messageBD = new Message();
         $messageBD->thread_id = $thread->id;
         $messageBD->user_id = null;
-        $messageBD->channel_message_number = null; // todo : definir comment recuperer
+        $messageBD->channel_message_number = null;
         $messageBD->author_type = TicketMessageAuthorTypeEnum::ADMIN;
         $messageBD->content = $message->content;
         $messageBD->save();
-        $this->logger->info('Message save in DB');
 
-        $this->logger->info('Message send on API');
+        $this->logger->info('Send message on API');
         $channel = $thread->ticket->channel->name;
-        match ($channel){
+        match ($channel) {
             ChannelEnum::BUT_FR => ButSendMessage::dispatch($messageBD),
             ChannelEnum::CARREFOUR_FR => CarrefourSendMessage::dispatch($messageBD),
             ChannelEnum::CONFORAMA_FR => ConforamaSendMesssage::dispatch($messageBD),
@@ -152,15 +150,5 @@ class RevivalCommand extends Command
             ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($messageBD),
             ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($messageBD),
         };
-
-
-        return $messageBD;
     }
-
-
-    private function getFrequencyInSecond(Revival $revival)
-    {
-        return $revival->frequency * (24 * 3600);
-    }
-
 }

@@ -8,7 +8,6 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Thread;
-use App\Models\Ticket\Ticket;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

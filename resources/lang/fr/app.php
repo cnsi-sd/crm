@@ -113,11 +113,6 @@ return [
         'customer_issue' => 'Problématique client',
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
-        'revival' => 'Relance automatique',
-        'start_revival' => 'Date de début de la relance automatique',
-        'select_revival' => 'relance automatique selectionnées',
-        'frequency' => "Fréquence d'envoie : ",
-        'MaxRevival' => "Nombre de relance effectuer : "
     ],
 
     'login' => [
@@ -145,14 +140,19 @@ return [
     'revival' => [
         'revival' => 'Relance automatique|Relances automatiques',
         'name' => 'Nom de la relance automatique',
-        'frequency' => "fréquence d'envoie",
+        'frequency' => "Fréquence d'envoi :",
         'max_revival' => "Nombre d'envoie de relance",
         'default_answer' => 'Message envoyer',
         'end_default_answer' => 'Message envoyer à la fin du cycle de relance',
         'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
         'choose_answer' => 'Choisir le message à envoyer',
         'end_state' => 'Statut final',
-        'channel' => "Cannaux d'aplication"
+        'channel' => "Cannaux d'aplication",
+        'start_revival' => 'À partir du',
+        'select_revival' => 'relance automatique selectionnées',
+        'frequency_details' => 'Tous les jours|Tous les :freq jours',
+        'MaxRevival' => 'Messages envoyés :',
+        'nextReply' => 'Prochaine relance : '
     ],
 
     'recover_password' => [
