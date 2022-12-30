@@ -33,12 +33,12 @@ class Channel extends Model
 
     public function defaultAnswers(): BelongsToMany
     {
-        return $this->belongsToMany(DefaultAnswer::class);
+        return $this->belongsToMany(DefaultAnswer::class)->orderBy('name');
     }
 
     public function revivals(): BelongsToMany
     {
-        return $this->belongsToMany(Revival::class);
+        return $this->belongsToMany(Revival::class)->orderBy('name');
     }
 
     public static function getChannelsNames(): array

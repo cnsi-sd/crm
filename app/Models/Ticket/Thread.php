@@ -8,6 +8,7 @@ use App\Models\Ticket\Revival\Revival;
 use DateInterval;
 use DateTime;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -48,7 +49,15 @@ class Thread extends Model
         'revival_start_date' => 'date',
     ];
 
-    public static function getThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue)
+    /**
+     * create or get thread
+     * @param Ticket $ticket
+     * @param string $channel_thread_number
+     * @param string $name
+     * @param string $customer_issue
+     * @return Model|Builder|Thread
+     */
+    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue): Model|Builder|Thread
     {
         return Thread::query()
             ->join('tickets', 'tickets.id', 'ticket_threads.ticket_id')
@@ -87,6 +96,17 @@ class Thread extends Model
         return $this->belongsTo(Revival::class);
     }
 
+    public function isRevivalSelected($revival_id): bool
+    {
+        return $this->revival_id === $revival_id;
+    }
+
+    /**
+     * This function return a boolean if thread_revival haven't error otherwise return a string with a message error
+     * @param bool $check_dates
+     * @return bool|string
+     * @throws Exception
+     */
     public function getThreadRevivalError(bool $check_dates = true): bool|string
     {
         $revival = $this->revival;
@@ -96,15 +116,15 @@ class Thread extends Model
         $starterMessage = 'Relance automatique non applicable : ';
         $endMessage = '';
 
-        // Verification du message
+        // check message
         if (!$revival->default_answer)
             $endMessage = 'Configuration de la relance auto incomplète : le champs `Réponse par défaut` es invalide';
 
-        //verification de la frequence
+        //check frequency
         if ($revival->frequency <= 0)
             $endMessage = 'Configuration de la relance auto incomplète : le champs `Fréquence des relances` es invalide';
 
-        //verification des parametres du dernier message
+        //check last message parameters
         $lastMessage = $this->getLastMessage();
         if (!$lastMessage || $lastMessage->author_type !== TicketMessageAuthorTypeEnum::ADMIN)
             $endMessage = 'Le dernier message doit être écrit par un administrateur';
@@ -112,7 +132,7 @@ class Thread extends Model
         if ($this->ticket->state !== TicketStateEnum::WAITING_CUSTOMER)
             $endMessage = 'Le ticket doit être en Attente client';
 
-        //verification de la date d'execution du prochain revival
+        //check the nex revival date
         if ($check_dates) {
             // Check next revival date
             $current_time = time();
@@ -127,6 +147,11 @@ class Thread extends Model
             return $starterMessage . $endMessage;
     }
 
+    /**
+     * Check if the start date is greater than the current date otherwise returns the date of the next revival send
+     * @return DateTime
+     * @throws Exception
+     */
     public function getNextRevivalDate(): DateTime
     {
         // Revival start date
@@ -150,8 +175,4 @@ class Thread extends Model
             ->first();
     }
 
-    public function getFrequencyInSeconds(Revival $revival): float|int
-    {
-        return $revival->frequency * 24 * 3600;
-    }
 }

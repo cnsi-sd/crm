@@ -20,6 +20,7 @@ use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use Cnsi\Logger\Logger;
+use DateInterval;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -105,8 +106,11 @@ class RevivalCommand extends Command
         // Update ticket
         $ticket = $thread->ticket;
         $ticket->state = TicketStateEnum::WAITING_CUSTOMER;
-        $ticket->deadline = date('Y-m-d H:i:s', time() + $thread->getFrequencyInSeconds($revival));
-        $ticket->save();
+        $lastDeadline = clone $ticket->deadline;
+        $freq = $revival->frequency;
+        $interval = new DateInterval('P' . $freq . 'D');
+        $lastDeadline->add($interval);
+        $ticket->deadline = $lastDeadline;
 
         // Update thread
         $thread->revival_message_count = ++$thread->revival_message_count;

@@ -65,9 +65,7 @@ class Revival extends Model
         return $this->end_state === $state;
     }
 
-    public function isRevivalSelected($revival_id) {
-        return $this->threads->keyBy('revival_id')->has($revival_id);
-    }
+
 
     public function default_answer(): BelongsTo
     {

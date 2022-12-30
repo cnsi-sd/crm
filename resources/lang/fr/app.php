@@ -149,7 +149,7 @@ return [
         'end_state' => 'Statut final',
         'channel' => "Cannaux d'aplication",
         'start_revival' => 'À partir du',
-        'select_revival' => 'relance automatique selectionnées',
+        'select_revival' => 'Aucune',
         'frequency_details' => 'Tous les jours|Tous les :freq jours',
         'MaxRevival' => 'Messages envoyés :',
         'nextReply' => 'Prochaine relance : '

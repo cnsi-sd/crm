@@ -67,12 +67,10 @@
                             <select
                                 name="channel[]"
                                 id="select-mp"
-                                class="form-control form-control-sm form-select"
+                                class="form-control form-control-sm form-select no-sort"
                                 multiple
                                 required
                             >
-                                <option value="">-- {{trans_choice('app.defaultAnswer.select_channel', 1)}} --
-                                </option>
                                 @foreach(\App\Models\Channel\Channel::all() as $channel)
                                     <option value="{{$channel->id}}"
                                             @if($revival->isChannelSelected($channel)) selected @endif>

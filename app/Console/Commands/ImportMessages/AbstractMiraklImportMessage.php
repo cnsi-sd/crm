@@ -74,7 +74,7 @@ abstract class AbstractMiraklImportMessage extends Command
                 $messages = array_reverse($miraklThread->getMessages()->getItems());
 
                 /** @var ThreadTopic $topic */
-                $thread = \App\Models\Ticket\Thread::getThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue(), '');
+                $thread = \App\Models\Ticket\Thread::getOrCreateThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue(), '');
 
                 $this->importMessageByThread($ticket, $thread, $messages);
 
@@ -119,6 +119,7 @@ abstract class AbstractMiraklImportMessage extends Command
     const FROM_SHOP_TYPE = 'SHOP_USER';
 
     /**
+     * returns if the message type is SHOP_USER
      * @param string $type
      * @return bool
      */
@@ -128,9 +129,11 @@ abstract class AbstractMiraklImportMessage extends Command
     }
 
     /**
+     * @param Ticket $ticket
      * @param \App\Models\Ticket\Thread $thread
      * @param  $messages
      * @return void
+     * @throws Exception
      */
     private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages)
     {
@@ -144,6 +147,8 @@ abstract class AbstractMiraklImportMessage extends Command
     }
 
     /**
+     * Convert api messages into message model in order to save it in database
+     * @param Ticket $ticket
      * @param ThreadMessage $api_message
      * @param \App\Models\Ticket\Thread $thread
      */
@@ -181,7 +186,7 @@ abstract class AbstractMiraklImportMessage extends Command
     /**
      * @param string $channel_message_number
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     private function isMessagesImported(string $channel_message_number): bool
     {

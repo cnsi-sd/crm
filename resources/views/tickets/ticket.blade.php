@@ -82,24 +82,27 @@
                             <div class="card-header">{{ trans_choice('app.revival.revival', 1) }}</div>
                             <div class="card-body">
                                 <div class="row">
-                                    <select name="ticket-revival" class="form-select">
-                                        <option value="">-- {{ __('app.revival.select_revival') }} --</option>
+                                    <select name="ticket-revival" class="form-select no-sort">
+                                        <option value="">{{ __('app.revival.select_revival') }}</option>
                                         @foreach ($thread->ticket->channel->revivals as $revival)
-                                            <option value="{{ $revival->id }}" @if($revival->isRevivalSelected($revival->id)) selected @endif>
+                                            <option value="{{ $revival->id }}">
                                                 {{ $revival->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col"><label>{{ __('app.revival.start_revival') }}</label></div>
-                                    <div class="col">
-                                        <input name="revival-delivery_date" class="form-control"
-                                                            type="date"
-                                                            value="{{ date('Y-m-d', strtotime($thread->revival_start_date)) }}"
-                                        />
+                                @if($thread->revival)
+                                    @php($revival = $thread->revival)
+                                    <div class="row mt-2">
+                                        <div class="col"><label>{{ __('app.revival.start_revival') }}</label></div>
+                                        <div class="col">
+                                            <input name="revival-delivery_date" class="form-control"
+                                                                type="date"
+                                                                value="{{ date('Y-m-d', strtotime($thread->revival_start_date)) }}"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                             <div class="card-footer">
                                 @if($thread->revival)
