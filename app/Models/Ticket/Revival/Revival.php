@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property string $name
  * @property int $frequency
+ * @property string $send_type
  * @property int $max_revival
  * @property string $end_state
  * @property DateTime $created_at
@@ -37,6 +38,7 @@ class Revival extends Model
     protected $fillable = [
         'name',
         'frequency',
+        'send_type',
         'default_answer_id',
         'max_revival',
         'end_default_answer_id',

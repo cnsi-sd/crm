@@ -59,6 +59,7 @@ class RevivalController extends Controller
         // Set name, content
         $revival->name = $request->input('name');
         $revival->frequency = $request->input('frequency');
+        $revival->send_type = $request->input('revivalType');
         $revival->default_answer_id = $request->input('default_answer_id');
         $revival->max_revival = $request->input('max_revival');
         $revival->end_default_answer_id = $request->input('end_default_answer_id');

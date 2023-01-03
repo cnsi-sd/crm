@@ -142,6 +142,25 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="m-2">
+                            <label for="name">{{trans_choice('app.revival.end_state', 1)}}
+
+                                <span class="required_field">*</span>
+                            </label>
+                            <select
+                                name="revivalType"
+                                id="select-revivalType"
+                                class="form-control form-control-sm form-select"
+                                required
+                            >
+                                @foreach( \App\Enums\Revival\RevivalSendTypeEnnum::getList() as $key => $value)
+                                    <option value="{{ $key }}"
+                                            @selected($revival->send_type == $key)>
+                                        {{ $value }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
 

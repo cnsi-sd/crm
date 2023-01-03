@@ -16,7 +16,8 @@
         "mirakl/sdk-php-shop": "^1.16",
         "realrashid/sweet-alert": "^5.1.0",
         "symfony/http-client": "^6.1",
-        "symfony/mailgun-mailer": "^6.1"
+        "symfony/mailgun-mailer": "^6.1",
+        "twilio/sdk": "^6.44"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
