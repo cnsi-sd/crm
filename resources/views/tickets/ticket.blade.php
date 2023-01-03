@@ -85,7 +85,7 @@
                                     <select name="ticket-revival" class="form-select no-sort">
                                         <option value="">{{ __('app.revival.select_revival') }}</option>
                                         @foreach ($thread->ticket->channel->revivals as $revival)
-                                            <option value="{{ $revival->id }}">
+                                            <option value="{{ $revival->id }}" @if(!empty($thread->revival->id)) @selected($revival->id == $thread->revival->id) @endif>
                                                 {{ $revival->name }}
                                             </option>
                                         @endforeach

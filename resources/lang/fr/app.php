@@ -128,6 +128,16 @@ return [
         'channel' => 'Channel',
     ],
 
+    'autoReply' => [
+        'autoReply' => 'Réponse automatique|Réponses automatiques',
+        'autoReplyWeek' => 'Réponse automatique : semaine',
+        'autoReplyWeekEnd' => 'Réponse automatique : week-end',
+        'validate' => 'Activé la réponse automatique',
+        'activate' => 'Activé',
+        'disable' => 'Désactivé',
+        'MessageToReply' => 'message envoyé'
+    ],
+
     'defaultAnswer' => [
         'defaultAnswer' => 'Réponse par défaut|Réponses par défaut',
         'save' => 'Enregistrer la réponse',

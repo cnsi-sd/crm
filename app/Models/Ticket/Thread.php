@@ -60,6 +60,7 @@ class Thread extends Model
     public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue): Model|Builder|Thread
     {
         return Thread::query()
+            ->select('ticket_threads.*')
             ->join('tickets', 'tickets.id', 'ticket_threads.ticket_id')
             ->where('ticket_threads.channel_thread_number', $channel_thread_number)
             ->where('tickets.channel_id', $ticket->channel_id)

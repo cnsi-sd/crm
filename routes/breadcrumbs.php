@@ -117,4 +117,8 @@ Breadcrumbs::for('edit_revival', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.edit'));
 });
 
-
+/** Auto Reply */
+Breadcrumbs::for('autoReply', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.autoReply.autoReply', 2), route('autoReply'));
+});

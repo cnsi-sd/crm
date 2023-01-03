@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Configuration\AutoReplyController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\RoutingController;
@@ -65,6 +66,9 @@ Route::middleware('checkActive')->group(function () {
             Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival');
             Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival');
             Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival');
+        });
+        Route::prefix('autoReply')->group(function () {
+            Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
         });
     });
 });

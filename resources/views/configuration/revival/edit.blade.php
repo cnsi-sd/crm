@@ -73,7 +73,7 @@
                             >
                                 @foreach(\App\Models\Channel\Channel::all() as $channel)
                                     <option value="{{$channel->id}}"
-                                            @if($revival->isChannelSelected($channel)) selected @endif>
+                                        @selected($revival->isChannelSelected($channel))>
                                         {{$channel->name}}
                                     </option>
                                 @endforeach
@@ -94,7 +94,7 @@
                                 </option>
                                 @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                     <option value="{{$answer->id}}"
-                                        @if($revival->isAnswerSelected($answer)) selected @endif>
+                                            @selected($revival->isAnswerSelected($answer))>
                                         {{$answer->name}}
                                     </option>
                                 @endforeach
@@ -113,9 +113,9 @@
                             >
                                 <option value="">-- {{trans_choice('app.revival.choose_end_default_answer', 1)}} --
                                 </option>
-                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
+                                @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                     <option value="{{$answer->id}}"
-                                          @if($revival->isEndAnswerSelected($answer)) selected @endif>
+                                            @selected($revival->isEndAnswerSelected($answer))>
                                         {{$answer->name}}
                                     </option>
                                 @endforeach
@@ -136,7 +136,7 @@
                                 </option>
                                 @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $key => $value)
                                     <option value="{{ $value }}"
-                                        @if($revival->isStateSelected($value)) selected @endif>
+                                            @selected($revival->isStateSelected($value))>
                                         {{ $value }}
                                     </option>
                                 @endforeach

@@ -18,7 +18,7 @@ abstract class Menu
                 'icon' => 'uil-home-alt',
             ],
             [
-                
+
                 'text' => trans_choice('app.ticket.ticket',2),
                 'icon' => 'uil-comment-message',
                 'ref' => 'tickets',
@@ -70,6 +70,12 @@ abstract class Menu
                         'text' => trans_choice('app.revival.revival', 2),
                         'route' => route('revival'),
                         'ref' => 'revival',
+                        'permission' => PermissionEnum::REVIVAL_READ
+                    ],
+                    [
+                        'text' => trans_choice('app.autoReply.autoReply', 2),
+                        'route' => route('autoReply'),
+                        'ref' => 'autoReply',
                         'permission' => PermissionEnum::REVIVAL_READ
                     ],
                 ]
