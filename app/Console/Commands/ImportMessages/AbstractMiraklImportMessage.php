@@ -54,7 +54,8 @@ abstract class AbstractMiraklImportMessage extends Command
 
     public function handle()
     {
-        $this->logger = new Logger('Import/Message/Laposte.log', true, true);
+        // import_message/but_fr/but_fr_2022_10_03.log
+        $this->logger = new Logger('import_message/'. $this->getChannelName().'/'.$this->getChannelName().'.log', true, true);
         $this->logger->info('--- Start ---');
         $date_time = new DateTime();
         $date_time->modify(self::FROM_DATE_TRANSFORMATOR);

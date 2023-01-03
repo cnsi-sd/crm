@@ -31,6 +31,15 @@ class Channel extends Model
         'updated_at'
     ];
 
+    public function getSnakeName($channelName): array|string
+    {
+        return self::staticGetSnakeName($channelName);
+    }
+
+    public static function staticGetSnakeName($name): array|string
+    {
+        return str_replace('.', '_', $name);
+    }
     public function defaultAnswers(): BelongsToMany
     {
         return $this->belongsToMany(DefaultAnswer::class)->orderBy('name');
