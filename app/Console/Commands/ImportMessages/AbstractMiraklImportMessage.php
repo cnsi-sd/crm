@@ -173,7 +173,7 @@ abstract class AbstractMiraklImportMessage extends Command
     {
         $authorType = $api_message->getFrom()->getType();
         $isNotShopUser = self::isNotShopUser($authorType);
-        if (true) {
+        if ($isNotShopUser) {
             $ticket->state = TicketStateEnum::WAITING_ADMIN;
             $ticket->save();
             Message::firstOrCreate([
@@ -188,7 +188,7 @@ abstract class AbstractMiraklImportMessage extends Command
                     'content' => strip_tags($api_message->getBody()),
                 ],
             );
-           
+
             if (setting('autoReplyActivate')) {
                 self::sendAutoReply(setting('autoReply'), $thread);
             }
