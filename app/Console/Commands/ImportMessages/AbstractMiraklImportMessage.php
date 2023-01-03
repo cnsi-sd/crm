@@ -39,7 +39,7 @@ abstract class AbstractMiraklImportMessage extends Command
 
     public ShopApiClient $client;
 
-    const FROM_DATE_TRANSFORMATOR = ' -  10 minutes';
+    const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
 
     protected static $_alreadyImportedMessages;
@@ -82,7 +82,8 @@ abstract class AbstractMiraklImportMessage extends Command
         foreach ($threads as $miraklThread) {
             try {
                 DB::beginTransaction();
-                /*$this->logger->info("begin Transaction");*/
+                $this->logger->info("begin Transaction");
+
                 $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
                 $channel = Channel::getByName($this->getChannelName());
                 $order = Order::getOrder($mpOrderId, $channel);
