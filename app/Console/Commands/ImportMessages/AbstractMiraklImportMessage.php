@@ -188,13 +188,9 @@ abstract class AbstractMiraklImportMessage extends Command
                     'content' => strip_tags($api_message->getBody()),
                 ],
             );
-            if ($thread->ticket->order->channel_order_number === '1055472612-A') {
-                if ($thread->channel_thread_number === '314f994d-959e-43a1-9707-ad776d9a855c') {
-                    //var_dump($api_message);
-                    if (setting('autoReplyActivate')) {
-                        self::sendAutoReply(setting('autoReply'), $thread);
-                    }
-                }
+           
+            if (setting('autoReplyActivate')) {
+                self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
     }
