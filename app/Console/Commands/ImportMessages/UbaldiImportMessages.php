@@ -17,7 +17,7 @@ class   UbaldiImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return ChannelEnum::LAPOSTE_FR;
+        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::UBALDI_COM);
     }
 
     /**

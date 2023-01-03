@@ -17,7 +17,7 @@ class LeclercImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return ChannelEnum::E_LECLERC;
+        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::E_LECLERC);
     }
 
     /**
