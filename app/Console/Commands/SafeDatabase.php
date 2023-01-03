@@ -25,7 +25,6 @@ class SafeDatabase extends Command
         ]);
 
         setting(['autoReplyActivate' => false]);
-        setting(['autoReply' => false]);
         setting()->save();
 
         $this->info('-- DONE');
