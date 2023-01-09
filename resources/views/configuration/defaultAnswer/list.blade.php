@@ -1,4 +1,4 @@
-@extends('layouts.horizontal', ["page_title"=> trans_choice('app.configuration.defaultAnswer', 2) ])
+@extends('layouts.horizontal', ["page_title"=> trans_choice('app.defaultAnswer.defaultAnswer', 2) ])
 
 @section('content')
     <div class="container-fluid">

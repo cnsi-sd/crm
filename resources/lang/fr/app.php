@@ -9,8 +9,13 @@ return [
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'create' => 'Création',
+    'delete' => 'Suppression',
+    'deleteExpression' => 'Êtes vous sûr de vouloir supprimer : ',
     'new' => 'Nouveau',
+    'display' => 'Afficher',
     'logout' => 'Déconnexion',
+    'no_result' => 'Aucun résultat.',
     'username' => 'Nom d\'utilisateur',
     'password' => 'Mot de passe',
     'enter_email' => 'Saisir votre email',
@@ -19,6 +24,20 @@ return [
     'password_confirmation' => 'Confirmation du mot de passe',
     'enter_password_confirmation' => 'Confirmer votre mot de passe',
     'email' => 'Email',
+    'date' => 'Date',
+    'second' => 'seconde|secondes',
+    'minute' => 'minute|minutes',
+    'hour' => 'heure|heures',
+    'from' => 'du',
+    'to' => 'au',
+    'attachment' => 'Pièce jointe|Pièces jointes',
+    'customer' => 'Client',
+    'operator' => 'Opérateur',
+    'send_message' => 'Envoyer un message',
+    'send_comment' => 'Envoyer un commentaire',
+    'order_info' => 'Info commande',
+    'product_return' => 'Retour produits',
+    'customer_service_process' => 'Procédure SAV',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -37,7 +56,9 @@ return [
     'permission' =>[
         'user' => 'Utilisateur',
         'role' => 'Role',
-        'default_message_answer' => 'Message par défaut'
+        'default_message_answer' => 'Message par défaut',
+        'revival' => 'Relance automatique',
+        'ticket'=> 'Ticket'
     ],
 
     'role' => [
@@ -72,6 +93,28 @@ return [
         'my_informations' => 'Mes informations',
     ],
 
+    'ticket' => [
+        'ticket' => 'Ticket|Tickets',
+        'deadline' => 'Deadline',
+        'owner' => 'Responsable',
+        'state' => 'Statut',
+        'priority' => 'Priorité',
+        'created_at' => 'Date d\'ouverture',
+        'all_tickets' => 'Tous les tickets',
+        'my_tickets' => 'Mes tickets',
+        'channel' => 'Canal de diffusion',
+        'subjects' => 'Sujets',
+        'mapping' => 'Association',
+        'order' => 'Commande',
+        'base_information' => 'Informations de base',
+        'customer_mail' => 'Email client',
+        'delivery_date' => 'Date de livraison',
+        'admin_thread' => 'Administration fil de discussion',
+        'customer_issue' => 'Problématique client',
+        'private_comments' => 'Commentaires privés',
+        'default_replies' => 'Réponses par défaut',
+    ],
+
     'login' => [
         'login' => 'Connexion',
         'sign_in' => 'Identification',
@@ -85,17 +128,43 @@ return [
         'channel' => 'Channel',
     ],
 
+    'autoReply' => [
+        'autoReply' => 'Réponse automatique|Réponses automatiques',
+        'autoReplyWeek' => 'Réponse automatique : semaine',
+        'autoReplyWeekEnd' => 'Réponse automatique : week-end',
+        'validate' => 'Activé la réponse automatique',
+        'activate' => 'Activé',
+        'disable' => 'Désactivé',
+        'MessageToReply' => 'message envoyé'
+    ],
+
     'defaultAnswer' => [
         'defaultAnswer' => 'Réponse par défaut|Réponses par défaut',
         'save' => 'Enregistrer la réponse',
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Cannaux sélectioner',
-        /*'create' => 'Création',
-        'edit' => 'Modification',
-        'delete' => 'Suppression',
-        'close' => 'Fermer',
-        'message' => 'Message '*/
+        'message' => 'Message '
+    ],
+
+    'revival' => [
+        'revival' => 'Relance automatique|Relances automatiques',
+        'name' => 'Nom de la relance automatique',
+        'frequency' => "Fréquence d'envoi :",
+        'max_revival' => "Nombre d'envoi de relance",
+        'default_answer' => 'Message envoyer',
+        'end_default_answer' => 'Message envoyer à la fin du cycle de relance',
+        'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
+        'choose_answer' => 'Choisir le message à envoyer',
+        'end_state' => 'Statut final',
+        'channel' => "Cannaux d'aplication",
+        'start_revival' => 'À partir du',
+        'select_revival' => 'Aucune',
+        'frequency_details' => 'Tous les jours|Tous les :freq jours',
+        'MaxRevival' => 'Messages envoyés :',
+        'nextReply' => 'Prochaine relance : ',
+        'sendType' => "Type d'envoi",
+        'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.'
     ],
 
     'recover_password' => [

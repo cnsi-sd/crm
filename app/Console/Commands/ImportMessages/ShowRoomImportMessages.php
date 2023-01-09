@@ -17,7 +17,7 @@ class ShowRoomImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return ChannelEnum::SHOWROOMPRIVE_COM;
+        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::SHOWROOMPRIVE_COM);
     }
 
     /**

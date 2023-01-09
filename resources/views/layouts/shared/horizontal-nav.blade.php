@@ -102,7 +102,7 @@
                                     <span>{{$item['text']}}</span>
                                     <span class="arrow-down"></span>
                                 </a>
-                                <div class="dropdown-menu @if(strpos(\Illuminate\Support\Facades\Request::url(), $item['ref'])) show @endif" id="{{$item['ref']}}">
+                                <div class="dropdown-menu" id="{{$item['ref']}}">
                                         @foreach($item['sub_items'] as $sub_item)
                                             @if(isset($sub_item['route']))
                                                     <a href="{{$sub_item['route']}}" class="@if(strpos(\Illuminate\Support\Facades\Request::url(), $sub_item['ref'])) active @endif dropdown-item">{{$sub_item['text']}}</a>

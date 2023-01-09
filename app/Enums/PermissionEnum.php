@@ -11,5 +11,8 @@ abstract class PermissionEnum extends AbstractEnum
     const ROLE_EDIT             = 'role_edit';
     const DEFAULT_ANSWER_READ   = 'default_answer_read';
     const DEFAULT_ANSWER_EDIT   = 'default_answer_edit';
-
+    const REVIVAL_READ          = 'revival_read';
+    const REVIVAL_EDIT          = 'revival_edit';
+    const TICKET_READ          = 'ticket_read';
+    const TICKET_EDIT          = 'ticket_edit';
 }

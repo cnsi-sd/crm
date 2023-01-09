@@ -67,6 +67,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function getUsersNames(): array
+    {
+        return self::query()->orderBy('name', 'ASC')
+            ->pluck('name', 'id')
+            ->toArray();
+    }
+
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);

@@ -2,8 +2,11 @@
 
 namespace App\Models\Ticket;
 
+use App\Enums\ColumnTypeEnum;
+use App\Enums\FixedWidthEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\User\User;
@@ -12,7 +15,6 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Date;
 
 /**
  * @property int $id
@@ -21,7 +23,9 @@ use Illuminate\Support\Facades\Date;
  * @property int $user_id
  * @property string $state
  * @property string $priority
- * @property Date $deadline
+ * @property Datetime $deadline
+ * @property Datetime $delivery_date
+ * @property string $direct_customer_email
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
@@ -82,5 +86,87 @@ class Ticket extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function getTableColumns($mode = 'all'): array
+    {
+        $columns = [];
+
+        $columns[] = TableColumnBuilder::id()
+            ->setSearchable(true)
+            ->setSortable(true);
+
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.ticket.deadline'))
+            ->setType(ColumnTypeEnum::DATE)
+            ->setKey('deadline')
+            ->setSortable(true);
+
+        if ($mode != 'user') {
+            $columns[] = (new TableColumnBuilder())
+                ->setLabel(__('app.ticket.owner'))
+                ->setType(ColumnTypeEnum::SELECT)
+                ->setOptions(User::getUsersNames())
+                ->setCallback(function (Ticket $ticket) {
+                    return $ticket->user->name;
+                })
+                ->setKey('user_id')
+                ->setSortable(true);
+        }
+
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.ticket.subjects'))
+            ->setType(ColumnTypeEnum::TEXT)
+            ->setCallback(function (Ticket $ticket) {
+                $displayThreads = '';
+                foreach ($ticket->threads as $thread) {
+                    $displayThreads .= $thread->name . "\n";
+                }
+                return $displayThreads;
+            })
+            ->setKey('deadline')
+            ->setSortable(true);
+
+        if ($mode != 'user') {
+            $columns[] = (new TableColumnBuilder())
+                ->setLabel(__('app.ticket.state'))
+                ->setType(ColumnTypeEnum::SELECT)
+                ->setOptions(TicketStateEnum::getTranslatedList())
+                ->setKey('state')
+                ->setSortable(true)
+                ->setCallback(function (Ticket $ticket) {
+                    return TicketStateEnum::getMessage($ticket->state);
+                });
+        }
+
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.ticket.priority'))
+            ->setType(ColumnTypeEnum::SELECT)
+            ->setOptions(TicketPriorityEnum::getList())
+            ->setKey('priority')
+            ->setSortable(true);
+
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.ticket.channel'))
+            ->setType(ColumnTypeEnum::SELECT)
+            ->setOptions(Channel::getChannelsNames())
+            ->setCallback(function (Ticket $ticket) {
+                return $ticket->channel->name;
+            })
+            ->setKey('channel_id')
+            ->setSortable(true);
+
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.ticket.created_at'))
+            ->setType(ColumnTypeEnum::DATE)
+            ->setKey('created_at')
+            ->setSortable(true);
+
+        $columns[] = TableColumnBuilder::actions()->setCallback(function (Ticket $ticket) {
+            return view('tickets.inline_table_actions')
+                ->with('ticket', $ticket);
+        });
+
+        return $columns;
     }
 }

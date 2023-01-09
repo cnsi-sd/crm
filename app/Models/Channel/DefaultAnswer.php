@@ -4,7 +4,9 @@ namespace App\Models\Channel;
 
 use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
+use App\Models\Ticket\Revival\Revival;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -18,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property DateTime $deleted_at
  *
  * @property Channel[] $channels
+ * @property Revival[] $revivals
  */
 class DefaultAnswer extends Model
 {
@@ -38,6 +41,11 @@ class DefaultAnswer extends Model
     public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class, 'channel_default_answer', 'default_answer_id','channel_id');
+    }
+
+    public function revivals(): HasMany
+    {
+        return $this->hasMany(Revival::class);
     }
 
     public static function getTableColumns(): array

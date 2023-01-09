@@ -2,13 +2,20 @@
 
 namespace App\Models\Ticket;
 
+use App\Enums\Channel\ChannelEnum;
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
+use App\Models\Ticket\Revival\Revival;
 use App\Models\User\User;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use League\CommonMark\Node\Inline\Text;
+use Mirakl\MMP\Common\Domain\Collection\Message\Thread\ThreadRecipientCollection;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
+use Mirakl\MMP\Common\Domain\Message\Thread\ThreadRecipient;
+use Mirakl\MMP\Common\Domain\Message\Thread\ThreadReplyMessageInput;
+use Mirakl\MMP\Common\Request\Message\ThreadReplyRequest;
 
 /**
  * @property int $id
@@ -50,6 +57,7 @@ class Message extends Model
     {
         return $this->belongsTo(User::class);
     }
+
 
 }
 

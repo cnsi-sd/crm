@@ -36,7 +36,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 $(document).ready(function() {
     // Enable select2 for all selects that do not have the "no-select2" class
     $('select:not(".no-select2"):not(".swal2-select")').select2({
-        sorter: data => data.sort((a, b) => a.text.localeCompare(b.text))
+        sorter: data => data.sort((a, b) => a.text.trim().localeCompare(b.text.trim()))
     });
 
     // Autofocus the select2 search field on open

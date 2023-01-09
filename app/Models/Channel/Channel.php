@@ -3,10 +3,12 @@
 namespace App\Models\Channel;
 
 
+use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -17,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $updated_at
  *
  * @property DefaultAnswer $defaultAnswers
+ * @property Revival $revivals
  * @property Ticket[] $tickets
  * @property Order[] $orders
  */
@@ -28,9 +31,30 @@ class Channel extends Model
         'updated_at'
     ];
 
-    public function defaultAnswers(): HasMany
+    public function getSnakeName($channelName): array|string
     {
-        return $this->hasMany(DefaultAnswer::class);
+        return self::staticGetSnakeName($channelName);
+    }
+
+    public static function staticGetSnakeName($name): array|string
+    {
+        return str_replace('.', '_', $name);
+    }
+    public function defaultAnswers(): BelongsToMany
+    {
+        return $this->belongsToMany(DefaultAnswer::class)->orderBy('name');
+    }
+
+    public function revivals(): BelongsToMany
+    {
+        return $this->belongsToMany(Revival::class)->orderBy('name');
+    }
+
+    public static function getChannelsNames(): array
+    {
+        return self::query()->orderBy('name', 'ASC')
+            ->pluck('name', 'id')
+            ->toArray();
     }
 
     public function tickets(): HasMany
@@ -53,10 +77,4 @@ class Channel extends Model
         return $channel;
     }
 
-    public static function getChannelNames(): array
-    {
-        return self::query()->orderBy('name', 'ASC')
-            ->pluck('name', 'id')
-            ->toArray();
-    }
 }

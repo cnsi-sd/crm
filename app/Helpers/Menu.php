@@ -9,6 +9,8 @@ abstract class Menu
 {
     public static function main()
     {
+        $user = Auth::user();
+
         $menu = [
             [
                 'text' => __('app.navbar.dashboard'),
@@ -16,9 +18,27 @@ abstract class Menu
                 'icon' => 'uil-home-alt',
             ],
             [
+
+                'text' => trans_choice('app.ticket.ticket',2),
+                'icon' => 'uil-comment-message',
+                'ref' => 'tickets',
+                'sub_items' => [
+                    [
+                        'text' => __('app.ticket.all_tickets'),
+                        'route' => route('all_tickets'),
+                        'ref' => 'all_tickets',
+                    ],
+                    [
+                        'text' => __('app.ticket.my_tickets'),
+                        'route' => route('user_tickets',[$user->id]),
+                        'ref' => 'user_tickets',
+                    ],
+                ]
+            ],
+            [
                 'text' => __('app.navbar.admin'),
                 'icon' => 'uil-cog',
-                'ref' => 'advanced',
+                'ref' => 'settings',
                 'sub_items' => [
                     [
                         'text' => trans_choice('app.user.user', 2),
@@ -45,7 +65,19 @@ abstract class Menu
                         'route' => route('defaultAnswers'),
                         'ref' => 'defaultAnswers',
                         'permission' => PermissionEnum::DEFAULT_ANSWER_READ
-                    ]
+                    ],
+                    [
+                        'text' => trans_choice('app.revival.revival', 2),
+                        'route' => route('revival'),
+                        'ref' => 'revival',
+                        'permission' => PermissionEnum::REVIVAL_READ
+                    ],
+                    [
+                        'text' => trans_choice('app.autoReply.autoReply', 2),
+                        'route' => route('autoReply'),
+                        'ref' => 'autoReply',
+                        'permission' => PermissionEnum::REVIVAL_READ
+                    ],
                 ]
             ],
 
