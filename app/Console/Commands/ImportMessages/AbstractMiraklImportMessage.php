@@ -55,40 +55,45 @@ abstract class AbstractMiraklImportMessage extends Command
     public function handle()
     {
         // import_message/but_fr/but_fr_2022_10_03.log
-        $this->logger = new Logger('import_message/'. $this->getChannelName().'/'.$this->getChannelName().'.log', true, true);
+        $this->logger = new Logger('import_message/' . $this->getChannelName() . '/' . $this->getChannelName() . '.log', true, true);
         $this->logger->info('--- Start ---');
-        $date_time = new DateTime();
-        $date_time->modify(self::FROM_DATE_TRANSFORMATOR);
+        try {
+            $date_time = new DateTime();
+            $date_time->modify(self::FROM_DATE_TRANSFORMATOR);
 
-        $request = new GetThreadsRequest();
-        $request->setUpdatedSince($date_time);
-        $request->setWithMessages(true);
+            $request = new GetThreadsRequest();
+            $request->setUpdatedSince($date_time);
+            $request->setWithMessages(true);
 
-        $this->logger->info('init api');
-        $client = $this->initApiClient();
+            $this->logger->info('Init api');
+            $client = $this->initApiClient();
 
-        $this->logger->info('get all thread');
-        $threads = [];
-        do {
-            $response = $client->getThreads($request);
-            foreach ($response->getCollection()->getItems() as $thread) {
-                $threads[] = $thread;
-            }
-            $nextToken = $response->getNextPageToken();
-            $request->setPageToken($nextToken);
-        } while ($nextToken);
-
+            $this->logger->info('Get all thread');
+            $threads = [];
+            do {
+                $response = $client->getThreads($request);
+                foreach ($response->getCollection()->getItems() as $thread) {
+                    $threads[] = $thread;
+                }
+                $nextToken = $response->getNextPageToken();
+                $request->setPageToken($nextToken);
+            } while ($nextToken);
+        } catch (Exception $e) {
+            $this->logger->error('An error has occurred on API call', $e);
+            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+        }
         /** @var Thread $miraklThread */
         foreach ($threads as $miraklThread) {
             try {
                 DB::beginTransaction();
-                $this->logger->info("begin Transaction");
+                $this->logger->info('Begin Transaction');
 
                 $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
                 $channel = Channel::getByName($this->getChannelName());
                 $order = Order::getOrder($mpOrderId, $channel);
                 $ticket = Ticket::getTicket($order, $channel);
 
+                $this->logger->info('Message recovery');
                 /** @var ThreadMessage[] $messages */
                 $messages = array_reverse($miraklThread->getMessages()->getItems());
 
@@ -124,7 +129,7 @@ abstract class AbstractMiraklImportMessage extends Command
 
     private function getMarketplaceOrderIdFromThreadEntities($entityIterator)
     {
-
+        $this->logger->info('Get Market place id from thread');
         if ($entityIterator->current()->getType() == 'MMP_ORDER')
             return $entityIterator->current()->getId();
 
@@ -157,7 +162,9 @@ abstract class AbstractMiraklImportMessage extends Command
     {
         foreach ($messages as $message) {
             $imported_id = $message->getId();
+            $this->logger->info('Check if this message is imported');
             if (!$this->isMessagesImported($imported_id)) {
+                $this->logger->info('Convert api message to db message');
                 $this->convertApiResponseToMessage($ticket, $message, $thread);
                 $this->addImportedMessageChannelNumber($imported_id);
             }
@@ -170,13 +177,15 @@ abstract class AbstractMiraklImportMessage extends Command
      * @param ThreadMessage $api_message
      * @param \App\Models\Ticket\Thread $thread
      */
-    public static function convertApiResponseToMessage(Ticket $ticket, ThreadMessage $api_message, \App\Models\Ticket\Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, ThreadMessage $api_message, \App\Models\Ticket\Thread $thread)
     {
         $authorType = $api_message->getFrom()->getType();
         $isNotShopUser = self::isNotShopUser($authorType);
         if ($isNotShopUser) {
+            $this->logger->info('Set ticket\'s status to wating admin');
             $ticket->state = TicketStateEnum::WAITING_ADMIN;
             $ticket->save();
+            $this->logger->info('Ticket save');
             Message::firstOrCreate([
                 'thread_id' => $thread->id,
                 'channel_message_number' => $api_message->getId(),
@@ -189,8 +198,8 @@ abstract class AbstractMiraklImportMessage extends Command
                     'content' => strip_tags($api_message->getBody()),
                 ],
             );
-
             if (setting('autoReplyActivate')) {
+                $this->logger->info('Send auto reply');
                 self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
@@ -239,7 +248,7 @@ abstract class AbstractMiraklImportMessage extends Command
      * @param \App\Models\Ticket\Thread $thread
      * @return void
      */
-    public static function sendAutoReply(mixed $messageId, \App\Models\Ticket\Thread $thread): void
+    public function sendAutoReply(mixed $messageId, \App\Models\Ticket\Thread $thread): void
     {
         $autoReplyContentWeek = DefaultAnswer::query()->select('content')->where('id', $messageId)->first();
 
@@ -250,19 +259,21 @@ abstract class AbstractMiraklImportMessage extends Command
         $autoReply->author_type = TicketMessageAuthorTypeEnum::ADMIN;
         $autoReply->content = $autoReplyContentWeek['content'];
         $autoReply->save();
+        $this->logger->info('Auto reply save in db');
 
+        $this->logger->info('Send queue execution');
         match ($thread->ticket->channel->name) {
-            ChannelEnum::BUT_FR             => ButSendMessage::dispatch($autoReply),
-            ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($autoReply),
-            ChannelEnum::CONFORAMA_FR       => ConforamaSendMesssage::dispatch($autoReply),
-            ChannelEnum::DARTY_COM          => DartySendMessage::dispatch($autoReply),
-            ChannelEnum::INTERMARCHE_FR     => IntermarcheSendMessage::dispatch($autoReply),
-            ChannelEnum::LAPOSTE_FR         => LaposteSendMessage::dispatch($autoReply),
-            ChannelEnum::E_LECLERC          => LeclercSendMessage::dispatch($autoReply),
-            ChannelEnum::METRO_FR           => MetroSendMessage::dispatch($autoReply),
-            ChannelEnum::RUEDUCOMMERCE_FR   => RueDuCommerceSendMessage::dispatch($autoReply),
-            ChannelEnum::SHOWROOMPRIVE_COM  => ShowroomSendMessage::dispatch($autoReply),
-            ChannelEnum::UBALDI_COM         => UbaldiSendMessage::dispatch($autoReply),
+            ChannelEnum::BUT_FR => ButSendMessage::dispatch($autoReply),
+            ChannelEnum::CARREFOUR_FR => CarrefourSendMessage::dispatch($autoReply),
+            ChannelEnum::CONFORAMA_FR => ConforamaSendMesssage::dispatch($autoReply),
+            ChannelEnum::DARTY_COM => DartySendMessage::dispatch($autoReply),
+            ChannelEnum::INTERMARCHE_FR => IntermarcheSendMessage::dispatch($autoReply),
+            ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($autoReply),
+            ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($autoReply),
+            ChannelEnum::METRO_FR => MetroSendMessage::dispatch($autoReply),
+            ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($autoReply),
+            ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($autoReply),
+            ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($autoReply),
         };
     }
 }
