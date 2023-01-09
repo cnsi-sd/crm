@@ -100,7 +100,7 @@
                                 @endforeach
                             </select>
 
-                            @if (strlen($revival->default_answer->content) > 160 && $revival->send_type === 'SMS')
+                            @if (strlen($revival->default_answer->content) > 160 && $revival->send_type === \App\Enums\Revival\RevivalSendTypeEnum::SMS)
                                 <div class="row mt-2">
                                     <div class="col">
                                         <div
@@ -132,7 +132,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @if (strlen($revival->end_default_answer->content) > 160 && $revival->send_type === 'SMS')
+                            @if (strlen($revival->end_default_answer->content) > 160 && $revival->send_type === \App\Enums\Revival\RevivalSendTypeEnum::SMS)
                                 <div class="row mt-2">
                                     <div class="col">
                                         <div
@@ -177,10 +177,10 @@
                                 class="form-control form-control-sm form-select"
                                 required
                             >
-                                @foreach( \App\Enums\Revival\RevivalSendTypeEnnum::getList() as $key => $value)
-                                    <option value="{{ $key }}"
-                                        @selected($revival->send_type == $key)>
-                                        {{ $value }}
+                                @foreach( \App\Enums\Revival\RevivalSendTypeEnum::getList() as $type)
+                                    <option value="{{ $type }}"
+                                        @selected($revival->send_type == $type)>
+                                        {{ $type }}
                                     </option>
                                 @endforeach
                             </select>

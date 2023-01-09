@@ -1,12 +1,20 @@
 <?php
 
-namespace App\SMS;
+namespace App\Jobs\SendSMS;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Twilio\Exceptions\ConfigurationException;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Client;
-class SMS
+
+class SMS implements ShouldQueue
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * @throws TwilioException
      * @throws ConfigurationException
@@ -17,11 +25,10 @@ class SMS
         $token = env('TWILLIO_USER_TOKEN');
         $twilio_number = env('TWILLIO_MOBILE_NUMBER');
 
-        if( env('ENABLE_TWILIO')){
-            //$message = substr($message, 0, 160);
+        if( in_array(env('APP_ENV'), ['local', 'development']) ){
             $client = new Client($sid, $token);
             $client->messages->create(
-                +33652289777,
+                +33652289777, //todo : set customer from number
                 [
                     'from' => $twilio_number,
                     'body' => $message,

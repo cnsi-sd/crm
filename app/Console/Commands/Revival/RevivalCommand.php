@@ -19,7 +19,7 @@ use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
-use App\SMS\SMS;
+use \App\Jobs\SendSMS\SMS;
 use Cnsi\Logger\Logger;
 use DateInterval;
 use Exception;
@@ -147,7 +147,7 @@ class RevivalCommand extends Command
 
         $revival_send_type = $thread->revival->send_type;
 
-        if ($revival_send_type === 'CHANNEL') {
+        if ($revival_send_type === 'CHANNEL') { // TODO
             $this->logger->info('Send message on API');
             $channel = $thread->ticket->channel->name;
             match ($channel) {
@@ -164,7 +164,7 @@ class RevivalCommand extends Command
                 ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($messageBD),
             };
         } elseif ($revival_send_type === 'SMS'){
-            SMS::sendSMS($messageBD->content);
+            SMS::dispatch($messageBD->content);
         }
     }
 }

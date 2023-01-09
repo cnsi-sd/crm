@@ -4,8 +4,9 @@ namespace App\Enums\Revival;
 
 use App\Enums\AbstractEnum;
 
-class RevivalSendTypeEnnum extends AbstractEnum
+class RevivalSendTypeEnum extends AbstractEnum
 {
-    const CHANNEL   = 'channel';
+    const CHANNEL  = 'channel';
+
     const SMS      = 'sms';
 }

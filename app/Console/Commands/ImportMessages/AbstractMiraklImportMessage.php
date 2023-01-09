@@ -99,9 +99,7 @@ abstract class AbstractMiraklImportMessage extends Command
 
                 DB::commit();
             } catch (Exception $e) {
-                $this->logger->error($e->getMessage());
-                $errorOutput = 'An error has occurred. Rolling back';
-                $this->error($errorOutput);
+                $this->logger->error('An error has occurred. Rolling back.', $e);
                 DB::rollBack();
                 \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
@@ -126,6 +124,7 @@ abstract class AbstractMiraklImportMessage extends Command
 
     private function getMarketplaceOrderIdFromThreadEntities($entityIterator)
     {
+
         if ($entityIterator->current()->getType() == 'MMP_ORDER')
             return $entityIterator->current()->getId();
 

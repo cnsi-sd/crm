@@ -164,7 +164,7 @@ return [
         'MaxRevival' => 'Messages envoyés :',
         'nextReply' => 'Prochaine relance : ',
         'sendType' => "Type d'envoi",
-        'warningLengthSMS' => 'Attention votre message dépasse les 160 charactères, vous enverrez donc : :nbMessage Messages '
+        'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.'
     ],
 
     'recover_password' => [
