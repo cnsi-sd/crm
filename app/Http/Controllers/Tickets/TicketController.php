@@ -75,7 +75,7 @@ class TicketController extends Controller
 
             $thread->customer_issue = $request->input('ticket-thread-customer_issue');
             $thread->revival_id = $request->input('ticket-revival');
-            $thread->revival_start_date = $request->input('revival-delivery_date');
+            $thread->revival_start_date = $request->input('revival-delivery_date') . ' 09:00:00';
             $thread->save();
 
             if($request->input('ticket-thread-messages-content')) {

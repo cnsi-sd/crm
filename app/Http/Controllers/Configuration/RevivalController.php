@@ -40,7 +40,7 @@ class RevivalController extends Controller
         {
             $this->save_revival($request, $revival);
             alert::toastSuccess(__('app.save'));
-            return redirect()->route('revival');
+            return redirect()->route('edit_revival', ['revival' => $revival->id]);
         }
 
         return view('configuration.revival.edit')

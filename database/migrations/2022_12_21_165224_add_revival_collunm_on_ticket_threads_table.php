@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('ticket_threads', function (Blueprint $table) {
             $table->foreignId('revival_id')->nullable()->after('ticket_id')->constrained();
-            $table->date('revival_start_date')->nullable()->after('revival_id');
+            $table->dateTime('revival_start_date')->nullable()->after('revival_id');
             $table->integer('revival_message_count')->default(0)->after('revival_start_date');
         });
     }

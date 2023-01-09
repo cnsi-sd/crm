@@ -23,8 +23,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $user_id
  * @property string $state
  * @property string $priority
- * @property Date $deadline
- * @property Date $delivery_date
+ * @property Datetime $deadline
+ * @property Datetime $delivery_date
  * @property string $direct_customer_email
  * @property Datetime $created_at
  * @property Datetime $updated_at

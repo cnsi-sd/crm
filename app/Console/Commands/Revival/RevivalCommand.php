@@ -19,11 +19,15 @@ use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
+use App\SMS\SMS;
 use Cnsi\Logger\Logger;
 use DateInterval;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Twilio\Exceptions\ConfigurationException;
+use Twilio\Exceptions\TwilioException;
 
 class RevivalCommand extends Command
 {
@@ -106,11 +110,9 @@ class RevivalCommand extends Command
         // Update ticket
         $ticket = $thread->ticket;
         $ticket->state = TicketStateEnum::WAITING_CUSTOMER;
-        $lastDeadline = clone $ticket->deadline;
-        $freq = $revival->frequency;
-        $interval = new DateInterval('P' . $freq . 'D');
-        $lastDeadline->add($interval);
-        $ticket->deadline = $lastDeadline;
+
+        //$lastDeadline = Carbon::createFromFormat('Y.m.d', $ticket->deadline)->addDays($revival->frequency);
+        //$ticket->deadline = $lastDeadline;
 
         // Update thread
         $thread->revival_message_count = ++$thread->revival_message_count;
@@ -128,6 +130,10 @@ class RevivalCommand extends Command
         $thread->save();
     }
 
+    /**
+     * @throws TwilioException
+     * @throws ConfigurationException
+     */
     private function sendRevivalMessage(Thread $thread, DefaultAnswer $message): void
     {
         $this->logger->info('Save message in DB');
@@ -139,20 +145,26 @@ class RevivalCommand extends Command
         $messageBD->content = $message->content;
         $messageBD->save();
 
-        $this->logger->info('Send message on API');
-        $channel = $thread->ticket->channel->name;
-        match ($channel) {
-            ChannelEnum::BUT_FR => ButSendMessage::dispatch($messageBD),
-            ChannelEnum::CARREFOUR_FR => CarrefourSendMessage::dispatch($messageBD),
-            ChannelEnum::CONFORAMA_FR => ConforamaSendMesssage::dispatch($messageBD),
-            ChannelEnum::DARTY_COM => DartySendMessage::dispatch($messageBD),
-            ChannelEnum::INTERMARCHE_FR => IntermarcheSendMessage::dispatch($messageBD),
-            ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($messageBD),
-            ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($messageBD),
-            ChannelEnum::METRO_FR => MetroSendMessage::dispatch($messageBD),
-            ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($messageBD),
-            ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($messageBD),
-            ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($messageBD),
-        };
+        $revival_send_type = $thread->revival->send_type;
+
+        if ($revival_send_type === 'CHANNEL') {
+            $this->logger->info('Send message on API');
+            $channel = $thread->ticket->channel->name;
+            match ($channel) {
+                ChannelEnum::BUT_FR => ButSendMessage::dispatch($messageBD),
+                ChannelEnum::CARREFOUR_FR => CarrefourSendMessage::dispatch($messageBD),
+                ChannelEnum::CONFORAMA_FR => ConforamaSendMesssage::dispatch($messageBD),
+                ChannelEnum::DARTY_COM => DartySendMessage::dispatch($messageBD),
+                ChannelEnum::INTERMARCHE_FR => IntermarcheSendMessage::dispatch($messageBD),
+                ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($messageBD),
+                ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($messageBD),
+                ChannelEnum::METRO_FR => MetroSendMessage::dispatch($messageBD),
+                ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($messageBD),
+                ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($messageBD),
+                ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($messageBD),
+            };
+        } elseif ($revival_send_type === 'SMS'){
+            SMS::sendSMS($messageBD->content);
+        }
     }
 }

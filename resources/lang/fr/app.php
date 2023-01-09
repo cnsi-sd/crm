@@ -151,7 +151,7 @@ return [
         'revival' => 'Relance automatique|Relances automatiques',
         'name' => 'Nom de la relance automatique',
         'frequency' => "Fréquence d'envoi :",
-        'max_revival' => "Nombre d'envoie de relance",
+        'max_revival' => "Nombre d'envoi de relance",
         'default_answer' => 'Message envoyer',
         'end_default_answer' => 'Message envoyer à la fin du cycle de relance',
         'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
@@ -162,7 +162,9 @@ return [
         'select_revival' => 'Aucune',
         'frequency_details' => 'Tous les jours|Tous les :freq jours',
         'MaxRevival' => 'Messages envoyés :',
-        'nextReply' => 'Prochaine relance : '
+        'nextReply' => 'Prochaine relance : ',
+        'sendType' => "Type d'envoi",
+        'warningLengthSMS' => 'Attention votre message dépasse les 160 charactères, vous enverrez donc : :nbMessage Messages '
     ],
 
     'recover_password' => [

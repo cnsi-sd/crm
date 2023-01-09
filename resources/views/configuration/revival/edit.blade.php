@@ -94,11 +94,23 @@
                                 </option>
                                 @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                     <option value="{{$answer->id}}"
-                                            @selected($revival->isAnswerSelected($answer))>
+                                        @selected($revival->isAnswerSelected($answer))>
                                         {{$answer->name}}
                                     </option>
                                 @endforeach
                             </select>
+
+                            @if (strlen($revival->default_answer->content) > 160 && $revival->send_type === 'SMS')
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        <div
+                                            class="alert alert-warning alert-dismissible bg-warning border-0 fade show text-dark"
+                                            role="alert">
+                                            {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival->default_answer->content) / 160)])}}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="m-2">
                             <label for="name">{{trans_choice('app.revival.end_default_answer', 1)}}
@@ -115,11 +127,23 @@
                                 </option>
                                 @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                     <option value="{{$answer->id}}"
-                                            @selected($revival->isEndAnswerSelected($answer))>
+                                        @selected($revival->isEndAnswerSelected($answer))>
                                         {{$answer->name}}
                                     </option>
                                 @endforeach
                             </select>
+                            @if (strlen($revival->end_default_answer->content) > 160 && $revival->send_type === 'SMS')
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        <div
+                                            class="alert alert-warning alert-dismissible bg-warning border-0 fade show text-dark"
+                                            role="alert">
+                                            {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival->default_answer->content) / 160)])}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            @endif
                         </div>
                         <div class="m-2">
                             <label for="name">{{trans_choice('app.revival.end_state', 1)}}
@@ -136,14 +160,14 @@
                                 </option>
                                 @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $key => $value)
                                     <option value="{{ $value }}"
-                                            @selected($revival->isStateSelected($value))>
+                                        @selected($revival->isStateSelected($value))>
                                         {{ $value }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="m-2">
-                            <label for="name">{{trans_choice('app.revival.end_state', 1)}}
+                            <label for="name">{{trans_choice('app.revival.sendType', 1)}}
 
                                 <span class="required_field">*</span>
                             </label>
@@ -155,15 +179,15 @@
                             >
                                 @foreach( \App\Enums\Revival\RevivalSendTypeEnnum::getList() as $key => $value)
                                     <option value="{{ $key }}"
-                                            @selected($revival->send_type == $key)>
+                                        @selected($revival->send_type == $key)>
                                         {{ $value }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
         <div class="d-grid gap-2 mt-3">
