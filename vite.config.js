@@ -10,6 +10,8 @@ export default defineConfig({
                 'resources/js/layout.js',
                 'resources/scss/app.scss',
                 'resources/scss/icons.scss',
+                'resources/js/tags.js',
+                'resources/js/ticket.js',
             ],
             refresh: true,
         }),

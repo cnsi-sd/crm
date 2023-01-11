@@ -7,6 +7,7 @@ use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Tickets\TicketController;
+use App\Http\Controllers\Configuration\TagsController;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
@@ -60,7 +61,6 @@ Route::middleware('checkActive')->group(function () {
             Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('defaultAnswers')->can('read', DefaultAnswer::class);
             Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswer::class);
         });
-
         Route::prefix('revival')->group(function () {
             Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival');
             Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival');
@@ -70,9 +70,16 @@ Route::middleware('checkActive')->group(function () {
         Route::prefix('autoReply')->group(function () {
             Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
         });
+        Route::prefix('tags')->group(function () {
+            Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags');
+            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags');
+            Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags');
+            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags');
+        });
     });
 });
 
+Route::get('/ajaxTags', [TagsController::class, 'ajax_tags']);
 
 Route::group(['prefix' => '/'], function () {
     Route::get('', function () {

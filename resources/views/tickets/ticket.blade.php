@@ -79,6 +79,45 @@
                             </div>
                         </div>
                         <div class="card">
+                            <div class="card-header">{{ __('app.ticket.base_information') }}</div>
+                            <div class="card-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
+                                        <div class="col"><input name="ticket-customer_email" class="form-control"
+                                                                type="text"
+                                                                value="{{ $ticket['direct_customer_email'] }}"/></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
+                                        <div class="col"><input name="ticket-delivery_date" class="form-control"
+                                                                type="date"
+                                                                value="{{ date('Y-m-d', strtotime($ticket['delivery_date'])) }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">{{ __('app.ticket.admin_thread') }}</div>
+                            <div class="card-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
+                                        <div class="col"><label>{{ date('d/m/Y', strtotime($ticket['created_at'])) }}
+                                                ({{round(abs(time() - strtotime($ticket['created_at']))/60/60/24)}}
+                                                j)</label></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>
+                                        <div class="col"><input name="ticket-thread-customer_issue" class="form-control"
+                                                                type="text"
+                                                                value="{{$activeThread['customer_issue']}}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
                             <div class="card-header">{{ trans_choice('app.revival.revival', 1) }}</div>
                             <div class="card-body">
                                 <select name="ticket-revival" class="form-select no-sort">
@@ -162,43 +201,29 @@
                             @endif
                         </div>
                         <div class="card">
-                            <div class="card-header">{{ __('app.ticket.base_information') }}</div>
-                            <div class="card-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
-                                        <div class="col"><input name="ticket-customer_email" class="form-control"
-                                                                type="text"
-                                                                value="{{ $ticket['direct_customer_email'] }}"/></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                        <div class="col"><input name="ticket-delivery_date" class="form-control"
-                                                                type="date"
-                                                                value="{{ date('Y-m-d', strtotime($ticket['delivery_date'])) }}"/>
-                                        </div>
-                                    </div>
+                            <div class="card-header">
+                                {{ trans_choice('app.tags.tags', 2) }}
+                                <button type="button" id="add" class="btn btn-success ms-2">+</button>
+                            </div>
+                            <div class="card-body" id="card-body-tag">
+                                <div id="list-1">
+                                    <select name="ticket-revival" class="form-select no-sort">
+                                        <option value="">{{ __('app.revival.select_revival') }}</option>
+                                        @foreach (\App\Models\Tags\Tags::all() as $tag)
+                                            <option value="{{ $tag->id }}">
+                                                {{ $tag->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">{{ __('app.ticket.admin_thread') }}</div>
-                            <div class="card-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
-                                        <div class="col"><label>{{ date('d/m/Y', strtotime($ticket['created_at'])) }}
-                                                ({{round(abs(time() - strtotime($ticket['created_at']))/60/60/24)}}
-                                                j)</label></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>
-                                        <div class="col"><input name="ticket-thread-customer_issue" class="form-control"
-                                                                type="text"
-                                                                value="{{$activeThread['customer_issue']}}"/></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <input type="number" name="numberlist" id="number-list"
+                                   value="1">
+                            {{--<div class="card-header">
+                                @foreach($thread->tagLists as $taglist)
+                                    {{ $taglist }}
+                                @endforeach
+                            </div>--}}
                         </div>
                         <div class="card">
                             <div class="card-header">{{ __('app.ticket.private_comments') }}</div>
@@ -327,4 +352,8 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('script-bottom')
+    <script src="{{ Vite::asset('resources/js/ticket.js') }}"></script>
 @endsection
