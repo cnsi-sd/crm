@@ -14,9 +14,10 @@
                                     <div class="row">
                                         <div class="col"><label>{{ __('app.ticket.state') }}</label></div>
                                         <div class="col">
-                                            <select name="ticket-state" class="form-select">
+                                            <select required name="ticket-state" class="form-select">
+                                                    <option value="">---</option>
                                                 @foreach($ticketStateEnum as $ticketState)
-                                                    <option value="{{ $ticketState }}" @if($ticket['state'] === $ticketState) selected @endif>{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
+                                                    <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
