@@ -95,8 +95,15 @@ class TicketController extends Controller
             ->toArray();
         $queryThread = Thread::query()
             ->where('id', $thread->id)
-            ->first()
-            ->toArray();
+            ->where('ticket_id', $ticket->id)
+            ->first();
+
+        if($queryThread) {
+            $queryThread = $queryThread->toArray();
+        } else {
+            return abort(404);
+        }
+
         $queryOrder = Order::query()
             ->where('id', $queryTicket['order_id'])
             ->first()
