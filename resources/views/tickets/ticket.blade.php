@@ -128,9 +128,11 @@
                                             @endforeach
                                             - {{ \Carbon\Carbon::parse($comment['created_at'])->translatedFormat('d/m/Y H:i') }}
                                         </div>
-                                        <div class="card-body {{$comment['type']}} collapse @if($comment['displayed'] === 1) show @endif()" id="collapse-comment-{{$comment['id']}}">
-                                            <div class="container text-start">
-                                                {!! nl2br($comment['content']) !!}
+                                        <div class="collapse @if($comment['displayed'] === 1) show @endif()" id="collapse-comment-{{$comment['id']}}">
+                                            <div class="card-body {{$comment['type']}}">
+                                                <div class="container text-start">
+                                                    {!! nl2br($comment['content']) !!}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -203,9 +205,11 @@
                                         @endif
                                         - {{ \Carbon\Carbon::parse($message['created_at'])->translatedFormat('d/m/Y H:i') }}
                                     </div>
-                                    <div class="card-body {{$message['author_type']}} collapse @if($message['author_type'] !== "admin") show @endif()" id="collapse-message-{{$message['id']}}">
-                                        <div class="container text-start">
-                                            {!! nl2br($message['content']) !!}
+                                    <div class="collapse @if($message['author_type'] !== "admin") show @endif()" id="collapse-message-{{$message['id']}}">
+                                        <div class="card-body {{$message['author_type']}}">
+                                            <div class="container text-start">
+                                                {!! nl2br($message['content']) !!}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
