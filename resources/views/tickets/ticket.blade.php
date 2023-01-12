@@ -193,7 +193,7 @@
                             </div>
                             @foreach($messages as $message)
                                 <div class="card">
-                                    <div class="card-header text-start" data-bs-toggle="collapse" data-bs-target="#collapse-message-{{$message['id']}}" aria-expanded="false" aria-controls="collapse-message-{{$message['id']}}">
+                                    <div class="card-header text-start @if($message['author_type'] === "admin") collapsed @endif()" data-bs-toggle="collapse" data-bs-target="#collapse-message-{{$message['id']}}" aria-expanded="false" aria-controls="collapse-message-{{$message['id']}}">
                                         @if($message['author_type'] === 'customer') {{ __('app.customer') }}
                                         @elseif($message['author_type'] === 'operator') {{ __('app.operator') }}
                                         @elseif($message['author_type'] === 'admin')

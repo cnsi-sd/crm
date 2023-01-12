@@ -41,3 +41,29 @@
 .thread-comments .card-header {
     cursor: pointer;
 }
+
+#threadsTabsContent .card-header.collapsed:before {
+    content: "";
+    float: right;
+    height: .6em;
+    width: .6em;
+    border-color: initial;
+    border-style: solid;
+    border-width: 0 0 1px 1px;
+    transform: rotate(-45deg) translateY(0%);
+    transition: all 0.5s;
+    margin-top: 10px;
+}
+
+#threadsTabsContent .card-header:before {
+    content: "";
+    float: right;
+    height: .6em;
+    width: .6em;
+    border-color: initial;
+    border-style: solid;
+    border-width: 0 0 1px 1px;
+    transform: rotate(135deg) translateY(0%);
+    transition: all 0.5s;
+    margin-top: 10px;
+}
