@@ -123,10 +123,10 @@
                                         <div class="card-header text-start" data-bs-toggle="collapse" data-bs-target="#collapse-comment-{{$comment['id']}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment['id']}}">
                                             @foreach($users as $user)
                                                 @if($comment['user_id'] === $user['id'])
-                                                    {{ $user['name'] . ',' }}
+                                                    {{ $user['name'] }}
                                                 @endif
                                             @endforeach
-                                            le {{ \Carbon\Carbon::parse($comment['created_at'])->translatedFormat('d F Y H:i') }}
+                                            - {{ \Carbon\Carbon::parse($comment['created_at'])->translatedFormat('d/m/Y H:i') }}
                                         </div>
                                         <div class="card-body {{$comment['type']}} collapse @if($comment['displayed'] === 1) show @endif()" id="collapse-comment-{{$comment['id']}}">
                                             <div class="container text-start">
@@ -201,7 +201,7 @@
                                                 @endif
                                             @endforeach
                                         @endif
-                                        le {{ \Carbon\Carbon::parse($message['created_at'])->translatedFormat('d F Y H:i') }}
+                                        - {{ \Carbon\Carbon::parse($message['created_at'])->translatedFormat('d/m/Y H:i') }}
                                     </div>
                                     <div class="card-body {{$message['author_type']}} collapse @if($message['author_type'] !== "admin") show @endif()" id="collapse-message-{{$message['id']}}">
                                         <div class="container text-start">
