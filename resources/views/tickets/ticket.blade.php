@@ -104,9 +104,20 @@
                             <div class="card-body">
                                 <textarea name="ticket-thread-comments-content" class="form-control"></textarea>
                                 <div class="controls text-end">
-                                    <button type="submit" class="btn btn-outline-primary">
-                                        {{ __('app.send_comment') }}
-                                    </button>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <select name="ticket-thread-comments-type" class="form-select">
+                                                @foreach($commentTypeEnum as $commentType)
+                                                    <option value="{{ $commentType }}">{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($commentType)}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <button type="submit" class="btn btn-outline-primary">
+                                                {{ __('app.send_comment') }}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="container thread-comments">
                                     @foreach($comments as $comment)

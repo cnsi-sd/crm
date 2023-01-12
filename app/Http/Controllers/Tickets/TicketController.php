@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tickets;
 
+use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
@@ -84,7 +85,7 @@ class TicketController extends Controller
                     'user_id' => $request->user()->id,
                     'content' => $request->input('ticket-thread-comments-content'),
                     'displayed' => 1,
-                    'type' => 'responsible_info',
+                    'type' => $request->input('ticket-thread-comments-type'),
                 ]);
             }
         }
@@ -116,6 +117,7 @@ class TicketController extends Controller
             ->with('threads', $queryThreads)
             ->with('messages', $queryMessages)
             ->with('comments', $queryComments)
+            ->with('commentTypeEnum', TicketCommentTypeEnum::getList())
             ->with('ticketStateEnum', TicketStateEnum::getList())
             ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
             ->with('channels', $queryChannels);
