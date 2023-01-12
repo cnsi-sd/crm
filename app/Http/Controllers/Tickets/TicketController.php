@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
+use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Comment;
 use App\Models\Channel\Channel;
@@ -62,8 +63,6 @@ class TicketController extends Controller
             $ticket->priority = $request->input('ticket-priority');
             $ticket->user_id = $request->input('ticket-user_id');
             $ticket->deadline = $request->input('ticket-deadline');
-            $ticket->channel_id = $request->input('ticket-channel');
-            $ticket->order_id = $request->input('ticket-order_id');
             $ticket->direct_customer_email = $request->input('ticket-customer_email');
             $ticket->delivery_date = $request->input('ticket-delivery_date');
             $ticket->save();
@@ -98,6 +97,10 @@ class TicketController extends Controller
             ->where('id', $thread->id)
             ->first()
             ->toArray();
+        $queryOrder = Order::query()
+            ->where('id', $queryTicket['order_id'])
+            ->first()
+            ->toArray();
 
         $queryUsers = User::query()->get()->toArray();
 
@@ -113,6 +116,7 @@ class TicketController extends Controller
         return view('tickets.ticket')
             ->with('ticket',$queryTicket)
             ->with('activeThread',$queryThread)
+            ->with('order',$queryOrder)
             ->with('users', $queryUsers)
             ->with('threads', $queryThreads)
             ->with('messages', $queryMessages)

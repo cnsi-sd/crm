@@ -55,16 +55,14 @@
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
                                     <div class="col">
-                                        <select name="ticket-channel" class="form-select">
                                             @foreach ($channels as $channel)
-                                                <option value="{{$channel['id']}}" @if($ticket['channel_id'] === $channel['id']) selected @endif> {{ $channel['name'] }}</option>
+                                                <label>@if($ticket['channel_id'] === $channel['id']) {{ $channel['name'] }} @endif</label>
                                             @endforeach
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.order') }}</label></div>
-                                    <div class="col"><input name="ticket-order_id" class="form-control" type="text" value="{{ $ticket['order_id'] }}"/></div>
+                                    <div class="col"><label>{{ $order['channel_order_number'] }}</label></div>
                                 </div>
                             </div>
                         </div>
