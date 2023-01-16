@@ -5,6 +5,7 @@
 use App\Models\Settings\ProductConfiguration;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
+use Illuminate\Support\Facades\Auth;
 
 Breadcrumbs::for('any', function (BreadcrumbTrail $trail) {
 });
@@ -72,7 +73,9 @@ Breadcrumbs::for('ticket', function (BreadcrumbTrail $trail, $ticket) {
     $trail->parent('tickets');
     $trail->push(trans_choice('app.ticket.ticket',1), route('ticket', $ticket));
 });
-Breadcrumbs::for('ticket_thread', function (BreadcrumbTrail $trail, $ticket) {
-    $trail->parent('tickets');
-    $trail->push(trans_choice('app.ticket.ticket',1), route('ticket', $ticket));
+Breadcrumbs::for('ticket_thread', function (BreadcrumbTrail $trail, $ticket, $thread) {
+    $user = Auth::user();
+    $trail->parent('user_tickets', $user->id);
+    $trail->push('#' . $ticket->id, route('ticket', $ticket));
+    $trail->push($thread->name, route('ticket_thread', [$ticket, $thread]));
 });
