@@ -46,7 +46,7 @@ class Tags extends Model
 
     public function tagLists(): BelongsToMany
     {
-        return $this->belongsToMany(Channel::class, 'tag_tagLists', 'tag_id', 'taglist_id');
+        return $this->belongsToMany(TagList::class, 'tag_tagLists', 'tag_id', 'tagList_id');
     }
 
     public static function getTableColumns(): array

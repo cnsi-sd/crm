@@ -38,6 +38,8 @@ Route::middleware('checkActive')->group(function () {
         Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}/{thread}', [TicketController::class, 'ticket'])->name('ticket_thread')->can('read', Ticket::class);
+        Route::match(['get', 'post'], '{ticket}/{thread}/save/{tags}', [TicketController::class, 'save_tag'])->name('save_tags');
+        Route::match(['get', 'post'], '{ticket}/{thread}/delete/{tags}', [TicketController::class, 'delete_tag'])->name('delete_ticket_tags');
     });
     Route::prefix('admin')->group(function () {
             Route::prefix('roles')->group(function () {

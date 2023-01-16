@@ -130,4 +130,8 @@ class TicketController extends Controller
             ->with('channels', $queryChannels);
     }
 
+    public function delete_tag(Request $request) {
+        return redirect()->route('all_tickets');
+    }
+
 }

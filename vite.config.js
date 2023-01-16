@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/scss/icons.scss',
                 'resources/js/tags.js',
                 'resources/js/ticket.js',
+                'resources/js/axios.js',
             ],
             refresh: true,
         }),

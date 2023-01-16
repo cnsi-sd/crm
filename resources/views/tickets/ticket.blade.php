@@ -201,29 +201,39 @@
                             @endif
                         </div>
                         <div class="card">
-                            <div class="card-header">
-                                {{ trans_choice('app.tags.tags', 2) }}
-                                <button type="button" id="add" class="btn btn-success ms-2">+</button>
+                            <div class="card-header justify-content-between">
+                                <div class="col-6">
+                                    {{ trans_choice('app.tags.tags', 2) }}
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" id="add" class="btn btn-success align-self-end">+</button>
+                                </div>
                             </div>
                             <div class="card-body" id="card-body-tag">
+                                <input type="number" name="numberlist" id="number-list"
+                                       value="1" hidden="true">
                                 <div id="list-1">
-                                    <select name="ticket-revival" class="form-select no-sort">
+                                    <select name="ticket-revival" class="form-select no-sort" onchange="saveTicketTags()">
                                         <option value="">{{ __('app.revival.select_revival') }}</option>
-                                        @foreach (\App\Models\Tags\Tags::all() as $tag)
+                                    @foreach (\App\Models\Tags\Tags::all() as $tag)
                                             <option value="{{ $tag->id }}">
                                                 {{ $tag->name }}
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    <div class="mt-3 mb-2">
+                                        @foreach($thread->tagList as $taglist)
+                                            @foreach($taglist->tags as $tag)
+                                                <span style="background-color: {{ $tag->background_color }}; color: {{ $tag->text_color }}; border-radius: 5em; padding: 0.5em;">
+                                                    {{ $tag->name }} | <a href="{{ route('delete_ticket_tags',["ticket" => $ticket['id'], 'thread' => $activeThread['id'], "tags" => $tag->id] ) }}" style="color: {{ $tag->text_color }}"> x </a>
+                                                </span>
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+                                    <hr/>
                                 </div>
                             </div>
-                            <input type="number" name="numberlist" id="number-list"
-                                   value="1">
-                            {{--<div class="card-header">
-                                @foreach($thread->tagLists as $taglist)
-                                    {{ $taglist }}
-                                @endforeach
-                            </div>--}}
                         </div>
                         <div class="card">
                             <div class="card-header">{{ __('app.ticket.private_comments') }}</div>
