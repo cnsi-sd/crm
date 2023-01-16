@@ -56,6 +56,23 @@ class TicketController extends Controller
         return redirect()->route('ticket_thread', [$ticket,$queryThreads['id']]);
     }
 
+    public function getNumberOfUnreadMessagesAfterAdmin($ticket) {
+        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get()->toArray();
+        foreach ($queryThreads as $queryThread) {
+            $numberOfUnreadMessages[$queryThread['id']] = 0;
+            $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
+            foreach ($queryMessages as $queryMessage) {
+                if ($queryMessage['author_type'] === "admin") {
+                    break;
+                } else {
+                    $numberOfUnreadMessages[$queryThread['id']] += 1;
+                }
+            }
+
+        }
+        return $numberOfUnreadMessages;
+    }
+
     public function ticket(Request $request, ?Ticket $ticket, ?Thread $thread): View
     {
         if ($request->input()){
@@ -122,6 +139,8 @@ class TicketController extends Controller
         $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
         $queryChannels = Channel::query()->get()->toArray();
 
+        $unreadMessagesByTicket = $this->getNumberOfUnreadMessagesAfterAdmin($ticket);
+
         return view('tickets.ticket')
             ->with('ticket',$queryTicket)
             ->with('activeThread',$queryThread)
@@ -130,6 +149,7 @@ class TicketController extends Controller
             ->with('threads', $queryThreads)
             ->with('messages', $queryMessages)
             ->with('comments', $queryComments)
+            ->with('unreadMessagesByTicket', $unreadMessagesByTicket)
             ->with('commentTypeEnum', TicketCommentTypeEnum::getList())
             ->with('ticketStateEnum', TicketStateEnum::getList())
             ->with('ticketPriorityEnum', TicketPriorityEnum::getList())

@@ -160,15 +160,12 @@
                     </div>
                     <ul class="nav nav-tabs" id="threadsTabs" role="tablist">
                         @foreach($threads as $thread)
-                        <li class="nav-item">
-                            <a class="nav-link @if($thread['id'] === $activeThread['id']) active @endif" aria-current="page" href="{{ route('ticket_thread', ['ticket' => $ticket['id'], 'thread' => $thread['id']]) }}">{{$thread['name']}}
-                                @foreach($messages as $message)
-                                    @if($message['thread_id'] === $thread['id'])
-                                        @if($loop->first)
-                                            @if($message['author_type'] !== "admin") (1) @endif
-                                        @endif
-                                    @endif
-                                @endforeach
+                        <li class="nav-item position-relative">
+                            @if($unreadMessagesByTicket[$thread['id']] > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $unreadMessagesByTicket[$thread['id']] }}</span>
+                            @endif
+                            <a class="nav-link @if($thread['id'] === $activeThread['id']) active @endif" aria-current="page" href="{{ route('ticket_thread', ['ticket' => $ticket['id'], 'thread' => $thread['id']]) }}">
+                                {{$thread['name']}}
                             </a>
                         </li>
                         @endforeach
