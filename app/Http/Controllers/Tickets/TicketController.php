@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tickets;
 
 use App\Enums\Ticket\TicketCommentTypeEnum;
+use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
@@ -87,6 +88,7 @@ class TicketController extends Controller
                     'type' => $request->input('ticket-thread-comments-type'),
                 ]);
             }
+            Alert::toastSuccess(__('app.ticket.saved'));
         }
 
         $queryTicket = Ticket::query()

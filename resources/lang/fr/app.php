@@ -100,6 +100,7 @@ return [
         'customer_issue' => 'Problématique client',
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
+        'saved' => 'Ticket enregistré',
     ],
 
     'login' => [

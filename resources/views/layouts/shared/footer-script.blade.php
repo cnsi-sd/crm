@@ -5,3 +5,5 @@
 <script src="{{ Vite::asset('resources/js/layout.js') }}"></script>
 <script src="{{ Vite::asset('resources/js/hyper.js') }}"></script>
 @yield('script-bottom')
+
+@include('sweetalert::alert')
