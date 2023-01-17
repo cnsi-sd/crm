@@ -13,7 +13,7 @@
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.state') }}</label></div>
                                     <div class="col">
-                                        <select required name="ticket-state" class="form-select">
+                                        <select required name="ticket-state" class="form-select required_field">
                                                 <option value="">---</option>
                                             @foreach($ticketStateEnum as $ticketState)
                                                 <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
@@ -24,7 +24,7 @@
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.priority') }}</label></div>
                                     <div class="col">
-                                        <select name="ticket-priority" class="form-select">
+                                        <select name="ticket-priority" class="form-select required_field">
                                             @foreach($ticketPriorityEnum as $ticketPriority)
                                                 <option value="{{ $ticketPriority }}" @if($ticket['priority'] === $ticketPriority) selected @endif>{{ $ticketPriority }}</option>
                                             @endforeach
@@ -34,7 +34,7 @@
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.owner') }}</label></div>
                                     <div class="col">
-                                        <select name="ticket-user_id" class="form-select">
+                                        <select name="ticket-user_id" class="form-select required_field">
                                             @foreach ($users as $user)
                                                 <option value="{{ $user['id'] }}" @if($ticket['user_id'] === $user['id']) selected @endif>{{ $user['name'] }}</option>
                                             @endforeach
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.deadline') }}</label></div>
-                                    <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ date('Y-m-d', strtotime($ticket['deadline'])) }}"></div>
+                                    <div class="col"><input name="ticket-deadline" class="form-control required_field" type="date" value="{{ date('Y-m-d', strtotime($ticket['deadline'])) }}"></div>
                                 </div>
                             </div>
                         </div>
