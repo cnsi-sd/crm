@@ -45,19 +45,12 @@
                                     <div class="col"><label>{{ __('app.ticket.deadline') }}</label></div>
                                     <div class="col"><input name="ticket-deadline" class="form-control required_field" type="date" value="{{ date('Y-m-d', strtotime($ticket['deadline'])) }}"></div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">{{ __('app.ticket.mapping') }}</div>
-                        <div class="card-body">
-                            <div class="container">
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
                                     <div class="col">
-                                            @foreach ($channels as $channel)
-                                                <label>@if($ticket['channel_id'] === $channel['id']) {{ $channel['name'] }} @endif</label>
-                                            @endforeach
+                                        @foreach ($channels as $channel)
+                                            @if($ticket['channel_id'] === $channel['id']) <label>{{ $channel['name'] }}</label> @endif
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="row">
