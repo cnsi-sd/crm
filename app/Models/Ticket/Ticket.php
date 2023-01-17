@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Date;
  * @property int $channel_id
  * @property int $order_id
  * @property int $user_id
+ * @property int $last_thread_displayed
  * @property string $state
  * @property string $priority
  * @property Date $deadline

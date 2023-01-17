@@ -31,9 +31,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('tickets', function (Blueprint $table) {
-            $table->dropForeign('tickets_last_thread_displayed_foreign');
-        });
-        Schema::table('tickets', function (Blueprint $table) {
+            $table->dropForeign(['last_thread_displayed']);
             $table->dropColumn('last_thread_displayed');
         });
         Schema::table('ticket_threads', function (Blueprint $table) {

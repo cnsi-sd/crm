@@ -52,8 +52,12 @@ class TicketController extends Controller
     public function redirectTicket(Request $request, ?Ticket $ticket)
     {
         //todo : utiliser last_thread_displayed pour afficher le dernier thread chargé
-        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->first()->toArray();
-        return redirect()->route('ticket_thread', [$ticket,$queryThreads['id']]);
+        if ($ticket->last_thread_displayed) {
+            $threadId = $ticket->last_thread_displayed;
+        } else {
+            $threadId = Thread::query()->where('ticket_id', $ticket->id)->first()->id;
+        }
+        return redirect()->route('ticket_thread', [$ticket,$threadId]);
     }
 
     public function getNumberOfUnreadMessagesAfterAdmin($ticket) {
@@ -75,6 +79,9 @@ class TicketController extends Controller
 
     public function ticket(Request $request, ?Ticket $ticket, ?Thread $thread): View
     {
+        $ticket->last_thread_displayed = $thread->id;
+        $ticket->save();
+
         if ($request->input()){
             //$request->validate();
             $ticket->state = $request->input('ticket-state');
