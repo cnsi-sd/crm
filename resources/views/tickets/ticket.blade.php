@@ -114,12 +114,19 @@
                                 @foreach($comments as $comment)
                                     <div class="card">
                                         <div class="card-header text-start" data-bs-toggle="collapse" data-bs-target="#collapse-comment-{{$comment['id']}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment['id']}}">
-                                            @foreach($users as $user)
-                                                @if($comment['user_id'] === $user['id'])
-                                                    {{ $user['name'] }}
-                                                @endif
-                                            @endforeach
-                                            - {{ \Carbon\Carbon::parse($comment['created_at'])->translatedFormat('d/m/Y H:i') }}
+                                            <div class="row">
+                                                <div class="col-9">
+                                                    @foreach($users as $user)
+                                                        @if($comment['user_id'] === $user['id'])
+                                                            {{ explode(" ", $user['name'])[0] . " " . substr(explode(" ", $user['name'])[1], 0, 1) . "."}}
+                                                        @endif
+                                                    @endforeach
+                                                    - {{ \Carbon\Carbon::parse($comment['created_at'])->translatedFormat('d/m/Y H:i') }}
+                                                </div>
+                                                <div class="col-3 text-end">
+                                                    <span title="{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment['type'])}}" class="badge {{$comment['type']}}">{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment['type'])}}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="collapse @if($comment['displayed'] === 1) show @endif()" id="collapse-comment-{{$comment['id']}}">
                                             <div class="card-body {{$comment['type']}}">

@@ -10,28 +10,41 @@
     background-color: #CCFFCC;
 }
 
-.thread-comments .card-body.others {
+.thread-comments .card-body.others, .thread-comments .badge.others {
     background-color: #dcdcdc;
+    color: #000000;
 }
 
-.thread-comments .card-body.external_contact {
+.thread-comments .card-body.external_contact, .thread-comments .badge.external_contact {
     background-color: #CCFFCC;
+    color: #000000;
 }
 
-.thread-comments .card-body.responsible_info {
+.thread-comments .card-body.responsible_info, .thread-comments .badge.responsible_info {
     background-color: #eaccff;
+    color: #000000;
 }
 
-.thread-comments .card-body.process_to_follow {
+.thread-comments .card-body.process_to_follow, .thread-comments .badge.process_to_follow  {
     background-color: #cce5ff;
+    color: #000000;
 }
 
-.thread-comments .card-body.info_important {
+.thread-comments .card-body.info_important, .thread-comments .badge.info_important {
     background-color: #FADBD9;
+    color: #000000;
 }
 
-.thread-comments .card-body.summary {
+.thread-comments .card-body.summary, .thread-comments .badge.summary {
     background-color: #ffe6cc;
+    color: #000000;
+}
+
+.thread-comments .badge{
+    max-width: 75px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #threadsTabsContent .card-header {
