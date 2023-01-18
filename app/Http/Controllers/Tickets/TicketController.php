@@ -91,7 +91,14 @@ class TicketController extends Controller
         $ticket->save();
 
         if ($request->input()){
-            //$request->validate();
+            $request->validate([
+                'ticket-state'     => ['required','string'],
+                'ticket-priority'  => ['required','string'],
+                'ticket-user_id'   => ['required','integer', 'exists:App\Models\User\User,id'],
+                'ticket-deadline'  => ['required','date'],
+                'ticket-customer_email' => ['string'],
+                'ticket-delivery_date' => ['date']
+            ]);
             $ticket->state = $request->input('ticket-state');
             $ticket->priority = $request->input('ticket-priority');
             $ticket->user_id = $request->input('ticket-user_id');
@@ -104,6 +111,9 @@ class TicketController extends Controller
             $thread->save();
 
             if($request->input('ticket-thread-messages-content')) {
+                $request->validate([
+                    'ticket-thread-messages-content'     => ['required','string'],
+                ]);
                 Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
@@ -112,6 +122,9 @@ class TicketController extends Controller
                 ]);
             }
             if($request->input('ticket-thread-comments-content')) {
+                $request->validate([
+                    'ticket-thread-comments-content'     => ['required','string'],
+                ]);
                 Comment::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
