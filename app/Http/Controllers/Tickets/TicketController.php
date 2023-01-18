@@ -16,6 +16,7 @@ use App\Models\Channel\Channel;
 use App\Models\User\User;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function view;
@@ -58,6 +59,13 @@ class TicketController extends Controller
             $threadId = Thread::query()->where('ticket_id', $ticket->id)->first()->id;
         }
         return redirect()->route('ticket_thread', [$ticket,$threadId]);
+    }
+
+    public function hide_comment(Comment $comment, $status = 200): \Illuminate\Http\JsonResponse
+    {
+        $comment->displayed = !$comment->displayed;
+        $comment->save();
+        return response()->json(['message' => 'success'], $status);
     }
 
     public function getNumberOfUnreadMessagesAfterAdmin($ticket) {
