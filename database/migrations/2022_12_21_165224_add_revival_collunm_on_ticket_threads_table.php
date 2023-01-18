@@ -28,7 +28,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('ticket_threads', function (Blueprint $table) {
-            $table->dropForeign(['revival_id']);
+            $table->dropForeign('ticket_thread_revival_id_foreign');
             $table->dropColumn('revival_id');
             $table->dropColumn('revival_start_date');
             $table->dropColumn('revival_message_count');

@@ -17,4 +17,5 @@ class ChannelEnum extends AbstractEnum
     const RUEDUCOMMERCE_FR  = "rueducommerce.fr";
     const SHOWROOMPRIVE_COM = "showroomprive.com";
     const UBALDI_COM        = "ubaldi.com";
+    const FNAC_COM          = "fnac.com";
 }
