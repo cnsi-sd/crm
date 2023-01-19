@@ -83,6 +83,9 @@ class FnacImportMessage extends AbstractImportMessage
         $query = new MessageQuery();
         $query->setMessageType(MessageType::ORDER);
         $messages = $client->callService($query);
+
+
+        $this->logger->info('Get messages');
         /** @var Message[] $messages */
         $messages = $messages->getMessages()->getArrayCopy();
 
@@ -94,7 +97,8 @@ class FnacImportMessage extends AbstractImportMessage
                 DB::beginTransaction();
                 $messageId  = $message->getMessageId();
                 $mpOrderId  = $message->getMessageReferer();
-                $channel    = Channel::getByName($this->getChannelName());
+//                $channel    = Channel::getByName($this->getChannelName()); // Channel = mp
+                $channel    = Channel::getByName(ChannelEnum::FNAC_COM); // Channel = mp
                 $order      = Order::getOrder($mpOrderId, $channel);
                 $ticket     = Ticket::getTicket($order, $channel);
 
