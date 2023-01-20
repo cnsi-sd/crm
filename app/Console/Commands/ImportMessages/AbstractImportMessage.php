@@ -11,12 +11,11 @@ abstract class AbstractImportMessage extends Command
 {
     protected Logger $logger;
     protected string $log_path;
-    const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
-    const HTTP_CONNECT_TIMEOUT = 15;
+
     protected static $_alreadyImportedMessages;
 
-    //TODO redefine signature and description
-
+    protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
+    protected $description = 'Importing messages from Marketplace.';
     abstract protected function getChannelName(): string;
     abstract protected function getCredentials(): array;
 

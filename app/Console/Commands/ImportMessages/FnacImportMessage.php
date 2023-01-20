@@ -27,11 +27,13 @@ class FnacImportMessage extends AbstractImportMessage
     }
     protected Logger $logger;
     protected string $marketplace = 'fnac';
+
     static private ?SimpleClient $client = null;
-    protected static $_alreadyImportedMessages;
+    public static $_alreadyImportedMessages;
 
     protected function getChannelName(): string
     {
+        //TODO pourquoi transformer le name en snake_case?
         return (new Channel)->getSnakeName(ChannelEnum::FNAC_COM);
     }
     protected $signature = 'fnac:import:messagestest {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
@@ -70,20 +72,24 @@ class FnacImportMessage extends AbstractImportMessage
      */
     public function handle()
     {
-        require base_path('lib/fnacapiclient/autoload.php');
 
-        $this->logger = new Logger('import_message/' . $this->getChannelName() . '/' . $this->getChannelName() . '.log', true, true);
+        $channel_thread_number = 'fnac_default';
+
+        $this->logger = new Logger(
+            'import_message/'
+            . $this->getChannelName() . '/'
+            . $this->getChannelName()
+            . '.log', true, true
+        );
         $this->logger->info('--- Start ---');
 
         //GET LAST MESSAGES
         $this->logger->info('Init api');
         $client = self::getApiCLient();
 
-        //TODO il semble que l'on puisse paginer, donner une date_min/date_max ...
         $query = new MessageQuery();
         $query->setMessageType(MessageType::ORDER);
         $messages = $client->callService($query);
-
 
         $this->logger->info('Get messages');
         /** @var Message[] $messages */
@@ -97,18 +103,15 @@ class FnacImportMessage extends AbstractImportMessage
                 DB::beginTransaction();
                 $messageId  = $message->getMessageId();
                 $mpOrderId  = $message->getMessageReferer();
-//                $channel    = Channel::getByName($this->getChannelName()); // Channel = mp
                 $channel    = Channel::getByName(ChannelEnum::FNAC_COM); // Channel = mp
                 $order      = Order::getOrder($mpOrderId, $channel);
                 $ticket     = Ticket::getTicket($order, $channel);
-
-                //TODO ligne provisoire, revoir le thread par défaut de FNAC
-                $thread = Thread::getOrCreateThread($ticket, 1, 'fnac_default', '');
+                $thread = Thread::getOrCreateThread($ticket, $channel_thread_number, $channel->name, '');
 
                 if (!$this->isMessageImported($messageId)) {
                     $this->logger->info('Convert api message to db message');
-                    $this->convertApiResponseToMessage($ticket, $message, $thread);
-                    $this->addImportedMessageChannelNumber($message);
+                    $this->convertApiResponseMessage($ticket, $message, $thread);
+                    $this->addImportedMessageChannelNumber($messageId);
                 }
 
                 DB::commit();
@@ -131,7 +134,7 @@ class FnacImportMessage extends AbstractImportMessage
                 ->select('channel_message_number')
                 ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
                 ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
-                ->where('channel_id', Channel::getByName($this->getChannelName())->id)
+                ->where('channel_id', Channel::getByName(ChannelEnum::FNAC_COM))
                 ->get()
                 ->pluck('channel_message_number', 'channel_message_number')
                 ->toArray();
@@ -142,31 +145,51 @@ class FnacImportMessage extends AbstractImportMessage
 
     public function convertApiResponseMessage(Ticket $ticket, Message $message, Thread $thread)
     {
-        $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
-        $ticket->save();
-        $this->logger->info('Ticket save');
-
         $authorType = $message->getMessageFromType();
+        $isNotShopUser = self::isNotShopUser($authorType);
 
-        \App\Models\Ticket\Message::firstOrCreate([
-            'thread_id' => $thread->id,
-            'channel_message_number' => $message->getMessageId(),
-        ],
-        [
-            'thread_id' => $thread->id,
-            'user_id' => null,
-            'channel-message_number' => $message->getMessageId(),
-            'author_type' => self::getAuthorType($authorType),
-            'content' => strip_tags($message->getMessageSubject())
-        ]);
+        if($isNotShopUser) {
+            $this->logger->info('Set ticket\'s status to waiting admin');
+            $ticket->state = TicketStateEnum::WAITING_ADMIN;
+            $ticket->save();
+            $this->logger->info('Ticket save');
+
+            \App\Models\Ticket\Message::firstOrCreate([
+                'thread_id' => $thread->id,
+                'channel_message_number' => $message->getMessageId(),
+            ],
+            [
+                'thread_id' => $thread->id,
+                'user_id' => null,
+                'channel-message_number' => $message->getMessageId(),
+                'author_type' => self::getAuthorType($authorType),
+                'content' => strip_tags($message->getMessageDescription())
+            ]);
+        }
     }
 
+    const FROM_SHOP_TYPE = [
+        'SHOP_USER',
+        'CALLCENTER',
+        ];
+
+    /**
+     * returns if the message type is SHOP_USER
+     * @param string $type
+     * @return bool
+     */
+    private static function isNotShopUser(string $type): bool
+    {
+//        return self::FROM_SHOP_TYPE !== $type;
+        return !in_array($type, self::FROM_SHOP_TYPE);
+    }
     private static function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'CUSTOMER_USER' => TicketMessageAuthorTypeEnum::CUSTOMER,
-            default => TicketMessageAuthorTypeEnum::OPERATEUR,
+            'CLIENT'        => TicketMessageAuthorTypeEnum::CLIENT,
+            'CALLCENTER'    => TicketMessageAuthorTypeEnum::CALLCENTER,
+            default         => TicketMessageAuthorTypeEnum::OPERATEUR,
         };
     }
 
@@ -174,7 +197,7 @@ class FnacImportMessage extends AbstractImportMessage
      * @param string $channel_message_number
      * @return void
      */
-    private function addImportedMessageChannelNumber(string $channel_message_number)
+    private function addImportedMessageChannelNumber(string $channel_message_number): void
     {
         self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
     }

@@ -64,7 +64,6 @@ abstract class AbstractMiraklImportMessage extends Command
             $request = new GetThreadsRequest();
             $request->setUpdatedSince($date_time);
             $request->setWithMessages(true);
-
             $this->logger->info('Init api');
             $client = $this->initApiClient();
 
