@@ -181,7 +181,7 @@ abstract class AbstractMiraklImportMessage extends Command
         $authorType = $api_message->getFrom()->getType();
         $isNotShopUser = self::isNotShopUser($authorType);
         if ($isNotShopUser) {
-            $this->logger->info('Set ticket\'s status to wating admin');
+            $this->logger->info('Set ticket\'s status to waiting admin');
             $ticket->state = TicketStateEnum::WAITING_ADMIN;
             $ticket->save();
             $this->logger->info('Ticket save');
