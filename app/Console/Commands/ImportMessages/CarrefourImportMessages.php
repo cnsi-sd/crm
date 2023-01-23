@@ -17,7 +17,7 @@ class CarrefourImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return ChannelEnum::CARREFOUR_FR;
+        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::CARREFOUR_FR);
     }
 
     /**

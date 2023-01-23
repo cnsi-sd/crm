@@ -15,7 +15,6 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Date;
 
 /**
  * @property int $id
@@ -25,8 +24,8 @@ use Illuminate\Support\Facades\Date;
  * @property int $last_thread_displayed
  * @property string $state
  * @property string $priority
- * @property Date $deadline
- * @property Date $delivery_date
+ * @property Datetime $deadline
+ * @property Datetime $delivery_date
  * @property string $direct_customer_email
  * @property Datetime $created_at
  * @property Datetime $updated_at

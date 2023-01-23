@@ -19,7 +19,7 @@ class RoleController extends Controller
             ->setExportable(false)
             ->setQuery($query);
 
-        return view('settings.permissions.roles.list')
+        return view('admin.roles.list')
             ->with('table', $table);
     }
 
@@ -34,8 +34,12 @@ class RoleController extends Controller
             return redirect()->route('roles');
         }
 
-        return view('settings.permissions.roles.edit')
-            ->with('role', $role);
+        /** get the role authorizations*/
+        $permissions = $role->getPermissions();
+
+        return view('admin.roles.edit')
+            ->with('role', $role)
+            ->with('permissions', $permissions);
     }
 
     public function save_role(Request $request, Role $role)
@@ -47,6 +51,15 @@ class RoleController extends Controller
 
         // Set name
         $role->name      = $request->input('name');
+
+        /** get all check authorizations */
+        $permissions_inputs = $request->except( ['name', '_token', 'save_role']);
+
+        /** Save the setting */
+        $permissions = array_keys($permissions_inputs);
+
+        $permissions = implode(';', $permissions);
+        $role->permissions = $permissions;
 
         // Enregistrement
         $role->save();

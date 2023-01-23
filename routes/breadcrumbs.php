@@ -15,14 +15,20 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
 });
 
 /** Settings */
-Breadcrumbs::for('settings', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('admin', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push(__('app.settings.settings'));
+    $trail->push(__('app.navbar.admin'));
+});
+
+/** Configuration */
+Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('app.configuration.configuration'));
 });
 
 /** Permissions */
 Breadcrumbs::for('permissions', function (BreadcrumbTrail $trail) {
-    $trail->parent('settings');
+    $trail->parent('admin');
     $trail->push(__('app.navbar.permissions'));
 });
 
@@ -34,9 +40,10 @@ Breadcrumbs::for('tickets', function (BreadcrumbTrail $trail) {
 
 /** Roles */
 Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
-    $trail->parent('permissions');
+    $trail->parent('admin');
     $trail->push(trans_choice('app.role.role', 2), route('roles'));
 });
+
 Breadcrumbs::for('create_role', function (BreadcrumbTrail $trail) {
     $trail->parent('roles');
     $trail->push(__('app.role.new'), route('create_role'));
@@ -48,7 +55,7 @@ Breadcrumbs::for('edit_role', function (BreadcrumbTrail $trail, $role) {
 
 /** Users */
 Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {
-    $trail->parent('permissions');
+    $trail->parent('admin');
     $trail->push(trans_choice('app.user.user', 2), route('users'));
 });
 Breadcrumbs::for('create_user', function (BreadcrumbTrail $trail) {
@@ -78,4 +85,43 @@ Breadcrumbs::for('ticket_thread', function (BreadcrumbTrail $trail, $ticket, $th
     $trail->parent('user_tickets', $user->id);
     $trail->push('#' . $ticket->id, route('ticket', $ticket));
     $trail->push($thread->name, route('ticket_thread', [$ticket, $thread]));
+});
+
+/** defaultAnswers */
+Breadcrumbs::for('defaultAnswers', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.defaultAnswer.defaultAnswer', 2), route('defaultAnswers'));
+});
+
+Breadcrumbs::for('create_defaultAnswer', function (BreadcrumbTrail $trail) {
+    $trail->parent('defaultAnswers');
+    $trail->push(__('app.create'));
+});
+
+Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail, \App\Models\Channel\DefaultAnswer $defaultAnswer) {
+    $trail->parent('defaultAnswers');
+    $trail->push($defaultAnswer->id);
+    $trail->push(__('app.edit'));
+});
+
+/** Revival */
+Breadcrumbs::for('revival', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.revival.revival', 2), route('revival'));
+});
+
+Breadcrumbs::for('create_revival', function (BreadcrumbTrail $trail) {
+    $trail->parent('revival');
+    $trail->push(__('app.create'));
+});
+
+Breadcrumbs::for('edit_revival', function (BreadcrumbTrail $trail) {
+    $trail->parent('revival');
+    $trail->push(__('app.edit'));
+});
+
+/** Auto Reply */
+Breadcrumbs::for('autoReply', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.autoReply.autoReply', 2), route('autoReply'));
 });

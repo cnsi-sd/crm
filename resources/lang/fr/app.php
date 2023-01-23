@@ -9,9 +9,12 @@ return [
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'create' => 'Création',
+    'delete' => 'Suppression',
+    'deleteExpression' => 'Êtes vous sûr de vouloir supprimer : ',
+    'new' => 'Nouveau',
     'display' => 'Afficher',
     'logout' => 'Déconnexion',
-    'search' => 'Rechercher',
     'no_result' => 'Aucun résultat.',
     'username' => 'Nom d\'utilisateur',
     'password' => 'Mot de passe',
@@ -40,11 +43,22 @@ return [
         'dashboard' => 'Tableau de bord',
         'settings' => 'Paramètres',
         'permissions' => 'Permissions',
+        'config' => 'Configurations',
+        'admin' => 'Administration'
     ],
 
     /** Settings */
-    'settings' => [
-        'settings' => 'Paramètres',
+    'admin' => [
+        'admin' => 'Paramètres',
+    ],
+
+    /** Permission */
+    'permission' =>[
+        'user' => 'Utilisateur',
+        'role' => 'Role',
+        'default_message_answer' => 'Message par défaut',
+        'revival' => 'Relance automatique',
+        'ticket'=> 'Ticket'
     ],
 
     'role' => [
@@ -90,7 +104,6 @@ return [
         'my_tickets' => 'Mes tickets',
         'channel' => 'Canal de diffusion',
         'subjects' => 'Sujets',
-        'state' => 'Statut',
         'mapping' => 'Association',
         'order' => 'Commande',
         'base_information' => 'Informations de base',
@@ -109,6 +122,50 @@ return [
         'enter_email_and_password' => 'Saisir votre adresse email et votre mot de passe pour vous connecter.',
         'forgot_your_password' => 'Mot de passe oublié ?',
         'remember_me' => 'Se souvenir de moi',
+    ],
+
+    'configuration' => [
+        'configuration' => 'Configuration',
+        'channel' => 'Channel',
+    ],
+
+    'autoReply' => [
+        'autoReply' => 'Réponse automatique|Réponses automatiques',
+        'autoReplyWeek' => 'Réponse automatique : semaine',
+        'autoReplyWeekEnd' => 'Réponse automatique : week-end',
+        'validate' => 'Activé la réponse automatique',
+        'activate' => 'Activé',
+        'disable' => 'Désactivé',
+        'MessageToReply' => 'message envoyé'
+    ],
+
+    'defaultAnswer' => [
+        'defaultAnswer' => 'Réponse par défaut|Réponses par défaut',
+        'save' => 'Enregistrer la réponse',
+        'name' => 'Nom de la réponse',
+        'content' => 'Contenu de la réponse',
+        'select_channel' => 'Cannaux sélectioner',
+        'message' => 'Message '
+    ],
+
+    'revival' => [
+        'revival' => 'Relance automatique|Relances automatiques',
+        'name' => 'Nom de la relance automatique',
+        'frequency' => "Fréquence d'envoi :",
+        'max_revival' => "Nombre d'envoi de relance",
+        'default_answer' => 'Message envoyer',
+        'end_default_answer' => 'Message envoyer à la fin du cycle de relance',
+        'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
+        'choose_answer' => 'Choisir le message à envoyer',
+        'end_state' => 'Statut final',
+        'channel' => "Cannaux d'aplication",
+        'start_revival' => 'À partir du',
+        'select_revival' => 'Aucune',
+        'frequency_details' => 'Tous les jours|Tous les :freq jours',
+        'MaxRevival' => 'Messages envoyés :',
+        'nextReply' => 'Prochaine relance : ',
+        'sendType' => "Type d'envoi",
+        'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.'
     ],
 
     'recover_password' => [

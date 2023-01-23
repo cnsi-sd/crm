@@ -3,6 +3,7 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Models\Channel\Channel;
 
 class ButImportMessages extends AbstractMiraklImportMessage
 {
@@ -17,7 +18,7 @@ class ButImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return ChannelEnum::BUT_FR;
+        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::BUT_FR);
     }
 
     /**

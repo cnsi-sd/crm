@@ -1,13 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Configuration\AutoReplyController;
+use App\Http\Controllers\Configuration\DefaultAnswerController;
+use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Tickets\TicketController;
+use App\Models\Channel\DefaultAnswer;
+use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
-use App\Models\Ticket\Ticket;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -35,21 +39,41 @@ Route::middleware('checkActive')->group(function() {
        Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);
        Route::match(['get', 'post'], '{ticket}/{thread}', [TicketController::class, 'ticket'])->name('ticket_thread')->can('read', Ticket::class);
     });
-    Route::prefix('settings')->group(function () {
-        Route::prefix('permissions')->group(function () {
+    Route::prefix('admin')->group(function () {
             Route::prefix('roles')->group(function () {
                 Route::match(['get', 'post'], 'new', [RoleController::class, 'edit'])->name('create_role')->can('edit', Role::class);
-                Route::match(['get', 'post'], '{role}', [RoleController::class, 'edit'])->name('edit_role')->can('edit', Role::class);
-                Route::match(['get', 'post'], '', [RoleController::class, 'list'])->name('roles')->can('edit', Role::class);
+                Route::match(['get', 'post'], '{role}', [RoleController::class, 'edit'])->name('edit_role')->can('read', Role::class);
+                Route::match(['get', 'post'], '', [RoleController::class, 'list'])->name('roles')->can('read', Role::class);
             });
             Route::prefix('users')->group(function () {
                 Route::match(['get', 'post'], 'new', [UserController::class, 'edit'])->name('create_user')->can('edit', User::class);
                 Route::match(['get', 'post'], '{user}', [UserController::class, 'edit'])->name('edit_user')->can('edit', User::class);
-                Route::match(['get', 'post'], '', [UserController::class, 'list'])->name('users')->can('edit', User::class);
+                Route::match(['get', 'post'], '', [UserController::class, 'list'])->name('users')->can('read', User::class);
             });
+    });
+});
+
+Route::middleware('checkActive')->group(function () {
+    Route::prefix('configuration')->group(function () {
+        Route::prefix('default_answer')->group(function () {
+            Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_defaultAnswer')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_defaultAnswer')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('defaultAnswers')->can('read', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswer::class);
+        });
+
+        Route::prefix('revival')->group(function () {
+            Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival');
+            Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival');
+            Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival');
+            Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival');
+        });
+        Route::prefix('autoReply')->group(function () {
+            Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
         });
     });
 });
+
 
 Route::group(['prefix' => '/'], function () {
     Route::get('', function () {
