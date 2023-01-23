@@ -181,4 +181,8 @@ class Ticket extends Model
 
         return $columns;
     }
+
+    public function getOpenedDays() {
+        return round(abs(time() - strtotime($this->created_at))/60/60/24);
+    }
 }
