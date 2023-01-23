@@ -11,9 +11,9 @@
                         <div class="card-body">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.state') }}</label></div>
+                                    <div class="col"><label>{{ __('app.ticket.state') }} <span class="required_field">*</span></label></div>
                                     <div class="col">
-                                        <select required name="ticket-state" class="form-select required_field">
+                                        <select required name="ticket-state" class="form-select">
                                                 <option value="">---</option>
                                             @foreach($ticketStateEnum as $ticketState)
                                                 <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
@@ -22,9 +22,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.priority') }}</label></div>
+                                    <div class="col"><label>{{ __('app.ticket.priority') }} <span class="required_field">*</span></label></div>
                                     <div class="col">
-                                        <select name="ticket-priority" class="form-select required_field">
+                                        <select name="ticket-priority" class="form-select">
                                             @foreach($ticketPriorityEnum as $ticketPriority)
                                                 <option value="{{ $ticketPriority }}" @selected($ticket['priority'] === $ticketPriority)>{{ $ticketPriority }}</option>
                                             @endforeach
@@ -32,9 +32,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.owner') }}</label></div>
+                                    <div class="col"><label>{{ __('app.ticket.owner') }} <span class="required_field">*</span></label></div>
                                     <div class="col">
-                                        <select name="ticket-user_id" class="form-select required_field">
+                                        <select name="ticket-user_id" class="form-select">
                                             @foreach ($users as $user)
                                                 <option value="{{ $user['id'] }}" @selected($ticket['user_id'] === $user['id'])>{{ $user['name'] }}</option>
                                             @endforeach
@@ -42,8 +42,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.deadline') }}</label></div>
-                                    <div class="col"><input name="ticket-deadline" class="form-control required_field" type="date" value="{{ date('Y-m-d', strtotime($ticket['deadline'])) }}"></div>
+                                    <div class="col"><label>{{ __('app.ticket.deadline') }} <span class="required_field">*</span></label></div>
+                                    <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ date('Y-m-d', strtotime($ticket['deadline'])) }}"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
