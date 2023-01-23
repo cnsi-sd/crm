@@ -3,11 +3,12 @@
 namespace App\Models\Channel;
 
 
+use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
-use App\Models\User\Channel_Users;
 use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
+ * @property DefaultAnswer $defaultAnswers
+ * @property Revival $revivals
  * @property Ticket[] $tickets
  * @property Order[] $orders
  */
@@ -27,6 +30,25 @@ class Channel extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function getSnakeName($channelName): array|string
+    {
+        return self::staticGetSnakeName($channelName);
+    }
+
+    public static function staticGetSnakeName($name): array|string
+    {
+        return str_replace('.', '_', $name);
+    }
+    public function defaultAnswers(): BelongsToMany
+    {
+        return $this->belongsToMany(DefaultAnswer::class)->orderBy('name');
+    }
+
+    public function revivals(): BelongsToMany
+    {
+        return $this->belongsToMany(Revival::class)->orderBy('name');
+    }
 
     public static function getChannelsNames(): array
     {
@@ -45,11 +67,6 @@ class Channel extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function channel_users(): HasMany
-    {
-        return $this->hasMany(Channel_Users::class);
-    }
-
     public static function getByName(string $name, bool $filter_active = true) : Channel
     {
         /** @var Channel $channel */
@@ -59,4 +76,5 @@ class Channel extends Model
 
         return $channel;
     }
+
 }

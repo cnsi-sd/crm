@@ -30,7 +30,7 @@ class UserController extends Controller
             ->setExportable(false)
             ->setQuery($query);
 
-        return view('settings.permissions.users.list')
+        return view('admin.users.list')
             ->with('table', $table);
     }
 
@@ -50,7 +50,7 @@ class UserController extends Controller
             return redirect()->route('users');
         }
 
-        return view('settings.permissions.users.edit')
+        return view('admin.users.edit')
             ->with('user', $user);
     }
 

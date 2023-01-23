@@ -6,8 +6,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "akaunting/laravel-setting": "^1.2",
+        "cnsi/logger": "dev-main",
         "diglactic/laravel-breadcrumbs": "8.0.1",
-        "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
@@ -15,7 +16,8 @@
         "mirakl/sdk-php-shop": "^1.16",
         "realrashid/sweet-alert": "^5.1.0",
         "symfony/http-client": "^6.1",
-        "symfony/mailgun-mailer": "^6.1"
+        "symfony/mailgun-mailer": "^6.1",
+        "twilio/sdk": "^6.44"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -67,5 +69,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "ssh://git@git.cnsi-sd.net:2222/packages/logger.git"
+        }
+    ]
 }

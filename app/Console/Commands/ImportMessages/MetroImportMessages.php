@@ -17,7 +17,7 @@ class MetroImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return ChannelEnum::METRO_FR;
+        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::METRO_FR);
     }
 
     /**

@@ -17,7 +17,7 @@ class DartyImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return ChannelEnum::DARTY_COM;
+        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::DARTY_COM);
     }
 
     /**

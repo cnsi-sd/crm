@@ -7,6 +7,7 @@ use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
+use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
 use App\Models\Channel\Order;
@@ -17,6 +18,7 @@ use App\Models\User\User;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
 use http\Env\Response;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function view;
@@ -85,6 +87,9 @@ class TicketController extends Controller
         return $numberOfUnreadMessages;
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function ticket(Request $request, ?Ticket $ticket, ?Thread $thread): View
     {
         $ticket->last_thread_displayed = $thread->id;
@@ -107,7 +112,10 @@ class TicketController extends Controller
             $ticket->delivery_date = $request->input('ticket-delivery_date');
             $ticket->save();
 
+
             $thread->customer_issue = $request->input('ticket-thread-customer_issue');
+            $thread->revival_id = $request->input('ticket-revival');
+            $thread->revival_start_date = $request->input('revival-delivery_date') . ' 09:00:00';
             $thread->save();
 
             if($request->input('ticket-thread-messages-content')) {
@@ -160,8 +168,8 @@ class TicketController extends Controller
 
         $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get()->toArray();
         $threads = [];
-        foreach ($queryThreads as $thread) {
-            $threads[] = $thread['id'];
+        foreach ($queryThreads as $thread2) {
+            $threads[] = $thread2['id'];
         }
         $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
         $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
@@ -171,6 +179,7 @@ class TicketController extends Controller
 
         return view('tickets.ticket')
             ->with('ticket',$queryTicket)
+            ->with('thread', $thread)
             ->with('activeThread',$queryThread)
             ->with('order',$queryOrder)
             ->with('users', $queryUsers)
