@@ -52,8 +52,8 @@ class Ticket extends Model
     ];
 
     protected $casts = [
-        'deadline' => 'datetime:Y-m-d',
-        'delivery_date' => 'datetime:Y-m-d'
+        'deadline' => 'datetime',
+        'delivery_date' => 'datetime'
     ];
 
     public static function getTicket(Order $order, Channel $channel)

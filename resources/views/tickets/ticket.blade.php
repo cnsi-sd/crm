@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.deadline') }} <span class="required_field">*</span></label></div>
-                                    <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ date('Y-m-d', strtotime($ticket->deadline)) }}"></div>
+                                    <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ $ticket->deadline->format("Y-m-d") }}"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="{{ date('Y-m-d', strtotime($ticket->delivery_date)) }}"/></div>
+                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="{{ $ticket->delivery_date->format("Y-m-d") }}"/></div>
                                 </div>
                             </div>
                         </div>
