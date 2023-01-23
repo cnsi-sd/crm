@@ -1,13 +1,13 @@
-@extends('layouts.horizontal', ["page_title"=> trans_choice('app.ticket.ticket', 1) . ' #' . $ticket['id']])
+@extends('layouts.horizontal', ["page_title"=> trans_choice('app.ticket.ticket', 1) . ' #' . $ticket->id])
 
 @section('content')
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
-        <form method="post" action="{{ route('ticket_thread', ['ticket' => $ticket['id'], 'thread' => $activeThread['id']]) }}">
+        <form method="post" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
         @csrf
             <div class="row">
                 <div class="col-3">
                     <div class="card">
-                        <div class="card-header">{{ trans_choice('app.ticket.ticket', 1) }} #{{ $ticket['id'] }}</div>
+                        <div class="card-header">{{ trans_choice('app.ticket.ticket', 1) }} #{{ $ticket->id }}</div>
                         <div class="card-body">
                             <div class="container">
                                 <div class="row">
@@ -26,7 +26,7 @@
                                     <div class="col">
                                         <select name="ticket-priority" class="form-select">
                                             @foreach($ticketPriorityEnum as $ticketPriority)
-                                                <option value="{{ $ticketPriority }}" @selected($ticket['priority'] === $ticketPriority)>{{ $ticketPriority }}</option>
+                                                <option value="{{ $ticketPriority }}" @selected($ticket->priority === $ticketPriority)>{{ $ticketPriority }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -36,26 +36,24 @@
                                     <div class="col">
                                         <select name="ticket-user_id" class="form-select">
                                             @foreach ($users as $user)
-                                                <option value="{{ $user['id'] }}" @selected($ticket['user_id'] === $user['id'])>{{ $user['name'] }}</option>
+                                                <option value="{{ $user->id }}" @selected($ticket->user_id === $user->id)>{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.deadline') }} <span class="required_field">*</span></label></div>
-                                    <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ date('Y-m-d', strtotime($ticket['deadline'])) }}"></div>
+                                    <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ date('Y-m-d', strtotime($ticket->deadline)) }}"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
                                     <div class="col">
-                                        @foreach ($channels as $channel)
-                                            @if($ticket['channel_id'] === $channel['id']) <label>{{ $channel['name'] }}</label> @endif
-                                        @endforeach
+                                        <label>{{ $ticket->channel->name }}</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.order') }}</label></div>
-                                    <div class="col"><label>{{ $order['channel_order_number'] }}</label></div>
+                                    <div class="col"><label>{{ $order->channel_order_number }}</label></div>
                                 </div>
                             </div>
                         </div>
@@ -149,11 +147,11 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
-                                    <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket['direct_customer_email'] }}"/></div>
+                                    <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="{{ date('Y-m-d', strtotime($ticket['delivery_date'])) }}"/></div>
+                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="{{ date('Y-m-d', strtotime($ticket->delivery_date)) }}"/></div>
                                 </div>
                             </div>
                         </div>
@@ -164,11 +162,11 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
-                                    <div class="col"><label>{{ date('d/m/Y', strtotime($ticket['created_at'])) }} ({{round(abs(time() - strtotime($ticket['created_at']))/60/60/24)}}j)</label></div>
+                                    <div class="col"><label>{{ date('d/m/Y', strtotime($ticket->created_at)) }} ({{round(abs(time() - strtotime($ticket->created_at))/60/60/24)}}j)</label></div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>
-                                    <div class="col"><input name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$activeThread['customer_issue']}}"/></div>
+                                    <div class="col"><input name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$thread->customer_issue}}"/></div>
                                 </div>
                             </div>
                         </div>
@@ -196,25 +194,21 @@
                             <div class="container thread-comments">
                                 @foreach($comments as $comment)
                                     <div class="card">
-                                        <div class="card-header text-start" data-bs-toggle="collapse" data-comment-id="{{$comment['id']}}" data-bs-target="#collapse-comment-{{$comment['id']}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment['id']}}">
+                                        <div class="card-header text-start" data-bs-toggle="collapse" data-comment-id="{{$comment->id}}" data-bs-target="#collapse-comment-{{$comment->id}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment->id}}">
                                             <div class="row">
                                                 <div class="col-9">
-                                                    @foreach($users as $user)
-                                                        @if($comment['user_id'] === $user['id'])
-                                                            {{ explode(" ", $user['name'])[0] . " " . substr(explode(" ", $user['name'])[1], 0, 1) . "."}}
-                                                        @endif
-                                                    @endforeach
-                                                    - {{ \Carbon\Carbon::parse($comment['created_at'])->translatedFormat('d/m/Y H:i') }}
+                                                            {{ explode(" ", $comment->user->name)[0] . " " . substr(explode(" ", $comment->user->name)[1], 0, 1) . "."}}
+                                                    - {{ \Carbon\Carbon::parse($comment->created_at)->translatedFormat('d/m/Y H:i') }}
                                                 </div>
                                                 <div class="col-3 text-end">
-                                                    <span title="{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment['type'])}}" class="badge {{$comment['type']}}">{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment['type'])}}</span>
+                                                    <span title="{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment->type)}}" class="badge {{$comment->type}}">{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment->type)}}</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="collapse @if($comment['displayed'] === 1) show @endif()" id="collapse-comment-{{$comment['id']}}">
-                                            <div class="card-body {{$comment['type']}}">
+                                        <div class="collapse @if($comment->displayed === 1) show @endif()" id="collapse-comment-{{$comment->id}}">
+                                            <div class="card-body {{$comment->type}}">
                                                 <div class="container text-start">
-                                                    {!! nl2br($comment['content']) !!}
+                                                    {!! nl2br($comment->content) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -242,13 +236,13 @@
                         </button>
                     </div>
                     <ul class="nav nav-tabs" id="threadsTabs" role="tablist">
-                        @foreach($threads as $thread)
+                        @foreach($ticket->threads as $ticketThread)
                         <li class="nav-item position-relative">
-                            @if($unreadMessagesByTicket[$thread['id']] > 0)
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $unreadMessagesByTicket[$thread['id']] }}</span>
+                            @if($ticketThread->getUnreadMessages() > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $ticketThread->getUnreadMessages() }}</span>
                             @endif
-                            <a class="nav-link @if($thread['id'] === $activeThread['id']) active @endif" aria-current="page" href="{{ route('ticket_thread', ['ticket' => $ticket['id'], 'thread' => $thread['id']]) }}">
-                                {{$thread['name']}}
+                            <a class="nav-link @if($ticketThread->id === $thread['id']) active @endif" aria-current="page" href="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $ticketThread->id]) }}">
+                                {{$ticketThread->name}}
                             </a>
                         </li>
                         @endforeach
@@ -273,22 +267,18 @@
                             </div>
                             @foreach($messages as $message)
                                 <div class="card">
-                                    <div class="card-header text-start @if($message['author_type'] === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) collapsed @endif()" data-bs-toggle="collapse" data-bs-target="#collapse-message-{{$message['id']}}" aria-expanded="false" aria-controls="collapse-message-{{$message['id']}}">
-                                        @if($message['author_type'] === 'customer') {{ __('app.customer') }}
-                                        @elseif($message['author_type'] === 'operator') {{ __('app.operator') }}
-                                        @elseif($message['author_type'] === 'admin')
-                                            @foreach($users as $user)
-                                                @if($message['user_id'] === $user['id'])
-                                                    {{ $user['name'] }}
-                                                @endif
-                                            @endforeach
+                                    <div class="card-header text-start @if($message->author_type === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) collapsed @endif()" data-bs-toggle="collapse" data-bs-target="#collapse-message-{{$message->id}}" aria-expanded="false" aria-controls="collapse-message-{{$message->id}}">
+                                        @if($message->author_type === 'customer') {{ __('app.customer') }}
+                                        @elseif($message->author_type === 'operator') {{ __('app.operator') }}
+                                        @elseif($message->author_type === 'admin')
+                                                    {{ $message->user->name }}
                                         @endif
-                                        - {{ \Carbon\Carbon::parse($message['created_at'])->translatedFormat('d/m/Y H:i') }}
+                                        - {{ \Carbon\Carbon::parse($message->created_at)->translatedFormat('d/m/Y H:i') }}
                                     </div>
-                                    <div class="collapse @if($message['author_type'] !== \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) show @endif()" id="collapse-message-{{$message['id']}}">
-                                        <div class="card-body {{$message['author_type']}}">
+                                    <div class="collapse @if($message->author_type !== \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) show @endif()" id="collapse-message-{{$message->id}}">
+                                        <div class="card-body {{$message->author_type}}">
                                             <div class="container text-start">
-                                                {!! nl2br($message['content']) !!}
+                                                {!! nl2br($message->content) !!}
                                             </div>
                                         </div>
                                     </div>

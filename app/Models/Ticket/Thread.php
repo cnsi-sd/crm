@@ -176,4 +176,18 @@ class Thread extends Model
             ->first();
     }
 
+    public function getUnreadMessages()
+    {
+        $numberOfUnreadMessages = 0;
+        $queryMessages = Message::query()->where('thread_id', $this->id)->orderBy('created_at', "DESC")->get();
+        foreach ($queryMessages as $queryMessage) {
+            if ($queryMessage['author_type'] === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) {
+                break;
+            } else {
+                $numberOfUnreadMessages += 1;
+            }
+        }
+    return $numberOfUnreadMessages;
+    }
+
 }

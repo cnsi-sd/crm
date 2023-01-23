@@ -33,7 +33,7 @@ require __DIR__ . '/auth.php';
 
 Route::middleware('checkActive')->group(function() {
     Route::prefix('tickets')->group(function() {
-       Route::match(['get', 'post'], 'hide_comment/{comment}', [TicketController::class, 'hide_comment'])->name('hide_comment')->can('read', Ticket::class);
+       Route::match(['get', 'post'], 'toggle_comment/{comment}', [TicketController::class, 'toggle_comment'])->name('toggle_comment')->can('read', Ticket::class);
        Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
        Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
        Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);

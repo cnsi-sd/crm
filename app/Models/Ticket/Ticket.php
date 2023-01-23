@@ -51,6 +51,11 @@ class Ticket extends Model
         'updated_at'
     ];
 
+    protected $casts = [
+        'deadline' => 'datetime:Y-m-d',
+        'delivery_date' => 'datetime:Y-m-d'
+    ];
+
     public static function getTicket(Order $order, Channel $channel)
     {
         return Ticket::firstOrCreate(

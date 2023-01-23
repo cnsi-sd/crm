@@ -54,43 +54,25 @@ class TicketController extends Controller
 
     public function redirectTicket(Request $request, ?Ticket $ticket)
     {
-        //todo : utiliser last_thread_displayed pour afficher le dernier thread chargé
         if ($ticket->last_thread_displayed) {
             $threadId = $ticket->last_thread_displayed;
         } else {
-            $threadId = Thread::query()->where('ticket_id', $ticket->id)->first()->id;
+            $threadId = $ticket->threads->first()->id;
         }
         return redirect()->route('ticket_thread', [$ticket,$threadId]);
     }
 
-    public function hide_comment(Comment $comment, $status = 200): \Illuminate\Http\JsonResponse
+    public function toggle_comment(Comment $comment): \Illuminate\Http\JsonResponse
     {
         $comment->displayed = !$comment->displayed;
         $comment->save();
-        return response()->json(['message' => 'success'], $status);
-    }
-
-    public function getNumberOfUnreadMessagesAfterAdmin($ticket) {
-        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get()->toArray();
-        foreach ($queryThreads as $queryThread) {
-            $numberOfUnreadMessages[$queryThread['id']] = 0;
-            $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
-            foreach ($queryMessages as $queryMessage) {
-                if ($queryMessage['author_type'] === "admin") {
-                    break;
-                } else {
-                    $numberOfUnreadMessages[$queryThread['id']] += 1;
-                }
-            }
-
-        }
-        return $numberOfUnreadMessages;
+        return response()->json(['message' => 'success']);
     }
 
     /**
      * @throws \ReflectionException
      */
-    public function ticket(Request $request, ?Ticket $ticket, ?Thread $thread): View
+    public function ticket(Request $request, Ticket $ticket, Thread $thread): View
     {
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
@@ -112,7 +94,6 @@ class TicketController extends Controller
             $ticket->delivery_date = $request->input('ticket-delivery_date');
             $ticket->save();
 
-
             $thread->customer_issue = $request->input('ticket-thread-customer_issue');
             $thread->revival_id = $request->input('ticket-revival');
             $thread->revival_start_date = $request->input('revival-delivery_date') . ' 09:00:00';
@@ -125,7 +106,7 @@ class TicketController extends Controller
                 Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
-                    'author_type' => 'admin',
+                    'author_type' => \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN,
                     'content' => $request->input('ticket-thread-messages-content'),
                 ]);
             }
@@ -144,49 +125,30 @@ class TicketController extends Controller
             Alert::toastSuccess(__('app.ticket.saved'));
         }
 
-        $queryTicket = Ticket::query()
-            ->where('id', $ticket->id)
-            ->first()
-            ->toArray();
-        $queryThread = Thread::query()
+        $checkThreadTicket = Thread::query()
             ->where('id', $thread->id)
             ->where('ticket_id', $ticket->id)
             ->first();
 
-        if($queryThread) {
-            $queryThread = $queryThread->toArray();
-        } else {
-            return abort(404);
+        if(!$checkThreadTicket) {
+            abort(404);
         }
 
-        $queryOrder = Order::query()
-            ->where('id', $queryTicket['order_id'])
-            ->first()
-            ->toArray();
-
-        $queryUsers = User::query()->get()->toArray();
-
-        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get()->toArray();
-        $threads = [];
-        foreach ($queryThreads as $thread2) {
-            $threads[] = $thread2['id'];
-        }
-        $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
-        $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
-        $queryChannels = Channel::query()->get()->toArray();
-
-        $unreadMessagesByTicket = $this->getNumberOfUnreadMessagesAfterAdmin($ticket);
+        $queryOrder = Order::query()->where('id', $ticket->order_id)->first();
+        $queryUsers = User::all();
+        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get();
+        $queryMessages = Message::query()->where('thread_id', $thread->id)->orderBy('created_at', "DESC")->get();
+        $queryComments = Comment::query()->where('thread_id', $thread->id)->orderBy('created_at', "DESC")->get();
+        $queryChannels = Channel::query()->get();
 
         return view('tickets.ticket')
-            ->with('ticket',$queryTicket)
-            ->with('thread', $thread)
-            ->with('activeThread',$queryThread)
+            ->with('ticket',$ticket)
+            ->with('thread',$thread)
             ->with('order',$queryOrder)
             ->with('users', $queryUsers)
             ->with('threads', $queryThreads)
             ->with('messages', $queryMessages)
             ->with('comments', $queryComments)
-            ->with('unreadMessagesByTicket', $unreadMessagesByTicket)
             ->with('commentTypeEnum', TicketCommentTypeEnum::getList())
             ->with('ticketStateEnum', TicketStateEnum::getList())
             ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
