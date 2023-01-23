@@ -10,32 +10,32 @@
     background-color: #CCFFCC;
 }
 
-.thread-comments .card-body.others, .thread-comments .badge.others {
+.thread-comments .badge.others {
     background-color: #dcdcdc;
     color: #000000;
 }
 
-.thread-comments .card-body.external_contact, .thread-comments .badge.external_contact {
+.thread-comments .badge.external_contact {
     background-color: #CCFFCC;
     color: #000000;
 }
 
-.thread-comments .card-body.manager_info, .thread-comments .badge.manager_info {
+.thread-comments .badge.manager_info {
     background-color: #eaccff;
     color: #000000;
 }
 
-.thread-comments .card-body.process_to_follow, .thread-comments .badge.process_to_follow  {
+.thread-comments .badge.process_to_follow  {
     background-color: #cce5ff;
     color: #000000;
 }
 
-.thread-comments .card-body.info_important, .thread-comments .badge.info_important {
+.thread-comments .badge.info_important {
     background-color: #FADBD9;
     color: #000000;
 }
 
-.thread-comments .card-body.summary, .thread-comments .badge.summary {
+.thread-comments .badge.summary {
     background-color: #ffe6cc;
     color: #000000;
 }
@@ -55,7 +55,7 @@
     cursor: pointer;
 }
 
-#threadsTabsContent .card-header.collapsed:before {
+#threadsTabsContent .card-header.collapsed:before, .thread-comments .card-header.collapsed:before{
     content: "";
     float: right;
     height: .6em;
@@ -68,7 +68,7 @@
     margin-top: 10px;
 }
 
-#threadsTabsContent .card-header:before {
+#threadsTabsContent .card-header:before, .thread-comments .card-header:before{
     content: "";
     float: right;
     height: .6em;

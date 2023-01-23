@@ -26,7 +26,7 @@
                                     <div class="col">
                                         <select name="ticket-priority" class="form-select required_field">
                                             @foreach($ticketPriorityEnum as $ticketPriority)
-                                                <option value="{{ $ticketPriority }}" @if($ticket['priority'] === $ticketPriority) selected @endif>{{ $ticketPriority }}</option>
+                                                <option value="{{ $ticketPriority }}" @selected($ticket['priority'] === $ticketPriority)>{{ $ticketPriority }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -36,7 +36,7 @@
                                     <div class="col">
                                         <select name="ticket-user_id" class="form-select required_field">
                                             @foreach ($users as $user)
-                                                <option value="{{ $user['id'] }}" @if($ticket['user_id'] === $user['id']) selected @endif>{{ $user['name'] }}</option>
+                                                <option value="{{ $user['id'] }}" @selected($ticket['user_id'] === $user['id'])>{{ $user['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -190,7 +190,7 @@
                             </div>
                             @foreach($messages as $message)
                                 <div class="card">
-                                    <div class="card-header text-start @if($message['author_type'] === "admin") collapsed @endif()" data-bs-toggle="collapse" data-bs-target="#collapse-message-{{$message['id']}}" aria-expanded="false" aria-controls="collapse-message-{{$message['id']}}">
+                                    <div class="card-header text-start @if($message['author_type'] === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) collapsed @endif()" data-bs-toggle="collapse" data-bs-target="#collapse-message-{{$message['id']}}" aria-expanded="false" aria-controls="collapse-message-{{$message['id']}}">
                                         @if($message['author_type'] === 'customer') {{ __('app.customer') }}
                                         @elseif($message['author_type'] === 'operator') {{ __('app.operator') }}
                                         @elseif($message['author_type'] === 'admin')
@@ -202,7 +202,7 @@
                                         @endif
                                         - {{ \Carbon\Carbon::parse($message['created_at'])->translatedFormat('d/m/Y H:i') }}
                                     </div>
-                                    <div class="collapse @if($message['author_type'] !== "admin") show @endif()" id="collapse-message-{{$message['id']}}">
+                                    <div class="collapse @if($message['author_type'] !== \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) show @endif()" id="collapse-message-{{$message['id']}}">
                                         <div class="card-body {{$message['author_type']}}">
                                             <div class="container text-start">
                                                 {!! nl2br($message['content']) !!}
