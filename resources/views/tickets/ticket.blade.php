@@ -197,7 +197,7 @@
                                         <div class="card-header text-start" data-bs-toggle="collapse" data-comment-id="{{$comment->id}}" data-bs-target="#collapse-comment-{{$comment->id}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment->id}}">
                                             <div class="row">
                                                 <div class="col-9">
-                                                            {{ explode(" ", $comment->user->name)[0] . " " . substr(explode(" ", $comment->user->name)[1], 0, 1) . "."}}
+                                                            {{ $comment->user->getShortName() }}
                                                     - {{ \Carbon\Carbon::parse($comment->created_at)->translatedFormat('d/m/Y H:i') }}
                                                 </div>
                                                 <div class="col-3 text-end">
