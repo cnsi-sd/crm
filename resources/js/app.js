@@ -3,4 +3,5 @@ import.meta.glob([
   '../fonts/**',
 ]);
 
+import $ from '../js/vendor/jquery.js';
 import './bootstrap';
