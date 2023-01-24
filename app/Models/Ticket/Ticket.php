@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $channel_id
  * @property int $order_id
  * @property int $user_id
+ * @property int $last_thread_displayed
  * @property string $state
  * @property string $priority
  * @property Datetime $deadline
@@ -100,7 +101,10 @@ class Ticket extends Model
             ->setLabel(__('app.ticket.deadline'))
             ->setType(ColumnTypeEnum::DATE)
             ->setKey('deadline')
-            ->setSortable(true);
+            ->setSortable(true)
+            ->setCallback(function (Ticket $ticket) {
+                return date('d/m/Y', strtotime($ticket->deadline));
+            });
 
         if ($mode != 'user') {
             $columns[] = (new TableColumnBuilder())
@@ -160,7 +164,10 @@ class Ticket extends Model
             ->setLabel(__('app.ticket.created_at'))
             ->setType(ColumnTypeEnum::DATE)
             ->setKey('created_at')
-            ->setSortable(true);
+            ->setSortable(true)
+            ->setCallback(function (Ticket $ticket) {
+                return date('d/m/Y', strtotime($ticket->created_at));
+            });
 
         $columns[] = TableColumnBuilder::actions()->setCallback(function (Ticket $ticket) {
             return view('tickets.inline_table_actions')

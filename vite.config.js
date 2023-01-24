@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/hyper.js',
                 'resources/js/layout.js',
+                'resources/js/tickets/ticket.js',
                 'resources/scss/app.scss',
                 'resources/scss/icons.scss',
                 'resources/js/tags.js',
