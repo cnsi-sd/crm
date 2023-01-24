@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Tickets;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
+use App\Models\Tags\TagList;
+use App\Models\Tags\Tags;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
@@ -131,7 +133,24 @@ class TicketController extends Controller
     }
 
     public function delete_tag(Request $request) {
+        $tag = Tags::find($request->input('tag_id'));
+        $tag->taglists()->detach($request->input('taglist_id'));
         return redirect()->route('all_tickets');
+    }
+
+
+    public function delete_ThreadTagList(Request $request) {
+        // TODO : make code to delete tag list
+        $taglist = TagList::find($request->input('taglist_id'));
+        $taglist->tags()->detach();
+        $taglist->delete();
+    }
+
+    public function saveThreadTags(Request $request) {
+        $taglist = TagList::find($request->input('taglist_id'));
+        $tag = Tags::find($request->input('tag_id'));
+        $tag->taglists()->attach($taglist->id);
+        return response()->json($tag);
     }
 
 }

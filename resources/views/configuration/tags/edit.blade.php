@@ -99,7 +99,7 @@
                                 <label for="name">{{__('app.tags.show')}}</label>
                             </div>
                             <div class="text-center">
-                                <span id="showResult"></span>
+                                <span id="showResult" class="tags-style"></span>
                             </div>
                         </div>
                     </div>

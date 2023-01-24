@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Configuration;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Controller;
+use App\Models\Tags\TagList;
 use App\Models\Tags\Tags;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Http\Request;
@@ -72,4 +73,12 @@ class TagsController extends Controller
 
         return response()->json(['data' => $data]);
     }
+
+    public function saveLineDB(Request $request) {
+        $taglist = new TagList();
+        $taglist->thread_id =$request->input('thread_id');
+        $taglist->save();
+        return response()->json($taglist->id);
+    }
+
 }

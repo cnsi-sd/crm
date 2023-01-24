@@ -7,8 +7,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     spanPreview.textContent = inputNameTag.value;
     spanPreview.style.background = inputbackgroundColor.value;
     spanPreview.style.color = inputTextColor.value;
-    spanPreview.style.borderRadius = "5em";
-    spanPreview.style.padding = "0.5em";
 // method
 });
 
@@ -20,6 +18,4 @@ function updateValue(e) {
     spanPreview.textContent = inputNameTag.value;
     spanPreview.style.background = inputbackgroundColor.value;
     spanPreview.style.color = inputTextColor.value;
-    spanPreview.style.borderRadius = "5em";
-    spanPreview.style.padding = "0.5em";
 }

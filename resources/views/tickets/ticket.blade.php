@@ -201,38 +201,46 @@
                             @endif
                         </div>
                         <div class="card">
-                            <div class="card-header justify-content-between">
-                                <div class="col-6">
-                                    {{ trans_choice('app.tags.tags', 2) }}
-                                </div>
-                                <div class="col-6">
-                                    <button type="button" id="add" class="btn btn-success align-self-end">+</button>
-                                </div>
+                            <div class="card-header d-flex">
+                                <p class="w-100">{{ trans_choice('app.tags.tags', 2) }}</p>
+                                <button type="button" id="add" class="btn btn-success flex-shrink-1"
+                                        data-thread_id="{{$activeThread['id']}}">+
+                                </button>
                             </div>
                             <div class="card-body" id="card-body-tag">
-                                <input type="number" name="numberlist" id="number-list"
-                                       value="1" hidden="true">
-                                <div id="list-1">
-                                    <select name="ticket-revival" class="form-select no-sort" onchange="saveTicketTags()">
-                                        <option value="">{{ __('app.revival.select_revival') }}</option>
-                                    @foreach (\App\Models\Tags\Tags::all() as $tag)
-                                            <option value="{{ $tag->id }}">
-                                                {{ $tag->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    <div class="mt-3 mb-2">
-                                        @foreach($thread->tagList as $taglist)
+                                @foreach($thread->tagList as $taglist)
+                                    <div id="list-{{$taglist->id}}">
+                                        <button type="button" id="deleteTaglist-{{$taglist->id}}"
+                                                class="deleteTaglist btn btn-danger"
+                                                data-thread_id="{{ $activeThread['id'] }}"
+                                                data-taglist_id="{{$taglist->id }}"
+                                        >x
+                                        </button>
+                                        <select name="ticket-revival" class="form-select no-sort tags"
+                                                data-thread_id="{{$activeThread['id']}}"
+                                                data-taglist_id="{{$taglist->id}}">
+                                            <option value="">{{ __('app.revival.select_revival') }}</option>
+                                            @foreach (\App\Models\Tags\Tags::all() as $optionTag)
+                                                <option value="{{ $optionTag->id }}">
+                                                    {{ $optionTag->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div id="view-{{$taglist->id}}" class="mt-3 mb-2">
                                             @foreach($taglist->tags as $tag)
-                                                <span style="background-color: {{ $tag->background_color }}; color: {{ $tag->text_color }}; border-radius: 5em; padding: 0.5em;">
-                                                    {{ $tag->name }} | <a href="{{ route('delete_ticket_tags',["ticket" => $ticket['id'], 'thread' => $activeThread['id'], "tags" => $tag->id] ) }}" style="color: {{ $tag->text_color }}"> x </a>
+                                                <span class="tags-style"
+                                                      style="background-color: {{ $tag->background_color }}; color: {{ $tag->text_color }};">
+                                                    {{ $tag->name }} | <button
+                                                        class="btn delete-tag"
+                                                        data-tag_id="{{$tag->id}}"
+                                                        data-taglist_id="{{$taglist->id}}"
+                                                        style="color: {{ $tag->text_color }};"> x </button>
                                                 </span>
                                             @endforeach
-                                        @endforeach
+                                        </div>
+                                        <hr/>
                                     </div>
-                                    <hr/>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="card">
