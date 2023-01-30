@@ -6,6 +6,7 @@ use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
+use App\Models\Ticket\Ticket;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -49,6 +50,12 @@ class Tags extends Model
         return $this->belongsToMany(TagList::class, 'tag_tagLists', 'tag_id', 'tagList_id');
     }
 
+    public static function getTagsNames(): array
+    {
+        return self::query()->orderBy('name', 'ASC')
+            ->pluck('name', 'id')
+            ->toArray();
+    }
     public static function getTableColumns(): array
     {
         $columns = [];
@@ -76,5 +83,25 @@ class Tags extends Model
     public function softDeleted(): ?bool
     {
         return $this->delete();
+    }
+
+    public function getlistTagWithTickets($tickets): array
+    {
+        $listeTag = array();
+        foreach($tickets as $ticket){
+            foreach($ticket->threads as $thread) {
+                foreach ($thread->taglist as $tagList) {
+                    foreach ($tagList->tags as $tag){
+                        if (!array_key_exists($tag->name,$listeTag)){
+                            $listeTag[$tag->name] = ['tag_id'=> $tag->id, 'background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
+                        } else {
+                            $listeTag[$tag->name]['count']++;
+                        }
+                    }
+                }
+            }
+
+        }
+        return $listeTag;
     }
 }
