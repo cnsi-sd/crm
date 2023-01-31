@@ -37,7 +37,6 @@ Route::middleware('checkActive')->group(function() {
        Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
        Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
        Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);
-       Route::match(['get', 'post'], '{ticket}/customer_service_process', [TicketController::class, 'customer_service_process'])->name('customer_service_process')->can('read', Ticket::class);
        Route::match(['get', 'post'], '{ticket}/{thread}', [TicketController::class, 'ticket'])->name('ticket_thread')->can('read', Ticket::class);
     });
     Route::prefix('admin')->group(function () {

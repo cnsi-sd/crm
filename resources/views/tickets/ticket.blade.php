@@ -4,14 +4,6 @@
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
         <form method="post" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
         @csrf
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">{{ __('app.order_info') }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('customer_service_process', ['ticket' => $ticket->id]) }}">{{ __('app.customer_service_process') }}</a>
-                </li>
-            </ul>
             <div class="row">
                 <div class="col-3">
                     <div class="card">
@@ -182,6 +174,24 @@
                     @include('tickets.parts.private_comments')
                 </div>
                 <div class="col-9">
+                    <ul class="nav nav-tabs" id="ticketTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="hide-tab" data-bs-toggle="tab" data-bs-target="#hide" type="button" role="tab" aria-controls="hide" aria-selected="true"><i class="uil-home"></i></button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="order-info-tab" data-bs-toggle="tab" data-bs-target="#order-info" type="button" role="tab" aria-controls="order-info" aria-selected="false">{{ __('app.order_info') }}</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="customer-service-process-tab" data-bs-toggle="tab" data-bs-target="#customer-service-process" type="button" role="tab" aria-controls="customer-service-process" aria-selected="false">{{ __('app.customer_service_process') }}</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="ticketTabContent">
+                        <div class="tab-pane fade show active" id="hide" role="tabpanel" aria-labelledby="hide-tab"></div>
+                        <div class="tab-pane fade" id="order-info" role="tabpanel" aria-labelledby="order-info-tab"></div>
+                        <div class="tab-pane fade" id="customer-service-process" role="tabpanel" aria-labelledby="customer-service-process-tab">
+                            <iframe src="{{ env('PRESTASHOP_URL') }}procedure-sav?mp_order={{$ticket->order->channel_order_number}}&amp;mp_name={{$ticket->channel->name}}&amp;id_ticket={{$ticket->id}}&amp;admintoken={{ env('PRESTASHOP_CUSTOMER_SERVICE_TOKEN') }}" allowfullscreen="" width="100%" height="1000" frameborder="0"></iframe>
+                        </div>
+                    </div>
                     <div class="controls text-end">
                         <button type="submit" class="btn btn-outline-primary">
                             {{ "💾 " . __('app.save') }}
