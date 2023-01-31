@@ -4,6 +4,14 @@
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
         <form method="post" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
         @csrf
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">{{ __('app.order_info') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('customer_service_process', ['ticket' => $ticket->id]) }}">{{ __('app.customer_service_process') }}</a>
+                </li>
+            </ul>
             <div class="row">
                 <div class="col-3">
                     <div class="card">
@@ -174,17 +182,6 @@
                     @include('tickets.parts.private_comments')
                 </div>
                 <div class="col-9">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">{{ __('app.order_info') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">{{ __('app.product_return') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">{{ __('app.customer_service_process') }}</a>
-                        </li>
-                    </ul>
                     <div class="controls text-end">
                         <button type="submit" class="btn btn-outline-primary">
                             {{ "💾 " . __('app.save') }}

@@ -69,6 +69,11 @@ class TicketController extends Controller
         return response()->json(['message' => 'success']);
     }
 
+    public function customer_service_process(Request $request, Ticket $ticket): View
+    {
+        return view('tickets.customer_service_process')->with('ticket',$ticket);
+    }
+
     /**
      * @throws \ReflectionException
      */
