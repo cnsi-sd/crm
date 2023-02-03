@@ -32,7 +32,7 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadTopic;
 use Mirakl\MMP\OperatorShop\Request\Message\GetThreadsRequest;
 use Mirakl\MMP\Shop\Client\ShopApiClient;
 
-abstract class AbstractMiraklImportMessage extends Command
+abstract class AbstractMiraklImportMessage extends AbstractImportMessage
 {
     protected Logger $logger;
     protected string $log_path;
@@ -42,7 +42,7 @@ abstract class AbstractMiraklImportMessage extends Command
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
 
-    protected static $_alreadyImportedMessages;
+//    protected static mixed $_alreadyImportedMessages;
 
     protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
     protected $description = 'Importing competing offers from Mirakl.';
@@ -51,6 +51,15 @@ abstract class AbstractMiraklImportMessage extends Command
     abstract protected function getChannelName(): string;
 
     abstract protected function getCredentials(): array;
+
+    protected function getMessageApiId($message): string
+    {
+       return $message->getId();
+    }
+    protected function getMpOrderApiId($message, $thread = null)
+    {
+        // TODO: Implement getMpOrderId() method.
+    }
 
     public function handle()
     {
@@ -150,25 +159,25 @@ abstract class AbstractMiraklImportMessage extends Command
         return self::FROM_SHOP_TYPE !== $type;
     }
 
-    /**
-     * @param Ticket $ticket
-     * @param \App\Models\Ticket\Thread $thread
-     * @param  $messages
-     * @return void
-     * @throws Exception
-     */
-    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages)
-    {
-        foreach ($messages as $message) {
-            $imported_id = $message->getId();
-            $this->logger->info('Check if this message is imported');
-            if (!$this->isMessagesImported($imported_id)) {
-                $this->logger->info('Convert api message to db message');
-                $this->convertApiResponseToMessage($ticket, $message, $thread);
-                $this->addImportedMessageChannelNumber($imported_id);
-            }
-        }
-    }
+//    /**
+//     * @param Ticket $ticket
+//     * @param \App\Models\Ticket\Thread $thread
+//     * @param  $messages
+//     * @return void
+//     * @throws Exception
+//     */
+//    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages)
+//    {
+//        foreach ($messages as $message) {
+//            $imported_id = $message->getId();
+//            $this->logger->info('Check if this message is imported');
+//            if (!$this->isMessagesImported($imported_id)) {
+//                $this->logger->info('Convert api message to db message');
+//                $this->convertApiResponseToMessage($ticket, $message, $thread);
+//                $this->addImportedMessageChannelNumber($imported_id);
+//            }
+//        }
+//    }
 
     /**
      * Convert api messages into message model in order to save it in database
@@ -176,7 +185,7 @@ abstract class AbstractMiraklImportMessage extends Command
      * @param ThreadMessage $api_message
      * @param \App\Models\Ticket\Thread $thread
      */
-    public function convertApiResponseToMessage(Ticket $ticket, ThreadMessage $api_message, \App\Models\Ticket\Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $api_message, \App\Models\Ticket\Thread $thread)
     {
         $authorType = $api_message->getFrom()->getType();
         $isNotShopUser = self::isNotShopUser($authorType);
@@ -197,10 +206,10 @@ abstract class AbstractMiraklImportMessage extends Command
                     'content' => strip_tags($api_message->getBody()),
                 ],
             );
-            if (setting('autoReplyActivate')) {
-                $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
-            }
+//            if (setting('autoReplyActivate')) {
+//                $this->logger->info('Send auto reply');
+//                self::sendAutoReply(setting('autoReply'), $thread);
+//            }
         }
     }
 
@@ -213,34 +222,34 @@ abstract class AbstractMiraklImportMessage extends Command
     }
 
     /**
-     * @param string $channel_message_number
-     * @return bool
-     * @throws Exception
-     */
-    private function isMessagesImported(string $channel_message_number): bool
-    {
-        if (!self::$_alreadyImportedMessages) {
-            self::$_alreadyImportedMessages = Message::query()
-                ->select('channel_message_number')
-                ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
-                ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
-                ->where('channel_id', Channel::getByName($this->getChannelName())->id)
-                ->get()
-                ->pluck('channel_message_number', 'channel_message_number')
-                ->toArray();
-        }
+//     * @param string $channel_message_number
+//     * @return bool
+//     * @throws Exception
+//     */
+//    private function isMessagesImported(string $channel_message_number): bool
+//    {
+//        if (!self::$_alreadyImportedMessages) {
+//            self::$_alreadyImportedMessages = Message::query()
+//                ->select('channel_message_number')
+//                ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
+//                ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
+//                ->where('channel_id', Channel::getByName($this->getChannelName())->id)
+//                ->get()
+//                ->pluck('channel_message_number', 'channel_message_number')
+//                ->toArray();
+//        }
+//
+//        return isset(self::$_alreadyImportedMessages[$channel_message_number]);
+//    }
 
-        return isset(self::$_alreadyImportedMessages[$channel_message_number]);
-    }
-
-    /**
-     * @param string $channel_message_number
-     * @return void
-     */
-    private function addImportedMessageChannelNumber(string $channel_message_number)
-    {
-        self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
-    }
+//    /**
+//     * @param string $channel_message_number
+//     * @return void
+//     */
+//    private function addImportedMessageChannelNumber(string $channel_message_number)
+//    {
+//        self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
+//    }
 
     /**
      * @param mixed $messageId

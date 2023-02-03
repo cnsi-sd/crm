@@ -28,16 +28,21 @@ class FnacImportMessage extends AbstractImportMessage
     protected Logger $logger;
     protected string $marketplace = 'fnac';
 
-//    static private ?SimpleClient $client = null;
-    public static mixed $_alreadyImportedMessages;
+    static private ?SimpleClient $client = null;
+//    protected static  $_alreadyImportedMessages ;
 
+    /**
+     * @throws Exception
+     */
     protected function getChannelName(): string
     {
         //TODO pourquoi transformer le name en snake_case?
-        return (new Channel)->getSnakeName(ChannelEnum::FNAC_COM);
+//        return (new Channel)->getSnakeName(ChannelEnum::FNAC_COM);
+        return ChannelEnum::FNAC_COM;
     }
-//    protected $signature = 'fnac:import:messagestest {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
-//    protected $description = 'Importing competing offers from testing fnac.';
+
+    protected $signature = 'fnac:import:messagestest {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
+    protected $description = 'Importing competing offers from testing fnac.';
 
     protected function getCredentials(): array
     {
@@ -57,7 +62,7 @@ class FnacImportMessage extends AbstractImportMessage
         if(self::$client == null) {
             $client = new SimpleClient();
 
-//            $this->logger = new Logger('import_message/' . $this->getChannelName() . '/' . $this->getChannelName() . '.log', true, true);
+            $this->logger = new Logger('import_message/' . $this->getChannelName() . '/' . $this->getChannelName() . '.log', true, true);
             $client->init(self::getCredentials());
             $client->checkAuth();
 
@@ -72,9 +77,9 @@ class FnacImportMessage extends AbstractImportMessage
         return $message->getMessageId();
     }
 
-    protected function getMpOrderApiId($message): string|array
+    protected function getMpOrderApiId($message, $thread = null)
     {
-        // TODO: Implement getMpOrderApiId() method.
+        return $message->getMessageReferer();
     }
 
     /**
@@ -82,19 +87,18 @@ class FnacImportMessage extends AbstractImportMessage
      */
     public function handle()
     {
-
         $channel_thread_number = 'fnac_default';
 
-//        $this->logger = new Logger(
-//            'import_message/'
-//            . $this->getChannelName() . '/'
-//            . $this->getChannelName()
-//            . '.log', true, true
-//        );
-//        $this->logger->info('--- Start ---');
+        $this->logger = new Logger(
+            'import_message/'
+            . $this->getChannelName() . '/'
+            . $this->getChannelName()
+            . '.log', true, true
+        );
+        $this->logger->info('--- Start ---');
 
-        //GET LAST MESSAGES
-//        $this->logger->info('Init api');
+        // GET LAST MESSAGES
+        $this->logger->info('Init api');
         $client = self::initApiClient();
 
         $query = new MessageQuery();
@@ -113,7 +117,6 @@ class FnacImportMessage extends AbstractImportMessage
                 DB::beginTransaction();
                 $messageId  = $this->getMessageApiId($message);
 
-                // TODO abstract these 4 or 5 lines ?
                 $mpOrderId  = $this->getMpOrderApiId($message);
                 $channel    = Channel::getByName(ChannelEnum::FNAC_COM); // Channel = mp
                 $order      = Order::getOrder($mpOrderId, $channel);
@@ -121,11 +124,11 @@ class FnacImportMessage extends AbstractImportMessage
 
                 $thread     = Thread::getOrCreateThread($ticket, $channel_thread_number, $channel->name, '');
 
-//                if (!$this->isMessageImported($messageId)) {
-//                    $this->logger->info('Convert api message to db message');
-//                    $this->convertApiResponseMessage($ticket, $message, $thread);
-//                    $this->addImportedMessageChannelNumber($messageId);
-//                }
+                if (!$this->isMessagesImported($messageId)) {
+                    $this->logger->info('Convert api message to db message');
+                    $this->convertApiResponseToMessage($ticket, $message, $thread);
+                    $this->addImportedMessageChannelNumber($messageId);
+                }
 
                 DB::commit();
             } catch (Exception $e) {
@@ -137,26 +140,7 @@ class FnacImportMessage extends AbstractImportMessage
         }
     }
 
-    /**
-     * @throws Exception
-     */
-    private function isMessageImported(string $channel_message_number): bool
-    {
-        if (!self::$_alreadyImportedMessages) {
-            self::$_alreadyImportedMessages = \App\Models\Ticket\Message::query()
-                ->select('channel_message_number')
-                ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
-                ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
-                ->where('channel_id', Channel::getByName(ChannelEnum::FNAC_COM))
-                ->get()
-                ->pluck('channel_message_number', 'channel_message_number')
-                ->toArray();
-        }
-
-        return isset(self::$_alreadyImportedMessages[$channel_message_number]);
-    }
-
-    public function convertApiResponseMessage(Ticket $ticket, Message $message, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message, Thread $thread)
     {
         $authorType = $message->getMessageFromType();
         $isNotShopUser = self::isNotShopUser($authorType);
@@ -181,36 +165,26 @@ class FnacImportMessage extends AbstractImportMessage
         }
     }
 
-//    const FROM_SHOP_TYPE = [
-//        'SHOP_USER',
-//        'CALLCENTER',
-//        ];
+    const FROM_SHOP_TYPE = [
+        'SHOP_USER',
+        'CALLCENTER',
+        ];
 
     /**
-//     * returns if the message type is SHOP_USER
-//     * @param string $type
-//     * @return bool
-//     */
-//    private static function isNotShopUser(string $type): bool
-//    {
-//        return !in_array($type, self::FROM_SHOP_TYPE);
-//    }
-//    private static function getAuthorType(string $authorType): string
-//    {
-//        return match ($authorType) {
-//            'CUSTOMER_USER' => TicketMessageAuthorTypeEnum::CUSTOMER,
-//            'CLIENT'        => TicketMessageAuthorTypeEnum::CLIENT,
-//            'CALLCENTER'    => TicketMessageAuthorTypeEnum::CALLCENTER,
-//            default         => TicketMessageAuthorTypeEnum::OPERATEUR,
-//        };
-//    }
-
-//    /**
-//     * @param string $channel_message_number
-//     * @return void
-//     */
-//    private function addImportedMessageChannelNumber(string $channel_message_number): void
-//    {
-//        self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
-//    }
+     * returns if the message type is SHOP_USER
+     * @param string $type
+     * @return bool
+     */
+    private static function isNotShopUser(string $type): bool
+    {
+        return !in_array($type, self::FROM_SHOP_TYPE);
+    }
+    private static function getAuthorType(string $authorType): string
+    {
+        return match ($authorType) {
+            'CLIENT'        => TicketMessageAuthorTypeEnum::CLIENT,
+            'CALLCENTER'    => TicketMessageAuthorTypeEnum::CALLCENTER,
+            default         => TicketMessageAuthorTypeEnum::OPERATEUR,
+        };
+    }
 }
