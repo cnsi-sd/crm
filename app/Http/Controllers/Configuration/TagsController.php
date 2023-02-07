@@ -73,7 +73,7 @@ class TagsController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function newTagLigne(Request $request) {
+    public function newTagLine(Request $request) {
         $taglist = new TagList();
         $taglist->thread_id =$request->input('thread_id');
         $taglist->save();
