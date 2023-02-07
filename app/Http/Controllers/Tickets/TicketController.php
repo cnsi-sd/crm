@@ -219,9 +219,7 @@ class TicketController extends Controller
         return redirect()->route('all_tickets');
     }
 
-
     public function delete_ThreadTagList(Request $request) {
-        // TODO : make code to delete tag list
         $taglist = TagList::find($request->input('taglist_id'));
         $taglist->tags()->detach();
         $taglist->delete();
