@@ -17,7 +17,7 @@ class TagsController extends Controller
     public function list(Request $request): View
     {
         $query = Tags::query();
-        $table = (new TableBuilder('defaultAnswers', $request))
+        $table = (new TableBuilder('Tags', $request))
             ->setColumns(Tags::getTableColumns())
             ->setExportable(false)
             ->setQuery($query);
