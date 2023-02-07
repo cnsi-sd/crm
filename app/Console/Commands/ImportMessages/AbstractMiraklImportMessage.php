@@ -41,8 +41,6 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
 
-//    protected static mixed $_alreadyImportedMessages;
-
     protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
     protected $description = 'Importing competing offers from Mirakl.';
 
@@ -63,7 +61,6 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
 
     public function handle()
     {
-        // import_message/but_fr/but_fr_2022_10_03.log
         $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
         $this->logger->info('--- Start ---');
         try {
@@ -114,7 +111,7 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
             } catch (Exception $e) {
                 $this->logger->error('An error has occurred. Rolling back.', $e);
                 DB::rollBack();
-//                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
             }
         }
@@ -206,10 +203,10 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
                     'content' => strip_tags($api_message->getBody()),
                 ],
             );
-//            if (setting('autoReplyActivate')) {
-//                $this->logger->info('Send auto reply');
-//                self::sendAutoReply(setting('autoReply'), $thread);
-//            }
+            if (setting('autoReplyActivate')) {
+                $this->logger->info('Send auto reply');
+                self::sendAutoReply(setting('autoReply'), $thread);
+            }
         }
     }
 
@@ -222,34 +219,25 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
     }
 
     /**
-//     * @param string $channel_message_number
-//     * @return bool
-//     * @throws Exception
-//     */
-//    private function isMessagesImported(string $channel_message_number): bool
-//    {
-//        if (!self::$_alreadyImportedMessages) {
-//            self::$_alreadyImportedMessages = Message::query()
-//                ->select('channel_message_number')
-//                ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
-//                ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
-//                ->where('channel_id', Channel::getByName($this->getChannelName())->id)
-//                ->get()
-//                ->pluck('channel_message_number', 'channel_message_number')
-//                ->toArray();
-//        }
-//
-//        return isset(self::$_alreadyImportedMessages[$channel_message_number]);
-//    }
+     * @param string $channel_message_number
+     * @return bool
+     * @throws Exception
+     */
+    protected function isMessagesImported(string $channel_message_number): bool
+    {
+        if (!self::$_alreadyImportedMessages) {
+            self::$_alreadyImportedMessages = Message::query()
+                ->select('channel_message_number')
+                ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
+                ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
+                ->where('channel_id', Channel::getByName($this->getChannelName())->id)
+                ->get()
+                ->pluck('channel_message_number', 'channel_message_number')
+                ->toArray();
+        }
 
-//    /**
-//     * @param string $channel_message_number
-//     * @return void
-//     */
-//    private function addImportedMessageChannelNumber(string $channel_message_number)
-//    {
-//        self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
-//    }
+        return isset(self::$_alreadyImportedMessages[$channel_message_number]);
+    }
 
     /**
      * @param mixed $messageId
