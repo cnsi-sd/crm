@@ -83,7 +83,7 @@ Route::middleware('checkActive')->group(function () {
 });
 // CALL AJAX
 Route::get('/ajaxTags', [TagsController::class, 'ajax_tags']);
-Route::post('/addTagList', [TagsController::class, 'saveLineDB']);
+Route::post('/addTagList', [TagsController::class, 'newTagLigne']);
 Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags']);
 Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList']);
 Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag']);
