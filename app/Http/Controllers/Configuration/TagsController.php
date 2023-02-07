@@ -56,8 +56,7 @@ class TagsController extends Controller
         $tags->background_color = $request->input('background_color');
         $tags->save();
 
-        $channelSelected = $request->toArray()['channel'];
-        $tags->channels()->sync($channelSelected);
+        $tags->channels()->sync($request->input('channel'));
     }
 
     public function delete(Request $request, ?Tags $tags)
