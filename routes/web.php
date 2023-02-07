@@ -12,6 +12,8 @@ use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
+use App\Models\Tags\Tags;
+use App\Models\Ticket\Revival\Revival;
 use Illuminate\Support\Facades\Route;
 
 
@@ -63,19 +65,19 @@ Route::middleware('checkActive')->group(function () {
             Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswer::class);
         });
         Route::prefix('revival')->group(function () {
-            Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival');
-            Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival');
-            Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival');
-            Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival');
+            Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival')->can('edit', Revival::class);
+            Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival')->can('edit', Revival::class);
+            Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival')->can('read', Revival::class);
+            Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival')->can('edit', Revival::class);
         });
         Route::prefix('autoReply')->group(function () {
             Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
         });
         Route::prefix('tags')->group(function () {
-            Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags');
-            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags');
-            Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags');
-            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags');
+            Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tags::class);
+            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', Tags::class);
+            Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags')->can('read', Tags::class);
+            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tags::class);
         });
     });
 });

@@ -58,7 +58,8 @@ return [
         'role' => 'Role',
         'default_message_answer' => 'Message par défaut',
         'revival' => 'Relance automatique',
-        'ticket'=> 'Ticket'
+        'ticket'=> 'Ticket',
+        'tag'=>'Tag'
     ],
 
     'role' => [

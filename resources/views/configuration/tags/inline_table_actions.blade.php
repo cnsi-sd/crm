@@ -1,4 +1,4 @@
-@can('edit', \App\Models\Ticket\Revival\Revival::class)
+@can('edit', \App\Models\Tags\Tags::class)
     <a
             href="{{ route('edit_tags', ['tags' => $tags]) }}"
             class="btn btn-secondary btn-sm"

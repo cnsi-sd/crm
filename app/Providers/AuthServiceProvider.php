@@ -4,12 +4,14 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Channel\DefaultAnswer;
+use App\Models\Tags\Tags;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\User\Role;
 use App\Models\User\User;
 use App\Policies\Configuration\Permission\DefaultAnswerPolicy;
 use App\Policies\Configuration\Permission\RevivalPolicy;
 use App\Models\Ticket\Ticket;
+use App\Policies\Configuration\Permission\TagPolicy;
 use App\Policies\Settings\Permissions\RolePolicy;
 use App\Policies\Settings\Permissions\UserPolicy;
 use App\Policies\Tickets\TicketPolicy;
@@ -28,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         DefaultAnswer::class => DefaultAnswerPolicy::class,
         Revival::class => RevivalPolicy::class,
         Ticket::class => TicketPolicy::class,
+        Tags::class => TagPolicy::class,
     ];
 
     /**
