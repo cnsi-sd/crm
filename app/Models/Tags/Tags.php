@@ -82,23 +82,29 @@ class Tags extends Model
         return $columns;
     }
 
-    public function getlistTagWithTickets($tickets): array
+    public static function getlistTagWithTickets($tickets): array
     {
         $listeTag = array();
         foreach($tickets as $ticket){
-            foreach($ticket->threads as $thread) {
-                foreach ($thread->taglist as $tagList) {
-                    foreach ($tagList->tags as $tag){
-                        if (!array_key_exists($tag->name,$listeTag)){
-                            $listeTag[$tag->name] = ['tag_id'=> $tag->id, 'background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
-                        } else {
-                            $listeTag[$tag->name]['count']++;
-                        }
+            self::getListTagByThread($ticket, $listeTag);
+        }
+        return $listeTag;
+    }
+
+    public static function getListTagByThread($ticket, $listeTag, $returnList = false){
+        foreach($ticket->threads as $thread) {
+            foreach ($thread->taglist as $tagList) {
+                foreach ($tagList->tags as $tag){
+                    if (!array_key_exists($tag->name,$listeTag)){
+                        $listeTag[$tag->name] = ['tag_id'=> $tag->id, 'background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
+                    } else {
+                        $listeTag[$tag->name]['count']++;
                     }
                 }
             }
-
         }
-        return $listeTag;
+        if($returnList){
+            return $listeTag;
+        }
     }
 }

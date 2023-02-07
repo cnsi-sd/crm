@@ -172,19 +172,8 @@ class Ticket extends Model
             ->setFixedWidth(FixedWidthEnum::LG)
             ->setCallback(function (Ticket $ticket) {
                 $listeTag = array();
-                    foreach($ticket->threads as $thread) {
-                        foreach ($thread->taglist as $tagList) {
-                            foreach ($tagList->tags as $tag){
-                                if (!array_key_exists($tag->name,$listeTag)){
-                                    $listeTag[$tag->name] = ['background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
-                                } else {
-                                    $listeTag[$tag->name]['count']++;
-                                }
-                            }
-                        }
-                    }
                 return view('tickets.tag.preview')
-                    ->with('listTags', $listeTag);
+                    ->with('listTags', Tags::getListTagByThread($ticket, $listeTag, true));
             });
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.created_at'))
