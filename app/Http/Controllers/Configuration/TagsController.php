@@ -61,7 +61,7 @@ class TagsController extends Controller
 
     public function delete(Request $request, ?Tags $tags)
     {
-        if($tags->softDeleted()){
+        if($tags->delete()){
             alert::toastSuccess(__('app.delete'));
         }
         return redirect()->route('tags');

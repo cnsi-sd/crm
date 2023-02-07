@@ -82,11 +82,6 @@ class Tags extends Model
         return $columns;
     }
 
-    public function softDeleted(): ?bool
-    {
-        return $this->delete();
-    }
-
     public function getlistTagWithTickets($tickets): array
     {
         $listeTag = array();
