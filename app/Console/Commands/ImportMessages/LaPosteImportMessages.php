@@ -18,6 +18,11 @@ class LaPosteImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
+        return ChannelEnum::LAPOSTE_FR;
+    }
+
+    protected function getSnakeChannelName(): string
+    {
         return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::LAPOSTE_FR);
     }
 

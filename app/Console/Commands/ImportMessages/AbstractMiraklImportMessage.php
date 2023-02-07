@@ -24,7 +24,6 @@ use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\Thread;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
@@ -49,10 +48,11 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
 
 
     abstract protected function getChannelName(): string;
+    abstract protected function getSnakeChannelName(): string;
 
     abstract protected function getCredentials(): array;
 
-    protected function getMessageApiId($message): string
+    protected function getMessageApiId(ThreadMessage|\FnacApiClient\Entity\Message $message): string
     {
        return $message->getId();
     }
@@ -64,7 +64,7 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
     public function handle()
     {
         // import_message/but_fr/but_fr_2022_10_03.log
-        $this->logger = new Logger('import_message/' . $this->getChannelName() . '/' . $this->getChannelName() . '.log', true, true);
+        $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
         $this->logger->info('--- Start ---');
         try {
             $date_time = new DateTime();
@@ -114,7 +114,7 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
             } catch (Exception $e) {
                 $this->logger->error('An error has occurred. Rolling back.', $e);
                 DB::rollBack();
-                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+//                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
             }
         }
@@ -159,25 +159,25 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
         return self::FROM_SHOP_TYPE !== $type;
     }
 
-//    /**
-//     * @param Ticket $ticket
-//     * @param \App\Models\Ticket\Thread $thread
-//     * @param  $messages
-//     * @return void
-//     * @throws Exception
-//     */
-//    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages)
-//    {
-//        foreach ($messages as $message) {
-//            $imported_id = $message->getId();
-//            $this->logger->info('Check if this message is imported');
-//            if (!$this->isMessagesImported($imported_id)) {
-//                $this->logger->info('Convert api message to db message');
-//                $this->convertApiResponseToMessage($ticket, $message, $thread);
-//                $this->addImportedMessageChannelNumber($imported_id);
-//            }
-//        }
-//    }
+    /**
+     * @param Ticket $ticket
+     * @param \App\Models\Ticket\Thread $thread
+     * @param  $messages
+     * @return void
+     * @throws Exception
+     */
+    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages): void
+    {
+        foreach ($messages as $message) {
+            $imported_id = $message->getId();
+            $this->logger->info('Check if this message is imported');
+            if (!$this->isMessagesImported($imported_id)) {
+                $this->logger->info('Convert api message to db message');
+                $this->convertApiResponseToMessage($ticket, $message, $thread);
+                $this->addImportedMessageChannelNumber($imported_id);
+            }
+        }
+    }
 
     /**
      * Convert api messages into message model in order to save it in database

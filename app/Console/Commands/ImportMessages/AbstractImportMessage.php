@@ -2,14 +2,14 @@
 
 namespace App\Console\Commands\ImportMessages;
 
-use App\Enums\Channel\ChannelEnum;
-use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
+use FnacApiClient\Entity\Message;
 use Illuminate\Console\Command;
+use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 abstract class AbstractImportMessage extends Command
 {
@@ -24,7 +24,7 @@ abstract class AbstractImportMessage extends Command
 
     abstract protected function getCredentials(): array;
 
-    abstract protected function getMessageApiId($message): string;
+    abstract protected function getMessageApiId(ThreadMessage | Message $message): string;
 
     abstract protected function getMpOrderApiId($message, $thread = null);
 
@@ -48,22 +48,6 @@ abstract class AbstractImportMessage extends Command
     /**
      * @throws Exception
      */
-    protected function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages)
-    {
-        foreach ($messages as $message) {
-            $this->logger->info('Check if this message is imported');
-            $imported_id = $message->getMessageApiId();
-            if (!$this->isMessagesImported($imported_id)) {
-                $this->logger->info('Convert api message to db message');
-                $this->convertApiResponseToMessage($ticket, $message, $thread);
-                $this->addImportedMessageChannelNumber($imported_id);
-            }
-        }
-    }
-
-    /**
-     * @throws Exception
-     */
     protected function isMessagesImported(string $channel_message_number): bool
     {
         if (!static::$_alreadyImportedMessages) {
@@ -71,8 +55,7 @@ abstract class AbstractImportMessage extends Command
                 ->select('channel_message_number')
                 ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
                 ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
-//                ->where('channel_id', Channel::getByName(ChannelEnum::FNAC_COM)) //TODO get real name
-                ->where('channel_id', Channel::getByName($this->getChannelName())) //TODO get real name
+                ->where('channel_id', Channel::getByName($this->getChannelName())->id) //TODO get real name
                 ->get()
                 ->pluck('channel_message_number', 'channel_message_number')
                 ->toArray();
@@ -84,16 +67,6 @@ abstract class AbstractImportMessage extends Command
     protected function addImportedMessageChannelNumber(string $channel_message_number): void
     {
         static::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
-    }
-
-    private static function getAuthorType(string $authorType): string
-    {
-        return match ($authorType) {
-            'CUSTOMER_USER' => TicketMessageAuthorTypeEnum::CUSTOMER,
-            'CLIENT' => TicketMessageAuthorTypeEnum::CLIENT,
-            'CALLCENTER' => TicketMessageAuthorTypeEnum::CALLCENTER,
-            default => TicketMessageAuthorTypeEnum::OPERATEUR,
-        };
     }
 }
 

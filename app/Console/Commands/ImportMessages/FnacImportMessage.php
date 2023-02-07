@@ -26,23 +26,25 @@ class FnacImportMessage extends AbstractImportMessage
         return parent::__construct();
     }
     protected Logger $logger;
-    protected string $marketplace = 'fnac';
-
     static private ?SimpleClient $client = null;
-//    protected static  $_alreadyImportedMessages ;
 
     /**
      * @throws Exception
      */
     protected function getChannelName(): string
     {
-        //TODO pourquoi transformer le name en snake_case?
-//        return (new Channel)->getSnakeName(ChannelEnum::FNAC_COM);
         return ChannelEnum::FNAC_COM;
     }
 
-    protected $signature = 'fnac:import:messagestest {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
-    protected $description = 'Importing competing offers from testing fnac.';
+    /**
+     * @throws Exception
+     */
+    protected function getSnakeChannelName(): array|string
+    {
+        return (new Channel)->getSnakeName($this->getChannelName());
+    }
+
+    protected $description = 'Importing competing offers from testing Fnac.';
 
     protected function getCredentials(): array
     {
@@ -72,7 +74,7 @@ class FnacImportMessage extends AbstractImportMessage
         return self::$client;
     }
 
-    protected function getMessageApiId($message): string
+    protected function getMessageApiId(Message|\Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage $message): string
     {
         return $message->getMessageId();
     }
@@ -91,8 +93,8 @@ class FnacImportMessage extends AbstractImportMessage
 
         $this->logger = new Logger(
             'import_message/'
-            . $this->getChannelName() . '/'
-            . $this->getChannelName()
+            . $this->getSnakeChannelName() . '/'
+            . $this->getSnakeChannelName()
             . '.log', true, true
         );
         $this->logger->info('--- Start ---');
@@ -118,7 +120,7 @@ class FnacImportMessage extends AbstractImportMessage
                 $messageId  = $this->getMessageApiId($message);
 
                 $mpOrderId  = $this->getMpOrderApiId($message);
-                $channel    = Channel::getByName(ChannelEnum::FNAC_COM); // Channel = mp
+                $channel    = Channel::getByName($this->getChannelName()); // Channel = mp
                 $order      = Order::getOrder($mpOrderId, $channel);
                 $ticket     = Ticket::getTicket($order, $channel);
 
