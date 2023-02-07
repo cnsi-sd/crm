@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property Datetime $created_at
  * @property Datetime $updated_at
+ * @property DateTime $deleted_at
  */
 class Tags extends Model
 {
@@ -33,7 +34,8 @@ class Tags extends Model
         'text_color',
         'background_color',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'deleted_at'
     ];
 
     public function isChannelSelected(Channel $channel)
