@@ -116,6 +116,23 @@ return [
         'saved' => 'Ticket enregistré',
     ],
 
+    'order' => [
+        'id_order' => 'ID Order',
+        'status' => 'Statut',
+        'date' => 'Date commande',
+        'carrier' => 'Transporteur',
+        'tracking' => 'Suivi',
+        'total_ttc' => 'Total TTC',
+        'margin_ht' => 'Marge HT',
+        'private_comment' => 'Commentaire privé Prestashop',
+        'billing' => 'Facturation',
+        'shipping' => 'Livraison',
+        'products' => 'Produits',
+        'designation' => 'Désignation',
+        'qty' => 'Qté',
+        'supplier' => 'Fournisseur',
+    ],
+
     'login' => [
         'login' => 'Connexion',
         'sign_in' => 'Identification',

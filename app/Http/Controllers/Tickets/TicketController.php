@@ -21,6 +21,7 @@ use http\Env\Response;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Http;
 use function view;
 
 class TicketController extends Controller
@@ -76,6 +77,10 @@ class TicketController extends Controller
     {
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
+
+        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalSuppliers = $this->getExternalSuppliers();
 
         if ($request->input()){
             $request->validate([
@@ -152,7 +157,25 @@ class TicketController extends Controller
             ->with('commentTypeEnum', TicketCommentTypeEnum::getList())
             ->with('ticketStateEnum', TicketStateEnum::getList())
             ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
-            ->with('channels', $queryChannels);
+            ->with('channels', $queryChannels)
+            ->with('externalOrderInfo',$externalOrderInfo)
+            ->with('externalAdditionalOrderInfo',$externalAdditionalOrderInfo)
+            ->with('externalSuppliers',$externalSuppliers);
+    }
+
+    public function getExternalOrderInfo($mp_order, $mp_name)
+    {
+        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order&mp_order=' . $mp_order . '&mp_name=' . $mp_name)[0];
+    }
+
+    public function getExternalAdditionalOrderInfo($mp_order, $mp_name)
+    {
+        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order_additional_infos&mp_order=' . $mp_order . '&mp_name=' . $mp_name)->json();
+    }
+
+    public function getExternalSuppliers()
+    {
+        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=supplier')->json();
     }
 
 }
