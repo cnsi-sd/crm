@@ -8,7 +8,7 @@ use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
 use App\Models\Tags\TagList;
-use App\Models\Tags\Tags;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
@@ -44,7 +44,7 @@ class TicketController extends Controller
         $tickets = $query->get();
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new \App\Models\Tags\Tags)->getlistTagWithTickets($tickets));
+            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
@@ -68,7 +68,7 @@ class TicketController extends Controller
 
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new \App\Models\Tags\Tags)->getlistTagWithTickets($tickets));
+            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
 
     }
 
@@ -214,7 +214,7 @@ class TicketController extends Controller
     }
 
     public function delete_tag(Request $request) {
-        $tag = Tags::find($request->input('tag_id'));
+        $tag = Tag::find($request->input('tag_id'));
         $tag->taglists()->detach($request->input('taglist_id'));
         return redirect()->route('all_tickets');
     }
@@ -227,7 +227,7 @@ class TicketController extends Controller
 
     public function saveThreadTags(Request $request) {
         $taglist = TagList::find($request->input('taglist_id'));
-        $tag = Tags::find($request->input('tag_id'));
+        $tag = Tag::find($request->input('tag_id'));
         $tag->taglists()->attach($taglist->id);
         return response()->json($tag);
     }

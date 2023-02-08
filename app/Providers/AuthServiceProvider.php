@@ -4,7 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Channel\DefaultAnswer;
-use App\Models\Tags\Tags;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\User\Role;
 use App\Models\User\User;
@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         DefaultAnswer::class => DefaultAnswerPolicy::class,
         Revival::class => RevivalPolicy::class,
         Ticket::class => TicketPolicy::class,
-        Tags::class => TagPolicy::class,
+        Tag::class => TagPolicy::class,
     ];
 
     /**

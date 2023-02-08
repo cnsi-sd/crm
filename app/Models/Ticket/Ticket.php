@@ -10,7 +10,7 @@ use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
-use App\Models\Tags\Tags;
+use App\Models\Tags\Tag;
 use App\Models\User\User;
 use Carbon\Carbon;
 use DateTime;
@@ -167,13 +167,13 @@ class Ticket extends Model
             ->setKey('tags_id')
             ->setWhereKey('tags.id')
             ->setType(ColumnTypeEnum::SELECT)
-            ->setOptions(Tags::getTagsNames())
+            ->setOptions(Tag::getTagsNames())
             ->setAlign(AlignEnum::CENTER)
             ->setFixedWidth(FixedWidthEnum::LG)
             ->setCallback(function (Ticket $ticket) {
                 $listeTag = array();
                 return view('tickets.tag.preview')
-                    ->with('listTags', Tags::getListTagByThread($ticket, $listeTag, true));
+                    ->with('listTags', Tag::getListTagByThread($ticket, $listeTag, true));
             });
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.created_at'))

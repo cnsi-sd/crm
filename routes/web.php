@@ -12,7 +12,7 @@ use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
-use App\Models\Tags\Tags;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Support\Facades\Route;
 
@@ -74,10 +74,10 @@ Route::middleware('checkActive')->group(function () {
             Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
         });
         Route::prefix('tags')->group(function () {
-            Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tags::class);
-            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', Tags::class);
-            Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags')->can('read', Tags::class);
-            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tags::class);
+            Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tag::class);
+            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', Tag::class);
+            Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags')->can('read', Tag::class);
+            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tag::class);
         });
     });
 });

@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Datetime $updated_at
  * @property DateTime $deleted_at
  */
-class Tags extends Model
+class Tag extends Model
 {
     use SoftDeletes;
 
@@ -68,13 +68,13 @@ class Tags extends Model
             ->setLabel(__('app.tags.view'))
             ->setKey('name')
             ->setAlign(AlignEnum::CENTER)
-            ->setCallback(function (Tags $tags) {
+            ->setCallback(function (Tag $tags) {
                 return view('configuration.tags.preview')
                     ->with('tags', $tags);
             });
 
         $columns[] = TableColumnBuilder::actions()
-            ->setCallback(function (Tags $tags) {
+            ->setCallback(function (Tag $tags) {
                 return view('configuration.tags.inline_table_actions')
                     ->with('tags', $tags);
             });

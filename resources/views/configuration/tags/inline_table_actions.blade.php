@@ -1,4 +1,4 @@
-@can('edit', \App\Models\Tags\Tags::class)
+@can('edit', \App\Models\Tags\Tag::class)
     <a
             href="{{ route('edit_tags', ['tags' => $tags]) }}"
             class="btn btn-secondary btn-sm"
