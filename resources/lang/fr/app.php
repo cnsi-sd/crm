@@ -159,7 +159,7 @@ return [
         'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
         'choose_answer' => 'Choisir le message à envoyer',
         'end_state' => 'Statut final',
-        'channel' => 'Cannaux d\'aplication',
+        'channel' => 'Cannaux d\'application',
         'start_revival' => 'À partir du',
         'select_revival' => 'Aucune',
         'frequency_details' => 'Tous les jours|Tous les :freq jours',
@@ -177,7 +177,7 @@ return [
         'name' => 'Nom',
         'backgroundColor' => 'Couleur du fond',
         'textColor' => 'Couleur du texte',
-        'select_channel' => 'Cannaux selectioner',
+        'select_channel' => 'Canaux selectioner',
         'show' => 'Prévisualisation',
     ],
 
