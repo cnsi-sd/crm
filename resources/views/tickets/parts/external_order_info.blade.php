@@ -1,4 +1,5 @@
 <div class="row">
+    @if($externalAdditionalOrderInfo)
     <div class="col-7">
         <div class="card">
             <div class="card-header">Commande</div>
@@ -127,4 +128,5 @@
             </div>
         </div>
     </div>
+    @endif
 </div>

@@ -53,6 +53,47 @@ class TicketController extends Controller
             ->with('table', $table);
     }
 
+    public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number)
+    {
+        $ticket = null;
+        $channel_id = Channel::query()
+            ->where('name', 'LIKE', '%'.$channel.'%')->first()->id;
+
+        if ($channel_id) {
+            $order = Order::query()
+                ->where('channel_id', $channel_id)
+                ->where('channel_order_number', $channel_order_number)
+                ->first();
+            if ($order) {
+                $ticket = Ticket::query()
+                    ->where('order_id', $order->id)->first();
+            }
+        }
+
+        if(!$ticket){
+            $order = new Order;
+            $order->channel_id = $channel_id;
+            $order->channel_order_number = $channel_order_number;
+            $order->save();
+
+            $ticket = new Ticket();
+            $ticket->channel_id = $channel_id;
+            $ticket->order_id = $order->id;
+            $ticket->user_id = Channel::query()->where('id', $order->channel_id)->first()->user_id;
+            $ticket->state  = TicketStateEnum::WAITING_ADMIN;
+            $ticket->priority = TicketPriorityEnum::P1;
+            $ticket->deadline = new \DateTime('now');
+            $ticket->save();
+
+            $thread = new Thread();
+            $thread->ticket_id = $ticket->id;
+            $thread->name = "Fil de discussion principal";
+            $thread->save();
+        }
+
+        return redirect()->route('ticket', [$ticket]);
+    }
+
     public function redirectTicket(Request $request, ?Ticket $ticket)
     {
         if ($ticket->last_thread_displayed) {

@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="{{ $ticket->delivery_date->format("Y-m-d") }}"/></div>
+                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date) {{ $ticket->delivery_date->format("Y-m-d") }} @endif"/></div>
                                 </div>
                             </div>
                         </div>
