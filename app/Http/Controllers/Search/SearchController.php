@@ -16,7 +16,7 @@ class SearchController extends Controller
             $term = $request->input('term');
             $queryTicket = Ticket::query()->where('id',$term)->exists();
             if ($queryTicket) {
-                return redirect()->route('ticket', [$ticket]);
+                return redirect()->route('ticket', [$term]);
             } else {
                 $queryOrder = Order::query()->where('channel_order_number', $term)->first();
                 if($queryOrder) {
