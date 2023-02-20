@@ -117,14 +117,13 @@ class FnacImportMessage extends AbstractImportMessage
         foreach ($messages as $message) {
             try {
                 DB::beginTransaction();
-                $messageId  = $this->getMessageApiId($message);
 
+                $messageId  = $this->getMessageApiId($message);
                 $mpOrderId  = $this->getMpOrderApiId($message);
                 $channel    = Channel::getByName($this->getChannelName()); // Channel = mp
                 $order      = Order::getOrder($mpOrderId, $channel);
                 $ticket     = Ticket::getTicket($order, $channel);
-
-                $thread     = Thread::getOrCreateThread($ticket, $channel_thread_number, $channel->name, '');
+                $thread     = Thread::getOrCreateThread($ticket, $message->getMessageReferer(), $message->getMessageSubject(), '');
 
                 if (!$this->isMessagesImported($messageId)) {
                     $this->logger->info('Convert api message to db message');
