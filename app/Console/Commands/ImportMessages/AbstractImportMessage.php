@@ -33,6 +33,7 @@ abstract class AbstractImportMessage extends Command
     const FROM_SHOP_TYPE = [
         'SHOP_USER',
         'CALLCENTER',
+        'SELLER'
     ];
 
     /**

@@ -64,7 +64,7 @@ class FnacImportMessage extends AbstractImportMessage
         if(self::$client == null) {
             $client = new SimpleClient();
 
-            $this->logger = new Logger('import_message/' . $this->getChannelName() . '/' . $this->getChannelName() . '.log', true, true);
+            $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
             $client->init(self::getCredentials());
             $client->checkAuth();
 
@@ -89,8 +89,6 @@ class FnacImportMessage extends AbstractImportMessage
      */
     public function handle()
     {
-        $channel_thread_number = 'fnac_default';
-
         $this->logger = new Logger(
             'import_message/'
             . $this->getSnakeChannelName() . '/'
@@ -105,6 +103,7 @@ class FnacImportMessage extends AbstractImportMessage
 
         $query = new MessageQuery();
         $query->setMessageType(MessageType::ORDER);
+//        $query->setOrderFnacId('9952SMDFC3WB4');
         $messages = $client->callService($query);
 
         $this->logger->info('Get messages');
