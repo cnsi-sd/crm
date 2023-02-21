@@ -4,6 +4,7 @@ namespace App\Models\Ticket;
 
 use App\Enums\ColumnTypeEnum;
 use App\Enums\FixedWidthEnum;
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
@@ -66,6 +67,25 @@ class Ticket extends Model
                 'user_id' => $channel->user_id,
             ],
         );
+    }
+
+    public static function getLastApiMessageByTicket($threadNumber, $channelName)
+    {
+        $channel = Channel::getByName($channelName);
+        $thread = Thread::firstWhere('channel_thread_number' , $threadNumber);
+
+         $lastMessage = Ticket::query()
+            ->select('ticket_thread_messages.content as messageContent',
+                'ticket_thread_messages.channel_message_number as messageId')
+            ->join('ticket_threads', 'ticket_threads.ticket_id' , 'tickets.id')
+            ->join('ticket_thread_messages', 'ticket_thread_messages.thread_id', 'ticket_threads.id')
+            ->where('ticket_thread_messages.thread_id', $thread->id)
+            ->where('tickets.channel_id', $channel->id)
+            ->where('author_type', TicketMessageAuthorTypeEnum::CLIENT)
+            ->orderBy('ticket_thread_messages.id', 'desc')
+            ->firstOrFail();
+
+         return $lastMessage;
     }
 
     public function threads(): HasMany

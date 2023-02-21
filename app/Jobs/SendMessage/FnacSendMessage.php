@@ -4,6 +4,7 @@ namespace App\Jobs\SendMessage;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
+use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
 use FnacApiClient\Client\SimpleClient;
@@ -44,10 +45,13 @@ class FnacSendMessage extends AbstractSendMessage
     public function handle(): void
     {
         try {
+
+            $this->logger = new Logger('send_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
+
             // Variables
             $sendTo = MessageToType::CLIENT;
-            $thread_id = $this->message->thread->channel_thread_number;
-            $messageId = $this->message->getLastApiMessage($thread_id);
+            $threadNumber = $this->message->thread->channel_thread_number;
+            $messageId = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
 
             // Init API client
             $client = $this->initApiClient();
@@ -61,7 +65,8 @@ class FnacSendMessage extends AbstractSendMessage
             $message2->setMessageTo($sendTo);
             $message2->setMessageSubject(MessageSubjectType::OTHER_QUESTION);
             $message2->setMessageType(MessageType::ORDER);
-            $message2->setMessageDescription($this->message->content);
+//            $message2->setMessageDescription($this->translateContent($this->message->content));
+            $message2->setMessageDescription( json_encode($this->message->content));
             $query->addMessage($message2);
 
             /** @var MessageUpdateResponse $messageUpdateResponse */

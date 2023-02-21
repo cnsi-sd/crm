@@ -14,6 +14,7 @@ use Exception;
 use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\Message;
 use FnacApiClient\Service\Request\MessageQuery;
+use FnacApiClient\Type\MessageFromType;
 use FnacApiClient\Type\MessageType;
 use Illuminate\Support\Facades\DB;
 
@@ -103,7 +104,7 @@ class FnacImportMessage extends AbstractImportMessage
 
         $query = new MessageQuery();
         $query->setMessageType(MessageType::ORDER);
-//        $query->setOrderFnacId('9952SMDFC3WB4');
+//        $query->setOfferId('9952SMDFC3WB4');
         $messages = $client->callService($query);
 
         $this->logger->info('Get messages');
