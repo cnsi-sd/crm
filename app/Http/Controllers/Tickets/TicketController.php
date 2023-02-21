@@ -2,9 +2,22 @@
 
 namespace App\Http\Controllers\Tickets;
 
+use App\Enums\Channel\ChannelEnum;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMessage\ButSendMessage;
+use App\Jobs\SendMessage\CarrefourSendMessage;
+use App\Jobs\SendMessage\ConforamaSendMesssage;
+use App\Jobs\SendMessage\DartySendMessage;
+use App\Jobs\SendMessage\FnacSendMessage;
+use App\Jobs\SendMessage\IntermarcheSendMessage;
+use App\Jobs\SendMessage\LaposteSendMessage;
+use App\Jobs\SendMessage\LeclercSendMessage;
+use App\Jobs\SendMessage\MetroSendMessage;
+use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\ShowroomSendMessage;
+use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
@@ -79,12 +92,28 @@ class TicketController extends Controller
             $thread->save();
 
             if($request->input('ticket-thread-messages-content')) {
-                Message::firstOrCreate([
+                $message = Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
                     'author_type' => 'admin',
                     'content' => $request->input('ticket-thread-messages-content'),
                 ]);
+
+                //TODO dispatch job
+                match($ticket->channel->name) {
+                    ChannelEnum::BUT_FR             => ButSendMessage::dispatch($message),
+                    ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($message),
+                    ChannelEnum::CONFORAMA_FR       => ConforamaSendMesssage::dispatch($message),
+                    ChannelEnum::DARTY_COM          => DartySendMessage::dispatch($message),
+                    ChannelEnum::INTERMARCHE_FR     => IntermarcheSendMessage::dispatch($message),
+                    ChannelEnum::LAPOSTE_FR         => LaposteSendMessage::dispatch($message),
+                    ChannelEnum::E_LECLERC          => LeclercSendMessage::dispatch($message),
+                    ChannelEnum::METRO_FR           => MetroSendMessage::dispatch($message),
+                    ChannelEnum::RUEDUCOMMERCE_FR   => RueDuCommerceSendMessage::dispatch($message),
+                    ChannelEnum::SHOWROOMPRIVE_COM  => ShowroomSendMessage::dispatch($message),
+                    ChannelEnum::UBALDI_COM         => UbaldiSendMessage::dispatch($message),
+                    ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message)
+                };
             }
             if($request->input('ticket-thread-comments-content')) {
                 Comment::firstOrCreate([
@@ -116,6 +145,8 @@ class TicketController extends Controller
         $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
         $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
         $queryChannels = Channel::query()->get()->toArray();
+
+
 
         return view('tickets.ticket')
             ->with('ticket',$queryTicket)

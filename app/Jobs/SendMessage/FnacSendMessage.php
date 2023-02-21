@@ -7,9 +7,15 @@ use App\Models\Channel\Channel;
 use Cnsi\Logger\Logger;
 use Exception;
 use FnacApiClient\Client\SimpleClient;
+use FnacApiClient\Entity\Message;
 use FnacApiClient\Exception\ErrorResponseException;
 use FnacApiClient\Service\Request\MessageUpdate;
+use FnacApiClient\Service\Response\MessageUpdateResponse;
+use FnacApiClient\Type\MessageActionType;
+use FnacApiClient\Type\MessageSubjectType;
 use FnacApiClient\Type\MessageToType;
+use FnacApiClient\Type\MessageType;
+use FnacApiClient\Type\ResponseStatusType;
 
 class FnacSendMessage extends AbstractSendMessage
 {
@@ -34,18 +40,41 @@ class FnacSendMessage extends AbstractSendMessage
 
     /**
      * @throws ErrorResponseException
+     * @throws Exception
      */
     public function handle(): void
     {
-        // Variables
-        $sendTo = MessageToType::CLIENT;
-        $thread_id = $this->message->thread->channel_thread_number;
+        try {
+            // Variables
+            $sendTo = MessageToType::CLIENT;
+            $thread_id = $this->message->thread->channel_thread_number;
 
-        // Init API client
-        $client = $this->initApiClient();
+            // Init API client
+            $client = $this->initApiClient();
 
-        $query = new MessageUpdate();
+            $query = new MessageUpdate();
 
+            // Answer to message
+            $message2 = new Message();
+            $message2->setMessageId($this->message->id);
+            $message2->setAction(MessageActionType::REPLY);
+            $message2->setMessageTo($sendTo);
+            $message2->setMessageSubject(MessageSubjectType::OTHER_QUESTION);
+            $message2->setMessageType(MessageType::ORDER);
+            $message2->setMessageDescription($this->message->content);
+            $query->addMessage($message2);
+
+            /** @var MessageUpdateResponse $messageUpdateResponse */
+            $messageUpdateResponse = $client->callService($query);
+
+            if ($messageUpdateResponse->getStatus() !== ResponseStatusType::OK)
+                throw new Exception("API push message error");
+        } catch (Exception $e) {
+            $this->logger->error('An error has occurred while sending message.', $e);
+
+//            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+            return;
+        }
 
     }
 
