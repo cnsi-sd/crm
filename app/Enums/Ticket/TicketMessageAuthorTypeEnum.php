@@ -11,4 +11,6 @@ abstract class TicketMessageAuthorTypeEnum extends AbstractEnum
     const CUSTOMER      = "customer";
     const SYSTEM        = "system";
     const API           = "api";
+    const CLIENT        = "client";
+    const CALLCENTER   = "callCenter";
 }

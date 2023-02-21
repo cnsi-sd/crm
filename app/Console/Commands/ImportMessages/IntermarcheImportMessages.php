@@ -3,6 +3,7 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Models\Channel\Channel;
 
 class IntermarcheImportMessages extends AbstractMiraklImportMessage
 {
@@ -17,7 +18,12 @@ class IntermarcheImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::INTERMARCHE_FR);
+        return ChannelEnum::INTERMARCHE_FR;
+    }
+
+    protected function getSnakeChannelName(): string
+    {
+        return (new Channel)->getSnakeName(ChannelEnum::INTERMARCHE_FR);
     }
 
     /**

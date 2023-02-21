@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0.2",
         "akaunting/laravel-setting": "^1.2",
+        "cnsi/fnac-api-client": "dev-master",
         "cnsi/logger": "dev-main",
         "diglactic/laravel-breadcrumbs": "8.0.1",
         "guzzlehttp/guzzle": "^7.2",
@@ -17,7 +18,8 @@
         "realrashid/sweet-alert": "^5.1.0",
         "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "^6.1",
-        "twilio/sdk": "^6.44"
+        "twilio/sdk": "^6.44",
+        "ext-curl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -65,7 +67,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "laminas/laminas-dependency-plugin": true
         }
     },
     "minimum-stability": "dev",
@@ -73,7 +76,11 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "ssh://git@git.cnsi-sd.net:2222/packages/logger.git"
+            "url": "https://gitlab+deploy-token-15:9rRyjyjxQbwrkVjczBuf@git.cnsi-sd.net/packages/logger.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token:glpat-zF9rsc-pxBoUz5h52Xr1@git.cnsi-sd.net/packages/fnacapiclient.git"
         }
     ]
 }

@@ -18,6 +18,11 @@ class ButImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
+        return ChannelEnum::BUT_FR;
+    }
+
+    protected function getSnakeChannelName(): string
+    {
         return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::BUT_FR);
     }
 

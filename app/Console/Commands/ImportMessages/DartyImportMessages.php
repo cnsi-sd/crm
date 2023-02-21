@@ -3,6 +3,7 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Models\Channel\Channel;
 
 class DartyImportMessages extends AbstractMiraklImportMessage
 {
@@ -17,7 +18,12 @@ class DartyImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::DARTY_COM);
+        return ChannelEnum::DARTY_COM;
+    }
+
+    protected function getSnakeChannelName(): string
+    {
+        return (new Channel)->getSnakeName(ChannelEnum::DARTY_COM);
     }
 
     /**

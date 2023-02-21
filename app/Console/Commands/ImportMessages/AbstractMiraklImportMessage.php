@@ -24,7 +24,6 @@ use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\Thread;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
@@ -32,7 +31,7 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadTopic;
 use Mirakl\MMP\OperatorShop\Request\Message\GetThreadsRequest;
 use Mirakl\MMP\Shop\Client\ShopApiClient;
 
-abstract class AbstractMiraklImportMessage extends Command
+abstract class AbstractMiraklImportMessage extends AbstractImportMessage
 {
     protected Logger $logger;
     protected string $log_path;
@@ -42,20 +41,27 @@ abstract class AbstractMiraklImportMessage extends Command
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
 
-    protected static $_alreadyImportedMessages;
-
     protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
     protected $description = 'Importing competing offers from Mirakl.';
 
 
     abstract protected function getChannelName(): string;
+    abstract protected function getSnakeChannelName(): string;
 
     abstract protected function getCredentials(): array;
 
+    protected function getMessageApiId(ThreadMessage|\FnacApiClient\Entity\Message $message): string
+    {
+       return $message->getId();
+    }
+    protected function getMpOrderApiId($message, $thread = null)
+    {
+        // TODO: Implement getMpOrderId() method.
+    }
+
     public function handle()
     {
-        // import_message/but_fr/but_fr_2022_10_03.log
-        $this->logger = new Logger('import_message/' . $this->getChannelName() . '/' . $this->getChannelName() . '.log', true, true);
+        $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
         $this->logger->info('--- Start ---');
         try {
             $date_time = new DateTime();
@@ -64,7 +70,6 @@ abstract class AbstractMiraklImportMessage extends Command
             $request = new GetThreadsRequest();
             $request->setUpdatedSince($date_time);
             $request->setWithMessages(true);
-
             $this->logger->info('Init api');
             $client = $this->initApiClient();
 
@@ -158,7 +163,7 @@ abstract class AbstractMiraklImportMessage extends Command
      * @return void
      * @throws Exception
      */
-    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages)
+    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages): void
     {
         foreach ($messages as $message) {
             $imported_id = $message->getId();
@@ -177,7 +182,7 @@ abstract class AbstractMiraklImportMessage extends Command
      * @param ThreadMessage $api_message
      * @param \App\Models\Ticket\Thread $thread
      */
-    public function convertApiResponseToMessage(Ticket $ticket, ThreadMessage $api_message, \App\Models\Ticket\Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $api_message, \App\Models\Ticket\Thread $thread)
     {
         $authorType = $api_message->getFrom()->getType();
         $isNotShopUser = self::isNotShopUser($authorType);
@@ -218,7 +223,7 @@ abstract class AbstractMiraklImportMessage extends Command
      * @return bool
      * @throws Exception
      */
-    private function isMessagesImported(string $channel_message_number): bool
+    protected function isMessagesImported(string $channel_message_number): bool
     {
         if (!self::$_alreadyImportedMessages) {
             self::$_alreadyImportedMessages = Message::query()
@@ -232,15 +237,6 @@ abstract class AbstractMiraklImportMessage extends Command
         }
 
         return isset(self::$_alreadyImportedMessages[$channel_message_number]);
-    }
-
-    /**
-     * @param string $channel_message_number
-     * @return void
-     */
-    private function addImportedMessageChannelNumber(string $channel_message_number)
-    {
-        self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
     }
 
     /**
