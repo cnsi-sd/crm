@@ -39,7 +39,6 @@ class FnacSendMessage extends AbstractSendMessage
     }
 
     /**
-     * @throws ErrorResponseException
      * @throws Exception
      */
     public function handle(): void
@@ -48,6 +47,7 @@ class FnacSendMessage extends AbstractSendMessage
             // Variables
             $sendTo = MessageToType::CLIENT;
             $thread_id = $this->message->thread->channel_thread_number;
+            $messageId = $this->message->getLastApiMessage($thread_id);
 
             // Init API client
             $client = $this->initApiClient();
@@ -56,7 +56,7 @@ class FnacSendMessage extends AbstractSendMessage
 
             // Answer to message
             $message2 = new Message();
-            $message2->setMessageId($this->message->id);
+            $message2->setMessageId($messageId);
             $message2->setAction(MessageActionType::REPLY);
             $message2->setMessageTo($sendTo);
             $message2->setMessageSubject(MessageSubjectType::OTHER_QUESTION);
@@ -75,7 +75,6 @@ class FnacSendMessage extends AbstractSendMessage
 //            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
             return;
         }
-
     }
 
     protected function getCredentials(): array
