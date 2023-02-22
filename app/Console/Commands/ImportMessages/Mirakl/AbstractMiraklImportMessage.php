@@ -1,30 +1,17 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages;
+namespace App\Console\Commands\ImportMessages\Mirakl;
 
-use App\Enums\Channel\ChannelEnum;
+use App\Console\Commands\ImportMessages\AbstractImportMessage;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
-use App\Jobs\SendMessage\ButSendMessage;
-use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMesssage;
-use App\Jobs\SendMessage\DartySendMessage;
-use App\Jobs\SendMessage\IntermarcheSendMessage;
-use App\Jobs\SendMessage\LaposteSendMessage;
-use App\Jobs\SendMessage\LeclercSendMessage;
-use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueDuCommerceSendMessage;
-use App\Jobs\SendMessage\ShowroomSendMessage;
-use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\Channel;
-use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\Thread;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
@@ -32,7 +19,7 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadTopic;
 use Mirakl\MMP\OperatorShop\Request\Message\GetThreadsRequest;
 use Mirakl\MMP\Shop\Client\ShopApiClient;
 
-abstract class AbstractMiraklImportMessage extends Command
+abstract class AbstractMiraklImportMessage extends AbstractImportMessage
 {
     protected Logger $logger;
     protected string $log_path;
@@ -42,20 +29,15 @@ abstract class AbstractMiraklImportMessage extends Command
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
 
-    protected static $_alreadyImportedMessages;
-
-    protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
-    protected $description = 'Importing competing offers from Mirakl.';
+    const FROM_SHOP_TYPE = 'SHOP_USER';
 
 
-    abstract protected function getChannelName(): string;
-
-    abstract protected function getCredentials(): array;
-
+    /**
+     * @throws Exception
+     */
     public function handle()
     {
-        // import_message/but_fr/but_fr_2022_10_03.log
-        $this->logger = new Logger('import_message/' . $this->getChannelName() . '/' . $this->getChannelName() . '.log', true, true);
+        $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
         $this->logger->info('--- Start ---');
         try {
             $date_time = new DateTime();
@@ -64,7 +46,6 @@ abstract class AbstractMiraklImportMessage extends Command
             $request = new GetThreadsRequest();
             $request->setUpdatedSince($date_time);
             $request->setWithMessages(true);
-
             $this->logger->info('Init api');
             $client = $this->initApiClient();
 
@@ -139,18 +120,6 @@ abstract class AbstractMiraklImportMessage extends Command
         return null;
     }
 
-    const FROM_SHOP_TYPE = 'SHOP_USER';
-
-    /**
-     * returns if the message type is SHOP_USER
-     * @param string $type
-     * @return bool
-     */
-    private static function isNotShopUser(string $type): bool
-    {
-        return self::FROM_SHOP_TYPE !== $type;
-    }
-
     /**
      * @param Ticket $ticket
      * @param \App\Models\Ticket\Thread $thread
@@ -158,7 +127,7 @@ abstract class AbstractMiraklImportMessage extends Command
      * @return void
      * @throws Exception
      */
-    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages)
+    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages): void
     {
         foreach ($messages as $message) {
             $imported_id = $message->getId();
@@ -177,10 +146,10 @@ abstract class AbstractMiraklImportMessage extends Command
      * @param ThreadMessage $api_message
      * @param \App\Models\Ticket\Thread $thread
      */
-    public function convertApiResponseToMessage(Ticket $ticket, ThreadMessage $api_message, \App\Models\Ticket\Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $api_message, \App\Models\Ticket\Thread $thread)
     {
         $authorType = $api_message->getFrom()->getType();
-        $isNotShopUser = self::isNotShopUser($authorType);
+        $isNotShopUser = self::isNotShopUser($authorType, self::FROM_SHOP_TYPE);
         if ($isNotShopUser) {
             $this->logger->info('Set ticket\'s status to waiting admin');
             $ticket->state = TicketStateEnum::WAITING_ADMIN;
@@ -205,7 +174,7 @@ abstract class AbstractMiraklImportMessage extends Command
         }
     }
 
-    private static function getAuthorType(string $authorType): string
+    protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'CUSTOMER_USER' => TicketMessageAuthorTypeEnum::CUSTOMER,
@@ -213,67 +182,4 @@ abstract class AbstractMiraklImportMessage extends Command
         };
     }
 
-    /**
-     * @param string $channel_message_number
-     * @return bool
-     * @throws Exception
-     */
-    private function isMessagesImported(string $channel_message_number): bool
-    {
-        if (!self::$_alreadyImportedMessages) {
-            self::$_alreadyImportedMessages = Message::query()
-                ->select('channel_message_number')
-                ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
-                ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
-                ->where('channel_id', Channel::getByName($this->getChannelName())->id)
-                ->get()
-                ->pluck('channel_message_number', 'channel_message_number')
-                ->toArray();
-        }
-
-        return isset(self::$_alreadyImportedMessages[$channel_message_number]);
-    }
-
-    /**
-     * @param string $channel_message_number
-     * @return void
-     */
-    private function addImportedMessageChannelNumber(string $channel_message_number)
-    {
-        self::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
-    }
-
-    /**
-     * @param mixed $messageId
-     * @param \App\Models\Ticket\Thread $thread
-     * @return void
-     */
-    public function sendAutoReply(mixed $messageId, \App\Models\Ticket\Thread $thread): void
-    {
-        $autoReplyContentWeek = DefaultAnswer::query()->select('content')->where('id', $messageId)->first();
-
-        $autoReply = new Message();
-        $autoReply->thread_id = $thread->id;
-        $autoReply->user_id = null;
-        $autoReply->channel_message_number = '';
-        $autoReply->author_type = TicketMessageAuthorTypeEnum::ADMIN;
-        $autoReply->content = $autoReplyContentWeek['content'];
-        $autoReply->save();
-        $this->logger->info('Auto reply save in db');
-
-        $this->logger->info('Send queue execution');
-        match ($thread->ticket->channel->name) {
-            ChannelEnum::BUT_FR => ButSendMessage::dispatch($autoReply),
-            ChannelEnum::CARREFOUR_FR => CarrefourSendMessage::dispatch($autoReply),
-            ChannelEnum::CONFORAMA_FR => ConforamaSendMesssage::dispatch($autoReply),
-            ChannelEnum::DARTY_COM => DartySendMessage::dispatch($autoReply),
-            ChannelEnum::INTERMARCHE_FR => IntermarcheSendMessage::dispatch($autoReply),
-            ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($autoReply),
-            ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($autoReply),
-            ChannelEnum::METRO_FR => MetroSendMessage::dispatch($autoReply),
-            ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($autoReply),
-            ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($autoReply),
-            ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($autoReply),
-        };
-    }
 }

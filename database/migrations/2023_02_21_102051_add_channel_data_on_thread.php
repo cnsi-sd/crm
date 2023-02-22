@@ -14,9 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('ticket_threads', function (Blueprint $table) {
-            $table->foreignId('revival_id')->nullable()->after('ticket_id')->constrained();
-            $table->dateTime('revival_start_date')->nullable()->after('revival_id');
-            $table->integer('revival_message_count')->default(0)->after('revival_start_date');
+            $table->json('channel_data')->nullable()->after('customer_issue');
         });
     }
 
@@ -28,10 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('ticket_threads', function (Blueprint $table) {
-            $table->dropForeign('ticket_thread_revival_id_foreign');
-            $table->dropColumn('revival_id');
-            $table->dropColumn('revival_start_date');
-            $table->dropColumn('revival_message_count');
+            $table->dropColumn('channel_data');
         });
     }
 };

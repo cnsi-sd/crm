@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $customer_issue
  * @property Datetime $created_at
  * @property Datetime $updated_at
+ * @property array $channel_data
  *
  * @property Comment[] $comments
  * @property Ticket $ticket
@@ -43,12 +44,14 @@ class Thread extends Model
         'channel_thread_number',
         'name',
         'customer_issue',
+        'channel_data',
         'created_at',
         'updated_at'
     ];
 
     protected $casts = [
         'revival_start_date' => 'date',
+        'channel_data' => 'array'
     ];
 
     /**
@@ -59,7 +62,7 @@ class Thread extends Model
      * @param string $customer_issue
      * @return Model|Builder|Thread
      */
-    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue): Model|Builder|Thread
+    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue, $channel_data = [] ): Model|Builder|Thread
     {
         return Thread::query()
             ->select('ticket_threads.*')
@@ -75,6 +78,7 @@ class Thread extends Model
                     'channel_thread_number' => $channel_thread_number,
                     'name' => $name,
                     'customer_issue' => $customer_issue,
+                    'channel_data' => json_encode($channel_data),
                 ],
             );
     }

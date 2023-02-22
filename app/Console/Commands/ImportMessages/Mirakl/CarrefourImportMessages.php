@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages;
+namespace App\Console\Commands\ImportMessages\Mirakl;
 
 use App\Enums\Channel\ChannelEnum;
 
@@ -16,6 +16,11 @@ class CarrefourImportMessages extends AbstractMiraklImportMessage
      * @return string
      */
     protected function getChannelName(): string
+    {
+        return ChannelEnum::CARREFOUR_FR;
+    }
+
+    protected function getSnakeChannelName(): string
     {
         return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::CARREFOUR_FR);
     }

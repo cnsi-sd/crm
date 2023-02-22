@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages;
+namespace App\Console\Commands\ImportMessages\Mirakl;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Models\Channel\Channel;
 
 class MetroImportMessages extends AbstractMiraklImportMessage
 {
@@ -17,7 +18,12 @@ class MetroImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::METRO_FR);
+        return ChannelEnum::METRO_FR;
+    }
+
+    protected function getSnakeChannelName(): string
+    {
+        return (new Channel)->getSnakeName(ChannelEnum::METRO_FR);
     }
 
     /**
