@@ -74,12 +74,11 @@ class IcozaSendMessage extends AbstractSendMessage
 
             $response = $client->request('POST', $this->getCredentials()['host']. 'Reply',
                 [
-                    'content' => $lastApiMessage->messageContent,
+                    'content' => $this->translateContent($lastApiMessage->messageContent),
                     'order' => $lastApiMessage->orderId,
                 ]
             );
 
-            $test = $response->getReasonPhrase();
             // Check response
             if ($response->getReasonPhrase() !== "OK")
                 throw new Exception("API push message error");
