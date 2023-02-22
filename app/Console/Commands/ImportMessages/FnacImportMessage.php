@@ -185,7 +185,6 @@ class FnacImportMessage extends AbstractImportMessage
         return match ($authorType) {
             'CLIENT'        => TicketMessageAuthorTypeEnum::CLIENT,
             'CALLCENTER'    => TicketMessageAuthorTypeEnum::CALLCENTER,
-            default         => TicketMessageAuthorTypeEnum::OPERATEUR,
         };
     }
 }

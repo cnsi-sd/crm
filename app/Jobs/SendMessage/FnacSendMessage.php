@@ -46,34 +46,45 @@ class FnacSendMessage extends AbstractSendMessage
     {
         try {
 
-            $this->logger = new Logger('send_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
+            $this->logger = new Logger('send_message/'
+                . $this->getSnakeChannelName()
+                . '/' . $this->getSnakeChannelName()
+                . '.log', true, true
+            );
+
+            $this->logger->info('--- Start ---');
 
             // Variables
             $sendTo = MessageToType::CLIENT;
             $threadNumber = $this->message->thread->channel_thread_number;
-            $messageId = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
+            $lastApimessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
 
             // Init API client
+            $this->logger->info('Init api');
             $client = $this->initApiClient();
 
             $query = new MessageUpdate();
 
             // Answer to message
             $message2 = new Message();
-            $message2->setMessageId($messageId);
+            $message2->setMessageId($lastApimessage->messageId);
             $message2->setAction(MessageActionType::REPLY);
             $message2->setMessageTo($sendTo);
             $message2->setMessageSubject(MessageSubjectType::OTHER_QUESTION);
             $message2->setMessageType(MessageType::ORDER);
-//            $message2->setMessageDescription($this->translateContent($this->message->content));
-            $message2->setMessageDescription( json_encode($this->message->content));
+            $message2->setMessageDescription( $this->translateContent($this->message->content));
             $query->addMessage($message2);
 
             /** @var MessageUpdateResponse $messageUpdateResponse */
             $messageUpdateResponse = $client->callService($query);
 
+            // Check response
             if ($messageUpdateResponse->getStatus() !== ResponseStatusType::OK)
                 throw new Exception("API push message error");
+
+            $this->logger->info('Message ' . $lastApimessage->messageId . ' sent with API response ' . $messageUpdateResponse->getStatus());
+            $this->logger->info('--- END ---');
+
         } catch (Exception $e) {
             $this->logger->error('An error has occurred while sending message.', $e);
 
