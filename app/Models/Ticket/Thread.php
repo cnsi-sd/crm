@@ -4,6 +4,7 @@ namespace App\Models\Ticket;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Models\Tags\TagList;
 use App\Models\Ticket\Revival\Revival;
 use DateInterval;
 use DateTime;
@@ -23,11 +24,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $customer_issue
  * @property Datetime $created_at
  * @property Datetime $updated_at
+ * @property array $channel_data
  *
  * @property Comment[] $comments
  * @property Ticket $ticket
  * @property Message[] $messages
  * @property Revival $revival
+ * @property TagList[] $tagList
  */
 class Thread extends Model
 {
@@ -41,12 +44,14 @@ class Thread extends Model
         'channel_thread_number',
         'name',
         'customer_issue',
+        'channel_data',
         'created_at',
         'updated_at'
     ];
 
     protected $casts = [
         'revival_start_date' => 'date',
+        'channel_data' => 'array'
     ];
 
     /**
@@ -57,7 +62,7 @@ class Thread extends Model
      * @param string $customer_issue
      * @return Model|Builder|Thread
      */
-    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue): Model|Builder|Thread
+    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue, $channel_data = [] ): Model|Builder|Thread
     {
         return Thread::query()
             ->select('ticket_threads.*')
@@ -73,6 +78,7 @@ class Thread extends Model
                     'channel_thread_number' => $channel_thread_number,
                     'name' => $name,
                     'customer_issue' => $customer_issue,
+                    'channel_data' => json_encode($channel_data),
                 ],
             );
     }
@@ -90,6 +96,10 @@ class Thread extends Model
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
+    }
+    public function tagList(): HasMany
+    {
+        return $this->hasMany(TagList::class);
     }
 
     public function revival(): BelongsTo

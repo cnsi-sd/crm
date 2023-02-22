@@ -2,13 +2,16 @@
 
 namespace App\Models\Ticket;
 
+use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
 use App\Enums\FixedWidthEnum;
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tag;
 use App\Models\User\User;
 use Carbon\Carbon;
 use DateTime;
@@ -74,6 +77,25 @@ class Ticket extends Model
         );
     }
 
+    public static function getLastApiMessageByTicket($threadNumber, $channelName)
+    {
+        $channel = Channel::getByName($channelName);
+        $thread = Thread::firstWhere('channel_thread_number' , $threadNumber);
+
+         $lastMessage = Ticket::query()
+            ->select('ticket_thread_messages.content as messageContent',
+                'ticket_thread_messages.channel_message_number as messageId')
+            ->join('ticket_threads', 'ticket_threads.ticket_id' , 'tickets.id')
+            ->join('ticket_thread_messages', 'ticket_thread_messages.thread_id', 'ticket_threads.id')
+            ->where('ticket_thread_messages.thread_id', $thread->id)
+            ->where('tickets.channel_id', $channel->id)
+            ->where('author_type', TicketMessageAuthorTypeEnum::CLIENT)
+            ->orderBy('ticket_thread_messages.id', 'desc')
+            ->firstOrFail();
+
+         return $lastMessage;
+    }
+
     public function threads(): HasMany
     {
         return $this->hasMany(Thread::class);
@@ -107,6 +129,7 @@ class Ticket extends Model
             ->setType(ColumnTypeEnum::DATE)
             ->setKey('deadline')
             ->setSortable(true)
+            ->setFixedWidth(FixedWidthEnum::SM)
             ->setCallback(function (Ticket $ticket) {
                 return date('d/m/Y', strtotime($ticket->deadline));
             });
@@ -164,12 +187,25 @@ class Ticket extends Model
             })
             ->setKey('channel_id')
             ->setSortable(true);
-
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.tags.view'))
+            ->setKey('tags_id')
+            ->setWhereKey('tags.id')
+            ->setType(ColumnTypeEnum::SELECT)
+            ->setOptions(Tag::getTagsNames())
+            ->setAlign(AlignEnum::CENTER)
+            ->setFixedWidth(FixedWidthEnum::LG)
+            ->setCallback(function (Ticket $ticket) {
+                $listeTag = array();
+                return view('tickets.tag.preview')
+                    ->with('listTags', Tag::getListTagByThread($ticket, $listeTag, true));
+            });
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.created_at'))
             ->setType(ColumnTypeEnum::DATE)
             ->setKey('created_at')
             ->setSortable(true)
+            ->setFixedWidth(FixedWidthEnum::SM)
             ->setCallback(function (Ticket $ticket) {
                 return date('d/m/Y', strtotime($ticket->created_at));
             });

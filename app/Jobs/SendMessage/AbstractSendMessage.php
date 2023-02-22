@@ -19,6 +19,12 @@ abstract class AbstractSendMessage implements ShouldQueue
     {
         $this->message = $message;
     }
+    protected function translateContent($content): string
+    {
+        $content = str_replace(['<br>', '<br/>', '<br />'], "\n", $content);
+        $content = html_entity_decode($content);
+        return $content;
+    }
 
     abstract public function handle(): void;
 }

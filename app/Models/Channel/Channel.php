@@ -3,6 +3,7 @@
 namespace App\Models\Channel;
 
 
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use DateTime;
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Revival $revivals
  * @property Ticket[] $tickets
  * @property Order[] $orders
+ * @property Tag[] $tags
  */
 class Channel extends Model
 {
@@ -48,6 +50,11 @@ class Channel extends Model
     public function revivals(): BelongsToMany
     {
         return $this->belongsToMany(Revival::class)->orderBy('name');
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
     public static function getChannelsNames(): array

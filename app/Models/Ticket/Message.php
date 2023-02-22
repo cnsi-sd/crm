@@ -7,6 +7,8 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\User\User;
 use DateTime;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -58,6 +60,12 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
-
+    public static function getLastApiMessage($threadId): Model|Builder
+    {
+        return Message::query()
+            ->where('thread_id' , $threadId)
+            ->where('author_type' , TicketMessageAuthorTypeEnum::CLIENT)
+            ->firstOrFail();
+    }
 }
 

@@ -28,7 +28,7 @@
                                 />
                             </div>
                             <div class="form-group mb-3">
-                                <label for="name">{{__('app.revival.frequency')}} (en jours)
+                                <label for="name">{{__('app.revival.frequency')}}
                                     <span class="required_field">*</span>
                                 </label>
                                 <input
