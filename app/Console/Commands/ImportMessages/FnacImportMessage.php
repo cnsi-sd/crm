@@ -163,7 +163,7 @@ class FnacImportMessage extends AbstractImportMessage
             [
                 'thread_id' => $thread->id,
                 'user_id' => null,
-                'channel-message_number' => $message->getMessageId(),
+                'channel_message_number' => $message->getMessageId(),
                 'author_type' => self::getAuthorType($authorType),
                 'content' => strip_tags($message->getMessageDescription())
             ]);
