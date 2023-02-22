@@ -39,7 +39,7 @@
                     </div>
                     <div class="row">
                         <div class="col">{{ __('app.order.tracking') }} :</label></div>
-                        <div class="col">
+                        <div class="col text-truncate">
                             {{ $externalAdditionalOrderInfo['tracking_info'][0]['tracking_number'] }}
                         </div>
                     </div>
