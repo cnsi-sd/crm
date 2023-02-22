@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Tickets;
 use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Models\Tags\TagList;
 use App\Models\Tags\Tag;
 use App\Enums\Channel\ChannelEnum;
@@ -131,7 +131,7 @@ class TicketController extends Controller
                 'ticket-priority'  => ['required','string'],
                 'ticket-user_id'   => ['required','integer', 'exists:App\Models\User\User,id'],
                 'ticket-deadline'  => ['required','date'],
-                'ticket-customer_email' => ['string'],
+                'ticket-customer_email' => ['nullable','string'],
                 'ticket-delivery_date' => ['date']
             ]);
             $ticket->state = $request->input('ticket-state');
@@ -159,7 +159,6 @@ class TicketController extends Controller
                     'content' => $request->input('ticket-thread-messages-content'),
                 ]);
 
-                //TODO dispatch job
                 match($ticket->channel->name) {
                     ChannelEnum::BUT_FR             => ButSendMessage::dispatch($message),
                     ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($message),

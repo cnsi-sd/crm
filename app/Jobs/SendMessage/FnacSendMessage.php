@@ -4,6 +4,7 @@ namespace App\Jobs\SendMessage;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
+use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
 use FnacApiClient\Client\SimpleClient;
@@ -44,31 +45,46 @@ class FnacSendMessage extends AbstractSendMessage
     public function handle(): void
     {
         try {
+
+            $this->logger = new Logger('send_message/'
+                . $this->getSnakeChannelName()
+                . '/' . $this->getSnakeChannelName()
+                . '.log', true, true
+            );
+
+            $this->logger->info('--- Start ---');
+
             // Variables
             $sendTo = MessageToType::CLIENT;
-            $thread_id = $this->message->thread->channel_thread_number;
-            $messageId = $this->message->getLastApiMessage($thread_id);
+            $threadNumber = $this->message->thread->channel_thread_number;
+            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
 
             // Init API client
+            $this->logger->info('Init api');
             $client = $this->initApiClient();
 
             $query = new MessageUpdate();
 
             // Answer to message
             $message2 = new Message();
-            $message2->setMessageId($messageId);
+            $message2->setMessageId($lastApiMessage->messageId);
             $message2->setAction(MessageActionType::REPLY);
             $message2->setMessageTo($sendTo);
             $message2->setMessageSubject(MessageSubjectType::OTHER_QUESTION);
             $message2->setMessageType(MessageType::ORDER);
-            $message2->setMessageDescription($this->message->content);
+            $message2->setMessageDescription( $this->translateContent($this->message->content));
             $query->addMessage($message2);
 
             /** @var MessageUpdateResponse $messageUpdateResponse */
             $messageUpdateResponse = $client->callService($query);
 
+            // Check response
             if ($messageUpdateResponse->getStatus() !== ResponseStatusType::OK)
                 throw new Exception("API push message error");
+
+            $this->logger->info('Message ' . $lastApiMessage->messageId . ' sent with API response ' . $messageUpdateResponse->getStatus());
+            $this->logger->info('--- END ---');
+
         } catch (Exception $e) {
             $this->logger->error('An error has occurred while sending message.', $e);
 
@@ -95,8 +111,6 @@ class FnacSendMessage extends AbstractSendMessage
     {
         if(self::$client == null) {
             $client = new SimpleClient();
-
-            $this->logger = new Logger('send_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
             $client->init(self::getCredentials());
             $client->checkAuth();
 

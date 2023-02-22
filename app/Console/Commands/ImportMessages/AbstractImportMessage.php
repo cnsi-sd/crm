@@ -9,6 +9,7 @@ use App\Jobs\SendMessage\CarrefourSendMessage;
 use App\Jobs\SendMessage\CdiscountSendMessage;
 use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\DartySendMessage;
+use App\Jobs\SendMessage\FnacSendMessage;
 use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
@@ -109,7 +110,8 @@ abstract class AbstractImportMessage extends Command
             ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($autoReply),
             ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($autoReply),
             ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($autoReply),
-            ChannelEnum::CDISCOUNT_FR => CdiscountSendMessage::dispatch($autoReply)
+            ChannelEnum::CDISCOUNT_FR => CdiscountSendMessage::dispatch($autoReply),
+            ChannelEnum::FNAC_COM => FnacSendMessage::dispatch($autoReply)
         };
     }
 }

@@ -14,8 +14,10 @@ use Exception;
 use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\Message;
 use FnacApiClient\Service\Request\MessageQuery;
+use FnacApiClient\Type\MessageFromType;
 use FnacApiClient\Type\MessageType;
 use Illuminate\Support\Facades\DB;
+use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class FnacImportMessage extends AbstractImportMessage
 {
@@ -35,6 +37,10 @@ class FnacImportMessage extends AbstractImportMessage
     {
         return ChannelEnum::FNAC_COM;
     }
+
+    const FROM_SHOP_TYPE = [
+        'SELLER'
+    ];
 
     /**
      * @throws Exception
@@ -74,7 +80,7 @@ class FnacImportMessage extends AbstractImportMessage
         return self::$client;
     }
 
-    protected function getMessageApiId(Message|\Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage $message): string
+    protected function getMessageApiId(Message|ThreadMessage $message): string
     {
         return $message->getMessageId();
     }
@@ -103,7 +109,6 @@ class FnacImportMessage extends AbstractImportMessage
 
         $query = new MessageQuery();
         $query->setMessageType(MessageType::ORDER);
-//        $query->setOrderFnacId('9952SMDFC3WB4');
         $messages = $client->callService($query);
 
         $this->logger->info('Get messages');
@@ -162,13 +167,12 @@ class FnacImportMessage extends AbstractImportMessage
                 'author_type' => self::getAuthorType($authorType),
                 'content' => strip_tags($message_api->getMessageDescription())
             ]);
+            if (setting('autoReplyActivate')) {
+                $this->logger->info('Send auto reply');
+                self::sendAutoReply(setting('autoReply'), $thread);
+            }
         }
     }
-
-    const FROM_SHOP_TYPE = [
-        'SHOP_USER',
-        'CALLCENTER',
-        ];
 
     /**
      * returns if the message type is SHOP_USER
@@ -184,7 +188,6 @@ class FnacImportMessage extends AbstractImportMessage
         return match ($authorType) {
             'CLIENT'        => TicketMessageAuthorTypeEnum::CLIENT,
             'CALLCENTER'    => TicketMessageAuthorTypeEnum::CALLCENTER,
-            default         => TicketMessageAuthorTypeEnum::OPERATEUR,
         };
     }
 }
