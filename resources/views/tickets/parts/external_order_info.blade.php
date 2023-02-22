@@ -81,30 +81,22 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-6">
-                            <div class="card">
-                                <div class="card-header">{{ __('app.order.billing') }}</div>
-                                <div class="card-body">
-                                    <div class="row">{{$externalOrderInfo['billing_address']['firstname']}} {{$externalOrderInfo['billing_address']['lastname']}}</div>
-                                    <div class="row">{{$externalOrderInfo['billing_address']['address1']}}</div>
-                                    <div class="row">{{$externalOrderInfo['billing_address']['address2']}}</div>
-                                    <div class="row">{{$externalOrderInfo['billing_address']['postcode']}} {{$externalOrderInfo['billing_address']['city']}}</div>
-                                    <div class="row">{{$externalOrderInfo['billing_address']['phone']}}</div>
-                                    <div class="row">{{$externalOrderInfo['billing_address']['phone_mobile']}}</div>
-                                </div>
-                            </div>
+                            <div class="row fw-bold">{{ __('app.order.billing') }}</div>
+                            <div class="row">{{$externalOrderInfo['billing_address']['firstname']}} {{$externalOrderInfo['billing_address']['lastname']}}</div>
+                            <div class="row">{{$externalOrderInfo['billing_address']['address1']}}</div>
+                            <div class="row">{{$externalOrderInfo['billing_address']['address2']}}</div>
+                            <div class="row">{{$externalOrderInfo['billing_address']['postcode']}} {{$externalOrderInfo['billing_address']['city']}}</div>
+                            <div class="row">{{$externalOrderInfo['billing_address']['phone']}}</div>
+                            <div class="row">{{$externalOrderInfo['billing_address']['phone_mobile']}}</div>
                         </div>
                         <div class="col-6">
-                            <div class="card">
-                                <div class="card-header">{{ __('app.order.shipping') }}</div>
-                                <div class="card-body">
-                                    <div class="row">{{$externalOrderInfo['shipping_address']['firstname']}} {{$externalOrderInfo['shipping_address']['lastname']}}</div>
-                                    <div class="row">{{$externalOrderInfo['shipping_address']['address1']}}</div>
-                                    <div class="row">{{$externalOrderInfo['shipping_address']['address2']}}</div>
-                                    <div class="row">{{$externalOrderInfo['shipping_address']['postcode']}} {{$externalOrderInfo['shipping_address']['city']}}</div>
-                                    <div class="row">{{$externalOrderInfo['shipping_address']['phone']}}</div>
-                                    <div class="row">{{$externalOrderInfo['shipping_address']['phone_mobile']}}</div>
-                                </div>
-                            </div>
+                            <div class="row fw-bold">{{ __('app.order.shipping') }}</div>
+                            <div class="row">{{$externalOrderInfo['shipping_address']['firstname']}} {{$externalOrderInfo['shipping_address']['lastname']}}</div>
+                            <div class="row">{{$externalOrderInfo['shipping_address']['address1']}}</div>
+                            <div class="row">{{$externalOrderInfo['shipping_address']['address2']}}</div>
+                            <div class="row">{{$externalOrderInfo['shipping_address']['postcode']}} {{$externalOrderInfo['shipping_address']['city']}}</div>
+                            <div class="row">{{$externalOrderInfo['shipping_address']['phone']}}</div>
+                            <div class="row">{{$externalOrderInfo['shipping_address']['phone_mobile']}}</div>
                         </div>
                     </div>
                 </div>
