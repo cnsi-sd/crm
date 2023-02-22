@@ -86,6 +86,12 @@ Breadcrumbs::for('ticket_thread', function (BreadcrumbTrail $trail, $ticket, $th
     $trail->push('#' . $ticket->id, route('ticket', $ticket));
     $trail->push($thread->name, route('ticket_thread', [$ticket, $thread]));
 });
+Breadcrumbs::for('customer_service_process', function (BreadcrumbTrail $trail, $ticket) {
+    $user = Auth::user();
+    $trail->parent('user_tickets', $user->id);
+    $trail->push('#' . $ticket->id, route('ticket', $ticket));
+    $trail->push(__('app.customer_service_process'));
+});
 
 /** defaultAnswers */
 Breadcrumbs::for('defaultAnswers', function (BreadcrumbTrail $trail) {

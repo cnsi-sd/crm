@@ -21,6 +21,7 @@ use http\Env\Response;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Http;
 use function view;
 
 class TicketController extends Controller
@@ -52,6 +53,47 @@ class TicketController extends Controller
             ->with('table', $table);
     }
 
+    public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number)
+    {
+        $ticket = null;
+        $channel_id = Channel::query()
+            ->where('name', 'LIKE', '%'.$channel.'%')->first()->id;
+
+        if ($channel_id) {
+            $order = Order::query()
+                ->where('channel_id', $channel_id)
+                ->where('channel_order_number', $channel_order_number)
+                ->first();
+            if ($order) {
+                $ticket = Ticket::query()
+                    ->where('order_id', $order->id)->first();
+            }
+        }
+
+        if(!$ticket){
+            $order = new Order;
+            $order->channel_id = $channel_id;
+            $order->channel_order_number = $channel_order_number;
+            $order->save();
+
+            $ticket = new Ticket();
+            $ticket->channel_id = $channel_id;
+            $ticket->order_id = $order->id;
+            $ticket->user_id = Channel::query()->where('id', $order->channel_id)->first()->user_id;
+            $ticket->state  = TicketStateEnum::WAITING_ADMIN;
+            $ticket->priority = TicketPriorityEnum::P1;
+            $ticket->deadline = new \DateTime('now');
+            $ticket->save();
+
+            $thread = new Thread();
+            $thread->ticket_id = $ticket->id;
+            $thread->name = "Fil de discussion principal";
+            $thread->save();
+        }
+
+        return redirect()->route('ticket', [$ticket]);
+    }
+
     public function redirectTicket(Request $request, ?Ticket $ticket)
     {
         if ($ticket->last_thread_displayed) {
@@ -76,6 +118,10 @@ class TicketController extends Controller
     {
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
+
+        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalSuppliers = $this->getExternalSuppliers();
 
         if ($request->input()){
             $request->validate([
@@ -152,7 +198,25 @@ class TicketController extends Controller
             ->with('commentTypeEnum', TicketCommentTypeEnum::getList())
             ->with('ticketStateEnum', TicketStateEnum::getList())
             ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
-            ->with('channels', $queryChannels);
+            ->with('channels', $queryChannels)
+            ->with('externalOrderInfo',$externalOrderInfo)
+            ->with('externalAdditionalOrderInfo',$externalAdditionalOrderInfo)
+            ->with('externalSuppliers',$externalSuppliers);
+    }
+
+    public function getExternalOrderInfo($mp_order, $mp_name)
+    {
+        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order&mp_order=' . $mp_order . '&mp_name=' . $mp_name)[0];
+    }
+
+    public function getExternalAdditionalOrderInfo($mp_order, $mp_name)
+    {
+        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order_additional_infos&mp_order=' . $mp_order . '&mp_name=' . $mp_name)->json();
+    }
+
+    public function getExternalSuppliers()
+    {
+        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=supplier')->json();
     }
 
 }
