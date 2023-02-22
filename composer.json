@@ -86,7 +86,7 @@
         },
         {
             "type": "vcs",
-            "url": "ssh://git@git.cnsi-sd.net:2222/packages/cdiscountapiclient.git"
+            "url": "ssh://gitlab+deploy-token-21:_yZqWhVcdSX7sSycsVxw/packages/cdiscountapiclient.git"
         }
     ]
 }
