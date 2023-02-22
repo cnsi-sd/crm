@@ -122,7 +122,7 @@ class IcozaImportMessage extends AbstractImportMessage
             } catch (Exception $e) {
                 $this->logger->error('An error has occurred. Rolling back.', $e);
                 DB::rollBack();
-                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+//                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
             }
         }
