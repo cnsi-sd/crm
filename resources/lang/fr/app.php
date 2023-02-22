@@ -7,6 +7,8 @@ return [
     'home' => 'Accueil',
     'save' => 'Enregistrer',
     'search' => 'Rechercher',
+    'no_results' => 'Aucun résultat, vérifiez votre référence',
+    'no_term' => 'Aucun mot clé recherché',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
     'create' => 'Création',

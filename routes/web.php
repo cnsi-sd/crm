@@ -8,6 +8,7 @@ use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Tickets\TicketController;
 use App\Http\Controllers\Configuration\TagsController;
+use App\Http\Controllers\Search\SearchController;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
@@ -54,6 +55,7 @@ Route::middleware('checkActive')->group(function() {
                 Route::match(['get', 'post'], '', [UserController::class, 'list'])->name('users')->can('read', User::class);
             });
     });
+    Route::match(['get','post'], 'search', [SearchController::class, 'search'])->name('search')->can('read', Ticket::class);
 });
 
 Route::middleware('checkActive')->group(function () {

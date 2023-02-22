@@ -2,9 +2,8 @@
 
 @section('content')
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
-        <form method="post"
-              action="{{ route('ticket_thread', ['ticket' => $ticket['id'], 'thread' => $activeThread['id']]) }}">
-            @csrf
+        <form method="post" action="{{ route('ticket_thread', ['ticket' => $ticket['id'], 'thread' => $activeThread['id']]) }}">
+        @csrf
             <div class="row">
                 <div class="col-3">
                     <div class="card">
@@ -74,7 +73,7 @@
                                 @foreach ($thread->ticket->channel->revivals as $revival)
                                     <option value="{{ $revival->id }}" @if(!empty($thread->revival->id))
                                         @selected($revival->id == $thread->revival->id)
-                                            @endif>
+                                        @endif>
                                         {{ $revival->name }}
                                     </option>
                                 @endforeach
@@ -85,8 +84,8 @@
                                     <div class="col"><label>{{ __('app.revival.start_revival') }}</label></div>
                                     <div class="col">
                                         <input name="revival-delivery_date" class="form-control"
-                                               type="date"
-                                               value="{{ date('Y-m-d', strtotime($thread->revival_start_date)) }}"
+                                                type="date"
+                                                value="{{ date('Y-m-d', strtotime($thread->revival_start_date)) }}"
                                         />
                                     </div>
                                 </div>
