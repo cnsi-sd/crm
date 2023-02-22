@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages;
+namespace App\Console\Commands\ImportMessages\Mirakl;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 
-class DartyImportMessages extends AbstractMiraklImportMessage
+class MetroImportMessages extends AbstractMiraklImportMessage
 {
     public function __construct()
     {
-        $this->signature = sprintf($this->signature, 'darty');
+        $this->signature = sprintf($this->signature, 'metro');
         return parent::__construct();
     }
 
@@ -18,12 +18,12 @@ class DartyImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return ChannelEnum::DARTY_COM;
+        return ChannelEnum::METRO_FR;
     }
 
     protected function getSnakeChannelName(): string
     {
-        return (new Channel)->getSnakeName(ChannelEnum::DARTY_COM);
+        return (new Channel)->getSnakeName(ChannelEnum::METRO_FR);
     }
 
     /**
@@ -32,9 +32,10 @@ class DartyImportMessages extends AbstractMiraklImportMessage
     protected function getCredentials(): array
     {
         return [
-            'API_URL' => env('DARTY_API_URL'),
-            'API_KEY' => env('DARTY_API_KEY'),
-            'API_SHOP_ID' => env('DARTY_API_SHOP_ID'),
+            'API_URL' => env('METRO_API_URL'),
+            'API_KEY' => env('METRO_API_KEY'),
+            'API_SHOP_ID' => env('METRO_API_SHOP_ID'),
         ];
     }
+
 }

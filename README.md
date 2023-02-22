@@ -2,7 +2,7 @@
 
 # PHP8.1 install
 ```bash
-sudo apt install php8.1 php8.1-dom php8.1-curl php8.1-bcmath php8.1-xml php8.1-mysql php8.1-gd php8.1-fpm php8.1-soap
+sudo apt install php8.1 php8.1-dom php8.1-curl php8.1-bcmath php8.1-xml php8.1-mysql php8.1-gd php8.1-fpm php8.1-soap php8.1-raphf
 ```
 
 # Node.js v18.x install
@@ -49,3 +49,5 @@ Dans le fichier suivant `.git/config` remplacer `filemode = true` par `filemode 
 
 # Mailhog
 Outil qui fait un faux serveur SMTP en local. [Installation et configuration](https://docs.google.com/document/d/1ldrS1BUNCsOweyQBWgi59p-xYSW8J0Gz10Wjs-5hknM/edit)
+
+

@@ -2,7 +2,7 @@
 
 namespace App\Jobs\SendMessage;
 
-class ConforamaSendMesssage extends AbstractMiraklSendMessage
+class ConforamaSendMessage extends AbstractMiraklSendMessage
 {
 
     protected function getCredentials(): array
