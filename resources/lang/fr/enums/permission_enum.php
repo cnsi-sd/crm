@@ -10,4 +10,6 @@ return [
     'REVIVAL_READ' => 'Consulter la liste des relances automatiques',
     'REVIVAL_EDIT' => 'Modifier une relance automatique',
     'TICKET_READ' => 'Consulter la liste des tickets',
+    'TAG_READ' => 'Consulter les tags',
+    'TAG_EDIT' => 'Modifier un tag',
 ];

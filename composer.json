@@ -10,6 +10,7 @@
         "cnsi/fnac-api-client": "dev-master",
         "cnsi/cdiscount-api-client": "dev-main",
         "cnsi/logger": "dev-main",
+        "cnsi/lock": "dev-main",
         "diglactic/laravel-breadcrumbs": "8.0.1",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",

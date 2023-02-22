@@ -126,7 +126,7 @@ Breadcrumbs::for('autoReply', function (BreadcrumbTrail $trail) {
     $trail->push(trans_choice('app.autoReply.autoReply', 2), route('autoReply'));
 });
 
-/** Tags */
+/** Tag */
 Breadcrumbs::for('tags', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
     $trail->push(trans_choice('app.tags.tags', 2), route('tags'));

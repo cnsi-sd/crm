@@ -2,7 +2,6 @@ $('.list-tag').on('click', filtreTag)
 $('#resetTagFilter').on('click', resetTagFilter)
 window.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded and parsed');
-    //let select = document.getElementsByName("search[tags_id]")
     let select = $('select[name="search[tags_id]"]').find(":selected").val();
     console.log(select);
     if(select !== '')

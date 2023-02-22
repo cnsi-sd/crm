@@ -8,10 +8,13 @@ use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Tickets\TicketController;
 use App\Http\Controllers\Configuration\TagsController;
+use App\Http\Controllers\Search\SearchController;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
+use App\Models\Tags\Tag;
+use App\Models\Ticket\Revival\Revival;
 use Illuminate\Support\Facades\Route;
 
 
@@ -52,6 +55,7 @@ Route::middleware('checkActive')->group(function() {
                 Route::match(['get', 'post'], '', [UserController::class, 'list'])->name('users')->can('read', User::class);
             });
     });
+    Route::match(['get','post'], 'search', [SearchController::class, 'search'])->name('search')->can('read', Ticket::class);
 });
 
 Route::middleware('checkActive')->group(function () {
@@ -63,25 +67,25 @@ Route::middleware('checkActive')->group(function () {
             Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswer::class);
         });
         Route::prefix('revival')->group(function () {
-            Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival');
-            Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival');
-            Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival');
-            Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival');
+            Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival')->can('edit', Revival::class);
+            Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival')->can('edit', Revival::class);
+            Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival')->can('read', Revival::class);
+            Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival')->can('edit', Revival::class);
         });
         Route::prefix('autoReply')->group(function () {
             Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
         });
         Route::prefix('tags')->group(function () {
-            Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags');
-            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags');
-            Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags');
-            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags');
+            Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tag::class);
+            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', Tag::class);
+            Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags')->can('read', Tag::class);
+            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tag::class);
         });
     });
 });
 // CALL AJAX
 Route::get('/ajaxTags', [TagsController::class, 'ajax_tags']);
-Route::post('/addTagList', [TagsController::class, 'saveLineDB']);
+Route::post('/addTagList', [TagsController::class, 'newTagLigne']);
 Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags']);
 Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList']);
 Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag']);
