@@ -40,7 +40,7 @@ class FnacImportMessage extends AbstractImportMessage
     /**
      * @throws Exception
      */
-    protected function getSnakeChannelName(): array|string
+    protected function getSnakeChannelName(): string
     {
         return (new Channel)->getSnakeName($this->getChannelName());
     }
@@ -180,7 +180,7 @@ class FnacImportMessage extends AbstractImportMessage
     {
         return !in_array($type, self::FROM_SHOP_TYPE);
     }
-    private static function getAuthorType(string $authorType): string
+    protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'CLIENT'        => TicketMessageAuthorTypeEnum::CLIENT,
