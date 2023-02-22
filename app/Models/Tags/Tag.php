@@ -23,8 +23,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property Datetime $created_at
  * @property Datetime $updated_at
+ * @property DateTime $deleted_at
  */
-class Tags extends Model
+class Tag extends Model
 {
     use SoftDeletes;
 
@@ -33,7 +34,8 @@ class Tags extends Model
         'text_color',
         'background_color',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'deleted_at'
     ];
 
     public function isChannelSelected(Channel $channel)
@@ -66,13 +68,13 @@ class Tags extends Model
             ->setLabel(__('app.tags.view'))
             ->setKey('name')
             ->setAlign(AlignEnum::CENTER)
-            ->setCallback(function (Tags $tags) {
+            ->setCallback(function (Tag $tags) {
                 return view('configuration.tags.preview')
                     ->with('tags', $tags);
             });
 
         $columns[] = TableColumnBuilder::actions()
-            ->setCallback(function (Tags $tags) {
+            ->setCallback(function (Tag $tags) {
                 return view('configuration.tags.inline_table_actions')
                     ->with('tags', $tags);
             });
@@ -80,28 +82,29 @@ class Tags extends Model
         return $columns;
     }
 
-    public function softDeleted(): ?bool
-    {
-        return $this->delete();
-    }
-
-    public function getlistTagWithTickets($tickets): array
+    public static function getlistTagWithTickets($tickets): array
     {
         $listeTag = array();
         foreach($tickets as $ticket){
-            foreach($ticket->threads as $thread) {
-                foreach ($thread->taglist as $tagList) {
-                    foreach ($tagList->tags as $tag){
-                        if (!array_key_exists($tag->name,$listeTag)){
-                            $listeTag[$tag->name] = ['tag_id'=> $tag->id, 'background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
-                        } else {
-                            $listeTag[$tag->name]['count']++;
-                        }
+            self::getListTagByThread($ticket, $listeTag);
+        }
+        return $listeTag;
+    }
+
+    public static function getListTagByThread($ticket, $listeTag, $returnList = false){
+        foreach($ticket->threads as $thread) {
+            foreach ($thread->taglist as $tagList) {
+                foreach ($tagList->tags as $tag){
+                    if (!array_key_exists($tag->name,$listeTag)){
+                        $listeTag[$tag->name] = ['tag_id'=> $tag->id, 'background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
+                    } else {
+                        $listeTag[$tag->name]['count']++;
                     }
                 }
             }
-
         }
-        return $listeTag;
+        if($returnList){
+            return $listeTag;
+        }
     }
 }

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  *
  * @property Thread[] $threads
- * @property Tags[] $tags
+ * @property Tag[] $tags
  *
  * @property Datetime $created_at
  * @property Datetime $updated_at
@@ -35,6 +35,6 @@ class TagList extends Model
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tags::class, 'tag_tagLists', 'tagList_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'tag_tagLists', 'tagList_id', 'tag_id');
     }
 }

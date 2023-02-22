@@ -7,6 +7,8 @@ return [
     'home' => 'Accueil',
     'save' => 'Enregistrer',
     'search' => 'Rechercher',
+    'no_results' => 'Aucun résultat, vérifiez votre référence',
+    'no_term' => 'Aucun mot clé recherché',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
     'create' => 'Création',
@@ -58,7 +60,8 @@ return [
         'role' => 'Role',
         'default_message_answer' => 'Message par défaut',
         'revival' => 'Relance automatique',
-        'ticket'=> 'Ticket'
+        'ticket'=> 'Ticket',
+        'tag'=>'Tag'
     ],
 
     'role' => [
@@ -158,7 +161,7 @@ return [
         'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
         'choose_answer' => 'Choisir le message à envoyer',
         'end_state' => 'Statut final',
-        'channel' => 'Cannaux d\'aplication',
+        'channel' => 'Cannaux d\'application',
         'start_revival' => 'À partir du',
         'select_revival' => 'Aucune',
         'frequency_details' => 'Tous les jours|Tous les :freq jours',
@@ -169,14 +172,14 @@ return [
     ],
 
     'tags' => [
-        'tags' => 'Tag|Tags',
+        'tags' => 'Tag|Tag',
         'view' => 'Aperçu du tag',
         'create' => 'Création d\'un tags',
         'edit' => 'Modification d\'un tags',
         'name' => 'Nom',
         'backgroundColor' => 'Couleur du fond',
         'textColor' => 'Couleur du texte',
-        'select_channel' => 'Cannaux selectioner',
+        'select_channel' => 'Canaux selectioner',
         'show' => 'Prévisualisation',
     ],
 

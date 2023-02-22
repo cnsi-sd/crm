@@ -6,7 +6,7 @@ use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Controller;
 use App\Models\Tags\TagList;
-use App\Models\Tags\Tags;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -16,9 +16,9 @@ class TagsController extends Controller
 
     public function list(Request $request): View
     {
-        $query = Tags::query();
-        $table = (new TableBuilder('defaultAnswers', $request))
-            ->setColumns(Tags::getTableColumns())
+        $query = Tag::query();
+        $table = (new TableBuilder('tags', $request))
+            ->setColumns(Tag::getTableColumns())
             ->setExportable(false)
             ->setQuery($query);
 
@@ -26,10 +26,10 @@ class TagsController extends Controller
             ->with('table', $table);
     }
 
-    public function edit(Request $request,?Tags $tags)
+    public function edit(Request $request,?Tag $tags)
     {
         if (!$tags){
-            $tags = new Tags();
+            $tags = new Tag();
         }
 
         if ($request->exists('save_tags'))
@@ -43,7 +43,7 @@ class TagsController extends Controller
             ->with('tags', $tags);
     }
 
-    private function save_tags(Request $request, ?Tags $tags)
+    private function save_tags(Request $request, ?Tag $tags)
     {
         $request->validate([
             'name' => 'required',
@@ -56,25 +56,24 @@ class TagsController extends Controller
         $tags->background_color = $request->input('background_color');
         $tags->save();
 
-        $channelSelected = $request->toArray()['channel'];
-        $tags->channels()->sync($channelSelected);
+        $tags->channels()->sync($request->input('channel'));
     }
 
-    public function delete(Request $request, ?Tags $tags)
+    public function delete(Request $request, ?Tag $tags)
     {
-        if($tags->softDeleted()){
+        if($tags->delete()){
             alert::toastSuccess(__('app.delete'));
         }
         return redirect()->route('tags');
     }
 
     public function ajax_tags(){
-        $data = Tags::all();
+        $data = Tag::all();
 
         return response()->json(['data' => $data]);
     }
 
-    public function saveLineDB(Request $request) {
+    public function newTagLine(Request $request) {
         $taglist = new TagList();
         $taglist->thread_id =$request->input('thread_id');
         $taglist->save();
