@@ -57,7 +57,7 @@ class FnacSendMessage extends AbstractSendMessage
             // Variables
             $sendTo = MessageToType::CLIENT;
             $threadNumber = $this->message->thread->channel_thread_number;
-            $lastApimessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
+            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
 
             // Init API client
             $this->logger->info('Init api');
@@ -67,7 +67,7 @@ class FnacSendMessage extends AbstractSendMessage
 
             // Answer to message
             $message2 = new Message();
-            $message2->setMessageId($lastApimessage->messageId);
+            $message2->setMessageId($lastApiMessage->messageId);
             $message2->setAction(MessageActionType::REPLY);
             $message2->setMessageTo($sendTo);
             $message2->setMessageSubject(MessageSubjectType::OTHER_QUESTION);
@@ -82,7 +82,7 @@ class FnacSendMessage extends AbstractSendMessage
             if ($messageUpdateResponse->getStatus() !== ResponseStatusType::OK)
                 throw new Exception("API push message error");
 
-            $this->logger->info('Message ' . $lastApimessage->messageId . ' sent with API response ' . $messageUpdateResponse->getStatus());
+            $this->logger->info('Message ' . $lastApiMessage->messageId . ' sent with API response ' . $messageUpdateResponse->getStatus());
             $this->logger->info('--- END ---');
 
         } catch (Exception $e) {
@@ -111,8 +111,6 @@ class FnacSendMessage extends AbstractSendMessage
     {
         if(self::$client == null) {
             $client = new SimpleClient();
-
-            $this->logger = new Logger('send_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
             $client->init(self::getCredentials());
             $client->checkAuth();
 

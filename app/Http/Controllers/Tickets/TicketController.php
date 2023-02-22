@@ -130,7 +130,7 @@ class TicketController extends Controller
                 'ticket-priority'  => ['required','string'],
                 'ticket-user_id'   => ['required','integer', 'exists:App\Models\User\User,id'],
                 'ticket-deadline'  => ['required','date'],
-                'ticket-customer_email' => ['string'],
+                'ticket-customer_email' => ['nullable','string'],
                 'ticket-delivery_date' => ['date']
             ]);
             $ticket->state = $request->input('ticket-state');

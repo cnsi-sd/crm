@@ -38,6 +38,10 @@ class FnacImportMessage extends AbstractImportMessage
         return ChannelEnum::FNAC_COM;
     }
 
+    const FROM_SHOP_TYPE = [
+        'SELLER'
+    ];
+
     /**
      * @throws Exception
      */
@@ -163,12 +167,12 @@ class FnacImportMessage extends AbstractImportMessage
                 'author_type' => self::getAuthorType($authorType),
                 'content' => strip_tags($message->getMessageDescription())
             ]);
+            if (setting('autoReplyActivate')) {
+                $this->logger->info('Send auto reply');
+                self::sendAutoReply(setting('autoReply'), $thread);
+            }
         }
     }
-
-    const FROM_SHOP_TYPE = [
-        'SELLER'
-        ];
 
     /**
      * returns if the message type is SHOP_USER
