@@ -39,7 +39,7 @@ class FnacImportMessage extends AbstractImportMessage
     }
 
     const FROM_SHOP_TYPE = [
-        'SELLER'
+        'SELLER' => TicketMessageAuthorTypeEnum::ADMIN
     ];
 
     /**
@@ -186,8 +186,8 @@ class FnacImportMessage extends AbstractImportMessage
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
-            'CLIENT'        => TicketMessageAuthorTypeEnum::CLIENT,
-            'CALLCENTER'    => TicketMessageAuthorTypeEnum::CALLCENTER,
+            'CLIENT'        => TicketMessageAuthorTypeEnum::CUSTOMER,
+            'CALLCENTER'    => TicketMessageAuthorTypeEnum::OPERATEUR,
         };
     }
 }
