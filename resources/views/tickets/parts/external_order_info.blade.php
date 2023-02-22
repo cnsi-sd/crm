@@ -115,24 +115,30 @@
         <div class="card">
             <div class="card-header">{{ __('app.order.products') }}</div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col fw-bold">{{ __('app.order.designation') }}</div>
-                    <div class="col fw-bold">{{ __('app.order.qty') }}</div>
-                    <div class="col fw-bold">{{ __('app.order.supplier') }}</div>
-                </div>
-                @foreach($externalOrderInfo['items'] as $item)
-                    <div class="row">
-                        <div class="col">{{ $item['product_name'] }} - {{ $item['product_reference'] }} - {{ $item['product_ean13'] }}</div>
-                        <div class="col">{{ $item['product_quantity'] }}</div>
-                        <div class="col">
-                            @foreach($externalSuppliers as $supplier)
-                                @if($supplier['id_supplier'] == $item['id_definitive_supplier'])
-                                {{ $supplier['name'] }}
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                @endforeach
+                <table class="table table-sm table-centered mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ __('app.order.designation') }}</th>
+                            <th>{{ __('app.order.qty') }}</th>
+                            <th>{{ __('app.order.supplier') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($externalOrderInfo['items'] as $item)
+                        <tr>
+                            <td>{{ $item['product_name'] }} - {{ $item['product_reference'] }} - {{ $item['product_ean13'] }}</td>
+                            <td>{{ $item['product_quantity'] }}</td>
+                            <td>
+                                @foreach($externalSuppliers as $supplier)
+                                    @if($supplier['id_supplier'] == $item['id_definitive_supplier'])
+                                    {{ $supplier['name'] }}
+                                    @endif
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
