@@ -125,3 +125,19 @@ Breadcrumbs::for('autoReply', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
     $trail->push(trans_choice('app.autoReply.autoReply', 2), route('autoReply'));
 });
+
+/** Tag */
+Breadcrumbs::for('tags', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.tags.tags', 2), route('tags'));
+});
+
+Breadcrumbs::for('create_tags', function (BreadcrumbTrail $trail) {
+    $trail->parent('tags');
+    $trail->push(__('app.tags.create'));
+});
+
+Breadcrumbs::for('edit_tags', function (BreadcrumbTrail $trail) {
+    $trail->parent('tags');
+    $trail->push(__('app.tags.edit'));
+});

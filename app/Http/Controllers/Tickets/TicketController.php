@@ -7,6 +7,8 @@ use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
+use App\Models\Tags\TagList;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
@@ -27,29 +29,47 @@ class TicketController extends Controller
 {
     public function all_tickets(Request $request): View
     {
-        $query = Ticket::query();
+        $query = Ticket::query()
+            ->select('tickets.*')
+            ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
+            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
+            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
+            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
+            ->groupBy('tickets.id');
         $table = (new TableBuilder('all_tickets', $request))
             ->setColumns(Ticket::getTableColumns())
             ->setExportable(false)
             ->setQuery($query);
 
+        $tickets = $query->get();
         return view('tickets.all_tickets')
-            ->with('table', $table);
+            ->with('table', $table)
+            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
     {
         $query = Ticket::query()
+            ->select('tickets.*')
+            ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
+            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
+            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
+            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
             ->where('user_id', $user->id)
-            ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER]);
+            ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
+            ->groupBy('tickets.id');
 
         $table = (new TableBuilder('user_tickets', $request))
             ->setColumns(Ticket::getTableColumns('user'))
             ->setExportable(false)
             ->setQuery($query);
 
+        $tickets = $query->get();
+
         return view('tickets.all_tickets')
-            ->with('table', $table);
+            ->with('table', $table)
+            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+
     }
 
     public function redirectTicket(Request $request, ?Ticket $ticket)
@@ -191,6 +211,25 @@ class TicketController extends Controller
             ->with('ticketStateEnum', TicketStateEnum::getList())
             ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
             ->with('channels', $queryChannels);
+    }
+
+    public function delete_tag(Request $request) {
+        $tag = Tag::find($request->input('tag_id'));
+        $tag->taglists()->detach($request->input('taglist_id'));
+        return redirect()->route('all_tickets');
+    }
+
+    public function delete_ThreadTagList(Request $request) {
+        $taglist = TagList::find($request->input('taglist_id'));
+        $taglist->tags()->detach();
+        $taglist->delete();
+    }
+
+    public function saveThreadTags(Request $request) {
+        $taglist = TagList::find($request->input('taglist_id'));
+        $tag = Tag::find($request->input('tag_id'));
+        $tag->taglists()->attach($taglist->id);
+        return response()->json($tag);
     }
 
 }

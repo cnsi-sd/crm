@@ -4,6 +4,7 @@ namespace App\Models\Ticket;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Models\Tags\TagList;
 use App\Models\Ticket\Revival\Revival;
 use DateInterval;
 use DateTime;
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Ticket $ticket
  * @property Message[] $messages
  * @property Revival $revival
+ * @property TagList[] $tagList
  */
 class Thread extends Model
 {
@@ -90,6 +92,10 @@ class Thread extends Model
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
+    }
+    public function tagList(): HasMany
+    {
+        return $this->hasMany(TagList::class);
     }
 
     public function revival(): BelongsTo
