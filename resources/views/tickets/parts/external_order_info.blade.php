@@ -46,13 +46,13 @@
                     <div class="row">
                         <div class="col">{{ __('app.order.total_ttc') }} :</label></div>
                         <div class="col">
-                            {{$externalOrderInfo['total_paid']}}
+                            {{\App\Helpers\PriceConverter::floatToString($externalOrderInfo['total_paid'], '€', 2)}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">{{ __('app.order.margin_ht') }} :</label></div>
                         <div class="col">
-                            {{ $externalAdditionalOrderInfo['margin'] }}
+                            {{\App\Helpers\PriceConverter::floatToString($externalAdditionalOrderInfo['margin'], '€', 2)}}
                         </div>
                     </div>
                     <div class="row">
