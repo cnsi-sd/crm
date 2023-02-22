@@ -1,8 +1,16 @@
 <div class="row">
     @if($externalAdditionalOrderInfo)
-    <div class="col-7">
+    <div class="col-5">
         <div class="card">
-            <div class="card-header">Commande</div>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">Commande</div>
+                    <div class="col-6 text-end">
+                        <a href="{{ env('PRESTASHOP_URL') }}index.php?fc=module&module=bmsmagentogateway&controller=order_redirect&reference={{$externalOrderInfo['reference']}}"
+                           type="button" class="btn btn-primary rounded-pill btn-sm" target="_blank">Lien commande Prestashop <i class="uil-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
             <div class="card-body top-cards-height">
                 <div class="container">
                     <div class="row">
@@ -20,7 +28,7 @@
                     <div class="row">
                         <div class="col">{{ __('app.order.date') }} :</label></div>
                         <div class="col">
-                            {{$externalOrderInfo['date_add']}}
+                            {{ \Carbon\Carbon::parse($externalOrderInfo['date_add'])->translatedFormat('d/m/Y H:i') }}
                         </div>
                     </div>
                     <div class="row">
@@ -47,11 +55,17 @@
                             {{ $externalAdditionalOrderInfo['margin'] }}
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">{{ __('app.email') }} :</label></div>
+                        <div class="col">
+                            {{$externalOrderInfo['customer']['email']}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-5">
+    <div class="col-7">
         <div class="card">
             <div class="card-header">{{ __('app.order.private_comment') }}</div>
             <div class="card-body top-cards-height overflow-scroll">
@@ -65,12 +79,6 @@
             <div class="card-header">{{ __('app.customer') }}</div>
             <div class="card-body">
                 <div class="container">
-                    <div class="row">
-                        <div class="col">{{ __('app.email') }} :</label></div>
-                        <div class="col">
-                            {{$externalOrderInfo['customer']['email']}}
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-6">
                             <div class="card">
