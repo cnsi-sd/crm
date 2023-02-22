@@ -8,14 +8,11 @@ use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Controller;
 use App\Models\Tags\TagList;
-use App\Models\Tags\Tags;
+use App\Models\Tags\Tag;
 use App\Enums\Channel\ChannelEnum;
-use App\Helpers\Builder\Table\TableBuilder;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Controller;
 use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMesssage;
+use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\DartySendMessage;
 use App\Jobs\SendMessage\FnacSendMessage;
 use App\Jobs\SendMessage\IntermarcheSendMessage;
@@ -25,7 +22,6 @@ use App\Jobs\SendMessage\MetroSendMessage;
 use App\Jobs\SendMessage\RueDuCommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
-use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
 use App\Models\Channel\Order;
@@ -35,8 +31,6 @@ use App\Models\Channel\Channel;
 use App\Models\User\User;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
-use http\Env\Response;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function view;
@@ -158,7 +152,7 @@ class TicketController extends Controller
                 $request->validate([
                     'ticket-thread-messages-content'     => ['required','string'],
                 ]);
-                Message::firstOrCreate([
+                $message = Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
                     'author_type' => 'admin',
@@ -169,7 +163,7 @@ class TicketController extends Controller
                 match($ticket->channel->name) {
                     ChannelEnum::BUT_FR             => ButSendMessage::dispatch($message),
                     ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($message),
-                    ChannelEnum::CONFORAMA_FR       => ConforamaSendMesssage::dispatch($message),
+                    ChannelEnum::CONFORAMA_FR       => ConforamaSendMessage::dispatch($message),
                     ChannelEnum::DARTY_COM          => DartySendMessage::dispatch($message),
                     ChannelEnum::INTERMARCHE_FR     => IntermarcheSendMessage::dispatch($message),
                     ChannelEnum::LAPOSTE_FR         => LaposteSendMessage::dispatch($message),
