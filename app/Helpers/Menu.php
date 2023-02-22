@@ -78,6 +78,12 @@ abstract class Menu
                         'ref' => 'autoReply',
                         'permission' => PermissionEnum::REVIVAL_READ
                     ],
+                    [
+                        'text' => trans_choice('app.tags.tags', 2),
+                        'route' => route('tags'),
+                        'ref' => 'tag',
+                        'permission' => PermissionEnum::REVIVAL_READ
+                    ],
                 ]
             ],
 

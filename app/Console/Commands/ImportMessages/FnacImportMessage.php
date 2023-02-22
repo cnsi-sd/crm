@@ -14,8 +14,10 @@ use Exception;
 use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\Message;
 use FnacApiClient\Service\Request\MessageQuery;
+use FnacApiClient\Type\MessageFromType;
 use FnacApiClient\Type\MessageType;
 use Illuminate\Support\Facades\DB;
+use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class FnacImportMessage extends AbstractImportMessage
 {
@@ -36,10 +38,14 @@ class FnacImportMessage extends AbstractImportMessage
         return ChannelEnum::FNAC_COM;
     }
 
+    const FROM_SHOP_TYPE = [
+        'SELLER'
+    ];
+
     /**
      * @throws Exception
      */
-    protected function getSnakeChannelName(): array|string
+    protected function getSnakeChannelName(): string
     {
         return (new Channel)->getSnakeName($this->getChannelName());
     }
@@ -64,7 +70,7 @@ class FnacImportMessage extends AbstractImportMessage
         if(self::$client == null) {
             $client = new SimpleClient();
 
-            $this->logger = new Logger('import_message/' . $this->getChannelName() . '/' . $this->getChannelName() . '.log', true, true);
+            $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
             $client->init(self::getCredentials());
             $client->checkAuth();
 
@@ -74,7 +80,7 @@ class FnacImportMessage extends AbstractImportMessage
         return self::$client;
     }
 
-    protected function getMessageApiId(Message|\Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage $message): string
+    protected function getMessageApiId(Message|ThreadMessage $message): string
     {
         return $message->getMessageId();
     }
@@ -89,8 +95,6 @@ class FnacImportMessage extends AbstractImportMessage
      */
     public function handle()
     {
-        $channel_thread_number = 'fnac_default';
-
         $this->logger = new Logger(
             'import_message/'
             . $this->getSnakeChannelName() . '/'
@@ -117,14 +121,13 @@ class FnacImportMessage extends AbstractImportMessage
         foreach ($messages as $message) {
             try {
                 DB::beginTransaction();
-                $messageId  = $this->getMessageApiId($message);
 
+                $messageId  = $this->getMessageApiId($message);
                 $mpOrderId  = $this->getMpOrderApiId($message);
                 $channel    = Channel::getByName($this->getChannelName()); // Channel = mp
                 $order      = Order::getOrder($mpOrderId, $channel);
                 $ticket     = Ticket::getTicket($order, $channel);
-
-                $thread     = Thread::getOrCreateThread($ticket, $channel_thread_number, $channel->name, '');
+                $thread     = Thread::getOrCreateThread($ticket, $message->getMessageReferer(), $message->getMessageSubject(), '');
 
                 if (!$this->isMessagesImported($messageId)) {
                     $this->logger->info('Convert api message to db message');
@@ -164,13 +167,12 @@ class FnacImportMessage extends AbstractImportMessage
                 'author_type' => self::getAuthorType($authorType),
                 'content' => strip_tags($message->getMessageDescription())
             ]);
+            if (setting('autoReplyActivate')) {
+                $this->logger->info('Send auto reply');
+                self::sendAutoReply(setting('autoReply'), $thread);
+            }
         }
     }
-
-    const FROM_SHOP_TYPE = [
-        'SHOP_USER',
-        'CALLCENTER',
-        ];
 
     /**
      * returns if the message type is SHOP_USER
@@ -181,12 +183,11 @@ class FnacImportMessage extends AbstractImportMessage
     {
         return !in_array($type, self::FROM_SHOP_TYPE);
     }
-    private static function getAuthorType(string $authorType): string
+    protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'CLIENT'        => TicketMessageAuthorTypeEnum::CLIENT,
             'CALLCENTER'    => TicketMessageAuthorTypeEnum::CALLCENTER,
-            default         => TicketMessageAuthorTypeEnum::OPERATEUR,
         };
     }
 }

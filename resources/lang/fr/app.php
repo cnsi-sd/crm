@@ -113,6 +113,7 @@ return [
         'customer_issue' => 'Problématique client',
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
+        'saved' => 'Ticket enregistré',
     ],
 
     'login' => [
@@ -150,21 +151,33 @@ return [
     'revival' => [
         'revival' => 'Relance automatique|Relances automatiques',
         'name' => 'Nom de la relance automatique',
-        'frequency' => "Fréquence d'envoi :",
-        'max_revival' => "Nombre d'envoi de relance",
+        'frequency' => 'Fréquence d\'envoi (en jours):',
+        'max_revival' => 'Nombre d\'envoi de relance',
         'default_answer' => 'Message envoyer',
         'end_default_answer' => 'Message envoyer à la fin du cycle de relance',
         'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
         'choose_answer' => 'Choisir le message à envoyer',
         'end_state' => 'Statut final',
-        'channel' => "Cannaux d'aplication",
+        'channel' => 'Cannaux d\'aplication',
         'start_revival' => 'À partir du',
         'select_revival' => 'Aucune',
         'frequency_details' => 'Tous les jours|Tous les :freq jours',
         'MaxRevival' => 'Messages envoyés :',
         'nextReply' => 'Prochaine relance : ',
-        'sendType' => "Type d'envoi",
+        'sendType' => 'Type d\'envoi',
         'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.'
+    ],
+
+    'tags' => [
+        'tags' => 'Tag|Tags',
+        'view' => 'Aperçu du tag',
+        'create' => 'Création d\'un tags',
+        'edit' => 'Modification d\'un tags',
+        'name' => 'Nom',
+        'backgroundColor' => 'Couleur du fond',
+        'textColor' => 'Couleur du texte',
+        'select_channel' => 'Cannaux selectioner',
+        'show' => 'Prévisualisation',
     ],
 
     'recover_password' => [

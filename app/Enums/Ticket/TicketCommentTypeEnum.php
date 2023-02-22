@@ -8,7 +8,7 @@ class TicketCommentTypeEnum extends AbstractEnum
 {
     const OTHERS            = "others";
     const EXTERNAL_CONTACT  = "external_contact";
-    const RESPONSIBLE_INFO  = "responsible_info";
+    const MANAGER_INFO      = "manager_info";
     const PROCESS_TO_FOLLOW = "process_to_follow";
     const INFO_IMPORTANT    = "info_important";
     const SUMMARY           = "summary";
@@ -19,7 +19,7 @@ class TicketCommentTypeEnum extends AbstractEnum
             {
                 self::OTHERS            => 'gray',
                 self::EXTERNAL_CONTACT  => 'green',
-                self::RESPONSIBLE_INFO  => 'purple',
+                self::MANAGER_INFO      => 'purple',
                 self::PROCESS_TO_FOLLOW => 'blue',
                 self::INFO_IMPORTANT    => 'red',
                 self::SUMMARY           => 'orange'

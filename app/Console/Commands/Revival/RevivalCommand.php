@@ -7,7 +7,7 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMesssage;
+use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\DartySendMessage;
 use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
@@ -153,7 +153,7 @@ class RevivalCommand extends Command
             match ($channel) {
                 ChannelEnum::BUT_FR => ButSendMessage::dispatch($messageBD),
                 ChannelEnum::CARREFOUR_FR => CarrefourSendMessage::dispatch($messageBD),
-                ChannelEnum::CONFORAMA_FR => ConforamaSendMesssage::dispatch($messageBD),
+                ChannelEnum::CONFORAMA_FR => ConforamaSendMessage::dispatch($messageBD),
                 ChannelEnum::DARTY_COM => DartySendMessage::dispatch($messageBD),
                 ChannelEnum::INTERMARCHE_FR => IntermarcheSendMessage::dispatch($messageBD),
                 ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($messageBD),
