@@ -7,6 +7,7 @@ use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Tickets\TicketController;
+use App\Http\Controllers\Configuration\TagsController;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
@@ -31,12 +32,13 @@ Route::get('/home', function () {
 
 require __DIR__ . '/auth.php';
 
-Route::middleware('checkActive')->group(function () {
-    Route::prefix('tickets')->group(function () {
-        Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
-        Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
-        Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);
-        Route::match(['get', 'post'], '{ticket}/{thread}', [TicketController::class, 'ticket'])->name('ticket_thread')->can('read', Ticket::class);
+Route::middleware('checkActive')->group(function() {
+    Route::prefix('tickets')->group(function() {
+       Route::match(['get', 'post'], 'hide_comment/{comment}', [TicketController::class, 'hide_comment'])->name('hide_comment')->can('read', Ticket::class);
+       Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
+       Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
+       Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);
+       Route::match(['get', 'post'], '{ticket}/{thread}', [TicketController::class, 'ticket'])->name('ticket_thread')->can('read', Ticket::class);
     });
     Route::prefix('admin')->group(function () {
             Route::prefix('roles')->group(function () {
@@ -60,7 +62,6 @@ Route::middleware('checkActive')->group(function () {
             Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('defaultAnswers')->can('read', DefaultAnswer::class);
             Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswer::class);
         });
-
         Route::prefix('revival')->group(function () {
             Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival');
             Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival');
@@ -70,9 +71,20 @@ Route::middleware('checkActive')->group(function () {
         Route::prefix('autoReply')->group(function () {
             Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
         });
+        Route::prefix('tags')->group(function () {
+            Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags');
+            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags');
+            Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags');
+            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags');
+        });
     });
 });
-
+// CALL AJAX
+Route::get('/ajaxTags', [TagsController::class, 'ajax_tags']);
+Route::post('/addTagList', [TagsController::class, 'saveLineDB']);
+Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags']);
+Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList']);
+Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag']);
 
 Route::group(['prefix' => '/'], function () {
     Route::get('', function () {

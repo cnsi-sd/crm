@@ -2,6 +2,7 @@
 
 namespace App\Models\Ticket;
 
+use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
 use App\Enums\FixedWidthEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
@@ -10,6 +11,7 @@ use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tags;
 use App\Models\User\User;
 use Carbon\Carbon;
 use DateTime;
@@ -22,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $channel_id
  * @property int $order_id
  * @property int $user_id
+ * @property int $last_thread_displayed
  * @property string $state
  * @property string $priority
  * @property Datetime $deadline
@@ -120,7 +123,11 @@ class Ticket extends Model
             ->setLabel(__('app.ticket.deadline'))
             ->setType(ColumnTypeEnum::DATE)
             ->setKey('deadline')
-            ->setSortable(true);
+            ->setSortable(true)
+            ->setFixedWidth(FixedWidthEnum::SM)
+            ->setCallback(function (Ticket $ticket) {
+                return date('d/m/Y', strtotime($ticket->deadline));
+            });
 
         if ($mode != 'user') {
             $columns[] = (new TableColumnBuilder())
@@ -175,12 +182,39 @@ class Ticket extends Model
             })
             ->setKey('channel_id')
             ->setSortable(true);
-
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.tags.view'))
+            ->setKey('tags_id')
+            ->setWhereKey('tags.id')
+            ->setType(ColumnTypeEnum::SELECT)
+            ->setOptions(Tags::getTagsNames())
+            ->setAlign(AlignEnum::CENTER)
+            ->setFixedWidth(FixedWidthEnum::LG)
+            ->setCallback(function (Ticket $ticket) {
+                $listeTag = array();
+                    foreach($ticket->threads as $thread) {
+                        foreach ($thread->taglist as $tagList) {
+                            foreach ($tagList->tags as $tag){
+                                if (!array_key_exists($tag->name,$listeTag)){
+                                    $listeTag[$tag->name] = ['background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
+                                } else {
+                                    $listeTag[$tag->name]['count']++;
+                                }
+                            }
+                        }
+                    }
+                return view('tickets.tag.preview')
+                    ->with('listTags', $listeTag);
+            });
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.created_at'))
             ->setType(ColumnTypeEnum::DATE)
             ->setKey('created_at')
-            ->setSortable(true);
+            ->setSortable(true)
+            ->setFixedWidth(FixedWidthEnum::SM)
+            ->setCallback(function (Ticket $ticket) {
+                return date('d/m/Y', strtotime($ticket->created_at));
+            });
 
         $columns[] = TableColumnBuilder::actions()->setCallback(function (Ticket $ticket) {
             return view('tickets.inline_table_actions')

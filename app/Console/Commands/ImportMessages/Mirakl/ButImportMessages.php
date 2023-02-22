@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages;
+namespace App\Console\Commands\ImportMessages\Mirakl;
 
 use App\Enums\Channel\ChannelEnum;
-use App\Models\Channel\Channel;
 
 class ButImportMessages extends AbstractMiraklImportMessage
 {

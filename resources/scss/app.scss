@@ -57,6 +57,7 @@ File: Main Css File
 @import "custom/components/social";
 @import "custom/components/steps";
 @import "custom/components/preloader";
+@import "custom/components/fixed_width";
 @import "custom/components/hero";/*
 @import "custom/plugins/select2";*/
 
@@ -77,3 +78,6 @@ File: Main Css File
 }
 //Tickets
 @import "tickets/ticket";
+
+//Tags
+@import "tags/tags";
