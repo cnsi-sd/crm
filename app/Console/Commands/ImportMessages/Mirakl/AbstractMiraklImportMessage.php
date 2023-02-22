@@ -143,12 +143,12 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
     /**
      * Convert api messages into message model in order to save it in database
      * @param Ticket $ticket
-     * @param ThreadMessage $api_message
+     * @param ThreadMessage $message_api
      * @param \App\Models\Ticket\Thread $thread
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $api_message, \App\Models\Ticket\Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, \App\Models\Ticket\Thread $thread)
     {
-        $authorType = $api_message->getFrom()->getType();
+        $authorType = $message_api->getFrom()->getType();
         $isNotShopUser = self::isNotShopUser($authorType, self::FROM_SHOP_TYPE);
         if ($isNotShopUser) {
             $this->logger->info('Set ticket\'s status to waiting admin');
@@ -157,14 +157,14 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
             $this->logger->info('Ticket save');
             Message::firstOrCreate([
                 'thread_id' => $thread->id,
-                'channel_message_number' => $api_message->getId(),
+                'channel_message_number' => $message_api->getId(),
             ],
                 [
                     'thread_id' => $thread->id,
                     'user_id' => null,
-                    'channel_message_number' => $api_message->getId(),
+                    'channel_message_number' => $message_api->getId(),
                     'author_type' => self::getAuthorType($authorType),
-                    'content' => strip_tags($api_message->getBody()),
+                    'content' => strip_tags($message_api->getBody()),
                 ],
             );
             if (setting('autoReplyActivate')) {

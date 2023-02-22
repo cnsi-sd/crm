@@ -39,7 +39,7 @@ class FnacImportMessage extends AbstractImportMessage
     /**
      * @throws Exception
      */
-    protected function getSnakeChannelName(): array|string
+    protected function getSnakeChannelName(): string
     {
         return (new Channel)->getSnakeName($this->getChannelName());
     }
@@ -140,9 +140,9 @@ class FnacImportMessage extends AbstractImportMessage
         }
     }
 
-    public function convertApiResponseToMessage(Ticket $ticket, $message, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
-        $authorType = $message->getMessageFromType();
+        $authorType = $message_api->getMessageFromType();
         $isNotShopUser = self::isNotShopUser($authorType);
 
         if($isNotShopUser) {
@@ -153,14 +153,14 @@ class FnacImportMessage extends AbstractImportMessage
 
             \App\Models\Ticket\Message::firstOrCreate([
                 'thread_id' => $thread->id,
-                'channel_message_number' => $message->getMessageId(),
+                'channel_message_number' => $message_api->getMessageId(),
             ],
             [
                 'thread_id' => $thread->id,
                 'user_id' => null,
-                'channel-message_number' => $message->getMessageId(),
+                'channel-message_number' => $message_api->getMessageId(),
                 'author_type' => self::getAuthorType($authorType),
-                'content' => strip_tags($message->getMessageDescription())
+                'content' => strip_tags($message_api->getMessageDescription())
             ]);
         }
     }
@@ -179,7 +179,7 @@ class FnacImportMessage extends AbstractImportMessage
     {
         return !in_array($type, self::FROM_SHOP_TYPE);
     }
-    private static function getAuthorType(string $authorType): string
+    protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'CLIENT'        => TicketMessageAuthorTypeEnum::CLIENT,
