@@ -215,14 +215,8 @@ class TicketController extends Controller
             Alert::toastSuccess(__('app.ticket.saved'));
         }
 
-        $checkThreadTicket = Thread::query()
-            ->where('id', $thread->id)
-            ->where('ticket_id', $ticket->id)
-            ->first();
-
-        if(!$checkThreadTicket) {
+        if($thread->ticket->id !== $ticket->id)
             abort(404);
-        }
 
         $queryOrder = Order::query()->where('id', $ticket->order_id)->first();
         $queryUsers = User::all();
