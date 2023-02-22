@@ -17,6 +17,7 @@ use FnacApiClient\Service\Request\MessageQuery;
 use FnacApiClient\Type\MessageFromType;
 use FnacApiClient\Type\MessageType;
 use Illuminate\Support\Facades\DB;
+use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class FnacImportMessage extends AbstractImportMessage
 {
@@ -75,7 +76,7 @@ class FnacImportMessage extends AbstractImportMessage
         return self::$client;
     }
 
-    protected function getMessageApiId(Message|\Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage $message): string
+    protected function getMessageApiId(Message|ThreadMessage $message): string
     {
         return $message->getMessageId();
     }
@@ -104,7 +105,6 @@ class FnacImportMessage extends AbstractImportMessage
 
         $query = new MessageQuery();
         $query->setMessageType(MessageType::ORDER);
-//        $query->setOfferId('9952SMDFC3WB4');
         $messages = $client->callService($query);
 
         $this->logger->info('Get messages');
@@ -167,8 +167,7 @@ class FnacImportMessage extends AbstractImportMessage
     }
 
     const FROM_SHOP_TYPE = [
-        'SHOP_USER',
-        'CALLCENTER',
+        'SELLER'
         ];
 
     /**
