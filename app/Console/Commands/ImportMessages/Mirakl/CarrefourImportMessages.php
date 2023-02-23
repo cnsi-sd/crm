@@ -4,7 +4,7 @@ namespace App\Console\Commands\ImportMessages\Mirakl;
 
 use App\Enums\Channel\ChannelEnum;
 
-class CarrefourImportMessages extends AbstractMiraklImportMessage
+class CarrefourImportMessages extends AbstractMiraklImportMessages
 {
     public function __construct()
     {

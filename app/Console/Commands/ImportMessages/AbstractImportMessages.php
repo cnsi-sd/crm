@@ -26,7 +26,7 @@ use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
 
-abstract class AbstractImportMessage extends Command
+abstract class AbstractImportMessages extends Command
 {
     protected Logger $logger;
     protected string $log_path;

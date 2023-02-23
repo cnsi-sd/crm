@@ -5,7 +5,7 @@ namespace App\Console\Commands\ImportMessages\Mirakl;
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 
-class ConforamaImportMessages extends AbstractMiraklImportMessage
+class ConforamaImportMessages extends AbstractMiraklImportMessages
 {
     public function __construct()
     {

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\ImportMessages\Mirakl;
 
-use App\Console\Commands\ImportMessages\AbstractImportMessage;
+use App\Console\Commands\ImportMessages\AbstractImportMessages;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Channel\Channel;
@@ -19,7 +19,7 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadTopic;
 use Mirakl\MMP\OperatorShop\Request\Message\GetThreadsRequest;
 use Mirakl\MMP\Shop\Client\ShopApiClient;
 
-abstract class AbstractMiraklImportMessage extends AbstractImportMessage
+abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 {
     protected Logger $logger;
     protected string $log_path;
