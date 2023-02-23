@@ -5,11 +5,11 @@ namespace App\Console\Commands\ImportMessages\Mirakl;
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 
-class ShowRoomImportMessages extends AbstractMiraklImportMessage
+class RueducommerceImportMessages extends AbstractMiraklImportMessages
 {
     public function __construct()
     {
-        $this->signature = sprintf($this->signature, 'showroom');
+        $this->signature = sprintf($this->signature, 'rueducommerce');
         return parent::__construct();
     }
 
@@ -18,12 +18,13 @@ class ShowRoomImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return ChannelEnum::SHOWROOMPRIVE_COM;
+        return ChannelEnum::RUEDUCOMMERCE_FR;
     }
 
     protected function getSnakeChannelName(): string
     {
-        return (new Channel)->getSnakeName(ChannelEnum::SHOWROOMPRIVE_COM);
+        return (new Channel)->getSnakeName(ChannelEnum::RUEDUCOMMERCE_FR);
+
     }
 
     /**
@@ -32,9 +33,9 @@ class ShowRoomImportMessages extends AbstractMiraklImportMessage
     protected function getCredentials(): array
     {
         return [
-            'API_URL' => env('SHOWROOM_API_URL'),
-            'API_KEY' => env('SHOWROOM_API_KEY'),
-            'API_SHOP_ID' => env('SHOWROOM_API_SHOP_ID'),
+            'API_URL' => env('RUEDUCOMMERCE_API_URL'),
+            'API_KEY' => env('RUEDUCOMMERCE_API_KEY'),
+            'API_SHOP_ID' => env('RUEDUCOMMERCE_API_SHOP_ID'),
         ];
     }
 

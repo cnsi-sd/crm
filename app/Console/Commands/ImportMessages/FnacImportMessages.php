@@ -19,7 +19,7 @@ use FnacApiClient\Type\MessageType;
 use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
-class FnacImportMessage extends AbstractImportMessage
+class FnacImportMessages extends AbstractImportMessages
 {
 
     public function __construct()

@@ -31,7 +31,7 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class CDiscountImportMessage extends AbstractImportMessage
+class CdiscountImportMessages extends AbstractImportMessages
 {
     protected Logger $logger;
 

@@ -4,7 +4,7 @@ namespace App\Console\Commands\ImportMessages\Mirakl;
 
 use App\Enums\Channel\ChannelEnum;
 
-class LaPosteImportMessages extends AbstractMiraklImportMessage
+class LaposteImportMessages extends AbstractMiraklImportMessages
 {
 
     public function __construct()

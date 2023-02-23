@@ -5,7 +5,7 @@ namespace App\Console\Commands\ImportMessages\Mirakl;
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 
-class DartyImportMessages extends AbstractMiraklImportMessage
+class DartyImportMessages extends AbstractMiraklImportMessages
 {
     public function __construct()
     {
