@@ -179,7 +179,7 @@
                             <button class="nav-link active" id="hide-tab" data-bs-toggle="tab" data-bs-target="#hide" type="button" role="tab" aria-controls="hide" aria-selected="true"><i class="uil-home"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="order-info-tab" data-bs-toggle="tab" data-bs-target="#order-info" type="button" role="tab" aria-controls="order-info" aria-selected="false">{{ __('app.order_info') }}</button>
+                            <button class="nav-link" id="order-info-tab" data-bs-toggle="tab" data-bs-target="#order-info" data-order-id="{{ $ticket->id }}" type="button" role="tab" aria-controls="order-info" aria-selected="false">{{ __('app.order_info') }}</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="customer-service-process-tab" data-bs-toggle="tab" data-bs-target="#customer-service-process" type="button" role="tab" aria-controls="customer-service-process" aria-selected="false">{{ __('app.customer_service_process') }}</button>

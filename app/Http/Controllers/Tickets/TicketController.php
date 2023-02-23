@@ -111,6 +111,19 @@ class TicketController extends Controller
         return response()->json(['message' => 'success']);
     }
 
+    public function get_external_infos(Ticket $ticket): \Illuminate\Http\JsonResponse
+    {
+        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalSuppliers = $this->getExternalSuppliers();
+
+        return response()->json([
+            'externalOrderInfo' => $externalOrderInfo,
+            'externalAdditionalOrderInfo' => $externalAdditionalOrderInfo,
+            'externalSuppliers' => $externalSuppliers
+            ]);
+    }
+
     /**
      * @throws \ReflectionException
      */
@@ -118,10 +131,6 @@ class TicketController extends Controller
     {
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
-
-        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalSuppliers = $this->getExternalSuppliers();
 
         if ($request->input()){
             $request->validate([
@@ -198,10 +207,7 @@ class TicketController extends Controller
             ->with('commentTypeEnum', TicketCommentTypeEnum::getList())
             ->with('ticketStateEnum', TicketStateEnum::getList())
             ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
-            ->with('channels', $queryChannels)
-            ->with('externalOrderInfo',$externalOrderInfo)
-            ->with('externalAdditionalOrderInfo',$externalAdditionalOrderInfo)
-            ->with('externalSuppliers',$externalSuppliers);
+            ->with('channels', $queryChannels);
     }
 
     public function getExternalOrderInfo($mp_order, $mp_name)
