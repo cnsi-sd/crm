@@ -7,8 +7,10 @@ use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\User\Role;
 use App\Models\User\User;
+use App\Models\Channel\Channel;
 use App\Policies\Configuration\Permission\DefaultAnswerPolicy;
 use App\Policies\Configuration\Permission\RevivalPolicy;
+use App\Policies\Configuration\Permission\ChannelPolicy;
 use App\Models\Ticket\Ticket;
 use App\Policies\Settings\Permissions\RolePolicy;
 use App\Policies\Settings\Permissions\UserPolicy;
@@ -28,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         DefaultAnswer::class => DefaultAnswerPolicy::class,
         Revival::class => RevivalPolicy::class,
         Ticket::class => TicketPolicy::class,
+        Channel::class => ChannelPolicy::class,
     ];
 
     /**

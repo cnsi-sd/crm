@@ -3,6 +3,7 @@
 use App\Http\Controllers\Configuration\AutoReplyController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
+use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
@@ -11,6 +12,7 @@ use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
+use App\Models\Channel\Channel;
 use Illuminate\Support\Facades\Route;
 
 
@@ -73,6 +75,10 @@ Route::middleware('checkActive')->group(function () {
         });
         Route::prefix('autoReply')->group(function () {
             Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
+        });
+        Route::prefix('channel')->group(function () {
+            Route::match(['get', 'post'], '', [ChannelController::class, 'list'])->name('channels')->can('read', Channel::class);
+            Route::match(['get', 'post'], '{channel}', [ChannelController::class, 'edit'])->name('edit_channel')->can('edit', Channel::class);
         });
     });
 });
