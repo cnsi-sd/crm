@@ -11,7 +11,7 @@ use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
-use App\Models\Tags\Tags;
+use App\Models\Tags\Tag;
 use App\Models\User\User;
 use Carbon\Carbon;
 use DateTime;
@@ -191,24 +191,13 @@ class Ticket extends Model
             ->setKey('tags_id')
             ->setWhereKey('tags.id')
             ->setType(ColumnTypeEnum::SELECT)
-            ->setOptions(Tags::getTagsNames())
+            ->setOptions(Tag::getTagsNames())
             ->setAlign(AlignEnum::CENTER)
             ->setFixedWidth(FixedWidthEnum::LG)
             ->setCallback(function (Ticket $ticket) {
                 $listeTag = array();
-                    foreach($ticket->threads as $thread) {
-                        foreach ($thread->taglist as $tagList) {
-                            foreach ($tagList->tags as $tag){
-                                if (!array_key_exists($tag->name,$listeTag)){
-                                    $listeTag[$tag->name] = ['background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
-                                } else {
-                                    $listeTag[$tag->name]['count']++;
-                                }
-                            }
-                        }
-                    }
                 return view('tickets.tag.preview')
-                    ->with('listTags', $listeTag);
+                    ->with('listTags', Tag::getListTagByThread($ticket, $listeTag, true));
             });
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.created_at'))

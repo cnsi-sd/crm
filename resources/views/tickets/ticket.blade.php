@@ -14,7 +14,7 @@
                                     <div class="col"><label>{{ __('app.ticket.state') }}</label></div>
                                     <div class="col">
                                         <select required name="ticket-state" class="form-select required_field">
-                                                <option value="">---</option>
+                                            <option value="">---</option>
                                             @foreach($ticketStateEnum as $ticketState)
                                                 <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
                                             @endforeach
@@ -43,13 +43,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.deadline') }}</label></div>
-                                    <div class="col"><input name="ticket-deadline" class="form-control required_field" type="date" value="{{ date('Y-m-d', strtotime($ticket['deadline'])) }}"></div>
+                                    <div class="col"><input name="ticket-deadline" class="form-control required_field"
+                                                            type="date"
+                                                            value="{{ date('Y-m-d', strtotime($ticket['deadline'])) }}">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
                                     <div class="col">
                                         @foreach ($channels as $channel)
-                                            @if($ticket['channel_id'] === $channel['id']) <label>{{ $channel['name'] }}</label> @endif
+                                            @if($ticket['channel_id'] === $channel['id'])
+                                                <label>{{ $channel['name'] }}</label>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
@@ -133,8 +138,8 @@
                                     <div class="row mt-2">
                                         <div class="col">
                                             <div
-                                                class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show"
-                                                role="alert">
+                                                    class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show"
+                                                    role="alert">
                                                 {{ $revivalError }}
                                             </div>
                                         </div>
@@ -149,11 +154,15 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
-                                    <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket['direct_customer_email'] }}"/></div>
+                                    <div class="col"><input name="ticket-customer_email" class="form-control"
+                                                            type="text" value="{{ $ticket['direct_customer_email'] }}"/>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="{{ date('Y-m-d', strtotime($ticket['delivery_date'])) }}"/></div>
+                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date"
+                                                            value="{{ date('Y-m-d', strtotime($ticket['delivery_date'])) }}"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -164,58 +173,62 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
-                                    <div class="col"><label>{{ date('d/m/Y', strtotime($ticket['created_at'])) }} ({{round(abs(time() - strtotime($ticket['created_at']))/60/60/24)}}j)</label></div>
+                                    <div class="col"><label>{{ date('d/m/Y', strtotime($ticket['created_at'])) }}
+                                            ({{round(abs(time() - strtotime($ticket['created_at']))/60/60/24)}}
+                                            j)</label></div>
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>
-                                    <div class="col"><input name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$activeThread['customer_issue']}}"/></div>
+                                    <div class="col"><input name="ticket-thread-customer_issue" class="form-control"
+                                                            type="text" value="{{$activeThread['customer_issue']}}"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card">
-                            <div class="card-header d-flex">
-                                <p class="w-100">{{ trans_choice('app.tags.tags', 2) }}</p>
-                                <button type="button" id="add" class="btn btn-success flex-shrink-1"
-                                        data-thread_id="{{$activeThread['id']}}">+
-                                </button>
-                            </div>
-                            <div class="card-body" id="card-body-tag">
-                                @foreach($thread->tagList as $taglist)
-                                    <div id="list-{{$taglist->id}}">
-                                        <button type="button" id="deleteTaglist-{{$taglist->id}}"
-                                                class="deleteTaglist btn btn-danger"
-                                                data-thread_id="{{ $activeThread['id'] }}"
-                                                data-taglist_id="{{$taglist->id }}"
-                                        >x
-                                        </button>
-                                        <select name="ticket-revival" class="form-select no-sort tags"
-                                                data-thread_id="{{$activeThread['id']}}"
-                                                data-taglist_id="{{$taglist->id}}">
-                                            <option value="">{{ __('app.revival.select_revival') }}</option>
-                                            @foreach (\App\Models\Tags\Tags::all() as $optionTag)
-                                                <option value="{{ $optionTag->id }}">
-                                                    {{ $optionTag->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div id="view-{{$taglist->id}}" class="mt-3 mb-2">
-                                            @foreach($taglist->tags as $tag)
-                                                <span class="tags-style"
-                                                      style="background-color: {{ $tag->background_color }}; color: {{ $tag->text_color }};">
+                        <div class="card-header d-flex">
+                            <p class="w-100">{{ trans_choice('app.tags.tags', 2) }}</p>
+                            <button type="button" id="add" class="btn btn-success flex-shrink-1"
+                                    data-thread_id="{{$activeThread['id']}}">+
+                            </button>
+                        </div>
+                        <div class="card-body" id="card-body-tag">
+                            @foreach($thread->tagList as $taglist)
+                                <div id="list-{{$taglist->id}}">
+                                    <button type="button" id="deleteTaglist-{{$taglist->id}}"
+                                            class="deleteTaglist btn btn-danger"
+                                            data-thread_id="{{ $activeThread['id'] }}"
+                                            data-taglist_id="{{$taglist->id }}"
+                                    >x
+                                    </button>
+                                    <select name="ticket-revival" class="form-select no-sort tags"
+                                            data-thread_id="{{$activeThread['id']}}"
+                                            data-taglist_id="{{$taglist->id}}">
+                                        <option value="">{{ __('app.revival.select_revival') }}</option>
+                                        @foreach (\App\Models\Tags\Tag::all() as $optionTag)
+                                            <option value="{{ $optionTag->id }}">
+                                                {{ $optionTag->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div id="view-{{$taglist->id}}" class="mt-3 mb-2">
+                                        @foreach($taglist->tags as $tag)
+                                            <span class="tags-style"
+                                                  style="background-color: {{ $tag->background_color }}; color: {{ $tag->text_color }};">
                                                     {{ $tag->name }} | <button
                                                         class="btn delete-tag"
                                                         data-tag_id="{{$tag->id}}"
                                                         data-taglist_id="{{$taglist->id}}"
                                                         style="color: {{ $tag->text_color }};"> x </button>
                                                 </span>
-                                            @endforeach
-                                        </div>
-                                        <hr/>
+                                        @endforeach
                                     </div>
-                                @endforeach
-                            </div>
+                                    <hr/>
+                                </div>
+                            @endforeach
                         </div>
+                    </div>
                     <div class="card">
                         <div class="card-header">{{ __('app.ticket.private_comments') }}</div>
                         <div class="card-body">
@@ -239,7 +252,10 @@
                             <div class="container thread-comments">
                                 @foreach($comments as $comment)
                                     <div class="card">
-                                        <div class="card-header text-start" data-bs-toggle="collapse" data-comment-id="{{$comment['id']}}" data-bs-target="#collapse-comment-{{$comment['id']}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment['id']}}">
+                                        <div class="card-header text-start" data-bs-toggle="collapse"
+                                             data-comment-id="{{$comment['id']}}"
+                                             data-bs-target="#collapse-comment-{{$comment['id']}}" aria-expanded="false"
+                                             aria-controls="collapse-comment-{{$comment['id']}}">
                                             <div class="row">
                                                 <div class="col-9">
                                                     @foreach($users as $user)
@@ -250,11 +266,13 @@
                                                     - {{ \Carbon\Carbon::parse($comment['created_at'])->translatedFormat('d/m/Y H:i') }}
                                                 </div>
                                                 <div class="col-3 text-end">
-                                                    <span title="{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment['type'])}}" class="badge {{$comment['type']}}">{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment['type'])}}</span>
+                                                    <span title="{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment['type'])}}"
+                                                          class="badge {{$comment['type']}}">{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment['type'])}}</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="collapse @if($comment['displayed'] === 1) show @endif()" id="collapse-comment-{{$comment['id']}}">
+                                        <div class="collapse @if($comment['displayed'] === 1) show @endif()"
+                                             id="collapse-comment-{{$comment['id']}}">
                                             <div class="card-body {{$comment['type']}}">
                                                 <div class="container text-start">
                                                     {!! nl2br($comment['content']) !!}
@@ -276,7 +294,8 @@
                             <a class="nav-link" aria-current="page" href="#">{{ __('app.product_return') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">{{ __('app.customer_service_process') }}</a>
+                            <a class="nav-link" aria-current="page"
+                               href="#">{{ __('app.customer_service_process') }}</a>
                         </li>
                     </ul>
                     <div class="controls text-end">
@@ -286,14 +305,16 @@
                     </div>
                     <ul class="nav nav-tabs" id="threadsTabs" role="tablist">
                         @foreach($threads as $thread)
-                        <li class="nav-item position-relative">
-                            @if($unreadMessagesByTicket[$thread['id']] > 0)
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $unreadMessagesByTicket[$thread['id']] }}</span>
-                            @endif
-                            <a class="nav-link @if($thread['id'] === $activeThread['id']) active @endif" aria-current="page" href="{{ route('ticket_thread', ['ticket' => $ticket['id'], 'thread' => $thread['id']]) }}">
-                                {{$thread['name']}}
-                            </a>
-                        </li>
+                            <li class="nav-item position-relative">
+                                @if($unreadMessagesByTicket[$thread['id']] > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $unreadMessagesByTicket[$thread['id']] }}</span>
+                                @endif
+                                <a class="nav-link @if($thread['id'] === $activeThread['id']) active @endif"
+                                   aria-current="page"
+                                   href="{{ route('ticket_thread', ['ticket' => $ticket['id'], 'thread' => $thread['id']]) }}">
+                                    {{$thread['name']}}
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                     <div class="tab-content" id="threadsTabsContent">
@@ -316,9 +337,13 @@
                             </div>
                             @foreach($messages as $message)
                                 <div class="card">
-                                    <div class="card-header text-start @if($message['author_type'] === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) collapsed @endif()" data-bs-toggle="collapse" data-bs-target="#collapse-message-{{$message['id']}}" aria-expanded="false" aria-controls="collapse-message-{{$message['id']}}">
-                                        @if($message['author_type'] === 'customer') {{ __('app.customer') }}
-                                        @elseif($message['author_type'] === 'operator') {{ __('app.operator') }}
+                                    <div class="card-header text-start @if($message['author_type'] === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) collapsed @endif()"
+                                         data-bs-toggle="collapse" data-bs-target="#collapse-message-{{$message['id']}}"
+                                         aria-expanded="false" aria-controls="collapse-message-{{$message['id']}}">
+                                        @if($message['author_type'] === 'customer')
+                                            {{ __('app.customer') }}
+                                        @elseif($message['author_type'] === 'operator')
+                                            {{ __('app.operator') }}
                                         @elseif($message['author_type'] === 'admin')
                                             @foreach($users as $user)
                                                 @if($message['user_id'] === $user['id'])
@@ -328,7 +353,8 @@
                                         @endif
                                         - {{ \Carbon\Carbon::parse($message['created_at'])->translatedFormat('d/m/Y H:i') }}
                                     </div>
-                                    <div class="collapse @if($message['author_type'] !== \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) show @endif()" id="collapse-message-{{$message['id']}}">
+                                    <div class="collapse @if($message['author_type'] !== \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) show @endif()"
+                                         id="collapse-message-{{$message['id']}}">
                                         <div class="card-body {{$message['author_type']}}">
                                             <div class="container text-start">
                                                 {!! nl2br($message['content']) !!}
@@ -345,5 +371,5 @@
     </div>
 @endsection
 @section('script-bottom')
-<script src="{{ Vite::asset('resources/js/tickets/ticket.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/tickets/ticket.js') }}"></script>
 @endsection
