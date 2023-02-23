@@ -8,6 +8,7 @@ use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 
 class IcozaSendMessage extends AbstractSendMessage
 {
@@ -43,7 +44,7 @@ class IcozaSendMessage extends AbstractSendMessage
         if(self::$client == null) {
 
             $client = new Client([
-                'headers' => [
+                RequestOptions::HEADERS => [
                     'token' => self::getCredentials()['key'],
                     'Accept' => 'application/json',
                 ],
@@ -72,12 +73,15 @@ class IcozaSendMessage extends AbstractSendMessage
             $this->logger->info('Init api');
             $client = self::initApiClient();
 
-            $response = $client->request('POST', $this->getCredentials()['host']. 'Reply',
-                [
-                    'content' => $this->translateContent($lastApiMessage->messageContent),
-                    'order' => $lastApiMessage->orderId,
-                ]
-            );
+            $route = $this->getCredentials()['host'] . 'Reply';
+            $response = $client->request('POST', $route, [
+                RequestOptions::FORM_PARAMS => [
+                    "content" => $this->translateContent($this->message->content),
+                    "order" => $lastApiMessage->threadId,
+                ],
+            ]);
+
+            $success = $response->getBody()->getContents();
 
             // Check response
             if ($response->getReasonPhrase() !== "OK")
