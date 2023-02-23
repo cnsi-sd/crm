@@ -17,11 +17,16 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
-class IcozaImportMessage extends AbstractImportMessage
+class IcozaImportMessage extends AbstractImportMessages
 {
-    protected function getChannelName(): string
+    /**
+     * @throws Exception
+     */
+    public function __construct()
     {
-        return ChannelEnum::ICOZA_FR;
+        $this->signature =sprintf($this->signature,'icoza');
+        $this->channel = Channel::getByName(ChannelEnum::ICOZA_FR);
+        return parent::__construct();
     }
 
     protected function getCredentials(): array
@@ -43,24 +48,21 @@ class IcozaImportMessage extends AbstractImportMessage
         // TODO: Implement getMpOrderApiId() method.
     }
 
-    public function __construct()
-    {
-        $this->signature =sprintf($this->signature,'icoza');
-        return parent::__construct();
-    }
-
     protected Logger $logger;
     static private ?Client $client = null;
     const FROM_SHOP_TYPE = [
         TicketMessageAuthorTypeEnum::ADMIN
     ];
 
+    /**
+     * @throws Exception
+     */
     protected function getSnakeChannelName(): string
     {
-        return (new Channel)->getSnakeName($this->getChannelName());
+        return $this->channel->getSnakeName($this->channel->name);
     }
 
-    protected function initApiClient()
+    protected function initApiClient(): ?Client
     {
         if(self::$client == null) {
 
@@ -78,6 +80,7 @@ class IcozaImportMessage extends AbstractImportMessage
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
     public function handle()
     {
@@ -106,7 +109,7 @@ class IcozaImportMessage extends AbstractImportMessage
             try {
                 DB::beginTransaction();
 
-                $channel    = Channel::getByName($this->getChannelName()); // Channel = mp
+                $channel    = $this->channel; // Channel = mp
                 $order      = Order::getOrder($message->order, $channel);
                 $ticket     = Ticket::getTicket($order, $channel);
                 $thread     = Thread::getOrCreateThread($ticket, $message->order, 'Icoza sujet', '');
@@ -151,10 +154,10 @@ class IcozaImportMessage extends AbstractImportMessage
                     'author_type' => self::getAuthorType($authorType),
                     'content' => strip_tags($message->content)
                 ]);
-            if (setting('autoReplyActivate')) {
-                $this->logger->info('Send auto reply');
+//            if (setting('autoReplyActivate')) {
+//                $this->logger->info('Send auto reply');
 //                self::sendAutoReply(setting('autoReply'), $thread);
-            }
+//            }
         }
     }
 

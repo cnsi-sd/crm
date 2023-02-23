@@ -14,17 +14,19 @@ use Exception;
 use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\Message;
 use FnacApiClient\Service\Request\MessageQuery;
-use FnacApiClient\Type\MessageFromType;
 use FnacApiClient\Type\MessageType;
 use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class FnacImportMessages extends AbstractImportMessages
 {
-
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'fnac');
+        $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
         return parent::__construct();
     }
     protected Logger $logger;
@@ -33,22 +35,14 @@ class FnacImportMessages extends AbstractImportMessages
     /**
      * @throws Exception
      */
-    protected function getChannelName(): string
+    protected function getSnakeChannelName(): string
     {
-        return ChannelEnum::FNAC_COM;
+        return Channel::staticGetSnakeName($this->channel->name);
     }
 
     const FROM_SHOP_TYPE = [
         'SELLER' => TicketMessageAuthorTypeEnum::ADMIN
     ];
-
-    /**
-     * @throws Exception
-     */
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName($this->getChannelName());
-    }
 
     protected $description = 'Importing competing offers from testing Fnac.';
 
@@ -124,7 +118,7 @@ class FnacImportMessages extends AbstractImportMessages
 
                 $messageId  = $this->getMessageApiId($message);
                 $mpOrderId  = $this->getMpOrderApiId($message);
-                $channel    = Channel::getByName($this->getChannelName()); // Channel = mp
+                $channel    = $this->channel; // Channel = mp
                 $order      = Order::getOrder($mpOrderId, $channel);
                 $ticket     = Ticket::getTicket($order, $channel);
                 $thread     = Thread::getOrCreateThread($ticket, $message->getMessageReferer(), $message->getMessageSubject(), '');
@@ -167,10 +161,10 @@ class FnacImportMessages extends AbstractImportMessages
                 'author_type' => self::getAuthorType($authorType),
                 'content' => strip_tags($message_api->getMessageDescription())
             ]);
-            if (setting('autoReplyActivate')) {
-                $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
-            }
+//            if (setting('autoReplyActivate')) {
+//                $this->logger->info('Send auto reply');
+//                self::sendAutoReply(setting('autoReply'), $thread);
+//            }
         }
     }
 
