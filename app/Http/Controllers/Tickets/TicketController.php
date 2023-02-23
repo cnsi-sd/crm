@@ -7,6 +7,7 @@ use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendMessage\ConforamaSendMessage;
+use App\Jobs\SendMessage\IcozaSendMessage;
 use App\Models\Tags\TagList;
 use App\Models\Tags\Tags;
 use App\Enums\Channel\ChannelEnum;
@@ -170,7 +171,8 @@ class TicketController extends Controller
                     ChannelEnum::RUEDUCOMMERCE_FR   => RueDuCommerceSendMessage::dispatch($message),
                     ChannelEnum::SHOWROOMPRIVE_COM  => ShowroomSendMessage::dispatch($message),
                     ChannelEnum::UBALDI_COM         => UbaldiSendMessage::dispatch($message),
-                    ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message)
+                    ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
+                    ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
                 };
             }
             if($request->input('ticket-thread-comments-content')) {

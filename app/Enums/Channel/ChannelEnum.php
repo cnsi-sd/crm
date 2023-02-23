@@ -19,4 +19,5 @@ class ChannelEnum extends AbstractEnum
     const UBALDI_COM        = "ubaldi.com";
     const FNAC_COM          = "fnac.com";
     const CDISCOUNT_FR      = "cdiscount.fr";
+    const ICOZA_FR          = "icoza.fr";
 }
