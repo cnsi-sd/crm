@@ -33,14 +33,9 @@ class Channel extends Model
         'updated_at'
     ];
 
-    public function getSnakeName($channelName): array|string
+    public function getSnakeName(): array|string
     {
-        return self::staticGetSnakeName($channelName);
-    }
-
-    public static function staticGetSnakeName($name): array|string
-    {
-        return str_replace('.', '_', $name);
+        return str_replace('.', '_', $this->name);
     }
     public function defaultAnswers(): BelongsToMany
     {
@@ -74,6 +69,9 @@ class Channel extends Model
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function getByName(string $name, bool $filter_active = true) : Channel
     {
         /** @var Channel $channel */
