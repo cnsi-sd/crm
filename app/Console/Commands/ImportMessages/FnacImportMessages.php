@@ -26,19 +26,10 @@ class FnacImportMessages extends AbstractImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'fnac');
-        $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
         return parent::__construct();
     }
     protected Logger $logger;
     static private ?SimpleClient $client = null;
-
-    /**
-     * @throws Exception
-     */
-    protected function getSnakeChannelName(): string
-    {
-        return Channel::staticGetSnakeName($this->channel->name);
-    }
 
     const FROM_SHOP_TYPE = [
         'SELLER' => TicketMessageAuthorTypeEnum::ADMIN
@@ -63,8 +54,6 @@ class FnacImportMessages extends AbstractImportMessages
     {
         if(self::$client == null) {
             $client = new SimpleClient();
-
-            $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
             $client->init(self::getCredentials());
             $client->checkAuth();
 
@@ -89,10 +78,13 @@ class FnacImportMessages extends AbstractImportMessages
      */
     public function handle()
     {
+        // Load channel
+        $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
+
         $this->logger = new Logger(
             'import_message/'
-            . $this->getSnakeChannelName() . '/'
-            . $this->getSnakeChannelName()
+            . $this->channel->getSnakeName() . '/'
+            . $this->channel->getSnakeName()
             . '.log', true, true
         );
         $this->logger->info('--- Start ---');
@@ -161,10 +153,10 @@ class FnacImportMessages extends AbstractImportMessages
                 'author_type' => self::getAuthorType($authorType),
                 'content' => strip_tags($message_api->getMessageDescription())
             ]);
-//            if (setting('autoReplyActivate')) {
-//                $this->logger->info('Send auto reply');
-//                self::sendAutoReply(setting('autoReply'), $thread);
-//            }
+            if (setting('autoReplyActivate')) {
+                $this->logger->info('Send auto reply');
+                self::sendAutoReply(setting('autoReply'), $thread);
+            }
         }
     }
 
