@@ -40,7 +40,9 @@
                     <div class="row">
                         <div class="col">{{ __('app.order.tracking') }} :</label></div>
                         <div class="col text-truncate">
-                            {{ $externalAdditionalOrderInfo['tracking_info'][0]['tracking_number'] }}
+                            <a href="{{ str_replace('@', $externalAdditionalOrderInfo['tracking_info'][0]['tracking_number'], $externalAdditionalOrderInfo['tracking_info'][0]['url']) }}" target="_blank">
+                                {{ $externalAdditionalOrderInfo['tracking_info'][0]['tracking_number'] }}
+                            </a>
                         </div>
                     </div>
                     <div class="row">
