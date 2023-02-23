@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Mirakl;
+namespace App\Console\Commands\ImportMessages;
 
-use App\Console\Commands\ImportMessages\AbstractImportMessages;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Channel\Channel;

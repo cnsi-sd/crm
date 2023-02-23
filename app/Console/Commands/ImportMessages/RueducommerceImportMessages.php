@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Mirakl;
+namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
