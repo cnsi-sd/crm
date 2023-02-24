@@ -20,10 +20,6 @@ class ConforamaImportMessages extends AbstractMiraklImportMessages
     {
         return ChannelEnum::CONFORAMA_FR;
     }
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName(ChannelEnum::CONFORAMA_FR);
-    }
 
     /**
      * @return array

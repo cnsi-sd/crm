@@ -20,20 +20,19 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class FnacImportMessages extends AbstractImportMessages
 {
+    private string $FROM_SHOP_TYPE;
+
     /**
      * @throws Exception
      */
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'fnac');
+        $this->FROM_SHOP_TYPE = 'SELLER';
         return parent::__construct();
     }
     protected Logger $logger;
     static private ?SimpleClient $client = null;
-
-    const FROM_SHOP_TYPE = [
-        'SELLER' => TicketMessageAuthorTypeEnum::ADMIN
-    ];
 
     protected $description = 'Importing competing offers from testing Fnac.';
 
@@ -110,9 +109,8 @@ class FnacImportMessages extends AbstractImportMessages
 
                 $messageId  = $this->getMessageApiId($message);
                 $mpOrderId  = $this->getMpOrderApiId($message);
-                $channel    = $this->channel; // Channel = mp
-                $order      = Order::getOrder($mpOrderId, $channel);
-                $ticket     = Ticket::getTicket($order, $channel);
+                $order      = Order::getOrder($mpOrderId, $this->channel);
+                $ticket     = Ticket::getTicket($order, $this->channel);
                 $thread     = Thread::getOrCreateThread($ticket, $message->getMessageReferer(), $message->getMessageSubject(), '');
 
                 if (!$this->isMessagesImported($messageId)) {
@@ -134,7 +132,7 @@ class FnacImportMessages extends AbstractImportMessages
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = $message_api->getMessageFromType();
-        $isNotShopUser = self::isNotShopUser($authorType);
+        $isNotShopUser = self::isNotShopUser($authorType , $this->FROM_SHOP_TYPE);
 
         if($isNotShopUser) {
             $this->logger->info('Set ticket\'s status to waiting admin');
@@ -160,15 +158,6 @@ class FnacImportMessages extends AbstractImportMessages
         }
     }
 
-    /**
-     * returns if the message type is SHOP_USER
-     * @param string $type
-     * @return bool
-     */
-    private static function isNotShopUser(string $type): bool
-    {
-        return !in_array($type, self::FROM_SHOP_TYPE);
-    }
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {

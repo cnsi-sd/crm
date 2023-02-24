@@ -21,11 +21,6 @@ class ShowroomImportMessages extends AbstractMiraklImportMessages
         return ChannelEnum::SHOWROOMPRIVE_COM;
     }
 
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName(ChannelEnum::SHOWROOMPRIVE_COM);
-    }
-
     /**
      * @return array
      */

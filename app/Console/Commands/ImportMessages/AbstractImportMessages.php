@@ -50,7 +50,7 @@ abstract class AbstractImportMessages extends Command
      * @param $FROM_SHOP_TYPE
      * @return bool
      */
-    private static function isNotShopUser(string $type, $FROM_SHOP_TYPE): bool
+    protected static function isNotShopUser(string $type, $FROM_SHOP_TYPE): bool
     {
         return $FROM_SHOP_TYPE !== $type;
     }

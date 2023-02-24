@@ -21,11 +21,6 @@ class   UbaldiImportMessages extends AbstractMiraklImportMessages
         return ChannelEnum::UBALDI_COM;
     }
 
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName(ChannelEnum::UBALDI_COM);
-    }
-
     /**
      * @return array
      */

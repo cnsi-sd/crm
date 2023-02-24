@@ -21,11 +21,6 @@ class IntermarcheImportMessages extends AbstractMiraklImportMessages
         return ChannelEnum::INTERMARCHE_FR;
     }
 
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName(ChannelEnum::INTERMARCHE_FR);
-    }
-
     /**
      * @return array
      */

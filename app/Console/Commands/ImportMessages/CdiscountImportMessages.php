@@ -53,7 +53,13 @@ class CdiscountImportMessages extends AbstractImportMessages
         'THIS IS A WARNING ONLY.',
         'Votre demande d’annulation a été acceptée. Le remboursement est en cours.',
     ];
+    private string $FROM_SHOP_TYPE;
 
+    public function __construct()
+    {
+        $this->FROM_SHOP_TYPE = 'Seller';
+        return parent::__construct();
+    }
 
     /**
      * @return string
@@ -75,6 +81,8 @@ class CdiscountImportMessages extends AbstractImportMessages
      */
     public function handle()
     {
+
+
         $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
         $this->logger->info('--- Start ---');
         try {
@@ -143,18 +151,6 @@ class CdiscountImportMessages extends AbstractImportMessages
         );
     }
 
-    const FROM_SHOP_TYPE = 'Seller';
-
-    /**
-     * returns if the message type is SHOP_USER
-     * @param string $type
-     * @return bool
-     */
-    private static function isNotShopUser(string $type): bool
-    {
-        return self::FROM_SHOP_TYPE !== $type;
-    }
-
     /**
      * @param Ticket $ticket
      * @param Thread $thread
@@ -183,7 +179,7 @@ class CdiscountImportMessages extends AbstractImportMessages
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = $message_api->getSender()->getUserType();
-        $isNotShopUser = self::isNotShopUser($authorType);
+        $isNotShopUser = self::isNotShopUser($authorType, $this->FROM_SHOP_TYPE);
         if ($isNotShopUser) {
             $this->logger->info('Set ticket\'s status to waiting admin');
             $ticket->state = TicketStateEnum::WAITING_ADMIN;
