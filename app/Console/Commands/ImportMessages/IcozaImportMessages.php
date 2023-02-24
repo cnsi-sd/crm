@@ -20,11 +20,10 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 class IcozaImportMessages extends AbstractImportMessages
 {
     private string $FROM_SHOP_TYPE;
-    const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
     private Client $client;
-    const FROM_SHOP_TYPE = [
-        TicketMessageAuthorTypeEnum::ADMIN
-    ];
+
+    const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
+
     /**
      * @throws Exception
      */
