@@ -192,7 +192,7 @@ class CdiscountImportMessages extends AbstractImportMessages
     {
         return match ($authorType) {
             'Customer' => TicketMessageAuthorTypeEnum::CUSTOMER, //
-            default => TicketMessageAuthorTypeEnum::OPERATEUR,
+            default => TicketMessageAuthorTypeEnum::OPERATOR,
         };
     }
 }
