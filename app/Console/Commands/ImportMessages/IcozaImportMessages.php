@@ -130,7 +130,8 @@ class IcozaImportMessages extends AbstractImportMessages
                     'user_id' => null,
                     'channel_message_number' => $message_api->id,
                     'direct_customer_email' => $message_api->email,
-                    'author_type' => self::getAuthorType($authorType),
+                // Messages authors are only customer on this API
+                    'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,
                     'content' => strip_tags($message_api->content)
                 ]);
             if (setting('autoReplyActivate')) {
@@ -139,12 +140,4 @@ class IcozaImportMessages extends AbstractImportMessages
             }
         }
     }
-
-    protected function getAuthorType(string $authorType): string
-    {
-        return match ($authorType) {
-            default => TicketMessageAuthorTypeEnum::CUSTOMER,
-        };
-    }
-
 }

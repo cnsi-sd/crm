@@ -56,11 +56,15 @@ class FnacImportMessages extends AbstractImportMessages
         return $this->client;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'CLIENT'        => TicketMessageAuthorTypeEnum::CUSTOMER,
             'CALLCENTER'    => TicketMessageAuthorTypeEnum::OPERATEUR,
+            default => throw new Exception('Bad author type.')
         };
     }
 
@@ -121,6 +125,9 @@ class FnacImportMessages extends AbstractImportMessages
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = $message_api->getMessageFromType();
@@ -140,12 +147,12 @@ class FnacImportMessages extends AbstractImportMessages
                 'thread_id' => $thread->id,
                 'user_id' => null,
                 'channel-message_number' => $message_api->getMessageId(),
-                'author_type' => self::getAuthorType($authorType),
+                'author_type' => $this->getAuthorType($authorType),
                 'content' => strip_tags($message_api->getMessageDescription())
             ]);
             if (setting('autoReplyActivate')) {
                 $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
+//                self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
     }

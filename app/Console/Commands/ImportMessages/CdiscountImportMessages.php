@@ -185,7 +185,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         }
         if (setting('autoReplyActivate') && $ticket->order->channel_order_number == '2302201135UQL01') {
             $this->logger->info('Send auto reply');
-            self::sendAutoReply(setting('autoReply'), $thread);
+//            self::sendAutoReply(setting('autoReply'), $thread);
         }
     }
 
