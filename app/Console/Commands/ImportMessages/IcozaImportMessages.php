@@ -49,25 +49,22 @@ class IcozaImportMessages extends AbstractImportMessages
         // TODO: Implement getMpOrderApiId() method.
     }
 
-    static private ?Client $client = null;
+    private Client $client;
     const FROM_SHOP_TYPE = [
         TicketMessageAuthorTypeEnum::ADMIN
     ];
 
     protected function initApiClient(): ?Client
     {
-        if(self::$client == null) {
+        $client = new Client([
+            'headers' => [
+                'token' => self::getCredentials()['key'],
+                'Accept' => 'application/json',
+            ],
+        ]);
+        $this->client = $client;
 
-            $client = new Client([
-                'headers' => [
-                    'token' => self::getCredentials()['key'],
-                    'Accept' => 'application/json',
-                ],
-            ]);
-            self::$client = $client;
-        }
-
-        return self::$client;
+        return $this->client;
     }
 
     /**
@@ -89,7 +86,7 @@ class IcozaImportMessages extends AbstractImportMessages
 
         // GET LAST MESSAGES
         $this->logger->info('Init api');
-        $client = self::initApiClient();
+        $client = $this->initApiClient();
 
         $fromTime = strtotime(date('Y-m-d H:m:s') . self::FROM_DATE_TRANSFORMATOR);
         $fromDate = date('Y-m-d H:i:s', $fromTime);

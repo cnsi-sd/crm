@@ -21,23 +21,7 @@ use FnacApiClient\Type\ResponseStatusType;
 class FnacSendMessage extends AbstractSendMessage
 {
     protected Logger $logger;
-    static private ?SimpleClient $client = null;
-
-    /**
-     * @throws Exception
-     */
-    protected function getChannelName(): string
-    {
-        return ChannelEnum::FNAC_COM;
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected function getSnakeChannelName(): array|string
-    {
-        return (new Channel)->getSnakeName($this->getChannelName());
-    }
+    private SimpleClient $client;
 
     /**
      * @throws Exception
@@ -45,10 +29,11 @@ class FnacSendMessage extends AbstractSendMessage
     public function handle(): void
     {
         try {
-
+            // Load channel
+            $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
             $this->logger = new Logger('send_message/'
-                . $this->getSnakeChannelName()
-                . '/' . $this->getSnakeChannelName()
+                . $this->channel->getSnakeName()
+                . '/' . $this->channel->getSnakeName()
                 . '.log', true, true
             );
 
@@ -57,7 +42,7 @@ class FnacSendMessage extends AbstractSendMessage
             // Variables
             $sendTo = MessageToType::CLIENT;
             $threadNumber = $this->message->thread->channel_thread_number;
-            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
+            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->channel->name);
 
             // Init API client
             $this->logger->info('Init api');
@@ -107,16 +92,13 @@ class FnacSendMessage extends AbstractSendMessage
      * @throws ErrorResponseException
      * @throws Exception
      */
-    protected function initApiCLient(): ?SimpleClient
+    protected function initApiCLient(): SimpleClient
     {
-        if(self::$client == null) {
-            $client = new SimpleClient();
-            $client->init(self::getCredentials());
-            $client->checkAuth();
+        $client = new SimpleClient();
+        $client->init($this->getCredentials());
+        $client->checkAuth();
+        $this->client = $client;
 
-            self::$client = $client;
-        }
-
-        return self::$client;
+        return $this->client;
     }
 }
