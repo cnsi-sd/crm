@@ -56,7 +56,6 @@ class FnacImportMessages extends AbstractImportMessages
         return $this->client;
     }
 
-
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
