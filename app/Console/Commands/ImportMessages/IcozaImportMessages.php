@@ -49,7 +49,6 @@ class IcozaImportMessages extends AbstractImportMessages
         // TODO: Implement getMpOrderApiId() method.
     }
 
-    protected Logger $logger;
     static private ?Client $client = null;
     const FROM_SHOP_TYPE = [
         TicketMessageAuthorTypeEnum::ADMIN

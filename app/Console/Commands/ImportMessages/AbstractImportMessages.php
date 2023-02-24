@@ -29,6 +29,7 @@ use Illuminate\Console\Command;
 
 abstract class AbstractImportMessages extends Command
 {
+    protected Logger $logger;
     protected Channel $channel;
     protected static mixed $_alreadyImportedMessages = false;
 

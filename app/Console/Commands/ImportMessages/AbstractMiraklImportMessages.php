@@ -20,8 +20,6 @@ use Mirakl\MMP\Shop\Client\ShopApiClient;
 
 abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 {
-    protected Logger $logger;
-
     public ShopApiClient $client;
 
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';

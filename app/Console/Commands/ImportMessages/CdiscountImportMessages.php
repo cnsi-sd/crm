@@ -33,8 +33,6 @@ use Illuminate\Support\Facades\DB;
 
 class CdiscountImportMessages extends AbstractImportMessages
 {
-    protected Logger $logger;
-
     /**
      * @var ClientCdiscount
      */
