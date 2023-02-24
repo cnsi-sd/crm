@@ -126,9 +126,7 @@ class IcozaImportMessages extends AbstractImportMessages
                 'channel_message_number' => $message_api->id,
             ],
                 [
-                    'thread_id' => $thread->id,
                     'user_id' => null,
-                    'channel_message_number' => $message_api->id,
                     'direct_customer_email' => $message_api->email,
                     'author_type' => self::getAuthorType($authorType),
                     'content' => strip_tags($message_api->content)
