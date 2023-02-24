@@ -189,12 +189,12 @@ class CdiscountImportMessages extends AbstractImportMessages
         }
     }
 
+    //TODO Il faut vérifier les auteurs des messages et renvoyer une erreur quand le $authorType reçus n'est pas attendu dans le match
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
-            'Customer' => TicketMessageAuthorTypeEnum::CUSTOMER,
+            'Customer' => TicketMessageAuthorTypeEnum::CUSTOMER, //
             default => TicketMessageAuthorTypeEnum::OPERATEUR,
         };
     }
-
 }

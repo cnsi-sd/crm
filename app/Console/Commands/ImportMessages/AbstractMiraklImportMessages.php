@@ -24,7 +24,6 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
-
     const FROM_SHOP_TYPE = 'SHOP_USER';
 
     abstract protected function getChannelName(): string;
@@ -171,16 +170,20 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             );
             if (setting('autoReplyActivate')) {
                 $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
+//                self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'CUSTOMER_USER' => TicketMessageAuthorTypeEnum::CUSTOMER,
-            default => TicketMessageAuthorTypeEnum::OPERATEUR,
+            'OPERATOR_USER' => TicketMessageAuthorTypeEnum::OPERATEUR,
+            default => throw new Exception('Bad author type')
         };
     }
 
