@@ -21,7 +21,6 @@ use Mirakl\MMP\Shop\Client\ShopApiClient;
 abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 {
     protected Logger $logger;
-    protected string $log_path;
 
     public ShopApiClient $client;
 
