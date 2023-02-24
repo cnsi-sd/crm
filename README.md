@@ -41,6 +41,8 @@ php8.1 artisan key:generate
 npm install
 npm run dev
 php8.1 artisan migrate
+php8.1 artisan db:seed
+php8.1 artisan db:safe
 php8.1 artisan serve
 ```
 
