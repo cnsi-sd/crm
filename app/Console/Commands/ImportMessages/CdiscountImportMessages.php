@@ -185,16 +185,16 @@ class CdiscountImportMessages extends AbstractImportMessages
         }
         if (setting('autoReplyActivate') && $ticket->order->channel_order_number == '2302201135UQL01') {
             $this->logger->info('Send auto reply');
-            self::sendAutoReply(setting('autoReply'), $thread);
+//            self::sendAutoReply(setting('autoReply'), $thread);
         }
     }
 
+    //TODO Il faut vérifier les auteurs des messages et renvoyer une erreur quand le $authorType reçus n'est pas attendu dans le match
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
-            'Customer' => TicketMessageAuthorTypeEnum::CUSTOMER,
+            'Customer' => TicketMessageAuthorTypeEnum::CUSTOMER, //
             default => TicketMessageAuthorTypeEnum::OPERATEUR,
         };
     }
-
 }
