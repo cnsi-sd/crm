@@ -29,13 +29,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home', function () {
-    return redirect('/index');
-})->name('home');
-
 require __DIR__ . '/auth.php';
-
 Route::middleware('checkActive')->group(function() {
+
+
+    Route::get('/home', function () {
+        return redirect('/index');
+    })->name('home');
+
+
+
     Route::prefix('tickets')->group(function() {
        Route::match(['get', 'post'], 'hide_comment/{comment}', [TicketController::class, 'hide_comment'])->name('hide_comment')->can('read', Ticket::class);
        Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
@@ -56,9 +59,7 @@ Route::middleware('checkActive')->group(function() {
             });
     });
     Route::match(['get','post'], 'search', [SearchController::class, 'search'])->name('search')->can('read', Ticket::class);
-});
 
-Route::middleware('checkActive')->group(function () {
     Route::prefix('configuration')->group(function () {
         Route::prefix('default_answer')->group(function () {
             Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_defaultAnswer')->can('edit', DefaultAnswer::class);
@@ -82,19 +83,22 @@ Route::middleware('checkActive')->group(function () {
             Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tag::class);
         });
     });
-});
-// CALL AJAX
-Route::get('/ajaxTags', [TagsController::class, 'ajax_tags']);
-Route::post('/addTagList', [TagsController::class, 'newTagLigne']);
-Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags']);
-Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList']);
-Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag']);
 
-Route::group(['prefix' => '/'], function () {
-    Route::get('', function () {
-        return redirect('/login');
-    })->name('root');
-    Route::get('{first}/{second}/{third}', [RoutingController::class, 'thirdLevel'])->name('third');
-    Route::get('{first}/{second}', [RoutingController::class, 'secondLevel'])->name('second');
-    Route::get('{any}', [RoutingController::class, 'root'])->name('any');
+    // CALL AJAX
+    Route::get('/ajaxTags', [TagsController::class, 'ajax_tags']);
+    Route::post('/addTagList', [TagsController::class, 'newTagLigne']);
+    Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags']);
+    Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList']);
+    Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag']);
+
+    Route::group(['prefix' => '/'], function () {
+        Route::get('', function () {
+            return redirect('/login');
+        })->name('root');
+        Route::get('{first}/{second}/{third}', [RoutingController::class, 'thirdLevel'])->name('third');
+        Route::get('{first}/{second}', [RoutingController::class, 'secondLevel'])->name('second');
+        Route::get('{any}', [RoutingController::class, 'root'])->name('any');
+    });
+
+
 });
