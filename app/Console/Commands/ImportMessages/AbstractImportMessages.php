@@ -40,7 +40,6 @@ abstract class AbstractImportMessages extends Command
 
     abstract protected function initApiClient();
 
-    abstract protected function getAuthorType(string $authorType): string;
     abstract protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread);
 
     /**
