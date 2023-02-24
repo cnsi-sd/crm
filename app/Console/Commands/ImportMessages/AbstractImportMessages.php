@@ -15,7 +15,7 @@ use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
 use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\RueducommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\Channel;
@@ -105,7 +105,7 @@ abstract class AbstractImportMessages extends Command
             ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($autoReply),
             ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($autoReply),
             ChannelEnum::METRO_FR => MetroSendMessage::dispatch($autoReply),
-            ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($autoReply),
+            ChannelEnum::RUEDUCOMMERCE_FR => RueducommerceSendMessage::dispatch($autoReply),
             ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($autoReply),
             ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($autoReply),
             ChannelEnum::CDISCOUNT_FR => CdiscountSendMessage::dispatch($autoReply),

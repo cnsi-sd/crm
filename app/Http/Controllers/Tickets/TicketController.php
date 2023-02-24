@@ -19,7 +19,7 @@ use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
 use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\RueducommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Ticket\Ticket;
@@ -172,7 +172,7 @@ class TicketController extends Controller
                     ChannelEnum::LAPOSTE_FR         => LaposteSendMessage::dispatch($message),
                     ChannelEnum::E_LECLERC          => LeclercSendMessage::dispatch($message),
                     ChannelEnum::METRO_FR           => MetroSendMessage::dispatch($message),
-                    ChannelEnum::RUEDUCOMMERCE_FR   => RueDuCommerceSendMessage::dispatch($message),
+                    ChannelEnum::RUEDUCOMMERCE_FR   => RueducommerceSendMessage::dispatch($message),
                     ChannelEnum::SHOWROOMPRIVE_COM  => ShowroomSendMessage::dispatch($message),
                     ChannelEnum::UBALDI_COM         => UbaldiSendMessage::dispatch($message),
                     ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
