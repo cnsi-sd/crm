@@ -21,6 +21,7 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 class FnacImportMessages extends AbstractImportMessages
 {
     private string $FROM_SHOP_TYPE;
+    private SimpleClient $client;
 
     /**
      * @throws Exception
@@ -31,8 +32,6 @@ class FnacImportMessages extends AbstractImportMessages
         $this->FROM_SHOP_TYPE = 'SELLER';
         return parent::__construct();
     }
-
-    static private ?SimpleClient $client = null;
 
     protected function getCredentials(): array
     {
@@ -47,17 +46,15 @@ class FnacImportMessages extends AbstractImportMessages
     /**
      * @throws Exception
      */
-    protected function initApiCLient(): ?SimpleClient
+    protected function initApiCLient(): SimpleClient
     {
-        if(self::$client == null) {
-            $client = new SimpleClient();
-            $client->init(self::getCredentials());
-            $client->checkAuth();
+        $client = new SimpleClient();
+        $client->init(self::getCredentials());
+        $client->checkAuth();
 
-            self::$client = $client;
-        }
+        $this->client = $client;
 
-        return self::$client;
+        return $this->client;
     }
 
     protected function getMessageApiId(Message|ThreadMessage $message): string
@@ -88,7 +85,7 @@ class FnacImportMessages extends AbstractImportMessages
 
         // GET LAST MESSAGES
         $this->logger->info('Init api');
-        $client = self::initApiClient();
+        $client = $this->initApiClient();
 
         $query = new MessageQuery();
         $query->setMessageType(MessageType::ORDER);
@@ -151,7 +148,7 @@ class FnacImportMessages extends AbstractImportMessages
             ]);
             if (setting('autoReplyActivate')) {
                 $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
+//                self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
     }
