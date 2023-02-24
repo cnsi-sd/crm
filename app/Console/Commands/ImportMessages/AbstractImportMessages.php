@@ -31,7 +31,6 @@ abstract class AbstractImportMessages extends Command
 {
     protected Logger $logger;
     protected Channel $channel;
-    protected string $log_path;
     protected static mixed $_alreadyImportedMessages = false;
 
     protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';

@@ -31,10 +31,8 @@ class FnacImportMessages extends AbstractImportMessages
         $this->FROM_SHOP_TYPE = 'SELLER';
         return parent::__construct();
     }
-    protected Logger $logger;
-    static private ?SimpleClient $client = null;
 
-    protected $description = 'Importing competing offers from testing Fnac.';
+    static private ?SimpleClient $client = null;
 
     protected function getCredentials(): array
     {

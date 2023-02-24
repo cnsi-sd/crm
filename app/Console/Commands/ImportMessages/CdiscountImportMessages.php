@@ -33,13 +33,6 @@ use Illuminate\Support\Facades\DB;
 
 class CdiscountImportMessages extends AbstractImportMessages
 {
-    protected Logger $logger;
-
-    protected $signature = 'cdiscount:import:messages';
-    protected $description = 'Command description';
-
-    protected string $channel_name = ChannelEnum::CDISCOUNT_FR;
-
     /**
      * @var ClientCdiscount
      */
@@ -57,21 +50,9 @@ class CdiscountImportMessages extends AbstractImportMessages
 
     public function __construct()
     {
+        $this->signature = sprintf($this->signature, 'cdiscount');
         $this->FROM_SHOP_TYPE = 'Seller';
         return parent::__construct();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getChannelName(): string
-    {
-        return ChannelEnum::CDISCOUNT_FR;
-    }
-
-    protected function getSnakeChannelName(): string
-    {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::CDISCOUNT_FR);
     }
 
     /**
@@ -81,9 +62,14 @@ class CdiscountImportMessages extends AbstractImportMessages
      */
     public function handle()
     {
+        $this->channel = Channel::getByName(ChannelEnum::CDISCOUNT_FR);
 
+        $this->logger = new Logger('import_message/'
+            . $this->channel->getSnakeName()
+            . '/' . $this->channel->getSnakeName()
+            . '.log', true, true
+        );
 
-        $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
         $this->logger->info('--- Start ---');
         try {
             $from_time = strtotime(date('Y-m-d H:m:s') . self::FROM_DATE_TRANSFORMATOR);
