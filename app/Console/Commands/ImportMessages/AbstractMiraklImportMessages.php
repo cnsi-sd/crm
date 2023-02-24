@@ -180,7 +180,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
     {
         return match ($authorType) {
             'CUSTOMER_USER' => TicketMessageAuthorTypeEnum::CUSTOMER,
-            'OPERATOR_USER' => TicketMessageAuthorTypeEnum::OPERATEUR,
+            'OPERATOR_USER' => TicketMessageAuthorTypeEnum::OPERATOR,
             default => throw new Exception('Bad author type')
         };
     }

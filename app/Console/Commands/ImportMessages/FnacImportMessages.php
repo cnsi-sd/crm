@@ -63,7 +63,7 @@ class FnacImportMessages extends AbstractImportMessages
     {
         return match ($authorType) {
             'CLIENT'        => TicketMessageAuthorTypeEnum::CUSTOMER,
-            'CALLCENTER'    => TicketMessageAuthorTypeEnum::OPERATEUR,
+            'CALLCENTER'    => TicketMessageAuthorTypeEnum::OPERATOR,
             default => throw new Exception('Bad author type.')
         };
     }
