@@ -16,7 +16,6 @@ use FnacApiClient\Entity\Message;
 use FnacApiClient\Service\Request\MessageQuery;
 use FnacApiClient\Type\MessageType;
 use Illuminate\Support\Facades\DB;
-use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class FnacImportMessages extends AbstractImportMessages
 {
@@ -55,16 +54,6 @@ class FnacImportMessages extends AbstractImportMessages
         $this->client = $client;
 
         return $this->client;
-    }
-
-    protected function getMessageApiId(Message|ThreadMessage $message): string
-    {
-        return $message->getMessageId();
-    }
-
-    protected function getMpOrderApiId($message, $thread = null)
-    {
-        return $message->getMessageReferer();
     }
 
     protected function getAuthorType(string $authorType): string
@@ -110,11 +99,11 @@ class FnacImportMessages extends AbstractImportMessages
             try {
                 DB::beginTransaction();
 
-                $messageId  = $this->getMessageApiId($message);
-                $mpOrderId  = $this->getMpOrderApiId($message);
+                $messageId  = $message->getMessageId();;
+                $mpOrderId  = $message->getMessageReferer();;
                 $order      = Order::getOrder($mpOrderId, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);
-                $thread     = Thread::getOrCreateThread($ticket, $message->getMessageReferer(), $message->getMessageSubject(), '');
+                $thread     = Thread::getOrCreateThread($ticket, $mpOrderId, $message->getMessageSubject(), '');
 
                 if (!$this->isMessagesImported($messageId)) {
                     $this->logger->info('Convert api message to db message');

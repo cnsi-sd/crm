@@ -42,16 +42,6 @@ class IcozaImportMessages extends AbstractImportMessages
         ];
     }
 
-    protected function getMessageApiId(ThreadMessage|Message $message): string
-    {
-        // TODO: Implement getMessageApiId() method.
-    }
-
-    protected function getMpOrderApiId($message, $thread = null)
-    {
-        // TODO: Implement getMpOrderApiId() method.
-    }
-
     protected function initApiClient(): ?Client
     {
         $client = new Client([
