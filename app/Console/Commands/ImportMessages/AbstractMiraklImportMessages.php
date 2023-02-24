@@ -161,9 +161,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 'channel_message_number' => $message_api->getId(),
             ],
                 [
-                    'thread_id' => $thread->id,
                     'user_id' => null,
-                    'channel_message_number' => $message_api->getId(),
                     'author_type' => self::getAuthorType($authorType),
                     'content' => strip_tags($message_api->getBody()),
                 ],

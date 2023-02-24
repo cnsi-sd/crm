@@ -175,9 +175,7 @@ class CdiscountImportMessages extends AbstractImportMessages
                 'channel_message_number' => $message_api->getMessageId(),
             ],
                 [
-                    'thread_id' => $thread->id,
                     'user_id' => null,
-                    'channel_message_number' => $message_api->getMessageId(),
                     'author_type' => self::getAuthorType($authorType),
                     'content' => strip_tags($message_api->getBody()),
                 ],

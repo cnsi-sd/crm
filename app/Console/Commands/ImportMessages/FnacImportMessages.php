@@ -144,15 +144,13 @@ class FnacImportMessages extends AbstractImportMessages
                 'channel_message_number' => $message_api->getMessageId(),
             ],
             [
-                'thread_id' => $thread->id,
                 'user_id' => null,
-                'channel-message_number' => $message_api->getMessageId(),
                 'author_type' => $this->getAuthorType($authorType),
                 'content' => strip_tags($message_api->getMessageDescription())
             ]);
             if (setting('autoReplyActivate')) {
                 $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
+//                self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
     }
