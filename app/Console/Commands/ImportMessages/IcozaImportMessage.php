@@ -19,12 +19,14 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class IcozaImportMessage extends AbstractImportMessages
 {
+    private string $FROM_SHOP_TYPE;
     /**
      * @throws Exception
      */
     public function __construct()
     {
         $this->signature =sprintf($this->signature,'icoza');
+        $this->FROM_SHOP_TYPE = 'ADMIN';
         return parent::__construct();
     }
 
@@ -103,9 +105,8 @@ class IcozaImportMessage extends AbstractImportMessages
             try {
                 DB::beginTransaction();
 
-                $channel    = $this->channel; // Channel = mp
-                $order      = Order::getOrder($message->order, $channel);
-                $ticket     = Ticket::getTicket($order, $channel);
+                $order      = Order::getOrder($message->order, $this->channel);
+                $ticket     = Ticket::getTicket($order, $this->channel);
                 $thread     = Thread::getOrCreateThread($ticket, $message->order, 'Icoza sujet', '');
 
                 if (!$this->isMessagesImported($message->id)) {
@@ -128,7 +129,7 @@ class IcozaImportMessage extends AbstractImportMessages
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
-        $isNotShopUser = self::isNotShopUser($authorType);
+        $isNotShopUser = self::isNotShopUser($authorType, $this->FROM_SHOP_TYPE);
 
         if($isNotShopUser) {
             $this->logger->info('Set ticket\'s status to waiting admin');
@@ -155,15 +156,6 @@ class IcozaImportMessage extends AbstractImportMessages
         }
     }
 
-    /**
-     * returns if the message type is SHOP_USER
-     * @param string $type
-     * @return bool
-     */
-    private static function isNotShopUser(string $type): bool
-    {
-        return !in_array($type, self::FROM_SHOP_TYPE);
-    }
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {

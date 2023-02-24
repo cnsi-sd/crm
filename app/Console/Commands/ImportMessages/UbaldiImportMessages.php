@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Mirakl;
+namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
@@ -19,11 +19,6 @@ class   UbaldiImportMessages extends AbstractMiraklImportMessages
     protected function getChannelName(): string
     {
         return ChannelEnum::UBALDI_COM;
-    }
-
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName(ChannelEnum::UBALDI_COM);
     }
 
     /**

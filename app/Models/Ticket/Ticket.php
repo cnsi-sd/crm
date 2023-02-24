@@ -189,7 +189,7 @@ class Ticket extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.tags.view'))
             ->setKey('tags_id')
-            ->setWhereKey('tags.id')
+            ->setWhereKey('tags.id') // TODO c'est ca qui cause l'id ambigüe?
             ->setType(ColumnTypeEnum::SELECT)
             ->setOptions(Tag::getTagsNames())
             ->setAlign(AlignEnum::CENTER)

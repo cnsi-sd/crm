@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Mirakl;
+namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
@@ -19,10 +19,6 @@ class ConforamaImportMessages extends AbstractMiraklImportMessages
     protected function getChannelName(): string
     {
         return ChannelEnum::CONFORAMA_FR;
-    }
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName(ChannelEnum::CONFORAMA_FR);
     }
 
     /**
