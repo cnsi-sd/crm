@@ -41,8 +41,14 @@ php8.1 artisan key:generate
 npm install
 npm run dev
 php8.1 artisan migrate
+php8.1 artisan db:seed --class=DevSeeder
+php8.1 artisan db:safe
 php8.1 artisan serve
 ```
+
+# Safe database
+La commande `db:safe` va modifier/censurer les différentes informations sensibles de la base de données.
+Elle doit être utilisée après chaque import d'une base de données de production.
 
 # Git
 Dans le fichier suivant `.git/config` remplacer `filemode = true` par `filemode = false`
