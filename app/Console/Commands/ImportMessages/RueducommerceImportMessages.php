@@ -21,12 +21,6 @@ class RueducommerceImportMessages extends AbstractMiraklImportMessages
         return ChannelEnum::RUEDUCOMMERCE_FR;
     }
 
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName(ChannelEnum::RUEDUCOMMERCE_FR);
-
-    }
-
     /**
      * @return array
      */

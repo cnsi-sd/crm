@@ -17,11 +17,17 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
-class IcozaImportMessage extends AbstractImportMessage
+class IcozaImportMessage extends AbstractImportMessages
 {
-    protected function getChannelName(): string
+    private string $FROM_SHOP_TYPE;
+    /**
+     * @throws Exception
+     */
+    public function __construct()
     {
-        return ChannelEnum::ICOZA_FR;
+        $this->signature =sprintf($this->signature,'icoza');
+        $this->FROM_SHOP_TYPE = 'ADMIN';
+        return parent::__construct();
     }
 
     protected function getCredentials(): array
@@ -43,24 +49,13 @@ class IcozaImportMessage extends AbstractImportMessage
         // TODO: Implement getMpOrderApiId() method.
     }
 
-    public function __construct()
-    {
-        $this->signature =sprintf($this->signature,'icoza');
-        return parent::__construct();
-    }
-
     protected Logger $logger;
     static private ?Client $client = null;
     const FROM_SHOP_TYPE = [
         TicketMessageAuthorTypeEnum::ADMIN
     ];
 
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName($this->getChannelName());
-    }
-
-    protected function initApiClient()
+    protected function initApiClient(): ?Client
     {
         if(self::$client == null) {
 
@@ -78,13 +73,17 @@ class IcozaImportMessage extends AbstractImportMessage
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
     public function handle()
     {
+        // Load Channel
+        $this->channel = Channel::getByName(ChannelEnum::ICOZA_FR);
+
         $this->logger = new Logger(
             'import_message/'
-            . $this->getSnakeChannelName() . '/'
-            . $this->getSnakeChannelName()
+            . $this->channel->getSnakeName() . '/'
+            . $this->channel->getSnakeName()
             . '.log', true, true
         );
         $this->logger->info('--- Start ---');
@@ -106,9 +105,8 @@ class IcozaImportMessage extends AbstractImportMessage
             try {
                 DB::beginTransaction();
 
-                $channel    = Channel::getByName($this->getChannelName()); // Channel = mp
-                $order      = Order::getOrder($message->order, $channel);
-                $ticket     = Ticket::getTicket($order, $channel);
+                $order      = Order::getOrder($message->order, $this->channel);
+                $ticket     = Ticket::getTicket($order, $this->channel);
                 $thread     = Thread::getOrCreateThread($ticket, $message->order, 'Icoza sujet', '');
 
                 if (!$this->isMessagesImported($message->id)) {
@@ -122,16 +120,16 @@ class IcozaImportMessage extends AbstractImportMessage
             } catch (Exception $e) {
                 $this->logger->error('An error has occurred. Rolling back.', $e);
                 DB::rollBack();
-//                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
             }
         }
     }
 
-    public function convertApiResponseToMessage(Ticket $ticket, $message, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
-        $isNotShopUser = self::isNotShopUser($authorType);
+        $isNotShopUser = self::isNotShopUser($authorType, $this->FROM_SHOP_TYPE);
 
         if($isNotShopUser) {
             $this->logger->info('Set ticket\'s status to waiting admin');
@@ -141,32 +139,23 @@ class IcozaImportMessage extends AbstractImportMessage
 
             \App\Models\Ticket\Message::firstOrCreate([
                 'thread_id' => $thread->id,
-                'channel_message_number' => $message->id,
+                'channel_message_number' => $message_api->id,
             ],
                 [
                     'thread_id' => $thread->id,
                     'user_id' => null,
-                    'channel_message_number' => $message->id,
-                    'direct_customer_email' => $message->email,
+                    'channel_message_number' => $message_api->id,
+                    'direct_customer_email' => $message_api->email,
                     'author_type' => self::getAuthorType($authorType),
-                    'content' => strip_tags($message->content)
+                    'content' => strip_tags($message_api->content)
                 ]);
             if (setting('autoReplyActivate')) {
                 $this->logger->info('Send auto reply');
-//                self::sendAutoReply(setting('autoReply'), $thread);
+                self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
     }
 
-    /**
-     * returns if the message type is SHOP_USER
-     * @param string $type
-     * @return bool
-     */
-    private static function isNotShopUser(string $type): bool
-    {
-        return !in_array($type, self::FROM_SHOP_TYPE);
-    }
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {

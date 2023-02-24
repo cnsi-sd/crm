@@ -30,13 +30,20 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 
     const FROM_SHOP_TYPE = 'SHOP_USER';
 
+    abstract protected function getChannelName(): string;
 
     /**
      * @throws Exception
      */
     public function handle()
     {
-        $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
+        $this->channel = Channel::getByName($this->getChannelName());
+        $this->logger = new Logger('import_message/'
+            . $this->channel->getSnakeName() . '/'
+            . $this->channel->getSnakeName()
+            . '.log', true, true
+        );
+
         $this->logger->info('--- Start ---');
         try {
             $date_time = new DateTime();
@@ -69,9 +76,8 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 $this->logger->info('Begin Transaction');
 
                 $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
-                $channel = Channel::getByName($this->getChannelName());
-                $order = Order::getOrder($mpOrderId, $channel);
-                $ticket = Ticket::getTicket($order, $channel);
+                $order = Order::getOrder($mpOrderId, $this->channel);
+                $ticket = Ticket::getTicket($order, $this->channel);
 
                 $this->logger->info('Message recovery');
                 /** @var ThreadMessage[] $messages */

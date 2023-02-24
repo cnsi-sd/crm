@@ -14,41 +14,25 @@ use Exception;
 use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\Message;
 use FnacApiClient\Service\Request\MessageQuery;
-use FnacApiClient\Type\MessageFromType;
 use FnacApiClient\Type\MessageType;
 use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class FnacImportMessages extends AbstractImportMessages
 {
+    private string $FROM_SHOP_TYPE;
 
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'fnac');
+        $this->FROM_SHOP_TYPE = 'SELLER';
         return parent::__construct();
     }
     protected Logger $logger;
     static private ?SimpleClient $client = null;
-
-    /**
-     * @throws Exception
-     */
-    protected function getChannelName(): string
-    {
-        return ChannelEnum::FNAC_COM;
-    }
-
-    const FROM_SHOP_TYPE = [
-        'SELLER' => TicketMessageAuthorTypeEnum::ADMIN
-    ];
-
-    /**
-     * @throws Exception
-     */
-    protected function getSnakeChannelName(): string
-    {
-        return (new Channel)->getSnakeName($this->getChannelName());
-    }
 
     protected $description = 'Importing competing offers from testing Fnac.';
 
@@ -69,8 +53,6 @@ class FnacImportMessages extends AbstractImportMessages
     {
         if(self::$client == null) {
             $client = new SimpleClient();
-
-            $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
             $client->init(self::getCredentials());
             $client->checkAuth();
 
@@ -95,10 +77,13 @@ class FnacImportMessages extends AbstractImportMessages
      */
     public function handle()
     {
+        // Load channel
+        $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
+
         $this->logger = new Logger(
             'import_message/'
-            . $this->getSnakeChannelName() . '/'
-            . $this->getSnakeChannelName()
+            . $this->channel->getSnakeName() . '/'
+            . $this->channel->getSnakeName()
             . '.log', true, true
         );
         $this->logger->info('--- Start ---');
@@ -124,9 +109,8 @@ class FnacImportMessages extends AbstractImportMessages
 
                 $messageId  = $this->getMessageApiId($message);
                 $mpOrderId  = $this->getMpOrderApiId($message);
-                $channel    = Channel::getByName($this->getChannelName()); // Channel = mp
-                $order      = Order::getOrder($mpOrderId, $channel);
-                $ticket     = Ticket::getTicket($order, $channel);
+                $order      = Order::getOrder($mpOrderId, $this->channel);
+                $ticket     = Ticket::getTicket($order, $this->channel);
                 $thread     = Thread::getOrCreateThread($ticket, $message->getMessageReferer(), $message->getMessageSubject(), '');
 
                 if (!$this->isMessagesImported($messageId)) {
@@ -148,7 +132,7 @@ class FnacImportMessages extends AbstractImportMessages
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = $message_api->getMessageFromType();
-        $isNotShopUser = self::isNotShopUser($authorType);
+        $isNotShopUser = self::isNotShopUser($authorType , $this->FROM_SHOP_TYPE);
 
         if($isNotShopUser) {
             $this->logger->info('Set ticket\'s status to waiting admin');
@@ -174,15 +158,6 @@ class FnacImportMessages extends AbstractImportMessages
         }
     }
 
-    /**
-     * returns if the message type is SHOP_USER
-     * @param string $type
-     * @return bool
-     */
-    private static function isNotShopUser(string $type): bool
-    {
-        return !in_array($type, self::FROM_SHOP_TYPE);
-    }
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {

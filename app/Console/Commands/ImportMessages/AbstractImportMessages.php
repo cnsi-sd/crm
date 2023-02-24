@@ -10,6 +10,7 @@ use App\Jobs\SendMessage\CdiscountSendMessage;
 use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\DartySendMessage;
 use App\Jobs\SendMessage\FnacSendMessage;
+use App\Jobs\SendMessage\IcozaSendMessage;
 use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
@@ -29,15 +30,12 @@ use Illuminate\Console\Command;
 abstract class AbstractImportMessages extends Command
 {
     protected Logger $logger;
+    protected Channel $channel;
     protected string $log_path;
     protected static mixed $_alreadyImportedMessages = false;
 
     protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
     protected $description = 'Importing messages from Marketplace.';
-
-    abstract protected function getChannelName(): string;
-
-    abstract protected function getSnakeChannelName(): string;
 
     abstract protected function getCredentials(): array;
 
@@ -52,7 +50,7 @@ abstract class AbstractImportMessages extends Command
      * @param $FROM_SHOP_TYPE
      * @return bool
      */
-    private static function isNotShopUser(string $type, $FROM_SHOP_TYPE): bool
+    protected static function isNotShopUser(string $type, $FROM_SHOP_TYPE): bool
     {
         return $FROM_SHOP_TYPE !== $type;
     }
@@ -67,7 +65,7 @@ abstract class AbstractImportMessages extends Command
                 ->select('channel_message_number')
                 ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
                 ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
-                ->where('channel_id', Channel::getByName($this->getChannelName())->id)
+                ->where('channel_id', $this->channel->id)
                 ->get()
                 ->pluck('channel_message_number', 'channel_message_number')
                 ->toArray();
@@ -111,7 +109,8 @@ abstract class AbstractImportMessages extends Command
             ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($autoReply),
             ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($autoReply),
             ChannelEnum::CDISCOUNT_FR => CdiscountSendMessage::dispatch($autoReply),
-            ChannelEnum::FNAC_COM => FnacSendMessage::dispatch($autoReply)
+            ChannelEnum::FNAC_COM => FnacSendMessage::dispatch($autoReply),
+            ChannelEnum::ICOZA_FR => IcozaSendMessage::dispatch($autoReply),
         };
     }
 }
