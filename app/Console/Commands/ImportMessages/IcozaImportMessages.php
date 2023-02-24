@@ -20,6 +20,11 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 class IcozaImportMessages extends AbstractImportMessages
 {
     private string $FROM_SHOP_TYPE;
+    const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
+    private Client $client;
+    const FROM_SHOP_TYPE = [
+        TicketMessageAuthorTypeEnum::ADMIN
+    ];
     /**
      * @throws Exception
      */
@@ -37,7 +42,6 @@ class IcozaImportMessages extends AbstractImportMessages
             'key'   => env('ICOZA_API_KEY'),
         ];
     }
-    const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
 
     protected function getMessageApiId(ThreadMessage|Message $message): string
     {
@@ -48,11 +52,6 @@ class IcozaImportMessages extends AbstractImportMessages
     {
         // TODO: Implement getMpOrderApiId() method.
     }
-
-    private Client $client;
-    const FROM_SHOP_TYPE = [
-        TicketMessageAuthorTypeEnum::ADMIN
-    ];
 
     protected function initApiClient(): ?Client
     {

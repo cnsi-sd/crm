@@ -67,6 +67,14 @@ class FnacImportMessages extends AbstractImportMessages
         return $message->getMessageReferer();
     }
 
+    protected function getAuthorType(string $authorType): string
+    {
+        return match ($authorType) {
+            'CLIENT'        => TicketMessageAuthorTypeEnum::CUSTOMER,
+            'CALLCENTER'    => TicketMessageAuthorTypeEnum::OPERATEUR,
+        };
+    }
+
     /**
      * @throws Exception
      */
@@ -148,16 +156,8 @@ class FnacImportMessages extends AbstractImportMessages
             ]);
             if (setting('autoReplyActivate')) {
                 $this->logger->info('Send auto reply');
-//                self::sendAutoReply(setting('autoReply'), $thread);
+                self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
-    }
-
-    protected function getAuthorType(string $authorType): string
-    {
-        return match ($authorType) {
-            'CLIENT'        => TicketMessageAuthorTypeEnum::CUSTOMER,
-            'CALLCENTER'    => TicketMessageAuthorTypeEnum::OPERATEUR,
-        };
     }
 }
