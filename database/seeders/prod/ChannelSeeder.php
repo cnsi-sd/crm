@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\prod;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
