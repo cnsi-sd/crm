@@ -14,7 +14,7 @@ use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
 use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\RueducommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\Channel;

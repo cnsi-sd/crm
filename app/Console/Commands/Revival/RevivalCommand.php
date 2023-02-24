@@ -13,7 +13,7 @@ use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
 use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\RueducommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\DefaultAnswer;
@@ -159,7 +159,7 @@ class RevivalCommand extends Command
                 ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($messageBD),
                 ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($messageBD),
                 ChannelEnum::METRO_FR => MetroSendMessage::dispatch($messageBD),
-                ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($messageBD),
+                ChannelEnum::RUEDUCOMMERCE_FR => RueducommerceSendMessage::dispatch($messageBD),
                 ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($messageBD),
                 ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($messageBD),
             };
