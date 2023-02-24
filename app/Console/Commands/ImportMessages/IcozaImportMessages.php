@@ -17,7 +17,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
-class IcozaImportMessage extends AbstractImportMessages
+class IcozaImportMessages extends AbstractImportMessages
 {
     private string $FROM_SHOP_TYPE;
     /**
