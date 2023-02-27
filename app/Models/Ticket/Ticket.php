@@ -121,7 +121,8 @@ class Ticket extends Model
 
         $columns[] = TableColumnBuilder::id()
             ->setSearchable(true)
-            ->setSortable(true);
+            ->setSortable(true)
+            ->setWhereKey('tickets.id');
 
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.deadline'))
