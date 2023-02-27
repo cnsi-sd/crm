@@ -1,11 +1,11 @@
 $( document ).ready(function() {
-    $('.card-header').click(function () {
-            $.get('/tickets/toggle_comment/' + $(this).data("comment-id"), function(data) {
+    $('.thread-comments .card-header').click(function () {
+            $.get($(this).data("toggle-comment-route"), function(data) {
         });
     });
 
     $('#order-info-tab').one("click", function () {
-        $.get('/tickets/get_external_infos/' + $(this).data("order-id"), function(data) {
+        $.get($(this).data("get-external-infos-route"), function(data) {
             $("#ext-order-link").attr('href', $("#ext-order-link").attr('href') + data.externalOrderInfo.reference);
             $("#ext-order-id").text(data.externalOrderInfo.id_order);
             $("#ext-order-state").text(data.externalOrderInfo.state);
@@ -37,7 +37,9 @@ $( document ).ready(function() {
                     data.externalSuppliers.find(element => element.id_supplier == item.id_definitive_supplier).name+
                     '</td></tr>');
             });
-        });
+            $("#order-info-content").css("display", "flex");
+            $("#order-info-spinner").remove();
+         });
     });
     function floatToString(value, currency, round) {
         if(!value)

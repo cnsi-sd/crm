@@ -1,4 +1,7 @@
-<div class="row">
+<div class="p-4 d-flex justify-content-center" id="order-info-spinner">
+    <div class="spinner-border text-primary" role="status"></div>
+</div>
+<div class="row" id="order-info-content">
     <div class="col-5">
         <div class="card">
             <div class="card-header">

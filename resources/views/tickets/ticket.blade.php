@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date) {{ $ticket->delivery_date->format("Y-m-d") }} @endif"/></div>
+                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date){{ $ticket->delivery_date->format("Y-m-d") }}@endif"/></div>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +179,7 @@
                             <button class="nav-link active" id="hide-tab" data-bs-toggle="tab" data-bs-target="#hide" type="button" role="tab" aria-controls="hide" aria-selected="true"><i class="uil-home"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="order-info-tab" data-bs-toggle="tab" data-bs-target="#order-info" data-order-id="{{ $ticket->id }}" type="button" role="tab" aria-controls="order-info" aria-selected="false">{{ __('app.order_info') }}</button>
+                            <button class="nav-link" id="order-info-tab" data-bs-toggle="tab" data-bs-target="#order-info" data-get-external-infos-route="{{ route("get_external_infos", ['ticket' => $ticket->id]) }}" type="button" role="tab" aria-controls="order-info" aria-selected="false">{{ __('app.order_info') }}</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="customer-service-process-tab" data-bs-toggle="tab" data-bs-target="#customer-service-process" type="button" role="tab" aria-controls="customer-service-process" aria-selected="false">{{ __('app.customer_service_process') }}</button>
