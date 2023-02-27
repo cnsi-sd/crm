@@ -67,9 +67,14 @@ class IcozaSendMessage extends AbstractSendMessage
 
             $this->logger->info('--- Start ---');
 
-            $threadNumber = $this->message->thread->channel_thread_number;
-            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
+          // If we are in local environment, we'll send messages only to a test order
+            if (env('APP_ENV') == 'local')
+                // Get the test order
+                $threadNumber = '526-SOOTUCIZG';
+            else
+                $threadNumber = $this->message->thread->channel_thread_number;
 
+            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
             $this->logger->info('Init api');
             $client = self::initApiClient();
 
