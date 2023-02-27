@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Search;
 
 use App\Helpers\Alert;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Models\Ticket\Ticket;
 use App\Models\Channel\Order;
 use Illuminate\Http\Request;
 
-class SearchController extends Controller
+class SearchAbstractController extends AbstractController
 {
     public function search(Request $request)
     {

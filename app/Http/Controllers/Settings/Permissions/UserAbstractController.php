@@ -7,7 +7,7 @@ use App\Enums\FixedWidthEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Helpers\Builder\Table\TableColumnBuilder;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Models\User\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ use function __;
 use function redirect;
 use function view;
 
-class UserController extends Controller
+class UserAbstractController extends AbstractController
 {
     public function list(Request $request): View
     {

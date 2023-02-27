@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Models\Tags\TagList;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class TagsController extends Controller
+class TagsAbstractController extends AbstractController
 {
 
     public function list(Request $request): View

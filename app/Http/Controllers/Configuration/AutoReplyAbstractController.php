@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Configuration;
 
 use Akaunting\Setting;
 use App\Helpers\Alert;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use Illuminate\Http\Request;
 
-class AutoReplyController extends Controller
+class AutoReplyAbstractController extends AbstractController
 {
 
     public function edit(Request $request){
