@@ -77,8 +77,7 @@ class CdiscountImportMessages extends AbstractImportMessages
 
             $this->logger->info('--- Init api client ---');
             $this->initApiClient();
-            $discussion = new DiscussionsApi(self::$client, env('CDISCOUNT_SELLERID'));
-
+            $discussion = new DiscussionsApi(self::$client,env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
             $this->logger->info('--- Get all discussions ---');
             $listDiscussionId = $discussion->getAllDiscussions($from_date);
 
@@ -97,9 +96,8 @@ class CdiscountImportMessages extends AbstractImportMessages
                     $this->logger->info('Begin Transaction');
 
                     $orderReference = $discu->getOrderReference();
-                    $channel = Channel::getByName($this->getChannelName());
-                    $order = Order::getOrder($orderReference, $channel);
-                    $ticket = Ticket::getTicket($order, $channel);
+                    $order = Order::getOrder($orderReference, $this->channel);
+                    $ticket = Ticket::getTicket($order, $this->channel);
 
                     $this->logger->info('Message recovery');
                     $messages = $discu->getMessages();
@@ -147,6 +145,7 @@ class CdiscountImportMessages extends AbstractImportMessages
     {
         foreach ($messages as $message) {
             $imported_id = $message->getMessageId();
+            $authorType = $message->getSender()->getUserType();
             $this->logger->info('Check if this message is imported');
             if (!$this->isMessagesImported($imported_id)) {
                 $this->logger->info('Convert api message to db message');
@@ -183,16 +182,19 @@ class CdiscountImportMessages extends AbstractImportMessages
         }
         if (setting('autoReplyActivate') && $ticket->order->channel_order_number == '2302201135UQL01') {
             $this->logger->info('Send auto reply');
-//            self::sendAutoReply(setting('autoReply'), $thread);
+            self::sendAutoReply(setting('autoReply'), $thread);
         }
     }
 
-    //TODO Il faut vérifier les auteurs des messages et renvoyer une erreur quand le $authorType reçus n'est pas attendu dans le match
+    /**
+     * @throws Exception
+     */
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'Customer' => TicketMessageAuthorTypeEnum::CUSTOMER, //
-            default => TicketMessageAuthorTypeEnum::OPERATOR,
+            'GrcOperator' => TicketMessageAuthorTypeEnum::OPERATOR, //
+            default => throw new Exception('Bad author type.')
         };
     }
 }
