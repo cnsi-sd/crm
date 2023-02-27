@@ -61,17 +61,14 @@ class TicketController extends Controller
     {
         $query = Ticket::query()
             ->select(
-                'tickets.id as ticketsId',
-                'ticket_threads.id as ticket_threadsId',
-                'tagLists.id as tagListsId',
-                'tags.id as tagsId')
-            ->join('ticket_threads', 'ticket_threads.ticket_id', 'ticketsId')
-            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threadsId')
-            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagListsId')
-            ->leftJoin('tags', 'tagsId', 'tag_tagLists.tag_id')
+                'tickets.*')
+            ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
+            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
+            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
+            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
             ->where('tickets.user_id', $user->id)
             ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
-            ->groupBy('ticketsId');
+            ->groupBy('tickets.id');
 
         $table = (new TableBuilder('user_tickets', $request))
             ->setColumns(Ticket::getTableColumns('user'))

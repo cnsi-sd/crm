@@ -46,7 +46,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             $date_time->modify(self::FROM_DATE_TRANSFORMATOR);
 
             $request = new GetThreadsRequest();
-            $request->setUpdatedSince($date_time);
+//            $request->setUpdatedSince($date_time);
             $request->setWithMessages(true);
             $this->logger->info('Init api');
             $client = $this->initApiClient();
