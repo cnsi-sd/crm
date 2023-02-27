@@ -57,7 +57,7 @@ class TicketController extends Controller
     {
         $ticket = null;
         $channel_id = Channel::query()
-            ->where('name', 'LIKE', '%'.$channel.'%')->first()->id;
+            ->where('ext_name', $channel)->first()->id;
 
         if ($channel_id) {
             $order = Order::query()
