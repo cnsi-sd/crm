@@ -2,6 +2,7 @@
 
 namespace App\Jobs\SendMessage;
 
+use App\Models\Channel\Channel;
 use App\Models\Ticket\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,6 +15,7 @@ abstract class AbstractSendMessage implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public Message $message;
+    protected Channel $channel;
 
     public function __construct(Message $message)
     {

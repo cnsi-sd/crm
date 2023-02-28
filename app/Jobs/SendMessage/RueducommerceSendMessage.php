@@ -2,7 +2,7 @@
 
 namespace App\Jobs\SendMessage;
 
-class RueDuCommerceSendMessage extends AbstractMiraklSendMessage
+class RueducommerceSendMessage extends AbstractMiraklSendMessage
 {
 
     protected function getCredentials(): array

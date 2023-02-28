@@ -7,6 +7,7 @@ use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendMessage\ConforamaSendMessage;
+use App\Jobs\SendMessage\IcozaSendMessage;
 use App\Models\Tags\TagList;
 use App\Models\Tags\Tag;
 use App\Enums\Channel\ChannelEnum;
@@ -18,7 +19,7 @@ use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
 use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\RueducommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Ticket\Ticket;
@@ -61,7 +62,7 @@ class TicketController extends Controller
             ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
             ->where('user_id', $user->id)
             ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
-            ->groupBy('tickets.id');
+            ->groupBy('ticketsId');
 
         $table = (new TableBuilder('user_tickets', $request))
             ->setColumns(Ticket::getTableColumns('user'))
@@ -162,10 +163,11 @@ class TicketController extends Controller
                     ChannelEnum::LAPOSTE_FR         => LaposteSendMessage::dispatch($message),
                     ChannelEnum::E_LECLERC          => LeclercSendMessage::dispatch($message),
                     ChannelEnum::METRO_FR           => MetroSendMessage::dispatch($message),
-                    ChannelEnum::RUEDUCOMMERCE_FR   => RueDuCommerceSendMessage::dispatch($message),
+                    ChannelEnum::RUEDUCOMMERCE_FR   => RueducommerceSendMessage::dispatch($message),
                     ChannelEnum::SHOWROOMPRIVE_COM  => ShowroomSendMessage::dispatch($message),
                     ChannelEnum::UBALDI_COM         => UbaldiSendMessage::dispatch($message),
-                    ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message)
+                    ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
+                    ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
                 };
             }
             if($request->input('ticket-thread-comments-content')) {
