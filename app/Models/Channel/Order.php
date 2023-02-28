@@ -4,6 +4,7 @@ namespace App\Models\Channel;
 
 use App\Models\Ticket\Ticket;
 use DateTime;
+use Cnsi\Searchable\Models\Search\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,6 +22,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
+    use Searchable;
+
+    protected $searchable = [
+        'channel_order_number',
+    ];
+
     protected $fillable = [
         'channel_id',
         'channel_order_number',
@@ -45,6 +52,17 @@ class Order extends Model
                 'channel_order_number' => $orderId,
             ],
         );
+    }
+
+    public function getShowRoute(): string
+    {
+        return "order";
+    }
+
+    public function __toString(): string
+    {
+        $default_name = $this->channel_order_number . ' - ' . $this->channel->name;
+        return $default_name;
     }
 
     public function tickets(): HasMany

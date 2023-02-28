@@ -13,6 +13,7 @@ use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\User\User;
+use Cnsi\Searchable\Models\Search\Searchable;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
@@ -43,6 +44,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ticket extends Model
 {
+    use Searchable;
+
+    protected $searchable = [
+        'id',
+    ];
+
     protected $table = 'tickets';
 
     protected $fillable = [
@@ -72,6 +79,17 @@ class Ticket extends Model
                 'user_id' => $channel->user_id,
             ],
         );
+    }
+
+    public function getShowRoute(): string
+    {
+        return "ticket";
+    }
+
+    public function __toString(): string
+    {
+        $default_name = '#' . $this->id . ' - ' . $this->order->channel_order_number . ' - ' . $this->order->channel->name;
+        return $default_name;
     }
 
     /**

@@ -6,29 +6,41 @@ use App\Helpers\Alert;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket\Ticket;
 use App\Models\Channel\Order;
-use Illuminate\Http\Request;
+use Cnsi\Searchable\Models\Search\Search;
+use Illuminate\Http\Request;use Illuminate\View\View;
 
 class SearchController extends Controller
 {
-    public function search(Request $request)
+    public function search(Request $request): View|RedirectResponse|JsonResponse
     {
-        if ($request->input()){
-            $term = $request->input('term');
-            $queryTicket = Ticket::query()->where('id',$term)->exists();
-            if ($queryTicket) {
-                return redirect()->route('ticket', [$term]);
-            } else {
-                $queryOrder = Order::query()->where('channel_order_number', $term)->first();
-                if($queryOrder) {
-                    return redirect()->route('ticket', [$queryOrder->tickets()->first()->id]);
-                }
-            }
-            alert::toastError(__('app.no_results'));
-            return redirect()->route('all_tickets');
-        } else {
-            alert::toastWarning(__('app.no_term'));
-            return redirect()->route('all_tickets');
+        // search parameters
+        $term       = $request->get("term") ?? "";
+        $entities   = $request->get("entities") ?? [];
+        $json       = $request->get("json") ?? false;
+
+        // search results
+        $search     = new Search($term, $entities);
+        $results    = $search->getResults();
+        $nb_results = $search->countResults();
+
+        // returns
+        // if json set to true, return a json encoded response
+        if($json) {
+            return response()->json($search->getFlattenedResults());
         }
+
+        // if none ajax request with single result : redirect
+        if($nb_results == 1 && !$request->ajax()) {
+            $model = $search->getFirstResult();
+            return redirect(route($model->getShowRoute(), $model));
+        }
+
+        // otherwise return a view, ajaxified or not
+        $view  = $request->ajax() ? 'admin.search.search_ajax' : 'admin.search.search';
+        return view($view)
+            ->with('term', $term)
+            ->with('nb_results', $nb_results)
+            ->with('results', $results);
     }
 }
 
