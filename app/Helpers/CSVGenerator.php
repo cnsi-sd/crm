@@ -117,9 +117,9 @@ class CSVGenerator
      *      $header = false pour ne pas mettre de headers
      * @return string The CSV filePath
      */
-    public function createCsvFromArray(string $prefix, array $csvLines, bool|array $header = true): string
+    public function createCsvFromArray(string $prefix, array $csvLines, bool|array $header = true, $needUniqId = true): string
     {
-        $fileName = uniqid($prefix . '_', true) . '.csv';
+        $fileName = ($needUniqId ? uniqid($prefix . '_', true) : $prefix) . '.csv';
         $filePath = storage_path() . '/' . $fileName;
 
         $this->file = fopen($filePath, 'w+');

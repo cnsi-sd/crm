@@ -29,7 +29,7 @@ class AlertTicketDelay extends Command
         ;
 
         if($ticketquery->count() > 0){
-            $filename = "TicketDelay/Alert-ticket-delay_" . date('Y-m-d');
+            $filename = "TicketDelay/Alert-ticket-delay_" . date('d-m-Y H:i:s');
 
             // Set header collunm
             $fields = array('TICKET_ID','RESPONSABLE','SUJET','STATUS','PRIORITÉ','CANAL DE DIFFUSION');
@@ -43,11 +43,11 @@ class AlertTicketDelay extends Command
                     $listTicket[] = array($ticket['id'], $ticket['user_name'], $ticket['thread_name'], $state , $ticket['priority'], $ticket['channel_name']);
                 }
             }
-            $csvFile = (new CSVGenerator())->createCsvFromArray($filename, $listTicket, $fields);
-            $recipients = explode(',', env('ERROR_RECIPIENTS'));
+            $csvFile = (new CSVGenerator())->createCsvFromArray($filename, $listTicket, $fields, false);
+            $recipients = explode(',', env('TICKET_DELAY_RECIPIENTS'));
             $data["email"] = $recipients;
-            $data["title"] =
-            $data["body"] = "Vous avez ". $ticketquery->count() . " ticket qui ont été repousser de plus de 15jours";;
+            $data["title"] = "Ticket décalé : " . date('d-m-Y') ;
+            $data["body"] = "Vous avez ". $ticketquery->count() . " ticket". ($ticketquery->count() > 1 ? "s " : " " ) ."qui ont été repousser de plus de 15jours, vous les trouverez ci-joint au mail.";
 
 
             Mail::send('emails.ticketDelay', $data, function($message)use($data, $csvFile) {
