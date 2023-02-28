@@ -120,7 +120,7 @@ class CSVGenerator
     public function createCsvFromArray(string $prefix, array $csvLines, bool|array $header = true): string
     {
         $fileName = uniqid($prefix . '_', true) . '.csv';
-        $filePath = sys_get_temp_dir() . '/' . $fileName;
+        $filePath = storage_path() . '/' . $fileName;
 
         $this->file = fopen($filePath, 'w+');
         if (count($csvLines) > 0) {

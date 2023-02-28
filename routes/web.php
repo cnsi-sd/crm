@@ -84,11 +84,11 @@ Route::middleware('checkActive')->group(function () {
     });
 });
 // CALL AJAX
-Route::get('/ajaxTags', [TagsController::class, 'ajax_tags']);
-Route::post('/addTagList', [TagsController::class, 'newTagLigne']);
-Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags']);
-Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList']);
-Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag']);
+    Route::get('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');
+    Route::post('/addTagList', [TagsController::class, 'newTagLine'])->name('addTagList');
+    Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags'])->name('saveTagOnticketThread');
+    Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList'])->name('deleteTagList');
+    Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnThread');
 
 Route::group(['prefix' => '/'], function () {
     Route::get('', function () {

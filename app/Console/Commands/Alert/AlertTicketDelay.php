@@ -6,6 +6,7 @@ use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\CSVGenerator;
 use App\Models\Ticket\Ticket;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class AlertTicketDelay extends Command
 {
@@ -28,17 +29,33 @@ class AlertTicketDelay extends Command
         ;
 
         if($ticketquery->count() > 0){
-            $filename = "Alert-ticket-delay_" . date('Y-m-d');
+            $filename = "TicketDelay/Alert-ticket-delay_" . date('Y-m-d');
 
             // Set header collunm
             $fields = array('TICKET_ID','RESPONSABLE','SUJET','STATUS','PRIORITÉ','CANAL DE DIFFUSION');
             $listTicket = array();
             foreach ($ticketquery as $ticket) {
+                if($ticket['state'] === TicketStateEnum::WAITING_CUSTOMER)
+                    $state = 'ATTENTE CLIENT';
+                elseif ($ticket['state'] === TicketStateEnum::WAITING_ADMIN)
+                    $state = 'ATTENTE ADMIN';
                 if($ticket['state'] === TicketStateEnum::WAITING_CUSTOMER || $ticket['state'] === TicketStateEnum::WAITING_ADMIN){
-                    $listTicket[] = array($ticket['id'], $ticket['user_name'], $ticket['thread_name'], $ticket['state'], $ticket['priority'], $ticket['channel_name']);
+                    $listTicket[] = array($ticket['id'], $ticket['user_name'], $ticket['thread_name'], $state , $ticket['priority'], $ticket['channel_name']);
                 }
             }
             $csvFile = (new CSVGenerator())->createCsvFromArray($filename, $listTicket, $fields);
+            $recipients = explode(',', env('ERROR_RECIPIENTS'));
+            $data["email"] = $recipients;
+            $data["title"] =
+            $data["body"] = "Vous avez ". $ticketquery->count() . " ticket qui ont été repousser de plus de 15jours";;
+
+
+            Mail::send('emails.ticketDelay', $data, function($message)use($data, $csvFile) {
+                $message->to($data["email"], $data["email"])
+                    ->subject($data["title"])
+                    ->attach($csvFile);
+
+            });
             print_r($csvFile);
         }
 

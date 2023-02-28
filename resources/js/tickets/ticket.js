@@ -17,7 +17,8 @@ function addListTagOnThread(e){
     // create new line in db
     let lineId;
     let thread_id = e.target.getAttribute("data-thread_id")
-    window.axios.post('/addTagList', {
+    let url = e.target.getAttribute("data-url_add_tag")
+    window.axios.post(url_add_tag_list, {
         thread_id: thread_id
     }).then(function (response) {
         lineId = response.data;
@@ -62,7 +63,7 @@ function addListTagOnThread(e){
 }
 
 function makeOption(select){
-    window.axios.get('/ajaxTags').then(function (response){
+    window.axios.get(url_show_tags).then(function (response){
         let json = response.data.data;
         let option = document.createElement('option')
         option.text = "Aucune";
@@ -78,7 +79,7 @@ function makeOption(select){
 function saveTicketThreadTags(e) {
     let tag_id = e.target.options[e.target.options.selectedIndex].value;
     let taglist_id = e.target.getAttribute("data-taglist_id");
-    window.axios.post('/saveTicketThreadTags', {
+    window.axios.post(url_save_tag_on_ticketThread, {
         taglist_id: taglist_id,
         tag_id: tag_id
     }).then(function(response) {
@@ -105,7 +106,7 @@ function saveTicketThreadTags(e) {
 function deleteTagLists(e){
     let thread_id = e.target.getAttribute("data-thread_id");
     let taglist_id = e.target.getAttribute("data-taglist_id");
-    window.axios.post('/deleteTagList', {
+    window.axios.post(url_delete_tagList, {
         thread_id: thread_id,
         taglist_id: taglist_id
     }).then(
@@ -116,7 +117,7 @@ function deleteTagLists(e){
 function deleteThreadTag(e) {
     let tag_id = e.target.getAttribute('data-tag_id');
     let taglist_id = e.target.getAttribute("data-taglist_id");
-    window.axios.post('/deleteThreadTagOnTagList', {
+    window.axios.post(url_delete_TagList_On_Thread, {
         tag_id: tag_id,
         taglist_id: taglist_id
     }).then(

@@ -190,7 +190,7 @@
                         <div class="card-header d-flex">
                             <p class="w-100">{{ trans_choice('app.tags.tags', 2) }}</p>
                             <button type="button" id="add" class="btn btn-success flex-shrink-1"
-                                    data-thread_id="{{$activeThread['id']}}">+
+                                    data-thread_id="{{$activeThread['id']}}" data-url_add_tag="{{route('addTagList')}}">+
                             </button>
                         </div>
                         <div class="card-body" id="card-body-tag">
@@ -369,7 +369,13 @@
             </div>
         </form>
     </div>
+    {!! \App\Helpers\JS::define('url_show_tags', route('ajaxShowTags')) !!}
+    {!! \App\Helpers\JS::define('url_add_tag_list', route('addTagList')) !!}
+    {!! \App\Helpers\JS::define('url_save_tag_on_ticketThread', route('saveTagOnticketThread')) !!}
+    {!! \App\Helpers\JS::define('url_delete_tagList', route('deleteTagList')) !!}
+    {!! \App\Helpers\JS::define('url_delete_TagList_On_Thread', route('deleteTagListOnThread')) !!}
 @endsection
 @section('script-bottom')
+
     <script src="{{ Vite::asset('resources/js/tickets/ticket.js') }}"></script>
 @endsection

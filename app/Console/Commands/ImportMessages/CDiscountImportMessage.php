@@ -83,7 +83,7 @@ class CDiscountImportMessage extends AbstractImportMessage
 
             $this->logger->info('--- Init api client ---');
             $this->initApiClient();
-            $discussion = new DiscussionsApi(self::$client, env('CDISCOUNT_SELLERID'));
+            $discussion = new DiscussionsApi(self::$client,env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
 
             $this->logger->info('--- Get all discussions ---');
             $listDiscussionId = $discussion->getAllDiscussions($from_date);

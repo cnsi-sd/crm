@@ -12,7 +12,6 @@ use App\Models\Tags\Tag;
 use App\Enums\Channel\ChannelEnum;
 use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\DartySendMessage;
 use App\Jobs\SendMessage\FnacSendMessage;
 use App\Jobs\SendMessage\IntermarcheSendMessage;
@@ -41,10 +40,7 @@ class TicketController extends Controller
     {
         $query = Ticket::query()
             ->select('tickets.*')
-            ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
-            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
-            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
-            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
+            ->join('ticket_threads', 'ticket_threads.ticket_id', '=','tickets.id')
             ->groupBy('tickets.id');
         $table = (new TableBuilder('all_tickets', $request))
             ->setColumns(Ticket::getTableColumns())
@@ -52,9 +48,10 @@ class TicketController extends Controller
             ->setQuery($query);
 
         $tickets = $query->get();
+
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
@@ -62,9 +59,6 @@ class TicketController extends Controller
         $query = Ticket::query()
             ->select('tickets.*')
             ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
-            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
-            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
-            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
             ->where('user_id', $user->id)
             ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
             ->groupBy('tickets.id');
@@ -75,10 +69,10 @@ class TicketController extends Controller
             ->setQuery($query);
 
         $tickets = $query->get();
-
+        
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));;
 
     }
 

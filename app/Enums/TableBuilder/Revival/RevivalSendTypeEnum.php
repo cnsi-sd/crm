@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums\Revival;
+namespace App\Enums\TableBuilder\Revival;
 
 use App\Enums\AbstractEnum;
 

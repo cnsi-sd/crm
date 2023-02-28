@@ -2,6 +2,7 @@
 
 namespace App\Jobs\SendMessage;
 
+use Cnsi\Cdiscount\ClientCdiscount;
 use Cnsi\Cdiscount\DiscussionsApi;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,7 +26,8 @@ class CdiscountSendMessage extends AbstractSendMessage
      */
     public function handle(): void
     {
-        $discussion = new DiscussionsApi('CNSI SD', '3008c6aa-6043-457a-abd5-81439911e20d', 33222);
+        $client = new ClientCdiscount(env('CDISCOUNT_USERNAME'), env('CDISCOUNT_PASSWORD'));
+        $discussion = new DiscussionsApi($client, env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
 
         $channel_data = json_decode($this->message->thread->channel_data);
 
