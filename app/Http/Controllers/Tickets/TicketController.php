@@ -69,7 +69,7 @@ class TicketController extends Controller
             ->setQuery($query);
 
         $tickets = $query->get();
-        
+
         return view('tickets.all_tickets')
             ->with('table', $table)
             ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));;
