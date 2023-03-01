@@ -141,8 +141,3 @@ Breadcrumbs::for('edit_tags', function (BreadcrumbTrail $trail) {
     $trail->parent('tags');
     $trail->push(__('app.tags.edit'));
 });
-
-Breadcrumbs::for('search', function (BreadcrumbTrail $trail) {
-    $trail->parent('home');
-    $trail->push(__('app.search'));
-});
