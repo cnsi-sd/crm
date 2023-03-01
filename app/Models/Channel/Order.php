@@ -3,8 +3,8 @@
 namespace App\Models\Channel;
 
 use App\Models\Ticket\Ticket;
+use Cnsi\Searchable\Trait\Searchable;
 use DateTime;
-use Cnsi\Searchable\Models\Search\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;

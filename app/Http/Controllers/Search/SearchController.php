@@ -6,7 +6,7 @@ use App\Helpers\Alert;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket\Ticket;
 use App\Models\Channel\Order;
-use Cnsi\Searchable\Models\Search\Search;
+use Cnsi\Searchable\Handler\Search;
 use Illuminate\Http\Request;use Illuminate\View\View;
 
 class SearchController extends Controller
