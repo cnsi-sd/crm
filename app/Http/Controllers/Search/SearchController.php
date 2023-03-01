@@ -42,5 +42,3 @@ class SearchController extends Controller
             ->with('results', $results);
     }
 }
-
-?>
