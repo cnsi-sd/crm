@@ -48,6 +48,7 @@ class Ticket extends Model
 
     protected $searchable = [
         'id',
+        'order.channel_order_number',
     ];
 
     protected $table = 'tickets';

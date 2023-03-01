@@ -123,10 +123,6 @@ return [
         'saved' => 'Ticket enregistré',
     ],
 
-    'order' => [
-        'order' => 'Commande',
-    ],
-
     'login' => [
         'login' => 'Connexion',
         'sign_in' => 'Identification',

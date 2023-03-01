@@ -97,11 +97,6 @@ class TicketController extends Controller
         return redirect()->route('ticket_thread', [$ticket,$threadId]);
     }
 
-    public function order(Request $request, Order $order)
-    {
-        return redirect()->route('ticket', $order->tickets()->first()->id);
-    }
-
     public function hide_comment(Comment $comment, $status = 200): \Illuminate\Http\JsonResponse
     {
         $comment->displayed = !$comment->displayed;
