@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Search;
 
-use App\Helpers\Alert;
 use App\Http\Controllers\Controller;
-use App\Models\Ticket\Ticket;
-use App\Models\Channel\Order;
 use Cnsi\Searchable\Handler\Search;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;use Illuminate\View\View;
 
 class SearchController extends Controller
