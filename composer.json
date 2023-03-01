@@ -10,6 +10,7 @@
         "cnsi/fnac-api-client": "dev-master",
         "cnsi/cdiscount-api-client": "dev-main",
         "cnsi/logger": "dev-main",
+        "cnsi/searchable": "dev-main",
         "diglactic/laravel-breadcrumbs": "8.0.1",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
@@ -87,6 +88,10 @@
         {
             "type": "vcs",
             "url": "https://gitlab+deploy-token-21:_yZqWhVcdSX7sSycsVxw@git.cnsi-sd.net/packages/cdiscountapiclient.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token:glpat-mMrz46pU-V2KDZWgrSZ6@git.cnsi-sd.net/packages/searchable.git"
         }
     ]
 }
