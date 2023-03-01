@@ -1,9 +1,9 @@
-@extends('layouts.horizontal', ["page_title"=> __('app.search_term', ["term" => $term]) ])
+@extends('layouts.horizontal', ["page_title"=> __('searchable::search.term', ["term" => $term]) ])
 
 @section('content')
     <div class="container-fluid">
         <h1>
-            {{ __('app.search_term', ["term" => $term]) }}
+            {{ __('searchable::search.term', ["term" => $term]) }}
         </h1>
         <div class="row">
             @foreach ($results as $model => $model_results)

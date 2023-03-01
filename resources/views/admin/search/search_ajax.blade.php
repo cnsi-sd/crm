@@ -1,5 +1,5 @@
 <div class="dropdown-header noti-title">
-    <h5 class="text-overflow mb-2">{{ __('app.search_results') }} <span class="text-danger">{{ $nb_results }}</span></h5>
+    <h5 class="text-overflow mb-2">{{ __('searchable::search.results') }} <span class="text-danger">{{ $nb_results }}</span></h5>
 </div>
 
 @foreach ($results as $model => $model_results)
