@@ -1,3 +1,7 @@
+/**
+ * THIS FILE COMES FROM THE CNSI/SEARCHABLE PACKAGE. YOU SHOULD NOT MODIFY IT.
+ */
+
 $('input#top-search').on('keyup', function()
 {
     let term = $(this).val();
