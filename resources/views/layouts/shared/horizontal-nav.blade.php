@@ -72,15 +72,14 @@
             <form action="{{ route('search') }}" method="POST">
                 @csrf
                 <div class="input-group">
-                    <input type="text" class="form-control dropdown-toggle" placeholder="{{__('app.search_example')}}..." id="top-search" name="term" autocomplete="off">
+                    <input type="text" class="form-control" placeholder="{{__('app.search')}}..." id="top-search" name="term">
                     <span class="mdi mdi-magnify search-icon"></span>
                     <button class="input-group-text  btn-primary" type="submit">{{__('app.search')}}</button>
                 </div>
             </form>
 
             <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
-                <div class="loading-ring float-center"></div>
-                <div id="ajax_search"></div>
+
             </div>
 
         </div>

@@ -41,10 +41,6 @@ return [
     'product_return' => 'Retour produits',
     'customer_service_process' => 'Procédure SAV',
 
-    'search_term' => "Recherche \":term\"",
-    'search_example' => "ticket id, commande mp, ...",
-    'search_results' => "Résultats trouvés : ",
-
     'navbar' => [
         'dashboard' => 'Tableau de bord',
         'settings' => 'Paramètres',

@@ -55,6 +55,7 @@ Route::middleware('checkActive')->group(function() {
                 Route::match(['get', 'post'], '', [UserController::class, 'list'])->name('users')->can('read', User::class);
             });
     });
+    Route::match(['get','post'], 'search', [SearchController::class, 'search'])->name('search')->can('read', Ticket::class);
 });
 
 Route::middleware('checkActive')->group(function () {
