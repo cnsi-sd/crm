@@ -68,22 +68,7 @@
                 <span></span>
             </div>
         </a>
-        <div class="app-search dropdown">
-            <form action="{{ route('search') }}" method="POST">
-                @csrf
-                <div class="input-group">
-                    <input type="text" class="form-control dropdown-toggle" placeholder="{{  __('searchable::search.example') }}" id="top-search" name="term" autocomplete="off">
-                    <span class="mdi mdi-magnify search-icon"></span>
-                    <button class="input-group-text  btn-primary" type="submit">{{__('searchable::search.search')}}</button>
-                </div>
-            </form>
-
-            <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
-                <div class="loading-ring float-center"></div>
-                <div id="ajax_search"></div>
-            </div>
-
-        </div>
+        @include('searchable::search_input')
     </div>
 </div>
 <!-- end Topbar -->
