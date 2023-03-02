@@ -78,6 +78,7 @@ Route::prefix('/')->group(function () {
         Route::prefix('channel')->group(function () {
             Route::match(['get', 'post'], '', [ChannelController::class, 'list'])->name('channels')->can('read', Channel::class);
             Route::match(['get', 'post'], '{channel}', [ChannelController::class, 'edit'])->name('edit_channel')->can('edit', Channel::class);
+        });
         Route::prefix('tags')->group(function () {
             Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tag::class);
             Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', Tag::class);
@@ -86,7 +87,7 @@ Route::prefix('/')->group(function () {
         });
     });
 
-// CALL AJAX
+    // CALL AJAX
     Route::get('/ajaxTags', [TagsController::class, 'ajax_tags']);
     Route::post('/addTagList', [TagsController::class, 'newTagLigne']);
     Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags']);

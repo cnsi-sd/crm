@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Tickets;
 
-use App\Enums\Ticket\TicketCommentTypeEnum;
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\IcozaSendMessage;
+use App\Models\Tags\Tag;
 use App\Models\Tags\TagList;
-use App\Models\Tags\Tags;
 use App\Enums\Channel\ChannelEnum;
 use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
@@ -31,10 +31,11 @@ use App\Models\Channel\Channel;
 use App\Models\User\User;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Http;
-use function view;
 
 class TicketController extends AbstractController
 {
@@ -55,7 +56,7 @@ class TicketController extends AbstractController
         $tickets = $query->get();
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+            ->with('liste', (new Tag())->getlistTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
@@ -80,7 +81,7 @@ class TicketController extends AbstractController
 
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+            ->with('liste', (new Tag())->getlistTagWithTickets($tickets));
 
     }
 
@@ -125,7 +126,7 @@ class TicketController extends AbstractController
         return redirect()->route('ticket', [$ticket]);
     }
 
-    public function redirectTicket(Request $request, ?Ticket $ticket)
+    public function redirectTicket(Request $request, ?Ticket $ticket): RedirectResponse
     {
         if ($ticket->last_thread_displayed) {
             $threadId = $ticket->last_thread_displayed;
@@ -135,14 +136,14 @@ class TicketController extends AbstractController
         return redirect()->route('ticket_thread', [$ticket,$threadId]);
     }
 
-    public function toggle_comment(Comment $comment): \Illuminate\Http\JsonResponse
+    public function toggle_comment(Comment $comment): JsonResponse
     {
         $comment->displayed = !$comment->displayed;
         $comment->save();
         return response()->json(['message' => 'success']);
     }
 
-    public function get_external_infos(Ticket $ticket): \Illuminate\Http\JsonResponse
+    public function get_external_infos(Ticket $ticket): JsonResponse
     {
         $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
         $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
@@ -192,7 +193,7 @@ class TicketController extends AbstractController
                 $message = Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
-                    'author_type' => \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN,
+                    'author_type' => TicketMessageAuthorTypeEnum::ADMIN,
                     'content' => $request->input('ticket-thread-messages-content'),
                 ]);
 
@@ -231,11 +232,8 @@ class TicketController extends AbstractController
             abort(404);
 
         return view('tickets.ticket')
-            ->with('ticket',$ticket)
-            ->with('thread',$thread)
-            ->with('externalOrderInfo',$externalOrderInfo)
-            ->with('externalAdditionalOrderInfo',$externalAdditionalOrderInfo)
-            ->with('externalSuppliers',$externalSuppliers);
+            ->with('ticket', $ticket)
+            ->with('thread', $thread);
     }
 
     public function getExternalOrderInfo($mp_order, $mp_name)
