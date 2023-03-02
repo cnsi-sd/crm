@@ -83,7 +83,7 @@ class RakutenImportMessages extends AbstractImportMessages
                         $authorType == 'Rakuten'
                             ? TicketMessageAuthorTypeEnum::OPERATOR
                             : TicketMessageAuthorTypeEnum::CUSTOMER,
-                    'content' => $messageApi['Message'],
+                    'content' => strip_tags($messageApi['Message']),
                 ],
             );
             if (setting('autoReplyActivate')) {
@@ -128,10 +128,9 @@ class RakutenImportMessages extends AbstractImportMessages
                 $this->logger->info('Begin Transaction');
 
                 if(isset($messages[0])){
-                $orderId = $messages[0]['MpOrderId'];
                 $order  = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
                 $ticket = Ticket::getTicket($order, $this->channel);
-                $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpOrderId'], 'Sujet?', '');
+                $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpOrderId'], $messages[0]['type'], '');
                 $this->importMessageByThread($ticket, $thread, $messages);
                 }
             }
@@ -158,11 +157,11 @@ class RakutenImportMessages extends AbstractImportMessages
             )->getBody()
             ->getContents();
 
-        return $this->xmlResponseToArray($items);
+        return $this->xmlItemsToArray($items);
         //TODO throw error if not success
     }
 
-    private function xmlResponseToArray($response): array
+    private function xmlItemsToArray($response): array
     {
         $messages = array();
 
@@ -252,7 +251,7 @@ class RakutenImportMessages extends AbstractImportMessages
     private function getInfos($msgsId, $client): array
     {
         $this->logger->info('Get messages list');
-        $array = [];
+        $arrayMessages = [];
         foreach ($msgsId as $msgId => $type) {
             $messages = $client->request(
                 'GET', $this->getCredentials()['host'] . '/sales_ws?action=getiteminfos&login='
@@ -263,10 +262,16 @@ class RakutenImportMessages extends AbstractImportMessages
             )->getBody()
                 ->getContents();
 
-            $array[] = $this->xmlThreadToArray($messages);
+            $messagesList = $this->xmlThreadToArray($messages);
+            if (isset($messagesList[0]))
+                foreach($messagesList as &$msg){
+                    $msg['type'] = $type;
+                }
+
+            $arrayMessages[] = $messagesList;
         }
 
-        return $array;
+        return $arrayMessages;
     }
 
     protected function removeCdata($fieldString): array|string
