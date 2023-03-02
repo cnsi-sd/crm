@@ -1,11 +1,11 @@
-$( document ).ready(function() {
+$(document).ready(function () {
     $('.thread-comments .card-header').click(function () {
-            $.get($(this).data("toggle-comment-route"), function(data) {
+        $.get($(this).data("toggle-comment-route"), function (data) {
         });
     });
 
     $('#order-info-tab').one("click", function () {
-        $.get($(this).data("get-external-infos-route"), function(data) {
+        $.get($(this).data("get-external-infos-route"), function (data) {
             $("#ext-order-link").attr('href', $("#ext-order-link").attr('href') + data.externalOrderInfo.reference);
             $("#ext-order-id").text(data.externalOrderInfo.id_order);
             $("#ext-order-state").text(data.externalOrderInfo.state);
@@ -31,24 +31,25 @@ $( document ).ready(function() {
             $("#ext-order-shipping-postcode-city").text(data.externalOrderInfo.shipping_address.postcode + " " + data.externalOrderInfo.shipping_address.city);
             $("#ext-order-shipping-phone").text(data.externalOrderInfo.shipping_address.phone);
             $("#ext-order-shipping-phone-mobile").text(data.externalOrderInfo.shipping_address.phone_mobile);
-            data.externalOrderInfo.items.forEach(function(item){
-                $('#ext-order-items tbody').append('<tr><td>'+item.product_name+' - '+item.product_reference+' - '+
-                    item.product_ean13+'</td><td>'+item.product_quantity+'</td><td>'+
-                    data.externalSuppliers.find(element => element.id_supplier == item.id_definitive_supplier).name+
+            data.externalOrderInfo.items.forEach(function (item) {
+                $('#ext-order-items tbody').append('<tr><td>' + item.product_name + ' - ' + item.product_reference + ' - ' +
+                    item.product_ean13 + '</td><td>' + item.product_quantity + '</td><td>' +
+                    data.externalSuppliers.find(element => element.id_supplier == item.id_definitive_supplier).name +
                     '</td></tr>');
             });
             $("#order-info-content").css("display", "flex");
             $("#order-info-spinner").remove();
-         });
+        });
     });
+
     function floatToString(value, currency, round) {
-        if(!value)
+        if (!value)
             return '--';
-        if(round) {
+        if (round) {
             round = Math.pow(10, round);
             value = Math.round(value * round) / round;
         }
-        return value.toString().replace('.',',') + ' ' + currency;
+        return value.toString().replace('.', ',') + ' ' + currency;
     }
 });
 
@@ -60,7 +61,7 @@ $('.tags').on('select2:select', saveTicketThreadTags);
 $('.deleteTaglist').on("click", deleteTagLists);
 $('.delete-tag').on("click", deleteThreadTag)
 
-function addListTagOnThread(e){
+function addListTagOnThread(e) {
     // create new line in db
     let lineId;
     let thread_id = e.target.getAttribute("data-thread_id")
@@ -100,7 +101,7 @@ function addListTagOnThread(e){
 
         //create div view tags
         let divView = document.createElement("div");
-        divView.id = "view-"+lineId;
+        divView.id = "view-" + lineId;
         divView.className = "mt-3 mb-2";
         divLine.appendChild(divView);
         $(divLine).append("<hr/>")
@@ -108,8 +109,8 @@ function addListTagOnThread(e){
 
 }
 
-function makeOption(select){
-    window.axios.get('/ajaxTags').then(function (response){
+function makeOption(select) {
+    window.axios.get('/ajaxTags').then(function (response) {
         let json = response.data.data;
         let option = document.createElement('option')
         option.text = "Aucune";
@@ -122,14 +123,15 @@ function makeOption(select){
         })
     })
 }
+
 function saveTicketThreadTags(e) {
     let tag_id = e.target.options[e.target.options.selectedIndex].value;
     let taglist_id = e.target.getAttribute("data-taglist_id");
     window.axios.post('/saveTicketThreadTags', {
         taglist_id: taglist_id,
         tag_id: tag_id
-    }).then(function(response) {
-        let divViewTag = document.getElementById('view-'+ taglist_id)
+    }).then(function (response) {
+        let divViewTag = document.getElementById('view-' + taglist_id)
         let span = document.createElement('span')
 
         let buttonDeleteTag = document.createElement('button')
@@ -149,7 +151,7 @@ function saveTicketThreadTags(e) {
     })
 }
 
-function deleteTagLists(e){
+function deleteTagLists(e) {
     let thread_id = e.target.getAttribute("data-thread_id");
     let taglist_id = e.target.getAttribute("data-taglist_id");
     window.axios.post('/deleteTagList', {
