@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Mirakl;
+namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
 
-class LaPosteImportMessages extends AbstractMiraklImportMessage
+class LaposteImportMessages extends AbstractMiraklImportMessages
 {
-
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'laposte');
@@ -19,11 +18,6 @@ class LaPosteImportMessages extends AbstractMiraklImportMessage
     protected function getChannelName(): string
     {
         return ChannelEnum::LAPOSTE_FR;
-    }
-
-    protected function getSnakeChannelName(): string
-    {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::LAPOSTE_FR);
     }
 
     /**

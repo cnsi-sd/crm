@@ -14,7 +14,7 @@ use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
 use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\RueducommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\Channel;
@@ -31,15 +31,8 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class CDiscountImportMessage extends AbstractImportMessage
+class CdiscountImportMessages extends AbstractImportMessages
 {
-    protected Logger $logger;
-
-    protected $signature = 'cdiscount:import:messages';
-    protected $description = 'Command description';
-
-    protected string $channel_name = ChannelEnum::CDISCOUNT_FR;
-
     /**
      * @var ClientCdiscount
      */
@@ -53,19 +46,13 @@ class CDiscountImportMessage extends AbstractImportMessage
         'THIS IS A WARNING ONLY.',
         'Votre demande d’annulation a été acceptée. Le remboursement est en cours.',
     ];
+    private string $FROM_SHOP_TYPE;
 
-
-    /**
-     * @return string
-     */
-    protected function getChannelName(): string
+    public function __construct()
     {
-        return ChannelEnum::CDISCOUNT_FR;
-    }
-
-    protected function getSnakeChannelName(): string
-    {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::CDISCOUNT_FR);
+        $this->signature = sprintf($this->signature, 'cdiscount');
+        $this->FROM_SHOP_TYPE = 'Seller';
+        return parent::__construct();
     }
 
     /**
@@ -75,7 +62,14 @@ class CDiscountImportMessage extends AbstractImportMessage
      */
     public function handle()
     {
-        $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
+        $this->channel = Channel::getByName(ChannelEnum::CDISCOUNT_FR);
+
+        $this->logger = new Logger('import_message/'
+            . $this->channel->getSnakeName()
+            . '/' . $this->channel->getSnakeName()
+            . '.log', true, true
+        );
+
         $this->logger->info('--- Start ---');
         try {
             $from_time = strtotime(date('Y-m-d H:m:s') . self::FROM_DATE_TRANSFORMATOR);
@@ -83,8 +77,7 @@ class CDiscountImportMessage extends AbstractImportMessage
 
             $this->logger->info('--- Init api client ---');
             $this->initApiClient();
-            $discussion = new DiscussionsApi(self::$client, env('CDISCOUNT_SELLERID'));
-
+            $discussion = new DiscussionsApi(self::$client,env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
             $this->logger->info('--- Get all discussions ---');
             $listDiscussionId = $discussion->getAllDiscussions($from_date);
 
@@ -103,9 +96,8 @@ class CDiscountImportMessage extends AbstractImportMessage
                     $this->logger->info('Begin Transaction');
 
                     $orderReference = $discu->getOrderReference();
-                    $channel = Channel::getByName($this->getChannelName());
-                    $order = Order::getOrder($orderReference, $channel);
-                    $ticket = Ticket::getTicket($order, $channel);
+                    $order = Order::getOrder($orderReference, $this->channel);
+                    $ticket = Ticket::getTicket($order, $this->channel);
 
                     $this->logger->info('Message recovery');
                     $messages = $discu->getMessages();
@@ -143,18 +135,6 @@ class CDiscountImportMessage extends AbstractImportMessage
         );
     }
 
-    const FROM_SHOP_TYPE = 'Seller';
-
-    /**
-     * returns if the message type is SHOP_USER
-     * @param string $type
-     * @return bool
-     */
-    private static function isNotShopUser(string $type): bool
-    {
-        return self::FROM_SHOP_TYPE !== $type;
-    }
-
     /**
      * @param Ticket $ticket
      * @param Thread $thread
@@ -165,6 +145,7 @@ class CDiscountImportMessage extends AbstractImportMessage
     {
         foreach ($messages as $message) {
             $imported_id = $message->getMessageId();
+            $authorType = $message->getSender()->getUserType();
             $this->logger->info('Check if this message is imported');
             if (!$this->isMessagesImported($imported_id)) {
                 $this->logger->info('Convert api message to db message');
@@ -183,7 +164,7 @@ class CDiscountImportMessage extends AbstractImportMessage
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = $message_api->getSender()->getUserType();
-        $isNotShopUser = self::isNotShopUser($authorType);
+        $isNotShopUser = self::isNotShopUser($authorType, $this->FROM_SHOP_TYPE);
         if ($isNotShopUser) {
             $this->logger->info('Set ticket\'s status to waiting admin');
             $ticket->state = TicketStateEnum::WAITING_ADMIN;
@@ -193,9 +174,7 @@ class CDiscountImportMessage extends AbstractImportMessage
                 'channel_message_number' => $message_api->getMessageId(),
             ],
                 [
-                    'thread_id' => $thread->id,
                     'user_id' => null,
-                    'channel_message_number' => $message_api->getMessageId(),
                     'author_type' => self::getAuthorType($authorType),
                     'content' => strip_tags($message_api->getBody()),
                 ],
@@ -207,12 +186,15 @@ class CDiscountImportMessage extends AbstractImportMessage
         }
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
-            'Customer' => TicketMessageAuthorTypeEnum::CUSTOMER,
-            default => TicketMessageAuthorTypeEnum::OPERATEUR,
+            'Customer' => TicketMessageAuthorTypeEnum::CUSTOMER, //
+            'GrcOperator' => TicketMessageAuthorTypeEnum::OPERATOR, //
+            default => throw new Exception('Bad author type.')
         };
     }
-
 }

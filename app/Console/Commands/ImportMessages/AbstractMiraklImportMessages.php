@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Mirakl;
+namespace App\Console\Commands\ImportMessages;
 
-use App\Console\Commands\ImportMessages\AbstractImportMessage;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Channel\Channel;
@@ -19,25 +18,28 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadTopic;
 use Mirakl\MMP\OperatorShop\Request\Message\GetThreadsRequest;
 use Mirakl\MMP\Shop\Client\ShopApiClient;
 
-abstract class AbstractMiraklImportMessage extends AbstractImportMessage
+abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 {
-    protected Logger $logger;
-    protected string $log_path;
-
     public ShopApiClient $client;
 
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
-
     const FROM_SHOP_TYPE = 'SHOP_USER';
 
+    abstract protected function getChannelName(): string;
 
     /**
      * @throws Exception
      */
     public function handle()
     {
-        $this->logger = new Logger('import_message/' . $this->getSnakeChannelName() . '/' . $this->getSnakeChannelName() . '.log', true, true);
+        $this->channel = Channel::getByName($this->getChannelName());
+        $this->logger = new Logger('import_message/'
+            . $this->channel->getSnakeName() . '/'
+            . $this->channel->getSnakeName()
+            . '.log', true, true
+        );
+
         $this->logger->info('--- Start ---');
         try {
             $date_time = new DateTime();
@@ -70,9 +72,8 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
                 $this->logger->info('Begin Transaction');
 
                 $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
-                $channel = Channel::getByName($this->getChannelName());
-                $order = Order::getOrder($mpOrderId, $channel);
-                $ticket = Ticket::getTicket($order, $channel);
+                $order = Order::getOrder($mpOrderId, $this->channel);
+                $ticket = Ticket::getTicket($order, $this->channel);
 
                 $this->logger->info('Message recovery');
                 /** @var ThreadMessage[] $messages */
@@ -160,25 +161,27 @@ abstract class AbstractMiraklImportMessage extends AbstractImportMessage
                 'channel_message_number' => $message_api->getId(),
             ],
                 [
-                    'thread_id' => $thread->id,
                     'user_id' => null,
-                    'channel_message_number' => $message_api->getId(),
                     'author_type' => self::getAuthorType($authorType),
                     'content' => strip_tags($message_api->getBody()),
                 ],
             );
             if (setting('autoReplyActivate')) {
                 $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
+//                self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'CUSTOMER_USER' => TicketMessageAuthorTypeEnum::CUSTOMER,
-            default => TicketMessageAuthorTypeEnum::OPERATEUR,
+            'OPERATOR_USER' => TicketMessageAuthorTypeEnum::OPERATOR,
+            default => throw new Exception('Bad author type')
         };
     }
 

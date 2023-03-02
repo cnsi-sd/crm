@@ -10,11 +10,12 @@ use App\Jobs\SendMessage\CdiscountSendMessage;
 use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\DartySendMessage;
 use App\Jobs\SendMessage\FnacSendMessage;
+use App\Jobs\SendMessage\IcozaSendMessage;
 use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
 use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\RueducommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\Channel;
@@ -26,24 +27,19 @@ use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
 
-abstract class AbstractImportMessage extends Command
+abstract class AbstractImportMessages extends Command
 {
     protected Logger $logger;
-    protected string $log_path;
+    protected Channel $channel;
     protected static mixed $_alreadyImportedMessages = false;
 
     protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
     protected $description = 'Importing messages from Marketplace.';
 
-    abstract protected function getChannelName(): string;
-
-    abstract protected function getSnakeChannelName(): string;
-
     abstract protected function getCredentials(): array;
 
     abstract protected function initApiClient();
 
-    abstract protected function getAuthorType(string $authorType): string;
     abstract protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread);
 
     /**
@@ -52,7 +48,7 @@ abstract class AbstractImportMessage extends Command
      * @param $FROM_SHOP_TYPE
      * @return bool
      */
-    private static function isNotShopUser(string $type, $FROM_SHOP_TYPE): bool
+    protected static function isNotShopUser(string $type, $FROM_SHOP_TYPE): bool
     {
         return $FROM_SHOP_TYPE !== $type;
     }
@@ -67,7 +63,7 @@ abstract class AbstractImportMessage extends Command
                 ->select('channel_message_number')
                 ->join('ticket_threads', 'ticket_threads.id', '=', 'ticket_thread_messages.thread_id') // thread
                 ->join('tickets', 'tickets.id', '=', 'ticket_threads.ticket_id') // ticket
-                ->where('channel_id', Channel::getByName($this->getChannelName())->id)
+                ->where('channel_id', $this->channel->id)
                 ->get()
                 ->pluck('channel_message_number', 'channel_message_number')
                 ->toArray();
@@ -107,11 +103,12 @@ abstract class AbstractImportMessage extends Command
             ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($autoReply),
             ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($autoReply),
             ChannelEnum::METRO_FR => MetroSendMessage::dispatch($autoReply),
-            ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($autoReply),
+            ChannelEnum::RUEDUCOMMERCE_FR => RueducommerceSendMessage::dispatch($autoReply),
             ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($autoReply),
             ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($autoReply),
             ChannelEnum::CDISCOUNT_FR => CdiscountSendMessage::dispatch($autoReply),
-            ChannelEnum::FNAC_COM => FnacSendMessage::dispatch($autoReply)
+            ChannelEnum::FNAC_COM => FnacSendMessage::dispatch($autoReply),
+            ChannelEnum::ICOZA_FR => IcozaSendMessage::dispatch($autoReply),
         };
     }
 }
