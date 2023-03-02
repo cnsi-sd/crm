@@ -54,7 +54,7 @@ class RakutenImportMessages extends AbstractImportMessages
         ];
     }
 
-    protected function initApiClient()
+    protected function initApiClient(): Client
     {
         $client = new Client([
             'token' => self::getCredentials()['token'],
@@ -95,7 +95,6 @@ class RakutenImportMessages extends AbstractImportMessages
 
     /**
      * @throws Exception
-     * @throws GuzzleException
      */
     public function handle()
     {
@@ -122,23 +121,26 @@ class RakutenImportMessages extends AbstractImportMessages
         $threadList = $this->getInfos($items, $client);
         $threads = $this->sortMessagesByDate($threadList);
 
-        foreach($threads as $messages) {
-            $this->logger->info('Begin Transaction');
+
+        try {
             DB::beginTransaction();
-            try {
+            foreach($threads as $messages) {
+                $this->logger->info('Begin Transaction');
+
                 if(isset($messages[0])){
-                    $order  = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
-                    $ticket = Ticket::getTicket($order, $this->channel);
-                    $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpOrderId'], 'Sujet?', '');
-                    $this->importMessageByThread($ticket, $thread, $messages);
-                    DB::commit();
+                $orderId = $messages[0]['MpOrderId'];
+                $order  = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
+                $ticket = Ticket::getTicket($order, $this->channel);
+                $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpOrderId'], 'Sujet?', '');
+                $this->importMessageByThread($ticket, $thread, $messages);
                 }
-            } catch (Exception $e) {
-                $this->logger->error('An error has occurred. Rolling back.', $e);
-                DB::rollBack();
-//                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
-                return;
             }
+            DB::commit();
+        } catch (Exception $e) {
+            $this->logger->error('An error has occurred. Rolling back.', $e);
+            DB::rollBack();
+//                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+            return;
         }
 
         $this->logger->info('Get messages');
@@ -149,18 +151,18 @@ class RakutenImportMessages extends AbstractImportMessages
         $this->logger->info('Get thread list');
 
         $items = $client->request(
-            'GET', $this->getCredentials()['host'] . '/sales_ws?action=getitemtodolist&login='
-            . env('RAKUTEN_LOGIN')
-            . '&pwd=' . env('RAKUTEN_PASSWORD')
-            . '&version=' . self::getitemtodolist_version
-        )->getBody()
+                'GET', $this->getCredentials()['host'] . '/sales_ws?action=getitemtodolist&login='
+                . env('RAKUTEN_LOGIN')
+                . '&pwd=' . env('RAKUTEN_PASSWORD')
+                . '&version=' . self::getitemtodolist_version
+            )->getBody()
             ->getContents();
 
         return $this->xmlResponseToArray($items);
         //TODO throw error if not success
     }
 
-    private function xmlResponseToArray($response)
+    private function xmlResponseToArray($response): array
     {
         $messages = array();
 
@@ -188,7 +190,7 @@ class RakutenImportMessages extends AbstractImportMessages
         return $messages;
     }
 
-    private function xmlThreadToArray($xml)
+    private function xmlThreadToArray($xml): array
     {
         $messages = [];
 
@@ -247,7 +249,7 @@ class RakutenImportMessages extends AbstractImportMessages
         return $messages;
     }
 
-    private function getInfos($msgsId, $client)
+    private function getInfos($msgsId, $client): array
     {
         $this->logger->info('Get messages list');
         $array = [];
@@ -267,7 +269,7 @@ class RakutenImportMessages extends AbstractImportMessages
         return $array;
     }
 
-    protected function removeCdata($fieldString)
+    protected function removeCdata($fieldString): array|string
     {
         $fieldString = str_replace('<![CDATA[', '', $fieldString);
         $fieldString = str_replace(']]', '', $fieldString);
@@ -299,7 +301,6 @@ class RakutenImportMessages extends AbstractImportMessages
     {
         foreach ($messages as $message) {
             $message['id'] = crc32($message['Message'] . $message['MpCustomerId'] . $message['Date']);
-//            $messageId = crc32($message['Message'] . $message['MpCustomerId'] . $message['Date']);
             $this->logger->info('Check if this message is imported');
             if(!$this->isMessagesImported($message['id'])){
                 $this->logger->info('Convert api message to db message');
