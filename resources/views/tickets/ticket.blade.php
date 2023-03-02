@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
         <form method="post" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
-        @csrf
+            @csrf
             <div class="row">
                 <div class="col-3">
                     <div class="card">
@@ -12,7 +12,7 @@
                             <div class="row">
                                 <div class="col"><label>{{ __('app.ticket.state') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
-                                    <select required name="ticket-state" class="form-select">
+                                    <select required name="ticket-state" class="form-select no-select2">
                                             <option value="">---</option>
                                         @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $ticketState)
                                             <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col"><label>{{ __('app.ticket.priority') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
-                                    <select name="ticket-priority" class="form-select">
+                                    <select name="ticket-priority" class="form-select no-select2">
                                         @foreach(\App\Enums\Ticket\TicketPriorityEnum::getList() as $ticketPriority)
                                             <option value="{{ $ticketPriority }}" @selected($ticket->priority === $ticketPriority)>{{ $ticketPriority }}</option>
                                         @endforeach
