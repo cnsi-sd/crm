@@ -112,7 +112,7 @@
                                         </label>
                                     </div>
                                     <div class="col">
-                                        {{ $thread->getNextRevivalDate()->format('d/m/Y') }}
+                                        {{ $thread->getNextRevivalDate()->format('d/m/y') }}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -157,7 +157,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
-                                <div class="col"><label>{{ $ticket->created_at->format('d/m/Y') }} ({{$ticket->getOpenedDays()}}j)</label></div>
+                                <div class="col"><label>{{ $ticket->created_at->format('d/m/y') }} ({{$ticket->getOpenedDays()}}j)</label></div>
                             </div>
                             <div class="row">
                                 <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>

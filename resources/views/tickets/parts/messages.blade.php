@@ -6,7 +6,7 @@
             @else
                 {{ \App\Enums\Ticket\TicketMessageAuthorTypeEnum::getMessage($message->author_type) }}
             @endif
-            - {{ $message->created_at->format('d/m/Y H:i') }}
+            - {{ $message->created_at->format('d/m/y H:i') }}
         </div>
         <div class="collapse @if($message->author_type !== \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) show @endif()" id="collapse-message-{{$message->id}}">
             <div class="card-body {{$message->author_type}}">
