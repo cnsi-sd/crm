@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Tickets;
 use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\IcozaSendMessage;
 use App\Models\Tags\TagList;
@@ -35,7 +35,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function view;
 
-class TicketController extends Controller
+class TicketController extends AbstractController
 {
     public function all_tickets(Request $request): View
     {

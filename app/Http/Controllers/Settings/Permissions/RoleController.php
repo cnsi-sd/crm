@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Settings\Permissions;
 
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Models\User\Role;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class RoleController extends Controller
+class RoleController extends AbstractController
 {
     public function list(Request $request): View
     {
