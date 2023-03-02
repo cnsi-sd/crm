@@ -34,7 +34,6 @@ return [
     'to' => 'au',
     'attachment' => 'Pièce jointe|Pièces jointes',
     'customer' => 'Client',
-    'operator' => 'Opérateur',
     'send_message' => 'Envoyer un message',
     'send_comment' => 'Envoyer un commentaire',
     'order_info' => 'Info commande',
@@ -117,6 +116,23 @@ return [
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
         'saved' => 'Ticket enregistré',
+    ],
+
+    'order' => [
+        'id_order' => 'ID Order',
+        'status' => 'Statut',
+        'date' => 'Date commande',
+        'carrier' => 'Transporteur',
+        'tracking' => 'Suivi',
+        'total_ttc' => 'Total TTC',
+        'margin_ht' => 'Marge HT',
+        'private_comment' => 'Commentaire privé Prestashop',
+        'billing' => 'Facturation',
+        'shipping' => 'Livraison',
+        'products' => 'Produits',
+        'designation' => 'Désignation',
+        'qty' => 'Qté',
+        'supplier' => 'Fournisseur',
     ],
 
     'login' => [
