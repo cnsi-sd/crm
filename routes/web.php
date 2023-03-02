@@ -3,6 +3,8 @@
 use App\Http\Controllers\Configuration\AutoReplyController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
+use App\Http\Controllers\Configuration\ChannelController;
+use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
@@ -12,6 +14,7 @@ use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
+use App\Models\Channel\Channel;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Support\Facades\Route;
@@ -35,14 +38,13 @@ Route::prefix('/')->group(function () {
     Route::prefix('redirect')->group(function() {
        Route::match(['get', 'post'], '{channel}/{channel_order_number}', [TicketController::class, 'redirectOrCreateTicket'])->name('redirect_or_create_ticket')->can('read', Ticket::class);
     });
-
     Route::prefix('tickets')->group(function() {
-        Route::match(['get', 'post'], 'hide_comment/{comment}', [TicketController::class, 'hide_comment'])->name('hide_comment')->can('read', Ticket::class);
+        Route::match(['get', 'post'], 'get_external_infos/{ticket}', [TicketController::class, 'get_external_infos'])->name('get_external_infos')->can('read', Ticket::class);
+        Route::match(['get', 'post'], 'toggle_comment/{comment}', [TicketController::class, 'toggle_comment'])->name('toggle_comment')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}/{thread}', [TicketController::class, 'ticket'])->name('ticket_thread')->can('read', Ticket::class);
-
     });
     Route::prefix('admin')->group(function () {
         Route::prefix('roles')->group(function () {
@@ -73,6 +75,9 @@ Route::prefix('/')->group(function () {
         Route::prefix('autoReply')->group(function () {
             Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
         });
+        Route::prefix('channel')->group(function () {
+            Route::match(['get', 'post'], '', [ChannelController::class, 'list'])->name('channels')->can('read', Channel::class);
+            Route::match(['get', 'post'], '{channel}', [ChannelController::class, 'edit'])->name('edit_channel')->can('edit', Channel::class);
         Route::prefix('tags')->group(function () {
             Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tag::class);
             Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', Tag::class);

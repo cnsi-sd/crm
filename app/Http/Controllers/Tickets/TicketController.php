@@ -88,7 +88,7 @@ class TicketController extends AbstractController
     {
         $ticket = null;
         $channel_id = Channel::query()
-            ->where('name', 'LIKE', '%'.$channel.'%')->first()->id;
+            ->where('ext_name', $channel)->first()->id;
 
         if ($channel_id) {
             $order = Order::query()
@@ -142,6 +142,19 @@ class TicketController extends AbstractController
         return response()->json(['message' => 'success']);
     }
 
+    public function get_external_infos(Ticket $ticket): \Illuminate\Http\JsonResponse
+    {
+        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalSuppliers = $this->getExternalSuppliers();
+
+        return response()->json([
+            'externalOrderInfo' => $externalOrderInfo,
+            'externalAdditionalOrderInfo' => $externalAdditionalOrderInfo,
+            'externalSuppliers' => $externalSuppliers
+            ]);
+    }
+
     /**
      * @throws \ReflectionException
      */
@@ -149,10 +162,6 @@ class TicketController extends AbstractController
     {
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
-
-        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalSuppliers = $this->getExternalSuppliers();
 
         if ($request->input()){
             $request->validate([

@@ -21,7 +21,7 @@
         <div class="container thread-comments">
             @foreach($thread->comments as $comment)
                 <div class="card">
-                    <div class="card-header text-start" data-bs-toggle="collapse" data-comment-id="{{$comment->id}}" data-bs-target="#collapse-comment-{{$comment->id}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment->id}}">
+                    <div class="card-header text-start" data-bs-toggle="collapse" data-toggle-comment-route="{{ route("toggle_comment", ['comment' => $comment->id]) }}" data-bs-target="#collapse-comment-{{$comment->id}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment->id}}">
                         <div class="row">
                             <div class="col-9">
                                 {{ $comment->user->getShortName() }}
