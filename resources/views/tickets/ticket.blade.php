@@ -9,52 +9,50 @@
                     <div class="card">
                         <div class="card-header">{{ trans_choice('app.ticket.ticket', 1) }} #{{ $ticket->id }}</div>
                         <div class="card-body">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.state') }} <span class="required_field">*</span></label></div>
-                                    <div class="col">
-                                        <select required name="ticket-state" class="form-select">
-                                                <option value="">---</option>
-                                            @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $ticketState)
-                                                <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.state') }} <span class="required_field">*</span></label></div>
+                                <div class="col">
+                                    <select required name="ticket-state" class="form-select">
+                                            <option value="">---</option>
+                                        @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $ticketState)
+                                            <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.priority') }} <span class="required_field">*</span></label></div>
-                                    <div class="col">
-                                        <select name="ticket-priority" class="form-select">
-                                            @foreach(\App\Enums\Ticket\TicketPriorityEnum::getList() as $ticketPriority)
-                                                <option value="{{ $ticketPriority }}" @selected($ticket->priority === $ticketPriority)>{{ $ticketPriority }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.priority') }} <span class="required_field">*</span></label></div>
+                                <div class="col">
+                                    <select name="ticket-priority" class="form-select">
+                                        @foreach(\App\Enums\Ticket\TicketPriorityEnum::getList() as $ticketPriority)
+                                            <option value="{{ $ticketPriority }}" @selected($ticket->priority === $ticketPriority)>{{ $ticketPriority }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.owner') }} <span class="required_field">*</span></label></div>
-                                    <div class="col">
-                                        <select name="ticket-user_id" class="form-select">
-                                            @foreach (\App\Models\User\User::all() as $user)
-                                                <option value="{{ $user->id }}" @selected($ticket->user_id === $user->id)>{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.owner') }} <span class="required_field">*</span></label></div>
+                                <div class="col">
+                                    <select name="ticket-user_id" class="form-select">
+                                        @foreach (\App\Models\User\User::all() as $user)
+                                            <option value="{{ $user->id }}" @selected($ticket->user_id === $user->id)>{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.deadline') }} <span class="required_field">*</span></label></div>
-                                    <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ $ticket->deadline->format("Y-m-d") }}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.deadline') }} <span class="required_field">*</span></label></div>
+                                <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ $ticket->deadline->format("Y-m-d") }}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
+                                <div class="col">
+                                    <label>{{ $ticket->channel->name }}</label>
                                 </div>
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
-                                    <div class="col">
-                                        <label>{{ $ticket->channel->name }}</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.order') }}</label></div>
-                                    <div class="col"><label>{{ $ticket->order->channel_order_number }}</label></div>
-                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.order') }}</label></div>
+                                <div class="col"><label>{{ $ticket->order->channel_order_number }}</label></div>
                             </div>
                         </div>
                     </div>
@@ -144,30 +142,26 @@
                     <div class="card">
                         <div class="card-header">{{ __('app.ticket.base_information') }}</div>
                         <div class="card-body">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
-                                    <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                    <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date){{ $ticket->delivery_date->format("Y-m-d") }}@endif"/></div>
-                                </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
+                                <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
+                                <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date){{ $ticket->delivery_date->format("Y-m-d") }}@endif"/></div>
                             </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header">{{ __('app.ticket.admin_thread') }}</div>
                         <div class="card-body">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
-                                    <div class="col"><label>{{ date('d/m/Y', strtotime($ticket->created_at)) }} ({{$ticket->getOpenedDays()}}j)</label></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>
-                                    <div class="col"><input name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$thread->customer_issue}}"/></div>
-                                </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
+                                <div class="col"><label>{{ date('d/m/Y', strtotime($ticket->created_at)) }} ({{$ticket->getOpenedDays()}}j)</label></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>
+                                <div class="col"><input name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$thread->customer_issue}}"/></div>
                             </div>
                         </div>
                     </div>
@@ -215,18 +209,16 @@
                         <div class="tab-pane fade show active" role="tabpanel" tabindex="0">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="container">
-                                        <textarea name="ticket-thread-messages-content" class="form-control"></textarea>
-                                        <div class="controls text-end">
-                                            <button type="submit" class="btn btn-outline-primary">
-                                                {{ __('app.send_message') }}
-                                            </button>
-                                        </div>
-                                        <div class="attachments">
-                                            <label>{{ trans_choice('app.attachment',2) }}</label> <input type="file"/>
-                                        </div>
-                                        <label>{{ __('app.ticket.default_replies') }}</label>
+                                    <textarea name="ticket-thread-messages-content" class="form-control"></textarea>
+                                    <div class="controls text-end">
+                                        <button type="submit" class="btn btn-outline-primary">
+                                            {{ __('app.send_message') }}
+                                        </button>
                                     </div>
+                                    <div class="attachments">
+                                        <label>{{ trans_choice('app.attachment',2) }}</label> <input type="file"/>
+                                    </div>
+                                    <label>{{ __('app.ticket.default_replies') }}</label>
                                 </div>
                             </div>
                             @include('tickets.parts.messages')

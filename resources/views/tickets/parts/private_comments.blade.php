@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="container thread-comments">
+        <div class="thread-comments">
             @foreach($thread->comments as $comment)
                 <div class="card">
                     <div class="card-header text-start" data-bs-toggle="collapse" data-toggle-comment-route="{{ route("toggle_comment", ['comment' => $comment->id]) }}" data-bs-target="#collapse-comment-{{$comment->id}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment->id}}">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="collapse @if($comment->displayed === 1) show @endif()" id="collapse-comment-{{$comment->id}}">
                         <div class="card-body {{$comment->type}}">
-                            <div class="container text-start">
+                            <div class="text-start">
                                 {!! nl2br($comment->content) !!}
                             </div>
                         </div>
