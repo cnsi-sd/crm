@@ -14,11 +14,8 @@ use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use function PHPUnit\Framework\isEmpty;
+
 
 class RakutenImportMessages extends AbstractImportMessages
 {
@@ -33,15 +30,6 @@ class RakutenImportMessages extends AbstractImportMessages
         $this->signature = sprintf($this->signature, 'rakuten');
         $this->FROM_SHOP_TYPE = 'Icoza';
         return parent::__construct();
-    }
-
-    private function getAuthorType($authorType)
-    {
-        return match ($authorType) {
-            'CLIENT'        => TicketMessageAuthorTypeEnum::CUSTOMER,
-            'Rakuten'    => TicketMessageAuthorTypeEnum::OPERATOR,
-            default => throw new Exception('Bad author type.')
-        };
     }
 
     protected function getCredentials(): array
@@ -145,20 +133,25 @@ class RakutenImportMessages extends AbstractImportMessages
         $this->logger->info('Get messages');
     }
 
+    /**
+     * @throws Exception
+     */
     private function getItems($client): array
     {
         $this->logger->info('Get thread list');
 
-        $items = $client->request(
+        $response = $client->request(
                 'GET', $this->getCredentials()['host'] . '/sales_ws?action=getitemtodolist&login='
                 . env('RAKUTEN_LOGIN')
                 . '&pwd=' . env('RAKUTEN_PASSWORD')
                 . '&version=' . self::getitemtodolist_version
-            )->getBody()
-            ->getContents();
+            );
 
+        if($response->getStatusCode() != '200')
+            throw new Exception('getitemtodolist api request gone bad');
+
+        $items = $response->getBody()->getContents();
         return $this->xmlItemsToArray($items);
-        //TODO throw error if not success
     }
 
     private function xmlItemsToArray($response): array
@@ -248,19 +241,26 @@ class RakutenImportMessages extends AbstractImportMessages
         return $messages;
     }
 
+    /**
+     * @throws Exception
+     */
     private function getInfos($msgsId, $client): array
     {
         $this->logger->info('Get messages list');
         $arrayMessages = [];
         foreach ($msgsId as $msgId => $type) {
-            $messages = $client->request(
+            $response = $client->request(
                 'GET', $this->getCredentials()['host'] . '/sales_ws?action=getiteminfos&login='
                 . env('RAKUTEN_LOGIN')
                 . '&pwd=' . env('RAKUTEN_PASSWORD')
                 . '&version=' . self::getiteminfos_version
                 . '&itemid=' . $msgId
-            )->getBody()
-                ->getContents();
+            );
+
+            if($response->getStatusCode() != '200')
+                throw new Exception('getiteminfos api request gone bad');
+
+            $messages = $response->getBody()->getContents();
 
             $messagesList = $this->xmlThreadToArray($messages);
             if (isset($messagesList[0]))
