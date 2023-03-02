@@ -227,34 +227,15 @@ class TicketController extends AbstractController
             Alert::toastSuccess(__('app.ticket.saved'));
         }
 
-        $checkThreadTicket = Thread::query()
-            ->where('id', $thread->id)
-            ->where('ticket_id', $ticket->id)
-            ->first();
-
-        if(!$checkThreadTicket) {
+        if($thread->ticket->id !== $ticket->id)
             abort(404);
-        }
-
-        $queryOrder = Order::query()->where('id', $ticket->order_id)->first();
-        $queryUsers = User::all();
-        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get();
-        $queryMessages = Message::query()->where('thread_id', $thread->id)->orderBy('created_at', "DESC")->get();
-        $queryComments = Comment::query()->where('thread_id', $thread->id)->orderBy('created_at', "DESC")->get();
-        $queryChannels = Channel::query()->get();
 
         return view('tickets.ticket')
             ->with('ticket',$ticket)
             ->with('thread',$thread)
-            ->with('order',$queryOrder)
-            ->with('users', $queryUsers)
-            ->with('threads', $queryThreads)
-            ->with('messages', $queryMessages)
-            ->with('comments', $queryComments)
-            ->with('commentTypeEnum', TicketCommentTypeEnum::getList())
-            ->with('ticketStateEnum', TicketStateEnum::getList())
-            ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
-            ->with('channels', $queryChannels);
+            ->with('externalOrderInfo',$externalOrderInfo)
+            ->with('externalAdditionalOrderInfo',$externalAdditionalOrderInfo)
+            ->with('externalSuppliers',$externalSuppliers);
     }
 
     public function getExternalOrderInfo($mp_order, $mp_name)

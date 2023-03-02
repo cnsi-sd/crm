@@ -34,7 +34,6 @@ return [
     'to' => 'au',
     'attachment' => 'Pièce jointe|Pièces jointes',
     'customer' => 'Client',
-    'operator' => 'Opérateur',
     'send_message' => 'Envoyer un message',
     'send_comment' => 'Envoyer un commentaire',
     'order_info' => 'Info commande',

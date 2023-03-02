@@ -15,7 +15,7 @@
                                     <div class="col">
                                         <select required name="ticket-state" class="form-select">
                                                 <option value="">---</option>
-                                            @foreach($ticketStateEnum as $ticketState)
+                                            @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $ticketState)
                                                 <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
                                             @endforeach
                                         </select>
@@ -25,7 +25,7 @@
                                     <div class="col"><label>{{ __('app.ticket.priority') }} <span class="required_field">*</span></label></div>
                                     <div class="col">
                                         <select name="ticket-priority" class="form-select">
-                                            @foreach($ticketPriorityEnum as $ticketPriority)
+                                            @foreach(\App\Enums\Ticket\TicketPriorityEnum::getList() as $ticketPriority)
                                                 <option value="{{ $ticketPriority }}" @selected($ticket->priority === $ticketPriority)>{{ $ticketPriority }}</option>
                                             @endforeach
                                         </select>
@@ -35,7 +35,7 @@
                                     <div class="col"><label>{{ __('app.ticket.owner') }} <span class="required_field">*</span></label></div>
                                     <div class="col">
                                         <select name="ticket-user_id" class="form-select">
-                                            @foreach ($users as $user)
+                                            @foreach (\App\Models\User\User::all() as $user)
                                                 <option value="{{ $user->id }}" @selected($ticket->user_id === $user->id)>{{ $user->name }}</option>
                                             @endforeach
                                         </select>
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col"><label>{{ __('app.ticket.order') }}</label></div>
-                                    <div class="col"><label>{{ $order->channel_order_number }}</label></div>
+                                    <div class="col"><label>{{ $ticket->order->channel_order_number }}</label></div>
                                 </div>
                             </div>
                         </div>
