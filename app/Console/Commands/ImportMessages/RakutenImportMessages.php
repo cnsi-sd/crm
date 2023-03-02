@@ -3,7 +3,11 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
+use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Channel\Channel;
+use App\Models\Channel\Order;
+use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
@@ -11,6 +15,10 @@ use DateTime;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use function PHPUnit\Framework\isEmpty;
 
 class RakutenImportMessages extends AbstractImportMessages
 {
@@ -23,8 +31,17 @@ class RakutenImportMessages extends AbstractImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'rakuten');
-        $this->FROM_SHOP_TYPE = '???'; // todo ? get shop type
+        $this->FROM_SHOP_TYPE = 'Icoza';
         return parent::__construct();
+    }
+
+    private function getAuthorType($authorType)
+    {
+        return match ($authorType) {
+            'CLIENT'        => TicketMessageAuthorTypeEnum::CUSTOMER,
+            'Rakuten'    => TicketMessageAuthorTypeEnum::OPERATOR,
+            default => throw new Exception('Bad author type.')
+        };
     }
 
     protected function getCredentials(): array
@@ -41,16 +58,39 @@ class RakutenImportMessages extends AbstractImportMessages
     {
         $client = new Client([
             'token' => self::getCredentials()['token'],
-            //            'httpversion' => '1.1'
         ]);
 
         $this->client = $client;
         return $this->client;
     }
 
-    protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread)
+    protected function convertApiResponseToMessage(Ticket $ticket, $messageApi, Thread $thread)
     {
-        // TODO: Implement convertApiResponseToMessage() method.
+        $authorType = $messageApi['MpCustomerId'];
+        $isNotShopUser = self::isNotShopUser($authorType, $this->FROM_SHOP_TYPE);
+        if($isNotShopUser) {
+            $this->logger->info('Set ticket\'s status to waiting admin');
+            $ticket->state = TicketStateEnum::WAITING_ADMIN;
+            $ticket->save();
+            $this->logger->info('Ticket save');
+            Message::firstOrCreate([
+                'thread_id' => $thread->id,
+                'channel_message_number' => $messageApi['id'],
+            ],
+                [
+                    'user_id' => null,
+                    'author_type' =>
+                        $authorType == 'Rakuten'
+                            ? TicketMessageAuthorTypeEnum::OPERATOR
+                            : TicketMessageAuthorTypeEnum::CUSTOMER,
+                    'content' => $messageApi['Message'],
+                ],
+            );
+            if (setting('autoReplyActivate')) {
+                $this->logger->info('Send auto reply');
+//                self::sendAutoReply(setting('autoReply'), $thread);
+            }
+        }
     }
 
     /**
@@ -80,10 +120,26 @@ class RakutenImportMessages extends AbstractImportMessages
 
         //get infos
         $threadList = $this->getInfos($items, $client);
+        $threads = $this->sortMessagesByDate($threadList);
 
-
-        $dateSortedList = $this->sortMessagesByDate($threadList);
-
+        foreach($threads as $messages) {
+            $this->logger->info('Begin Transaction');
+            DB::beginTransaction();
+            try {
+                if(isset($messages[0])){
+                    $order  = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
+                    $ticket = Ticket::getTicket($order, $this->channel);
+                    $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpOrderId'], 'Sujet?', '');
+                    $this->importMessageByThread($ticket, $thread, $messages);
+                    DB::commit();
+                }
+            } catch (Exception $e) {
+                $this->logger->error('An error has occurred. Rolling back.', $e);
+                DB::rollBack();
+//                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+                return;
+            }
+        }
 
         $this->logger->info('Get messages');
     }
@@ -234,5 +290,22 @@ class RakutenImportMessages extends AbstractImportMessages
         }
 
         return $threads;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function importMessageByThread($ticket, Thread $thread, mixed $messages)
+    {
+        foreach ($messages as $message) {
+            $message['id'] = crc32($message['Message'] . $message['MpCustomerId'] . $message['Date']);
+//            $messageId = crc32($message['Message'] . $message['MpCustomerId'] . $message['Date']);
+            $this->logger->info('Check if this message is imported');
+            if(!$this->isMessagesImported($message['id'])){
+                $this->logger->info('Convert api message to db message');
+                $this->convertApiResponseToMessage($ticket, $message, $thread);
+                $this->addImportedMessageChannelNumber($message['id']);
+            }
+        }
     }
 }
