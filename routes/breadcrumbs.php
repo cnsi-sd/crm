@@ -2,13 +2,9 @@
 
 // https://github.com/diglactic/laravel-breadcrumbs
 
-use App\Models\Settings\ProductConfiguration;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 use Illuminate\Support\Facades\Auth;
-
-Breadcrumbs::for('any', function (BreadcrumbTrail $trail) {
-});
 
 Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.home'), route('home'));
@@ -141,4 +137,24 @@ Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('edit_channel', function (BreadcrumbTrail $trail) {
     $trail->parent('channels');
     $trail->push(__('app.channel.edit'));
+});
+/** Tag */
+Breadcrumbs::for('tags', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.tags.tags', 2), route('tags'));
+});
+
+Breadcrumbs::for('create_tags', function (BreadcrumbTrail $trail) {
+    $trail->parent('tags');
+    $trail->push(__('app.tags.create'));
+});
+
+Breadcrumbs::for('edit_tags', function (BreadcrumbTrail $trail) {
+    $trail->parent('tags');
+    $trail->push(__('app.tags.edit'));
+});
+
+Breadcrumbs::for('search', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('searchable::search.search'));
 });

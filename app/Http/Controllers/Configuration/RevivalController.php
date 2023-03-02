@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class RevivalController extends Controller
+class RevivalController extends AbstractController
 {
 
     public function list(Request $request): View

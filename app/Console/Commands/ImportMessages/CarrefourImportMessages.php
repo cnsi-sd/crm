@@ -4,7 +4,7 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
 
-class CarrefourImportMessages extends AbstractMiraklImportMessage
+class CarrefourImportMessages extends AbstractMiraklImportMessages
 {
     public function __construct()
     {
@@ -17,7 +17,7 @@ class CarrefourImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::CARREFOUR_FR);
+        return ChannelEnum::CARREFOUR_FR;
     }
 
     /**

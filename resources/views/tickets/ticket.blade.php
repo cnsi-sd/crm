@@ -131,8 +131,8 @@
                                     <div class="row mt-2">
                                         <div class="col">
                                             <div
-                                                class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show"
-                                                role="alert">
+                                                    class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show"
+                                                    role="alert">
                                                 {{ $revivalError }}
                                             </div>
                                         </div>

@@ -2,9 +2,9 @@
 
 namespace App\Models\Channel;
 
-
 use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\User\User;
@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Revival $revivals
  * @property Ticket[] $tickets
  * @property Order[] $orders
+ * @property Tag[] $tags
  */
 class Channel extends Model
 {
@@ -36,14 +37,9 @@ class Channel extends Model
         'updated_at'
     ];
 
-    public function getSnakeName($channelName): array|string
+    public function getSnakeName(): array|string
     {
-        return self::staticGetSnakeName($channelName);
-    }
-
-    public static function staticGetSnakeName($name): array|string
-    {
-        return str_replace('.', '_', $name);
+        return str_replace('.', '_', $this->name);
     }
     public function defaultAnswers(): BelongsToMany
     {
@@ -53,6 +49,11 @@ class Channel extends Model
     public function revivals(): BelongsToMany
     {
         return $this->belongsToMany(Revival::class)->orderBy('name');
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
     public static function getChannelsNames(): array
@@ -72,6 +73,9 @@ class Channel extends Model
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function getByName(string $name, bool $filter_active = true) : Channel
     {
         /** @var Channel $channel */

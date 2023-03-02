@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
-class PasswordResetLinkController extends Controller
+class PasswordResetLinkController extends AbstractController
 {
+    protected bool $need_auth = false;
+
     /**
      * Display the password reset link request view.
      *

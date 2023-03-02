@@ -5,9 +5,23 @@ namespace App\Http\Controllers\Tickets;
 use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Controller;
-use App\Models\Ticket\Revival\Revival;
+use App\Http\Controllers\AbstractController;
+use App\Jobs\SendMessage\ConforamaSendMessage;
+use App\Jobs\SendMessage\IcozaSendMessage;
+use App\Models\Tags\TagList;
+use App\Models\Tags\Tags;
+use App\Enums\Channel\ChannelEnum;
+use App\Jobs\SendMessage\ButSendMessage;
+use App\Jobs\SendMessage\CarrefourSendMessage;
+use App\Jobs\SendMessage\DartySendMessage;
+use App\Jobs\SendMessage\FnacSendMessage;
+use App\Jobs\SendMessage\IntermarcheSendMessage;
+use App\Jobs\SendMessage\LaposteSendMessage;
+use App\Jobs\SendMessage\LeclercSendMessage;
+use App\Jobs\SendMessage\MetroSendMessage;
+use App\Jobs\SendMessage\RueducommerceSendMessage;
+use App\Jobs\SendMessage\ShowroomSendMessage;
+use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
 use App\Models\Channel\Order;
@@ -17,40 +31,57 @@ use App\Models\Channel\Channel;
 use App\Models\User\User;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
-use http\Env\Response;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Http;
 use function view;
 
-class TicketController extends Controller
+class TicketController extends AbstractController
 {
     public function all_tickets(Request $request): View
     {
-        $query = Ticket::query();
+        $query = Ticket::query()
+            ->select('tickets.*')
+            ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
+            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
+            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
+            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
+            ->groupBy('tickets.id');
         $table = (new TableBuilder('all_tickets', $request))
             ->setColumns(Ticket::getTableColumns())
             ->setExportable(false)
             ->setQuery($query);
 
+        $tickets = $query->get();
         return view('tickets.all_tickets')
-            ->with('table', $table);
+            ->with('table', $table)
+            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
     {
         $query = Ticket::query()
-            ->where('user_id', $user->id)
-            ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER]);
+            ->select(
+                'tickets.*')
+            ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
+            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
+            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
+            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
+            ->where('tickets.user_id', $user->id)
+            ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
+            ->groupBy('tickets.id');
 
         $table = (new TableBuilder('user_tickets', $request))
             ->setColumns(Ticket::getTableColumns('user'))
             ->setExportable(false)
             ->setQuery($query);
 
+        $tickets = $query->get();
+
         return view('tickets.all_tickets')
-            ->with('table', $table);
+            ->with('table', $table)
+            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+
     }
 
     public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number)
@@ -138,7 +169,7 @@ class TicketController extends Controller
                 'ticket-priority'  => ['required','string'],
                 'ticket-user_id'   => ['required','integer', 'exists:App\Models\User\User,id'],
                 'ticket-deadline'  => ['required','date'],
-                'ticket-customer_email' => ['string'],
+                'ticket-customer_email' => ['nullable','string'],
                 'ticket-delivery_date' => ['date']
             ]);
             $ticket->state = $request->input('ticket-state');
@@ -158,12 +189,28 @@ class TicketController extends Controller
                 $request->validate([
                     'ticket-thread-messages-content'     => ['required','string'],
                 ]);
-                Message::firstOrCreate([
+                $message = Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
                     'author_type' => \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN,
                     'content' => $request->input('ticket-thread-messages-content'),
                 ]);
+
+                match($ticket->channel->name) {
+                    ChannelEnum::BUT_FR             => ButSendMessage::dispatch($message),
+                    ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($message),
+                    ChannelEnum::CONFORAMA_FR       => ConforamaSendMessage::dispatch($message),
+                    ChannelEnum::DARTY_COM          => DartySendMessage::dispatch($message),
+                    ChannelEnum::INTERMARCHE_FR     => IntermarcheSendMessage::dispatch($message),
+                    ChannelEnum::LAPOSTE_FR         => LaposteSendMessage::dispatch($message),
+                    ChannelEnum::E_LECLERC          => LeclercSendMessage::dispatch($message),
+                    ChannelEnum::METRO_FR           => MetroSendMessage::dispatch($message),
+                    ChannelEnum::RUEDUCOMMERCE_FR   => RueducommerceSendMessage::dispatch($message),
+                    ChannelEnum::SHOWROOMPRIVE_COM  => ShowroomSendMessage::dispatch($message),
+                    ChannelEnum::UBALDI_COM         => UbaldiSendMessage::dispatch($message),
+                    ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
+                    ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
+                };
             }
             if($request->input('ticket-thread-comments-content')) {
                 $request->validate([
@@ -223,6 +270,25 @@ class TicketController extends Controller
     public function getExternalSuppliers()
     {
         return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=supplier')->json();
+    }
+
+    public function delete_tag(Request $request) {
+        $tag = Tag::find($request->input('tag_id'));
+        $tag->taglists()->detach($request->input('taglist_id'));
+        return redirect()->route('all_tickets');
+    }
+
+    public function delete_ThreadTagList(Request $request) {
+        $taglist = TagList::find($request->input('taglist_id'));
+        $taglist->tags()->detach();
+        $taglist->delete();
+    }
+
+    public function saveThreadTags(Request $request) {
+        $taglist = TagList::find($request->input('taglist_id'));
+        $tag = Tag::find($request->input('tag_id'));
+        $tag->taglists()->attach($taglist->id);
+        return response()->json($tag);
     }
 
 }

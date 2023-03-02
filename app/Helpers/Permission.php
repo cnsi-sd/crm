@@ -68,6 +68,18 @@ abstract class Permission
                     ],
                 ],
             ],
+            [
+                'title' => trans_choice('app.permission.tag', 2),
+                'sub_sections' => [
+                    [
+                        'title' => trans_choice('app.permission.tag',2),
+                        'items' => [
+                            PermissionEnum::TAG_READ,
+                            PermissionEnum::TAG_EDIT
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

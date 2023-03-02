@@ -3,8 +3,9 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Models\Channel\Channel;
 
-class MetroImportMessages extends AbstractMiraklImportMessage
+class MetroImportMessages extends AbstractMiraklImportMessages
 {
     public function __construct()
     {
@@ -17,7 +18,7 @@ class MetroImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::METRO_FR);
+        return ChannelEnum::METRO_FR;
     }
 
     /**

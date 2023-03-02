@@ -4,11 +4,11 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
 
-class ShowRoomImportMessages extends AbstractMiraklImportMessage
+class LaposteImportMessages extends AbstractMiraklImportMessages
 {
     public function __construct()
     {
-        $this->signature = sprintf($this->signature, 'showroom');
+        $this->signature = sprintf($this->signature, 'laposte');
         return parent::__construct();
     }
 
@@ -17,7 +17,7 @@ class ShowRoomImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::SHOWROOMPRIVE_COM);
+        return ChannelEnum::LAPOSTE_FR;
     }
 
     /**
@@ -26,10 +26,11 @@ class ShowRoomImportMessages extends AbstractMiraklImportMessage
     protected function getCredentials(): array
     {
         return [
-            'API_URL' => env('SHOWROOM_API_URL'),
-            'API_KEY' => env('SHOWROOM_API_KEY'),
-            'API_SHOP_ID' => env('SHOWROOM_API_SHOP_ID'),
+            'API_URL' => env('LAPOSTE_API_URL'),
+            'API_KEY' => env('LAPOSTE_API_KEY'),
+            'API_SHOP_ID' => env('LAPOSTE_API_SHOP_ID'),
         ];
     }
+
 
 }

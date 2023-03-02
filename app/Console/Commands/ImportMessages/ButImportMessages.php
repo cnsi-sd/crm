@@ -3,9 +3,8 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
-use App\Models\Channel\Channel;
 
-class ButImportMessages extends AbstractMiraklImportMessage
+class ButImportMessages extends AbstractMiraklImportMessages
 {
     public function __construct()
     {
@@ -16,9 +15,9 @@ class ButImportMessages extends AbstractMiraklImportMessage
     /**
      * @return string
      */
-    protected function getChannelName(): string
+    public function getChannelName(): string
     {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::BUT_FR);
+        return ChannelEnum::BUT_FR;
     }
 
     /**

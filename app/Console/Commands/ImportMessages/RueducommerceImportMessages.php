@@ -3,13 +3,13 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Models\Channel\Channel;
 
-class LaPosteImportMessages extends AbstractMiraklImportMessage
+class RueducommerceImportMessages extends AbstractMiraklImportMessages
 {
-
     public function __construct()
     {
-        $this->signature = sprintf($this->signature, 'laposte');
+        $this->signature = sprintf($this->signature, 'rueducommerce');
         return parent::__construct();
     }
 
@@ -18,7 +18,7 @@ class LaPosteImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::LAPOSTE_FR);
+        return ChannelEnum::RUEDUCOMMERCE_FR;
     }
 
     /**
@@ -27,11 +27,10 @@ class LaPosteImportMessages extends AbstractMiraklImportMessage
     protected function getCredentials(): array
     {
         return [
-            'API_URL' => env('LAPOSTE_API_URL'),
-            'API_KEY' => env('LAPOSTE_API_KEY'),
-            'API_SHOP_ID' => env('LAPOSTE_API_SHOP_ID'),
+            'API_URL' => env('RUEDUCOMMERCE_API_URL'),
+            'API_KEY' => env('RUEDUCOMMERCE_API_KEY'),
+            'API_SHOP_ID' => env('RUEDUCOMMERCE_API_SHOP_ID'),
         ];
     }
-
 
 }

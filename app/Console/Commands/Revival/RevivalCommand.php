@@ -7,13 +7,13 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMesssage;
+use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\DartySendMessage;
 use App\Jobs\SendMessage\IntermarcheSendMessage;
 use App\Jobs\SendMessage\LaposteSendMessage;
 use App\Jobs\SendMessage\LeclercSendMessage;
 use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueDuCommerceSendMessage;
+use App\Jobs\SendMessage\RueducommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\DefaultAnswer;
@@ -153,13 +153,13 @@ class RevivalCommand extends Command
             match ($channel) {
                 ChannelEnum::BUT_FR => ButSendMessage::dispatch($messageBD),
                 ChannelEnum::CARREFOUR_FR => CarrefourSendMessage::dispatch($messageBD),
-                ChannelEnum::CONFORAMA_FR => ConforamaSendMesssage::dispatch($messageBD),
+                ChannelEnum::CONFORAMA_FR => ConforamaSendMessage::dispatch($messageBD),
                 ChannelEnum::DARTY_COM => DartySendMessage::dispatch($messageBD),
                 ChannelEnum::INTERMARCHE_FR => IntermarcheSendMessage::dispatch($messageBD),
                 ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($messageBD),
                 ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($messageBD),
                 ChannelEnum::METRO_FR => MetroSendMessage::dispatch($messageBD),
-                ChannelEnum::RUEDUCOMMERCE_FR => RueDuCommerceSendMessage::dispatch($messageBD),
+                ChannelEnum::RUEDUCOMMERCE_FR => RueducommerceSendMessage::dispatch($messageBD),
                 ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($messageBD),
                 ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($messageBD),
             };

@@ -3,8 +3,9 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Models\Channel\Channel;
 
-class LeclercImportMessages extends AbstractMiraklImportMessage
+class LeclercImportMessages extends AbstractMiraklImportMessages
 {
     public function __construct()
     {
@@ -17,7 +18,7 @@ class LeclercImportMessages extends AbstractMiraklImportMessage
      */
     protected function getChannelName(): string
     {
-        return (new \App\Models\Channel\Channel)->getSnakeName(ChannelEnum::E_LECLERC);
+        return ChannelEnum::E_LECLERC;
     }
 
     /**
