@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-header">{{ trans_choice('app.ticket.ticket', 1) }} #{{ $ticket->id }}</div>
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.state') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
                                     <select required name="ticket-state" class="form-select no-select2">
@@ -20,7 +20,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.priority') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
                                     <select name="ticket-priority" class="form-select no-select2">
@@ -30,7 +30,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.owner') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
                                     <select name="ticket-user_id" class="form-select">
@@ -40,17 +40,17 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.deadline') }} <span class="required_field">*</span></label></div>
                                 <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ $ticket->deadline->format("Y-m-d") }}"></div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
                                 <div class="col">
                                     <label>{{ $ticket->channel->name }}</label>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.order') }}</label></div>
                                 <div class="col"><label>{{ $ticket->order->channel_order_number }}</label></div>
                             </div>
@@ -142,7 +142,7 @@
                     <div class="card">
                         <div class="card-header">{{ __('app.ticket.base_information') }}</div>
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
                                 <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
                             </div>
@@ -155,7 +155,7 @@
                     <div class="card">
                         <div class="card-header">{{ __('app.ticket.admin_thread') }}</div>
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
                                 <div class="col"><label>{{ $ticket->created_at->format('d/m/y') }} ({{$ticket->getOpenedDays()}}j)</label></div>
                             </div>
