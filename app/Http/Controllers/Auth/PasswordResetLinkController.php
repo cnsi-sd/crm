@@ -6,7 +6,7 @@ use App\Http\Controllers\AbstractController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
-class PasswordResetLinkAbstractController extends AbstractController
+class PasswordResetLinkController extends AbstractController
 {
     protected bool $need_auth = false;
 

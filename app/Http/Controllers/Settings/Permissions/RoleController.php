@@ -9,7 +9,7 @@ use App\Models\User\Role;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class RoleAbstractController extends AbstractController
+class RoleController extends AbstractController
 {
     public function list(Request $request): View
     {

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use function view;
 
-class DefaultAnswerAbstractController extends AbstractController
+class DefaultAnswerController extends AbstractController
 {
     public function list(Request $request): View
     {

@@ -8,7 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthenticatedSessionAbstractController extends AbstractController
+class AuthenticatedSessionController extends AbstractController
 {
     protected bool $need_auth = false;
 

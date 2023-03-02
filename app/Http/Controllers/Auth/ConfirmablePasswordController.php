@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-class ConfirmablePasswordAbstractController extends AbstractController
+class ConfirmablePasswordController extends AbstractController
 {
     protected bool $need_auth = false;
 

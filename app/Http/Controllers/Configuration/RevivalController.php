@@ -9,7 +9,7 @@ use App\Models\Ticket\Revival\Revival;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class RevivalAbstractController extends AbstractController
+class RevivalController extends AbstractController
 {
 
     public function list(Request $request): View

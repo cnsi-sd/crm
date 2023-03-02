@@ -1,42 +1,42 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionAbstractController;
-use App\Http\Controllers\Auth\ConfirmablePasswordAbstractController;
-use App\Http\Controllers\Auth\NewPasswordAbstractController;
-use App\Http\Controllers\Auth\PasswordResetLinkAbstractController;
-use App\Http\Controllers\Auth\RegisteredUserAbstractController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', [AuthenticatedSessionAbstractController::class, 'create'])
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')
                 ->name('login');
 
-Route::post('/login', [AuthenticatedSessionAbstractController::class, 'store'])
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('guest');
 
-Route::get('/forgot-password', [PasswordResetLinkAbstractController::class, 'create'])
+Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->middleware('guest')
                 ->name('password.request');
 
-Route::post('/forgot-password', [PasswordResetLinkAbstractController::class, 'store'])
+Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
                 ->middleware('guest')
                 ->name('password.email');
 
-Route::get('/reset-password/{token}', [NewPasswordAbstractController::class, 'create'])
+Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
                 ->middleware('guest')
                 ->name('password.reset');
 
-Route::post('/reset-password', [NewPasswordAbstractController::class, 'store'])
+Route::post('/reset-password', [NewPasswordController::class, 'store'])
                 ->middleware('guest')
                 ->name('password.update');
 
-Route::get('/confirm-password', [ConfirmablePasswordAbstractController::class, 'show'])
+Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
                 ->middleware('auth')
                 ->name('password.confirm');
 
-Route::post('/confirm-password', [ConfirmablePasswordAbstractController::class, 'store'])
+Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
                 ->middleware('auth');
 
-Route::post('/logout', [AuthenticatedSessionAbstractController::class, 'destroy'])
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');

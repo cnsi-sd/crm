@@ -20,7 +20,7 @@ use function __;
 use function redirect;
 use function view;
 
-class UserAbstractController extends AbstractController
+class UserController extends AbstractController
 {
     public function list(Request $request): View
     {

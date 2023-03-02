@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
-class NewPasswordAbstractController extends AbstractController
+class NewPasswordController extends AbstractController
 {
     protected bool $need_auth = false;
 

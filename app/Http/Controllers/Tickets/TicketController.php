@@ -35,7 +35,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function view;
 
-class TicketAbstractController extends AbstractController
+class TicketController extends AbstractController
 {
     public function all_tickets(Request $request): View
     {

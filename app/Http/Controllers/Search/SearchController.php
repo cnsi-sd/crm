@@ -8,7 +8,7 @@ use App\Models\Ticket\Ticket;
 use App\Models\Channel\Order;
 use Illuminate\Http\Request;
 
-class SearchAbstractController extends AbstractController
+class SearchController extends AbstractController
 {
     public function search(Request $request)
     {
