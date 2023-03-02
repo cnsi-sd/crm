@@ -6,8 +6,8 @@
             <div class="row">
                 <div class="col-5">
                     <select name="ticket-thread-comments-type" class="form-select">
-                        @foreach(\App\Enums\Ticket\TicketCommentTypeEnum::getList() as $commentType)
-                            <option value="{{ $commentType }}">{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($commentType)}}</option>
+                        @foreach(\App\Enums\Ticket\TicketCommentTypeEnum::getTranslatedList() as $key => $message)
+                            <option value="{{ $key }}">{{ $message }}</option>
                         @endforeach
                     </select>
                 </div>
