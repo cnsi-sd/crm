@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Models\Channel\DefaultAnswer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use function view;
 
-class DefaultAnswerController extends Controller
+class DefaultAnswerController extends AbstractController
 {
     public function list(Request $request): View
     {
