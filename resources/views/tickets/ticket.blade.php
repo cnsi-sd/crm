@@ -157,7 +157,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
-                                <div class="col"><label>{{ date('d/m/Y', strtotime($ticket->created_at)) }} ({{$ticket->getOpenedDays()}}j)</label></div>
+                                <div class="col"><label>{{ $ticket->created_at->format('d/m/Y') }} ({{$ticket->getOpenedDays()}}j)</label></div>
                             </div>
                             <div class="row">
                                 <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>

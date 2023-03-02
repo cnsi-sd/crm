@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="col-9">
                                 {{ $comment->user->getShortName() }}
-                                - {{ \Carbon\Carbon::parse($comment->created_at)->translatedFormat('d/m/Y H:i') }}
+                                - {{ $comment->created_at->format('d/m/Y H:i') }}
                             </div>
                             <div class="col-3 text-end">
                                 <span title="{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment->type)}}" class="badge {{$comment->type}}">{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment->type)}}</span>
