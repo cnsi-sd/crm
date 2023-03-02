@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-5">
                     <select name="ticket-thread-comments-type" class="form-select">
-                        @foreach($commentTypeEnum as $commentType)
+                        @foreach(\App\Enums\Ticket\TicketCommentTypeEnum::getList() as $commentType)
                             <option value="{{ $commentType }}">{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($commentType)}}</option>
                         @endforeach
                     </select>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="container thread-comments">
-            @foreach($comments as $comment)
+            @foreach($thread->comments as $comment)
                 <div class="card">
                     <div class="card-header text-start" data-bs-toggle="collapse" data-comment-id="{{$comment->id}}" data-bs-target="#collapse-comment-{{$comment->id}}" aria-expanded="false" aria-controls="collapse-comment-{{$comment->id}}">
                         <div class="row">
