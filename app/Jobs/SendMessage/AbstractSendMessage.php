@@ -5,6 +5,7 @@ namespace App\Jobs\SendMessage;
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Message;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -29,6 +30,9 @@ abstract class AbstractSendMessage implements ShouldQueue
         return $content;
     }
 
+    /**
+     * @throws Exception
+     */
     public static function dispatchMessage(Message $message)
     {
         match($message->thread->ticket->channel->name) {
@@ -46,6 +50,7 @@ abstract class AbstractSendMessage implements ShouldQueue
             ChannelEnum::CDISCOUNT_FR       => CdiscountSendMessage::dispatch($message),
             ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
             ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
+            default => throw new Exception(__('exceptions.messages.channel_given_does_not_exists'))
         };
     }
 }

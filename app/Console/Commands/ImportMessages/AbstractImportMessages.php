@@ -34,7 +34,7 @@ abstract class AbstractImportMessages extends Command
     protected Channel $channel;
     protected static mixed $_alreadyImportedMessages = false;
 
-    protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
+    protected $signature = '%s:import:messages';
     protected $description = 'Importing messages from Marketplace.';
 
     abstract protected function getCredentials(): array;
