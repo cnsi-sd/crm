@@ -37,21 +37,8 @@ abstract class AbstractImportMessages extends Command
     protected $description = 'Importing messages from Marketplace.';
 
     abstract protected function getCredentials(): array;
-
     abstract protected function initApiClient();
-
     abstract protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread);
-
-    /**
-     * returns if the message type is SHOP_USER
-     * @param string $type
-     * @param $FROM_SHOP_TYPE
-     * @return bool
-     */
-    protected static function isNotShopUser(string $type, $FROM_SHOP_TYPE): bool
-    {
-        return $FROM_SHOP_TYPE !== $type;
-    }
 
     /**
      * @throws Exception
