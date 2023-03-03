@@ -1,6 +1,12 @@
 @foreach($thread->messages as $message)
     <div class="card">
-        <div class="card-header text-start @if($message->author_type === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) collapsed @endif()" data-bs-toggle="collapse" data-bs-target="#collapse-message-{{$message->id}}" aria-expanded="false" aria-controls="collapse-message-{{$message->id}}">
+        <div
+            @class(['card-header d-flex justify-content-between align-items-center', 'collapsed' => $message->author_type === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN])
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse-message-{{$message->id}}"
+            aria-expanded="false"
+            aria-controls="collapse-message-{{$message->id}}"
+        >
             @if($message->author_type === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN)
                 {{ $message->user->name }}
             @else

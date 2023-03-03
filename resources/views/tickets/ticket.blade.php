@@ -188,7 +188,7 @@
                             <iframe src="{{ env('PRESTASHOP_URL') }}procedure-sav?mp_order={{$ticket->order->channel_order_number}}&amp;mp_name={{$ticket->channel->ext_name}}&amp;id_ticket={{$ticket->id}}&amp;admintoken={{ env('PRESTASHOP_CUSTOMER_SERVICE_TOKEN') }}" allowfullscreen="" width="100%" height="1000" frameborder="0"></iframe>
                         </div>
                     </div>
-                    <div class="controls text-end">
+                    <div class="mt-2 text-end">
                         <button type="submit" class="btn btn-outline-primary">
                             {{ "💾 " . __('app.save') }}
                         </button>
@@ -210,7 +210,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <textarea name="ticket-thread-messages-content" class="form-control"></textarea>
-                                    <div class="controls text-end">
+                                    <div class="mt-2 text-end">
                                         <button type="submit" class="btn btn-outline-primary">
                                             {{ __('app.send_message') }}
                                         </button>
