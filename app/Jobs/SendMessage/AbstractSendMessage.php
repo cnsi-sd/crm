@@ -30,6 +30,8 @@ abstract class AbstractSendMessage implements ShouldQueue
         return $content;
     }
 
+    abstract public function handle(): void;
+
     /**
      * @throws Exception
      */
