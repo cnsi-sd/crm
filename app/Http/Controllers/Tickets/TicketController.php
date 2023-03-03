@@ -6,6 +6,7 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\AbstractController;
+use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\IcozaSendMessage;
 use App\Models\Tags\Tag;
@@ -197,21 +198,7 @@ class TicketController extends AbstractController
                     'content' => $request->input('ticket-thread-messages-content'),
                 ]);
 
-                match($ticket->channel->name) {
-                    ChannelEnum::BUT_FR             => ButSendMessage::dispatch($message),
-                    ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($message),
-                    ChannelEnum::CONFORAMA_FR       => ConforamaSendMessage::dispatch($message),
-                    ChannelEnum::DARTY_COM          => DartySendMessage::dispatch($message),
-                    ChannelEnum::INTERMARCHE_FR     => IntermarcheSendMessage::dispatch($message),
-                    ChannelEnum::LAPOSTE_FR         => LaposteSendMessage::dispatch($message),
-                    ChannelEnum::E_LECLERC          => LeclercSendMessage::dispatch($message),
-                    ChannelEnum::METRO_FR           => MetroSendMessage::dispatch($message),
-                    ChannelEnum::RUEDUCOMMERCE_FR   => RueducommerceSendMessage::dispatch($message),
-                    ChannelEnum::SHOWROOMPRIVE_COM  => ShowroomSendMessage::dispatch($message),
-                    ChannelEnum::UBALDI_COM         => UbaldiSendMessage::dispatch($message),
-                    ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
-                    ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
-                };
+                AbstractSendMessage::dispatchMessage($message);
             }
             if($request->input('ticket-thread-comments-content')) {
                 $request->validate([
