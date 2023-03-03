@@ -161,9 +161,6 @@ class RakutenImportMessages extends AbstractImportMessages
             $data = simplexml_load_string($response); //data is a SimpleXMLElement
 
             if ($data->response) {
-                $sellerid = (string)$data->response->sellerid;
-                $lastversion = (string)$data->response->lastversion;
-
                 $msgs = $data->response->items->item;
 
                 $nbMsgs = count($msgs);
@@ -190,14 +187,11 @@ class RakutenImportMessages extends AbstractImportMessages
 
             $res = $data->response;
             if ($res) {
-                $sellerid = (string)$res->sellerid;
-                $lastversion = (string)$res->lastversion;
-
                 $MpOrderId = (string)$res->purchaseid;
 
                 $item = $res->item;
 
-                $sellerAccount = ucfirst(strtolower(env('RAKUTEN_LOGIN')));
+                $sellerAccount = $this->FROM_SHOP_TYPE;
 
                 if (!empty($item)) {
                     $MpItemId = (string)$item->itemid;
@@ -318,7 +312,6 @@ class RakutenImportMessages extends AbstractImportMessages
                     $action = "Ignore";
                 }
             } else {
-                $subject = $message['MpOrderId'];
                 $action = "Sales";
             }
 
