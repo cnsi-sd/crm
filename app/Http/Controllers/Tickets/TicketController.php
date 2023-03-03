@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Tickets;
 
-use App\Enums\Ticket\TicketCommentTypeEnum;
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\IcozaSendMessage;
+use App\Models\Tags\Tag;
 use App\Models\Tags\TagList;
-use App\Models\Tags\Tags;
 use App\Enums\Channel\ChannelEnum;
 use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
@@ -31,9 +31,11 @@ use App\Models\Channel\Channel;
 use App\Models\User\User;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use function view;
+use Illuminate\Support\Facades\Http;
 
 class TicketController extends AbstractController
 {
@@ -54,7 +56,7 @@ class TicketController extends AbstractController
         $tickets = $query->get();
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+            ->with('liste', (new Tag())->getlistTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
@@ -79,49 +81,85 @@ class TicketController extends AbstractController
 
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+            ->with('liste', (new Tag())->getlistTagWithTickets($tickets));
 
     }
 
-    public function redirectTicket(Request $request, ?Ticket $ticket)
+    public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number)
     {
-        //todo : utiliser last_thread_displayed pour afficher le dernier thread chargé
+        $ticket = null;
+        $channel_id = Channel::query()
+            ->where('ext_name', $channel)->first()->id;
+
+        if ($channel_id) {
+            $order = Order::query()
+                ->where('channel_id', $channel_id)
+                ->where('channel_order_number', $channel_order_number)
+                ->first();
+            if ($order) {
+                $ticket = Ticket::query()
+                    ->where('order_id', $order->id)->first();
+            }
+        }
+
+        if(!$ticket){
+            $order = new Order;
+            $order->channel_id = $channel_id;
+            $order->channel_order_number = $channel_order_number;
+            $order->save();
+
+            $ticket = new Ticket();
+            $ticket->channel_id = $channel_id;
+            $ticket->order_id = $order->id;
+            $ticket->user_id = Channel::query()->where('id', $order->channel_id)->first()->user_id;
+            $ticket->state  = TicketStateEnum::WAITING_ADMIN;
+            $ticket->priority = TicketPriorityEnum::P1;
+            $ticket->deadline = new \DateTime('now');
+            $ticket->save();
+
+            $thread = new Thread();
+            $thread->ticket_id = $ticket->id;
+            $thread->name = "Fil de discussion principal";
+            $thread->save();
+        }
+
+        return redirect()->route('ticket', [$ticket]);
+    }
+
+    public function redirectTicket(Request $request, ?Ticket $ticket): RedirectResponse
+    {
         if ($ticket->last_thread_displayed) {
             $threadId = $ticket->last_thread_displayed;
         } else {
-            $threadId = Thread::query()->where('ticket_id', $ticket->id)->first()->id;
+            $threadId = $ticket->threads->first()->id;
         }
         return redirect()->route('ticket_thread', [$ticket,$threadId]);
     }
 
-    public function hide_comment(Comment $comment, $status = 200): \Illuminate\Http\JsonResponse
+    public function toggle_comment(Comment $comment): JsonResponse
     {
         $comment->displayed = !$comment->displayed;
         $comment->save();
-        return response()->json(['message' => 'success'], $status);
+        return response()->json(['message' => 'success']);
     }
 
-    public function getNumberOfUnreadMessagesAfterAdmin($ticket) {
-        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get()->toArray();
-        foreach ($queryThreads as $queryThread) {
-            $numberOfUnreadMessages[$queryThread['id']] = 0;
-            $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
-            foreach ($queryMessages as $queryMessage) {
-                if ($queryMessage['author_type'] === "admin") {
-                    break;
-                } else {
-                    $numberOfUnreadMessages[$queryThread['id']] += 1;
-                }
-            }
+    public function get_external_infos(Ticket $ticket): JsonResponse
+    {
+        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalSuppliers = $this->getExternalSuppliers();
 
-        }
-        return $numberOfUnreadMessages;
+        return response()->json([
+            'externalOrderInfo' => $externalOrderInfo,
+            'externalAdditionalOrderInfo' => $externalAdditionalOrderInfo,
+            'externalSuppliers' => $externalSuppliers
+            ]);
     }
 
     /**
      * @throws \ReflectionException
      */
-    public function ticket(Request $request, ?Ticket $ticket, ?Thread $thread): View
+    public function ticket(Request $request, Ticket $ticket, Thread $thread): View
     {
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
@@ -143,7 +181,6 @@ class TicketController extends AbstractController
             $ticket->delivery_date = $request->input('ticket-delivery_date');
             $ticket->save();
 
-
             $thread->customer_issue = $request->input('ticket-thread-customer_issue');
             $thread->revival_id = $request->input('ticket-revival');
             $thread->revival_start_date = $request->input('revival-delivery_date') . ' 09:00:00';
@@ -156,7 +193,7 @@ class TicketController extends AbstractController
                 $message = Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
-                    'author_type' => 'admin',
+                    'author_type' => TicketMessageAuthorTypeEnum::ADMIN,
                     'content' => $request->input('ticket-thread-messages-content'),
                 ]);
 
@@ -191,53 +228,27 @@ class TicketController extends AbstractController
             Alert::toastSuccess(__('app.ticket.saved'));
         }
 
-        $queryTicket = Ticket::query()
-            ->where('id', $ticket->id)
-            ->first()
-            ->toArray();
-        $queryThread = Thread::query()
-            ->where('id', $thread->id)
-            ->where('ticket_id', $ticket->id)
-            ->first();
-
-        if($queryThread) {
-            $queryThread = $queryThread->toArray();
-        } else {
-            return abort(404);
-        }
-
-        $queryOrder = Order::query()
-            ->where('id', $queryTicket['order_id'])
-            ->first()
-            ->toArray();
-
-        $queryUsers = User::query()->get()->toArray();
-
-        $queryThreads = Thread::query()->where('ticket_id', $ticket->id)->get()->toArray();
-        $threads = [];
-        foreach ($queryThreads as $thread2) {
-            $threads[] = $thread2['id'];
-        }
-        $queryMessages = Message::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
-        $queryComments = Comment::query()->where('thread_id', $queryThread['id'])->orderBy('created_at', "DESC")->get()->toArray();
-        $queryChannels = Channel::query()->get()->toArray();
-
-        $unreadMessagesByTicket = $this->getNumberOfUnreadMessagesAfterAdmin($ticket);
+        if($thread->ticket->id !== $ticket->id)
+            abort(404);
 
         return view('tickets.ticket')
-            ->with('ticket',$queryTicket)
-            ->with('thread', $thread)
-            ->with('activeThread',$queryThread)
-            ->with('order',$queryOrder)
-            ->with('users', $queryUsers)
-            ->with('threads', $queryThreads)
-            ->with('messages', $queryMessages)
-            ->with('comments', $queryComments)
-            ->with('unreadMessagesByTicket', $unreadMessagesByTicket)
-            ->with('commentTypeEnum', TicketCommentTypeEnum::getList())
-            ->with('ticketStateEnum', TicketStateEnum::getList())
-            ->with('ticketPriorityEnum', TicketPriorityEnum::getList())
-            ->with('channels', $queryChannels);
+            ->with('ticket', $ticket)
+            ->with('thread', $thread);
+    }
+
+    public function getExternalOrderInfo($mp_order, $mp_name)
+    {
+        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order&mp_order=' . $mp_order . '&mp_name=' . $mp_name)[0];
+    }
+
+    public function getExternalAdditionalOrderInfo($mp_order, $mp_name)
+    {
+        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order_additional_infos&mp_order=' . $mp_order . '&mp_name=' . $mp_name)->json();
+    }
+
+    public function getExternalSuppliers()
+    {
+        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=supplier')->json();
     }
 
     public function delete_tag(Request $request) {

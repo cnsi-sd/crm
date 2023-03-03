@@ -82,6 +82,12 @@ Breadcrumbs::for('ticket_thread', function (BreadcrumbTrail $trail, $ticket, $th
     $trail->push('#' . $ticket->id, route('ticket', $ticket));
     $trail->push($thread->name, route('ticket_thread', [$ticket, $thread]));
 });
+Breadcrumbs::for('customer_service_process', function (BreadcrumbTrail $trail, $ticket) {
+    $user = Auth::user();
+    $trail->parent('user_tickets', $user->id);
+    $trail->push('#' . $ticket->id, route('ticket', $ticket));
+    $trail->push(__('app.customer_service_process'));
+});
 
 /** defaultAnswers */
 Breadcrumbs::for('defaultAnswers', function (BreadcrumbTrail $trail) {
@@ -122,6 +128,16 @@ Breadcrumbs::for('autoReply', function (BreadcrumbTrail $trail) {
     $trail->push(trans_choice('app.autoReply.autoReply', 2), route('autoReply'));
 });
 
+/** Channel */
+Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.configuration.channel', 2), route('channels'));
+});
+/** Channel */
+Breadcrumbs::for('edit_channel', function (BreadcrumbTrail $trail) {
+    $trail->parent('channels');
+    $trail->push(__('app.channel.edit'));
+});
 /** Tag */
 Breadcrumbs::for('tags', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');

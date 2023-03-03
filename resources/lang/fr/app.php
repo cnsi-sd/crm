@@ -34,7 +34,6 @@ return [
     'to' => 'au',
     'attachment' => 'Pièce jointe|Pièces jointes',
     'customer' => 'Client',
-    'operator' => 'Opérateur',
     'send_message' => 'Envoyer un message',
     'send_comment' => 'Envoyer un commentaire',
     'order_info' => 'Info commande',
@@ -119,6 +118,23 @@ return [
         'saved' => 'Ticket enregistré',
     ],
 
+    'order' => [
+        'id_order' => 'ID Order',
+        'status' => 'Statut',
+        'date' => 'Date commande',
+        'carrier' => 'Transporteur',
+        'tracking' => 'Suivi',
+        'total_ttc' => 'Total TTC',
+        'margin_ht' => 'Marge HT',
+        'private_comment' => 'Commentaire privé Prestashop',
+        'billing' => 'Facturation',
+        'shipping' => 'Livraison',
+        'products' => 'Produits',
+        'designation' => 'Désignation',
+        'qty' => 'Qté',
+        'supplier' => 'Fournisseur',
+    ],
+
     'login' => [
         'login' => 'Connexion',
         'sign_in' => 'Identification',
@@ -129,7 +145,7 @@ return [
 
     'configuration' => [
         'configuration' => 'Configuration',
-        'channel' => 'Channel',
+        'channel' => 'Canal|Canaux',
     ],
 
     'autoReply' => [
@@ -147,7 +163,7 @@ return [
         'save' => 'Enregistrer la réponse',
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
-        'select_channel' => 'Cannaux sélectioner',
+        'select_channel' => 'Canaux sélectionnés',
         'message' => 'Message '
     ],
 
@@ -161,7 +177,7 @@ return [
         'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
         'choose_answer' => 'Choisir le message à envoyer',
         'end_state' => 'Statut final',
-        'channel' => 'Cannaux d\'application',
+        'channel' => 'Canaux d\'application',
         'start_revival' => 'À partir du',
         'select_revival' => 'Aucune',
         'frequency_details' => 'Tous les jours|Tous les :freq jours',
@@ -198,5 +214,12 @@ return [
     'mail' => [
         'process_error' => 'Echec d\'un processus',
     ],
+
+    'channel' => [
+        'name' => 'Nom',
+        'ext_name' => 'Nom externe',
+        'saved' => 'Canal enregistré',
+        'edit' => 'Modifier un canal',
+    ]
 
 ];

@@ -64,6 +64,11 @@ class Ticket extends Model
         'updated_at'
     ];
 
+    protected $casts = [
+        'deadline' => 'datetime',
+        'delivery_date' => 'datetime'
+    ];
+
     public static function getTicket(Order $order, Channel $channel)
     {
         return Ticket::firstOrCreate(
@@ -233,5 +238,10 @@ class Ticket extends Model
         });
 
         return $columns;
+    }
+
+    public function getOpenedDays() {
+        $now = new DateTime();
+        return $now->diff($this->created_at)->format("%a");
     }
 }
