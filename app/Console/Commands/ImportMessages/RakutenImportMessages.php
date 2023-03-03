@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\DB;
 class RakutenImportMessages extends AbstractImportMessages
 {
     private Client $client;
-    private string $FROM_SHOP_TYPE;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
     const PAGE ='sales_ws';
     const GET_ITEM_TODO_LIST ='getitemtodolist';
@@ -31,7 +30,6 @@ class RakutenImportMessages extends AbstractImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'rakuten');
-        $this->FROM_SHOP_TYPE = 'Icoza';
         return parent::__construct();
     }
 
@@ -192,8 +190,6 @@ class RakutenImportMessages extends AbstractImportMessages
 
                 $item = $res->item;
 
-                $sellerAccount = $this->FROM_SHOP_TYPE;
-
                 if (!empty($item)) {
                     $MpItemId = (string)$item->itemid;
 
@@ -207,7 +203,7 @@ class RakutenImportMessages extends AbstractImportMessages
                             $message['Date'] = (string)$mess->senddate;
                             $message['Message'] = trim($this->removeCdata($mess->content));
                             $message['Status'] = (string)$mess->status;
-                            if ($sellerAccount != $message['MpCustomerId']) {
+                            if ($message['MpCustomerId'] != 'Icoza') {
                                 $messages[] = $message;//get only message from customer (don't re import our own answer)
                             }
                         }
@@ -223,7 +219,7 @@ class RakutenImportMessages extends AbstractImportMessages
                             $message['Object'] = trim($this->removeCdata($mail->object));
                             $message['Message'] = trim($this->removeCdata($mail->content));
                             $message['Status'] = (string)$mail->status;
-                            if ($sellerAccount != $message['MpCustomerId']) {
+                            if ($message['MpCustomerId'] !='Icoza') {
                                 $messages[] = $message;//get only message from customer (don't re import our own answer)
                             }
                         }
