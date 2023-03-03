@@ -57,6 +57,19 @@
                         </div>
                     </div>
                     <div class="card">
+                        <div class="card-header">{{ __('app.ticket.base_information') }}</div>
+                        <div class="card-body">
+                            <div class="row mb-1">
+                                <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
+                                <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
+                                <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date){{ $ticket->delivery_date->format("Y-m-d") }}@endif"/></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
                         <div class="card-header">{{ trans_choice('app.revival.revival', 1) }}</div>
                         <div class="card-body">
                             <select name="ticket-revival" class="form-select no-sort">
@@ -138,19 +151,6 @@
                                 @endif
                             </div>
                         @endif
-                    </div>
-                    <div class="card">
-                        <div class="card-header">{{ __('app.ticket.base_information') }}</div>
-                        <div class="card-body">
-                            <div class="row mb-1">
-                                <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
-                                <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
-                            </div>
-                            <div class="row">
-                                <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date){{ $ticket->delivery_date->format("Y-m-d") }}@endif"/></div>
-                            </div>
-                        </div>
                     </div>
                     <div class="card">
                         <div class="card-header">{{ __('app.ticket.admin_thread') }}</div>
