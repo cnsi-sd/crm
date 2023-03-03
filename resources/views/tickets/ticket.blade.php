@@ -133,7 +133,7 @@
                         <div class="tab-pane fade show active" role="tabpanel" tabindex="0">
                             <div class="card">
                                 <div class="card-body">
-                                    <textarea name="ticket-thread-messages-content" class="form-control"></textarea>
+                                    <textarea name="ticket-thread-messages-content" class="form-control" rows="15"></textarea>
                                     <div class="mt-2 text-end">
                                         <button type="submit" class="btn btn-outline-primary">
                                             {{ __('app.send_message') }}
