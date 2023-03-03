@@ -46,12 +46,10 @@ class CdiscountImportMessages extends AbstractImportMessages
         'THIS IS A WARNING ONLY.',
         'Votre demande d’annulation a été acceptée. Le remboursement est en cours.',
     ];
-    private string $FROM_SHOP_TYPE;
 
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'cdiscount');
-        $this->FROM_SHOP_TYPE = 'Seller';
         return parent::__construct();
     }
 
@@ -145,7 +143,6 @@ class CdiscountImportMessages extends AbstractImportMessages
     {
         foreach ($messages as $message) {
             $imported_id = $message->getMessageId();
-            $authorType = $message->getSender()->getUserType();
             $this->logger->info('Check if this message is imported');
             if (!$this->isMessagesImported($imported_id)) {
                 $this->logger->info('Convert api message to db message');
@@ -165,14 +162,21 @@ class CdiscountImportMessages extends AbstractImportMessages
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = $message_api->getSender()->getUserType();
-        $isNotShopUser = self::isNotShopUser($authorType, $this->FROM_SHOP_TYPE);
-        if ($isNotShopUser) {
-            $this->logger->info('Set ticket\'s status to waiting admin');
-            $ticket->state = TicketStateEnum::WAITING_ADMIN;
-            $ticket->save();
-            Message::firstOrCreate([
-                'thread_id' => $thread->id,
-                'channel_message_number' => $message_api->getMessageId(),
+
+        if ($authorType == 'Seller')
+            return;
+
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $message_api->getMessageId(),
+        ],
+            [
+                'user_id' => null,
+                'author_type' => self::getAuthorType($authorType),
+                'content' => strip_tags($message_api->getBody()),
             ],
                 [
                     'user_id' => null,

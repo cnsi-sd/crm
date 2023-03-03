@@ -72,10 +72,9 @@ class Thread extends Model
             ->firstOrCreate(
                 [
                     'channel_thread_number' => $channel_thread_number,
+                    'ticket_id' => $ticket->id,
                 ],
                 [
-                    'ticket_id' => $ticket->id,
-                    'channel_thread_number' => $channel_thread_number,
                     'name' => $name,
                     'customer_issue' => $customer_issue,
                     'channel_data' => json_encode($channel_data),
