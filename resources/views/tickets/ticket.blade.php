@@ -6,8 +6,10 @@
             @csrf
             <div class="row">
                 <div class="col-3">
+                    <div class="ticket-divider h4 text-center">
+                        {{ __('app.ticket.admin_ticket') }} #{{ $ticket->id }}
+                    </div>
                     <div class="card">
-                        <div class="card-header">{{ trans_choice('app.ticket.ticket', 1) }} #{{ $ticket->id }}</div>
                         <div class="card-body">
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.state') }} <span class="required_field">*</span></label></div>
@@ -69,9 +71,12 @@
                             </div>
                         </div>
                     </div>
-                    @include('tickets.parts.revival')
+
+                    <div class="ticket-divider h4 text-center">
+                        {{ __('app.ticket.admin_thread') }} #{{ $thread->id }}
+                    </div>
+
                     <div class="card">
-                        <div class="card-header">{{ __('app.ticket.admin_thread') }}</div>
                         <div class="card-body">
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
@@ -83,6 +88,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('tickets.parts.revival')
                     @include('tickets.parts.private_comments')
                 </div>
                 <div class="col-9">

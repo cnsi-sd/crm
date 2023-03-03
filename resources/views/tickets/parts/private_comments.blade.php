@@ -16,7 +16,7 @@
                 </button>
             </div>
         </div>
-        <div class="thread-comments mt-3">
+        <div class="thread-comments mt-3 pb-1">
             @foreach($thread->comments as $comment)
                 <div
                     @class(['title d-flex justify-content-between align-items-center mt-3', 'collapsed' => !$comment->displayed])

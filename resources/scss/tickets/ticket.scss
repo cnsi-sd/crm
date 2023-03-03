@@ -1,6 +1,15 @@
 @import "ticket-comments";
 
 /**
+ DIVIDER
+ */
+.ticket-divider {
+    margin: 0 0 $spacer 0;
+    padding: 10px;
+    border: solid 1px $gray-300;
+}
+
+/**
  COLLAPSE
  */
 #threadsTabsContent, .thread-comments {
@@ -46,9 +55,9 @@
 }
 
 .top-cards-height {
-    height:250px;
+    height: 250px;
 }
 
 #order-info-content {
-    display:none;
+    display: none;
 }
