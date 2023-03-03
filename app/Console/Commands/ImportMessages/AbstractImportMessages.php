@@ -2,23 +2,8 @@
 
 namespace App\Console\Commands\ImportMessages;
 
-use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Jobs\SendMessage\AbstractSendMessage;
-use App\Jobs\SendMessage\ButSendMessage;
-use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\CdiscountSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMessage;
-use App\Jobs\SendMessage\DartySendMessage;
-use App\Jobs\SendMessage\FnacSendMessage;
-use App\Jobs\SendMessage\IcozaSendMessage;
-use App\Jobs\SendMessage\IntermarcheSendMessage;
-use App\Jobs\SendMessage\LaposteSendMessage;
-use App\Jobs\SendMessage\LeclercSendMessage;
-use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueducommerceSendMessage;
-use App\Jobs\SendMessage\ShowroomSendMessage;
-use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
@@ -82,9 +67,14 @@ abstract class AbstractImportMessages extends Command
      * @param mixed $messageId
      * @param Thread $thread
      * @return void
+     * @throws Exception
      */
     public function sendAutoReply(mixed $messageId, Thread $thread): void
     {
+        if(!setting('autoReplyActivate')) {
+            return;
+        }
+        $this->logger->info('Send auto reply');
         $autoReplyContentWeek = DefaultAnswer::query()->select('content')->where('id', $messageId)->first();
 
         $autoReply = new Message();

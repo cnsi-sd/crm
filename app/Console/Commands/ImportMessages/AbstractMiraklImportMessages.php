@@ -146,6 +146,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
      * @param Ticket $ticket
      * @param ThreadMessage $message_api
      * @param \App\Models\Ticket\Thread $thread
+     * @throws Exception
      */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, \App\Models\Ticket\Thread $thread)
     {
@@ -166,10 +167,8 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                     'content' => strip_tags($message_api->getBody()),
                 ],
             );
-            if (setting('autoReplyActivate')) {
-                $this->logger->info('Send auto reply');
-//                self::sendAutoReply(setting('autoReply'), $thread);
-            }
+
+            self::sendAutoReply(setting('autoReply'), $thread);
         }
     }
 

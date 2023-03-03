@@ -160,6 +160,7 @@ class CdiscountImportMessages extends AbstractImportMessages
      * @param Ticket $ticket
      * @param $message_api
      * @param Thread $thread
+     * @throws Exception
      */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
@@ -180,8 +181,7 @@ class CdiscountImportMessages extends AbstractImportMessages
                 ],
             );
         }
-        if (setting('autoReplyActivate') && $ticket->order->channel_order_number == '2302201135UQL01') {
-            $this->logger->info('Send auto reply');
+        if ($ticket->order->channel_order_number == '2302201135UQL01') {
             self::sendAutoReply(setting('autoReply'), $thread);
         }
     }
