@@ -22,8 +22,11 @@ class RakutenImportMessages extends AbstractImportMessages
     private Client $client;
     private string $FROM_SHOP_TYPE;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
-    const getitemtodolist_version = '2011-09-01';
-    const getiteminfos_version = '2017-08-07';
+    const PAGE ='sales_ws';
+    const GET_ITEM_TODO_LIST ='getitemtodolist';
+    const GET_ITEM_TODO_LIST_VERSION = '2011-09-01';
+    const GET_ITEM_INFOS = 'getiteminfos';
+    const GET_ITEM_INFOS_VERSION = '2017-08-07';
 
     public function __construct()
     {
@@ -137,10 +140,11 @@ class RakutenImportMessages extends AbstractImportMessages
         $this->logger->info('Get thread list');
 
         $response = $client->request(
-                'GET', $this->getCredentials()['host'] . '/sales_ws?action=getitemtodolist&login='
-                . env('RAKUTEN_LOGIN')
-                . '&pwd=' . env('RAKUTEN_PASSWORD')
-                . '&version=' . self::getitemtodolist_version
+                'GET', $this->getCredentials()['host'] . '/'. self::PAGE
+                . '?action='  . self::GET_ITEM_TODO_LIST
+                . '&login='   . env('RAKUTEN_LOGIN')
+                . '&pwd='     . env('RAKUTEN_PASSWORD')
+                . '&version=' . self::GET_ITEM_TODO_LIST_VERSION
             );
 
         if($response->getStatusCode() != '200')
@@ -240,11 +244,12 @@ class RakutenImportMessages extends AbstractImportMessages
         $arrayMessages = [];
         foreach ($msgsId as $msgId => $type) {
             $response = $client->request(
-                'GET', $this->getCredentials()['host'] . '/sales_ws?action=getiteminfos&login='
-                . env('RAKUTEN_LOGIN')
-                . '&pwd=' . env('RAKUTEN_PASSWORD')
-                . '&version=' . self::getiteminfos_version
-                . '&itemid=' . $msgId
+                'GET', $this->getCredentials()['host'] . '/' . self::PAGE
+                . '?action='  . self::GET_ITEM_INFOS
+                . '&login='   . env('RAKUTEN_LOGIN')
+                . '&pwd='     . env('RAKUTEN_PASSWORD')
+                . '&version=' . self::GET_ITEM_INFOS_VERSION
+                . '&itemid='  . $msgId
             );
 
             if($response->getStatusCode() != '200')
