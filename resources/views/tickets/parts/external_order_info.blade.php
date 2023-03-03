@@ -14,41 +14,39 @@
                 </div>
             </div>
             <div class="card-body top-cards-height">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">{{ __('app.order.id_order') }} :</label></div>
-                        <div id="ext-order-id" class="col"></div>
+                <div class="row">
+                    <div class="col">{{ __('app.order.id_order') }} :</label></div>
+                    <div id="ext-order-id" class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ __('app.order.status') }} :</label></div>
+                    <div id="ext-order-state" class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ __('app.order.date') }} :</label></div>
+                    <div id="ext-order-date" class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ __('app.order.carrier')}} :</label></div>
+                    <div id="ext-order-carrier" class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ __('app.order.tracking') }} :</label></div>
+                    <div class="col text-truncate">
+                        <a href="#" target="_blank" id="ext-order-tracking"></a>
                     </div>
-                    <div class="row">
-                        <div class="col">{{ __('app.order.status') }} :</label></div>
-                        <div id="ext-order-state" class="col"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ __('app.order.date') }} :</label></div>
-                        <div id="ext-order-date" class="col"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ __('app.order.carrier')}} :</label></div>
-                        <div id="ext-order-carrier" class="col"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ __('app.order.tracking') }} :</label></div>
-                        <div class="col text-truncate">
-                            <a href="#" target="_blank" id="ext-order-tracking"></a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ __('app.order.total_ttc') }} :</label></div>
-                        <div id="ext-order-total-paid" class="col"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ __('app.order.margin_ht') }} :</label></div>
-                        <div id="ext-order-margin" class="col"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{ __('app.email') }} :</label></div>
-                        <div id="ext-order-customer-email" class="col"></div>
-                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ __('app.order.total_ttc') }} :</label></div>
+                    <div id="ext-order-total-paid" class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ __('app.order.margin_ht') }} :</label></div>
+                    <div id="ext-order-margin" class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col">{{ __('app.email') }} :</label></div>
+                    <div id="ext-order-customer-email" class="col"></div>
                 </div>
             </div>
         </div>
@@ -66,26 +64,24 @@
         <div class="card">
             <div class="card-header">{{ __('app.customer') }}</div>
             <div class="card-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="row fw-bold">{{ __('app.order.billing') }}</div>
-                            <div class="row" id="ext-order-billing-name"></div>
-                            <div class="row" id="ext-order-billing-address1"></div>
-                            <div class="row" id="ext-order-billing-address2"></div>
-                            <div class="row" id="ext-order-billing-postcode-city"></div>
-                            <div class="row" id="ext-order-billing-phone"></div>
-                            <div class="row" id="ext-order-billing-phone-mobile"></div>
-                        </div>
-                        <div class="col-6">
-                            <div class="row fw-bold">{{ __('app.order.shipping') }}</div>
-                            <div class="row" id="ext-order-shipping-name"></div>
-                            <div class="row" id="ext-order-shipping-address1"></div>
-                            <div class="row" id="ext-order-shipping-address2"></div>
-                            <div class="row" id="ext-order-shipping-postcode-city"></div>
-                            <div class="row" id="ext-order-shipping-phone"></div>
-                            <div class="row" id="ext-order-shipping-phone-mobile"></div>
-                        </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="fw-bold">{{ __('app.order.billing') }}</div>
+                        <div id="ext-order-billing-name"></div>
+                        <div id="ext-order-billing-address1"></div>
+                        <div id="ext-order-billing-address2"></div>
+                        <div id="ext-order-billing-postcode-city"></div>
+                        <div id="ext-order-billing-phone"></div>
+                        <div id="ext-order-billing-phone-mobile"></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="fw-bold">{{ __('app.order.shipping') }}</div>
+                        <div id="ext-order-shipping-name"></div>
+                        <div id="ext-order-shipping-address1"></div>
+                        <div id="ext-order-shipping-address2"></div>
+                        <div id="ext-order-shipping-postcode-city"></div>
+                        <div id="ext-order-shipping-phone"></div>
+                        <div id="ext-order-shipping-phone-mobile"></div>
                     </div>
                 </div>
             </div>
