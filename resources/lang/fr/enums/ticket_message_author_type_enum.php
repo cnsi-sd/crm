@@ -2,7 +2,7 @@
 
 return array(
     'ADMIN' => 'Employé',
-    'OPERATEUR' => 'Opérateur',
+    'OPERATOR' => 'Opérateur',
     'CUSTOMER' => 'Client',
     'SYSTEM' => 'Système',
     'API' => 'API',
