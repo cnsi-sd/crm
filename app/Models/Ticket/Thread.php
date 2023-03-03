@@ -10,6 +10,7 @@ use DateInterval;
 use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -26,11 +27,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $updated_at
  * @property array $channel_data
  *
- * @property Comment[] $comments
+ * @property Collection|Comment[] $comments
  * @property Ticket $ticket
- * @property Message[] $messages
+ * @property Collection|Message[] $messages
  * @property Revival $revival
- * @property TagList[] $tagList
+ * @property Collection|TagList[] $tagList
  */
 class Thread extends Model
 {

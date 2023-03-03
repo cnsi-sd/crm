@@ -60,12 +60,15 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function getLastApiMessage($threadId): Model|Builder
+    public function isExternal(): bool
     {
-        return Message::query()
-            ->where('thread_id' , $threadId)
-            ->where('author_type' , TicketMessageAuthorTypeEnum::CLIENT)
-            ->firstOrFail();
+        return in_array($this->author_type, [TicketMessageAuthorTypeEnum::CUSTOMER, TicketMessageAuthorTypeEnum::OPERATOR]);
+    }
+
+    public function isFirstMessageOnThread(): bool
+    {
+        $threadMessages = $this->thread->messages;
+        return $threadMessages->count() === 1 && $threadMessages->first()->id === $this->id;
     }
 }
 
