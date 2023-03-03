@@ -55,8 +55,6 @@ class RakutenImportMessages extends AbstractImportMessages
     protected function convertApiResponseToMessage(Ticket $ticket, $messageApi, Thread $thread)
     {
         $authorType = $messageApi['MpCustomerId'];
-//        $isNotShopUser = self::isNotShopUser($authorType, $this->FROM_SHOP_TYPE);
-//        if($isNotShopUser) {
             $this->logger->info('Set ticket\'s status to waiting admin');
             $ticket->state = TicketStateEnum::WAITING_ADMIN;
             $ticket->save();
@@ -76,9 +74,8 @@ class RakutenImportMessages extends AbstractImportMessages
             );
             if (setting('autoReplyActivate')) {
                 $this->logger->info('Send auto reply');
-//                self::sendAutoReply(setting('autoReply'), $thread);
+                self::sendAutoReply(setting('autoReply'), $thread);
             }
-//        }
     }
 
     /**
@@ -125,7 +122,7 @@ class RakutenImportMessages extends AbstractImportMessages
         } catch (Exception $e) {
             $this->logger->error('An error has occurred. Rolling back.', $e);
             DB::rollBack();
-//                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
             return;
         }
 
