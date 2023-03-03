@@ -168,7 +168,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             );
             if (setting('autoReplyActivate')) {
                 $this->logger->info('Send auto reply');
-//                self::sendAutoReply(setting('autoReply'), $thread);
+                self::sendAutoReply(setting('autoReply'), $thread);
             }
         }
     }
