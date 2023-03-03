@@ -22,6 +22,7 @@ class IcozaImportMessages extends AbstractImportMessages
     private Client $client;
 
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
+    const version = '2011-09-01';
 
     /**
      * @throws Exception

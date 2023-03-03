@@ -75,7 +75,6 @@ class Thread extends Model
                     'ticket_id' => $ticket->id,
                 ],
                 [
-                    'channel_thread_number' => $channel_thread_number,
                     'name' => $name,
                     'customer_issue' => $customer_issue,
                     'channel_data' => json_encode($channel_data),

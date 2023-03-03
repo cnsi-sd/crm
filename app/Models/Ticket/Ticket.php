@@ -77,8 +77,6 @@ class Ticket extends Model
                 'channel_id' => $channel->id,
             ],
             [
-                'channel_id' => $channel->id,
-                'order_id' => $order->id,
                 'state' => TicketStateEnum::WAITING_ADMIN,
                 'priority' => TicketPriorityEnum::P1,
                 'deadline' => Carbon::now()->addHours(24), // TODO : JJ ou J+1
