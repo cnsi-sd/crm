@@ -247,7 +247,7 @@ $gradient: linear-gradient(180deg, rgba($white, .15), rgba($white, 0));
 // You can add more entries to the $spacers map, should you need more variation.
 
 // scss-docs-start spacer-variables-maps
-$spacer: 1.5rem;
+$spacer: 1rem;
 $spacers: (
   0: 0,
   1: $spacer / 4,
@@ -343,7 +343,7 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 $grid-columns:                12;
-$grid-gutter-width:           24px;
+$grid-gutter-width:           15px;
 $grid-row-columns:            6;
 
 $gutters: $spacers;
@@ -426,7 +426,7 @@ $font-family-code:            var(--#{$variable-prefix}font-monospace);
 // $font-size-root effects the value of `rem`, which is used for as well font sizes, paddings and margins
 // $font-size-base effects the font size of the body text
 $font-size-root:              null;
-$font-size-base:              0.9rem; // Assumes the browser default, typically `16px`
+$font-size-base:              .8rem; // Assumes the browser default, typically `16px`
 $font-size-sm:                $font-size-base - .025;
 $font-size-lg:                $font-size-base * 1.390;
 
