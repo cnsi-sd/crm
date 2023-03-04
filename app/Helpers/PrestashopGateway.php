@@ -5,24 +5,26 @@ namespace App\Helpers;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
-final class BmsMagentoGateway
+final class PrestashopGateway
 {
     protected string $endpoint;
-    protected array $defaultQueryParams = [
-        'fc' => 'module',
-        'module' => 'bmsmagentogateway',
-    ];
+    protected string $token;
 
     public function __construct()
     {
         // Get endpoint from environment
         $this->endpoint = env('PRESTASHOP_URL') . 'index.php';
+        $this->token = env('PRESTASHOP_CRM_LINK_TOKEN');
     }
 
     protected function get(array $queryParams): Response
     {
         // Apply default parameters
-        $queryParams = array_merge($queryParams, $this->defaultQueryParams);
+        $queryParams = array_merge($queryParams, [
+            'fc' => 'module',
+            'module' => 'crmlink',
+            'token' => $this->token,
+        ]);
 
         // Transform array to query string
         $queryString = http_build_query($queryParams);
@@ -34,30 +36,20 @@ final class BmsMagentoGateway
         return Http::get($url);
     }
 
-    public function getExternalOrderInfo(string $mp_order, string $mp_name)
+    public function getOrderInfo(string $marketplace_order_id, string $channel_name): array
     {
         $queryParams = [
             'controller' => 'order',
-            'mp_order' => $mp_order,
-            'mp_name' => $mp_name,
-        ];
-        return $this->get($queryParams)[0];
-    }
-
-    public function getExternalAdditionalOrderInfo(string $mp_order, string $mp_name)
-    {
-        $queryParams = [
-            'controller' => 'order_additional_infos',
-            'mp_order' => $mp_order,
-            'mp_name' => $mp_name,
+            'marketplace_order_id' => $marketplace_order_id,
+            'channel_name' => $channel_name,
         ];
         return $this->get($queryParams)->json();
     }
 
-    public function getExternalSuppliers()
+    public function getChannels(): array
     {
         $queryParams = [
-            'controller' => 'supplier',
+            'controller' => 'channels',
         ];
         return $this->get($queryParams)->json();
     }
