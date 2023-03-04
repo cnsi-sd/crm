@@ -15,37 +15,37 @@
             </div>
             <div class="card-body top-cards-height">
                 <div class="row">
-                    <div class="col">{{ __('app.order.id_order') }} :</label></div>
+                    <div class="col">{{ __('app.order.id_order') }} :</div>
                     <div id="ext-order-id" class="col"></div>
                 </div>
                 <div class="row">
-                    <div class="col">{{ __('app.order.status') }} :</label></div>
+                    <div class="col">{{ __('app.order.status') }} :</div>
                     <div id="ext-order-state" class="col"></div>
                 </div>
                 <div class="row">
-                    <div class="col">{{ __('app.order.date') }} :</label></div>
+                    <div class="col">{{ __('app.order.date') }} :</div>
                     <div id="ext-order-date" class="col"></div>
                 </div>
                 <div class="row">
-                    <div class="col">{{ __('app.order.carrier')}} :</label></div>
+                    <div class="col">{{ __('app.order.carrier')}} :</div>
                     <div id="ext-order-carrier" class="col"></div>
                 </div>
                 <div class="row">
-                    <div class="col">{{ __('app.order.tracking') }} :</label></div>
+                    <div class="col">{{ __('app.order.tracking') }} :</div>
                     <div class="col text-truncate">
                         <a href="#" target="_blank" id="ext-order-tracking"></a>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">{{ __('app.order.total_ttc') }} :</label></div>
+                    <div class="col">{{ __('app.order.total_ttc') }} :</div>
                     <div id="ext-order-total-paid" class="col"></div>
                 </div>
                 <div class="row">
-                    <div class="col">{{ __('app.order.margin_ht') }} :</label></div>
+                    <div class="col">{{ __('app.order.margin_ht') }} :</div>
                     <div id="ext-order-margin" class="col"></div>
                 </div>
                 <div class="row">
-                    <div class="col">{{ __('app.email') }} :</label></div>
+                    <div class="col">{{ __('app.email') }} :</div>
                     <div id="ext-order-customer-email" class="col"></div>
                 </div>
             </div>
