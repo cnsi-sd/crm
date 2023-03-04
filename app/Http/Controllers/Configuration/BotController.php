@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Configuration\Bot;
+namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
 use Illuminate\Contracts\View\View;

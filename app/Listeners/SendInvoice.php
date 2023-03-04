@@ -4,22 +4,14 @@ namespace App\Listeners;
 
 use App\Events\NewMessage;
 
-class SendInvoice extends AbstractListener
+class SendInvoice extends AbstractNewMessageListener
 {
     public function handle(NewMessage $event): ?bool
     {
-        if(!setting('bot.invoice.active'))
-            return self::SKIP;
+        $this->event = $event;
+        $this->message = $event->getMessage();
 
-        $message = $event->getMessage();
-
-        if(!$message->isExternal())
-            return self::SKIP;
-
-        if(!$message->isFirstMessageOnThread())
-            return self::SKIP;
-
-        if(!preg_match('/(facture)/i', $message->content, $matches))
+        if(!$this->canBeProcessed())
             return self::SKIP;
 
         // TODO : try to get invoice
@@ -28,5 +20,22 @@ class SendInvoice extends AbstractListener
         // TODO : if no invoice and order has been shipped, return self::SKIP
 
         return self::STOP_PROPAGATION;
+    }
+
+    protected function canBeProcessed(): bool
+    {
+        if (!setting('bot.invoice.active'))
+            return false;
+
+        if (!$this->message->isExternal())
+            return false;
+
+        if (!$this->message->isFirstMessageOnThread())
+            return false;
+
+        if (!preg_match('/(facture)/i', $this->message->content, $matches))
+            return false;
+
+        return true;
     }
 }

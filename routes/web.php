@@ -1,21 +1,21 @@
 <?php
 
-use App\Http\Controllers\Configuration\Bot\BotController;
+use App\Http\Controllers\Configuration\BotController;
+use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
-use App\Http\Controllers\Configuration\ChannelController;
+use App\Http\Controllers\Configuration\TagsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Tickets\TicketController;
-use App\Http\Controllers\Configuration\TagsController;
+use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
+use App\Models\Tags\Tag;
+use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
-use App\Models\Channel\Channel;
-use App\Models\Tags\Tag;
-use App\Models\Ticket\Revival\Revival;
 use Illuminate\Support\Facades\Route;
 
 

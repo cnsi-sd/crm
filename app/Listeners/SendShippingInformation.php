@@ -5,24 +5,33 @@ namespace App\Listeners;
 use App\Events\NewMessage;
 use App\Models\Ticket\Message;
 
-class SendShippingInformation extends AbstractListener
+class SendShippingInformation extends AbstractNewMessageListener
 {
     public function handle(NewMessage $event): ?bool
     {
-        $message = $event->getMessage();
+        $this->event = $event;
+        $this->message = $event->getMessage();
 
-        if(!$message->isExternal())
-            return self::SKIP;
-
-        if(!$message->isFirstMessageOnThread())
-            return self::SKIP;
-
-        if(!$this->matchPatterns($message))
+        if(!$this->canBeProcessed())
             return self::SKIP;
 
         // TODO : Send Shipping Information
 
         return self::STOP_PROPAGATION;
+    }
+
+    protected function canBeProcessed(): bool
+    {
+        if(!$this->message->isExternal())
+            return false;
+
+        if(!$this->message->isFirstMessageOnThread())
+            return false;
+
+        if(!$this->matchPatterns($this->message))
+            return false;
+
+        return true;
     }
 
     protected function matchPatterns(Message $message): bool
