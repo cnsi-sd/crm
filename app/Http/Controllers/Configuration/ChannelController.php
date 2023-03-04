@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Http\Controllers\Controller;
+use App\Helpers\PrestashopGateway;
+use App\Http\Controllers\AbstractController;
 use App\Models\Channel\Channel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function view;
 
-class ChannelController extends Controller
+class ChannelController extends AbstractController
 {
     public function list(Request $request): View
     {
@@ -42,6 +43,7 @@ class ChannelController extends Controller
         }
 
         return view('configuration.channel.edit')
+            ->with('ext_channels', (new PrestashopGateway())->getChannels())
             ->with('channel', $channel);
     }
 
