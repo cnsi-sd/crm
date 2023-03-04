@@ -1,4 +1,4 @@
-@extends('configuration.bot.home', ["page_title"=> __('app.bot.acknowledgement.acknowledgement') ])
+@extends('configuration.bot.home', ["page_title"=> __('app.bot.invoice.invoice') ])
 
 @section('bot_content')
     <div class="col-4">

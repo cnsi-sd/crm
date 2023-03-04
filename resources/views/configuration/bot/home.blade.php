@@ -1,4 +1,4 @@
-@extends('layouts.horizontal', ["page_title"=> __('app.bot.bot') ])
+@extends('layouts.horizontal', ["page_title"=> $page_title ?? __('app.bot.bot') ])
 
 @section('content')
     <div class="container-fluid">
