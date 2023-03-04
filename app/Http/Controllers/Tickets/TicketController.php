@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tickets;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Helpers\Alert;
+use App\Helpers\BmsMagentoGateway;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\ConforamaSendMessage;
@@ -145,9 +146,10 @@ class TicketController extends AbstractController
 
     public function get_external_infos(Ticket $ticket): JsonResponse
     {
-        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalSuppliers = $this->getExternalSuppliers();
+        $bmsMagentoGateway = new BmsMagentoGateway();
+        $externalOrderInfo = $bmsMagentoGateway->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalAdditionalOrderInfo = $bmsMagentoGateway->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
+        $externalSuppliers = $bmsMagentoGateway->getExternalSuppliers();
 
         return response()->json([
             'externalOrderInfo' => $externalOrderInfo,
@@ -234,21 +236,6 @@ class TicketController extends AbstractController
         return view('tickets.ticket')
             ->with('ticket', $ticket)
             ->with('thread', $thread);
-    }
-
-    public function getExternalOrderInfo($mp_order, $mp_name)
-    {
-        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order&mp_order=' . $mp_order . '&mp_name=' . $mp_name)[0];
-    }
-
-    public function getExternalAdditionalOrderInfo($mp_order, $mp_name)
-    {
-        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order_additional_infos&mp_order=' . $mp_order . '&mp_name=' . $mp_name)->json();
-    }
-
-    public function getExternalSuppliers()
-    {
-        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=supplier')->json();
     }
 
     public function delete_tag(Request $request) {
