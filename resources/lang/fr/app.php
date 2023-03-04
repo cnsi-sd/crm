@@ -153,14 +153,19 @@ return [
         'bot' => 'Bot',
 
         'active' => 'Activé ?',
-        'saved' => 'Configuration enregistrée',
+        'saved' => 'Configuration enregistrée !',
 
         'acknowledgement' => [
             'acknowledgement' => 'Accusé de réception',
-            'default_answer' => 'Réponse à envoyer',
+            'answer' => 'Réponse à envoyer',
         ],
 
-        'invoice' => 'Demande de facture',
+        'invoice' => [
+            'invoice' => 'Demande de facture',
+            'found_answer' => 'Réponse à envoyer : facture trouvée',
+            'not_shipped_answer' => 'Réponse à envoyer : facture pas encore générée',
+        ],
+
         'shipping_information' => 'Information de livraison',
     ],
 

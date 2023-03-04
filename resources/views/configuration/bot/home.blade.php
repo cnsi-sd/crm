@@ -6,7 +6,7 @@
             <div class="col-2">
                 <ul class="list-group rounded">
                     <a href="{{ route('bot_invoice') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'bot_invoice'])>
-                        {{ __('app.bot.invoice') }}
+                        {{ __('app.bot.invoice.invoice') }}
                     </a>
 
                     <a href="{{ route('bot_shipping_information') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'bot_shipping_information'])>

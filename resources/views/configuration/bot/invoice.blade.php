@@ -13,18 +13,31 @@
 
                     <div class="mb-3">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="active" id="active" @checked(setting('autoReplyActivate'))>
+                            <input type="checkbox" class="form-check-input" name="active" id="active" @checked(setting('bot.invoice.active'))>
                             <label class="form-check-label" for="active">{{ __('app.bot.active') }}</label>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="answer_id" class="form-label">
-                            {{ __('app.bot.acknowledgement.answer') }}
+                        <label for="found_answer_id" class="form-label">
+                            {{ __('app.bot.invoice.found_answer') }}
                         </label>
-                        <select name="answer_id" class="form-control form-select" required>
+                        <select name="found_answer_id" class="form-control form-select" required>
                             @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('autoReply') == $reply->id)>
+                                <option value="{{ $reply->id }}" @selected(setting('bot.invoice.found_answer_id') == $reply->id)>
+                                    {{ $reply->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="not_shipped_answer_id" class="form-label">
+                            {{ __('app.bot.invoice.not_shipped_answer') }}
+                        </label>
+                        <select name="not_shipped_answer_id" class="form-control form-select" required>
+                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
+                                <option value="{{ $reply->id }}" @selected(setting('bot.invoice.not_shipped_answer_id') == $reply->id)>
                                     {{ $reply->name }}
                                 </option>
                             @endforeach

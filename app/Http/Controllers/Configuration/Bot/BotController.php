@@ -18,7 +18,7 @@ class BotController
     {
         if ($request->exists('save')) {
             setting(['autoReplyActivate' => $request->has('active')]);
-            setting(['autoReply' => $request->input('default_answer_id')]);
+            setting(['autoReply' => $request->input('answer_id')]);
             setting()->save();
 
             Alert::toastSuccess(__('app.bot.saved'));
@@ -30,7 +30,17 @@ class BotController
 
     public function invoice(Request $request): View|RedirectResponse
     {
-        return view('configuration.bot.home');
+        if ($request->exists('save')) {
+            setting(['bot.invoice.active' => $request->has('active')]);
+            setting(['bot.invoice.found_answer_id' => $request->input('found_answer_id')]);
+            setting(['bot.invoice.not_shipped_answer_id' => $request->input('not_shipped_answer_id')]);
+            setting()->save();
+
+            Alert::toastSuccess(__('app.bot.saved'));
+            return redirect()->route('bot_invoice');
+        }
+
+        return view('configuration.bot.invoice');
     }
 
     public function shipping_information(Request $request): View|RedirectResponse

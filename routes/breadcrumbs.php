@@ -133,7 +133,7 @@ Breadcrumbs::for('bot_acknowledgement', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('bot_invoice', function (BreadcrumbTrail $trail) {
     $trail->parent('bot_home');
-    $trail->push(__('app.bot.invoice'), route('bot_invoice'));
+    $trail->push(__('app.bot.invoice.invoice'), route('bot_invoice'));
 });
 Breadcrumbs::for('bot_shipping_information', function (BreadcrumbTrail $trail) {
     $trail->parent('bot_home');
