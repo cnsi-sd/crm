@@ -8,6 +8,9 @@ class SendAcknowledgement extends AbstractListener
 {
     public function handle(NewMessage $event)
     {
+        if(!setting('autoReplyActivate'))
+            return self::SKIP;
+
         $message = $event->getMessage();
 
         if(!$message->isExternal())

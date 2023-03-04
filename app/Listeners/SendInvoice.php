@@ -8,6 +8,9 @@ class SendInvoice extends AbstractListener
 {
     public function handle(NewMessage $event): ?bool
     {
+        if(!setting('bot.invoice.active'))
+            return self::SKIP;
+
         $message = $event->getMessage();
 
         if(!$message->isExternal())
