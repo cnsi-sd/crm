@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\Configuration\AutoReplyController;
+use App\Http\Controllers\Configuration\Bot\BotController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\Configuration\ChannelController;
-use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
@@ -72,9 +71,6 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival')->can('read', Revival::class);
             Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival')->can('edit', Revival::class);
         });
-        Route::prefix('autoReply')->group(function () {
-            Route::match(['get', 'post'], '', [AutoReplyController::class, 'edit'])->name('autoReply');
-        });
         Route::prefix('channel')->group(function () {
             Route::match(['get', 'post'], '', [ChannelController::class, 'list'])->name('channels')->can('read', Channel::class);
             Route::match(['get', 'post'], '{channel}', [ChannelController::class, 'edit'])->name('edit_channel')->can('edit', Channel::class);
@@ -84,6 +80,12 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', Tag::class);
             Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags')->can('read', Tag::class);
             Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tag::class);
+        });
+        Route::prefix('bot')->group(function () {
+            Route::match(['get', 'post'], '', [BotController::class, 'home'])->name('bot_home');
+            Route::match(['get', 'post'], 'acknowledgement', [BotController::class, 'acknowledgement'])->name('bot_acknowledgement');
+            Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice');
+            Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information');
         });
     });
 

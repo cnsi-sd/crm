@@ -149,14 +149,19 @@ return [
         'channel' => 'Canal|Canaux',
     ],
 
-    'autoReply' => [
-        'autoReply' => 'Réponse automatique|Réponses automatiques',
-        'autoReplyWeek' => 'Réponse automatique : semaine',
-        'autoReplyWeekEnd' => 'Réponse automatique : week-end',
-        'validate' => 'Activé la réponse automatique',
-        'activate' => 'Activé',
-        'disable' => 'Désactivé',
-        'MessageToReply' => 'message envoyé'
+    'bot' => [
+        'bot' => 'Bot',
+
+        'active' => 'Activé ?',
+        'saved' => 'Configuration enregistrée',
+
+        'acknowledgement' => [
+            'acknowledgement' => 'Accusé de réception',
+            'default_answer' => 'Réponse à envoyer',
+        ],
+
+        'invoice' => 'Demande de facture',
+        'shipping_information' => 'Information de livraison',
     ],
 
     'defaultAnswer' => [
