@@ -189,7 +189,7 @@ return [
     ],
 
     'tags' => [
-        'tags' => 'Tag|Tag',
+        'tags' => 'Tag|Tags',
         'view' => 'Aperçu du tag',
         'create' => 'Création d\'un tags',
         'edit' => 'Modification d\'un tags',
