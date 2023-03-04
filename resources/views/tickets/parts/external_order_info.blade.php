@@ -1,7 +1,4 @@
-<div class="p-4 d-flex justify-content-center" id="order-info-spinner">
-    <div class="spinner-border text-primary" role="status"></div>
-</div>
-<div class="row" id="order-info-content">
+<div class="row">
     <div class="col-5">
         <div class="card">
             <div class="card-header">
@@ -13,40 +10,45 @@
                     </div>
                 </div>
             </div>
+            @php($order = $orders[0])
             <div class="card-body top-cards-height">
                 <div class="row">
                     <div class="col">{{ __('app.order.id_order') }} :</div>
-                    <div id="ext-order-id" class="col"></div>
+                    <div class="col">{{ $order['id_order'] }}</div>
                 </div>
                 <div class="row">
                     <div class="col">{{ __('app.order.status') }} :</div>
-                    <div id="ext-order-state" class="col"></div>
+                    <div class="col">
+                        <span class="badge" style="background-color: {{ $order['state']['bg_color'] }}; color: {{ $order['state']['text_color'] }};">
+                            {{ $order['state']['name'] }}
+                        </span>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">{{ __('app.order.date') }} :</div>
-                    <div id="ext-order-date" class="col"></div>
+                    <div class="col">{{ (new DateTime($order['date_add']))->format('d/m/y H:i') }}</div>
                 </div>
                 <div class="row">
                     <div class="col">{{ __('app.order.carrier')}} :</div>
-                    <div id="ext-order-carrier" class="col"></div>
+                    <div class="col">{{ $order['shipping']['carrier'] }}</div>
                 </div>
                 <div class="row">
                     <div class="col">{{ __('app.order.tracking') }} :</div>
                     <div class="col text-truncate">
-                        <a href="#" target="_blank" id="ext-order-tracking"></a>
+                        <a href="{{ $order['shipping']['url'] }}" target="_blank">{{ $order['shipping']['tracking_number'] }}</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">{{ __('app.order.total_ttc') }} :</div>
-                    <div id="ext-order-total-paid" class="col"></div>
+                    <div class="col">{{ \App\Helpers\PriceConverter::withThousandSeparator($order['total_tax_incl']) }}</div>
                 </div>
                 <div class="row">
                     <div class="col">{{ __('app.order.margin_ht') }} :</div>
-                    <div id="ext-order-margin" class="col"></div>
+                    <div class="col">{{ \App\Helpers\PriceConverter::withThousandSeparator($order['margin_tax_excl']) }}</div>
                 </div>
                 <div class="row">
                     <div class="col">{{ __('app.email') }} :</div>
-                    <div id="ext-order-customer-email" class="col"></div>
+                    <div class="col">{{ $order['email'] }}</div>
                 </div>
             </div>
         </div>
@@ -54,8 +56,8 @@
     <div class="col-7">
         <div class="card">
             <div class="card-header">{{ __('app.order.private_comment') }}</div>
-            <div class="card-body top-cards-height overflow-scroll">
-                <div id="ext-order-note"></div>
+            <div class="card-body top-cards-height overflow-auto">
+                {!! nl2br($order['private_comment']) !!}
             </div>
         </div>
     </div>
@@ -67,21 +69,23 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="fw-bold">{{ __('app.order.billing') }}</div>
-                        <div id="ext-order-billing-name"></div>
-                        <div id="ext-order-billing-address1"></div>
-                        <div id="ext-order-billing-address2"></div>
-                        <div id="ext-order-billing-postcode-city"></div>
-                        <div id="ext-order-billing-phone"></div>
-                        <div id="ext-order-billing-phone-mobile"></div>
+                        <div>{{ $order['invoice_address']['firstname'] }} {{ $order['invoice_address']['lastname'] }}</div>
+                        <div>{{ $order['invoice_address']['company'] }}</div>
+                        <div>{{ $order['invoice_address']['address1'] }}</div>
+                        <div>{{ $order['invoice_address']['address2'] }}</div>
+                        <div>{{ $order['invoice_address']['postcode'] }} {{ $order['invoice_address']['city'] }}</div>
+                        <div>{{ $order['invoice_address']['phone'] }}</div>
+                        <div>{{ $order['invoice_address']['phone_mobile'] }}</div>
                     </div>
                     <div class="col-6">
                         <div class="fw-bold">{{ __('app.order.shipping') }}</div>
-                        <div id="ext-order-shipping-name"></div>
-                        <div id="ext-order-shipping-address1"></div>
-                        <div id="ext-order-shipping-address2"></div>
-                        <div id="ext-order-shipping-postcode-city"></div>
-                        <div id="ext-order-shipping-phone"></div>
-                        <div id="ext-order-shipping-phone-mobile"></div>
+                        <div>{{ $order['delivery_address']['firstname'] }} {{ $order['invoice_address']['lastname'] }}</div>
+                        <div>{{ $order['delivery_address']['company'] }}</div>
+                        <div>{{ $order['delivery_address']['address1'] }}</div>
+                        <div>{{ $order['delivery_address']['address2'] }}</div>
+                        <div>{{ $order['delivery_address']['postcode'] }} {{ $order['invoice_address']['city'] }}</div>
+                        <div>{{ $order['delivery_address']['phone'] }}</div>
+                        <div>{{ $order['delivery_address']['phone_mobile'] }}</div>
                     </div>
                 </div>
             </div>
@@ -100,6 +104,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($order['products'] as $product)
+                            <tr>
+                                <td>
+                                    {{ $product['name'] }}
+                                    - {{ $product['reference'] }}
+                                    - {{ $product['ean'] }}
+                                </td>
+                                <td>{{ $product['quantity'] }}</td>
+                                <td>
+                                    {{ $product['supplier'] }}
+                                    @if($product['is_definitive_supplier'])
+                                        <span class="badge bg-warning"><i class="uil-lock"></i></span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
