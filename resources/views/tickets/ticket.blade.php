@@ -88,6 +88,8 @@
                             </div>
                         </div>
                     </div>
+
+                    @include('tickets.parts.tags')
                     @include('tickets.parts.revival')
                     @include('tickets.parts.private_comments')
                 </div>
@@ -154,7 +156,12 @@
             </div>
         </form>
     </div>
+    {!! \App\Helpers\JS::define('url_show_tags', route('ajaxShowTags')) !!}
+    {!! \App\Helpers\JS::define('url_add_tag_list', route('addTagList')) !!}
+    {!! \App\Helpers\JS::define('url_save_tag_on_ticketThread', route('saveTagOnticketThread')) !!}
+    {!! \App\Helpers\JS::define('url_delete_tagList', route('deleteTagList')) !!}
+    {!! \App\Helpers\JS::define('url_delete_TagList_On_Thread', route('deleteTagListOnThread')) !!}
 @endsection
 @section('script-bottom')
-<script src="{{ Vite::asset('resources/js/tickets/ticket.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/tickets/ticket.js') }}"></script>
 @endsection
