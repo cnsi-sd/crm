@@ -63,7 +63,7 @@ class RakutenImportMessages extends AbstractImportMessages
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
         $this->logger->info('Ticket save');
-        $message = Message::firstOrCreate([
+        Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $messageApi['id'],
         ],
@@ -77,7 +77,7 @@ class RakutenImportMessages extends AbstractImportMessages
             ],
         );
 
-        self::sendAutoReply($message);
+        self::sendAutoReply($thread);
     }
 
     /**

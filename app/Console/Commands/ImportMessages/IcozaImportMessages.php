@@ -133,7 +133,6 @@ class IcozaImportMessages extends AbstractImportMessages
                 'content' => strip_tags($message_api->content)
             ]);
 
-            self::sendAutoReply($thread);
-        }
+        self::sendAutoReply($thread);
     }
 }

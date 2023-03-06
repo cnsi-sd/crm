@@ -152,6 +152,5 @@ class FnacImportMessages extends AbstractImportMessages
         );
 
         self::sendAutoReply($thread);
-        }
     }
 }
