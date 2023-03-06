@@ -121,8 +121,4 @@ return [
         'pallet_number_already_scan' => 'Cette palette est déjà comprise dans l\'inventaire',
         'error_location_pallet_number' => 'Cette palette est censée être dans l\'emplacement :location',
     ],
-
-    'messages' => [
-        'channel_given_does_not_exists' => 'La canal donné n\'existe pas',
-    ]
 ];

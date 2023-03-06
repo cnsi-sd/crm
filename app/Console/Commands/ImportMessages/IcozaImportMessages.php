@@ -121,19 +121,18 @@ class IcozaImportMessages extends AbstractImportMessages
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        \App\Models\Ticket\Message::firstOrCreate([
+        $message = \App\Models\Ticket\Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->id,
         ],
             [
                 'user_id' => null,
                 'direct_customer_email' => $message_api->email,
-            // Messages authors are only customer on this API
-                'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,
+                'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,     // Messages authors are only customer on this API
                 'content' => strip_tags($message_api->content)
-            ]);
+            ]
+        );
 
-            self::sendAutoReply(setting('autoReply'), $thread);
-        }
+        self::sendAutoReply($message);
     }
 }
