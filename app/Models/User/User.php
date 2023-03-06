@@ -148,4 +148,9 @@ class User extends Authenticatable
             ->where('channel_users.channel_id', $channel->id)
             ->first();
     }
+
+    public function getShortName()
+    {
+        return explode(" ", $this->name)[0] . " " . substr(explode(" ", $this->name)[1], 0, 1) . ".";
+    }
 }

@@ -24,7 +24,6 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
-    const FROM_SHOP_TYPE = 'SHOP_USER';
 
     abstract protected function getChannelName(): string;
 
@@ -46,7 +45,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             $date_time->modify(self::FROM_DATE_TRANSFORMATOR);
 
             $request = new GetThreadsRequest();
-//            $request->setUpdatedSince($date_time);
+            $request->setUpdatedSince($date_time);
             $request->setWithMessages(true);
             $this->logger->info('Init api');
             $client = $this->initApiClient();
@@ -146,31 +145,30 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
      * @param Ticket $ticket
      * @param ThreadMessage $message_api
      * @param \App\Models\Ticket\Thread $thread
+     * @throws Exception
      */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, \App\Models\Ticket\Thread $thread)
     {
         $authorType = $message_api->getFrom()->getType();
-        $isNotShopUser = self::isNotShopUser($authorType, self::FROM_SHOP_TYPE);
-        if ($isNotShopUser) {
-            $this->logger->info('Set ticket\'s status to waiting admin');
-            $ticket->state = TicketStateEnum::WAITING_ADMIN;
-            $ticket->save();
-            $this->logger->info('Ticket save');
-            Message::firstOrCreate([
-                'thread_id' => $thread->id,
-                'channel_message_number' => $message_api->getId(),
-            ],
-                [
-                    'user_id' => null,
-                    'author_type' => self::getAuthorType($authorType),
-                    'content' => strip_tags($message_api->getBody()),
-                ],
-            );
-            if (setting('autoReplyActivate')) {
-                $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
-            }
-        }
+
+        if ($authorType == 'SHOP_USER')
+            return;
+
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
+        Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $message_api->getId(),
+        ],
+            [
+                'user_id' => null,
+                'author_type' => $this->getAuthorType($authorType),
+                'content' => strip_tags($message_api->getBody()),
+            ]
+        );
+        self::sendAutoReply($thread);
     }
 
     /**
@@ -184,5 +182,4 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             default => throw new Exception('Bad author type')
         };
     }
-
 }

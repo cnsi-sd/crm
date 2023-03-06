@@ -10,7 +10,7 @@ class ConforamaImportMessages extends AbstractMiraklImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'conforama');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**

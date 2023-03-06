@@ -15,6 +15,8 @@ abstract class PermissionEnum extends AbstractEnum
     const REVIVAL_EDIT          = 'revival_edit';
     const TICKET_READ           = 'ticket_read';
     const TICKET_EDIT           = 'ticket_edit';
+    const CHANNEL_READ          = 'channel_read';
+    const CHANNEL_EDIT          = 'channel_edit';
     const TAG_EDIT              = 'tag_edit';
     const TAG_READ              = 'tag_read';
 }

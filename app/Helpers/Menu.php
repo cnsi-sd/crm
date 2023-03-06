@@ -36,26 +36,6 @@ abstract class Menu
                 ]
             ],
             [
-                'text' => __('app.navbar.admin'),
-                'icon' => 'uil-cog',
-                'ref' => 'settings',
-                'sub_items' => [
-                    [
-                        'text' => trans_choice('app.user.user', 2),
-                        'route' => route('users'),
-                        'ref' => 'users',
-                        'permission' => PermissionEnum::USER_READ
-                    ],
-                    [
-                        'text' => trans_choice('app.role.role', 2),
-                        'route' => route('roles'),
-                        'ref' => 'roles',
-                        'permission' => PermissionEnum::ROLE_READ
-                    ],
-                ],
-            ],
-
-            [
                 'text' => __('app.navbar.config'),
                 'icon' => 'uil-cog',
                 'ref' => 'advanced',
@@ -79,6 +59,12 @@ abstract class Menu
                         'permission' => PermissionEnum::REVIVAL_READ
                     ],
                     [
+                        'text' => trans_choice('app.configuration.channel', 2),
+                        'route' => route('channels'),
+                        'ref' => 'channel',
+                        'permission' => PermissionEnum::CHANNEL_READ
+                    ],
+                    [
                         'text' => trans_choice('app.tags.tags', 2),
                         'route' => route('tags'),
                         'ref' => 'tags',
@@ -86,7 +72,25 @@ abstract class Menu
                     ],
                 ]
             ],
-
+            [
+                'text' => __('app.navbar.admin'),
+                'icon' => 'uil-cog',
+                'ref' => 'settings',
+                'sub_items' => [
+                    [
+                        'text' => trans_choice('app.user.user', 2),
+                        'route' => route('users'),
+                        'ref' => 'users',
+                        'permission' => PermissionEnum::USER_READ
+                    ],
+                    [
+                        'text' => trans_choice('app.role.role', 2),
+                        'route' => route('roles'),
+                        'ref' => 'roles',
+                        'permission' => PermissionEnum::ROLE_READ
+                    ],
+                ],
+            ],
         ];
 
         return self::checkAuthorization($menu);

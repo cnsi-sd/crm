@@ -103,7 +103,7 @@ abstract class AbstractEnum
         $translated_list = [];
 
         foreach ($list as $key => $value)
-            $translated_list[$key] = self::getMessage($key, $trans_choice_count);
+            $translated_list[$value] = self::getMessage($key, $trans_choice_count);
 
         if ($sort)
             asort($translated_list);

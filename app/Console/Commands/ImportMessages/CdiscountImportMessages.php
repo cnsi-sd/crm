@@ -46,13 +46,11 @@ class CdiscountImportMessages extends AbstractImportMessages
         'THIS IS A WARNING ONLY.',
         'Votre demande d’annulation a été acceptée. Le remboursement est en cours.',
     ];
-    private string $FROM_SHOP_TYPE;
 
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'cdiscount');
-        $this->FROM_SHOP_TYPE = 'Seller';
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**
@@ -77,8 +75,7 @@ class CdiscountImportMessages extends AbstractImportMessages
 
             $this->logger->info('--- Init api client ---');
             $this->initApiClient();
-            $discussion = new DiscussionsApi(self::$client, env('CDISCOUNT_SELLERID'));
-
+            $discussion = new DiscussionsApi(self::$client,env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
             $this->logger->info('--- Get all discussions ---');
             $listDiscussionId = $discussion->getAllDiscussions($from_date);
 
@@ -97,9 +94,8 @@ class CdiscountImportMessages extends AbstractImportMessages
                     $this->logger->info('Begin Transaction');
 
                     $orderReference = $discu->getOrderReference();
-                    $channel = Channel::getByName($this->getChannelName());
-                    $order = Order::getOrder($orderReference, $channel);
-                    $ticket = Ticket::getTicket($order, $channel);
+                    $order = Order::getOrder($orderReference, $this->channel);
+                    $ticket = Ticket::getTicket($order, $this->channel);
 
                     $this->logger->info('Message recovery');
                     $messages = $discu->getMessages();
@@ -161,18 +157,26 @@ class CdiscountImportMessages extends AbstractImportMessages
      * @param Ticket $ticket
      * @param $message_api
      * @param Thread $thread
+     * @throws Exception
      */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = $message_api->getSender()->getUserType();
-        $isNotShopUser = self::isNotShopUser($authorType, $this->FROM_SHOP_TYPE);
-        if ($isNotShopUser) {
-            $this->logger->info('Set ticket\'s status to waiting admin');
-            $ticket->state = TicketStateEnum::WAITING_ADMIN;
-            $ticket->save();
-            Message::firstOrCreate([
-                'thread_id' => $thread->id,
-                'channel_message_number' => $message_api->getMessageId(),
+
+        if ($authorType == 'Seller')
+            return;
+
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $message_api->getMessageId(),
+        ],
+            [
+                'user_id' => null,
+                'author_type' => self::getAuthorType($authorType),
+                'content' => strip_tags($message_api->getBody()),
             ],
                 [
                     'user_id' => null,
@@ -180,19 +184,21 @@ class CdiscountImportMessages extends AbstractImportMessages
                     'content' => strip_tags($message_api->getBody()),
                 ],
             );
-        }
-        if (setting('autoReplyActivate') && $ticket->order->channel_order_number == '2302201135UQL01') {
-            $this->logger->info('Send auto reply');
-//            self::sendAutoReply(setting('autoReply'), $thread);
+
+        if ($ticket->order->channel_order_number == '2302201135UQL01') {
+            self::sendAutoReply($thread);
         }
     }
 
-    //TODO Il faut vérifier les auteurs des messages et renvoyer une erreur quand le $authorType reçus n'est pas attendu dans le match
+    /**
+     * @throws Exception
+     */
     protected function getAuthorType(string $authorType): string
     {
         return match ($authorType) {
             'Customer' => TicketMessageAuthorTypeEnum::CUSTOMER, //
-            default => TicketMessageAuthorTypeEnum::OPERATOR,
+            'GrcOperator' => TicketMessageAuthorTypeEnum::OPERATOR, //
+            default => throw new Exception('Bad author type.')
         };
     }
 }

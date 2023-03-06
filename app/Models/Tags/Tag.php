@@ -82,16 +82,16 @@ class Tag extends Model
         return $columns;
     }
 
-    public static function getlistTagWithTickets($tickets): array
+    public function getlistTagWithTickets($tickets): array
     {
         $listeTag = array();
         foreach($tickets as $ticket){
-            self::getListTagByThread($ticket, $listeTag);
+            $this->getListTagByThread($ticket, $listeTag);
         }
         return $listeTag;
     }
 
-    public static function getListTagByThread($ticket, $listeTag, $returnList = false){
+    public function getListTagByThread($ticket, &$listeTag, $returnList = false){
         foreach($ticket->threads as $thread) {
             foreach ($thread->taglist as $tagList) {
                 foreach ($tagList->tags as $tag){
@@ -106,5 +106,6 @@ class Tag extends Model
         if($returnList){
             return $listeTag;
         }
+
     }
 }

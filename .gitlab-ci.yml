@@ -1,0 +1,38 @@
+image: devilbox/php-fpm:8.1-prod
+
+variables:
+  SECURE_LOG_LEVEL: error
+  COMPOSER_DEFAULT_OPTIONS: '--optimize-autoloader --no-scripts'
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  before_script:
+    - apt-get update
+    - apt-get install -y git
+  script:
+    - php composer.phar install ${COMPOSER_DEFAULT_OPTIONS}
+    - cp .env.example .env
+    - php artisan key:generate
+  variables:
+    APP_ENV: prod
+  artifacts:
+    paths:
+      - vendor/
+  allow_failure: false
+
+phpcs:
+  stage: test
+  script:
+    # exclude side effects because phpcs doesnt manage enum well
+    - php vendor/bin/phpcs ./app --standard=PSR2 --exclude=PSR1.Files.SideEffects --severity=error
+  allow_failure: true
+
+phpstan:
+  stage: test
+  script:
+    - php -d memory_limit=-1 vendor/bin/phpstan analyse app
+  allow_failure: true
