@@ -21,8 +21,8 @@ class SendInvoice extends AbstractNewMessageListener
         $this->event = $event;
         $this->message = $event->getMessage();
         $this->prestashopGateway = new PrestashopGateway();
-        $this->answerInvoiceFound = DefaultAnswer::firstOrFail(setting('bot.invoice.found_answer_id'));
-        $this->answerOrderNotShipped = DefaultAnswer::firstOrFail(setting('bot.invoice.not_shipped_answer_id'));
+        $this->answerInvoiceFound = DefaultAnswer::findOrFail(setting('bot.invoice.found_answer_id'));
+        $this->answerOrderNotShipped = DefaultAnswer::findOrFail(setting('bot.invoice.not_shipped_answer_id'));
 
         if (!$this->canBeProcessed())
             return self::SKIP;
