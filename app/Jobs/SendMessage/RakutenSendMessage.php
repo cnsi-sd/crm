@@ -12,6 +12,8 @@ use GuzzleHttp\Client;
 
 class RakutenSendMessage extends AbstractSendMessage
 {
+    protected string $testOrder = '654714566';
+    protected string $testItemId = '868826680';
     protected Logger $logger;
     protected Client $client;
     const MESSAGE_LIMIT = 475;
@@ -35,22 +37,29 @@ class RakutenSendMessage extends AbstractSendMessage
              */
             // Variables
             $threadNumber = $this->message->thread->channel_thread_number;
-            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->channel->name);
+//            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->channel->name);
 
             $this->logger->info('Init api');
             $client = self::initApiClient();
 
-            $xmlResponse = $client->request(
+            $response = $client->request(
                 'POST', $this->getCredentials()['host'] . '/' . self::PAGE
                 . '?action='    . self::ACTION
-                . '?itemid='    . $lastApiMessage->channel_message_number
-                . '?content='   . $this->prepareMessageForPriceMinister($this->message->content)
-                . '?login='     . env('RAKUTEN_LOGIN')
-                . '?pwd'        . env('RAKUTEN_PASSWORD')
-                . '?version='   . self::VERSION
+//                . '&itemid='    . $threadNumber
+                . '&itemid='    . $this->testItemId
+//                . '&content='   . $this->prepareMessageForRakuten($this->message->content)
+                . '&content='   . $this->prepareMessageForRakuten('Ceci est un message de test, veuillez ne pas en tenir compte.
+                                                                    Merci de votre compréhension.
+                                                                    L\'équipe développeur.')
+                . '&login='     . env('RAKUTEN_LOGIN')
+                . '&pwd='        . env('RAKUTEN_PASSWORD')
+                . '&version='   . self::VERSION
             );
-            $array = $this->xmlResponseToArray($xmlResponse);
-            $test = '';
+
+            if($response->getStatusCode() != '200')
+                throw new Exception('getitemtodolist api request gone bad');
+            $array = $this->xmlResponseToArray($response->getBody()->getContents()); // TODO qu'est ce que j'en fait ?
+
         }  catch (Exception $e) {
             $this->logger->error('An error has occurred while sending message.', $e);
 //            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
@@ -78,7 +87,7 @@ class RakutenSendMessage extends AbstractSendMessage
         return $this->client;
     }
 
-    private function prepareMessageForPriceMinister($message): string
+    private function prepareMessageForRakuten($message): string
     {
         $message = html_entity_decode(strip_tags(trim($message)), ENT_NOQUOTES, "ISO-8859-15");
         $contentLen = strlen($message);
