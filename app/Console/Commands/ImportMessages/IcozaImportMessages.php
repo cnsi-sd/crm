@@ -30,7 +30,7 @@ class IcozaImportMessages extends AbstractImportMessages
     public function __construct()
     {
         $this->signature =sprintf($this->signature,'icoza');
-        return parent::__construct();
+        parent::__construct();
     }
 
     protected function getCredentials(): array

@@ -28,12 +28,13 @@
                                 <label for="ext_name">
                                     {{ __('app.channel.ext_name') }}
                                 </label>
-                                <input
-                                    type="text"
-                                    name="ext_name"
-                                    class="form-control form-control-sm"
-                                    value="{{ $channel->ext_name }}"
-                                />
+                                <select name="ext_name" class="form-control form-control-sm form-select">
+                                    @foreach($ext_channels as $ext_channel)
+                                        <option value="{{ $ext_channel }}" @selected($ext_channel === $channel->ext_name)>
+                                            {{ $ext_channel }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group mb-3">

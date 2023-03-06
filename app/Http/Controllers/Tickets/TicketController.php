@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Tickets;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Helpers\Alert;
-use App\Helpers\BmsMagentoGateway;
 use App\Helpers\Builder\Table\TableBuilder;
+use App\Helpers\PrestashopGateway;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\ConforamaSendMessage;
 use App\Jobs\SendMessage\IcozaSendMessage;
@@ -36,7 +36,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Http;
 
 class TicketController extends AbstractController
 {
@@ -144,18 +143,13 @@ class TicketController extends AbstractController
         return response()->json(['message' => 'success']);
     }
 
-    public function get_external_infos(Ticket $ticket): JsonResponse
+    public function get_external_infos(Ticket $ticket): View
     {
-        $bmsMagentoGateway = new BmsMagentoGateway();
-        $externalOrderInfo = $bmsMagentoGateway->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalAdditionalOrderInfo = $bmsMagentoGateway->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalSuppliers = $bmsMagentoGateway->getExternalSuppliers();
+        $prestashopGateway = new PrestashopGateway();
+        $externalOrderInfo = $prestashopGateway->getOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->ext_name);
 
-        return response()->json([
-            'externalOrderInfo' => $externalOrderInfo,
-            'externalAdditionalOrderInfo' => $externalAdditionalOrderInfo,
-            'externalSuppliers' => $externalSuppliers
-            ]);
+        return view('tickets.parts.external_order_info')
+            ->with('orders', $externalOrderInfo);
     }
 
     /**

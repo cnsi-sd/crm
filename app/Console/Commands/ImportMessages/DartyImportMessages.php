@@ -10,7 +10,7 @@ class DartyImportMessages extends AbstractMiraklImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'darty');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**
