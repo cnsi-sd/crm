@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 class FnacImportMessages extends AbstractImportMessages
 {
+    protected string $testOrder = 'FICGB4UDKJXMM';
     private SimpleClient $client;
 
     /**

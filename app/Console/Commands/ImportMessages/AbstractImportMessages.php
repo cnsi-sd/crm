@@ -18,6 +18,7 @@ abstract class AbstractImportMessages extends Command
     protected Logger $logger;
     protected Channel $channel;
     protected static mixed $_alreadyImportedMessages = false;
+    protected string $testOrder;
 
     protected $signature = '%s:import:messages';
     protected $description = 'Importing messages from Marketplace.';
@@ -60,6 +61,10 @@ abstract class AbstractImportMessages extends Command
         if(!setting('autoReplyActivate')) {
             return;
         }
+
+        if($thread->ticket->order->channel_order_number != $this->testOrder)
+            return;
+
         $this->logger->info('Send auto reply');
         $autoReplyId = setting('autoReply');
         $autoReplyContentWeek = DefaultAnswer::query()->select('content')->where('id', $autoReplyId)->first();

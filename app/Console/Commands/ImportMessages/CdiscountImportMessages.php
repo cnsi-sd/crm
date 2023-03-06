@@ -30,14 +30,16 @@ use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class CdiscountImportMessages extends AbstractImportMessages
 {
+    protected string $testOrder = '2302201135UQL01';
+
     /**
      * @var ClientCdiscount
      */
     static private ClientCdiscount $client;
-
     const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
     const MAX_RETRY_API_CALL = 5;
     const IGNORE_MSG_CONTAINS = [
@@ -56,7 +58,7 @@ class CdiscountImportMessages extends AbstractImportMessages
     /**
      * Execute the console command.
      *
-     * @throws Exception
+     * @throws Exception|TransportExceptionInterface
      */
     public function handle()
     {
