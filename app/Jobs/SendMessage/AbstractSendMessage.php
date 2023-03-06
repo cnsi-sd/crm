@@ -2,6 +2,7 @@
 
 namespace App\Jobs\SendMessage;
 
+use App\Console\Commands\ImportMessages\RakutenImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Message;
