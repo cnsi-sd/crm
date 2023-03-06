@@ -73,4 +73,13 @@ final class PrestashopGateway
         ];
         return $this->get($queryParams)->json();
     }
+
+    public function getOrderInvoice(int $prestashop_order_id): ?string
+    {
+        $queryParams = [
+            'controller' => 'order_invoice',
+            'id_order' => $prestashop_order_id,
+        ];
+        return $this->get($queryParams)->body();
+    }
 }
