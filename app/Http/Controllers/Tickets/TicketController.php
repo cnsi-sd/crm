@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tickets;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
+use App\Helpers\PrestashopGateway;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Tags\Tag;
@@ -22,7 +23,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Http;
 
 class TicketController extends AbstractController
 {
@@ -130,17 +130,13 @@ class TicketController extends AbstractController
         return response()->json(['message' => 'success']);
     }
 
-    public function get_external_infos(Ticket $ticket): JsonResponse
+    public function get_external_infos(Ticket $ticket): View
     {
-        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalSuppliers = $this->getExternalSuppliers();
+        $prestashopGateway = new PrestashopGateway();
+        $externalOrderInfo = $prestashopGateway->getOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->ext_name);
 
-        return response()->json([
-            'externalOrderInfo' => $externalOrderInfo,
-            'externalAdditionalOrderInfo' => $externalAdditionalOrderInfo,
-            'externalSuppliers' => $externalSuppliers
-            ]);
+        return view('tickets.parts.external_order_info')
+            ->with('orders', $externalOrderInfo);
     }
 
     /**
@@ -207,21 +203,6 @@ class TicketController extends AbstractController
         return view('tickets.ticket')
             ->with('ticket', $ticket)
             ->with('thread', $thread);
-    }
-
-    public function getExternalOrderInfo($mp_order, $mp_name)
-    {
-        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order&mp_order=' . $mp_order . '&mp_name=' . $mp_name)[0];
-    }
-
-    public function getExternalAdditionalOrderInfo($mp_order, $mp_name)
-    {
-        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order_additional_infos&mp_order=' . $mp_order . '&mp_name=' . $mp_name)->json();
-    }
-
-    public function getExternalSuppliers()
-    {
-        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=supplier')->json();
     }
 
     public function delete_tag(Request $request) {

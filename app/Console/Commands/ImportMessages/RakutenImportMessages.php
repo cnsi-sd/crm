@@ -30,7 +30,7 @@ class RakutenImportMessages extends AbstractImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'rakuten');
-        return parent::__construct();
+        parent::__construct();
     }
 
     protected function getCredentials(): array

@@ -50,7 +50,7 @@ class CdiscountImportMessages extends AbstractImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'cdiscount');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**

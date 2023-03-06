@@ -10,7 +10,7 @@ class MetroImportMessages extends AbstractMiraklImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'metro');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**

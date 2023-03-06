@@ -27,7 +27,7 @@ class FnacImportMessages extends AbstractImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'fnac');
-        return parent::__construct();
+        parent::__construct();
     }
 
     protected function getCredentials(): array
