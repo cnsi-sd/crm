@@ -2,6 +2,7 @@
 
 namespace App\Models\Ticket;
 
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Models\User\User;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
