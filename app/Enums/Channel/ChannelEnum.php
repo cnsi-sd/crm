@@ -20,4 +20,5 @@ class ChannelEnum extends AbstractEnum
     const FNAC_COM          = "fnac.com";
     const CDISCOUNT_FR      = "cdiscount.fr";
     const ICOZA_FR          = "icoza.fr";
+    const RAKUTEN_COM       = "rakuten.com";
 }

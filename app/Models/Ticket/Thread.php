@@ -72,10 +72,9 @@ class Thread extends Model
             ->firstOrCreate(
                 [
                     'channel_thread_number' => $channel_thread_number,
+                    'ticket_id' => $ticket->id,
                 ],
                 [
-                    'ticket_id' => $ticket->id,
-                    'channel_thread_number' => $channel_thread_number,
                     'name' => $name,
                     'customer_issue' => $customer_issue,
                     'channel_data' => json_encode($channel_data),
@@ -184,6 +183,20 @@ class Thread extends Model
             ->where('thread_id', $this->id)
             ->orderBy('created_at', 'DESC')
             ->first();
+    }
+
+    public function getUnreadMessages()
+    {
+        $numberOfUnreadMessages = 0;
+        $queryMessages = Message::query()->where('thread_id', $this->id)->orderBy('created_at', "DESC")->get();
+        foreach ($queryMessages as $queryMessage) {
+            if ($queryMessage['author_type'] === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) {
+                break;
+            } else {
+                $numberOfUnreadMessages += 1;
+            }
+        }
+    return $numberOfUnreadMessages;
     }
 
 }

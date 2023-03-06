@@ -10,7 +10,7 @@ class LeclercImportMessages extends AbstractMiraklImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'leclerc');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**

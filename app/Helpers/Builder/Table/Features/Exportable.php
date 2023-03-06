@@ -3,7 +3,6 @@
 namespace App\Helpers\Builder\Table\Features;
 
 use App\Enums\TableBuilder\ExportTypeEnum;
-use App\Helpers\Builder\PDF\PDFBuilder;
 use App\Helpers\Builder\Table\TableToExcel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -56,9 +55,7 @@ trait Exportable
                 $tableToExcel = new TableToExcel($this, $this->getFileName() . '.xlsx');
                 return $tableToExcel->exportToExcel();
             case ExportTypeEnum::PDF:
-                $view = $this->render();
-                PDFBuilder::load($view)->download();
-                break;
+                throw new \Exception('Not implemented yet.');
         }
 
         return null;

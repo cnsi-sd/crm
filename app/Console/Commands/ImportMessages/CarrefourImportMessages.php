@@ -9,7 +9,7 @@ class CarrefourImportMessages extends AbstractMiraklImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'carrefour');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**

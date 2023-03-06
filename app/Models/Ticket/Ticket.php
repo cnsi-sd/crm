@@ -14,6 +14,7 @@ use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\User\User;
 use Carbon\Carbon;
+use Cnsi\Searchable\Trait\Searchable;
 use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,6 +44,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ticket extends Model
 {
+    use Searchable;
+
+    protected $searchable = [
+        'id',
+        'order.channel_order_number',
+    ];
+
     protected $table = 'tickets';
 
     protected $fillable = [
@@ -56,6 +64,11 @@ class Ticket extends Model
         'updated_at'
     ];
 
+    protected $casts = [
+        'deadline' => 'datetime',
+        'delivery_date' => 'datetime'
+    ];
+
     public static function getTicket(Order $order, Channel $channel)
     {
         return Ticket::firstOrCreate(
@@ -64,14 +77,23 @@ class Ticket extends Model
                 'channel_id' => $channel->id,
             ],
             [
-                'channel_id' => $channel->id,
-                'order_id' => $order->id,
                 'state' => TicketStateEnum::WAITING_ADMIN,
                 'priority' => TicketPriorityEnum::P1,
                 'deadline' => Carbon::now()->addHours(24), // TODO : JJ ou J+1
                 'user_id' => $channel->user_id,
             ],
         );
+    }
+
+    public function getShowRoute(): string
+    {
+        return "ticket";
+    }
+
+    public function __toString(): string
+    {
+        $default_name = '#' . $this->id . ' - ' . $this->order->channel_order_number . ' - ' . $this->order->channel->name;
+        return $default_name;
     }
 
     /**
@@ -121,7 +143,8 @@ class Ticket extends Model
 
         $columns[] = TableColumnBuilder::id()
             ->setSearchable(true)
-            ->setSortable(true);
+            ->setSortable(true)
+            ->setWhereKey('tickets.id');
 
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.deadline'))
@@ -223,4 +246,8 @@ class Ticket extends Model
         return (new Tag())->getListTagByThread($this, $listeTag,true);
     }
 
+    public function getOpenedDays() {
+        $now = new DateTime();
+        return $now->diff($this->created_at)->format("%a");
+    }
 }

@@ -1,9 +1,18 @@
-$( document ).ready(function() {
-    $('.card-header').click(function () {
-        $.get('/tickets/hide_comment/' + $(this).data("comment-id"), function(data) {
+$(document).ready(function () {
+    $('.thread-comments .card-header').click(function () {
+        const route = $(this).data("toggle-comment-route")
+        $.get(route, function (data) {
+
         });
     });
-});
+
+    $('#order-info-tab').one("click", function () {
+        const route = $(this).data("get-external-infos-route")
+        $.get(route, function (data) {
+            $('#order-info').html(data)
+        });
+    })
+})
 
 let inputLine = document.getElementById('number-list');
 let bodyCard = document.getElementById('card-body-tag');
@@ -13,7 +22,7 @@ $('.tags').on('select2:select', saveTicketThreadTags);
 $('.deleteTaglist').on("click", deleteTagLists);
 $('.delete-tag').on("click", deleteThreadTag)
 
-function addListTagOnThread(e){
+function addListTagOnThread(e) {
     // create new line in db
     let lineId;
     let thread_id = e.target.getAttribute("data-thread_id")
@@ -54,7 +63,7 @@ function addListTagOnThread(e){
 
         //create div view tags
         let divView = document.createElement("div");
-        divView.id = "view-"+lineId;
+        divView.id = "view-" + lineId;
         divView.className = "mt-3 mb-2";
         divLine.appendChild(divView);
         $(divLine).append("<hr/>")
@@ -76,14 +85,15 @@ function makeOption(select){
         })
     })
 }
+
 function saveTicketThreadTags(e) {
     let tag_id = e.target.options[e.target.options.selectedIndex].value;
     let taglist_id = e.target.getAttribute("data-taglist_id");
     window.axios.post(url_save_tag_on_ticketThread, {
         taglist_id: taglist_id,
         tag_id: tag_id
-    }).then(function(response) {
-        let divViewTag = document.getElementById('view-'+ taglist_id)
+    }).then(function (response) {
+        let divViewTag = document.getElementById('view-' + taglist_id)
         let span = document.createElement('span')
 
         let buttonDeleteTag = document.createElement('button')
@@ -103,7 +113,7 @@ function saveTicketThreadTags(e) {
     })
 }
 
-function deleteTagLists(e){
+function deleteTagLists(e) {
     let thread_id = e.target.getAttribute("data-thread_id");
     let taglist_id = e.target.getAttribute("data-taglist_id");
     window.axios.post(url_delete_tagList, {

@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\DB;
 
 class FnacImportMessages extends AbstractImportMessages
 {
-    private string $FROM_SHOP_TYPE;
     private SimpleClient $client;
 
     /**
@@ -28,8 +27,7 @@ class FnacImportMessages extends AbstractImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'fnac');
-        $this->FROM_SHOP_TYPE = 'SELLER';
-        return parent::__construct();
+        parent::__construct();
     }
 
     protected function getCredentials(): array
@@ -130,28 +128,26 @@ class FnacImportMessages extends AbstractImportMessages
      */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
+
         $authorType = $message_api->getMessageFromType();
-        $isNotShopUser = self::isNotShopUser($authorType , $this->FROM_SHOP_TYPE);
 
-        if($isNotShopUser) {
-            $this->logger->info('Set ticket\'s status to waiting admin');
-            $ticket->state = TicketStateEnum::WAITING_ADMIN;
-            $ticket->save();
-            $this->logger->info('Ticket save');
-
-            \App\Models\Ticket\Message::firstOrCreate([
-                'thread_id' => $thread->id,
-                'channel_message_number' => $message_api->getMessageId(),
-            ],
-            [
-                'user_id' => null,
-                'author_type' => $this->getAuthorType($authorType),
-                'content' => strip_tags($message_api->getMessageDescription())
-            ]);
-            if (setting('autoReplyActivate')) {
-                $this->logger->info('Send auto reply');
-//                self::sendAutoReply(setting('autoReply'), $thread);
-            }
+        \App\Models\Ticket\Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $message_api->getMessageId(),
+        ],
+        [
+            'user_id' => null,
+            'author_type' => $this->getAuthorType($authorType),
+            'content' => strip_tags($message_api->getMessageDescription())
+        ]);
+        if (setting('autoReplyActivate')) {
+            $this->logger->info('Send auto reply');
+                self::sendAutoReply(setting('autoReply'), $thread);
         }
+
     }
 }
