@@ -2,7 +2,6 @@
 
 namespace App\Jobs\SendMessage;
 
-use App\Console\Commands\ImportMessages\RakutenImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Message;
@@ -53,6 +52,7 @@ abstract class AbstractSendMessage implements ShouldQueue
             ChannelEnum::CDISCOUNT_FR       => CdiscountSendMessage::dispatch($message),
             ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
             ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
+            ChannelEnum::RAKUTEN_COM        => RakutenSendMessage::dispatch($message),
             default => throw new Exception('Channel given does not exists.'),
         };
     }
