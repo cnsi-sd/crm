@@ -43,10 +43,7 @@ class TicketController extends AbstractController
     {
         $query = Ticket::query()
             ->select('tickets.*')
-            ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
-            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
-            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
-            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
+            ->join('ticket_threads', 'ticket_threads.ticket_id', '=','tickets.id')
             ->groupBy('tickets.id');
         $table = (new TableBuilder('all_tickets', $request))
             ->setColumns(Ticket::getTableColumns())
@@ -54,21 +51,18 @@ class TicketController extends AbstractController
             ->setQuery($query);
 
         $tickets = $query->get();
+
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new Tag())->getlistTagWithTickets($tickets));
+            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
     {
         $query = Ticket::query()
-            ->select(
-                'tickets.*')
+            ->select('tickets.*')
             ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
-            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
-            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
-            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
-            ->where('tickets.user_id', $user->id)
+            ->where('user_id', $user->id)
             ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
             ->groupBy('tickets.id');
 
@@ -81,7 +75,7 @@ class TicketController extends AbstractController
 
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new Tag())->getlistTagWithTickets($tickets));
+            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));;
 
     }
 
