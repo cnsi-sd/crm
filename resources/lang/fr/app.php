@@ -120,6 +120,11 @@ return [
     ],
 
     'order' => [
+        'order' => 'Commande',
+
+        'empty_orders' => 'Aucune commande trouvée ...',
+        'null_orders' => 'Erreur lors de la récupération des commandes ...',
+
         'id_order' => 'ID Order',
         'status' => 'Statut',
         'date' => 'Date commande',
