@@ -135,6 +135,11 @@ class FnacImportMessages extends AbstractImportMessages
 
         $authorType = $message_api->getMessageFromType();
 
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
+
         \App\Models\Ticket\Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->getMessageId(),
@@ -143,11 +148,9 @@ class FnacImportMessages extends AbstractImportMessages
             'user_id' => null,
             'author_type' => $this->getAuthorType($authorType),
             'content' => strip_tags($message_api->getMessageDescription())
-        ]);
-        if (setting('autoReplyActivate')) {
-            $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
-        }
+        ]
+        );
 
+        self::sendAutoReply($thread);
     }
 }

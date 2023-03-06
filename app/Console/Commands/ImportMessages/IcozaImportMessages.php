@@ -109,8 +109,13 @@ class IcozaImportMessages extends AbstractImportMessages
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
+        $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
+
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
@@ -123,12 +128,11 @@ class IcozaImportMessages extends AbstractImportMessages
             [
                 'user_id' => null,
                 'direct_customer_email' => $message_api->email,
-                'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER, // Messages authors are only customer on this API
+            // Messages authors are only customer on this API
+                'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,
                 'content' => strip_tags($message_api->content)
             ]);
-        if (setting('autoReplyActivate')) {
-            $this->logger->info('Send auto reply');
-            self::sendAutoReply(setting('autoReply'), $thread);
-        }
+
+        self::sendAutoReply($thread);
     }
 }

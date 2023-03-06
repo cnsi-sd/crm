@@ -166,13 +166,9 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 'user_id' => null,
                 'author_type' => $this->getAuthorType($authorType),
                 'content' => strip_tags($message_api->getBody()),
-            ],
+            ]
         );
-        if (setting('autoReplyActivate')) {
-            $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
-        }
-
+        self::sendAutoReply($thread);
     }
 
     /**
@@ -186,5 +182,4 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             default => throw new Exception('Bad author type')
         };
     }
-
 }
