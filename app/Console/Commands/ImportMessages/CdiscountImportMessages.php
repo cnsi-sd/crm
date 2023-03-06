@@ -186,7 +186,7 @@ class CdiscountImportMessages extends AbstractImportMessages
             );
         }
         if ($ticket->order->channel_order_number == '2302201135UQL01') {
-            self::sendAutoReply(setting('autoReply'), $thread);
+            self::sendAutoReply($thread);
         }
     }
 
