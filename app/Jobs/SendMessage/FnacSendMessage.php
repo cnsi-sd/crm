@@ -28,6 +28,11 @@ class FnacSendMessage extends AbstractSendMessage
      */
     public function handle(): void
     {
+        // If we are in local environment, we only can send messages to a test order
+        if (env('APP_ENV') == 'local')
+            if( $this->message->thread->channel_thread_number != 'FICGB4UDKJXMM')
+                return;
+
         try {
             // Load channel
             $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
@@ -41,12 +46,6 @@ class FnacSendMessage extends AbstractSendMessage
 
             // Variables
             $sendTo = MessageToType::CLIENT;
-
-            // If we are in local environment, we only can send messages to a test order
-            if (env('APP_ENV') == 'local')
-                if( $this->message->thread->channel_thread_number != 'FICGB4UDKJXMM')
-                    return;
-
             $threadNumber = $this->message->thread->channel_thread_number;
 
             $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->channel->name);

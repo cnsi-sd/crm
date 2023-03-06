@@ -58,6 +58,11 @@ class IcozaSendMessage extends AbstractSendMessage
 
     public function handle(): void
     {
+        // If we are in local environment, we only can send messages to a test order
+        if (env('APP_ENV') == 'local')
+            if( $this->message->thread->channel_thread_number != '526-SOOTUCIZG')
+                return;
+
         try {
             $this->logger = new Logger('send_message/'
                 . $this->getSnakeChannelName()

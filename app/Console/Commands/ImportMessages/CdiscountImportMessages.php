@@ -179,17 +179,10 @@ class CdiscountImportMessages extends AbstractImportMessages
                 'user_id' => null,
                 'author_type' => self::getAuthorType($authorType),
                 'content' => strip_tags($message_api->getBody()),
-            ],
-                [
-                    'user_id' => null,
-                    'author_type' => self::getAuthorType($authorType),
-                    'content' => strip_tags($message_api->getBody()),
-                ],
-            );
+            ]
+        );
 
-        if ($ticket->order->channel_order_number == '2302201135UQL01') {
-            self::sendAutoReply($thread);
-        }
+        self::sendAutoReply($thread);
     }
 
     /**
