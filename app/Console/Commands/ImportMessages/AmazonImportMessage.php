@@ -37,8 +37,8 @@ class AmazonImportMessage extends AbstractImportMessages
 
         $this->logger->info('--- Start ---');
         try {
-            $from_time = strtotime(date('j F Y') . self::FROM_DATE_TRANSFORMATOR);
-            $from_date = date("j F Y", $from_time);
+            $from_time = strtotime(date('d M Y H:i:s') . self::FROM_DATE_TRANSFORMATOR);
+            $from_date = date("d M Y H:i:s", $from_time);
 
             $this->logger->info('--- Init api client ---');
 
@@ -46,12 +46,13 @@ class AmazonImportMessage extends AbstractImportMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
+                'SUBJECT' => 'Demande de renseignements',
                 'SINCE' => $from_date
             ]);
 
             $this->logger->info('--- Get Emails details');
             foreach($this->getEmails($emailIds) as $emailId => $email){
-                dd($email);
+                dd($email->textHtml);
             }
 
             $t = "kqdjfv";
@@ -95,8 +96,7 @@ class AmazonImportMessage extends AbstractImportMessages
                 $criterias[] = strtoupper($criteria);
                 continue;
             }
-
-            $criterias[] = strtoupper($criteria) . ' AmazonImportMessage.php' .$value.'"';
+            $criterias[] = strtoupper($criteria).' "'.$value.'"';
         }
 
         return $this->mailbox->searchMailbox(implode(' ', $criterias));
@@ -106,7 +106,7 @@ class AmazonImportMessage extends AbstractImportMessages
     {
         $emails = [];
         foreach ($emailIds as $emailId) {
-            $this->logger->info('--- Get Email : '.$emailId);
+            $this->logger->info('--- Get Email : '. $emailId);
             $emails[$emailId] = $this->mailbox->getMail($emailId,false);
             break;
         }
