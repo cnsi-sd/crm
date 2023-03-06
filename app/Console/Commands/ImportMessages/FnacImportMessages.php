@@ -140,18 +140,18 @@ class FnacImportMessages extends AbstractImportMessages
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        $message = \App\Models\Ticket\Message::firstOrCreate([
+        \App\Models\Ticket\Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->getMessageId(),
         ],
-            [
-                'user_id' => null,
-                'author_type' => $this->getAuthorType($authorType),
-                'content' => strip_tags($message_api->getMessageDescription())
-            ]
+        [
+            'user_id' => null,
+            'author_type' => $this->getAuthorType($authorType),
+            'content' => strip_tags($message_api->getMessageDescription())
+        ]
         );
 
-        self::sendAutoReply($message);
-
+        self::sendAutoReply(setting('autoReply'), $thread);
+        }
     }
 }

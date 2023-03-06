@@ -51,20 +51,21 @@ abstract class AbstractImportMessages extends Command
     }
 
     /**
-     * @param Message $message
+     * @param mixed $messageId
+     * @param Thread $thread
      * @return void
      * @throws Exception
      */
-    public function sendAutoReply(Message $message): void
+    public function sendAutoReply(mixed $messageId, Thread $thread): void
     {
-        if(!setting('autoReplyActivate'))
+        if(!setting('autoReplyActivate')) {
             return;
-
+        }
         $this->logger->info('Send auto reply');
-        $autoReplyContentWeek = DefaultAnswer::query()->select('content')->where('id', $message->id)->first();
+        $autoReplyContentWeek = DefaultAnswer::query()->select('content')->where('id', $messageId)->first();
 
         $autoReply = new Message();
-        $autoReply->thread_id = $message->thread_id;
+        $autoReply->thread_id = $thread->id;
         $autoReply->user_id = null;
         $autoReply->channel_message_number = '';
         $autoReply->author_type = TicketMessageAuthorTypeEnum::ADMIN;

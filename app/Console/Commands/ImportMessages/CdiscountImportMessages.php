@@ -169,7 +169,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
-        $message = Message::firstOrCreate([
+        Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->getMessageId(),
         ],
@@ -178,10 +178,15 @@ class CdiscountImportMessages extends AbstractImportMessages
                 'author_type' => self::getAuthorType($authorType),
                 'content' => strip_tags($message_api->getBody()),
             ],
-        );
-
+                [
+                    'user_id' => null,
+                    'author_type' => self::getAuthorType($authorType),
+                    'content' => strip_tags($message_api->getBody()),
+                ],
+            );
+        }
         if ($ticket->order->channel_order_number == '2302201135UQL01') {
-            self::sendAutoReply($message);
+            self::sendAutoReply(setting('autoReply'), $thread);
         }
     }
 

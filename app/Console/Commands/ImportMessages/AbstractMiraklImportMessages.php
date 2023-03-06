@@ -158,7 +158,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
         $this->logger->info('Ticket save');
-        $message = Message::firstOrCreate([
+        Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->getId(),
         ],
@@ -169,7 +169,9 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             ]
         );
 
-        self::sendAutoReply($message);
+            self::sendAutoReply(setting('autoReply'), $thread);
+        }
+
     }
 
     /**
