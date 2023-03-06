@@ -10,7 +10,7 @@ class   UbaldiImportMessages extends AbstractMiraklImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'ubaldi');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**
