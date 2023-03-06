@@ -111,7 +111,8 @@ return [
         'base_information' => 'Informations de base',
         'customer_mail' => 'Email client',
         'delivery_date' => 'Date de livraison',
-        'admin_thread' => 'Administration fil de discussion',
+        'admin_ticket' => 'Administration Ticket',
+        'admin_thread' => 'Administration Fil de discussion',
         'customer_issue' => 'Problématique client',
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
@@ -188,7 +189,7 @@ return [
     ],
 
     'tags' => [
-        'tags' => 'Tag|Tag',
+        'tags' => 'Tag|Tags',
         'view' => 'Aperçu du tag',
         'create' => 'Création d\'un tags',
         'edit' => 'Modification d\'un tags',

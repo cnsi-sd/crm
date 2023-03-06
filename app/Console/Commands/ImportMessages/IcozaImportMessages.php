@@ -19,7 +19,6 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class IcozaImportMessages extends AbstractImportMessages
 {
-    private string $FROM_SHOP_TYPE;
     private Client $client;
 
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
@@ -31,8 +30,7 @@ class IcozaImportMessages extends AbstractImportMessages
     public function __construct()
     {
         $this->signature =sprintf($this->signature,'icoza');
-        $this->FROM_SHOP_TYPE = 'ADMIN';
-        return parent::__construct();
+        parent::__construct();
     }
 
     protected function getCredentials(): array
@@ -101,42 +99,40 @@ class IcozaImportMessages extends AbstractImportMessages
                 }
 
                 DB::commit();
-                $this->logger->info('---- END ----');
             } catch (Exception $e) {
                 $this->logger->error('An error has occurred. Rolling back.', $e);
                 DB::rollBack();
                 \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
             }
+            $this->logger->info('---- END ----');
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
         $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
-        $isNotShopUser = self::isNotShopUser($authorType, $this->FROM_SHOP_TYPE);
 
-        if($isNotShopUser) {
-            $this->logger->info('Set ticket\'s status to waiting admin');
-            $ticket->state = TicketStateEnum::WAITING_ADMIN;
-            $ticket->save();
-            $this->logger->info('Ticket save');
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
 
-            \App\Models\Ticket\Message::firstOrCreate([
-                'thread_id' => $thread->id,
-                'channel_message_number' => $message_api->id,
-            ],
-                [
-                    'user_id' => null,
-                    'direct_customer_email' => $message_api->email,
-                // Messages authors are only customer on this API
-                    'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,
-                    'content' => strip_tags($message_api->content)
-                ]);
-            if (setting('autoReplyActivate')) {
-                $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
-            }
-        }
+        \App\Models\Ticket\Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $message_api->id,
+        ],
+            [
+                'user_id' => null,
+                'direct_customer_email' => $message_api->email,
+            // Messages authors are only customer on this API
+                'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,
+                'content' => strip_tags($message_api->content)
+            ]);
+
+        self::sendAutoReply($thread);
     }
 }

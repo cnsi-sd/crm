@@ -2,7 +2,7 @@
 
 # PHP8.1 install
 ```bash
-sudo apt install php8.1 php8.1-dom php8.1-curl php8.1-bcmath php8.1-xml php8.1-mysql php8.1-gd php8.1-fpm php8.1-soap php8.1-raphf
+sudo apt install php8.1 php8.1-dom php8.1-curl php8.1-bcmath php8.1-xml php8.1-mysql php8.1-gd php8.1-fpm php8.1-soap php8.1-raphf php8.1-imap
 ```
 
 # Node.js v18.x install

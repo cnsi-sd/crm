@@ -5,23 +5,11 @@ namespace App\Http\Controllers\Tickets;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
+use App\Helpers\PrestashopGateway;
 use App\Http\Controllers\AbstractController;
-use App\Jobs\SendMessage\ConforamaSendMessage;
-use App\Jobs\SendMessage\IcozaSendMessage;
+use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Tags\Tag;
 use App\Models\Tags\TagList;
-use App\Enums\Channel\ChannelEnum;
-use App\Jobs\SendMessage\ButSendMessage;
-use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\DartySendMessage;
-use App\Jobs\SendMessage\FnacSendMessage;
-use App\Jobs\SendMessage\IntermarcheSendMessage;
-use App\Jobs\SendMessage\LaposteSendMessage;
-use App\Jobs\SendMessage\LeclercSendMessage;
-use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueducommerceSendMessage;
-use App\Jobs\SendMessage\ShowroomSendMessage;
-use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\Thread;
 use App\Models\Channel\Order;
@@ -35,7 +23,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Http;
 
 class TicketController extends AbstractController
 {
@@ -43,10 +30,7 @@ class TicketController extends AbstractController
     {
         $query = Ticket::query()
             ->select('tickets.*')
-            ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
-            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
-            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
-            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
+            ->join('ticket_threads', 'ticket_threads.ticket_id', '=','tickets.id')
             ->groupBy('tickets.id');
         $table = (new TableBuilder('all_tickets', $request))
             ->setColumns(Ticket::getTableColumns())
@@ -54,21 +38,18 @@ class TicketController extends AbstractController
             ->setQuery($query);
 
         $tickets = $query->get();
+
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new Tag())->getlistTagWithTickets($tickets));
+            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
     {
         $query = Ticket::query()
-            ->select(
-                'tickets.*')
+            ->select('tickets.*')
             ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
-            ->leftJoin('tagLists', 'tagLists.thread_id', 'ticket_threads.id')
-            ->leftJoin('tag_tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
-            ->leftJoin('tags', 'tags.id', 'tag_tagLists.tag_id')
-            ->where('tickets.user_id', $user->id)
+            ->where('user_id', $user->id)
             ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
             ->groupBy('tickets.id');
 
@@ -81,7 +62,7 @@ class TicketController extends AbstractController
 
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('liste', (new Tag())->getlistTagWithTickets($tickets));
+            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));;
 
     }
 
@@ -143,17 +124,13 @@ class TicketController extends AbstractController
         return response()->json(['message' => 'success']);
     }
 
-    public function get_external_infos(Ticket $ticket): JsonResponse
+    public function get_external_infos(Ticket $ticket): View
     {
-        $externalOrderInfo = $this->getExternalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalAdditionalOrderInfo = $this->getExternalAdditionalOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->name);
-        $externalSuppliers = $this->getExternalSuppliers();
+        $prestashopGateway = new PrestashopGateway();
+        $externalOrderInfo = $prestashopGateway->getOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->ext_name);
 
-        return response()->json([
-            'externalOrderInfo' => $externalOrderInfo,
-            'externalAdditionalOrderInfo' => $externalAdditionalOrderInfo,
-            'externalSuppliers' => $externalSuppliers
-            ]);
+        return view('tickets.parts.external_order_info')
+            ->with('orders', $externalOrderInfo);
     }
 
     /**
@@ -197,21 +174,7 @@ class TicketController extends AbstractController
                     'content' => $request->input('ticket-thread-messages-content'),
                 ]);
 
-                match($ticket->channel->name) {
-                    ChannelEnum::BUT_FR             => ButSendMessage::dispatch($message),
-                    ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($message),
-                    ChannelEnum::CONFORAMA_FR       => ConforamaSendMessage::dispatch($message),
-                    ChannelEnum::DARTY_COM          => DartySendMessage::dispatch($message),
-                    ChannelEnum::INTERMARCHE_FR     => IntermarcheSendMessage::dispatch($message),
-                    ChannelEnum::LAPOSTE_FR         => LaposteSendMessage::dispatch($message),
-                    ChannelEnum::E_LECLERC          => LeclercSendMessage::dispatch($message),
-                    ChannelEnum::METRO_FR           => MetroSendMessage::dispatch($message),
-                    ChannelEnum::RUEDUCOMMERCE_FR   => RueducommerceSendMessage::dispatch($message),
-                    ChannelEnum::SHOWROOMPRIVE_COM  => ShowroomSendMessage::dispatch($message),
-                    ChannelEnum::UBALDI_COM         => UbaldiSendMessage::dispatch($message),
-                    ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
-                    ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
-                };
+                AbstractSendMessage::dispatchMessage($message);
             }
             if($request->input('ticket-thread-comments-content')) {
                 $request->validate([
@@ -234,21 +197,6 @@ class TicketController extends AbstractController
         return view('tickets.ticket')
             ->with('ticket', $ticket)
             ->with('thread', $thread);
-    }
-
-    public function getExternalOrderInfo($mp_order, $mp_name)
-    {
-        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order&mp_order=' . $mp_order . '&mp_name=' . $mp_name)[0];
-    }
-
-    public function getExternalAdditionalOrderInfo($mp_order, $mp_name)
-    {
-        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=order_additional_infos&mp_order=' . $mp_order . '&mp_name=' . $mp_name)->json();
-    }
-
-    public function getExternalSuppliers()
-    {
-        return Http::get(env('PRESTASHOP_URL') . 'index.php?fc=module&module=bmsmagentogateway&controller=supplier')->json();
     }
 
     public function delete_tag(Request $request) {

@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                {{ trans_choice('app.revival.revival', 2) }}
+                {{ trans_choice('app.tags.tags', 2) }}
                 {!! $table->getLinesCountBadge() !!}
 
             @can('edit', App\Models\User\User::class)

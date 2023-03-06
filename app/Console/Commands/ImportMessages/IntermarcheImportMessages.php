@@ -10,7 +10,7 @@ class IntermarcheImportMessages extends AbstractMiraklImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'intermarche');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**

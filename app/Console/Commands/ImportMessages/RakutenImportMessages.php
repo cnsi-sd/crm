@@ -20,16 +20,17 @@ use Illuminate\Support\Facades\DB;
 class RakutenImportMessages extends AbstractImportMessages
 {
     private Client $client;
-    private string $FROM_SHOP_TYPE;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
-    const getitemtodolist_version = '2011-09-01';
-    const getiteminfos_version = '2017-08-07';
+    const PAGE ='sales_ws';
+    const GET_ITEM_TODO_LIST ='getitemtodolist';
+    const GET_ITEM_TODO_LIST_VERSION = '2011-09-01';
+    const GET_ITEM_INFOS = 'getiteminfos';
+    const GET_ITEM_INFOS_VERSION = '2017-08-07';
 
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'rakuten');
-        $this->FROM_SHOP_TYPE = 'Icoza';
-        return parent::__construct();
+        parent::__construct();
     }
 
     protected function getCredentials(): array
@@ -52,30 +53,31 @@ class RakutenImportMessages extends AbstractImportMessages
         return $this->client;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function convertApiResponseToMessage(Ticket $ticket, $messageApi, Thread $thread)
     {
         $authorType = $messageApi['MpCustomerId'];
-            $this->logger->info('Set ticket\'s status to waiting admin');
-            $ticket->state = TicketStateEnum::WAITING_ADMIN;
-            $ticket->save();
-            $this->logger->info('Ticket save');
-            Message::firstOrCreate([
-                'thread_id' => $thread->id,
-                'channel_message_number' => $messageApi['id'],
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
+        Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $messageApi['id'],
+        ],
+            [
+                'user_id' => null,
+                'author_type' =>
+                    $authorType == 'Rakuten'
+                        ? TicketMessageAuthorTypeEnum::OPERATOR
+                        : TicketMessageAuthorTypeEnum::CUSTOMER,
+                'content' => strip_tags($messageApi['Message']),
             ],
-                [
-                    'user_id' => null,
-                    'author_type' =>
-                        $authorType == 'Rakuten'
-                            ? TicketMessageAuthorTypeEnum::OPERATOR
-                            : TicketMessageAuthorTypeEnum::CUSTOMER,
-                    'content' => strip_tags($messageApi['Message']),
-                ],
-            );
-            if (setting('autoReplyActivate')) {
-                $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
-            }
+        );
+
+        self::sendAutoReply($thread);
     }
 
     /**
@@ -137,10 +139,11 @@ class RakutenImportMessages extends AbstractImportMessages
         $this->logger->info('Get thread list');
 
         $response = $client->request(
-                'GET', $this->getCredentials()['host'] . '/sales_ws?action=getitemtodolist&login='
-                . env('RAKUTEN_LOGIN')
-                . '&pwd=' . env('RAKUTEN_PASSWORD')
-                . '&version=' . self::getitemtodolist_version
+                'GET', $this->getCredentials()['host'] . '/'. self::PAGE
+                . '?action='  . self::GET_ITEM_TODO_LIST
+                . '&login='   . env('RAKUTEN_LOGIN')
+                . '&pwd='     . env('RAKUTEN_PASSWORD')
+                . '&version=' . self::GET_ITEM_TODO_LIST_VERSION
             );
 
         if($response->getStatusCode() != '200')
@@ -188,8 +191,6 @@ class RakutenImportMessages extends AbstractImportMessages
 
                 $item = $res->item;
 
-                $sellerAccount = $this->FROM_SHOP_TYPE;
-
                 if (!empty($item)) {
                     $MpItemId = (string)$item->itemid;
 
@@ -203,7 +204,7 @@ class RakutenImportMessages extends AbstractImportMessages
                             $message['Date'] = (string)$mess->senddate;
                             $message['Message'] = trim($this->removeCdata($mess->content));
                             $message['Status'] = (string)$mess->status;
-                            if ($sellerAccount != $message['MpCustomerId']) {
+                            if ($message['MpCustomerId'] != 'Icoza') {
                                 $messages[] = $message;//get only message from customer (don't re import our own answer)
                             }
                         }
@@ -219,7 +220,7 @@ class RakutenImportMessages extends AbstractImportMessages
                             $message['Object'] = trim($this->removeCdata($mail->object));
                             $message['Message'] = trim($this->removeCdata($mail->content));
                             $message['Status'] = (string)$mail->status;
-                            if ($sellerAccount != $message['MpCustomerId']) {
+                            if ($message['MpCustomerId'] !='Icoza') {
                                 $messages[] = $message;//get only message from customer (don't re import our own answer)
                             }
                         }
@@ -240,11 +241,12 @@ class RakutenImportMessages extends AbstractImportMessages
         $arrayMessages = [];
         foreach ($msgsId as $msgId => $type) {
             $response = $client->request(
-                'GET', $this->getCredentials()['host'] . '/sales_ws?action=getiteminfos&login='
-                . env('RAKUTEN_LOGIN')
-                . '&pwd=' . env('RAKUTEN_PASSWORD')
-                . '&version=' . self::getiteminfos_version
-                . '&itemid=' . $msgId
+                'GET', $this->getCredentials()['host'] . '/' . self::PAGE
+                . '?action='  . self::GET_ITEM_INFOS
+                . '&login='   . env('RAKUTEN_LOGIN')
+                . '&pwd='     . env('RAKUTEN_PASSWORD')
+                . '&version=' . self::GET_ITEM_INFOS_VERSION
+                . '&itemid='  . $msgId
             );
 
             if($response->getStatusCode() != '200')
