@@ -10,7 +10,7 @@ class ShowroomImportMessages extends AbstractMiraklImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'showroom');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**

@@ -9,7 +9,7 @@ class LaposteImportMessages extends AbstractMiraklImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'laposte');
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**
