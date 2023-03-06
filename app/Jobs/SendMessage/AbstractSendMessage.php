@@ -37,8 +37,6 @@ abstract class AbstractSendMessage implements ShouldQueue
      */
     public static function dispatchMessage(Message $message)
     {
-
-
         match($message->thread->ticket->channel->name) {
             ChannelEnum::BUT_FR             => ButSendMessage::dispatch($message),
             ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($message),

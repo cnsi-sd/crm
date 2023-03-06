@@ -12,8 +12,7 @@ use GuzzleHttp\Client;
 
 class RakutenSendMessage extends AbstractSendMessage
 {
-    protected string $testOrder = '654714566';
-    protected string $testItemId = '868826680';
+    protected string $testOrder = '868826680';
     protected Logger $logger;
     protected Client $client;
     const MESSAGE_LIMIT = 475;
@@ -37,7 +36,6 @@ class RakutenSendMessage extends AbstractSendMessage
              */
             // Variables
             $threadNumber = $this->message->thread->channel_thread_number;
-//            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->channel->name);
 
             $this->logger->info('Init api');
             $client = self::initApiClient();
@@ -45,21 +43,18 @@ class RakutenSendMessage extends AbstractSendMessage
             $response = $client->request(
                 'POST', $this->getCredentials()['host'] . '/' . self::PAGE
                 . '?action='    . self::ACTION
-//                . '&itemid='    . $threadNumber
-                . '&itemid='    . $this->testItemId
-//                . '&content='   . $this->prepareMessageForRakuten($this->message->content)
-                . '&content='   . $this->prepareMessageForRakuten('Ceci est un message de test, veuillez ne pas en tenir compte.
-                                                                    Merci de votre compréhension.
-                                                                    L\'équipe développeur.')
+                . '&itemid='    . $threadNumber
+                . '&content='   . $this->prepareMessageForRakuten($this->message->content)
                 . '&login='     . env('RAKUTEN_LOGIN')
                 . '&pwd='        . env('RAKUTEN_PASSWORD')
                 . '&version='   . self::VERSION
             );
 
             if($response->getStatusCode() != '200')
-                throw new Exception('getitemtodolist api request gone bad');
-            $array = $this->xmlResponseToArray($response->getBody()->getContents()); // TODO qu'est ce que j'en fait ?
+                throw new Exception('contactuseraboutitem api request gone bad');
 
+            $statusResponse = $this->xmlResponseToArray($response->getBody()->getContents());
+            $this->logger->info('Sending message status = '.$statusResponse);
         }  catch (Exception $e) {
             $this->logger->error('An error has occurred while sending message.', $e);
 //            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
@@ -104,8 +99,6 @@ class RakutenSendMessage extends AbstractSendMessage
             $data = simplexml_load_string($xml); //data is a SimpleXMLElement
             if ($data->response) {
                 $status = (string)$data->response->status; //default 'SENT'
-                $lastversion = (string)$data->response->lastversion;
-//                $this->updateModuleVersion($lastversion);
             }
         }
         return $status;
