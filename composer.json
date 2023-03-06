@@ -7,13 +7,14 @@
     "require": {
         "php": "^8.0.2",
         "ext-curl": "*",
+        "ext-imap": "*",
         "ext-libxml": "*",
         "ext-simplexml": "*",
         "akaunting/laravel-setting": "^1.2",
         "cnsi/cdiscount-api-client": "dev-main",
+        "cnsi/csvgenerator": "dev-main",
         "cnsi/fnac-api-client": "dev-master",
         "cnsi/logger": "dev-main",
-        "cnsi/csvgenerator": "dev-main",
         "cnsi/searchable": "dev-main",
         "diglactic/laravel-breadcrumbs": "8.0.1",
         "doctrine/dbal": "^3.6",
@@ -22,14 +23,13 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "mirakl/sdk-php-shop": "^1.16",
-        "php-imap/php-imap": "^5.0",
+        "php-imap/php-imap": "dev-master",
+        "phpoffice/phpspreadsheet": "^1.28",
         "realrashid/sweet-alert": "^5.1.0",
         "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "^6.1",
         "twilio/sdk": "^6.44",
-        "webklex/php-imap": "^5.0",
-        "ext-imap": "*",
-        "phpoffice/phpspreadsheet": "^1.28"
+        "webklex/php-imap": "^5.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

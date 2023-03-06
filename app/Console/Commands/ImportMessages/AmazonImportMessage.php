@@ -15,20 +15,20 @@ use PhpImap\Mailbox;
 class AmazonImportMessage extends AbstractImportMessages
 {
     /** @var Mailbox */
-    private $mailbox;
+    private Mailbox $mailbox;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'amazon');
         //$this->FROM_SHOP_TYPE = 'Seller';
-        return parent::__construct();
+        parent::__construct();
     }
 
     /**
      * @throws Exception
      */
     public function handle(){
-        $this->channel = Channel::getByName(ChannelEnum::AMAZON);
+        $this->channel = Channel::getByName(ChannelEnum::AMAZON_FR);
         $this->logger = new Logger('import_message/'
             . $this->channel->getSnakeName()
             . '/' . $this->channel->getSnakeName()
@@ -37,7 +37,7 @@ class AmazonImportMessage extends AbstractImportMessages
 
         $this->logger->info('--- Start ---');
         try {
-            $from_time = strtotime(AmazonImportMessage . phpdate('j F Y') . self::FROM_DATE_TRANSFORMATOR);
+            $from_time = strtotime(date('j F Y') . self::FROM_DATE_TRANSFORMATOR);
             $from_date = date("j F Y", $from_time);
 
             $this->logger->info('--- Init api client ---');
@@ -70,6 +70,9 @@ class AmazonImportMessage extends AbstractImportMessages
         ];
     }
 
+    /**
+     * @throws InvalidParameterException
+     */
     protected function initApiClient()
     {
         $credentials = $this->getCredentials();
