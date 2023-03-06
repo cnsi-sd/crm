@@ -183,5 +183,4 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             default => throw new Exception('Bad author type')
         };
     }
-
 }
