@@ -2,12 +2,14 @@
 
 namespace App\Console\Commands\ImportMessages;
 
+use App\Console\Commands\ImportMessages\Beautifier\AmazonBeautifierMail;
 use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
+use PHPHtmlParser\Dom;
 use PhpImap\Exceptions\ConnectionException;
 use PhpImap\Exceptions\InvalidParameterException;
 use PhpImap\Mailbox;
@@ -52,7 +54,8 @@ class AmazonImportMessage extends AbstractImportMessages
 
             $this->logger->info('--- Get Emails details');
             foreach($this->getEmails($emailIds) as $emailId => $email){
-                dd($email->textHtml);
+                $infoMail = $email->textHtml;
+                $message = AmazonBeautifierMail::getCustomerMessage($infoMail);
             }
 
             $t = "kqdjfv";
