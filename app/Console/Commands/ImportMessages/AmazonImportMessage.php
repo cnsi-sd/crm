@@ -4,11 +4,16 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Console\Commands\ImportMessages\Beautifier\AmazonBeautifierMail;
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
+use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Channel\Channel;
+use App\Models\Channel\Order;
+use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use PHPHtmlParser\Dom;
 use PhpImap\Exceptions\ConnectionException;
 use PhpImap\Exceptions\InvalidParameterException;
@@ -48,18 +53,31 @@ class AmazonImportMessage extends AbstractImportMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
-                'SUBJECT' => 'Demande de renseignements',
+                'SUBJECT' => 'Demande de',
                 'SINCE' => $from_date
             ]);
 
             $this->logger->info('--- Get Emails details');
-            foreach($this->getEmails($emailIds) as $emailId => $email){
-                $infoMail = $email->textHtml;
-                $message = AmazonBeautifierMail::getCustomerMessage($infoMail);
+            foreach($this->getEmails($emailIds) as $emailId => $email) {
+                try {
+                    DB::beginTransaction();
+                    $this->logger->info('Begin Transaction');
+
+                    $this->logger->info('Retrieve command number from email');
+                    $mpOrder = AmazonBeautifierMail::showCommandNumber($email->subject, '(Commande : ', ')');
+                    $order = Order::getOrder($mpOrder, $this->channel);
+                    $ticket = Ticket::getTicket($order, $this->channel);
+                    $thread = Thread::getOrCreateThread($ticket,$mpOrder,$email->subject,'');
+
+                    $this->importMessageByThread($ticket, $thread, $email);
+                    DB::commit();
+                } catch (Exception $e) {
+                    $this->logger->error('An error has occurred. Rolling back.', $e);
+                    DB::rollBack();
+                    \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+                    return;
+                }
             }
-
-            $t = "kqdjfv";
-
         } catch (Exception $e){
             $this->logger->error('An error has occurred. Rolling back.', $e);
             \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
@@ -111,13 +129,50 @@ class AmazonImportMessage extends AbstractImportMessages
         foreach ($emailIds as $emailId) {
             $this->logger->info('--- Get Email : '. $emailId);
             $emails[$emailId] = $this->mailbox->getMail($emailId,false);
-            break;
         }
         return $emails;
     }
 
+    /**
+     * @param Ticket $ticket
+     * @param Thread $thread
+     * @param $messages
+     * @return void
+     * @throws Exception
+     */
+    private function importMessageByThread(Ticket $ticket, Thread $thread, $message): void
+    {
+        $imported_id = $message->id;
+        $this->logger->info('Check if this message is imported');
+        if (!$this->isMessagesImported($imported_id)) {
+            $this->logger->info('Convert api message to db message');
+            $this->convertApiResponseToMessage($ticket, $message, $thread);
+            $this->addImportedMessageChannelNumber($imported_id);
+        }
+    }
     protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread)
     {
-        // TODO: Implement convertApiResponseToMessage() method.
+        $this->logger->info('Retrieve message from email');
+        $infoMail = $message_api_api->textHtml;
+        $message = AmazonBeautifierMail::getCustomerMessage($infoMail);
+
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
+        Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $message_api_api->messageId,
+        ],
+            [
+                'user_id' => null,
+                'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,
+                'content' => strip_tags($message),
+            ],
+        );
+        if (setting('autoReplyActivate')) {
+            $this->logger->info('Send auto reply');
+            self::sendAutoReply(setting('autoReply'), $thread);
+        }
     }
 }

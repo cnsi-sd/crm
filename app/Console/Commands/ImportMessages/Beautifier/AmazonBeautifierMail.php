@@ -28,6 +28,18 @@ class AmazonBeautifierMail
         return self::cleanHtml($new_html);
     }
 
+    public static function showCommandNumber($string, $start, $end){
+
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) return '';
+
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+
+    }
+
     /**
      * From an HTML text, try to get an element by tag name from specified position
      *
