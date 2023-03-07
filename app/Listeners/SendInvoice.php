@@ -31,13 +31,13 @@ class SendInvoice extends AbstractNewMessageListener
 
         if (in_array('generated', $invoicesProgress)) {
             $this->sendInvoiceFoundAnswer($invoicesProgress);
-            $this->closeTicket();
+            $this->message->thread->ticket->close();
 
             return self::STOP_PROPAGATION;
         }
         elseif (in_array('not_shipped_yet', $invoicesProgress)) {
             $this->sendOrderNotShippedAnswer();
-            $this->closeTicket();
+            $this->message->thread->ticket->close();
 
             return self::STOP_PROPAGATION;
         }
@@ -79,13 +79,6 @@ class SendInvoice extends AbstractNewMessageListener
 
         // Return only invoice progress data
         return array_column($prestashopOrders, 'invoice_progress', 'id_order');
-    }
-
-    private function closeTicket()
-    {
-        $ticket = $this->message->thread->ticket;
-        $ticket->state = TicketStateEnum::CLOSED;
-        $ticket->save();
     }
 
     private function sendInvoiceFoundAnswer($invoicesProgress)
