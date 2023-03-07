@@ -171,7 +171,19 @@ return [
             'not_shipped_answer' => 'Réponse à envoyer : facture pas encore générée',
         ],
 
-        'shipping_information' => 'Information de livraison',
+        'shipping_information' => [
+            'shipping_information' => 'Information de livraison',
+
+            'vir_shipped_answer' => 'Réponse à envoyer : suivi VIR disponible',
+            'default_shipped_answer' => 'Réponse à envoyer : suivi autre transporteur disponible',
+
+            'in_preparation_answer' => 'Réponse à envoyer : en cours de préparation',
+            'in_preparation_with_delay_answer' => 'Réponse à envoyer : en cours de préparation avec délai',
+
+            'fulfillment_answer' => 'Réponse à envoyer : commande Fulfillment',
+
+            'tag_late_preparation' => 'Tag retard de préparation',
+        ],
     ],
 
     'defaultAnswer' => [

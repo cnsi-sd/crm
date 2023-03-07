@@ -137,7 +137,7 @@ Breadcrumbs::for('bot_invoice', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('bot_shipping_information', function (BreadcrumbTrail $trail) {
     $trail->parent('bot_home');
-    $trail->push(__('app.bot.shipping_information'), route('bot_shipping_information'));
+    $trail->push(__('app.bot.shipping_information.shipping_information'), route('bot_shipping_information'));
 });
 
 /** Channel */

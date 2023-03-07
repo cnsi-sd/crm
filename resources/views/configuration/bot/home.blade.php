@@ -10,7 +10,7 @@
                     </a>
 
                     <a href="{{ route('bot_shipping_information') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'bot_shipping_information'])>
-                        {{ __('app.bot.shipping_information') }}
+                        {{ __('app.bot.shipping_information.shipping_information') }}
                     </a>
 
                     <a href="{{ route('bot_acknowledgement') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'bot_acknowledgement'])>
