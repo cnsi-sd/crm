@@ -7,6 +7,7 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
+use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
@@ -18,7 +19,7 @@ class ManomanoImportMessages extends AbstractImportMessages
 {
     /** @var Mailbox */
     private Mailbox $mailbox;
-    const FROM_DATE_TRANSFORMATOR = ' - 72 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 1 hours';
 
     public function __construct()
     {
@@ -52,7 +53,8 @@ class ManomanoImportMessages extends AbstractImportMessages
                 'SINCE' => $from_date
             ]);
 
-            $this->logger->info('--- Get Emails details');
+            $this->logger->info('Get Emails details');
+
             foreach($this->getEmails($emailIds) as $emailId => $email){
                 $sender = $email->senderAddress;
 
@@ -61,13 +63,13 @@ class ManomanoImportMessages extends AbstractImportMessages
                 if($doNotReply)
                     continue;
 
+                $message = $this->messageProcess($email);
+
                 $support = strpos($sender,'support');
                 if($support)
-                    $authorType = TicketMessageAuthorTypeEnum::OPERATOR;
+                    $message['authorType'] = TicketMessageAuthorTypeEnum::OPERATOR;
                 else
-                    $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
-
-                $message = $this->messageProcess($email);
+                    $message['authorType'] = TicketMessageAuthorTypeEnum::CUSTOMER;
 
                 $message['date']    = $from_time;
                 $message['subject'] = $email->subject;
@@ -77,7 +79,7 @@ class ManomanoImportMessages extends AbstractImportMessages
                 $ticket     = Ticket::getTicket($order, $this->channel);
                 $thread     = Thread::getOrCreateThread($ticket, $message['orderId'], $email->subject, '');
 
-
+                $this->convertApiResponseToMessage($ticket, $message, $thread);
                 $test = '';
             }
         } catch (Exception $e){
@@ -107,11 +109,6 @@ class ManomanoImportMessages extends AbstractImportMessages
         );
     }
 
-    protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread)
-    {
-        // TODO: Implement convertApiResponseToMessage() method.
-    }
-
     private function search($query = []): array
     {
         if(empty($query)) {
@@ -134,7 +131,7 @@ class ManomanoImportMessages extends AbstractImportMessages
     {
         $emails = [];
         foreach ($emailIds as $emailId) {
-            $this->logger->info('--- Get Email : '. $emailId);
+            $this->logger->info('Get Email : '. $emailId);
             $emails[$emailId] = $this->mailbox->getMail($emailId,false);
         }
         return $emails;
@@ -150,7 +147,7 @@ class ManomanoImportMessages extends AbstractImportMessages
     private function parseOrderId($subject): bool|string
     {
         // get the orderId (Mxxxxxxxxxxxx pattern) in subjet
-        preg_match('/M(\d{12})',$subject, $orderMatche);
+        preg_match('/M(\d{12})/',$subject, $orderMatche);
 
         if(isset($orderMatche[1])){
             return $orderMatche[1];
@@ -180,16 +177,17 @@ class ManomanoImportMessages extends AbstractImportMessages
         $subject = $email->subject;
         $attachment = $email->getAttachments();
         $messageId = $email->messageId; // todo parse id <[idToParse]@swift.generated>
-        $parsedMessage = $this->parseHtmlMessage($email->textHtml);
+//        $parsedMessage = $this->parseHtmlMessage($email->textHtml);
 
 
 
         if(strlen($email->textPlain))
             $message['content'] = $email->textPlain;
         else
-            $message['content'] = $email->textHtml;
+            // TODO delete all space and CSS
+            $message['content'] = strip_tags($email->textHtml);
 
-        if(strpos('Demande de facture',$subject))
+        if(strpos($subject, 'facture'))
             $message['content'] = 'Pouvez-vous répondre à cet email avec la facture au format pdf en pièce-jointe svp?';
 
         $message['orderId'] = $this->parseOrderId($subject);
@@ -200,31 +198,29 @@ class ManomanoImportMessages extends AbstractImportMessages
     /**
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message, Thread $thread)
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        $authorType = $message_api->getMessageFromType();
-
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        \App\Models\Ticket\Message::firstOrCreate([
+        Message::firstOrCreate([
             'thread_id' => $thread->id,
-            'channel_message_number' => $message_api->getMessageId(),
+            'channel_message_number' => $message['id'],
         ],
             [
                 'user_id' => null,
-                'author_type' => $this->getAuthorType($authorType),
-                'content' => strip_tags($message_api->getMessageDescription())
+                'author_type' => $message['authorType'],
+                'content' => strip_tags($message['content'])
             ]
         );
 
-        self::sendAutoReply($thread);
+//        self::sendAutoReply($thread);
     }
 }
