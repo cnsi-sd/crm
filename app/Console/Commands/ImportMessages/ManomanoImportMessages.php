@@ -51,12 +51,15 @@ class ManomanoImportMessages extends AbstractImportMessages
 
             $this->logger->info('--- Get Emails details');
             foreach($this->getEmails($emailIds) as $emailId => $email){
+                $sender = $email->senderAddress;
+                    if(strpos('ne-pas-repondre', $sender))
+                        return;
+
                 $body =($email->textHtml);
                 $subject = $email->subject;
                 $messageId = $email->messageId; // todo parse id <[idToParse]@swift.generated>
                 $parsedMessage = $this->parseMessage($email->textHtml);
-                $test = utf8_decode($parsedMessage);
-                $test2= '';
+                $test = '';
             }
 
             $test = "";
@@ -116,15 +119,14 @@ class ManomanoImportMessages extends AbstractImportMessages
         foreach ($emailIds as $emailId) {
             $this->logger->info('--- Get Email : '. $emailId);
             $emails[$emailId] = $this->mailbox->getMail($emailId,false);
-            break;
         }
         return $emails;
     }
 
-    private function parseMessage($htmlEmail): string
+    private function parseMessage($htmlEmail): array
     {
         $pattern = "/Message:(.*)<br/";
         preg_match($pattern,$htmlEmail,$matches);
-        return $matches[1];
+        return $matches;
     }
 }
