@@ -28,15 +28,11 @@ class AmazonBeautifierMail
         return self::cleanHtml($new_html);
     }
 
-    public static function showCommandNumber($string, $start, $end){
+    public static function showCommandNumber($string){
 
-        $string = ' ' . $string;
-        $ini = strpos($string, $start);
-        if ($ini == 0) return '';
 
-        $ini += strlen($start);
-        $len = strpos($string, $end, $ini) - $ini;
-        return substr($string, $ini, $len);
+        preg_match('#(\d{3}-\d{7}-\d{7})#',$string, $commandNumber);
+        return $commandNumber[1] ?? '';
 
     }
 

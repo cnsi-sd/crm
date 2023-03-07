@@ -6,6 +6,7 @@ use App\Console\Commands\ImportMessages\Beautifier\AmazonBeautifierMail;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\Stringer;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
@@ -58,18 +59,41 @@ class AmazonImportMessage extends AbstractImportMessages
             ]);
 
             $this->logger->info('--- Get Emails details');
-            foreach($this->getEmails($emailIds) as $emailId => $email) {
+            foreach(array_reverse($this->getEmails($emailIds)) as $emailId => $email) {
                 try {
+                    $t = $email;
+                    $fd= 'df';
                     DB::beginTransaction();
                     $this->logger->info('Begin Transaction');
 
                     $this->logger->info('Retrieve command number from email');
-                    $mpOrder = AmazonBeautifierMail::showCommandNumber($email->subject, '(Commande : ', ')');
-                    $order = Order::getOrder($mpOrder, $this->channel);
-                    $ticket = Ticket::getTicket($order, $this->channel);
-                    $thread = Thread::getOrCreateThread($ticket,$mpOrder,$email->subject,'');
 
-                    $this->importMessageByThread($ticket, $thread, $email);
+                    $patterns = array();
+                    $patterns[] = array('pattern' => '#remboursementinitieacutepourlacommande#'); //Remboursement initié pour la commande <num_cmd>
+                    $patterns[] = array('pattern' => '#actionrequise#'); //Action requise: ...
+                    $patterns[] = array('pattern' => '#amazonfruneouplusieursdevosoffresamazononteacuteteacutesupprimeacuteesdelarecherche#'); // [Amazon.fr] Une ou plusieurs de vos offres Amazon ont été supprimées de la recherche
+                    $patterns[] = array('pattern' => '#demandedrsquoautorisationderetourpourlacommande#'); //Demande d’autorisation de retour pour la commande
+                    $patterns[] = array('pattern' => '#offredeacutesactiveacuteesenraisonduneerreurdeprixpotentielle#'); //Offre désactivées en raison d'une erreur de prix potentielle
+                    $patterns[] = array('pattern' => '#votreemaila#'); // Votre e-mail à AUPEE
+                    $patterns[] = array('pattern' => '#spam#'); // [SPAM]
+
+                    $normalizedSubject = $this->normalizeSubject($email->subject);
+                    $this->logger->info('--- start import email : '. $email->id);
+                    $canImport = true;
+                    foreach ($patterns as $pattern) {
+                        if (preg_match($pattern['pattern'], $normalizedSubject)) {
+                            $canImport = false;
+                        }
+                    }
+                    $mpOrder = AmazonBeautifierMail::showCommandNumber($email->subject);
+                    if ($canImport) {
+                        $order   = Order::getOrder($mpOrder, $this->channel);
+                        $ticket  = Ticket::getTicket($order, $this->channel);
+                        $thread  = Thread::getOrCreateThread($ticket, $mpOrder, $email->subject, '', ['replyTo' => $email->fromAddress, 'fromName' => $email->fromName]);
+
+                        $this->importMessageByThread($ticket, $thread, $email);
+                    }
+                    $this->logger->info('--- end import email');
                     DB::commit();
                 } catch (Exception $e) {
                     $this->logger->error('An error has occurred. Rolling back.', $e);
@@ -131,6 +155,16 @@ class AmazonImportMessage extends AbstractImportMessages
             $emails[$emailId] = $this->mailbox->getMail($emailId,false);
         }
         return $emails;
+    }
+
+    /**
+     * Normalize subject with lower case and only a -> z chars
+     * @param string $subject
+     * @return string
+     */
+    public function normalizeSubject(string $subject): string
+    {
+        return Stringer::normalize($subject);
     }
 
     /**
