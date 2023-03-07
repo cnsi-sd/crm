@@ -4,6 +4,7 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
+use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
@@ -66,7 +67,7 @@ class ManomanoImportMessages extends AbstractImportMessages
                 else
                     $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
 
-                $message = $this->messageTreatment($email, $from_time);
+                $message = $this->messageProcess($email);
 
                 $message['date']    = $from_time;
                 $message['subject'] = $email->subject;
@@ -146,7 +147,7 @@ class ManomanoImportMessages extends AbstractImportMessages
         return $matches;
     }
 
-    private function parseOrderId($subject)
+    private function parseOrderId($subject): bool|string
     {
         // get the orderId (Mxxxxxxxxxxxx pattern) in subjet
         preg_match('/M(\d{12})',$subject, $orderMatche);
@@ -154,10 +155,11 @@ class ManomanoImportMessages extends AbstractImportMessages
         if(isset($orderMatche[1])){
             return $orderMatche[1];
         }
+        $this->logger->info('No OrderId found in '. $subject);
         return false;
     }
 
-    public function messageTreatment($email, $from_time)
+    public function messageProcess($email): array
     {
         $message = [];
         /**
@@ -173,7 +175,6 @@ class ManomanoImportMessages extends AbstractImportMessages
          */
 
         $isReply = $email->replyTo;
-        $messageDate = $from_time;
         $body = $email->textHtml;
         $plainBody = $email->textPlain;
         $subject = $email->subject;
@@ -181,17 +182,49 @@ class ManomanoImportMessages extends AbstractImportMessages
         $messageId = $email->messageId; // todo parse id <[idToParse]@swift.generated>
         $parsedMessage = $this->parseHtmlMessage($email->textHtml);
 
-        if(strpos('Demande de facture',$subject))
-            $message['content'] = 'Pouvez-vous répondre à cet email avec la facture au format pdf en pièce-jointe svp?';
+
 
         if(strlen($email->textPlain))
             $message['content'] = $email->textPlain;
+        else
+            $message['content'] = $email->textHtml;
+
+        if(strpos('Demande de facture',$subject))
+            $message['content'] = 'Pouvez-vous répondre à cet email avec la facture au format pdf en pièce-jointe svp?';
 
         $message['orderId'] = $this->parseOrderId($subject);
-
 
         return $message;
     }
 
+    /**
+     * @throws Exception
+     */
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
+    {
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
 
+        $authorType = $message_api->getMessageFromType();
+
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
+
+        \App\Models\Ticket\Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $message_api->getMessageId(),
+        ],
+            [
+                'user_id' => null,
+                'author_type' => $this->getAuthorType($authorType),
+                'content' => strip_tags($message_api->getMessageDescription())
+            ]
+        );
+
+        self::sendAutoReply($thread);
+    }
 }
