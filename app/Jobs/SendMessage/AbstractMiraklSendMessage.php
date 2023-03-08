@@ -2,7 +2,6 @@
 
 namespace App\Jobs\SendMessage;
 
-use App\Models\Ticket\Message;
 use Mirakl\MMP\Common\Domain\Collection\Message\Thread\ThreadRecipientCollection;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadRecipient;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadReplyMessageInput;
@@ -19,8 +18,14 @@ abstract class AbstractMiraklSendMessage extends AbstractSendMessage
 
     public function handle(): void
     {
-        // Variables
+    // If we are in local environment, we only can send messages to a test order
+        if (env('APP_ENV') == 'local')
+            if($this->message->thread->channel_thread_number != '07b62278-0faa-41da-9278-d19550eda712')
+               return;
+
         $thread_id = $this->message->thread->channel_thread_number;
+
+        // Variables
         $send_to = [self::CUSTOMER];
 
         // Init API client

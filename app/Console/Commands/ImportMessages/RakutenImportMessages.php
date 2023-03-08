@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 class RakutenImportMessages extends AbstractImportMessages
 {
+    protected string $testOrder = '868826680'; // itemId
     private Client $client;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
     const PAGE ='sales_ws';
