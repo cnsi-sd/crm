@@ -12,6 +12,7 @@ use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use PhpImap\Exceptions\InvalidParameterException;
 use PhpImap\Mailbox;
 
@@ -40,6 +41,7 @@ class ManomanoImportMessages extends AbstractImportMessages
         );
 
         try {
+            DB::beginTransaction();
             $from_time = strtotime(date('d M Y H:i:s') . self::FROM_DATE_TRANSFORMATOR);
             $from_date = date("d M Y H:i:s", $from_time);
 
@@ -49,7 +51,6 @@ class ManomanoImportMessages extends AbstractImportMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
-//                'SUBJECT' => 'Demande de renseignements',
                 'SINCE' => $from_date
             ]);
 
@@ -75,15 +76,22 @@ class ManomanoImportMessages extends AbstractImportMessages
                 $message['subject'] = $email->subject;
                 $message['id']      = $email->messageId;
 
+
                 $order      = Order::getOrder($message['orderId'], $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);
                 $thread     = Thread::getOrCreateThread($ticket, $message['orderId'], $email->subject, '');
 
-                $this->convertApiResponseToMessage($ticket, $message, $thread);
-                $test = '';
+                if(!$this->isMessagesImported($email->messageId)) {
+                    $this->logger->info('Convert api message to db message');
+                    $this->convertApiResponseToMessage($ticket, $message, $thread);
+                    $this->addImportedMessageChannelNumber($email->messageId);
+
+                }
+                DB::commit();
             }
         } catch (Exception $e){
             $this->logger->error('An error has occurred. Rolling back.', $e);
+            DB::rollBack();
             \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
         }
     }
@@ -137,13 +145,6 @@ class ManomanoImportMessages extends AbstractImportMessages
         return $emails;
     }
 
-    private function parseHtmlMessage($htmlEmail)
-    {
-        $pattern = "/Message:(.*)<br/";
-        preg_match($pattern,$htmlEmail,$matches);
-        return $matches;
-    }
-
     private function parseOrderId($subject): bool|string
     {
         // get the orderId (Mxxxxxxxxxxxx pattern) in subjet
@@ -164,14 +165,12 @@ class ManomanoImportMessages extends AbstractImportMessages
         $subject = $email->subject;
         $attachment = $email->getAttachments();
 
-
-        // todo eject messages already imported
         // html process to be readable
         $withoutHtml = strip_tags($email->textHtml);
         $withoutSpaces = preg_replace('/\s+/', ' ', $withoutHtml);
         $withoutCss = preg_replace('/@(.*); }/', '',$withoutSpaces);
 
-        if(strlen($email->textPlain))
+        if(strlen($email->textPlain) > 0)
             $message['content'] = preg_replace('/(\v+)/', PHP_EOL, $plainBody);
         else
             $message['content'] = $withoutCss;
@@ -179,7 +178,9 @@ class ManomanoImportMessages extends AbstractImportMessages
         if(strpos($subject, 'facture'))
             $message['content'] = 'Pouvez-vous répondre à cet email avec la facture au format pdf en pièce-jointe svp?';
 
-        $message['orderId'] = $this->parseOrderId($subject);
+        $this->parseOrderId($subject)
+            ? $message['orderId'] = $this->parseOrderId($subject)
+            : $message['orderId'] = 'No_order_found';
 
         return $message;
     }
@@ -206,7 +207,7 @@ class ManomanoImportMessages extends AbstractImportMessages
             [
                 'user_id' => null,
                 'author_type' => $message['authorType'],
-                'content' => strip_tags($message['content'])
+                'content' => $message['content'],
             ]
         );
 
