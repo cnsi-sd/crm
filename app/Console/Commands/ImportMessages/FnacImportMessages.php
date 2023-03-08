@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
@@ -140,7 +141,7 @@ class FnacImportMessages extends AbstractImportMessages
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        \App\Models\Ticket\Message::firstOrCreate([
+        $message = \App\Models\Ticket\Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->getMessageId(),
         ],
@@ -150,5 +151,7 @@ class FnacImportMessages extends AbstractImportMessages
             'content' => strip_tags($message_api->getMessageDescription())
         ]
         );
+
+        NewMessage::dispatch($message);
     }
 }
