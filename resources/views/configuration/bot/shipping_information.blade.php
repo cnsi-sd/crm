@@ -13,7 +13,7 @@
 
                     <div class="mb-3">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="active" id="active" @checked(setting('autoReplyActivate'))>
+                            <input type="checkbox" class="form-check-input" name="active" id="active" @checked(setting('bot.shipping_information.active'))>
                             <label class="form-check-label" for="active">{{ __('app.bot.active') }}</label>
                         </div>
                     </div>
