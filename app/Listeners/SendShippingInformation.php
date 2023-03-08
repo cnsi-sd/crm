@@ -39,9 +39,11 @@ class SendShippingInformation extends AbstractNewMessageListener
                 $this->sendAnswer(setting('bot.shipping_information.in_preparation_answer_id'));
             }
 
+            // Close ticket only if the max_ship_date is not reached
+            if($this->getOrderDelay($prestashopOrder) !== 0) {
+                $this->message->thread->ticket->close();
+            }
 
-
-            $this->message->thread->ticket->close();
             return self::STOP_PROPAGATION;
         }
 
@@ -52,10 +54,7 @@ class SendShippingInformation extends AbstractNewMessageListener
                 $this->sendAnswer(setting('bot.shipping_information.default_shipped_answer_id'));
             }
 
-            if($this->getOrderDelay($prestashopOrder) !== 0) {
-                $this->message->thread->ticket->close();
-            }
-
+            $this->message->thread->ticket->close();
             return self::STOP_PROPAGATION;
         }
 
