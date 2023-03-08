@@ -6,6 +6,7 @@ use App\Console\Commands\ImportMessages\Beautifier\AmazonBeautifierMail;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Helpers\Stringer;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
@@ -194,7 +195,7 @@ class AmazonImportMessage extends AbstractImportMessages
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
         $this->logger->info('Ticket save');
-        Message::firstOrCreate([
+        $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api_api->messageId,
         ],
@@ -204,9 +205,7 @@ class AmazonImportMessage extends AbstractImportMessages
                 'content' => strip_tags($message),
             ],
         );
-        if (setting('autoReplyActivate')) {
-            $this->logger->info('Send auto reply');
-            self::sendAutoReply(setting('autoReply'), $thread);
-        }
+
+        NewMessage::dispatch($message);
     }
 }
