@@ -26,7 +26,7 @@ class SendShippingInformation extends AbstractNewMessageListener
 
         $prestashopOrder = $this->getPrestashopOrder();
 
-        if ($prestashopOrder->is_fulfillment) {
+        if ($prestashopOrder['is_fulfillment']) {
             $this->sendAnswer(setting('bot.shipping_information.fulfillment_answer_id'));
             $this->message->thread->ticket->close();
             return self::STOP_PROPAGATION;
