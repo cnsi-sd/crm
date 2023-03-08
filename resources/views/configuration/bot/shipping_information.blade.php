@@ -22,9 +22,9 @@
                         <label for="fulfillment_answer_id" class="form-label">
                             {{ __('app.bot.shipping_information.fulfillment_answer') }}
                         </label>
-                        <select name="answer_id" class="form-control form-select" required>
+                        <select name="fulfillment_answer_id" class="form-control form-select" required>
                             @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('autoReply') == $reply->id)>
+                                <option value="{{ $reply->id }}" @selected(setting('bot.shipping_information.fulfillment_answer_id') == $reply->id)>
                                     {{ $reply->name }}
                                 </option>
                             @endforeach
@@ -35,9 +35,9 @@
                         <label for="in_preparation_answer_id" class="form-label">
                             {{ __('app.bot.shipping_information.in_preparation_answer') }}
                         </label>
-                        <select name="answer_id" class="form-control form-select" required>
+                        <select name="in_preparation_answer_id" class="form-control form-select" required>
                             @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('autoReply') == $reply->id)>
+                                <option value="{{ $reply->id }}" @selected(setting('bot.shipping_information.in_preparation_answer_id') == $reply->id)>
                                     {{ $reply->name }}
                                 </option>
                             @endforeach
@@ -48,9 +48,9 @@
                         <label for="in_preparation_with_delay_answer_id" class="form-label">
                             {{ __('app.bot.shipping_information.in_preparation_with_delay_answer') }}
                         </label>
-                        <select name="answer_id" class="form-control form-select" required>
+                        <select name="in_preparation_with_delay_answer_id" class="form-control form-select" required>
                             @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('autoReply') == $reply->id)>
+                                <option value="{{ $reply->id }}" @selected(setting('bot.shipping_information.in_preparation_with_delay_answer_id') == $reply->id)>
                                     {{ $reply->name }}
                                 </option>
                             @endforeach
@@ -62,9 +62,9 @@
                         <label for="vir_shipped_answer_id" class="form-label">
                             {{ __('app.bot.shipping_information.vir_shipped_answer') }}
                         </label>
-                        <select name="answer_id" class="form-control form-select" required>
+                        <select name="vir_shipped_answer_id" class="form-control form-select" required>
                             @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('autoReply') == $reply->id)>
+                                <option value="{{ $reply->id }}" @selected(setting('bot.shipping_information.vir_shipped_answer_id') == $reply->id)>
                                     {{ $reply->name }}
                                 </option>
                             @endforeach
@@ -75,9 +75,9 @@
                         <label for="default_shipped_answer_id" class="form-label">
                             {{ __('app.bot.shipping_information.default_shipped_answer') }}
                         </label>
-                        <select name="answer_id" class="form-control form-select" required>
+                        <select name="default_shipped_answer_id" class="form-control form-select" required>
                             @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('autoReply') == $reply->id)>
+                                <option value="{{ $reply->id }}" @selected(setting('bot.shipping_information.default_shipped_answer_id') == $reply->id)>
                                     {{ $reply->name }}
                                 </option>
                             @endforeach
