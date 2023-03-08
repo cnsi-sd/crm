@@ -67,7 +67,7 @@ abstract class AbstractImportMessages extends Command
                 return;
 
         $this->logger->info('Send auto reply');
-        $autoReplyId = setting('autoReply');
+        $autoReplyId = setting('bot.acknowledgment.answer_id');
         $autoReplyContentWeek = DefaultAnswer::query()->select('content')->where('id', $autoReplyId)->first();
 
         $autoReply = new Message();

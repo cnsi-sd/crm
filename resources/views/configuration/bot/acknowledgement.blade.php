@@ -24,7 +24,7 @@
                         </label>
                         <select name="answer_id" class="form-control form-select" required>
                             @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('autoReply') == $reply->id)>
+                                <option value="{{ $reply->id }}" @selected(setting('bot.acknowledgment.answer_id') == $reply->id)>
                                     {{ $reply->name }}
                                 </option>
                             @endforeach

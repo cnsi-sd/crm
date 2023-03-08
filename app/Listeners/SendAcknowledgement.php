@@ -16,7 +16,7 @@ class SendAcknowledgement extends AbstractNewMessageListener
     {
         $this->event = $event;
         $this->message = $event->getMessage();
-        $this->answerAcknowledgement = DefaultAnswer::findOrFail(setting('autoReply'));
+        $this->answerAcknowledgement = DefaultAnswer::findOrFail(setting('bot.acknowledgment.answer_id'));
 
         if(!$this->canBeProcessed())
             return self::SKIP;

@@ -18,7 +18,7 @@ class BotController
     {
         if ($request->exists('save')) {
             setting(['bot.acknowledgment.active' => $request->has('active')]);
-            setting(['autoReply' => $request->input('answer_id')]);
+            setting(['bot.acknowledgment.answer_id' => $request->input('answer_id')]);
             setting()->save();
 
             Alert::toastSuccess(__('app.bot.saved'));
