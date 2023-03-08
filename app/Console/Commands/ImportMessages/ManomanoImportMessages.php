@@ -21,7 +21,7 @@ class ManomanoImportMessages extends AbstractImportMessages
 {
     /** @var Mailbox */
     private Mailbox $mailbox;
-    const FROM_DATE_TRANSFORMATOR = ' - 10 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
 
     public function __construct()
     {

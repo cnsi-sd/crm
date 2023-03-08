@@ -53,6 +53,7 @@ abstract class AbstractSendMessage implements ShouldQueue
             ChannelEnum::CDISCOUNT_FR       => CdiscountSendMessage::dispatch($message),
             ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
             ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
+            ChannelEnum::MANOMANO_COM       => ManomanoSendMessage::dispatch($message),
             default => throw new Exception('Channel given does not exists.'),
         };
     }
