@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
@@ -109,26 +110,30 @@ class IcozaImportMessages extends AbstractImportMessages
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
+        $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
+
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        \App\Models\Ticket\Message::firstOrCreate([
+        $message = \App\Models\Ticket\Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->id,
         ],
             [
                 'user_id' => null,
                 'direct_customer_email' => $message_api->email,
-                'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER, // Messages authors are only customer on this API
+            // Messages authors are only customer on this API
+                'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,
                 'content' => strip_tags($message_api->content)
             ]);
-        if (setting('autoReplyActivate')) {
-            $this->logger->info('Send auto reply');
-            self::sendAutoReply(setting('autoReply'), $thread);
-        }
+
+        NewMessage::dispatch($message);
     }
 }

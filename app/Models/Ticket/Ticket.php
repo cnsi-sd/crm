@@ -246,8 +246,15 @@ class Ticket extends Model
         return (new Tag())->getListTagByThread($this, $listeTag,true);
     }
 
-    public function getOpenedDays() {
+    public function getOpenedDays(): string
+    {
         $now = new DateTime();
         return $now->diff($this->created_at)->format("%a");
+    }
+
+    public function close()
+    {
+        $this->state = TicketStateEnum::CLOSED;
+        $this->save();
     }
 }

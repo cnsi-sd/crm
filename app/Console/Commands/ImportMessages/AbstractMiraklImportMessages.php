@@ -4,6 +4,7 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
@@ -158,7 +159,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
         $this->logger->info('Ticket save');
-        Message::firstOrCreate([
+        $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->getId(),
         ],
@@ -166,13 +167,10 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 'user_id' => null,
                 'author_type' => $this->getAuthorType($authorType),
                 'content' => strip_tags($message_api->getBody()),
-            ],
+            ]
         );
-        if (setting('autoReplyActivate')) {
-            $this->logger->info('Send auto reply');
-                self::sendAutoReply(setting('autoReply'), $thread);
-        }
 
+        NewMessage::dispatch($message);
     }
 
     /**
@@ -186,5 +184,4 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             default => throw new Exception('Bad author type')
         };
     }
-
 }

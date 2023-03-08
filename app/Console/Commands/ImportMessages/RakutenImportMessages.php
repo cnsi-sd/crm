@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
@@ -53,30 +54,31 @@ class RakutenImportMessages extends AbstractImportMessages
         return $this->client;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function convertApiResponseToMessage(Ticket $ticket, $messageApi, Thread $thread)
     {
         $authorType = $messageApi['MpCustomerId'];
-            $this->logger->info('Set ticket\'s status to waiting admin');
-            $ticket->state = TicketStateEnum::WAITING_ADMIN;
-            $ticket->save();
-            $this->logger->info('Ticket save');
-            Message::firstOrCreate([
-                'thread_id' => $thread->id,
-                'channel_message_number' => $messageApi['id'],
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
+        $message = Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $messageApi['id'],
+        ],
+            [
+                'user_id' => null,
+                'author_type' =>
+                    $authorType == 'Rakuten'
+                        ? TicketMessageAuthorTypeEnum::OPERATOR
+                        : TicketMessageAuthorTypeEnum::CUSTOMER,
+                'content' => strip_tags($messageApi['Message']),
             ],
-                [
-                    'user_id' => null,
-                    'author_type' =>
-                        $authorType == 'Rakuten'
-                            ? TicketMessageAuthorTypeEnum::OPERATOR
-                            : TicketMessageAuthorTypeEnum::CUSTOMER,
-                    'content' => strip_tags($messageApi['Message']),
-                ],
-            );
-            if (setting('autoReplyActivate')) {
-                $this->logger->info('Send auto reply');
-//                self::sendAutoReply(setting('autoReply'), $thread);
-            }
+        );
+
+        NewMessage::dispatch($message);
     }
 
     /**

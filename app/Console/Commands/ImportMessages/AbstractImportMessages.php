@@ -2,22 +2,8 @@
 
 namespace App\Console\Commands\ImportMessages;
 
-use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
-use App\Jobs\SendMessage\ButSendMessage;
-use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\CdiscountSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMessage;
-use App\Jobs\SendMessage\DartySendMessage;
-use App\Jobs\SendMessage\FnacSendMessage;
-use App\Jobs\SendMessage\IcozaSendMessage;
-use App\Jobs\SendMessage\IntermarcheSendMessage;
-use App\Jobs\SendMessage\LaposteSendMessage;
-use App\Jobs\SendMessage\LeclercSendMessage;
-use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueducommerceSendMessage;
-use App\Jobs\SendMessage\ShowroomSendMessage;
-use App\Jobs\SendMessage\UbaldiSendMessage;
+use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
@@ -33,7 +19,7 @@ abstract class AbstractImportMessages extends Command
     protected Channel $channel;
     protected static mixed $_alreadyImportedMessages = false;
 
-    protected $signature = '%s:import:messages {--S|sync} {--T|thread=} {--only_best_prices} {--only_updated_offers} {--exclude_supplier=*} {--only_best_sellers} {--part=}';
+    protected $signature = '%s:import:messages';
     protected $description = 'Importing messages from Marketplace.';
 
     abstract protected function getCredentials(): array;
@@ -62,41 +48,6 @@ abstract class AbstractImportMessages extends Command
     protected function addImportedMessageChannelNumber(string $channel_message_number): void
     {
         static::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
-    }
-
-    /**
-     * @param mixed $messageId
-     * @param Thread $thread
-     * @return void
-     */
-    public function sendAutoReply(mixed $messageId, Thread $thread): void
-    {
-        $autoReplyContentWeek = DefaultAnswer::query()->select('content')->where('id', $messageId)->first();
-
-        $autoReply = new Message();
-        $autoReply->thread_id = $thread->id;
-        $autoReply->user_id = null;
-        $autoReply->channel_message_number = '';
-        $autoReply->author_type = TicketMessageAuthorTypeEnum::ADMIN;
-        $autoReply->content = $autoReplyContentWeek['content'];
-        $autoReply->save();
-
-        match ($thread->ticket->channel->name) {
-            ChannelEnum::BUT_FR => ButSendMessage::dispatch($autoReply),
-            ChannelEnum::CARREFOUR_FR => CarrefourSendMessage::dispatch($autoReply),
-            ChannelEnum::CONFORAMA_FR => ConforamaSendMessage::dispatch($autoReply),
-            ChannelEnum::DARTY_COM => DartySendMessage::dispatch($autoReply),
-            ChannelEnum::INTERMARCHE_FR => IntermarcheSendMessage::dispatch($autoReply),
-            ChannelEnum::LAPOSTE_FR => LaposteSendMessage::dispatch($autoReply),
-            ChannelEnum::E_LECLERC => LeclercSendMessage::dispatch($autoReply),
-            ChannelEnum::METRO_FR => MetroSendMessage::dispatch($autoReply),
-            ChannelEnum::RUEDUCOMMERCE_FR => RueducommerceSendMessage::dispatch($autoReply),
-            ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($autoReply),
-            ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($autoReply),
-            ChannelEnum::CDISCOUNT_FR => CdiscountSendMessage::dispatch($autoReply),
-            ChannelEnum::FNAC_COM => FnacSendMessage::dispatch($autoReply),
-            ChannelEnum::ICOZA_FR => IcozaSendMessage::dispatch($autoReply),
-        };
     }
 }
 
