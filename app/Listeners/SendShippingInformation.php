@@ -39,6 +39,8 @@ class SendShippingInformation extends AbstractNewMessageListener
                 $this->sendAnswer(setting('bot.shipping_information.in_preparation_answer_id'));
             }
 
+
+
             $this->message->thread->ticket->close();
             return self::STOP_PROPAGATION;
         }
@@ -50,7 +52,10 @@ class SendShippingInformation extends AbstractNewMessageListener
                 $this->sendAnswer(setting('bot.shipping_information.default_shipped_answer_id'));
             }
 
-            $this->message->thread->ticket->close();
+            if($this->getOrderDelay($prestashopOrder) !== 0) {
+                $this->message->thread->ticket->close();
+            }
+
             return self::STOP_PROPAGATION;
         }
 
@@ -137,10 +142,15 @@ class SendShippingInformation extends AbstractNewMessageListener
         $now = new DateTime();
         $max_shipment_date = new DateTime($prestashopOrder['max_shipment_date']);
 
-        if ($max_shipment_date->getTimestamp() > 0 && $now < $max_shipment_date) {
-            $diff = $now->diff($max_shipment_date);
-            $days_diff = $diff->format('%a');
-            return (int)$days_diff;
+        if ($max_shipment_date->getTimestamp() > 0) {
+            if($now < $max_shipment_date) {
+                $diff = $now->diff($max_shipment_date);
+                $days_diff = $diff->format('%a');
+                return (int)$days_diff;
+            }
+            else {
+                return 0; // Deadline exceeded
+            }
         }
 
         return null;
