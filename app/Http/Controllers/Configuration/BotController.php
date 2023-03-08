@@ -17,7 +17,7 @@ class BotController
     public function acknowledgement(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
-            setting(['autoReplyActivate' => $request->has('active')]);
+            setting(['bot.acknowledgment.active' => $request->has('active')]);
             setting(['autoReply' => $request->input('answer_id')]);
             setting()->save();
 

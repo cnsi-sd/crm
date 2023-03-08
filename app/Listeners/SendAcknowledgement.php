@@ -29,7 +29,7 @@ class SendAcknowledgement extends AbstractNewMessageListener
 
     protected function canBeProcessed(): bool
     {
-        if(!setting('autoReplyActivate'))
+        if(!setting('bot.acknowledgment.active'))
             return false;
 
         if(!$this->message->isExternal())

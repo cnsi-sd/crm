@@ -58,7 +58,7 @@ abstract class AbstractImportMessages extends Command
      */
     public function sendAutoReply(Thread $thread): void
     {
-        if(!setting('autoReplyActivate')) {
+        if(!setting('bot.acknowledgment.active')) {
             return;
         }
 
