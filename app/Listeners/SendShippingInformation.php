@@ -4,55 +4,57 @@ namespace App\Listeners;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Events\NewMessage;
+use App\Helpers\PrestashopGateway;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
+use DateTime;
+use Illuminate\Support\Str;
 
 class SendShippingInformation extends AbstractNewMessageListener
 {
+    private PrestashopGateway $prestashopGateway;
+
     public function handle(NewMessage $event): ?bool
     {
         $this->event = $event;
         $this->message = $event->getMessage();
+        $this->prestashopGateway = new PrestashopGateway();
 
         if (!$this->canBeProcessed())
             return self::SKIP;
 
         $prestashopOrder = $this->getPrestashopOrder();
 
-        if($prestashopOrder->is_fulfillment) {
+        if ($prestashopOrder->is_fulfillment) {
             $this->sendAnswer(setting('bot.shipping_information.fulfillment_answer_id'));
             $this->message->thread->ticket->close();
             return self::STOP_PROPAGATION;
         }
 
-        // TODO
         if ($this->isStateInPreparation($prestashopOrder)) {
             if ($this->isOrderWithDelay($prestashopOrder)) {
                 $this->sendAnswer(setting('bot.shipping_information.in_preparation_with_delay_answer_id'));
-                $this->message->thread->ticket->close();
-                return self::STOP_PROPAGATION;
-            }
-            else {
+            } else {
                 $this->sendAnswer(setting('bot.shipping_information.in_preparation_answer_id'));
-                $this->message->thread->ticket->close();
-                return self::STOP_PROPAGATION;
             }
+
+            $this->message->thread->ticket->close();
+            return self::STOP_PROPAGATION;
         }
 
-        else if ($this->isStateShipped($prestashopOrder)) {
-            $this->getTrackingUrl($prestashopOrder);
-            if ($this->isVirSupplier($prestashopOrder))
-                $defaultReplyId = Mage::getStoreConfig('crmticket/scripted_answer/response_shipped_vir');
-            else {
-                $defaultReplyId = Mage::getStoreConfig('crmticket/scripted_answer/response_shipped_default');
+        if ($this->isStateShipped($prestashopOrder)) {
+            if ($this->isVirSupplier($prestashopOrder)) {
+                $this->sendAnswer(setting('bot.shipping_information.vir_shipped_answer_id'));
+            } else {
+                $this->sendAnswer(setting('bot.shipping_information.default_shipped_answer_id'));
             }
+
+            $this->message->thread->ticket->close();
+            return self::STOP_PROPAGATION;
         }
-        else
-            return false;
 
-
-        return self::STOP_PROPAGATION;
+        return self::SKIP;
     }
 
     protected function canBeProcessed(): bool
@@ -103,6 +105,51 @@ class SendShippingInformation extends AbstractNewMessageListener
             return null;
 
         return $prestashopOrders[0];
+    }
+
+    private function isStateInPreparation($prestashopOrder): bool
+    {
+        return Str::contains($prestashopOrder['state']['name'], [
+            'paiement accepté',
+            'en cours de préparation',
+            'en cours de conformité',
+            'en cours d\'envoi',
+            'expédié de entrepôts cnsi',
+        ], true);
+    }
+
+    private function isStateShipped($prestashopOrder): bool
+    {
+        return Str::contains($prestashopOrder['state']['name'], [
+            'expédié',
+            'expédié sans maj mp',
+            'a expédier manuellement',
+        ], true);
+    }
+
+    protected function isVirSupplier($prestashopOrder): bool
+    {
+        return Str::contains($prestashopOrder['shipping']['carrier'], 'VIR', true);
+    }
+
+    private function getOrderDelay($prestashopOrder): ?int
+    {
+        $now = new DateTime();
+        $max_shipment_date = new DateTime($prestashopOrder['max_shipment_date']);
+
+        if ($max_shipment_date->getTimestamp() > 0 && $now < $max_shipment_date) {
+            $diff = $now->diff($max_shipment_date);
+            $days_diff = $diff->format('%a');
+            return (int)$days_diff;
+        }
+
+        return null;
+    }
+
+    private function isOrderWithDelay($prestashopOrder): bool
+    {
+        $orderDelay = $this->getOrderDelay($prestashopOrder);
+        return $orderDelay >= 10;
     }
 
     private function sendAnswer(int $defaultAnswerId)
