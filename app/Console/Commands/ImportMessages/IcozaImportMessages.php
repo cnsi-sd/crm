@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
@@ -19,7 +20,6 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class IcozaImportMessages extends AbstractImportMessages
 {
-    protected string $testOrder = '526-SOOTUCIZG';
     private Client $client;
 
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
@@ -122,7 +122,7 @@ class IcozaImportMessages extends AbstractImportMessages
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        \App\Models\Ticket\Message::firstOrCreate([
+        $message = \App\Models\Ticket\Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->id,
         ],
@@ -134,6 +134,6 @@ class IcozaImportMessages extends AbstractImportMessages
                 'content' => strip_tags($message_api->content)
             ]);
 
-        self::sendAutoReply($thread);
+        NewMessage::dispatch($message);
     }
 }

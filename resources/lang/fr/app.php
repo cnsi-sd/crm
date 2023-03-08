@@ -154,14 +154,36 @@ return [
         'channel' => 'Canal|Canaux',
     ],
 
-    'autoReply' => [
-        'autoReply' => 'Réponse automatique|Réponses automatiques',
-        'autoReplyWeek' => 'Réponse automatique : semaine',
-        'autoReplyWeekEnd' => 'Réponse automatique : week-end',
-        'validate' => 'Activé la réponse automatique',
-        'activate' => 'Activé',
-        'disable' => 'Désactivé',
-        'MessageToReply' => 'message envoyé'
+    'bot' => [
+        'bot' => 'Bot',
+
+        'active' => 'Activé ?',
+        'saved' => 'Configuration enregistrée !',
+
+        'acknowledgement' => [
+            'acknowledgement' => 'Accusé de réception',
+            'answer' => 'Réponse à envoyer',
+        ],
+
+        'invoice' => [
+            'invoice' => 'Demande de facture',
+            'found_answer' => 'Réponse à envoyer : facture trouvée',
+            'not_shipped_answer' => 'Réponse à envoyer : facture pas encore générée',
+        ],
+
+        'shipping_information' => [
+            'shipping_information' => 'Information de livraison',
+
+            'vir_shipped_answer' => 'Réponse à envoyer : suivi VIR disponible',
+            'default_shipped_answer' => 'Réponse à envoyer : suivi autre transporteur disponible',
+
+            'in_preparation_answer' => 'Réponse à envoyer : en cours de préparation',
+            'in_preparation_with_delay_answer' => 'Réponse à envoyer : en cours de préparation avec délai',
+
+            'fulfillment_answer' => 'Réponse à envoyer : commande Fulfillment',
+
+            'tag_late_preparation' => 'Tag retard de préparation',
+        ],
     ],
 
     'defaultAnswer' => [

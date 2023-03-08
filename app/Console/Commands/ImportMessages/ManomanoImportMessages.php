@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
@@ -189,7 +190,7 @@ class ManomanoImportMessages extends AbstractImportMessages
         else
             $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
 
-        Message::firstOrCreate([
+        $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $email->messageId,
         ],
@@ -200,6 +201,6 @@ class ManomanoImportMessages extends AbstractImportMessages
             ]
         );
 
-        self::sendAutoReply($thread);
+        NewMessage::dispatch($message);
     }
 }

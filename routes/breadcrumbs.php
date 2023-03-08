@@ -122,10 +122,22 @@ Breadcrumbs::for('edit_revival', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.edit'));
 });
 
-/** Auto Reply */
-Breadcrumbs::for('autoReply', function (BreadcrumbTrail $trail) {
+/** Bot */
+Breadcrumbs::for('bot_home', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(trans_choice('app.autoReply.autoReply', 2), route('autoReply'));
+    $trail->push(__('app.bot.bot'), route('bot_home'));
+});
+Breadcrumbs::for('bot_acknowledgement', function (BreadcrumbTrail $trail) {
+    $trail->parent('bot_home');
+    $trail->push(__('app.bot.acknowledgement.acknowledgement'), route('bot_acknowledgement'));
+});
+Breadcrumbs::for('bot_invoice', function (BreadcrumbTrail $trail) {
+    $trail->parent('bot_home');
+    $trail->push(__('app.bot.invoice.invoice'), route('bot_invoice'));
+});
+Breadcrumbs::for('bot_shipping_information', function (BreadcrumbTrail $trail) {
+    $trail->parent('bot_home');
+    $trail->push(__('app.bot.shipping_information.shipping_information'), route('bot_shipping_information'));
 });
 
 /** Channel */

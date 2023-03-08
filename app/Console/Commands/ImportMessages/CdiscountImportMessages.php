@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
 use App\Jobs\SendMessage\CdiscountSendMessage;
@@ -34,8 +35,6 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class CdiscountImportMessages extends AbstractImportMessages
 {
-    protected string $testOrder = '2302201135UQL01';
-
     /**
      * @var ClientCdiscount
      */
@@ -171,7 +170,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
-        Message::firstOrCreate([
+        $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->getMessageId(),
         ],
@@ -182,7 +181,7 @@ class CdiscountImportMessages extends AbstractImportMessages
             ]
         );
 
-        self::sendAutoReply($thread);
+        NewMessage::dispatch($message);
     }
 
     /**

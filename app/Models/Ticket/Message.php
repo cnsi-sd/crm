@@ -2,6 +2,7 @@
 
 namespace App\Models\Ticket;
 
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Models\User\User;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -46,6 +47,17 @@ class Message extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function isExternal(): bool
+    {
+        return in_array($this->author_type, [TicketMessageAuthorTypeEnum::CUSTOMER, TicketMessageAuthorTypeEnum::OPERATOR]);
+    }
+
+    public function isFirstMessageOnThread(): bool
+    {
+        $threadMessages = $this->thread->messages;
+        return $threadMessages->count() === 1 && $threadMessages->first()->id === $this->id;
     }
 }
 

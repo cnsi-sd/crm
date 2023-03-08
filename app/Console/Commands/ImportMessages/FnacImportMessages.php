@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
@@ -19,7 +20,6 @@ use Illuminate\Support\Facades\DB;
 
 class FnacImportMessages extends AbstractImportMessages
 {
-    protected string $testOrder = 'FICGB4UDKJXMM';
     private SimpleClient $client;
 
     /**
@@ -141,7 +141,7 @@ class FnacImportMessages extends AbstractImportMessages
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        \App\Models\Ticket\Message::firstOrCreate([
+        $message = \App\Models\Ticket\Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->getMessageId(),
         ],
@@ -152,6 +152,6 @@ class FnacImportMessages extends AbstractImportMessages
         ]
         );
 
-        self::sendAutoReply($thread);
+        NewMessage::dispatch($message);
     }
 }
