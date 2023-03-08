@@ -19,6 +19,7 @@ use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class IcozaImportMessages extends AbstractImportMessages
 {
+    protected string $testOrder = '526-SOOTUCIZG';
     private Client $client;
 
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';

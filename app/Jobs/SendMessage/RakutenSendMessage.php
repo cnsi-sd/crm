@@ -13,7 +13,6 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class RakutenSendMessage extends AbstractSendMessage
 {
-    protected string $testOrder = '868826680';
     protected Logger $logger;
     protected Client $client;
     const MESSAGE_LIMIT = 475;
@@ -27,6 +26,11 @@ class RakutenSendMessage extends AbstractSendMessage
      */
     public function handle(): void
     {
+        // If we are in local environment, we only can send messages to a test order
+        if (env('APP_ENV') == 'local')
+            if($this->message->thread->channel_thread_number != '868826680')
+                return;
+                
         // Load channel
         $this->channel = Channel::getByName(ChannelEnum::RAKUTEN_COM);
         $this->logger = new Logger('send_message/'

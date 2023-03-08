@@ -18,6 +18,7 @@ abstract class AbstractSendMessage implements ShouldQueue
 
     public Message $message;
     protected Channel $channel;
+    protected string $testOrder;
 
     public function __construct(Message $message)
     {
