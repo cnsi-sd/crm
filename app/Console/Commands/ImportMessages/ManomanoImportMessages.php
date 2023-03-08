@@ -14,13 +14,14 @@ use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use PhpImap\Exceptions\InvalidParameterException;
+use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 
 class ManomanoImportMessages extends AbstractImportMessages
 {
     /** @var Mailbox */
     private Mailbox $mailbox;
-    const FROM_DATE_TRANSFORMATOR = ' - 24 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 10 hours';
 
     public function __construct()
     {
@@ -57,33 +58,22 @@ class ManomanoImportMessages extends AbstractImportMessages
             $this->logger->info('Get Emails details');
 
             foreach($this->getEmails($emailIds) as $emailId => $email){
-                $sender = $email->senderAddress;
-
                 // Check if sender is "ne-pas-repondre@manomano.fr"
-                $doNotReply = strpos($sender, 'repondre');
+                $doNotReply = str_contains($email->senderAddress, 'repondre');
                 if($doNotReply)
                     continue;
 
-                $message = $this->messageProcess($email);
+                $orderId = $this->parseOrderId($email);
+                if(!$orderId)
+                    continue;
 
-                $support = strpos($sender,'support');
-                if($support)
-                    $message['authorType'] = TicketMessageAuthorTypeEnum::OPERATOR;
-                else
-                    $message['authorType'] = TicketMessageAuthorTypeEnum::CUSTOMER;
-
-                $message['date']    = $from_time;
-                $message['subject'] = $email->subject;
-                $message['id']      = $email->messageId;
-
-
-                $order      = Order::getOrder($message['orderId'], $this->channel);
+                $order      = Order::getOrder($orderId, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);
-                $thread     = Thread::getOrCreateThread($ticket, $message['orderId'], $email->subject, '');
+                $thread     = Thread::getOrCreateThread($ticket, $orderId, $orderId, '');
 
                 if(!$this->isMessagesImported($email->messageId)) {
                     $this->logger->info('Convert api message to db message');
-                    $this->convertApiResponseToMessage($ticket, $message, $thread);
+                    $this->convertApiResponseToMessage($ticket, $email, $thread);
                     $this->addImportedMessageChannelNumber($email->messageId);
 
                 }
@@ -145,72 +135,67 @@ class ManomanoImportMessages extends AbstractImportMessages
         return $emails;
     }
 
-    private function parseOrderId($subject): bool|string
+    private function parseOrderId(IncomingMail $email): bool|string
     {
-        // get the orderId (Mxxxxxxxxxxxx pattern) in subjet
+        $subject = $email->subject;
+
+        // get the orderId (Mxxxxxxxxxxxx pattern) in subject
         preg_match('/M(\d{12})/',$subject, $orderMatche);
 
-        if(isset($orderMatche[1])){
-            return $orderMatche[1];
-        }
-        $this->logger->info('No OrderId found in '. $subject);
+        if(isset($orderMatche[1]))
+            return 'M'. $orderMatche[1];
+
+        $this->logger->info('No Order found in '. $subject);
         return false;
     }
 
-    public function messageProcess($email): array
+    public function getMessageContent(IncomingMail $email): string
     {
-        $message = [];
-
-        $plainBody = $email->textPlain;
         $subject = $email->subject;
         $attachment = $email->getAttachments();
 
-        // html process to be readable
-        $withoutHtml = strip_tags($email->textHtml);
-        $withoutSpaces = preg_replace('/\s+/', ' ', $withoutHtml);
-        $withoutCss = preg_replace('/@(.*); }/', '',$withoutSpaces);
+        if(empty($email->textPlain)) {
+            $content = strip_tags($email->textHtml); // remove html
+            $content = preg_replace('/\s+/', ' ', $content); // remove whitespaces
+            $content = preg_replace('/@(.*); }/', '',$content); // remove css
+        }
+        else {
+            $content = preg_replace('/(\v+)/', PHP_EOL, $email->textPlain);
+        }
 
-        if(strlen($email->textPlain) > 0)
-            $message['content'] = preg_replace('/(\v+)/', PHP_EOL, $plainBody);
-        else
-            $message['content'] = $withoutCss;
+        if(str_contains($subject, 'Demande de facture'))
+            $content = 'Pouvez-vous répondre à cet email avec la facture au format pdf en pièce-jointe svp?';
 
-        if(strpos($subject, 'facture'))
-            $message['content'] = 'Pouvez-vous répondre à cet email avec la facture au format pdf en pièce-jointe svp?';
-
-        $this->parseOrderId($subject)
-            ? $message['orderId'] = $this->parseOrderId($subject)
-            : $message['orderId'] = 'No_order_found';
-
-        return $message;
+        return $content;
     }
 
     /**
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $message, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $email, Thread $thread)
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
-        $ticket->save();
-        $this->logger->info('Ticket save');
+        $support = str_contains($email->senderAddress,'support');
+        if($support)
+            $authorType = TicketMessageAuthorTypeEnum::OPERATOR;
+        else
+            $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
 
         Message::firstOrCreate([
             'thread_id' => $thread->id,
-            'channel_message_number' => $message['id'],
+            'channel_message_number' => $email->messageId,
         ],
             [
                 'user_id' => null,
-                'author_type' => $message['authorType'],
-                'content' => $message['content'],
+                'author_type' => $authorType,
+                'content' => $this->getMessageContent($email),
             ]
         );
 
-//        self::sendAutoReply($thread);
+        self::sendAutoReply($thread);
     }
 }
