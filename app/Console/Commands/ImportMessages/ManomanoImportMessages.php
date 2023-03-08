@@ -21,7 +21,7 @@ class ManomanoImportMessages extends AbstractImportMessages
 {
     /** @var Mailbox */
     private Mailbox $mailbox;
-    const FROM_DATE_TRANSFORMATOR = ' - 10 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
 
     public function __construct()
     {
@@ -67,15 +67,19 @@ class ManomanoImportMessages extends AbstractImportMessages
                 if(!$orderId)
                     continue;
 
+                if(str_contains($email->senderAddress, '@monechelle.zendesk.com'))
+                    $threadPrefix = 'Support';
+                else
+                    $threadPrefix = 'Client';
+
                 $order      = Order::getOrder($orderId, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);
-                $thread     = Thread::getOrCreateThread($ticket, $orderId, $orderId, '');
+                $thread     = Thread::getOrCreateThread($ticket, $threadPrefix.'-'.$orderId, $threadPrefix.'-'.$email->subject, '', $email->senderAddress);
 
                 if(!$this->isMessagesImported($email->messageId)) {
                     $this->logger->info('Convert api message to db message');
                     $this->convertApiResponseToMessage($ticket, $email, $thread);
                     $this->addImportedMessageChannelNumber($email->messageId);
-
                 }
                 DB::commit();
             }
