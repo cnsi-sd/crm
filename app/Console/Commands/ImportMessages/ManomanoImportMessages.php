@@ -19,7 +19,7 @@ class ManomanoImportMessages extends AbstractImportMessages
 {
     /** @var Mailbox */
     private Mailbox $mailbox;
-    const FROM_DATE_TRANSFORMATOR = ' - 1 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 24 hours';
 
     public function __construct()
     {
@@ -159,33 +159,22 @@ class ManomanoImportMessages extends AbstractImportMessages
     public function messageProcess($email): array
     {
         $message = [];
-        /**
-         * on vérif le sender; si contient "repondre" on tèj, s'il contient "support" à voir le traitement mais c'est pas clair ( autant le traiter comme les autres )
-         * on vérif le subject => on prend le numéro de commande M(\d+12) ( qui sera le numéro de thread et l'orderId; le default "manomano_support"  )
-         * Si c'est [
-         *  une demande de facture,
-         *  demande d'information
-         *  ]
-         *  => on remplie le sujet, thread number, order, mais pour pour le content, on écrit un message bateau.
-         *
-         * on vérif s'il existe le textPlain, sinon on prend le textHtml.
-         */
 
-        $isReply = $email->replyTo;
-        $body = $email->textHtml;
         $plainBody = $email->textPlain;
         $subject = $email->subject;
         $attachment = $email->getAttachments();
-        $messageId = $email->messageId; // todo parse id <[idToParse]@swift.generated>
-//        $parsedMessage = $this->parseHtmlMessage($email->textHtml);
 
 
+        // todo eject messages already imported
+        // html process to be readable
+        $withoutHtml = strip_tags($email->textHtml);
+        $withoutSpaces = preg_replace('/\s+/', ' ', $withoutHtml);
+        $withoutCss = preg_replace('/@(.*); }/', '',$withoutSpaces);
 
         if(strlen($email->textPlain))
-            $message['content'] = $email->textPlain;
+            $message['content'] = preg_replace('/(\v+)/', PHP_EOL, $plainBody);
         else
-            // TODO delete all space and CSS
-            $message['content'] = strip_tags($email->textHtml);
+            $message['content'] = $withoutCss;
 
         if(strpos($subject, 'facture'))
             $message['content'] = 'Pouvez-vous répondre à cet email avec la facture au format pdf en pièce-jointe svp?';
