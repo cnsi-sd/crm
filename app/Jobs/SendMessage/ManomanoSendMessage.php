@@ -6,12 +6,12 @@ use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 use Cnsi\Logger\Logger;
 use Exception;
-use Webklex\PHPIMAP\Client;
+use Illuminate\Support\Facades\Mail;
+
 
 class ManomanoSendMessage extends AbstractSendMessage
 {
     protected Logger $logger;
-    private Client $client;
     /**
      * @throws Exception
      */
@@ -26,5 +26,26 @@ class ManomanoSendMessage extends AbstractSendMessage
         );
 
         $this->logger->info('--- Start ---');
+
+        $toMailAddress = str_replace('"',"", $this->message->thread->channel_data);
+
+        $response = imap_mail(
+            $toMailAddress,
+            $this->message->thread->name,
+            $this->message->content,'','','',
+            'laurent.lefoulgoc@cnsi-sd.fr');
+
+
+
+        Mail::raw($toMailAddress)->send();
+
+        $response
+            ? $this->logger->info('Message sent to '. $toMailAddress)
+            : $this->logger->info('An error occurred, mail to ' . $toMailAddress . ' sending problem');
+    }
+
+    public function buildMail()
+    {
+
     }
 }
