@@ -58,6 +58,11 @@ class IcozaSendMessage extends AbstractSendMessage
 
     public function handle(): void
     {
+        // If we are in local environment, we only can send messages to a test order
+        if (env('APP_ENV') == 'local')
+            if( $this->message->thread->channel_thread_number != '526-SOOTUCIZG')
+                return;
+
         try {
             $this->logger = new Logger('send_message/'
                 . $this->getSnakeChannelName()
@@ -67,9 +72,14 @@ class IcozaSendMessage extends AbstractSendMessage
 
             $this->logger->info('--- Start ---');
 
-            $threadNumber = $this->message->thread->channel_thread_number;
-            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
+          // If we are in local environment, we only can send messages to a test order
+            if (env('APP_ENV') == 'local')
+                if($this->message->thread->channel_thread_number != '526-SOOTUCIZG')
+                    return;
 
+            $threadNumber = $this->message->thread->channel_thread_number;
+
+            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
             $this->logger->info('Init api');
             $client = self::initApiClient();
 

@@ -24,7 +24,7 @@ class SafeDatabase extends Command
             'password' => Hash::make('password'),
         ]);
 
-        setting(['autoReplyActivate' => false]);
+        setting()->forget('bot');
         setting()->save();
 
         $this->info('-- DONE');

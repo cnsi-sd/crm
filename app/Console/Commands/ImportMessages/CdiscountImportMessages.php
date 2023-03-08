@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
 use App\Jobs\SendMessage\CdiscountSendMessage;
@@ -30,6 +31,7 @@ use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class CdiscountImportMessages extends AbstractImportMessages
 {
@@ -37,7 +39,6 @@ class CdiscountImportMessages extends AbstractImportMessages
      * @var ClientCdiscount
      */
     static private ClientCdiscount $client;
-
     const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
     const MAX_RETRY_API_CALL = 5;
     const IGNORE_MSG_CONTAINS = [
@@ -56,7 +57,7 @@ class CdiscountImportMessages extends AbstractImportMessages
     /**
      * Execute the console command.
      *
-     * @throws Exception
+     * @throws Exception|TransportExceptionInterface
      */
     public function handle()
     {
@@ -169,7 +170,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
-        Message::firstOrCreate([
+        $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $message_api->getMessageId(),
         ],
@@ -177,17 +178,10 @@ class CdiscountImportMessages extends AbstractImportMessages
                 'user_id' => null,
                 'author_type' => self::getAuthorType($authorType),
                 'content' => strip_tags($message_api->getBody()),
-            ],
-                [
-                    'user_id' => null,
-                    'author_type' => self::getAuthorType($authorType),
-                    'content' => strip_tags($message_api->getBody()),
-                ],
-            );
+            ]
+        );
 
-        if ($ticket->order->channel_order_number == '2302201135UQL01') {
-            self::sendAutoReply($thread);
-        }
+        NewMessage::dispatch($message);
     }
 
     /**

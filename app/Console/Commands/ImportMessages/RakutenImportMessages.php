@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Events\NewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
@@ -63,7 +64,7 @@ class RakutenImportMessages extends AbstractImportMessages
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
         $this->logger->info('Ticket save');
-        Message::firstOrCreate([
+        $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
             'channel_message_number' => $messageApi['id'],
         ],
@@ -77,7 +78,7 @@ class RakutenImportMessages extends AbstractImportMessages
             ],
         );
 
-        self::sendAutoReply($thread);
+        NewMessage::dispatch($message);
     }
 
     /**

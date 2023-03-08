@@ -49,30 +49,5 @@ abstract class AbstractImportMessages extends Command
     {
         static::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
     }
-
-    /**
-     * @param Thread $thread
-     * @return void
-     * @throws Exception
-     */
-    public function sendAutoReply(Thread $thread): void
-    {
-        if(!setting('autoReplyActivate')) {
-            return;
-        }
-        $this->logger->info('Send auto reply');
-        $autoReplyId = setting('autoReply');
-        $autoReplyContentWeek = DefaultAnswer::query()->select('content')->where('id', $autoReplyId)->first();
-
-        $autoReply = new Message();
-        $autoReply->thread_id = $thread->id;
-        $autoReply->user_id = null;
-        $autoReply->channel_message_number = '';
-        $autoReply->author_type = TicketMessageAuthorTypeEnum::ADMIN;
-        $autoReply->content = $autoReplyContentWeek['content'];
-        $autoReply->save();
-
-        AbstractSendMessage::dispatchMessage($autoReply);
-    }
 }
 

@@ -53,12 +53,6 @@ abstract class Menu
                         'permission' => PermissionEnum::REVIVAL_READ
                     ],
                     [
-                        'text' => trans_choice('app.autoReply.autoReply', 2),
-                        'route' => route('autoReply'),
-                        'ref' => 'autoReply',
-                        'permission' => PermissionEnum::REVIVAL_READ
-                    ],
-                    [
                         'text' => trans_choice('app.configuration.channel', 2),
                         'route' => route('channels'),
                         'ref' => 'channel',
@@ -69,6 +63,11 @@ abstract class Menu
                         'route' => route('tags'),
                         'ref' => 'tags',
                         'permission' => PermissionEnum::TAG_READ
+                    ],
+                    [
+                        'text' => __('app.bot.bot'),
+                        'route' => route('bot_home'),
+                        'ref' => 'bot',
                     ],
                 ]
             ],
