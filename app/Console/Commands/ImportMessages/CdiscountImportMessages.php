@@ -34,8 +34,6 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class CdiscountImportMessages extends AbstractImportMessages
 {
-    protected string $testOrder = '2302201135UQL01';
-
     /**
      * @var ClientCdiscount
      */
@@ -181,8 +179,6 @@ class CdiscountImportMessages extends AbstractImportMessages
                 'content' => strip_tags($message_api->getBody()),
             ]
         );
-
-        self::sendAutoReply($thread);
     }
 
     /**

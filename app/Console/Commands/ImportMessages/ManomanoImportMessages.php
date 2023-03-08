@@ -199,7 +199,5 @@ class ManomanoImportMessages extends AbstractImportMessages
                 'content' => $this->getMessageContent($email),
             ]
         );
-
-        self::sendAutoReply($thread);
     }
 }

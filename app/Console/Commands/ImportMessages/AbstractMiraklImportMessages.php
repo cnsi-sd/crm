@@ -168,7 +168,6 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 'content' => strip_tags($message_api->getBody()),
             ]
         );
-        self::sendAutoReply($thread);
     }
 
     /**

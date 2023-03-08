@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\DB;
 
 class FnacImportMessages extends AbstractImportMessages
 {
-    protected string $testOrder = 'FICGB4UDKJXMM';
     private SimpleClient $client;
 
     /**
@@ -151,7 +150,5 @@ class FnacImportMessages extends AbstractImportMessages
             'content' => strip_tags($message_api->getMessageDescription())
         ]
         );
-
-        self::sendAutoReply($thread);
     }
 }
