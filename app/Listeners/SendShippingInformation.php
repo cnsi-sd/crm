@@ -39,9 +39,14 @@ class SendShippingInformation extends AbstractNewMessageListener
                 $this->sendAnswer(setting('bot.shipping_information.in_preparation_answer_id'));
             }
 
-            // Close ticket only if the max_ship_date is not reached
+            // If the max_ship_date is not reached, close ticket
             if($this->getOrderDelay($prestashopOrder) !== 0) {
                 $this->message->thread->ticket->close();
+            }
+            // Otherwise (max_ship_date reached), add tag on ticket, stay open
+            else {
+                $tagId = setting('bot.shipping_information.late_order_tag_id');
+                // TODO @Mathias, add tag on $this->message->thread.
             }
 
             return self::STOP_PROPAGATION;

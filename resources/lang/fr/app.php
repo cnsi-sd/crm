@@ -182,7 +182,7 @@ return [
 
             'fulfillment_answer' => 'Réponse à envoyer : commande Fulfillment',
 
-            'tag_late_preparation' => 'Tag retard de préparation',
+            'late_order_tag' => 'Tag retard de préparation',
         ],
     ],
 
