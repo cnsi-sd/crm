@@ -83,9 +83,6 @@ class RakutenSendMessage extends AbstractSendMessage
     {
         $client = new Client([
             'token' => self::getCredentials()['token'],
-            'headers' => [
-                "accept-charset" => "UTF-8"
-            ]
         ]);
 
         $this->client = $client;
