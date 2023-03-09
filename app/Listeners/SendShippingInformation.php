@@ -7,24 +7,22 @@ use App\Events\NewMessage;
 use App\Helpers\PrestashopGateway;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\DefaultAnswer;
+use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use DateTime;
 use Illuminate\Support\Str;
 
 class SendShippingInformation extends AbstractNewMessageListener
 {
-    private PrestashopGateway $prestashopGateway;
-
     public function handle(NewMessage $event): ?bool
     {
         $this->event = $event;
         $this->message = $event->getMessage();
-        $this->prestashopGateway = new PrestashopGateway();
 
         if (!$this->canBeProcessed())
             return self::SKIP;
 
-        $prestashopOrder = $this->getPrestashopOrder();
+        $prestashopOrder = $this->message->thread->ticket->order->getFirstPrestashopOrder();
 
         if ($prestashopOrder['is_fulfillment']) {
             $this->sendAnswer(setting('bot.shipping_information.fulfillment_answer_id'));
@@ -40,7 +38,7 @@ class SendShippingInformation extends AbstractNewMessageListener
             }
 
             // If the max_ship_date is not reached, close ticket
-            if($this->getOrderDelay($prestashopOrder) !== 0) {
+            if(Order::getOrderDelay($prestashopOrder) !== 0) {
                 $this->message->thread->ticket->close();
             }
             // Otherwise (max_ship_date reached), add tag on ticket, stay open
@@ -99,23 +97,6 @@ class SendShippingInformation extends AbstractNewMessageListener
         return false;
     }
 
-    private function getPrestashopOrder()
-    {
-        // Get the CRM order across relations
-        $crmOrder = $this->message->thread->ticket->order;
-
-        // Call the Prestashop API to get orders data
-        $prestashopOrders = $this->prestashopGateway->getOrderInfo(
-            $crmOrder->channel_order_number,
-            $crmOrder->channel->ext_name,
-        );
-
-        if (!$prestashopOrders)
-            return null;
-
-        return $prestashopOrders[0];
-    }
-
     private function isStateInPreparation($prestashopOrder): bool
     {
         return Str::contains($prestashopOrder['state']['name'], [
@@ -141,28 +122,9 @@ class SendShippingInformation extends AbstractNewMessageListener
         return Str::contains($prestashopOrder['shipping']['carrier'], 'VIR', true);
     }
 
-    private function getOrderDelay($prestashopOrder): ?int
-    {
-        $now = new DateTime();
-        $max_shipment_date = new DateTime($prestashopOrder['max_shipment_date']);
-
-        if ($max_shipment_date->getTimestamp() > 0) {
-            if($now < $max_shipment_date) {
-                $diff = $now->diff($max_shipment_date);
-                $days_diff = $diff->format('%a');
-                return (int)$days_diff;
-            }
-            else {
-                return 0; // Deadline exceeded
-            }
-        }
-
-        return null;
-    }
-
     private function isOrderWithDelay($prestashopOrder): bool
     {
-        $orderDelay = $this->getOrderDelay($prestashopOrder);
+        $orderDelay = Order::getOrderDelay($prestashopOrder);
         return $orderDelay >= 10;
     }
 

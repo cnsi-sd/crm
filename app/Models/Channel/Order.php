@@ -2,6 +2,7 @@
 
 namespace App\Models\Channel;
 
+use App\Helpers\PrestashopGateway;
 use App\Models\Ticket\Ticket;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,8 @@ class Order extends Model
         'updated_at'
     ];
 
+    protected ?array $_prestashopOrders = null;
+
     /**
      * @param string $orderId
      * @param string $channelId
@@ -45,6 +48,40 @@ class Order extends Model
                 'channel_order_number' => $orderId,
             ],
         );
+    }
+
+    public function getPrestashopOrders(): ?array
+    {
+        if(!$this->_prestashopOrders) {
+            $prestashopGateway = new PrestashopGateway();
+            $this->_prestashopOrders = $prestashopGateway->getOrderInfo($this->channel_order_number, $this->channel->ext_name);
+        }
+
+        return $this->_prestashopOrders;
+    }
+
+    public function getFirstPrestashopOrder(): ?array
+    {
+        return $this->getPrestashopOrders() ? $this->getPrestashopOrders()[0] : null;
+    }
+
+    public static function getOrderDelay(array $prestashopOrder): ?int
+    {
+        $now = new DateTime();
+        $max_shipment_date = new DateTime($prestashopOrder['max_shipment_date']);
+
+        if ($max_shipment_date->getTimestamp() > 0) {
+            if($now < $max_shipment_date) {
+                $diff = $now->diff($max_shipment_date);
+                $days_diff = $diff->format('%a');
+                return (int)$days_diff;
+            }
+            else {
+                return 0; // Deadline exceeded
+            }
+        }
+
+        return null;
     }
 
     public function tickets(): HasMany
