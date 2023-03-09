@@ -146,7 +146,7 @@ class TicketController extends AbstractController
                 'ticket-user_id'   => ['required','integer', 'exists:App\Models\User\User,id'],
                 'ticket-deadline'  => ['required','date'],
                 'ticket-customer_email' => ['nullable','string'],
-                'ticket-delivery_date' => ['date']
+                'ticket-delivery_date' => ['nullable', 'date'],
             ]);
             $ticket->state = $request->input('ticket-state');
             $ticket->priority = $request->input('ticket-priority');
