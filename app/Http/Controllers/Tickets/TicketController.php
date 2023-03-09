@@ -126,9 +126,7 @@ class TicketController extends AbstractController
 
     public function get_external_infos(Ticket $ticket): View
     {
-        $prestashopGateway = new PrestashopGateway();
-        $externalOrderInfo = $prestashopGateway->getOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->ext_name);
-
+        $externalOrderInfo = $ticket->order->getPrestashopOrders();
         return view('tickets.parts.external_order_info')
             ->with('orders', $externalOrderInfo);
     }

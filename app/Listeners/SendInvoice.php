@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
-use App\Enums\Ticket\TicketStateEnum;
 use App\Events\NewMessage;
 use App\Helpers\PrestashopGateway;
 use App\Jobs\SendMessage\AbstractSendMessage;
@@ -69,11 +68,7 @@ class SendInvoice extends AbstractNewMessageListener
         $crmOrder = $this->message->thread->ticket->order;
 
         // Call the Prestashop API to get orders data
-        $prestashopOrders = $this->prestashopGateway->getOrderInfo(
-            $crmOrder->channel_order_number,
-            $crmOrder->channel->ext_name,
-        );
-
+        $prestashopOrders = $crmOrder->getPrestashopOrders();
         if (!$prestashopOrders)
             return null;
 
