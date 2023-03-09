@@ -29,7 +29,7 @@ class Order extends Model
         'updated_at'
     ];
 
-    protected ?array $_prestashopOrders;
+    protected ?array $_prestashopOrders = null;
 
     /**
      * @param string $orderId
