@@ -10,6 +10,7 @@ use Cnsi\Logger\Logger;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 
 class RakutenSendMessage extends AbstractSendMessage
 {
@@ -30,7 +31,7 @@ class RakutenSendMessage extends AbstractSendMessage
         if (env('APP_ENV') == 'local')
             if($this->message->thread->channel_thread_number != '868826680')
                 return;
-                
+
         // Load channel
         $this->channel = Channel::getByName(ChannelEnum::RAKUTEN_COM);
         $this->logger = new Logger('send_message/'
@@ -49,15 +50,17 @@ class RakutenSendMessage extends AbstractSendMessage
         $this->logger->info('Init api');
         $client = self::initApiClient();
 
-        $response = $client->request(
-            'POST', $this->getCredentials()['host'] . '/' . self::PAGE
-            . '?action='    . self::ACTION
-            . '&itemid='    . $threadNumber
-            . '&content='   . $this->prepareMessageForRakuten($this->message->content)
-            . '&login='     . env('RAKUTEN_LOGIN')
-            . '&pwd='        . env('RAKUTEN_PASSWORD')
-            . '&version='   . self::VERSION
-        );
+        $url = $this->getCredentials()['host'] . '/' . self::PAGE;
+        $response = $client->post($url, [
+            RequestOptions::QUERY => [
+                'action' => self::ACTION,
+                'itemid' => $threadNumber,
+                'content' => $this->prepareMessageForRakuten($this->message->content),
+                'login' => env('RAKUTEN_LOGIN'),
+                'pwd' => env('RAKUTEN_PASSWORD'),
+                'version' => self::VERSION,
+            ],
+        ]);
 
         if($response->getStatusCode() != '200')
             throw new Exception('contactuseraboutitem api request gone bad');
@@ -88,7 +91,8 @@ class RakutenSendMessage extends AbstractSendMessage
 
     private function prepareMessageForRakuten($message): string
     {
-        $message = html_entity_decode(strip_tags(trim($message)), ENT_NOQUOTES, "ISO-8859-15");
+        //Charset must be is Iso, not UTF-8. Html codes are not authorized.
+        $message =  mb_convert_encoding($message, 'ISO-8859-1');
         $contentLen = strlen($message);
         if ($contentLen > self::MESSAGE_LIMIT) {
             $message = substr($message, 0, self::MESSAGE_LIMIT);
