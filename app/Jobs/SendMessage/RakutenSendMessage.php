@@ -91,6 +91,7 @@ class RakutenSendMessage extends AbstractSendMessage
 
     private function prepareMessageForRakuten($message): string
     {
+        //Charset must be is Iso, not UTF-8. Html codes are not authorized.
         $message =  mb_convert_encoding($message, 'ISO-8859-1');
         $contentLen = strlen($message);
         if ($contentLen > self::MESSAGE_LIMIT) {

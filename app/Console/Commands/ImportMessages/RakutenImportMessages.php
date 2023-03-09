@@ -78,7 +78,7 @@ class RakutenImportMessages extends AbstractImportMessages
             ],
         );
 
-//        NewMessage::dispatch($message);
+        NewMessage::dispatch($message);
     }
 
     /**
