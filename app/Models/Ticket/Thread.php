@@ -190,11 +190,12 @@ class Thread extends Model
     {
         $numberOfUnreadMessages = 0;
         $queryMessages = Message::query()->where('thread_id', $this->id)->orderBy('created_at', "DESC")->get();
+        /** @var Message $queryMessage */
         foreach ($queryMessages as $queryMessage) {
-            if ($queryMessage['author_type'] === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) {
-                break;
-            } else {
+            if ($queryMessage->isExternal()) {
                 $numberOfUnreadMessages += 1;
+            } else {
+                break;
             }
         }
     return $numberOfUnreadMessages;
