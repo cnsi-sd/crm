@@ -11,6 +11,8 @@ enum MessageVariable: string
     case NOM_CLIENT = 'Nom cient';
     case URL_SUIVI = 'URL Suivi';
     case DELAI_COMMANDE = 'Délai commande';
+    case MARKETPLACE = 'Marketplace';
+    case NUM_CMD_MP = 'Numéro commande MP';
 
     case SIGNATURE_BOT = 'Signature bot';
 
@@ -35,7 +37,8 @@ enum MessageVariable: string
 
     public function getValue(Message $message): string
     {
-        $extOrder = $message->thread->ticket->order->getFirstPrestashopOrder();
+        $order = $message->thread->ticket->order;
+        $extOrder = $order->getFirstPrestashopOrder();
 
         return match($this)
         {
@@ -43,6 +46,8 @@ enum MessageVariable: string
             MessageVariable::NOM_CLIENT => $extOrder['invoice_address']['lastname'],
             MessageVariable::URL_SUIVI => $extOrder['shipping']['url'],
             MessageVariable::DELAI_COMMANDE => Order::getOrderDelay($extOrder),
+            MessageVariable::MARKETPLACE => ucfirst($order->channel->name),
+            MessageVariable::NUM_CMD_MP => $order->channel_order_number,
             MessageVariable::SIGNATURE_BOT => 'Olympe',
         };
     }
