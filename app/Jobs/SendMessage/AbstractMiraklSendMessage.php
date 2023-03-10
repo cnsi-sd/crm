@@ -16,7 +16,7 @@ abstract class AbstractMiraklSendMessage extends AbstractSendMessage
 
     abstract protected function getCredentials(): array;
 
-    public function handle(): void
+    public function sendMessage(): void
     {
     // If we are in local environment, we only can send messages to a test order
         if (env('APP_ENV') == 'local')

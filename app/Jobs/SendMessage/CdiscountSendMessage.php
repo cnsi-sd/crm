@@ -24,7 +24,7 @@ class CdiscountSendMessage extends AbstractSendMessage
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function handle(): void
+    public function sendMessage(): void
     {
         $client = new ClientCdiscount(env('CDISCOUNT_USERNAME'), env('CDISCOUNT_PASSWORD'));
         $discussion = new DiscussionsApi($client, env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));

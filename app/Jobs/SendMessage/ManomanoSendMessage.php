@@ -16,7 +16,7 @@ class ManomanoSendMessage extends AbstractSendMessage
     /**
      * @throws Exception
      */
-    public function handle(): void
+    public function sendMessage(): void
     {
         // Load channel
         $this->channel = Channel::getByName(ChannelEnum::MANOMANO_COM);

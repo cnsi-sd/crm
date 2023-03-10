@@ -60,17 +60,5 @@ class Message extends Model
         $threadMessages = $this->thread->messages;
         return $threadMessages->count() === 1 && $threadMessages->first()->id === $this->id;
     }
-
-    public function save(array $options = [])
-    {
-        // Replace variables by values
-        foreach(MessageVariable::cases() as $variable) {
-            if(str_contains($this->content, $variable->templateVar())) {
-                $this->content = str_replace($variable->templateVar(), $variable->getValue($this), $this->content);
-            }
-        }
-
-        return parent::save($options);
-    }
 }
 
