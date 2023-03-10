@@ -7,16 +7,16 @@ use App\Models\Ticket\Message;
 
 enum MessageVariable
 {
-    case EXT_ORDER_CUSTOMER_FIRSTNAME;
-    case EXT_ORDER_CUSTOMER_LASTNAME;
-    case EXT_ORDER_TRACKING_URL;
-    case EXT_ORDER_DELAY;
+    case PRENOM_CLIENT;
+    case NOM_CLIENT;
+    case URL_SUIVI;
+    case DELAI_COMMANDE;
 
-    case BOT_NAME;
+    case SIGNATURE_BOT;
 
     public function templateVar(): string
     {
-        return '{{' . $this->name . '}}';
+        return '{' . $this->name . '}';
     }
 
     public function getValue(Message $message): string
@@ -25,11 +25,11 @@ enum MessageVariable
 
         return match($this)
         {
-            MessageVariable::EXT_ORDER_CUSTOMER_FIRSTNAME => $extOrder['invoice_address']['firstname'],
-            MessageVariable::EXT_ORDER_CUSTOMER_LASTNAME => $extOrder['invoice_address']['lastname'],
-            MessageVariable::EXT_ORDER_TRACKING_URL => $extOrder['shipping']['url'],
-            MessageVariable::EXT_ORDER_DELAY => Order::getOrderDelay($extOrder),
-            MessageVariable::BOT_NAME => 'Olympe',
+            MessageVariable::PRENOM_CLIENT => $extOrder['invoice_address']['firstname'],
+            MessageVariable::NOM_CLIENT => $extOrder['invoice_address']['lastname'],
+            MessageVariable::URL_SUIVI => $extOrder['shipping']['url'],
+            MessageVariable::DELAI_COMMANDE => Order::getOrderDelay($extOrder),
+            MessageVariable::SIGNATURE_BOT => 'Olympe',
         };
     }
 }
