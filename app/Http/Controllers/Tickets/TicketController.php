@@ -135,7 +135,7 @@ class TicketController extends AbstractController
     /**
      * @throws \ReflectionException
      */
-    public function ticket(Request $request, Ticket $ticket, Thread $thread): View
+    public function ticket(Request $request, Ticket $ticket, Thread $thread): View|RedirectResponse
     {
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
@@ -188,6 +188,7 @@ class TicketController extends AbstractController
                 ]);
             }
             Alert::toastSuccess(__('app.ticket.saved'));
+            return redirect()->back();
         }
 
         if($thread->ticket->id !== $ticket->id)
