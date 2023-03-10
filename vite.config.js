@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import laravel from 'laravel-vite-plugin';
+
 
 export default defineConfig({
     plugins: [
@@ -13,9 +15,18 @@ export default defineConfig({
                 'resources/js/axios.js',
                 'resources/scss/app.scss',
                 'resources/scss/icons.scss',
-                'resources/js/tags.js'
+                'resources/js/tags.js',
+                'resources/js/tinymce.js',
             ],
             refresh: true,
         }),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: 'vendor/tinymce/tinymce',
+                    dest: ''
+                }
+            ]
+        })
     ],
 });

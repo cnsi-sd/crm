@@ -25,7 +25,7 @@ class RakutenSendMessage extends AbstractSendMessage
      * @throws GuzzleException
      * @throws Exception
      */
-    public function handle(): void
+    public function sendMessage(): void
     {
         // If we are in local environment, we only can send messages to a test order
         if (env('APP_ENV') == 'local')
