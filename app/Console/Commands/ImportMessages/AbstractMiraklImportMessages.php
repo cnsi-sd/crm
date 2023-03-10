@@ -4,7 +4,7 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
-use App\Events\NewMessage;
+use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
@@ -170,7 +170,8 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             ]
         );
 
-        NewMessage::dispatch($message);
+        // Dispatch the job that will try to answer automatically to this new imported
+        AnswerToNewMessage::dispatch($message);
     }
 
     /**
