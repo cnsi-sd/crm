@@ -1,24 +1,18 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Jobs\Bot\Answers;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
-use App\Events\NewMessage;
-use App\Helpers\PrestashopGateway;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
-use DateTime;
 use Illuminate\Support\Str;
 
-class SendShippingInformation extends AbstractNewMessageListener
+class SendShippingInformation extends AbstractAnswer
 {
-    public function handle(NewMessage $event): ?bool
+    public function handle(): bool
     {
-        $this->event = $event;
-        $this->message = $event->getMessage();
-
         if (!$this->canBeProcessed())
             return self::SKIP;
 
