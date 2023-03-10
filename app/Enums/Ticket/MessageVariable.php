@@ -7,8 +7,8 @@ use App\Models\Ticket\Message;
 
 enum MessageVariable: string
 {
-    case PRENOM_CLIENT = 'Prénom cient';
-    case NOM_CLIENT = 'Nom cient';
+    case PRENOM_CLIENT = 'Prénom client';
+    case NOM_CLIENT = 'Nom client';
     case URL_SUIVI = 'URL Suivi';
     case DELAI_COMMANDE = 'Délai commande';
     case MARKETPLACE = 'Marketplace';
