@@ -2,7 +2,6 @@
 
 namespace App\Models\Ticket;
 
-use App\Enums\Ticket\MessageVariable;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Models\User\User;
 use DateTime;
