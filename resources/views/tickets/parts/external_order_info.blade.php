@@ -36,7 +36,11 @@
                     <div class="row">
                         <div class="col">{{ __('app.order.tracking') }} :</div>
                         <div class="col text-truncate">
-                            <a href="{{ $order['shipping']['url'] }}" target="_blank">{{ $order['shipping']['tracking_number'] }}</a>
+                            @if($order['shipping']['url'])
+                                <a href="{{ $order['shipping']['url'] }}" target="_blank">{{ $order['shipping']['tracking_number'] }}</a>
+                            @else
+                               {{ $order['shipping']['tracking_number'] }}
+                            @endif
                         </div>
                     </div>
                     <div class="row">

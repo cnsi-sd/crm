@@ -6,6 +6,7 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Helpers\PrestashopGateway;
+use App\Helpers\TinyMCE;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Tags\Tag;
@@ -126,9 +127,7 @@ class TicketController extends AbstractController
 
     public function get_external_infos(Ticket $ticket): View
     {
-        $prestashopGateway = new PrestashopGateway();
-        $externalOrderInfo = $prestashopGateway->getOrderInfo($ticket->order->channel_order_number, $ticket->order->channel->ext_name);
-
+        $externalOrderInfo = $ticket->order->getPrestashopOrders();
         return view('tickets.parts.external_order_info')
             ->with('orders', $externalOrderInfo);
     }
@@ -136,7 +135,7 @@ class TicketController extends AbstractController
     /**
      * @throws \ReflectionException
      */
-    public function ticket(Request $request, Ticket $ticket, Thread $thread): View
+    public function ticket(Request $request, Ticket $ticket, Thread $thread): View|RedirectResponse
     {
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
@@ -148,7 +147,7 @@ class TicketController extends AbstractController
                 'ticket-user_id'   => ['required','integer', 'exists:App\Models\User\User,id'],
                 'ticket-deadline'  => ['required','date'],
                 'ticket-customer_email' => ['nullable','string'],
-                'ticket-delivery_date' => ['date']
+                'ticket-delivery_date' => ['nullable', 'date'],
             ]);
             $ticket->state = $request->input('ticket-state');
             $ticket->priority = $request->input('ticket-priority');
@@ -163,7 +162,7 @@ class TicketController extends AbstractController
             $thread->revival_start_date = $request->input('revival-delivery_date') . ' 09:00:00';
             $thread->save();
 
-            if($request->input('ticket-thread-messages-content')) {
+            if($messageContent = $request->input('ticket-thread-messages-content')) {
                 $request->validate([
                     'ticket-thread-messages-content'     => ['required','string'],
                 ]);
@@ -171,7 +170,7 @@ class TicketController extends AbstractController
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
                     'author_type' => TicketMessageAuthorTypeEnum::ADMIN,
-                    'content' => $request->input('ticket-thread-messages-content'),
+                    'content' => TinyMCE::toText($messageContent),
                 ]);
 
                 AbstractSendMessage::dispatchMessage($message);
@@ -189,6 +188,7 @@ class TicketController extends AbstractController
                 ]);
             }
             Alert::toastSuccess(__('app.ticket.saved'));
+            return redirect()->back();
         }
 
         if($thread->ticket->id !== $ticket->id)

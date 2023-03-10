@@ -31,13 +31,7 @@
                                 <label for="name">
                                     {{__('app.defaultAnswer.content')}}
                                 </label>
-                                <textarea
-                                    class="form-control"
-                                    id="content"
-                                    name="content"
-                                    value=""
-                                    rows="5"
-                                >{{ old('content', $defaultAnswer->content) }}</textarea>
+                                <textarea id="message_to_customer" name="content">{{ \App\Helpers\TinyMCE::toHtml(old('content', $defaultAnswer->content)) }}</textarea>
                             </div>
 
                         </div>
@@ -78,4 +72,10 @@
             </button>
         </div>
     </form>
+@endsection
+
+@section('script-bottom')
+    {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
+    <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/tinymce.js') }}"></script>
 @endsection

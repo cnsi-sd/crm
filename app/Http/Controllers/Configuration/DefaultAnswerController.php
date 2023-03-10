@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
+use App\Helpers\TinyMCE;
 use App\Http\Controllers\AbstractController;
 use App\Models\Channel\DefaultAnswer;
 use Illuminate\Http\RedirectResponse;
@@ -73,7 +74,7 @@ class DefaultAnswerController extends AbstractController
 
         // Set name, content
         $defaultAnswer->name = $request->input('name');
-        $defaultAnswer->content = $request->input('content');
+        $defaultAnswer->content = TinyMCE::toText($request->input('content'));
 
         // Save
         $defaultAnswer->save();

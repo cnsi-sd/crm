@@ -137,7 +137,7 @@
                         <div class="tab-pane fade show active" role="tabpanel" tabindex="0">
                             <div class="card">
                                 <div class="card-body">
-                                    <textarea name="ticket-thread-messages-content" class="form-control" rows="15"></textarea>
+                                    <textarea id="message_to_customer" name="ticket-thread-messages-content"></textarea>
                                     <div class="mt-2 text-end">
                                         <button type="submit" class="btn btn-outline-primary">
                                             {{ __('app.send_message') }}
@@ -156,12 +156,18 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('script-bottom')
     {!! \App\Helpers\JS::define('url_show_tags', route('ajaxShowTags')) !!}
     {!! \App\Helpers\JS::define('url_add_tag_list', route('addTagList')) !!}
     {!! \App\Helpers\JS::define('url_save_tag_on_ticketThread', route('saveTagOnticketThread')) !!}
     {!! \App\Helpers\JS::define('url_delete_tagList', route('deleteTagList')) !!}
     {!! \App\Helpers\JS::define('url_delete_TagList_On_Thread', route('deleteTagListOnThread')) !!}
-@endsection
-@section('script-bottom')
+
+    {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
+    <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/tinymce.js') }}"></script>
+
     <script src="{{ Vite::asset('resources/js/tickets/ticket.js') }}"></script>
 @endsection

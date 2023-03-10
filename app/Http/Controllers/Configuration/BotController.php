@@ -52,6 +52,7 @@ class BotController
             setting(['bot.shipping_information.in_preparation_answer_id' => $request->input('in_preparation_answer_id')]);
             setting(['bot.shipping_information.in_preparation_with_delay_answer_id' => $request->input('in_preparation_with_delay_answer_id')]);
             setting(['bot.shipping_information.fulfillment_answer_id' => $request->input('fulfillment_answer_id')]);
+            setting(['bot.shipping_information.late_order_tag_id' => $request->input('late_order_tag_id')]);
             setting()->save();
 
             Alert::toastSuccess(__('app.bot.saved'));

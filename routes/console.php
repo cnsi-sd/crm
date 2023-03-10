@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Artisan;
 | simple approach to interacting with each command's IO methods.
 |
 */
+Artisan::command('testa', function () {
+    $message = \App\Models\Ticket\Message::findOrFail(43);
+    \App\Events\NewMessage::dispatch($message);
+});
 
 Artisan::command('inspire', function () {
     $role = new App\Models\User\Role();

@@ -22,7 +22,6 @@ class SendAcknowledgement extends AbstractNewMessageListener
             return self::SKIP;
 
         $this->sendAcknowledgementAnswer();
-        $this->message->thread->ticket->close();
 
         return self::STOP_PROPAGATION;
     }

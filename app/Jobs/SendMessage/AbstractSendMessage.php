@@ -3,6 +3,7 @@
 namespace App\Jobs\SendMessage;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\Ticket\MessageVariable;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Message;
 use Exception;
@@ -20,18 +21,37 @@ abstract class AbstractSendMessage implements ShouldQueue
     protected Channel $channel;
     protected string $testOrder;
 
+    abstract protected function sendMessage(): void;
+
     public function __construct(Message $message)
     {
         $this->message = $message;
     }
+
+    final public function handle(): void
+    {
+        $this->replaceVariablesInMessages();
+        $this->sendMessage();
+    }
+
+    private function replaceVariablesInMessages()
+    {
+        // Replace variables by values
+        foreach(MessageVariable::cases() as $variable) {
+            if(str_contains($this->message->content, $variable->templateVar())) {
+                $this->message->content = str_replace($variable->templateVar(), $variable->getValue($this->message), $this->message->content);
+            }
+        }
+
+        $this->message->save();
+    }
+
     protected function translateContent($content): string
     {
         $content = str_replace(['<br>', '<br/>', '<br />'], "\n", $content);
         $content = html_entity_decode($content);
         return $content;
     }
-
-    abstract public function handle(): void;
 
     /**
      * @throws Exception
@@ -53,6 +73,7 @@ abstract class AbstractSendMessage implements ShouldQueue
             ChannelEnum::CDISCOUNT_FR       => CdiscountSendMessage::dispatch($message),
             ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
             ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
+            ChannelEnum::MANOMANO_COM       => ManomanoSendMessage::dispatch($message),
             ChannelEnum::RAKUTEN_COM        => RakutenSendMessage::dispatch($message),
             default => throw new Exception('Channel given does not exists.'),
         };
