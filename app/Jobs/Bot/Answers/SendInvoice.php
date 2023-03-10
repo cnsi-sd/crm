@@ -1,24 +1,21 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Jobs\Bot\Answers;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
-use App\Events\NewMessage;
 use App\Helpers\PrestashopGateway;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 
-class SendInvoice extends AbstractNewMessageListener
+class SendInvoice extends AbstractAnswer
 {
     private PrestashopGateway $prestashopGateway;
     private DefaultAnswer $answerInvoiceFound;
     private DefaultAnswer $answerOrderNotShipped;
 
-    public function handle(NewMessage $event): ?bool
+    public function handle(): bool
     {
-        $this->event = $event;
-        $this->message = $event->getMessage();
         $this->prestashopGateway = new PrestashopGateway();
         $this->answerInvoiceFound = DefaultAnswer::findOrFail(setting('bot.invoice.found_answer_id'));
         $this->answerOrderNotShipped = DefaultAnswer::findOrFail(setting('bot.invoice.not_shipped_answer_id'));

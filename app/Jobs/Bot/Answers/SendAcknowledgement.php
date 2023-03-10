@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Jobs\Bot\Answers;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
-use App\Events\NewMessage;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 
-class SendAcknowledgement extends AbstractNewMessageListener
+class SendAcknowledgement extends AbstractAnswer
 {
     private DefaultAnswer $answerAcknowledgement;
 
-    public function handle(NewMessage $event): ?bool
+    public function handle(): bool
     {
-        $this->event = $event;
-        $this->message = $event->getMessage();
         $this->answerAcknowledgement = DefaultAnswer::findOrFail(setting('bot.acknowledgment.answer_id'));
 
         if(!$this->canBeProcessed())
