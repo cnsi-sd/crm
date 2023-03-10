@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import laravel from 'laravel-vite-plugin';
+
 
 export default defineConfig({
     plugins: [
@@ -18,5 +20,13 @@ export default defineConfig({
             ],
             refresh: true,
         }),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: 'vendor/tinymce/tinymce',
+                    dest: ''
+                }
+            ]
+        })
     ],
 });

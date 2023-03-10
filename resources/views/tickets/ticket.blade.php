@@ -166,7 +166,7 @@
     {!! \App\Helpers\JS::define('url_delete_TagList_On_Thread', route('deleteTagListOnThread')) !!}
 
     {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
-    <script src="{{ asset('assets/js/tinymce/js/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>
     <script src="{{ Vite::asset('resources/js/tinymce.js') }}"></script>
 
     <script src="{{ Vite::asset('resources/js/tickets/ticket.js') }}"></script>
