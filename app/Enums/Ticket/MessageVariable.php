@@ -14,6 +14,7 @@ enum MessageVariable: string
     case MARKETPLACE = 'Marketplace';
     case NUM_CMD_MP = 'Numéro commande MP';
 
+    case SIGNATURE_ADMIN = 'Signature admin';
     case SIGNATURE_BOT = 'Signature bot';
 
     public function templateVar(): string
@@ -48,6 +49,7 @@ enum MessageVariable: string
             MessageVariable::DELAI_COMMANDE => Order::getOrderDelay($extOrder),
             MessageVariable::MARKETPLACE => ucfirst($order->channel->name),
             MessageVariable::NUM_CMD_MP => $order->channel_order_number,
+            MessageVariable::SIGNATURE_ADMIN => $message->user->name,
             MessageVariable::SIGNATURE_BOT => 'Olympe',
         };
     }
