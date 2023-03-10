@@ -6,8 +6,8 @@ use App\Console\Commands\ImportMessages\Beautifier\AmazonBeautifierMail;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
-use App\Events\NewMessage;
 use App\Helpers\Stringer;
+use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
@@ -16,8 +16,6 @@ use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use PHPHtmlParser\Dom;
-use PhpImap\Exceptions\ConnectionException;
 use PhpImap\Exceptions\InvalidParameterException;
 use PhpImap\Mailbox;
 
@@ -206,6 +204,7 @@ class AmazonImportMessage extends AbstractImportMessages
             ],
         );
 
-        NewMessage::dispatch($message);
+        // Dispatch the job that will try to answer automatically to this new imported
+        AnswerToNewMessage::dispatch($message);
     }
 }
