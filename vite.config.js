@@ -13,7 +13,8 @@ export default defineConfig({
                 'resources/js/axios.js',
                 'resources/scss/app.scss',
                 'resources/scss/icons.scss',
-                'resources/js/tags.js'
+                'resources/js/tags.js',
+                'resources/js/tinymce.js',
             ],
             refresh: true,
         }),
