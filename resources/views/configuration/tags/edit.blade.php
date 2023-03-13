@@ -44,7 +44,7 @@
                                         name="background_color"
                                         class="form-control form-control-sm"
                                         min="1"
-                                        value="{{ old('name', $tags->backgroung_color ?? '') }}"
+                                        value="{{ old('name', $tags->background_color ?? '#000000') }}"
                                         required
                                     />
                                 </div>
@@ -62,7 +62,7 @@
                                         name="text_color"
                                         min="1"
                                         class="form-control form-control-sm"
-                                        value="{{ old('name', $tags->text_color ?? '') }}"
+                                        value="{{ old('name', $tags->text_color ?? '#ffffff') }}"
                                         required
                                     />
                                 </div>
@@ -79,7 +79,6 @@
                                         id="select-mp"
                                         class="form-control form-control-sm form-select no-sort"
                                         multiple
-                                        required
                                     >
                                         @foreach(\App\Models\Channel\Channel::all() as $channel)
                                             <option value="{{$channel->id}}" @selected($tags->isChannelSelected($channel))>

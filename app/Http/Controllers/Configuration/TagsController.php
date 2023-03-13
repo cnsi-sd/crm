@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Configuration;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\AbstractController;
+use App\Models\Channel\Channel;
 use App\Models\Tags\TagList;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
@@ -56,7 +57,16 @@ class TagsController extends AbstractController
         $tags->background_color = $request->input('background_color');
         $tags->save();
 
-        $tags->channels()->sync($request->input('channel'));
+        //$tags->channels()->sync($request->input('channel'));
+        if(array_key_exists('channel',$request->toArray())){
+            $channelSelected = $request->toArray()['channel'];
+            $tags->channels()->sync($channelSelected);
+        } else {
+            foreach (Channel::all() as $channel){
+                $allChannelId[] = $channel->id;
+            }
+            $tags->channels()->sync($allChannelId);
+        }
     }
 
     public function delete(Request $request, ?Tag $tags)
