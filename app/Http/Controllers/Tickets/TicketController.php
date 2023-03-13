@@ -70,8 +70,7 @@ class TicketController extends AbstractController
     public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number)
     {
         $ticket = null;
-        $channel_id = Channel::query()
-            ->where('ext_name', $channel)->first()->id;
+        $channel_id = Channel::query()->where('ext_names', 'LIKE', '%' . $channel . '%')->first()->id;
 
         if ($channel_id) {
             $order = Order::query()

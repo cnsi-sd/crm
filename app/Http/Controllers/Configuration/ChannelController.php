@@ -51,12 +51,12 @@ class ChannelController extends AbstractController
     {
         // Validate request
         $validation_rules = [
-            'ext_name'          => 'required',
+            'ext_names' => ['required', 'array'],
         ];
         $request->validate($validation_rules);
 
-        // Set ext_name
-        $channel->ext_name = $request->input('ext_name');
+        // Set ext_names
+        $channel->ext_names = $request->input('ext_names');
 
         // Enregistrement
         $channel->save();
