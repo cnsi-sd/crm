@@ -92,6 +92,18 @@ abstract class Permission
                     ],
                 ],
             ],
+            [
+                'title' => __('app.navbar.admin'),
+                'sub_sections' => [
+                    [
+                        'title' => trans_choice('app.configuration.channel', 2),
+                        'items' => [
+                            PermissionEnum::CHANNEL_READ,
+                            PermissionEnum::CHANNEL_EDIT,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

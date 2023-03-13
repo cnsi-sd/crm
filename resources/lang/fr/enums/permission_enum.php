@@ -14,4 +14,6 @@ return [
     'TAG_EDIT' => 'Modifier un tag',
     'BOT_CONFIG' => 'Configurer le bot',
     'VARIABLES_CONFIG' => 'Configurer les variables',
+    'CHANNEL_READ' => 'Consulter les canaux',
+    'CHANNEL_EDIT' => 'Éditer un canal',
 ];
