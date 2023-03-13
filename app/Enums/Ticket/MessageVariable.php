@@ -56,9 +56,25 @@ enum MessageVariable: string
             self::MARKETPLACE => ucfirst($order->channel->name),
             self::NUM_CMD_MP => $order->channel_order_number,
             self::SIGNATURE_ADMIN => $message->user->name,
-            self::SIGNATURE_BOT => 'Olympe',
-            self::NOM_BOUTIQUE => 'Icoza',
-            self::TELEPHONE_BOUTIQUE => '0 971 00 60 44',
+            self::SIGNATURE_BOT, self::NOM_BOUTIQUE, self::TELEPHONE_BOUTIQUE  => $this->getSettingValue(),
         };
+    }
+
+    public function isConfigurable(): bool
+    {
+        return match($this) {
+            self::SIGNATURE_BOT, self::NOM_BOUTIQUE, self::TELEPHONE_BOUTIQUE => true,
+            default => false,
+        };
+    }
+
+    public function getSettingKey(): string
+    {
+        return 'variables.' . strtolower($this->name);
+    }
+
+    public function getSettingValue(): string
+    {
+        return setting($this->getSettingKey(), '');
     }
 }

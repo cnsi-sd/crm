@@ -5,6 +5,7 @@ use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\Configuration\TagsController;
+use App\Http\Controllers\Configuration\VariableController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
@@ -87,6 +88,7 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice');
             Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information');
         });
+        Route::match(['get', 'post'], 'variables', [VariableController::class, 'config'])->name('variables_config');
     });
     // CALL AJAX
     Route::get('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');

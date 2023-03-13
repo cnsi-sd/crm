@@ -69,6 +69,11 @@ abstract class Menu
                         'route' => route('bot_home'),
                         'ref' => 'bot',
                     ],
+                    [
+                        'text' => trans_choice('app.variable.variable', 2),
+                        'route' => route('variables_config'),
+                        'ref' => 'variables',
+                    ],
                 ]
             ],
             [
