@@ -79,7 +79,7 @@ class AmazonImportMessage extends AbstractImportMessages
                         $this->logger->info('--- start import email : '. $email->id);
                         $order   = Order::getOrder($mpOrder, $this->channel);
                         $ticket  = Ticket::getTicket($order, $this->channel);
-                        $thread  = Thread::getOrCreateThread($ticket, $mpOrder, $email->subject, '', $email->fromAddress);
+                        $thread  = Thread::getOrCreateThread($ticket, $mpOrder, $email->subject, $email->fromAddress);
 
                         $this->importMessageByThread($ticket, $thread, $email);
                     }
