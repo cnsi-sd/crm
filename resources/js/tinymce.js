@@ -17,7 +17,9 @@ $(function() {
 
             const getMatchedChars = function (pattern) {
                 return messageVariables.filter(function (char) {
-                    return char.text.toLowerCase().indexOf(pattern.toLowerCase()) !== -1;
+                    return char.text.toLowerCase().indexOf(pattern.toLowerCase()) !== -1
+                        || char.value.toLowerCase().indexOf(pattern.toLowerCase()) !== -1
+                        || char.templateVar.toLowerCase().indexOf(pattern.toLowerCase()) !== -1
                 });
             };
 
@@ -32,7 +34,7 @@ $(function() {
                         var results = getMatchedChars(pattern).map(function (char) {
                             return {
                                 type: 'cardmenuitem',
-                                value: char.value,
+                                value: char.templateVar,
                                 label: char.text,
                                 items: [
                                     {

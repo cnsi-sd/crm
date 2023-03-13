@@ -4,6 +4,7 @@ namespace App\Enums\Ticket;
 
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
+use Exception;
 
 enum MessageVariable: string
 {
@@ -32,10 +33,11 @@ enum MessageVariable: string
     {
         $variables = [];
 
-        foreach(MessageVariable::cases() as $variable) {
+        foreach(MessageVariable::cases() as $var) {
             $variables[] = [
-                'text' => $variable->value,
-                'value' => $variable->templateVar(),
+                'text' => $var->value,
+                'templateVar' => $var->templateVar(),
+                'value' => $var->isConfigurable() ? $var->getSettingValue() : '',
             ];
         }
 
@@ -49,16 +51,46 @@ enum MessageVariable: string
 
         return match($this)
         {
-            MessageVariable::PRENOM_CLIENT => $extOrder['invoice_address']['firstname'],
-            MessageVariable::NOM_CLIENT => $extOrder['invoice_address']['lastname'],
-            MessageVariable::URL_SUIVI => $extOrder['shipping']['url'],
-            MessageVariable::DELAI_COMMANDE => Order::getOrderDelay($extOrder),
-            MessageVariable::MARKETPLACE => ucfirst($order->channel->name),
-            MessageVariable::NUM_CMD_MP => $order->channel_order_number,
-            MessageVariable::SIGNATURE_ADMIN => $message->user->name,
-            MessageVariable::SIGNATURE_BOT => 'Olympe',
-            self::NOM_BOUTIQUE => 'Icoza',
-            self::TELEPHONE_BOUTIQUE => '0 971 00 60 44',
+            self::PRENOM_CLIENT => $extOrder['invoice_address']['firstname'],
+            self::NOM_CLIENT => $extOrder['invoice_address']['lastname'],
+            self::URL_SUIVI => $extOrder['shipping']['url'],
+            self::DELAI_COMMANDE => Order::getOrderDelay($extOrder),
+            self::MARKETPLACE => ucfirst($order->channel->name),
+            self::NUM_CMD_MP => $order->channel_order_number,
+            self::SIGNATURE_ADMIN => $message->user->name,
+            self::SIGNATURE_BOT, self::NOM_BOUTIQUE, self::TELEPHONE_BOUTIQUE  => $this->getSettingValue(),
         };
+    }
+
+    public function isConfigurable(): bool
+    {
+        return match($this) {
+            self::SIGNATURE_BOT, self::NOM_BOUTIQUE, self::TELEPHONE_BOUTIQUE => true,
+            default => false,
+        };
+    }
+
+    public function getSettingKey(): string
+    {
+        $this->throwIfNotConfigurable();
+        return 'variables.' . strtolower($this->name);
+    }
+
+    public function getSettingValue(): string
+    {
+        $this->throwIfNotConfigurable();
+        return setting($this->getSettingKey(), '');
+    }
+
+    public function saveValue($value): void
+    {
+        $this->throwIfNotConfigurable();
+        setting([$this->getSettingKey() => $value]);
+        setting()->save();
+    }
+
+    protected function throwIfNotConfigurable(): void
+    {
+        throw_if(!$this->isConfigurable(), new Exception('Method allowed only for configurable variables'));
     }
 }

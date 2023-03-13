@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Enums\PermissionEnum;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
@@ -18,6 +19,7 @@ use App\Policies\Settings\Permissions\RolePolicy;
 use App\Policies\Settings\Permissions\UserPolicy;
 use App\Policies\Tickets\TicketPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -45,6 +47,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('bot_config', function (User $user) {
+            return $user->hasPermission(PermissionEnum::BOT_CONFIG);
+        });
+
+        Gate::define('variables_config', function (User $user) {
+            return $user->hasPermission(PermissionEnum::VARIABLES_CONFIG);
+        });
     }
 }

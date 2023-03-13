@@ -80,6 +80,18 @@ abstract class Permission
                     ],
                 ],
             ],
+            [
+                'title' => __('app.configuration.configuration'),
+                'sub_sections' => [
+                    [
+                        'title' => __('app.configuration.configuration'),
+                        'items' => [
+                            PermissionEnum::BOT_CONFIG,
+                            PermissionEnum::VARIABLES_CONFIG,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

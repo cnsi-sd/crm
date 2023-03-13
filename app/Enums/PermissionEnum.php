@@ -19,4 +19,6 @@ abstract class PermissionEnum extends AbstractEnum
     const CHANNEL_EDIT          = 'channel_edit';
     const TAG_EDIT              = 'tag_edit';
     const TAG_READ              = 'tag_read';
+    const BOT_CONFIG            = 'bot_config';
+    const VARIABLES_CONFIG      = 'variables_config';
 }

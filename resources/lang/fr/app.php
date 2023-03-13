@@ -186,6 +186,11 @@ return [
         ],
     ],
 
+    'variable' => [
+        'variable' => 'Variable|Variables',
+        'saved' => 'Variables enregistrées'
+    ],
+
     'defaultAnswer' => [
         'defaultAnswer' => 'Réponse par défaut|Réponses par défaut',
         'save' => 'Enregistrer la réponse',

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
+use App\Http\Controllers\AbstractController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class BotController
+class BotController extends AbstractController
 {
     public function home(): View
     {
