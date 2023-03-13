@@ -53,6 +53,9 @@ class SendInvoice extends AbstractAnswer
         if (!$this->message->isFirstMessageOnThread())
             return false;
 
+        if($this->message->hasBeenAnswered())
+            return false;
+
         if (!preg_match('/(facture)/i', $this->message->content, $matches))
             return false;
 

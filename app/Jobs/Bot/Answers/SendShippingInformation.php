@@ -66,6 +66,9 @@ class SendShippingInformation extends AbstractAnswer
         if (!$this->message->isFirstMessageOnThread())
             return false;
 
+        if($this->message->hasBeenAnswered())
+            return false;
+
         if (!$this->matchPatterns($this->message))
             return false;
 
