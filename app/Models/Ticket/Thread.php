@@ -190,19 +190,16 @@ class Thread extends Model
         return $lastMessageDate;
     }
 
-    public function getUnreadMessages()
+    public function getUnreadMessages(): int
     {
         $numberOfUnreadMessages = 0;
-        $queryMessages = Message::query()->where('thread_id', $this->id)->orderBy('created_at', "DESC")->get();
-        /** @var Message $queryMessage */
-        foreach ($queryMessages as $queryMessage) {
-            if ($queryMessage->isExternal()) {
+        foreach ($this->messages()->get() as $message) {
+            if ($message->isExternal()) {
                 $numberOfUnreadMessages += 1;
             } else {
                 break;
             }
         }
-    return $numberOfUnreadMessages;
+        return $numberOfUnreadMessages;
     }
-
 }
