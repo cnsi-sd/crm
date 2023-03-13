@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="customer-service-process" role="tabpanel" aria-labelledby="customer-service-process-tab">
-                            <iframe src="{{ \App\Helpers\Prestashop\SavProcessGateway::getUrl($ticket) }}" allowfullscreen="" width="100%" height="1000" frameborder="0"></iframe>
+                            <iframe src="{{ \App\Helpers\Prestashop\SavProcessGateway::getUrl($ticket) }}" allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div class="mt-2 text-end">
