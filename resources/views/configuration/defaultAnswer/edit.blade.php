@@ -49,7 +49,6 @@
                                 id="select-mp"
                                 class="form-control form-control-sm form-select"
                                 multiple
-                                required
                             >
                                 <option value="">-- {{trans_choice('app.defaultAnswer.select_channel', 1)}} --
                                 </option>
@@ -60,6 +59,10 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <label for="name">{{__('app.defaultAnswer.select_all_channel')}}
+
+                                <span class="required_field">*</span>
+                            </label>
                         </div>
                     </div>
                 </div>

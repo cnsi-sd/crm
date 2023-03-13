@@ -210,6 +210,7 @@ return [
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Canaux sélectionnés',
+        'select_all_channel' => 'Laissez le champs vide pour tout sélectionés',
         'message' => 'Message '
     ],
 

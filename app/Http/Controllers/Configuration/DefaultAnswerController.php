@@ -6,6 +6,7 @@ use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Helpers\TinyMCE;
 use App\Http\Controllers\AbstractController;
+use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -79,8 +80,15 @@ class DefaultAnswerController extends AbstractController
         // Save
         $defaultAnswer->save();
 
-        $channelSelected = $request->toArray()['channel'];
-        $defaultAnswer->channels()->sync($channelSelected);
+        if(array_key_exists('channel',$request->toArray())){
+            $channelSelected = $request->toArray()['channel'];
+            $defaultAnswer->channels()->sync($channelSelected);
+        } else {
+            foreach (Channel::all() as $channel){
+                $allChannelId[] = $channel->id;
+            }
+            $defaultAnswer->channels()->sync($allChannelId);
+        }
     }
 
     public function delete(Request $request, ?DefaultAnswer $defaultAnswer)
