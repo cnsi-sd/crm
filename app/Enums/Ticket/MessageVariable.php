@@ -7,6 +7,7 @@ use App\Models\Ticket\Message;
 
 enum MessageVariable: string
 {
+    // Order scope
     case PRENOM_CLIENT = 'Prénom client';
     case NOM_CLIENT = 'Nom client';
     case URL_SUIVI = 'URL Suivi';
@@ -14,8 +15,13 @@ enum MessageVariable: string
     case MARKETPLACE = 'Marketplace';
     case NUM_CMD_MP = 'Numéro commande MP';
 
+    // User scope
     case SIGNATURE_ADMIN = 'Signature admin';
+
+    // Global scope
     case SIGNATURE_BOT = 'Signature bot';
+    case NOM_BOUTIQUE = 'Nom boutique';
+    case TELEPHONE_BOUTIQUE = 'Téléphone boutique';
 
     public function templateVar(): string
     {
@@ -51,6 +57,8 @@ enum MessageVariable: string
             MessageVariable::NUM_CMD_MP => $order->channel_order_number,
             MessageVariable::SIGNATURE_ADMIN => $message->user->name,
             MessageVariable::SIGNATURE_BOT => 'Olympe',
+            self::NOM_BOUTIQUE => 'Icoza',
+            self::TELEPHONE_BOUTIQUE => '0 971 00 60 44',
         };
     }
 }
