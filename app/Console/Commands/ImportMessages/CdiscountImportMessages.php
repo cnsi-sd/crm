@@ -105,7 +105,7 @@ class CdiscountImportMessages extends AbstractImportMessages
                         "salesChannel" => $discu->getSalesChannel(),
                         "userId" => $discu->getCustomerId(),
                     ];
-                    $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), '', $channel_data);
+                    $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
 
                     $this->importMessageByThread($ticket, $thread, $messages);
                     DB::commit();

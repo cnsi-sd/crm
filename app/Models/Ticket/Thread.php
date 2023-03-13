@@ -61,10 +61,10 @@ class Thread extends Model
      * @param Ticket $ticket
      * @param string $channel_thread_number
      * @param string $name
-     * @param string $customer_issue
-     * @return Model|Builder|Thread
+     * @param array $channel_data
+     * @return Model|Thread
      */
-    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue, $channel_data = [] ): Model|Builder|Thread
+    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, $channel_data = [] ): Model|Thread
     {
         return Thread::query()
             ->select('ticket_threads.*')
@@ -78,7 +78,6 @@ class Thread extends Model
                 ],
                 [
                     'name' => $name,
-                    'customer_issue' => $customer_issue,
                     'channel_data' => json_encode($channel_data),
                 ],
             );

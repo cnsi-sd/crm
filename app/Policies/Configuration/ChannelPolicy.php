@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies\Configuration\Permission;
+namespace App\Policies\Configuration;
 
 use App\Enums\PermissionEnum;
 use App\Models\User\User;
