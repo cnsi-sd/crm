@@ -17,6 +17,7 @@ use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
+use App\Policies\Configuration\ConfigurationPolicy;
 use Illuminate\Support\Facades\Route;
 
 
@@ -83,12 +84,12 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tag::class);
         });
         Route::prefix('bot')->group(function () {
-            Route::match(['get', 'post'], '', [BotController::class, 'home'])->name('bot_home');
-            Route::match(['get', 'post'], 'acknowledgement', [BotController::class, 'acknowledgement'])->name('bot_acknowledgement');
-            Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice');
-            Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information');
+            Route::match(['get', 'post'], '', [BotController::class, 'home'])->name('bot_home')->can('bot_config');
+            Route::match(['get', 'post'], 'acknowledgement', [BotController::class, 'acknowledgement'])->name('bot_acknowledgement')->can('bot_config');
+            Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice')->can('bot_config');
+            Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information')->can('bot_config');
         });
-        Route::match(['get', 'post'], 'variables', [VariableController::class, 'config'])->name('variables_config');
+        Route::match(['get', 'post'], 'variables', [VariableController::class, 'config'])->name('variables_config')->can('variables_config');
     });
     // CALL AJAX
     Route::get('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');

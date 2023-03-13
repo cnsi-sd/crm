@@ -12,4 +12,6 @@ return [
     'TICKET_READ' => 'Consulter la liste des tickets',
     'TAG_READ' => 'Consulter les tags',
     'TAG_EDIT' => 'Modifier un tag',
+    'BOT_CONFIG' => 'Configurer le bot',
+    'VARIABLES_CONFIG' => 'Configurer les variables',
 ];
