@@ -2,7 +2,7 @@
 
 namespace App\Models\Channel;
 
-use App\Helpers\PrestashopGateway;
+use App\Helpers\Prestashop\CrmLinkGateway;
 use App\Models\Ticket\Ticket;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -53,8 +53,8 @@ class Order extends Model
     public function getPrestashopOrders(): ?array
     {
         if(!$this->_prestashopOrders) {
-            $prestashopGateway = new PrestashopGateway();
-            $this->_prestashopOrders = $prestashopGateway->getOrderInfo($this->channel_order_number, $this->channel->ext_name);
+            $prestashopGateway = new CrmLinkGateway();
+            $this->_prestashopOrders = $prestashopGateway->getOrderInfo($this->channel_order_number, $this->channel->ext_names);
         }
 
         return $this->_prestashopOrders;

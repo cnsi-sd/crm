@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="customer-service-process" role="tabpanel" aria-labelledby="customer-service-process-tab">
-                            <iframe src="{{ env('PRESTASHOP_URL') }}procedure-sav?mp_order={{$ticket->order->channel_order_number}}&amp;mp_name={{$ticket->channel->ext_name}}&amp;id_ticket={{$ticket->id}}&amp;admintoken={{ env('PRESTASHOP_CUSTOMER_SERVICE_TOKEN') }}" allowfullscreen="" width="100%" height="1000" frameborder="0"></iframe>
+                            <iframe src="{{ \App\Helpers\Prestashop\SavProcessGateway::getUrl($ticket) }}" allowfullscreen="" width="100%" height="1000" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div class="mt-2 text-end">

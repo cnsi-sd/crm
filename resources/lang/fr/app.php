@@ -250,7 +250,7 @@ return [
 
     'channel' => [
         'name' => 'Nom',
-        'ext_name' => 'Nom externe',
+        'ext_names' => 'Nom(s) externe(s)',
         'saved' => 'Canal enregistré',
         'edit' => 'Modifier un canal',
     ]
