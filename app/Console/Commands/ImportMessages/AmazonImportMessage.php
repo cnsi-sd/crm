@@ -4,14 +4,20 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Console\Commands\ImportMessages\Beautifier\AmazonBeautifierMail;
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
+use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\Stringer;
+use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
+use App\Models\Channel\Order;
+use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
-use PHPHtmlParser\Dom;
-use PhpImap\Exceptions\ConnectionException;
+use Illuminate\Support\Facades\DB;
 use PhpImap\Exceptions\InvalidParameterException;
+use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 
 class AmazonImportMessage extends AbstractImportMessages
@@ -22,7 +28,6 @@ class AmazonImportMessage extends AbstractImportMessages
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'amazon');
-        //$this->FROM_SHOP_TYPE = 'Seller';
         parent::__construct();
     }
 
@@ -48,18 +53,45 @@ class AmazonImportMessage extends AbstractImportMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
-                'SUBJECT' => 'Demande de renseignements',
                 'SINCE' => $from_date
             ]);
 
             $this->logger->info('--- Get Emails details');
-            foreach($this->getEmails($emailIds) as $emailId => $email){
-                $infoMail = $email->textHtml;
-                $message = AmazonBeautifierMail::getCustomerMessage($infoMail);
+            foreach(array_reverse($this->getEmails($emailIds)) as $emailId => $email) {
+                try {
+                    // check if is not a don't reply sender
+                    $doNotReply = str_contains($email->senderAddress, 'reply');
+                    if($doNotReply)
+                        continue;
+
+                    // Parse incomming mail
+                    $parseMail = $this->parseIncomingMail($email);
+                    if(!$parseMail)
+                        continue;
+
+                    $this->logger->info('Begin Transaction');
+                    DB::beginTransaction();
+
+                    $this->logger->info('Retrieve command number from email');
+                    $mpOrder = $this->showCommandNumber($email);
+
+                    if ($mpOrder && str_contains($email->fromAddress, '@marketplace.amazon.fr')) {
+                        $this->logger->info('--- start import email : '. $email->id);
+                        $order   = Order::getOrder($mpOrder, $this->channel);
+                        $ticket  = Ticket::getTicket($order, $this->channel);
+                        $thread  = Thread::getOrCreateThread($ticket, $mpOrder, $email->subject, $email->fromAddress);
+
+                        $this->importMessageByThread($ticket, $thread, $email);
+                    }
+                    $this->logger->info('--- end import email');
+                    DB::commit();
+                } catch (Exception $e) {
+                    $this->logger->error('An error has occurred. Rolling back.', $e);
+                    DB::rollBack();
+                    \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+                    return;
+                }
             }
-
-            $t = "kqdjfv";
-
         } catch (Exception $e){
             $this->logger->error('An error has occurred. Rolling back.', $e);
             \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
@@ -68,7 +100,7 @@ class AmazonImportMessage extends AbstractImportMessages
     protected function getCredentials(): array
     {
         return [
-            'API_URL'            => env('AMAZON_API_URL'),
+            'API_URL'            => env('AMAZON_MAIL_URL'),
             'API_USERNAME'       => env('AMAZON_USERNAME'),
             'API_PASSWORD'       => env('AMAZON_PASSWORD')
         ];
@@ -111,13 +143,100 @@ class AmazonImportMessage extends AbstractImportMessages
         foreach ($emailIds as $emailId) {
             $this->logger->info('--- Get Email : '. $emailId);
             $emails[$emailId] = $this->mailbox->getMail($emailId,false);
-            break;
         }
         return $emails;
     }
 
+    public function parseIncomingMail(IncomingMail $mail): bool
+    {
+        $patterns = array();
+        $patterns[] = array('pattern' => '#remboursementinitieacutepourlacommande#'); //Remboursement initié pour la commande <num_cmd>
+        $patterns[] = array('pattern' => '#actionrequise#'); //Action requise: ...
+        $patterns[] = array('pattern' => '#amazonfruneouplusieursdevosoffresamazononteacuteteacutesupprimeacuteesdelarecherche#'); // [Amazon.fr] Une ou plusieurs de vos offres Amazon ont été supprimées de la recherche
+        $patterns[] = array('pattern' => '#demandedrsquoautorisationderetourpourlacommande#'); //Demande d’autorisation de retour pour la commande
+        $patterns[] = array('pattern' => '#offredeacutesactiveacuteesenraisonduneerreurdeprixpotentielle#'); //Offre désactivées en raison d'une erreur de prix potentielle
+        $patterns[] = array('pattern' => '#votreemaila#'); // Votre e-mail à AUPEE
+        $patterns[] = array('pattern' => '#spam#'); // [SPAM]
+
+        $normalizedSubject = $this->normalizeSubject($mail->subject);
+
+        $canImport = true;
+        foreach ($patterns as $pattern) {
+            if (preg_match($pattern['pattern'], $normalizedSubject)) {
+                $canImport = false;
+            }
+        }
+        return $canImport;
+    }
+    /**
+     * Normalize subject with lower case and only a -> z chars
+     * @param string $subject
+     * @return string
+     */
+    public function normalizeSubject(string $subject): string
+    {
+        return Stringer::normalize($subject);
+    }
+
+    public function showCommandNumber($email): ?string
+    {
+        $pattern = '#(\d{3}-\d{7}-\d{7})#';
+        preg_match($pattern,$email->subject, $commandNumber);
+        if(isset($commandNumber[0])){
+            $this->logger->info('Amazon : orderId found from Subject '.$commandNumber[0]);
+            return $commandNumber[0];
+        }
+
+        preg_match($pattern, $email->textHtml, $commandNumber);
+        if (isset($commandNumber[0])){
+            $this->logger->info('Amazon : orderId found from Body '.$commandNumber[0]);
+            return $commandNumber[0];
+        }
+
+        return null;
+
+    }
+
+    /**
+     * @param Ticket $ticket
+     * @param Thread $thread
+     * @param $message
+     * @return void
+     * @throws Exception
+     */
+    private function importMessageByThread(Ticket $ticket, Thread $thread, $message): void
+    {
+        $imported_id = $message->id;
+        $this->logger->info('Check if this message is imported');
+        if (!$this->isMessagesImported($imported_id)) {
+            $this->logger->info('Convert api message to db message');
+            $this->convertApiResponseToMessage($ticket, $message, $thread);
+            $this->addImportedMessageChannelNumber($imported_id);
+        }
+    }
     protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread)
     {
-        // TODO: Implement convertApiResponseToMessage() method.
+        $this->logger->info('Retrieve message from email');
+        $infoMail = $message_api_api->textHtml;
+        $message = AmazonBeautifierMail::getCustomerMessage($infoMail);
+
+        $this->logger->info('Set ticket\'s status to waiting admin');
+        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->save();
+        $this->logger->info('Ticket save');
+        $message = Message::firstOrCreate([
+            'thread_id' => $thread->id,
+            'channel_message_number' => $message_api_api->messageId,
+        ],
+            [
+                'user_id' => null,
+                'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,
+                'content' => strip_tags($message),
+            ],
+        );
+        $this->logger->info($message->id);
+
+        // Dispatch the job that will try to answer automatically to this new imported
+        AnswerToNewMessage::dispatch($message);
     }
 }

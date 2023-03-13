@@ -28,6 +28,8 @@ class AmazonBeautifierMail
         return self::cleanHtml($new_html);
     }
 
+
+
     /**
      * From an HTML text, try to get an element by tag name from specified position
      *
