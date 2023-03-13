@@ -28,13 +28,7 @@ class AmazonBeautifierMail
         return self::cleanHtml($new_html);
     }
 
-    public static function showCommandNumber($string){
 
-
-        preg_match('#(\d{3}-\d{7}-\d{7})#',$string, $commandNumber);
-        return $commandNumber[1] ?? '';
-
-    }
 
     /**
      * From an HTML text, try to get an element by tag name from specified position
