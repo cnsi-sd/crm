@@ -33,10 +33,11 @@ enum MessageVariable: string
     {
         $variables = [];
 
-        foreach(MessageVariable::cases() as $variable) {
+        foreach(MessageVariable::cases() as $var) {
             $variables[] = [
-                'text' => $variable->value,
-                'value' => $variable->templateVar(),
+                'text' => $var->value,
+                'templateVar' => $var->templateVar(),
+                'value' => $var->isConfigurable() ? $var->getSettingValue() : '',
             ];
         }
 
