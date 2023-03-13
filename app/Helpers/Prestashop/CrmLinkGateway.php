@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Prestashop;
 
 use Cnsi\Logger\Logger;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
-final class PrestashopGateway
+final class CrmLinkGateway
 {
     protected string $endpoint;
     protected string $token;

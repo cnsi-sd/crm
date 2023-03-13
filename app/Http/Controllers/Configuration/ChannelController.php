@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Helpers\PrestashopGateway;
+use App\Helpers\Prestashop\CrmLinkGateway;
 use App\Http\Controllers\AbstractController;
 use App\Models\Channel\Channel;
 use Illuminate\Http\RedirectResponse;
@@ -43,7 +43,7 @@ class ChannelController extends AbstractController
         }
 
         return view('configuration.channel.edit')
-            ->with('ext_channels', (new PrestashopGateway())->getChannels())
+            ->with('ext_channels', (new CrmLinkGateway())->getChannels())
             ->with('channel', $channel);
     }
 
