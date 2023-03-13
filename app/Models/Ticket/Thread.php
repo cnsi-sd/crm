@@ -96,18 +96,19 @@ class Thread extends Model
 
     public function firstMessage(): ?Message
     {
-        return $this->messages()->orderBy('id', 'ASC')->first();
+        return $this->messages()->reorder('id', 'ASC')->first();
     }
 
     public function lastMessage(): ?Message
     {
-        return $this->messages()->orderBy('id', 'DESC')->first();
+        return $this->messages()->reorder('id', 'DESC')->first();
     }
 
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
     }
+
     public function tagList(): HasMany
     {
         return $this->hasMany(TagList::class);
