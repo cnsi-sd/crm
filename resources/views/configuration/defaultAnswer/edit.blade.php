@@ -31,7 +31,7 @@
                                 <label for="name">
                                     {{__('app.defaultAnswer.content')}}
                                 </label>
-                                <textarea id="message_to_customer" name="content">{{ \App\Helpers\TinyMCE::toHtml(old('content', $defaultAnswer->content)) }}</textarea>
+                                <textarea id="message_to_customer" class="w-100" name="content">{{ \App\Helpers\TinyMCE::toHtml(old('content', $defaultAnswer->content)) }}</textarea>
                             </div>
 
                         </div>
@@ -78,4 +78,5 @@
     {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
     <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>
     <script src="{{ Vite::asset('resources/js/tinymce.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/defaultAnswer.js') }}"></script>
 @endsection

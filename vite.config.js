@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/js/layout.js',
                 'resources/js/tickets/ticket.js',
                 'resources/js/tickets/showTicket.js',
+                'resources/js/defaultAnswer.js',
                 'resources/js/axios.js',
                 'resources/scss/app.scss',
                 'resources/scss/icons.scss',
