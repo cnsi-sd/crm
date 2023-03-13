@@ -19,7 +19,7 @@ class ThreadTest extends TestCase
 
         $order      = Order::getOrder($order, $channel);
         $ticket     = Ticket::getTicket($order, $channel);
-        $thread     = Thread::getOrCreateThread($ticket, $order, 'Fake subject', '');
+        $thread     = Thread::getOrCreateThread($ticket, $order, fake()->sentence, '');
 
         $firstMessage = new Message();
         $firstMessage->thread_id = $thread->id;
@@ -43,7 +43,7 @@ class ThreadTest extends TestCase
 
         $order      = Order::getOrder($order, $channel);
         $ticket     = Ticket::getTicket($order, $channel);
-        $thread     = Thread::getOrCreateThread($ticket, $order, 'Fake subject', '');
+        $thread     = Thread::getOrCreateThread($ticket, $order, fake()->sentence, '');
 
         $firstMessage = new Message();
         $firstMessage->thread_id = $thread->id;
@@ -58,5 +58,43 @@ class ThreadTest extends TestCase
         $secondMessage->content = fake()->text;
         $secondMessage->save();
         $this->assertEquals($secondMessage->id, $thread->lastMessage()->id);
+    }
+
+    public function test_getUnreadMessages()
+    {
+        $channel = Channel::firstOrFail();
+        $order = fake()->word;
+
+        $order      = Order::getOrder($order, $channel);
+        $ticket     = Ticket::getTicket($order, $channel);
+        $thread     = Thread::getOrCreateThread($ticket, $order, fake()->sentence, '');
+
+        $firstMessage = new Message();
+        $firstMessage->thread_id = $thread->id;
+        $firstMessage->author_type = TicketMessageAuthorTypeEnum::CUSTOMER;
+        $firstMessage->content = fake()->text;
+        $firstMessage->save();
+        $this->assertEquals(1, $thread->getUnreadMessages());
+
+        $secondMessage = new Message();
+        $secondMessage->thread_id = $thread->id;
+        $secondMessage->author_type = TicketMessageAuthorTypeEnum::CUSTOMER;
+        $secondMessage->content = fake()->text;
+        $secondMessage->save();
+        $this->assertEquals(2, $thread->getUnreadMessages());
+
+        $thirdMessage = new Message();
+        $thirdMessage->thread_id = $thread->id;
+        $thirdMessage->author_type = TicketMessageAuthorTypeEnum::ADMIN;
+        $thirdMessage->content = fake()->text;
+        $thirdMessage->save();
+        $this->assertEquals(0, $thread->getUnreadMessages());
+
+        $fourthMessage = new Message();
+        $fourthMessage->thread_id = $thread->id;
+        $fourthMessage->author_type = TicketMessageAuthorTypeEnum::CUSTOMER;
+        $fourthMessage->content = fake()->text;
+        $fourthMessage->save();
+        $this->assertEquals(1, $thread->getUnreadMessages());
     }
 }

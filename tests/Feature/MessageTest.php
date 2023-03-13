@@ -35,7 +35,7 @@ class MessageTest extends TestCase
 
         $order      = Order::getOrder($order, $channel);
         $ticket     = Ticket::getTicket($order, $channel);
-        $thread     = Thread::getOrCreateThread($ticket, $order, 'Fake subject', '');
+        $thread     = Thread::getOrCreateThread($ticket, $order, fake()->sentence, '');
 
         $firstMessage = new Message();
         $firstMessage->thread_id = $thread->id;
@@ -62,7 +62,7 @@ class MessageTest extends TestCase
 
         $order      = Order::getOrder($order, $channel);
         $ticket     = Ticket::getTicket($order, $channel);
-        $thread     = Thread::getOrCreateThread($ticket, $order, 'Fake subject', '');
+        $thread     = Thread::getOrCreateThread($ticket, $order, fake()->sentence, '');
 
         $firstMessage = new Message();
         $firstMessage->thread_id = $thread->id;
