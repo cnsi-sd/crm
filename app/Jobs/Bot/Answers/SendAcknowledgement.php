@@ -31,6 +31,9 @@ class SendAcknowledgement extends AbstractAnswer
         if(!$this->message->isExternal())
             return false;
 
+        if($this->message->hasBeenAnswered())
+            return false;
+
         return true;
     }
 

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -93,6 +94,16 @@ class Thread extends Model
         return $this->hasMany(Message::class)->orderBy('id', 'DESC');
     }
 
+    public function firstMessage(): ?Message
+    {
+        return $this->messages()->orderBy('id', 'ASC')->first();
+    }
+
+    public function lastMessage(): ?Message
+    {
+        return $this->messages()->orderBy('id', 'DESC')->first();
+    }
+
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
@@ -136,7 +147,7 @@ class Thread extends Model
             $endMessage = 'Configuration de la relance auto incomplète : le champs `Fréquence des relances` es invalide';
 
         //check last message parameters
-        $lastMessage = $this->getLastMessage();
+        $lastMessage = $this->lastMessage();
         if (!$lastMessage || $lastMessage->author_type !== TicketMessageAuthorTypeEnum::ADMIN)
             $endMessage = 'Le dernier message doit être écrit par un administrateur';
 
@@ -170,20 +181,12 @@ class Thread extends Model
             return $this->revival_start_date;
 
         // Revival frequency
-        $lastMessageDate = clone $this->getLastMessage()->updated_at;
+        $lastMessageDate = clone $this->lastMessage()->updated_at;
         $freq = $this->revival->frequency;
         $interval = new DateInterval('P' . $freq . 'D');
         $lastMessageDate->add($interval);
 
         return $lastMessageDate;
-    }
-
-    public function getLastMessage(): ?Message
-    {
-        return Message::query()
-            ->where('thread_id', $this->id)
-            ->orderBy('created_at', 'DESC')
-            ->first();
     }
 
     public function getUnreadMessages()
