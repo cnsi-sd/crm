@@ -54,7 +54,7 @@ class Order extends Model
     {
         if(!$this->_prestashopOrders) {
             $prestashopGateway = new PrestashopGateway();
-            $this->_prestashopOrders = $prestashopGateway->getOrderInfo($this->channel_order_number, $this->channel->ext_name);
+            $this->_prestashopOrders = $prestashopGateway->getOrderInfo($this->channel_order_number, $this->channel->ext_names);
         }
 
         return $this->_prestashopOrders;

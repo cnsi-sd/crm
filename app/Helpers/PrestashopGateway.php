@@ -56,12 +56,12 @@ final class PrestashopGateway
         return $response;
     }
 
-    public function getOrderInfo(string $marketplace_order_id, string $channel_name): ?array
+    public function getOrderInfo(string $marketplace_order_id, array $channel_names): ?array
     {
         $queryParams = [
             'controller' => 'order',
             'marketplace_order_id' => $marketplace_order_id,
-            'channel_name' => $channel_name,
+            'channel_names' => implode(',', $channel_names),
         ];
         return $this->get($queryParams)->json();
     }
