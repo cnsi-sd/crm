@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Policies\Settings\Permissions;
+namespace App\Policies\Configuration;
 
-//use App\Enums\PermissionEnum;
 use App\Enums\PermissionEnum;
 use App\Models\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class DefaultAnswerPolicy
 {
     use HandlesAuthorization;
 
     public function read(User $user): bool
     {
-        return $user->hasPermission(PermissionEnum::USER_READ);
+        return $user->hasPermission(PermissionEnum::DEFAULT_ANSWER_READ);
     }
 
     public function edit(User $user): bool
     {
-        return $user->hasPermission(PermissionEnum::USER_EDIT);
+        return $user->hasPermission(PermissionEnum::DEFAULT_ANSWER_EDIT);
     }
 }
