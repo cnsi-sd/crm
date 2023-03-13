@@ -49,14 +49,14 @@ enum MessageVariable: string
 
         return match($this)
         {
-            MessageVariable::PRENOM_CLIENT => $extOrder['invoice_address']['firstname'],
-            MessageVariable::NOM_CLIENT => $extOrder['invoice_address']['lastname'],
-            MessageVariable::URL_SUIVI => $extOrder['shipping']['url'],
-            MessageVariable::DELAI_COMMANDE => Order::getOrderDelay($extOrder),
-            MessageVariable::MARKETPLACE => ucfirst($order->channel->name),
-            MessageVariable::NUM_CMD_MP => $order->channel_order_number,
-            MessageVariable::SIGNATURE_ADMIN => $message->user->name,
-            MessageVariable::SIGNATURE_BOT => 'Olympe',
+            self::PRENOM_CLIENT => $extOrder['invoice_address']['firstname'],
+            self::NOM_CLIENT => $extOrder['invoice_address']['lastname'],
+            self::URL_SUIVI => $extOrder['shipping']['url'],
+            self::DELAI_COMMANDE => Order::getOrderDelay($extOrder),
+            self::MARKETPLACE => ucfirst($order->channel->name),
+            self::NUM_CMD_MP => $order->channel_order_number,
+            self::SIGNATURE_ADMIN => $message->user->name,
+            self::SIGNATURE_BOT => 'Olympe',
             self::NOM_BOUTIQUE => 'Icoza',
             self::TELEPHONE_BOUTIQUE => '0 971 00 60 44',
         };
