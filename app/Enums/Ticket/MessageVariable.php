@@ -4,6 +4,7 @@ namespace App\Enums\Ticket;
 
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
+use Exception;
 
 enum MessageVariable: string
 {
@@ -70,11 +71,25 @@ enum MessageVariable: string
 
     public function getSettingKey(): string
     {
+        $this->throwIfNotConfigurable();
         return 'variables.' . strtolower($this->name);
     }
 
     public function getSettingValue(): string
     {
+        $this->throwIfNotConfigurable();
         return setting($this->getSettingKey(), '');
+    }
+
+    public function saveValue($value): void
+    {
+        $this->throwIfNotConfigurable();
+        setting([$this->getSettingKey() => $value]);
+        setting()->save();
+    }
+
+    protected function throwIfNotConfigurable(): void
+    {
+        throw_if(!$this->isConfigurable(), new Exception('Method allowed only for configurable variables'));
     }
 }

@@ -15,13 +15,15 @@ class VariableController extends AbstractController
     {
         if ($request->exists('save')) {
             foreach (MessageVariable::cases() as $variable) {
+                if(!$variable->isConfigurable())
+                    continue;
+
                 $key = $variable->getSettingKey();
                 $request_key = str_replace('.', '_', $key);
 
-                if ($variable->isConfigurable() && $request->exists($request_key)) {
-                    setting([$key => $request->input($request_key)]);
+                if ($request->exists($request_key)) {
+                    $variable->saveValue($request->input($request_key));
                 }
-                setting()->save();
             }
 
             Alert::toastSuccess(__('app.variable.saved'));
