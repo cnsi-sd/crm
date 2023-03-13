@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Policies\Configuration\Permission;
+namespace App\Policies\Settings;
 
 use App\Enums\PermissionEnum;
 use App\Models\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RevivalPolicy
+class
+UserPolicy
 {
     use HandlesAuthorization;
 
     public function read(User $user): bool
     {
-        return $user->hasPermission(PermissionEnum::REVIVAL_READ);
+        return $user->hasPermission(PermissionEnum::USER_READ);
     }
 
     public function edit(User $user): bool
     {
-        return $user->hasPermission(PermissionEnum::REVIVAL_EDIT);
+        return $user->hasPermission(PermissionEnum::USER_EDIT);
     }
 }

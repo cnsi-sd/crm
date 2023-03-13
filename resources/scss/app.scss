@@ -81,3 +81,7 @@ File: Main Css File
 
 //Tag
 @import "tags/tags";
+
+.tox-collection__item {
+    border-bottom: solid 1px $body-bg !important;
+}

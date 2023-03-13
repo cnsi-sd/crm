@@ -56,8 +56,15 @@ class Message extends Model
 
     public function isFirstMessageOnThread(): bool
     {
-        $threadMessages = $this->thread->messages;
-        return $threadMessages->count() === 1 && $threadMessages->first()->id === $this->id;
+        return $this->thread->firstMessage()->id === $this->id;
+    }
+
+    public function hasBeenAnswered(): bool
+    {
+        return $this->thread->messages()
+            ->where('id', '>', $this->id)
+            ->whereIn('author_type', [TicketMessageAuthorTypeEnum::SYSTEM, TicketMessageAuthorTypeEnum::ADMIN])
+            ->count() > 0;
     }
 }
 

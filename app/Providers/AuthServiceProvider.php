@@ -2,22 +2,23 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Enums\PermissionEnum;
+use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
+use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
-use App\Models\Channel\Channel;
-use App\Policies\Configuration\Permission\DefaultAnswerPolicy;
-use App\Policies\Configuration\Permission\RevivalPolicy;
-use App\Policies\Configuration\Permission\ChannelPolicy;
-use App\Models\Ticket\Ticket;
-use App\Policies\Configuration\Permission\TagPolicy;
-use App\Policies\Settings\Permissions\RolePolicy;
-use App\Policies\Settings\Permissions\UserPolicy;
+use App\Policies\Configuration\ChannelPolicy;
+use App\Policies\Configuration\DefaultAnswerPolicy;
+use App\Policies\Configuration\RevivalPolicy;
+use App\Policies\Configuration\TagPolicy;
+use App\Policies\Settings\RolePolicy;
+use App\Policies\Settings\UserPolicy;
 use App\Policies\Tickets\TicketPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('bot_config', function (User $user) {
+            return $user->hasPermission(PermissionEnum::BOT_CONFIG);
+        });
+
+        Gate::define('variables_config', function (User $user) {
+            return $user->hasPermission(PermissionEnum::VARIABLES_CONFIG);
+        });
     }
 }

@@ -75,7 +75,7 @@ class ManomanoImportMessages extends AbstractImportMessages
 
                 $order      = Order::getOrder($orderId, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);
-                $thread     = Thread::getOrCreateThread($ticket, $threadPrefix.'-'.$orderId, $threadPrefix.'-'.$email->subject, '', $email->senderAddress);
+                $thread     = Thread::getOrCreateThread($ticket, $threadPrefix.'-'.$orderId, $threadPrefix, $email->senderAddress);
 
                 if(!$this->isMessagesImported($email->messageId)) {
                     $this->logger->info('Convert api message to db message');

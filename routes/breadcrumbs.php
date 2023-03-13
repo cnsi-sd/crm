@@ -140,6 +140,12 @@ Breadcrumbs::for('bot_shipping_information', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.bot.shipping_information.shipping_information'), route('bot_shipping_information'));
 });
 
+/** Variables */
+Breadcrumbs::for('variables_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.variable.variable', 2), route('variables_config'));
+});
+
 /** Channel */
 Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');

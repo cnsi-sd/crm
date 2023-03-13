@@ -106,7 +106,7 @@ class FnacImportMessages extends AbstractImportMessages
                 $mpOrderId  = $message->getMessageReferer();;
                 $order      = Order::getOrder($mpOrderId, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);
-                $thread     = Thread::getOrCreateThread($ticket, $mpOrderId, $message->getMessageSubject(), '');
+                $thread     = Thread::getOrCreateThread($ticket, $mpOrderId, $message->getMessageSubject());
 
                 if (!$this->isMessagesImported($messageId)) {
                     $this->logger->info('Convert api message to db message');

@@ -118,7 +118,7 @@ class RakutenImportMessages extends AbstractImportMessages
                 if(isset($messages[0])){
                 $order  = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
                 $ticket = Ticket::getTicket($order, $this->channel);
-                $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpItemId'], $messages[0]['type'], '');
+                $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpItemId'], $messages[0]['type']);
                 $this->importMessageByThread($ticket, $thread, $messages);
                 }
             }

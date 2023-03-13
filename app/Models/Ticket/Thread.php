@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -60,10 +61,10 @@ class Thread extends Model
      * @param Ticket $ticket
      * @param string $channel_thread_number
      * @param string $name
-     * @param string $customer_issue
-     * @return Model|Builder|Thread
+     * @param array $channel_data
+     * @return Model|Thread
      */
-    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue, $channel_data = [] ): Model|Builder|Thread
+    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, $channel_data = [] ): Model|Thread
     {
         return Thread::query()
             ->select('ticket_threads.*')
@@ -77,7 +78,6 @@ class Thread extends Model
                 ],
                 [
                     'name' => $name,
-                    'customer_issue' => $customer_issue,
                     'channel_data' => json_encode($channel_data),
                 ],
             );
@@ -93,10 +93,21 @@ class Thread extends Model
         return $this->hasMany(Message::class)->orderBy('id', 'DESC');
     }
 
+    public function firstMessage(): ?Message
+    {
+        return $this->messages()->reorder('id', 'ASC')->first();
+    }
+
+    public function lastMessage(): ?Message
+    {
+        return $this->messages()->reorder('id', 'DESC')->first();
+    }
+
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
     }
+
     public function tagList(): HasMany
     {
         return $this->hasMany(TagList::class);
@@ -136,7 +147,7 @@ class Thread extends Model
             $endMessage = 'Configuration de la relance auto incomplète : le champs `Fréquence des relances` es invalide';
 
         //check last message parameters
-        $lastMessage = $this->getLastMessage();
+        $lastMessage = $this->lastMessage();
         if (!$lastMessage || $lastMessage->author_type !== TicketMessageAuthorTypeEnum::ADMIN)
             $endMessage = 'Le dernier message doit être écrit par un administrateur';
 
@@ -170,7 +181,7 @@ class Thread extends Model
             return $this->revival_start_date;
 
         // Revival frequency
-        $lastMessageDate = clone $this->getLastMessage()->updated_at;
+        $lastMessageDate = clone $this->lastMessage()->updated_at;
         $freq = $this->revival->frequency;
         $interval = new DateInterval('P' . $freq . 'D');
         $lastMessageDate->add($interval);
@@ -178,26 +189,16 @@ class Thread extends Model
         return $lastMessageDate;
     }
 
-    public function getLastMessage(): ?Message
-    {
-        return Message::query()
-            ->where('thread_id', $this->id)
-            ->orderBy('created_at', 'DESC')
-            ->first();
-    }
-
-    public function getUnreadMessages()
+    public function getUnreadMessages(): int
     {
         $numberOfUnreadMessages = 0;
-        $queryMessages = Message::query()->where('thread_id', $this->id)->orderBy('created_at', "DESC")->get();
-        foreach ($queryMessages as $queryMessage) {
-            if ($queryMessage['author_type'] === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN) {
-                break;
-            } else {
+        foreach ($this->messages()->get() as $message) {
+            if ($message->isExternal()) {
                 $numberOfUnreadMessages += 1;
+            } else {
+                break;
             }
         }
-    return $numberOfUnreadMessages;
+        return $numberOfUnreadMessages;
     }
-
 }

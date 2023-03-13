@@ -80,7 +80,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 $messages = array_reverse($miraklThread->getMessages()->getItems());
 
                 /** @var ThreadTopic $topic */
-                $thread = \App\Models\Ticket\Thread::getOrCreateThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue(), '');
+                $thread = \App\Models\Ticket\Thread::getOrCreateThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue());
 
                 $this->importMessageByThread($ticket, $thread, $messages);
 
