@@ -4,6 +4,7 @@ namespace App\Models\Tags;
 
 use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
+use App\Enums\FixedWidthEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Ticket;
@@ -68,10 +69,21 @@ class Tag extends Model
             ->setLabel(__('app.tags.view'))
             ->setKey('name')
             ->setAlign(AlignEnum::CENTER)
+
             ->setCallback(function (Tag $tags) {
                 return view('configuration.tags.preview')
                     ->with('tags', $tags);
             });
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.defaultAnswer.select_channel'))
+            ->setClass('w-25')
+            ->setCallback(function (Tag $tag){
+                $channels = $tag->channels->pluck('name')->toArray();
+                return implode(", ", $channels);
+            })
+            ->setKey('channels')
+            ->setSortable(false)
+            ->setSearchable(false);
 
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Tag $tags) {
