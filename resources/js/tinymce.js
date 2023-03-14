@@ -7,7 +7,8 @@ $(function() {
         skin: 'tinymce-5',
         content_style: "body { font-size: .8rem; }",
         paste_as_text: true,
-        height: 250,
+        plugins : "autoresize",
+        min_height: 250,
         setup: function (editor) {
             const onAction = function (autocompleteApi, rng, value) {
                 editor.selection.setRng(rng);
