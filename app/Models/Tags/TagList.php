@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  *
- * @property Thread[] $threads
+ * @property Thread[] $thread
  * @property Tag[] $tags
  *
  * @property Datetime $created_at
@@ -28,7 +28,7 @@ class TagList extends Model
         'updated_at'
     ];
 
-    public function threads(): BelongsTo
+    public function thread(): BelongsTo
     {
         return $this->belongsTo(Thread::class);
     }
@@ -36,5 +36,11 @@ class TagList extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'tag_tagLists', 'tagList_id', 'tag_id');
+    }
+
+    public function addTag(int $tagId){
+        $tag = Tag::find($tagId);
+        $this->tags()->attach($tag->id);
+        return $tag;
     }
 }

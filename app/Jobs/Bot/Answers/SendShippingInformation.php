@@ -38,6 +38,7 @@ class SendShippingInformation extends AbstractAnswer
             // Otherwise (max_ship_date reached), add tag on ticket, stay open
             else {
                 $tagId = setting('bot.shipping_information.late_order_tag_id');
+                $this->message->thread->addTag($tagId);
                 // TODO @Mathias, add tag on $this->message->thread.
             }
 
