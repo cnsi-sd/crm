@@ -10,6 +10,8 @@ use App\Helpers\Stringer;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tag;
+use App\Models\Tags\TagList;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
@@ -59,14 +61,9 @@ class AmazonImportMessage extends AbstractImportMessages
             $this->logger->info('--- Get Emails details');
             foreach(array_reverse($this->getEmails($emailIds)) as $emailId => $email) {
                 try {
-                    // check if is not a don't reply sender
-                    $doNotReply = str_contains($email->senderAddress, 'reply');
-                    if($doNotReply)
-                        continue;
-
                     // Parse incomming mail
                     $parseMail = $this->parseIncomingMail($email);
-                    if(!$parseMail)
+                    if(!$parseMail[0])
                         continue;
 
                     $this->logger->info('Begin Transaction');
@@ -75,13 +72,15 @@ class AmazonImportMessage extends AbstractImportMessages
                     $this->logger->info('Retrieve command number from email');
                     $mpOrder = $this->showCommandNumber($email);
 
-                    if ($mpOrder && str_contains($email->fromAddress, '@marketplace.amazon.fr')) {
+                    if ($mpOrder) {
                         $this->logger->info('--- start import email : '. $email->id);
                         $order   = Order::getOrder($mpOrder, $this->channel);
                         $ticket  = Ticket::getTicket($order, $this->channel);
                         $thread  = Thread::getOrCreateThread($ticket, $mpOrder, $email->subject, $email->fromAddress);
-
-                        $this->importMessageByThread($ticket, $thread, $email);
+                        if (!$parseMail[1])
+                            $this->importMessageByThread($ticket, $thread, $email);
+                        else
+                            $this->addReturnOnThread($thread, $email);
                     }
                     $this->logger->info('--- end import email');
                     DB::commit();
@@ -147,13 +146,13 @@ class AmazonImportMessage extends AbstractImportMessages
         return $emails;
     }
 
-    public function parseIncomingMail(IncomingMail $mail): bool
+    public function parseIncomingMail(IncomingMail $mail): array
     {
         $patterns = array();
         $patterns[] = array('pattern' => '#remboursementinitieacutepourlacommande#'); //Remboursement initié pour la commande <num_cmd>
         $patterns[] = array('pattern' => '#actionrequise#'); //Action requise: ...
         $patterns[] = array('pattern' => '#amazonfruneouplusieursdevosoffresamazononteacuteteacutesupprimeacuteesdelarecherche#'); // [Amazon.fr] Une ou plusieurs de vos offres Amazon ont été supprimées de la recherche
-        $patterns[] = array('pattern' => '#demandedrsquoautorisationderetourpourlacommande#'); //Demande d’autorisation de retour pour la commande
+        //$patterns[] = array('pattern' => '#demandedrsquoautorisationderetourpourlacommande#'); //Demande d’autorisation de retour pour la commande
         $patterns[] = array('pattern' => '#offredeacutesactiveacuteesenraisonduneerreurdeprixpotentielle#'); //Offre désactivées en raison d'une erreur de prix potentielle
         $patterns[] = array('pattern' => '#votreemaila#'); // Votre e-mail à AUPEE
         $patterns[] = array('pattern' => '#spam#'); // [SPAM]
@@ -165,8 +164,17 @@ class AmazonImportMessage extends AbstractImportMessages
             if (preg_match($pattern['pattern'], $normalizedSubject)) {
                 $canImport = false;
             }
+            // check if is not a don't reply sender
+            $doNotReply = str_contains($mail->senderAddress, 'reply');
+            if($doNotReply)
+                $canImport = false;
         }
-        return $canImport;
+        $autorisationReturnAmazon = false;
+        if (preg_match('#autorisationderetourpourlacommande#', $normalizedSubject)){
+            $autorisationReturnAmazon = true;
+            $canImport = true;
+        }
+        return [$canImport, $autorisationReturnAmazon];
     }
     /**
      * Normalize subject with lower case and only a -> z chars
@@ -234,9 +242,14 @@ class AmazonImportMessage extends AbstractImportMessages
                 'content' => strip_tags($message),
             ],
         );
-        $this->logger->info($message->id);
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);
+    }
+
+    private function addReturnOnThread(Thread $thread, mixed $email)
+    {
+        $tag = Tag::query()->select('id')->where('name', 'Autorisation retour AMAZON');
+        $thread->checkTagList($tag);
     }
 }
