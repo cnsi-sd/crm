@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\Tickets;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
+use App\Enums\Ticket\TicketPriorityEnum;
+use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Helpers\PrestashopGateway;
 use App\Helpers\TinyMCE;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\AbstractSendMessage;
+use App\Models\Channel\Channel;
+use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\Tags\TagList;
-use App\Models\Ticket\Ticket;
-use App\Models\Ticket\Thread;
-use App\Models\Channel\Order;
-use App\Models\Ticket\Message;
 use App\Models\Ticket\Comment;
-use App\Models\Channel\Channel;
+use App\Models\Ticket\Message;
+use App\Models\Ticket\Thread;
+use App\Models\Ticket\Ticket;
 use App\Models\User\User;
-use App\Enums\Ticket\TicketStateEnum;
-use App\Enums\Ticket\TicketPriorityEnum;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -70,8 +69,7 @@ class TicketController extends AbstractController
     public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number)
     {
         $ticket = null;
-        $channel_id = Channel::query()
-            ->where('ext_name', $channel)->first()->id;
+        $channel_id = Channel::query()->where('ext_names', 'LIKE', '%' . $channel . '%')->first()->id;
 
         if ($channel_id) {
             $order = Order::query()

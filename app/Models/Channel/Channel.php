@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property string $name
- * @property string $ext_name
+ * @property array $ext_names
  * @property int $user_id
  * @property Datetime $created_at
  * @property Datetime $updated_at
@@ -35,6 +35,10 @@ class Channel extends Model
         'name',
         'created_at',
         'updated_at'
+    ];
+
+    protected $casts = [
+        'ext_names' => 'json',
     ];
 
     public function getSnakeName(): array|string
@@ -101,8 +105,11 @@ class Channel extends Model
             ->setLabel(__('app.channel.name'))
             ->setKey('name');
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.channel.ext_name'))
-            ->setKey('ext_name');
+            ->setLabel(__('app.channel.ext_names'))
+            ->setCallback(function(Channel $channel) {
+                return implode(', ', $channel->ext_names);
+            })
+            ->setKey('ext_names');
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.owner'))
             ->setType(ColumnTypeEnum::SELECT)

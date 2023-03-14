@@ -3,20 +3,20 @@
 namespace App\Jobs\Bot\Answers;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
-use App\Helpers\PrestashopGateway;
+use App\Helpers\Prestashop\CrmLinkGateway;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 
 class SendInvoice extends AbstractAnswer
 {
-    private PrestashopGateway $prestashopGateway;
+    private CrmLinkGateway $prestashopGateway;
     private DefaultAnswer $answerInvoiceFound;
     private DefaultAnswer $answerOrderNotShipped;
 
     public function handle(): bool
     {
-        $this->prestashopGateway = new PrestashopGateway();
+        $this->prestashopGateway = new CrmLinkGateway();
         $this->answerInvoiceFound = DefaultAnswer::findOrFail(setting('bot.invoice.found_answer_id'));
         $this->answerOrderNotShipped = DefaultAnswer::findOrFail(setting('bot.invoice.not_shipped_answer_id'));
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
-use App\Helpers\PrestashopGateway;
+use App\Helpers\Prestashop\CrmLinkGateway;
 use App\Http\Controllers\AbstractController;
 use App\Models\Channel\Channel;
 use Illuminate\Http\RedirectResponse;
@@ -43,7 +43,7 @@ class ChannelController extends AbstractController
         }
 
         return view('configuration.channel.edit')
-            ->with('ext_channels', (new PrestashopGateway())->getChannels())
+            ->with('ext_channels', (new CrmLinkGateway())->getChannels())
             ->with('channel', $channel);
     }
 
@@ -51,12 +51,12 @@ class ChannelController extends AbstractController
     {
         // Validate request
         $validation_rules = [
-            'ext_name'          => 'required',
+            'ext_names' => ['required', 'array'],
         ];
         $request->validate($validation_rules);
 
-        // Set ext_name
-        $channel->ext_name = $request->input('ext_name');
+        // Set ext_names
+        $channel->ext_names = $request->input('ext_names');
 
         // Enregistrement
         $channel->save();
