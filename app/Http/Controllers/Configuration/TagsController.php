@@ -58,14 +58,13 @@ class TagsController extends AbstractController
         $tags->save();
 
         //$tags->channels()->sync($request->input('channel'));
-        if(array_key_exists('channel',$request->toArray())){
-            $channelSelected = $request->toArray()['channel'];
-            $tags->channels()->sync($channelSelected);
-        } else {
-            foreach (Channel::all() as $channel){
-                $allChannelId[] = $channel->id;
+        
+        $channelSelect = $request->input('channel');
+        $tags->channels()->detach();
+        if (!empty($channelSelect)) {
+            foreach ($channelSelect as $channelId) {
+                $tags->channels()->attach($channelId);
             }
-            $tags->channels()->sync($allChannelId);
         }
     }
 

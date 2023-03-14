@@ -48,6 +48,10 @@ class DefaultAnswer extends Model
         return $this->hasMany(Revival::class);
     }
 
+    public function getManagableChannel(){
+        return $this->channels->count() === 0 ? Channel::all()->all() : $this->channels->all();
+    }
+
     public static function getTableColumns(): array
     {
         $columns = [];
@@ -63,8 +67,15 @@ class DefaultAnswer extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setCallback(function (DefaultAnswer $defaultAnswer){
-                $channels = $defaultAnswer->channels->pluck('name')->toArray();
-                return implode(", ", $channels);
+                $channels = $defaultAnswer->getManagableChannel();
+                foreach ($channels as $channel){
+                    $listChannel[] = $channel->name;
+                }
+                if (count($channels) === Channel::all()->count()){
+                    return __('app.all');
+                } else {
+                    return implode(", ", $listChannel);
+                }
             })
             ->setKey('channels')
             ->setSortable(false)

@@ -80,14 +80,12 @@ class DefaultAnswerController extends AbstractController
         // Save
         $defaultAnswer->save();
 
-        if(array_key_exists('channel',$request->toArray())){
-            $channelSelected = $request->toArray()['channel'];
-            $defaultAnswer->channels()->sync($channelSelected);
-        } else {
-            foreach (Channel::all() as $channel){
-                $allChannelId[] = $channel->id;
+        $channelSelect = $request->input('channel');
+        $defaultAnswer->channels()->detach();
+        if (!empty($channelSelect)) {
+            foreach ($channelSelect as $channelId) {
+                $defaultAnswer->channels()->attach($channelId);
             }
-            $defaultAnswer->channels()->sync($allChannelId);
         }
     }
 

@@ -1,7 +1,7 @@
 <?php
 return [
     /** Global */
-
+    'all' => 'Tous',
     'yes' => 'Oui',
     'no' => 'Non',
     'home' => 'Accueil',

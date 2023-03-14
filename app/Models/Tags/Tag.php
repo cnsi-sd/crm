@@ -59,6 +59,10 @@ class Tag extends Model
             ->pluck('name', 'id')
             ->toArray();
     }
+
+    public function getManagableChannel(){
+        return $this->channels->count() === 0 ? Channel::all()->all() : $this->channels->all();
+    }
     public static function getTableColumns(): array
     {
         $columns = [];
@@ -78,8 +82,15 @@ class Tag extends Model
             ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setClass('w-25')
             ->setCallback(function (Tag $tag){
-                $channels = $tag->channels->pluck('name')->toArray();
-                return implode(", ", $channels);
+                $tags = $tag->getManagableChannel();
+                foreach ($tags as $tag){
+                    $listTags[] = $tag->name;
+                }
+                if (count($tags) === Channel::all()->count()){
+                    return __('app.all');
+                } else {
+                    return implode(", ", $listTags);
+                }
             })
             ->setKey('channels')
             ->setSortable(false)
