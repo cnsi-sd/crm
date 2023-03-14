@@ -23,6 +23,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Cnsi\Attachments\Model\Document;
+use Cnsi\Attachments\Trait\Documentable;
+use Cnsi\Attachments\Enum\DocumentTypeEnum;
 
 class TicketController extends AbstractController
 {
@@ -135,6 +138,7 @@ class TicketController extends AbstractController
      */
     public function ticket(Request $request, Ticket $ticket, Thread $thread): View|RedirectResponse
     {
+        $upload_doc_route = route('upload_document', [$thread, $thread::class]);
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
 
@@ -194,7 +198,8 @@ class TicketController extends AbstractController
 
         return view('tickets.ticket')
             ->with('ticket', $ticket)
-            ->with('thread', $thread);
+            ->with('thread', $thread)
+            ->with('documents_table_comments', $thread->getCommentsDocumentsTable($request, $upload_doc_route));
     }
 
     public function delete_tag(Request $request) {
