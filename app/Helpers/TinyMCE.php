@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 abstract class TinyMCE
 {
-    public static function toHtml(string $string): string
+    public static function toHtml(?string $string): string
     {
         return nl2br($string);
     }
