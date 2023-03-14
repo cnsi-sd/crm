@@ -93,7 +93,7 @@ class Tag extends Model
 
     public function getListTagByThread($ticket, &$listeTag, $returnList = false){
         foreach($ticket->threads as $thread) {
-            foreach ($thread->taglist as $tagList) {
+            foreach ($thread->taglists as $tagList) {
                 foreach ($tagList->tags as $tag){
                     if (!array_key_exists($tag->name,$listeTag)){
                         $listeTag[$tag->name] = ['tag_id'=> $tag->id, 'background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
