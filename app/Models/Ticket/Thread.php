@@ -4,6 +4,7 @@ namespace App\Models\Ticket;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Enums\CrmDocumentTypeEnum;
 use App\Models\Tags\TagList;
 use App\Models\Ticket\Revival\Revival;
 use DateInterval;
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Cnsi\Attachments\Model\Document;
+use Cnsi\Attachments\Trait\Documentable;
 
 /**
  * @property int $id
@@ -55,6 +58,8 @@ class Thread extends Model
         'revival_start_date' => 'date',
         'channel_data' => 'array'
     ];
+
+    use Documentable;
 
     /**
      * create or get thread
@@ -200,5 +205,17 @@ class Thread extends Model
             }
         }
         return $numberOfUnreadMessages;
+    }
+
+    protected function getAllowedDocumentTypes(): array
+    {
+        return [
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_REPORT,
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_STATION,
+            CrmDocumentTypeEnum::CLIENT_BANK_ACCOUNT_NUMBER,
+            CrmDocumentTypeEnum::CUSTOMER_FILING,
+            CrmDocumentTypeEnum::PRODUCT_PHOTO,
+            CrmDocumentTypeEnum::OTHER,
+        ];
     }
 }
