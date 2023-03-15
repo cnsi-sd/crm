@@ -253,10 +253,13 @@ class AmazonImportMessage extends AbstractImportMessages
         $thread->checkTagList(setting('tag.retour_amazon'));
         $infoMail = $email->textHtml;
         $returnComment = AmazonBeautifierMail::getReturnInformation($infoMail);
-        $comment = new Comment();
-        $comment->thread_id = $thread->id;
-        $comment->content = $returnComment;
-        $comment->displayed = 1;
-        $comment->type = setting();
+        if ($returnComment !== "") {
+            $comment = new Comment();
+            $comment->thread_id = $thread->id;
+            $comment->content = $returnComment;
+            $comment->displayed = 1;
+            $comment->type = setting('return.command');
+            $comment->save();
+        }
     }
 }
