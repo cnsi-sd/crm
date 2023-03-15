@@ -2,6 +2,7 @@
 
 namespace App\Enums\Ticket;
 
+use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use Exception;
@@ -15,6 +16,7 @@ enum MessageVariable: string
     case DELAI_COMMANDE = 'Délai commande';
     case MARKETPLACE = 'Marketplace';
     case NUM_CMD_MP = 'Numéro commande MP';
+    case TELEPHONE_MP_FFM = 'Téléphone MP Fulfillment';
 
     // User scope
     case SIGNATURE_ADMIN = 'Signature admin';
@@ -58,6 +60,10 @@ enum MessageVariable: string
             self::MARKETPLACE => ucfirst($order->channel->name),
             self::NUM_CMD_MP => $order->channel_order_number,
             self::SIGNATURE_ADMIN => $message->user->name,
+            self::TELEPHONE_MP_FFM => match($order->channel->name) {
+                ChannelEnum::CDISCOUNT_FR => 'par téléphone au 09 70 80 90 50',
+                default => 'par téléphone',
+            },
             self::SIGNATURE_BOT, self::NOM_BOUTIQUE, self::TELEPHONE_BOUTIQUE  => $this->getSettingValue(),
         };
     }
