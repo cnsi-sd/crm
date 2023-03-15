@@ -28,6 +28,66 @@ class AmazonBeautifierMail
         return self::cleanHtml($new_html);
     }
 
+    public static function getReturnInformation($mail_html){
+        /*$get_starter_transporteur = 'Motif du retour :';
+        $cursor_start_reading = strpos($mail_html, $get_starter_transporteur);
+        $new_html = self::getHtmlElement('p', $mail_html, $cursor_start_reading);*/
+
+        $keep = (preg_match("'</head></html>'si", $mail_html)) ? ['head'] : [];
+        //$content = trim((new AmazonBeautifierMail)->cleanNonAcceptableHtmlElements($mail_html, $keep));
+        return self::parse($mail_html);
+    }
+
+    /**
+     * Clean head, css and js elements from a mail
+     *
+     * @param type $html
+     * @return type
+     */
+    protected function cleanNonAcceptableHtmlElements($html, $keep = array()) {
+
+        //$lenBefore=strlen($html);
+        $search = array();
+        if (!in_array('script', $keep))
+            $search[] = "'<script[^>]*?>.*?</script>'si"; //remove js
+        if (!in_array('style', $keep))
+            $search[] = "'<style[^>]*?>.*?</style>'si"; //remove css
+        if (!in_array('link', $keep))
+            $search[] = "'<link[^>]*?>.*?</link>'si"; //remove link
+        if (!in_array('object', $keep))
+            $search[] = "'<object[^>]*?>.*?</object>'si";
+        if (!in_array('head', $keep))
+            $search[] = "'<head[^>]*?>.*?</head>'si"; //remove head
+
+        $replace = "";
+        $formattedHtml = preg_replace($search, $replace, $html);
+        //$lenAfter = strlen($formattedHtml);
+        //echo "lenBefore=$lenBefore lenAfter=$lenAfter <br/>";
+        return $formattedHtml;
+    }
+
+    public static function parse($email)
+    {
+        //$default_data = self::parse($email);
+
+        $additional_comment = '';
+
+        if (preg_match("'Transporteur du retour&#xa0;: (?<carrier>.*)<br>'i", $email, $data)) {
+            $carrier = $data['carrier'];
+
+            $tracking_number = '';
+            if (preg_match("'Numéro de suivi&#xa0;: (?<tracking>)<br>'i", $email, $data))
+                $tracking_number = $data['tracking'];
+
+            $additional_comment_body = "---------%s---------<br>Retour automatique Amazon<br>Transporteur: %s<br>Numéro de suivi %s<br>-------------------------------------<br>";
+
+            $additional_comment = sprintf($additional_comment_body, date('Y-m-d H:i:s'), $carrier, $tracking_number);
+        }
+
+
+        $default_data['additional_comment'] = $additional_comment;
+        return $default_data;
+    }
 
 
     /**

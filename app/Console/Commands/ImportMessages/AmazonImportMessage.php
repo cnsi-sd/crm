@@ -12,6 +12,7 @@ use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\Tags\TagList;
+use App\Models\Ticket\Comment;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
@@ -249,7 +250,13 @@ class AmazonImportMessage extends AbstractImportMessages
 
     private function addReturnOnThread(Thread $thread, mixed $email)
     {
-        $tag = Tag::query()->select('id')->where('name', 'Autorisation retour AMAZON');
-        $thread->checkTagList($tag);
+        $thread->checkTagList(setting('tag.retour_amazon'));
+        $infoMail = $email->textHtml;
+        $returnComment = AmazonBeautifierMail::getReturnInformation($infoMail);
+        $comment = new Comment();
+        $comment->thread_id = $thread->id;
+        $comment->content = $returnComment;
+        $comment->displayed = 1;
+        $comment->type = setting();
     }
 }
