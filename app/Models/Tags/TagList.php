@@ -39,7 +39,7 @@ class TagList extends Model
     }
 
     public function addTag(int $tagId){
-        $tag = Tag::find($tagId);
+        $tag = Tag::findOrFail($tagId);
         $this->tags()->attach($tag->id);
         return $tag;
     }
