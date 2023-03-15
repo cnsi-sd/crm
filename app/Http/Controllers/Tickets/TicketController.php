@@ -225,8 +225,7 @@ class TicketController extends AbstractController
 
     public function saveThreadTags(Request $request) {
         $taglist = TagList::find($request->input('taglist_id'));
-        $tag = Tag::find($request->input('tag_id'));
-        $tag->taglists()->attach($taglist->id);
+        $tag = $taglist->addTag($request->input('tag_id'));
         return response()->json($tag);
     }
 

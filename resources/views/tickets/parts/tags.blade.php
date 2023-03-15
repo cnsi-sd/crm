@@ -6,7 +6,7 @@
         </button>
     </div>
     <div class="card-body" id="card-body-tag">
-        @foreach($thread->tagList as $taglist)
+        @foreach($thread->tagLists as $taglist)
             <div id="list-{{$taglist->id}}">
                 <button form="saveTicket" type="button" id="deleteTaglist-{{$taglist->id}}"
                         class="deleteTaglist btn btn-danger"

@@ -75,7 +75,7 @@ class TagsController extends AbstractController
 
     public function newTagLine(Request $request) {
         $taglist = new TagList();
-        $taglist->thread_id =$request->input('thread_id');
+        $taglist->thread_id = $request->input('thread_id');
         $taglist->save();
         return response()->json($taglist->id);
     }
