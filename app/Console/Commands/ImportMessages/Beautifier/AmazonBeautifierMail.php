@@ -41,9 +41,9 @@ class AmazonBeautifierMail
             if (preg_match("'Numéro de suivi&#xa0;: (?<tracking>)<br>'i", $email, $data))
                 $tracking_number = $data['tracking'];
 
-            $additional_comment_body = "%s<br>Retour automatique Amazon<br>Transporteur: %s<br>Numéro de suivi %s<br>";
+            $additional_comment_body = "Retour automatique Amazon<br>Transporteur: %s<br>Numéro de suivi %s<br>";
 
-            $additional_comment = sprintf($additional_comment_body, date('Y-m-d H:i:s'), $carrier, $tracking_number);
+            $additional_comment = sprintf($additional_comment_body, $carrier, $tracking_number);
         }
 
 
