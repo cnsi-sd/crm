@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
-        <form method="post" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
+        <form id="saveTicket" method="post" enctype="multipart/form-data" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
             @csrf
         </form>
             <div class="row">
@@ -150,7 +150,13 @@
                                         </button>
                                     </div>
                                     <div class="attachments">
-                                        <label>{{ trans_choice('app.attachment',2) }}</label> <input type="file"/>
+                                        <label>{{ trans_choice('app.attachment',2) }}</label>
+                                        <input form="saveTicket" name="attachment_1_file" id="attachment_1_file" type="file"/>
+                                        <input form="saveTicket" type="hidden" name="attachment_1_type" value="other">
+                                        <input form="saveTicket" name="attachment_2_file" id="attachment_2_file" type="file"/>
+                                        <input form="saveTicket" type="hidden" name="attachment_2_type" value="other">
+                                        <input form="saveTicket" name="attachment_3_file" id="attachment_3_file" type="file"/>
+                                        <input form="saveTicket" type="hidden" name="attachment_3_type" value="other">
                                     </div>
                                     <label>{{ __('app.ticket.default_replies') }}</label>
                                 </div>

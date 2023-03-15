@@ -22,10 +22,9 @@ use App\Models\User\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\View\View;
 use Cnsi\Attachments\Model\Document;
-use Cnsi\Attachments\Trait\Documentable;
-use Cnsi\Attachments\Enum\DocumentTypeEnum;
 
 class TicketController extends AbstractController
 {
@@ -175,6 +174,16 @@ class TicketController extends AbstractController
                     'content' => TinyMCE::toText($messageContent),
                 ]);
 
+                if($request->file('attachment_1_file')) {
+                    $this->uploadFile($request,$message,"attachment_1_type","attachment_1_file");
+                }
+                if($request->file('attachment_2_file')) {
+                    $this->uploadFile($request,$message,"attachment_2_type","attachment_2_file");
+                }
+                if($request->file('attachment_3_file')) {
+                    $this->uploadFile($request,$message,"attachment_3_type","attachment_3_file");
+                }
+
                 AbstractSendMessage::dispatchMessage($message);
             }
             if($request->input('ticket-thread-comments-content')) {
@@ -219,6 +228,17 @@ class TicketController extends AbstractController
         $tag = Tag::find($request->input('tag_id'));
         $tag->taglists()->attach($taglist->id);
         return response()->json($tag);
+    }
+
+    public function uploadFile($request, $message, $typeName, $fileName)
+    {
+        $modelLoad = App::make($message::class);
+        Document::upload(
+            $request,
+            $modelLoad->find($message->id),
+            $typeName,
+            $fileName
+        );
     }
 
 }
