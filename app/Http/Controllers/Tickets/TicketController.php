@@ -208,7 +208,7 @@ class TicketController extends AbstractController
         return view('tickets.ticket')
             ->with('ticket', $ticket)
             ->with('thread', $thread)
-            ->with('documents_table_comments', $thread->getCommentsDocumentsTable($request, $upload_doc_route));
+            ->with('documents_table_comments', $thread->getDocumentsTable($request, $upload_doc_route));
     }
 
     public function delete_tag(Request $request) {

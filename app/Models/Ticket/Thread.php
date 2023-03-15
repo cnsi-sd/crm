@@ -7,7 +7,6 @@ use App\Enums\Ticket\TicketStateEnum;
 use App\Enums\CrmDocumentTypeEnum;
 use App\Models\Tags\TagList;
 use App\Models\Ticket\Revival\Revival;
-use App\Trait\CrmDocumentable;
 use DateInterval;
 use DateTime;
 use Exception;
@@ -18,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Cnsi\Attachments\Model\Document;
-//use Cnsi\Attachments\Trait\Documentable;
+use Cnsi\Attachments\Trait\Documentable;
 
 /**
  * @property int $id
@@ -60,7 +59,7 @@ class Thread extends Model
         'channel_data' => 'array'
     ];
 
-    use CrmDocumentable;
+    use Documentable;
 
     /**
      * create or get thread
