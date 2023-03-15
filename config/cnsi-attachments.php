@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'document_type_enum' => '\App\Enums\CrmDocumentTypeEnum',
+    'document_type_enum' => \App\Enums\CrmDocumentTypeEnum::class,
 ];
