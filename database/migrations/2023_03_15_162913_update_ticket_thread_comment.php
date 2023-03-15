@@ -25,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('ticket_thread_comments', function (Blueprint $table) {
+            $table->foreignId('user_id')->nullable(false)->change();
+        });
     }
 };
