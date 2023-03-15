@@ -22,7 +22,9 @@ use App\Models\User\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\View\View;
+use Cnsi\Attachments\Model\Document;
 
 class TicketController extends AbstractController
 {
@@ -135,6 +137,7 @@ class TicketController extends AbstractController
      */
     public function ticket(Request $request, Ticket $ticket, Thread $thread): View|RedirectResponse
     {
+        $upload_doc_route = route('upload_document', [$thread, $thread::class]);
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
 
@@ -171,6 +174,16 @@ class TicketController extends AbstractController
                     'content' => TinyMCE::toText($messageContent),
                 ]);
 
+                if($request->file('attachment_1_file')) {
+                    $this->uploadFile($request,$message,"attachment_1_type","attachment_1_file");
+                }
+                if($request->file('attachment_2_file')) {
+                    $this->uploadFile($request,$message,"attachment_2_type","attachment_2_file");
+                }
+                if($request->file('attachment_3_file')) {
+                    $this->uploadFile($request,$message,"attachment_3_type","attachment_3_file");
+                }
+
                 AbstractSendMessage::dispatchMessage($message);
             }
             if($request->input('ticket-thread-comments-content')) {
@@ -194,7 +207,8 @@ class TicketController extends AbstractController
 
         return view('tickets.ticket')
             ->with('ticket', $ticket)
-            ->with('thread', $thread);
+            ->with('thread', $thread)
+            ->with('documents_table_comments', $thread->getDocumentsTable($request, $upload_doc_route));
     }
 
     public function delete_tag(Request $request) {
@@ -213,6 +227,17 @@ class TicketController extends AbstractController
         $taglist = TagList::find($request->input('taglist_id'));
         $tag = $taglist->addTag($request->input('tag_id'));
         return response()->json($tag);
+    }
+
+    public function uploadFile($request, $message, $typeName, $fileName)
+    {
+        $modelLoad = App::make($message::class);
+        Document::upload(
+            $request,
+            $modelLoad->find($message->id),
+            $typeName,
+            $fileName
+        );
     }
 
 }

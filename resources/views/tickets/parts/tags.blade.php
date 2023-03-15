@@ -1,20 +1,20 @@
 <div class="card">
     <div class="card-header d-flex">
         <p class="w-100">{{ trans_choice('app.tags.tags', 2) }}</p>
-        <button type="button" id="add" class="btn btn-success flex-shrink-1"
+        <button form="saveTicket" type="button" id="add" class="btn btn-success flex-shrink-1"
                 data-thread_id="{{$thread->id}}" data-url_add_tag="{{route('addTagList')}}">+
         </button>
     </div>
     <div class="card-body" id="card-body-tag">
         @foreach($thread->tagLists as $taglist)
             <div id="list-{{$taglist->id}}">
-                <button type="button" id="deleteTaglist-{{$taglist->id}}"
+                <button form="saveTicket" type="button" id="deleteTaglist-{{$taglist->id}}"
                         class="deleteTaglist btn btn-danger"
                         data-thread_id="{{ $thread->id }}"
                         data-taglist_id="{{$taglist->id }}"
                 >x
                 </button>
-                <select name="ticket-revival" class="form-select no-sort tags"
+                <select form="saveTicket" name="ticket-revival" class="form-select no-sort tags"
                         data-thread_id="{{$thread->id}}"
                         data-taglist_id="{{$taglist->id}}">
                     <option value="">{{ __('app.revival.select_revival') }}</option>
