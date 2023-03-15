@@ -2,8 +2,9 @@
 
 @section('content')
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
-        <form method="post" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
+        <form id="saveTicket" method="post" enctype="multipart/form-data" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
             @csrf
+        </form>
             <div class="row">
                 <div class="col-3">
                     <div class="ticket-divider h4 text-center">
@@ -14,7 +15,7 @@
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.state') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
-                                    <select required name="ticket-state" class="form-select no-select2">
+                                    <select form="saveTicket" required name="ticket-state" class="form-select no-select2">
                                             <option value="">---</option>
                                         @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $ticketState)
                                             <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
@@ -25,7 +26,7 @@
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.priority') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
-                                    <select name="ticket-priority" class="form-select no-select2">
+                                    <select form="saveTicket" name="ticket-priority" class="form-select no-select2">
                                         @foreach(\App\Enums\Ticket\TicketPriorityEnum::getList() as $ticketPriority)
                                             <option value="{{ $ticketPriority }}" @selected($ticket->priority === $ticketPriority)>{{ $ticketPriority }}</option>
                                         @endforeach
@@ -35,7 +36,7 @@
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.owner') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
-                                    <select name="ticket-user_id" class="form-select">
+                                    <select form="saveTicket" name="ticket-user_id" class="form-select">
                                         @foreach (\App\Models\User\User::all() as $user)
                                             <option value="{{ $user->id }}" @selected($ticket->user_id === $user->id)>{{ $user->name }}</option>
                                         @endforeach
@@ -44,7 +45,7 @@
                             </div>
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.deadline') }} <span class="required_field">*</span></label></div>
-                                <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ $ticket->deadline->format("Y-m-d") }}"></div>
+                                <div class="col"><input form="saveTicket" name="ticket-deadline" class="form-control" type="date" value="{{ $ticket->deadline->format("Y-m-d") }}"></div>
                             </div>
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
@@ -63,11 +64,11 @@
                         <div class="card-body">
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
-                                <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
+                                <div class="col"><input form="saveTicket" name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
                             </div>
                             <div class="row">
                                 <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date){{ $ticket->delivery_date->format("Y-m-d") }}@endif"/></div>
+                                <div class="col"><input form="saveTicket" name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date){{ $ticket->delivery_date->format("Y-m-d") }}@endif"/></div>
                             </div>
                         </div>
                     </div>
@@ -84,13 +85,14 @@
                             </div>
                             <div class="row">
                                 <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>
-                                <div class="col"><input name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$thread->customer_issue}}"/></div>
+                                <div class="col"><input form="saveTicket" name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$thread->customer_issue}}"/></div>
                             </div>
                         </div>
                     </div>
 
                     @include('tickets.parts.tags')
                     @include('tickets.parts.revival')
+                    {!! $documents_table_comments !!}
                     @include('tickets.parts.private_comments')
                 </div>
                 <div class="col-9">
@@ -117,7 +119,7 @@
                         </div>
                     </div>
                     <div class="mt-2 text-end">
-                        <button type="submit" class="btn btn-outline-primary">
+                        <button form="saveTicket" type="submit" class="btn btn-outline-primary">
                             {{ "💾 " . __('app.save') }}
                         </button>
                     </div>
@@ -141,14 +143,20 @@
                         <div class="tab-pane fade show active" role="tabpanel" tabindex="0">
                             <div class="card">
                                 <div class="card-body">
-                                    <textarea id="message_to_customer" name="ticket-thread-messages-content"></textarea>
+                                    <textarea form="saveTicket" id="message_to_customer" name="ticket-thread-messages-content"></textarea>
                                     <div class="mt-2 text-end">
-                                        <button type="submit" class="btn btn-outline-primary">
+                                        <button form="saveTicket" type="submit" class="btn btn-outline-primary">
                                             {{ __('app.send_message') }}
                                         </button>
                                     </div>
                                     <div class="attachments">
-                                        <label>{{ trans_choice('app.attachment',2) }}</label> <input type="file"/>
+                                        <label>{{ trans_choice('app.attachment',2) }}</label>
+                                        <input form="saveTicket" name="attachment_1_file" id="attachment_1_file" type="file"/>
+                                        <input form="saveTicket" type="hidden" name="attachment_1_type" value="other">
+                                        <input form="saveTicket" name="attachment_2_file" id="attachment_2_file" type="file"/>
+                                        <input form="saveTicket" type="hidden" name="attachment_2_type" value="other">
+                                        <input form="saveTicket" name="attachment_3_file" id="attachment_3_file" type="file"/>
+                                        <input form="saveTicket" type="hidden" name="attachment_3_type" value="other">
                                     </div>
                                     <label>{{ __('app.ticket.default_replies') }}</label>
                                 </div>
@@ -158,7 +166,6 @@
                     </div>
                 </div>
             </div>
-        </form>
     </div>
 @endsection
 
