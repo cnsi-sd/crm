@@ -6,4 +6,6 @@
 <script src="{{ Vite::asset('resources/js/hyper.js') }}"></script>
 @yield('script-bottom')
 
+@stack('custom-scripts')
+
 @include('sweetalert::alert')
