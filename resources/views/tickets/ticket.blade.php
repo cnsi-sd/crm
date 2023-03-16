@@ -155,9 +155,7 @@
                                             <div class="col">
                                                 <select form="saveTicket" name="attachment_1_type" class="form-select no-select2">
                                                     <option value="">---</option>
-                                                    @foreach(\App\Enums\MessageDocumentTypeEnum::getList() as $messageDocumentType)
-                                                        <option value="{{ $messageDocumentType }}">{{ \App\Enums\MessageDocumentTypeEnum::getMessage($messageDocumentType)}}</option>
-                                                    @endforeach
+                                                    @include('tickets.parts.messages_document_types')
                                                 </select>
                                             </div>
                                             <div class="col">
@@ -168,9 +166,7 @@
                                             <div class="col">
                                                 <select form="saveTicket" name="attachment_2_type" class="form-select no-select2">
                                                     <option value="">---</option>
-                                                    @foreach(\App\Enums\MessageDocumentTypeEnum::getList() as $messageDocumentType)
-                                                        <option value="{{ $messageDocumentType }}">{{ \App\Enums\MessageDocumentTypeEnum::getMessage($messageDocumentType)}}</option>
-                                                    @endforeach
+                                                    @include('tickets.parts.messages_document_types')
                                                 </select>
                                             </div>
                                             <div class="col">
@@ -181,9 +177,7 @@
                                             <div class="col">
                                                 <select form="saveTicket" name="attachment_3_type" class="form-select no-select2">
                                                     <option value="">---</option>
-                                                    @foreach(\App\Enums\MessageDocumentTypeEnum::getList() as $messageDocumentType)
-                                                        <option value="{{ $messageDocumentType }}">{{ \App\Enums\MessageDocumentTypeEnum::getMessage($messageDocumentType)}}</option>
-                                                    @endforeach
+                                                    @include('tickets.parts.messages_document_types')
                                                 </select>
                                             </div>
                                             <div class="col">
