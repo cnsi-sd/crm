@@ -88,10 +88,10 @@
                                         @endforeach
                                     </select>
                                     <span class="help-block">
-                                <small>
-                                    {{ __('app.tags.select_all_channel') }}
-                                </small>
-                            </span>
+                                        <small>
+                                            {{ __('app.tags.select_all_channel') }}
+                                        </small>
+                                    </span>
                                 </div>
                             </div>
                         </div>

@@ -218,19 +218,17 @@ return [
         'name' => 'Nom de la relance automatique',
         'frequency' => 'Fréquence d\'envoi (en jours):',
         'max_revival' => 'Nombre d\'envoi de relance',
-        'default_answer' => 'Message envoyer',
-        'end_default_answer' => 'Message envoyer à la fin du cycle de relance',
-        'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
-        'choose_answer' => 'Choisir le message à envoyer',
+        'end_default_answer' => 'Message envoyé à la fin du cycle de relance',
         'end_state' => 'Statut final',
-        'channel' => 'Canaux d\'application',
         'start_revival' => 'À partir du',
         'select_revival' => 'Aucune',
+        'select_channel' => 'Canaux autorisés',
         'frequency_details' => 'Tous les jours|Tous les :freq jours',
         'MaxRevival' => 'Messages envoyés :',
         'nextReply' => 'Prochaine relance : ',
         'sendType' => 'Type d\'envoi',
-        'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.'
+        'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.',
+        'select_all_channel' => 'Laissez vide pour tout autoriser',
     ],
 
     'tags' => [

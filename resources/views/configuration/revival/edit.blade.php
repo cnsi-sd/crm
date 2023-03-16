@@ -62,22 +62,25 @@
                     <div class="card">
                         <div class="m-2 ">
                             <label for="channels">
-                                {{__('app.defaultAnswer.select_channel')}}
-                                <span class="required_field">*</span>
+                                {{__('app.revival.select_channel')}}
                             </label>
                             <select
-                                name="channel[]"
+                                name="channels[]"
                                 id="channels"
                                 class="form-control form-control-sm form-select no-sort"
                                 multiple
-                                required
                             >
                                 @foreach(\App\Models\Channel\Channel::all() as $channel)
-                                    <option value="{{$channel->id}}" @selected($revival->isChannelSelected($channel))>
+                                    <option value="{{$channel->id}}" @selected($revival->isChannelAuthorized($channel))>
                                         {{$channel->name}}
                                     </option>
                                 @endforeach
                             </select>
+                            <span class="help-block">
+                                <small>
+                                    {{ __('app.revival.select_all_channel') }}
+                                </small>
+                            </span>
                         </div>
                         <div class="m-2">
                             <label for="name">
@@ -90,8 +93,7 @@
                                 class="form-control form-control-sm form-select"
                                 required
                             >
-                                <option value="">-- {{trans_choice('app.revival.choose_answer', 1)}} --
-                                </option>
+                                <option value=""></option>
                                 @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                     <option value="{{$answer->id}}" @selected($revival->isAnswerSelected($answer))>
                                         {{$answer->name}}
@@ -102,10 +104,7 @@
                             @if (strlen($revival?->default_answer?->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
                                 <div class="row mt-2">
                                     <div class="col">
-                                        <div
-                                            class="alert alert-warning alert-dismissible bg-warning border-0 fade show text-dark"
-                                            role="alert"
-                                        >
+                                        <div class="alert alert-warning" role="alert">
                                             {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival?->default_answer?->content) / 160)])}}
                                         </div>
                                     </div>
@@ -123,8 +122,7 @@
                                 class="form-control form-control-sm form-select"
                                 required
                             >
-                                <option value="">-- {{trans_choice('app.revival.choose_end_default_answer', 1)}} --
-                                </option>
+                                <option value=""></option>
                                 @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                     <option value="{{$answer->id}}"
                                         @selected($revival->isEndAnswerSelected($answer))>
@@ -135,10 +133,7 @@
                             @if (strlen($revival?->end_default_answer?->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
                                 <div class="row mt-2">
                                     <div class="col">
-                                        <div
-                                            class="alert alert-warning alert-dismissible bg-warning border-0 fade show text-dark"
-                                            role="alert"
-                                        >
+                                        <div class="alert alert-warning" role="alert">
                                             {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival->default_answer->content) / 160)])}}
                                         </div>
                                     </div>
@@ -157,11 +152,10 @@
                                 class="form-control form-control-sm form-select"
                                 required
                             >
-                                <option value="">-- {{trans_choice('app.revival.end_state', 1)}} --
-                                </option>
-                                @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $key => $value)
-                                    <option value="{{ $value }}"
-                                        @selected($revival->isStateSelected($value))>
+                                <option value=""></option>
+                                @foreach(\App\Enums\Ticket\TicketStateEnum::getTranslatedList() as $key => $value)
+                                    <option value="{{ $key }}"
+                                        @selected($revival->isStateSelected($key))>
                                         {{ $value }}
                                     </option>
                                 @endforeach
@@ -191,7 +185,7 @@
             </div>
         </div>
         <div class="d-grid gap-2 mt-3">
-            <button type="submit" name="save_default_answer" class="btn btn-primary btn-block">
+            <button type="submit" name="save_revival" class="btn btn-primary btn-block">
                 {{ __('app.save') }}
             </button>
         </div>
