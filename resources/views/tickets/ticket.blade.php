@@ -6,7 +6,7 @@
             @csrf
         </form>
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
                     <div class="ticket-divider h4 text-center">
                         {{ __('app.ticket.admin_ticket') }} #{{ $ticket->id }}
                     </div>
@@ -95,7 +95,7 @@
                     {!! $documents_table_comments !!}
                     @include('tickets.parts.private_comments')
                 </div>
-                <div class="col-9">
+                <div class="col-8">
                     <ul class="nav nav-tabs" id="ticketTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="hide-tab" data-bs-toggle="tab" data-bs-target="#hide" type="button" role="tab" aria-controls="hide" aria-selected="true"><i class="uil-home"></i></button>
