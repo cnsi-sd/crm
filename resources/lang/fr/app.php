@@ -139,6 +139,8 @@ return [
         'designation' => 'Désignation',
         'qty' => 'Qté',
         'supplier' => 'Fournisseur',
+        'reference' => 'Référence :',
+        'ean' => 'EAN :',
     ],
 
     'login' => [

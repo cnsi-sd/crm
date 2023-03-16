@@ -113,11 +113,13 @@
                                 <tr>
                                     <td>
                                         {{ $product['name'] }}
-                                        - {{ $product['reference'] }}
-                                        - {{ $product['ean'] }}
+                                        <br>
+                                        <b>{{ __('app.order.reference') }}</b> {{ $product['reference'] }}
+                                        <br>
+                                        <b>{{ __('app.order.ean') }}</b> {{ $product['ean'] }}
                                     </td>
                                     <td>{{ $product['quantity'] }}</td>
-                                    <td>
+                                    <td class="text-nowrap">
                                         {{ $product['supplier'] }}
                                         @if($product['is_definitive_supplier'])
                                             <span class="badge bg-warning"><i class="uil-lock"></i></span>
