@@ -209,9 +209,8 @@ return [
         'save' => 'Enregistrer la réponse',
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
-        'select_channel' => 'Canaux sélectionnés',
-        'select_all_channel' => 'Laissez le champs vide pour tout sélectionés',
-        'message' => 'Message '
+        'select_channel' => 'Canaux autorisés',
+        'select_all_channel' => 'Laissez vide pour tout autoriser',
     ],
 
     'revival' => [

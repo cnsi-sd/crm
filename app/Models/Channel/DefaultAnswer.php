@@ -48,7 +48,8 @@ class DefaultAnswer extends Model
         return $this->hasMany(Revival::class);
     }
 
-    public function getManagableChannel(){
+    public function getAuthorizedChannels()
+    {
         return $this->channels->count() === 0 ? Channel::all()->all() : $this->channels->all();
     }
 
@@ -67,7 +68,7 @@ class DefaultAnswer extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setCallback(function (DefaultAnswer $defaultAnswer){
-                $channels = $defaultAnswer->getManagableChannel();
+                $channels = $defaultAnswer->getAuthorizedChannels();
                 foreach ($channels as $channel){
                     $listChannel[] = $channel->name;
                 }

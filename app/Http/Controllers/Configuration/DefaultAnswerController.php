@@ -80,13 +80,8 @@ class DefaultAnswerController extends AbstractController
         // Save
         $defaultAnswer->save();
 
-        $channelSelect = $request->input('channel');
-        $defaultAnswer->channels()->detach();
-        if (!empty($channelSelect)) {
-            foreach ($channelSelect as $channelId) {
-                $defaultAnswer->channels()->attach($channelId);
-            }
-        }
+        $channels = $request->input('channels');
+        $defaultAnswer->channels()->sync($channels);
     }
 
     public function delete(Request $request, ?DefaultAnswer $defaultAnswer)
