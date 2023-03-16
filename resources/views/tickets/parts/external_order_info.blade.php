@@ -79,8 +79,12 @@
                             <div>{{ $order['invoice_address']['address1'] }}</div>
                             <div>{{ $order['invoice_address']['address2'] }}</div>
                             <div>{{ $order['invoice_address']['postcode'] }} {{ $order['invoice_address']['city'] }}</div>
-                            <div>{{ $order['invoice_address']['phone'] }}</div>
-                            <div>{{ $order['invoice_address']['phone_mobile'] }}</div>
+                            <div class="phone_number" title="{{ __('app.ticket.click_and_call.start') }}">
+                                {{ $order['invoice_address']['phone'] }}
+                            </div>
+                            <div class="phone_number" title="{{ __('app.ticket.click_and_call.start') }}">
+                                {{ $order['invoice_address']['phone_mobile'] }}
+                            </div>
                         </div>
                         <div class="col-6">
                             <div class="fw-bold">{{ __('app.order.shipping') }}</div>
@@ -89,8 +93,12 @@
                             <div>{{ $order['delivery_address']['address1'] }}</div>
                             <div>{{ $order['delivery_address']['address2'] }}</div>
                             <div>{{ $order['delivery_address']['postcode'] }} {{ $order['invoice_address']['city'] }}</div>
-                            <div>{{ $order['delivery_address']['phone'] }}</div>
-                            <div>{{ $order['delivery_address']['phone_mobile'] }}</div>
+                            <div class="phone_number" title="{{ __('app.ticket.click_and_call.start') }}">
+                                {{ $order['delivery_address']['phone'] }}
+                            </div>
+                            <div class="phone_number" title="{{ __('app.ticket.click_and_call.start') }}">
+                                {{ $order['delivery_address']['phone_mobile'] }}
+                            </div>
                         </div>
                     </div>
                 </div>

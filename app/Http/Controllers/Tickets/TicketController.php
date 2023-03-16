@@ -7,6 +7,7 @@ use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
+use App\Helpers\Prestashop\LiveoGateway;
 use App\Helpers\TinyMCE;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\AbstractSendMessage;
@@ -19,6 +20,7 @@ use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use App\Models\User\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -227,6 +229,23 @@ class TicketController extends AbstractController
         $taglist = TagList::find($request->input('taglist_id'));
         $tag = $taglist->addTag($request->input('tag_id'));
         return response()->json($tag);
+    }
+
+    public function clickAndCall(Request $request): JsonResponse
+    {
+        try {
+            LiveoGateway::startCall(auth()->user()->email, $request->input('phone_number'));
+            return response()->json([
+                'status' => 'success',
+                'message' => __('app.ticket.click_and_call.success'),
+            ]);
+        }
+        catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     public function uploadFile($request, $message, $typeName, $fileName)

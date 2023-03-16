@@ -17,7 +17,7 @@ final class CrmLinkGateway
         // Get endpoint from environment
         $this->endpoint = env('PRESTASHOP_URL') . 'index.php';
         $this->token = env('PRESTASHOP_CRM_LINK_TOKEN');
-        $this->logger = new Logger('api/out/prestashop/prestashop.log', false, false, true, 14);
+        $this->logger = new Logger('api/out/prestashop/crmlink.log', false, false, true, 14);
     }
 
     protected function get(array $queryParams): Response
