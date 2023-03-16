@@ -50,7 +50,7 @@
                                 multiple
                             >
                                 @foreach(\App\Models\Channel\Channel::all() as $channel)
-                                    <option value="{{$channel->id}}" @selected($defaultAnswer->isChannelSelected($channel)) >
+                                    <option value="{{$channel->id}}" @selected($defaultAnswer->isChannelAuthorized($channel)) >
                                         {{$channel->name}}
                                     </option>
                                 @endforeach

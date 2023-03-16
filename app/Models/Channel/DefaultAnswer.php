@@ -34,7 +34,7 @@ class DefaultAnswer extends Model
         'deleted_at'
     ];
 
-    public function isChannelSelected(Channel $channel) {
+    public function isChannelAuthorized(Channel $channel) {
         return $this->channels->keyBy('id')->has($channel->id);
     }
 

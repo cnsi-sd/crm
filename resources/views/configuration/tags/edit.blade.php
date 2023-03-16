@@ -82,7 +82,7 @@
                                         multiple
                                     >
                                         @foreach(\App\Models\Channel\Channel::all() as $channel)
-                                            <option value="{{$channel->id}}" @selected($tags->isChannelSelected($channel))>
+                                            <option value="{{$channel->id}}" @selected($tags->isChannelAuthorized($channel))>
                                                 {{$channel->name}}
                                             </option>
                                         @endforeach
