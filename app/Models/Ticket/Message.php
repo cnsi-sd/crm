@@ -77,8 +77,10 @@ class Message extends Model
             MessageDocumentTypeEnum::AUTHENTIC_CERTIFICATE,
             MessageDocumentTypeEnum::CUSTOMER_INVOICE,
             MessageDocumentTypeEnum::CUSTOMER_RETURN,
+            MessageDocumentTypeEnum::CUSTOMER_UPLOAD,
             MessageDocumentTypeEnum::MANUAL_USE,
             MessageDocumentTypeEnum::OTHER,
+            MessageDocumentTypeEnum::PREPAID_RETURN_TICKET,
             MessageDocumentTypeEnum::SLIP_RETURN,
         ];
     }
