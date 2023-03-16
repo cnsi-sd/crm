@@ -65,6 +65,7 @@ class Order extends Model
         return $this->getPrestashopOrders() ? $this->getPrestashopOrders()[0] : null;
     }
 
+    // TODO : This method should be in a PrestashopOrder class.
     public static function getOrderDelay(array $prestashopOrder): ?int
     {
         $now = new DateTime();
@@ -82,6 +83,18 @@ class Order extends Model
         }
 
         return null;
+    }
+
+    // TODO : This method should be in a PrestashopOrder class.
+    public static function getOrderCreatedSinceNbDays(array $prestashopOrder): int
+    {
+        $now = new DateTime();
+        $order_date = new DateTime($prestashopOrder['date_add']);
+
+        $diff = $now->diff($order_date);
+        $days_diff = $diff->format('%a');
+
+        return (int)$days_diff;
     }
 
     public function tickets(): HasMany

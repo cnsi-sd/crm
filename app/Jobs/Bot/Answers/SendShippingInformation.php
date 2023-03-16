@@ -44,7 +44,8 @@ class SendShippingInformation extends AbstractAnswer
             return self::STOP_PROPAGATION;
         }
 
-        if ($this->isStateShipped($prestashopOrder)) {
+        $order_nb_days = Order::getOrderCreatedSinceNbDays($prestashopOrder);
+        if ($this->isStateShipped($prestashopOrder) && $order_nb_days < 3) {
             if ($this->isVirSupplier($prestashopOrder)) {
                 $this->sendAnswer(setting('bot.shipping_information.vir_shipped_answer_id'));
             } else {
