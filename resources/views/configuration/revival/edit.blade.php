@@ -99,14 +99,14 @@
                                 @endforeach
                             </select>
 
-                            @if (strlen($revival->default_answer->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
+                            @if (strlen($revival?->default_answer?->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
                                 <div class="row mt-2">
                                     <div class="col">
                                         <div
                                             class="alert alert-warning alert-dismissible bg-warning border-0 fade show text-dark"
                                             role="alert"
                                         >
-                                            {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival->default_answer->content) / 160)])}}
+                                            {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival?->default_answer?->content) / 160)])}}
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +132,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @if (strlen($revival->end_default_answer->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
+                            @if (strlen($revival?->end_default_answer?->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
                                 <div class="row mt-2">
                                     <div class="col">
                                         <div
