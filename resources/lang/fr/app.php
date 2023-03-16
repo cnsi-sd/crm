@@ -241,8 +241,9 @@ return [
         'name' => 'Nom',
         'backgroundColor' => 'Couleur du fond',
         'textColor' => 'Couleur du texte',
-        'select_channel' => 'Canaux selectioner',
+        'select_channel' => 'Canaux autorisés',
         'show' => 'Prévisualisation',
+        'select_all_channel' => 'Laissez vide pour tout autoriser',
     ],
 
     'recover_password' => [

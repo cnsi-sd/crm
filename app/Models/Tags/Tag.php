@@ -60,9 +60,11 @@ class Tag extends Model
             ->toArray();
     }
 
-    public function getManagableChannel(){
+    public function getAuthorizedChannels()
+    {
         return $this->channels->count() === 0 ? Channel::all()->all() : $this->channels->all();
     }
+
     public static function getTableColumns(): array
     {
         $columns = [];
@@ -82,7 +84,7 @@ class Tag extends Model
             ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setClass('w-25')
             ->setCallback(function (Tag $tag){
-                $tags = $tag->getManagableChannel();
+                $tags = $tag->getAuthorizedChannels();
                 foreach ($tags as $tag){
                     $listTags[] = $tag->name;
                 }

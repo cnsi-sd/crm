@@ -16,7 +16,8 @@
                             @csrf
                             <div class="row form-group mb-3">
                                 <div class="col-4">
-                                    <label for="name">{{__('app.tags.name')}}
+                                    <label for="name">
+                                        {{__('app.tags.name')}}
                                         <span class="required_field">*</span>
                                     </label>
                                 </div>
@@ -33,7 +34,8 @@
                             </div>
                             <div class="row form-group mb-3">
                                 <div class="col-4">
-                                    <label for="name">{{__('app.tags.backgroundColor')}}
+                                    <label for="name">
+                                        {{__('app.tags.backgroundColor')}}
                                         <span class="required_field">*</span>
                                     </label>
                                 </div>
@@ -51,7 +53,8 @@
                             </div>
                             <div class="row form-group mb-3">
                                 <div class="col-4">
-                                    <label for="name">{{__('app.tags.textColor')}}
+                                    <label for="name">
+                                        {{__('app.tags.textColor')}}
                                         <span class="required_field">*</span>
                                     </label>
                                 </div>
@@ -69,14 +72,12 @@
                             </div>
                             <div class="row form-group mb-3">
                                 <div class="col-4">
-                                    <label for="name">{{__('app.tags.select_channel')}}
-                                        <span class="required_field">*</span>
-                                    </label>
+                                    <label for="channels">{{__('app.tags.select_channel')}}</label>
                                 </div>
                                 <div class="col-8">
                                     <select
-                                        name="channel[]"
-                                        id="select-mp"
+                                        name="channels[]"
+                                        id="channels"
                                         class="form-control form-control-sm form-select no-sort"
                                         multiple
                                     >
@@ -86,6 +87,11 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <span class="help-block">
+                                <small>
+                                    {{ __('app.tags.select_all_channel') }}
+                                </small>
+                            </span>
                                 </div>
                             </div>
                         </div>
