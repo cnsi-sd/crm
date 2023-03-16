@@ -1,15 +1,36 @@
 $(document).ready(function () {
     $('.thread-comments .card-header').click(function () {
         const route = $(this).data("toggle-comment-route")
-        $.get(route, function (data) {
-
-        });
+        $.get(route);
     });
 
-    $('#order-info-tab').one("click", function () {
+    let externalOrderInfoLoaded = false;
+    $('#order-info-tab').click(function () {
+        if(externalOrderInfoLoaded)
+            return;
+
         const route = $(this).data("get-external-infos-route")
         $.get(route, function (data) {
             $('#order-info').html(data)
+
+            $('.phone_number').click(function() {
+                window.axios.post(url_click_and_call, {
+                    'phone_number' : $(this).text(),
+                })
+                .then(function (response) {
+                    window.swal.fire({
+                        icon: response.data.status,
+                        title: response.data.message,
+                        toast: true,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: 'top-end',
+                    })
+                })
+                .catch(window.axios_response.error)
+            });
+
+            externalOrderInfoLoaded = true;
         });
     })
 })

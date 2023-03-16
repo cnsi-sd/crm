@@ -175,6 +175,7 @@
     {!! \App\Helpers\JS::define('url_save_tag_on_ticketThread', route('saveTagOnticketThread')) !!}
     {!! \App\Helpers\JS::define('url_delete_tagList', route('deleteTagList')) !!}
     {!! \App\Helpers\JS::define('url_delete_TagList_On_Thread', route('deleteTagListOnThread')) !!}
+    {!! \App\Helpers\JS::define('url_click_and_call', route('click_and_call')) !!}
 
     {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
     <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>

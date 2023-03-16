@@ -48,6 +48,12 @@ return [
         'admin' => 'Administration'
     ],
 
+    'axios' => [
+        'unknown_error' => 'Erreur inconnue',
+        'no_response_error' => 'La demande a été faite mais aucune réponse n\'a été reçue',
+        'setting_up_error' => 'Something happened in setting up the request that triggered an Error',
+    ],
+
     /** Settings */
     'admin' => [
         'admin' => 'Paramètres',
@@ -117,6 +123,11 @@ return [
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
         'saved' => 'Ticket enregistré',
+
+        'click_and_call' => [
+            'start' => 'Cliquer pour lancer l\'appel',
+            'success' => 'Appel en cours',
+        ],
     ],
 
     'order' => [

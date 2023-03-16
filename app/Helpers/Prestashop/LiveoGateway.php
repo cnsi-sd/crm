@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 final class LiveoGateway
 {
-    public static function startCall(string $email, string $phone_number): bool
+    public static function startCall(string $email, string $phone_number): void
     {
         $logger = new Logger('api/out/prestashop/liveo.log', false, false, true, 14);
 
@@ -37,7 +37,5 @@ final class LiveoGateway
             $logger->error('Prestashop error : ' . $response->body());
             throw new Exception('Erreur Prestashop : ' . $response->body() );
         }
-
-        return true;
     }
 }
