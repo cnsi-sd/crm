@@ -92,8 +92,8 @@
 
                     @include('tickets.parts.tags')
                     @include('tickets.parts.revival')
-                    {!! $documents_table_comments !!}
                     @include('tickets.parts.private_comments')
+                    {!! $documents_table_comments !!}
                 </div>
                 <div class="col-8">
                     <ul class="nav nav-tabs" id="ticketTab" role="tablist">
