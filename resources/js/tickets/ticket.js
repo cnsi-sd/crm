@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    var attachmentIndex = 1;
     $('.thread-comments .card-header').click(function () {
         const route = $(this).data("toggle-comment-route")
         $.get(route, function (data) {
@@ -12,6 +13,13 @@ $(document).ready(function () {
             $('#order-info').html(data)
         });
     })
+
+    $('#addAttachment').on("click", function () {
+        $( ".attachment_bloc" ).first().clone().appendTo( ".attachments" );
+        attachmentIndex = attachmentIndex+1;
+        $( ".attachment_type" ).last().attr('name', "attachment_type_"+attachmentIndex);
+        $( ".attachment_file" ).last().attr('name', "attachment_file_"+attachmentIndex);
+    });
 })
 
 let inputLine = document.getElementById('number-list');
