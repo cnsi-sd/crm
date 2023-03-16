@@ -43,6 +43,7 @@ class Tag extends Model
     {
         return $this->channels->keyBy('id')->has($channel->id);
     }
+
     public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class, 'channel_tags', 'tag_id', 'channel_id');
@@ -62,7 +63,7 @@ class Tag extends Model
 
     public function getAuthorizedChannels()
     {
-        return $this->channels->count() === 0 ? Channel::all()->all() : $this->channels->all();
+        return $this->channels->count() === 0 ? Channel::all() : $this->channels;
     }
 
     public static function getTableColumns(): array
@@ -75,7 +76,6 @@ class Tag extends Model
             ->setLabel(__('app.tags.view'))
             ->setKey('name')
             ->setAlign(AlignEnum::CENTER)
-
             ->setCallback(function (Tag $tags) {
                 return view('configuration.tags.preview')
                     ->with('tags', $tags);
@@ -83,15 +83,12 @@ class Tag extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setClass('w-25')
-            ->setCallback(function (Tag $tag){
-                $tags = $tag->getAuthorizedChannels();
-                foreach ($tags as $tag){
-                    $listTags[] = $tag->name;
-                }
-                if (count($tags) === Channel::all()->count()){
+            ->setCallback(function (Tag $tag) {
+                $channels = $tag->getAuthorizedChannels();
+                if (count($channels) === Channel::all()->count()) {
                     return __('app.all');
                 } else {
-                    return implode(", ", $listTags);
+                    return $channels->pluck('name')->implode(', ');
                 }
             })
             ->setKey('channels')
@@ -110,25 +107,26 @@ class Tag extends Model
     public function getlistTagWithTickets($tickets): array
     {
         $listeTag = array();
-        foreach($tickets as $ticket){
+        foreach ($tickets as $ticket) {
             $this->getListTagByThread($ticket, $listeTag);
         }
         return $listeTag;
     }
 
-    public function getListTagByThread($ticket, &$listeTag, $returnList = false){
-        foreach($ticket->threads as $thread) {
+    public function getListTagByThread($ticket, &$listeTag, $returnList = false)
+    {
+        foreach ($ticket->threads as $thread) {
             foreach ($thread->taglists as $tagList) {
-                foreach ($tagList->tags as $tag){
-                    if (!array_key_exists($tag->name,$listeTag)){
-                        $listeTag[$tag->name] = ['tag_id'=> $tag->id, 'background_color'=>$tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
+                foreach ($tagList->tags as $tag) {
+                    if (!array_key_exists($tag->name, $listeTag)) {
+                        $listeTag[$tag->name] = ['tag_id' => $tag->id, 'background_color' => $tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
                     } else {
                         $listeTag[$tag->name]['count']++;
                     }
                 }
             }
         }
-        if($returnList){
+        if ($returnList) {
             return $listeTag;
         }
 

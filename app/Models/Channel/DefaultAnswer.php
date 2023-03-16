@@ -50,7 +50,7 @@ class DefaultAnswer extends Model
 
     public function getAuthorizedChannels()
     {
-        return $this->channels->count() === 0 ? Channel::all()->all() : $this->channels->all();
+        return $this->channels->count() === 0 ? Channel::all() : $this->channels;
     }
 
     public static function getTableColumns(): array
@@ -69,13 +69,10 @@ class DefaultAnswer extends Model
             ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setCallback(function (DefaultAnswer $defaultAnswer){
                 $channels = $defaultAnswer->getAuthorizedChannels();
-                foreach ($channels as $channel){
-                    $listChannel[] = $channel->name;
-                }
-                if (count($channels) === Channel::all()->count()){
+                if (count($channels) === Channel::all()->count()) {
                     return __('app.all');
                 } else {
-                    return implode(", ", $listChannel);
+                    return $channels->pluck('name')->implode(', ');
                 }
             })
             ->setKey('channels')
