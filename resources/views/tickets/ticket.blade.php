@@ -153,37 +153,16 @@
                                     </div>
                                     <div class="attachments">
                                         <label>{{ trans_choice('app.attachment',2) }}</label>
+                                        <button form="saveTicket" type="button" id="addAttachment" class="btn btn-success flex-shrink-1">+</button>
                                         <div class="row attachment_bloc">
                                             <div class="col">
-                                                <select form="saveTicket" name="attachment_1_type" class="form-select no-select2">
+                                                <select form="saveTicket" name="attachment_type_1" class="form-select no-select2 attachment_type">
                                                     <option value="">---</option>
                                                     @include('tickets.parts.messages_document_types')
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <input form="saveTicket" name="attachment_1_file" id="attachment_1_file" type="file"/>
-                                            </div>
-                                        </div>
-                                        <div class="row attachment_bloc">
-                                            <div class="col">
-                                                <select form="saveTicket" name="attachment_2_type" class="form-select no-select2">
-                                                    <option value="">---</option>
-                                                    @include('tickets.parts.messages_document_types')
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <input form="saveTicket" name="attachment_2_file" id="attachment_2_file" type="file"/>
-                                            </div>
-                                        </div>
-                                        <div class="row attachment_bloc">
-                                            <div class="col">
-                                                <select form="saveTicket" name="attachment_3_type" class="form-select no-select2">
-                                                    <option value="">---</option>
-                                                    @include('tickets.parts.messages_document_types')
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <input form="saveTicket" name="attachment_3_file" id="attachment_3_file" type="file"/>
+                                                <input form="saveTicket" name="attachment_file_1" id="attachment_file_1" type="file" class="attachment_file"/>
                                             </div>
                                         </div>
                                     </div>

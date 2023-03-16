@@ -33,6 +33,14 @@ $(document).ready(function () {
             externalOrderInfoLoaded = true;
         });
     })
+
+    var attachmentIndex = 1;
+    $('#addAttachment').on("click", function () {
+        $( ".attachment_bloc" ).first().clone().appendTo( ".attachments" );
+        attachmentIndex = attachmentIndex+1;
+        $( ".attachment_type" ).last().attr('name', "attachment_type_"+attachmentIndex);
+        $( ".attachment_file" ).last().attr('name', "attachment_file_"+attachmentIndex);
+    });
 })
 
 let bodyCard = document.getElementById('card-body-tag');
