@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('ticket_threads', function (Blueprint $table) {
-            $table->json('channel_data')->nullable()->after('customer_issue');
+            $table->json('channel_data')->nullable()->after('name');
         });
     }
 

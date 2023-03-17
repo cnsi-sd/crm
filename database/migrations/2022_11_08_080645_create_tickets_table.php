@@ -23,6 +23,7 @@ return new class extends Migration
             $table->dateTime('deadline');
             $table->dateTime('delivery_date')->nullable();
             $table->string('direct_customer_email')->nullable();
+            $table->string('customer_issue')->nullable();
             $table->timestamps();
         });
     }

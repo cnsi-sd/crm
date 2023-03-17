@@ -26,7 +26,6 @@ use Cnsi\Attachments\Trait\Documentable;
  * @property int $revival_message_count
  * @property string $channel_thread_number
  * @property string $name
- * @property string $customer_issue
  * @property Datetime $created_at
  * @property Datetime $updated_at
  * @property array $channel_data
@@ -48,7 +47,6 @@ class Thread extends Model
         'revival_message_count',
         'channel_thread_number',
         'name',
-        'customer_issue',
         'channel_data',
         'created_at',
         'updated_at'

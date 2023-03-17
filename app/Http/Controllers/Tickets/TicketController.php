@@ -157,10 +157,10 @@ class TicketController extends AbstractController
             $ticket->user_id = $request->input('ticket-user_id');
             $ticket->deadline = $request->input('ticket-deadline');
             $ticket->direct_customer_email = $request->input('ticket-customer_email');
+            $ticket->customer_issue = $request->input('ticket-customer_issue');
             $ticket->delivery_date = $request->input('ticket-delivery_date');
             $ticket->save();
 
-            $thread->customer_issue = $request->input('ticket-thread-customer_issue');
             $thread->revival_id = $request->input('ticket-revival');
             $thread->revival_start_date = $request->input('revival-delivery_date') . ' 09:00:00';
             $thread->save();

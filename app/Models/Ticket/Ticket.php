@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $priority
  * @property Datetime $deadline
  * @property Datetime $delivery_date
+ * @property string $customer_issue
  * @property string $direct_customer_email
  * @property Datetime $created_at
  * @property Datetime $updated_at

@@ -69,7 +69,7 @@
                             <div class="row mb-1">
                                 <div class="col-xl-4"><label>{{ __('app.ticket.customer_issue') }}</label></div>
                                 <div class="col-xl-8">
-                                    <input form="saveTicket" name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$thread->customer_issue}}"/>
+                                    <input form="saveTicket" name="ticket-customer_issue" class="form-control" type="text" value="{{$ticket->customer_issue}}"/>
                                 </div>
                             </div>
                             <div class="row mb-1">
