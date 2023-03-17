@@ -4,7 +4,6 @@ namespace App\Models\Ticket;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
-use App\Models\Tags\TagList;
 use App\Models\Ticket\Revival\Revival;
 use DateInterval;
 use DateTime;
@@ -29,7 +28,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Ticket $ticket
  * @property Collection|Message[] $messages
  * @property Revival $revival
- * @property Collection|TagList[] $tagList
  */
 class Thread extends Model
 {
@@ -102,11 +100,6 @@ class Thread extends Model
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
-    }
-
-    public function tagLists(): HasMany
-    {
-        return $this->hasMany(TagList::class);
     }
 
     public function revival(): BelongsTo
@@ -196,18 +189,5 @@ class Thread extends Model
             }
         }
         return $numberOfUnreadMessages;
-    }
-
-    public function checkTagList(int $tagId, TagList $tagList = null){
-        if (is_null($tagList)) {
-            if ($this->tagLists->first()) {
-                $tagList = $this->tagLists->first();
-            } else {
-                $tagList = new TagList();
-                $tagList->thread_id = $this->id;
-                $tagList->save();
-            }
-        }
-        return $tagList->addTag($tagId);
     }
 }

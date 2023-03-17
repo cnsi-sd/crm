@@ -215,7 +215,6 @@ class TicketController extends AbstractController
     public function delete_tag(Request $request) {
         $tag = Tag::find($request->input('tag_id'));
         $tag->taglists()->detach($request->input('taglist_id'));
-        return redirect()->route('all_tickets');
     }
 
     public function delete_ThreadTagList(Request $request) {
@@ -226,7 +225,8 @@ class TicketController extends AbstractController
 
     public function saveThreadTags(Request $request) {
         $taglist = TagList::find($request->input('taglist_id'));
-        $tag = $taglist->addTag($request->input('tag_id'));
+        $tag = Tag::findOrFail($request->input('tag_id'));
+        $taglist->addTag($tag);
         return response()->json($tag);
     }
 

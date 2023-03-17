@@ -13,6 +13,7 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
+use App\Models\Tags\TagList;
 use App\Models\User\User;
 use Carbon\Carbon;
 use Cnsi\Attachments\Trait\Documentable;
@@ -41,6 +42,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $updated_at
  *
  * @property Collection|Thread[] $threads
+ * @property Collection|TagList[] $tagLists
  * @property Channel $channel
  * @property Order $order
  * @property User $user
@@ -140,6 +142,11 @@ class Ticket extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function tagLists(): HasMany
+    {
+        return $this->hasMany(TagList::class);
     }
 
     public static function getTableColumns($mode = 'all'): array
@@ -281,5 +288,20 @@ class Ticket extends Model
             CrmDocumentTypeEnum::PRODUCT_PHOTO,
             CrmDocumentTypeEnum::OTHER,
         ];
+    }
+
+    public function addTag(Tag $tag, ?TagList $tagList = null)
+    {
+        if (is_null($tagList)) {
+            if ($this->tagLists->first()) {
+                $tagList = $this->tagLists->first();
+            } else {
+                $tagList = new TagList();
+                $tagList->ticket_id = $this->id;
+                $tagList->save();
+            }
+        }
+
+        $tagList->addTag($tag);
     }
 }

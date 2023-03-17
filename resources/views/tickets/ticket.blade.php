@@ -87,13 +87,13 @@
                         </div>
                     </div>
 
+                    @include('tickets.parts.tags')
                     {!! $documents_table !!}
 
                     <div class="ticket-divider h4 text-center">
                         {{ __('app.ticket.admin_thread') }} #{{ $thread->id }}
                     </div>
 
-                    @include('tickets.parts.tags')
                     @include('tickets.parts.revival')
                     @include('tickets.parts.private_comments')
                 </div>
@@ -174,9 +174,9 @@
 @section('script-bottom')
     {!! \App\Helpers\JS::define('url_show_tags', route('ajaxShowTags')) !!}
     {!! \App\Helpers\JS::define('url_add_tag_list', route('addTagList')) !!}
-    {!! \App\Helpers\JS::define('url_save_tag_on_ticketThread', route('saveTagOnticketThread')) !!}
     {!! \App\Helpers\JS::define('url_delete_tagList', route('deleteTagList')) !!}
-    {!! \App\Helpers\JS::define('url_delete_TagList_On_Thread', route('deleteTagListOnThread')) !!}
+    {!! \App\Helpers\JS::define('url_add_tag_on_ticket', route('saveTagOnticketThread')) !!}
+    {!! \App\Helpers\JS::define('url_delete_tag_on_ticket', route('deleteTagListOnThread')) !!}
     {!! \App\Helpers\JS::define('url_click_and_call', route('click_and_call')) !!}
 
     {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}

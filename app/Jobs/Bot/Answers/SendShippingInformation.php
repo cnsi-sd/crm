@@ -6,6 +6,7 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Message;
 use Illuminate\Support\Str;
 
@@ -38,7 +39,8 @@ class SendShippingInformation extends AbstractAnswer
             // Otherwise (max_ship_date reached), add tag on ticket, stay open
             else {
                 $tagId = setting('bot.shipping_information.late_order_tag_id');
-                $this->message->thread->checkTagList($tagId);
+                $tag = Tag::findOrFail($tagId);
+                $this->message->thread->ticket->addTag($tag);
             }
 
             return self::STOP_PROPAGATION;
