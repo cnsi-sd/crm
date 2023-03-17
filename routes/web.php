@@ -36,9 +36,8 @@ require __DIR__ . '/auth.php';
 Route::prefix('/')->group(function () {
     Route::get('', [HomeController::class, 'home'])->name('home');
 
-    Route::prefix('redirect')->group(function() {
-       Route::match(['get', 'post'], '{channel}/{channel_order_number}', [TicketController::class, 'redirectOrCreateTicket'])->name('redirect_or_create_ticket')->can('read', Ticket::class);
-    });
+   Route::match(['get', 'post'], 'redirect/{channel}/{channel_order_number}', [TicketController::class, 'redirectOrCreateTicket'])->name('redirect_or_create_ticket')->can('read', Ticket::class);
+
     Route::prefix('tickets')->group(function() {
         Route::match(['get', 'post'], 'get_external_infos/{ticket}', [TicketController::class, 'get_external_infos'])->name('get_external_infos')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'toggle_comment/{comment}', [TicketController::class, 'toggle_comment'])->name('toggle_comment')->can('read', Ticket::class);

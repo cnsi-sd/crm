@@ -70,44 +70,25 @@ class TicketController extends AbstractController
 
     }
 
-    public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number)
+    public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number): RedirectResponse
     {
-        $ticket = null;
-        $channel_id = Channel::getByExtName($channel)->id;
-
-        if ($channel_id) {
-            $order = Order::query()
-                ->where('channel_id', $channel_id)
-                ->where('channel_order_number', $channel_order_number)
-                ->first();
-            if ($order) {
-                $ticket = Ticket::query()
-                    ->where('order_id', $order->id)->first();
-            }
+        // Get Channel
+        $channel = Channel::getByExtName($channel);
+        if (!$channel) {
+            Alert::modalError('Canal inconnu.');
+            return redirect()->route('home');
         }
 
-        if(!$ticket){
-            $order = new Order;
-            $order->channel_id = $channel_id;
-            $order->channel_order_number = $channel_order_number;
-            $order->save();
+        // Get order & ticket
+        $order = Order::getOrder($channel_order_number, $channel);
+        $ticket = Ticket::getTicket($order, $channel);
 
-            $ticket = new Ticket();
-            $ticket->channel_id = $channel_id;
-            $ticket->order_id = $order->id;
-            $ticket->user_id = Channel::query()->where('id', $order->channel_id)->first()->user_id;
-            $ticket->state  = TicketStateEnum::WAITING_ADMIN;
-            $ticket->priority = TicketPriorityEnum::P1;
-            $ticket->deadline = Ticket::getAutoDeadline();
-            $ticket->save();
+        // Create thread if not exists
+        if($ticket->threads->count() === 0)
+            Thread::getOrCreateThread($ticket, $channel_order_number, "Fil de discussion principal");
 
-            $thread = new Thread();
-            $thread->ticket_id = $ticket->id;
-            $thread->name = "Fil de discussion principal";
-            $thread->save();
-        }
-
-        return redirect()->route('ticket', [$ticket]);
+        // Redirect to ticket
+        return redirect()->route('ticket', $ticket);
     }
 
     public function redirectTicket(Request $request, ?Ticket $ticket): RedirectResponse
