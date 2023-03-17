@@ -18,6 +18,7 @@ use Cnsi\Searchable\Trait\Searchable;
 use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -36,7 +37,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
- * @property Thread[] $threads
+ * @property Collection|Thread[] $threads
  * @property Channel $channel
  * @property Order $order
  * @property User $user
@@ -79,7 +80,7 @@ class Ticket extends Model
             [
                 'state' => TicketStateEnum::WAITING_ADMIN,
                 'priority' => TicketPriorityEnum::P1,
-                'deadline' => Carbon::now()->addHours(24), // TODO : JJ ou J+1
+                'deadline' => Ticket::getAutoDeadline(),
                 'user_id' => $channel->user_id,
             ],
         );
@@ -250,6 +251,14 @@ class Ticket extends Model
     {
         $now = new DateTime();
         return $now->diff($this->created_at)->format("%a");
+    }
+
+    public static function getAutoDeadline(): Carbon
+    {
+        if (Carbon::now()->hour < 16)
+            return Carbon::today();
+        else
+            return Carbon::tomorrow();
     }
 
     public function close()

@@ -98,7 +98,7 @@ class TicketController extends AbstractController
             $ticket->user_id = Channel::query()->where('id', $order->channel_id)->first()->user_id;
             $ticket->state  = TicketStateEnum::WAITING_ADMIN;
             $ticket->priority = TicketPriorityEnum::P1;
-            $ticket->deadline = new \DateTime('now');
+            $ticket->deadline = Ticket::getAutoDeadline();
             $ticket->save();
 
             $thread = new Thread();
