@@ -4,6 +4,7 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Console\Commands\ImportMessages\Beautifier\AmazonBeautifierMail;
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Stringer;
@@ -81,7 +82,7 @@ class AmazonImportMessage extends AbstractImportMessages
                         if (!$parseMail[1])
                             $this->importMessageByThread($ticket, $thread, $email);
                         else
-                            $this->addReturnOnThread($thread, $email);
+                            $this->addReturnOnTicket($ticket, $email);
                     }
                     $this->logger->info('--- end import email');
                     DB::commit();
@@ -248,17 +249,20 @@ class AmazonImportMessage extends AbstractImportMessages
         AnswerToNewMessage::dispatch($message);
     }
 
-    private function addReturnOnThread(Thread $thread, mixed $email)
+    private function addReturnOnTicket(Ticket $ticket, mixed $email)
     {
-        $thread->checkTagList(setting('tag.retour_amazon'));
+        $tagId = setting('tag.retour_amazon');
+        $tag = Tag::findOrFail($tagId);
+        $ticket->addTag($tag);
+
         $infoMail = $email->textHtml;
         $returnComment = AmazonBeautifierMail::getReturnInformation($infoMail);
         if ($returnComment !== "") {
             $comment = new Comment();
-            $comment->thread_id = $thread->id;
+            $comment->ticket_id = $ticket->id;
             $comment->content = $returnComment;
             $comment->displayed = 1;
-            $comment->type = setting('return.command');
+            $comment->type = TicketCommentTypeEnum::INFO_IMPORTANT;
             $comment->save();
         }
     }
