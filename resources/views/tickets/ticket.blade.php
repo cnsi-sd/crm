@@ -63,31 +63,32 @@
                         <div class="card-header">{{ __('app.ticket.base_information') }}</div>
                         <div class="card-body">
                             <div class="row mb-1">
-                                <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
-                                <div class="col"><input form="saveTicket" name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
+                                <div class="col-xl-4"><label>{{ __('app.ticket.created_at') }}</label></div>
+                                <div class="col-xl-8 text-xl-end">{{ $ticket->created_at->format('d/m/y') }} ({{$ticket->getOpenedDays()}}j)</div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-xl-4"><label>{{ __('app.ticket.customer_issue') }}</label></div>
+                                <div class="col-xl-8">
+                                    <input form="saveTicket" name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$thread->customer_issue}}"/>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-xl-4"><label>{{ __('app.ticket.customer_mail') }}</label></div>
+                                <div class="col-xl-8">
+                                    <input form="saveTicket" name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                <div class="col"><input form="saveTicket" name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date){{ $ticket->delivery_date->format("Y-m-d") }}@endif"/></div>
+                                <div class="col-xl-4"><label>{{ __('app.ticket.delivery_date') }}</label></div>
+                                <div class="col-xl-8">
+                                    <input form="saveTicket" name="ticket-delivery_date" class="form-control" type="date" value="{{ $ticket->delivery_date?->format("Y-m-d") }}"/>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="ticket-divider h4 text-center">
                         {{ __('app.ticket.admin_thread') }} #{{ $thread->id }}
-                    </div>
-
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row mb-1">
-                                <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
-                                <div class="col"><label>{{ $ticket->created_at->format('d/m/y') }} ({{$ticket->getOpenedDays()}}j)</label></div>
-                            </div>
-                            <div class="row">
-                                <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>
-                                <div class="col"><input form="saveTicket" name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$thread->customer_issue}}"/></div>
-                            </div>
-                        </div>
                     </div>
 
                     @include('tickets.parts.tags')
