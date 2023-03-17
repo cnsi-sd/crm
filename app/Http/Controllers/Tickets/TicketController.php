@@ -45,7 +45,7 @@ class TicketController extends AbstractController
 
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+            ->with('listTags', Tag::getListTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
@@ -66,7 +66,7 @@ class TicketController extends AbstractController
 
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));;
+            ->with('listTags', Tag::getListTagWithTickets($tickets));
 
     }
 
