@@ -69,7 +69,7 @@ class Ticket extends Model
         'delivery_date' => 'datetime'
     ];
 
-    public static function getTicket(Order $order, Channel $channel)
+    public static function getTicket(Order $order, Channel $channel): Ticket
     {
         return Ticket::firstOrCreate(
             [
