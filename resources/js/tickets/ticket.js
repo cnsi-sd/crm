@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.thread-comments .card-header').click(function () {
+    $('.ticket-comments .card-header').click(function () {
         const route = $(this).data("toggle-comment-route")
         $.get(route);
     });

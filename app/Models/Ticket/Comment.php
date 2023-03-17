@@ -9,7 +9,7 @@ use App\Models\User\User;
 
 /**
  * @property int $id
- * @property int $thread_id
+ * @property int $ticket_id
  * @property int $user_id
  * @property string $content
  * @property boolean $displayed
@@ -17,15 +17,15 @@ use App\Models\User\User;
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
- * @property Thread $thread
+ * @property Ticket $ticket
  */
 
 class Comment extends Model
 {
-    protected $table = 'ticket_thread_comments';
+    protected $table = 'ticket_comments';
 
     protected $fillable = [
-      'thread_id',
+      'ticket_id',
       'user_id',
       'content',
       'displayed',
@@ -34,9 +34,9 @@ class Comment extends Model
       'updated_at'
     ];
 
-    public function thread(): BelongsTo
+    public function ticket(): BelongsTo
     {
-        return $this->belongsTo(Thread::class);
+        return $this->belongsTo(Ticket::class);
     }
 
     public function user(): BelongsTo

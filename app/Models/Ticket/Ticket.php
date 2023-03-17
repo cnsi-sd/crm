@@ -43,6 +43,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property Collection|Thread[] $threads
  * @property Collection|TagList[] $tagLists
+ * @property Collection|Comment[] $comments
  * @property Channel $channel
  * @property Order $order
  * @property User $user
@@ -147,6 +148,11 @@ class Ticket extends Model
     public function tagLists(): HasMany
     {
         return $this->hasMany(TagList::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public static function getTableColumns($mode = 'all'): array

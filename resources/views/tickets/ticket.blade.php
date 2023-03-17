@@ -88,6 +88,7 @@
                     </div>
 
                     @include('tickets.parts.tags')
+                    @include('tickets.parts.private_comments')
                     {!! $documents_table !!}
 
                     <div class="ticket-divider h4 text-center">
@@ -95,7 +96,6 @@
                     </div>
 
                     @include('tickets.parts.revival')
-                    @include('tickets.parts.private_comments')
                 </div>
                 <div class="col-8">
                     <ul class="nav nav-tabs" id="ticketTab" role="tablist">

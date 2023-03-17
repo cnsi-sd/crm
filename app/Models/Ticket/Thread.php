@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $updated_at
  * @property array $channel_data
  *
- * @property Collection|Comment[] $comments
  * @property Ticket $ticket
  * @property Collection|Message[] $messages
  * @property Revival $revival
@@ -75,11 +74,6 @@ class Thread extends Model
                     'channel_data' => json_encode($channel_data),
                 ],
             );
-    }
-
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
     }
 
     public function messages(): HasMany
