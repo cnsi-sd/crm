@@ -73,7 +73,7 @@ class Ticket extends Model
     ];
 
     protected $casts = [
-        'deadline' => 'datetime',
+        'deadline' => 'date',
         'delivery_date' => 'datetime'
     ];
 
