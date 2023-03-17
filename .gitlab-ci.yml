@@ -36,3 +36,17 @@ phpstan:
   script:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse app
   allow_failure: true
+
+phpunit:
+  stage: test
+  script:
+    - cp .env.testing.example .env
+    - cp .env.testing.example .env.testing
+    - php artisan key:generate
+    - php artisan migrate:fresh --seed
+    - php artisan db:seed --class=DevSeeder
+    - php vendor/bin/phpunit tests/
+  variables:
+    APP_ENV: test
+  dependencies:
+    - build
