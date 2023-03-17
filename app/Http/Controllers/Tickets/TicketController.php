@@ -139,7 +139,6 @@ class TicketController extends AbstractController
      */
     public function ticket(Request $request, Ticket $ticket, Thread $thread): View|RedirectResponse
     {
-        $upload_doc_route = route('upload_document', [$thread, $thread::class]);
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
 
@@ -210,7 +209,7 @@ class TicketController extends AbstractController
         return view('tickets.ticket')
             ->with('ticket', $ticket)
             ->with('thread', $thread)
-            ->with('documents_table_comments', $thread->getDocumentsTable($request, $upload_doc_route));
+            ->with('documents_table', $ticket->getDocumentsTable($request, route('upload_document', [$ticket, $ticket::class])));
     }
 
     public function delete_tag(Request $request) {

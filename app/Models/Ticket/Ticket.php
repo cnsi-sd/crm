@@ -4,6 +4,7 @@ namespace App\Models\Ticket;
 
 use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
+use App\Enums\CrmDocumentTypeEnum;
 use App\Enums\FixedWidthEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
@@ -14,6 +15,7 @@ use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\User\User;
 use Carbon\Carbon;
+use Cnsi\Attachments\Trait\Documentable;
 use Cnsi\Searchable\Trait\Searchable;
 use DateTime;
 use Exception;
@@ -47,6 +49,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Ticket extends Model
 {
     use Searchable;
+    use Documentable;
 
     protected $searchable = [
         'id',
@@ -266,5 +269,17 @@ class Ticket extends Model
     {
         $this->state = TicketStateEnum::CLOSED;
         $this->save();
+    }
+
+    protected function getAllowedDocumentTypes(): array
+    {
+        return [
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_REPORT,
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_STATION,
+            CrmDocumentTypeEnum::CLIENT_BANK_ACCOUNT_NUMBER,
+            CrmDocumentTypeEnum::CUSTOMER_FILING,
+            CrmDocumentTypeEnum::PRODUCT_PHOTO,
+            CrmDocumentTypeEnum::OTHER,
+        ];
     }
 }
