@@ -69,15 +69,16 @@ class TagsController extends AbstractController
         return redirect()->route('tags');
     }
 
-    public function ajax_tags(){
+    public function ajax_tags()
+    {
         $data = Tag::all();
-
         return response()->json(['data' => $data]);
     }
 
-    public function newTagLine(Request $request) {
+    public function newTagLine(Request $request)
+    {
         $taglist = new TagList();
-        $taglist->thread_id = $request->input('thread_id');
+        $taglist->ticket_id = $request->input('ticket_id');
         $taglist->save();
         return response()->json($taglist->id);
     }

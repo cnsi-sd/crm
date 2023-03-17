@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('channels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->json('ext_names')->default("[]");
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ namespace App\Models\Ticket;
 
 use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
+use App\Enums\CrmDocumentTypeEnum;
 use App\Enums\FixedWidthEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
@@ -12,8 +13,10 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
+use App\Models\Tags\TagList;
 use App\Models\User\User;
 use Carbon\Carbon;
+use Cnsi\Attachments\Trait\Documentable;
 use Cnsi\Searchable\Trait\Searchable;
 use DateTime;
 use Exception;
@@ -33,11 +36,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $priority
  * @property Datetime $deadline
  * @property Datetime $delivery_date
+ * @property string $customer_issue
  * @property string $direct_customer_email
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
  * @property Collection|Thread[] $threads
+ * @property Collection|TagList[] $tagLists
+ * @property Collection|Comment[] $comments
  * @property Channel $channel
  * @property Order $order
  * @property User $user
@@ -46,6 +52,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Ticket extends Model
 {
     use Searchable;
+    use Documentable;
 
     protected $searchable = [
         'id',
@@ -136,6 +143,16 @@ class Ticket extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function tagLists(): HasMany
+    {
+        return $this->hasMany(TagList::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public static function getTableColumns($mode = 'all'): array
@@ -265,5 +282,32 @@ class Ticket extends Model
     {
         $this->state = TicketStateEnum::CLOSED;
         $this->save();
+    }
+
+    protected function getAllowedDocumentTypes(): array
+    {
+        return [
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_REPORT,
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_STATION,
+            CrmDocumentTypeEnum::CLIENT_BANK_ACCOUNT_NUMBER,
+            CrmDocumentTypeEnum::CUSTOMER_FILING,
+            CrmDocumentTypeEnum::PRODUCT_PHOTO,
+            CrmDocumentTypeEnum::OTHER,
+        ];
+    }
+
+    public function addTag(Tag $tag, ?TagList $tagList = null)
+    {
+        if (is_null($tagList)) {
+            if ($this->tagLists->first()) {
+                $tagList = $this->tagLists->first();
+            } else {
+                $tagList = new TagList();
+                $tagList->ticket_id = $this->id;
+                $tagList->save();
+            }
+        }
+
+        $tagList->addTag($tag);
     }
 }

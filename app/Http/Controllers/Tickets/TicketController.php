@@ -139,7 +139,6 @@ class TicketController extends AbstractController
      */
     public function ticket(Request $request, Ticket $ticket, Thread $thread): View|RedirectResponse
     {
-        $upload_doc_route = route('upload_document', [$thread, $thread::class]);
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
 
@@ -157,10 +156,10 @@ class TicketController extends AbstractController
             $ticket->user_id = $request->input('ticket-user_id');
             $ticket->deadline = $request->input('ticket-deadline');
             $ticket->direct_customer_email = $request->input('ticket-customer_email');
+            $ticket->customer_issue = $request->input('ticket-customer_issue');
             $ticket->delivery_date = $request->input('ticket-delivery_date');
             $ticket->save();
 
-            $thread->customer_issue = $request->input('ticket-thread-customer_issue');
             $thread->revival_id = $request->input('ticket-revival');
             $thread->revival_start_date = $request->input('revival-delivery_date') . ' 09:00:00';
             $thread->save();
@@ -188,16 +187,17 @@ class TicketController extends AbstractController
 
                 AbstractSendMessage::dispatchMessage($message);
             }
-            if($request->input('ticket-thread-comments-content')) {
+            if($request->input('ticket-comments-content')) {
                 $request->validate([
-                    'ticket-thread-comments-content'     => ['required','string'],
+                    'ticket-comments-content'     => ['required','string'],
+                    'ticket-comment-type'         => ['required','string'],
                 ]);
                 Comment::firstOrCreate([
-                    'thread_id' => $thread->id,
+                    'ticket_id' => $thread->id,
                     'user_id' => $request->user()->id,
-                    'content' => $request->input('ticket-thread-comments-content'),
+                    'content' => $request->input('ticket-comments-content'),
                     'displayed' => 1,
-                    'type' => $request->input('ticket-thread-comments-type'),
+                    'type' => $request->input('ticket-comment-type'),
                 ]);
             }
             Alert::toastSuccess(__('app.ticket.saved'));
@@ -210,13 +210,12 @@ class TicketController extends AbstractController
         return view('tickets.ticket')
             ->with('ticket', $ticket)
             ->with('thread', $thread)
-            ->with('documents_table_comments', $thread->getDocumentsTable($request, $upload_doc_route));
+            ->with('documents_table', $ticket->getDocumentsTable($request, route('upload_document', [$ticket, $ticket::class])));
     }
 
     public function delete_tag(Request $request) {
         $tag = Tag::find($request->input('tag_id'));
         $tag->taglists()->detach($request->input('taglist_id'));
-        return redirect()->route('all_tickets');
     }
 
     public function delete_ThreadTagList(Request $request) {
@@ -227,7 +226,8 @@ class TicketController extends AbstractController
 
     public function saveThreadTags(Request $request) {
         $taglist = TagList::find($request->input('taglist_id'));
-        $tag = $taglist->addTag($request->input('tag_id'));
+        $tag = Tag::findOrFail($request->input('tag_id'));
+        $taglist->addTag($tag);
         return response()->json($tag);
     }
 

@@ -4,9 +4,6 @@ namespace App\Models\Ticket;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
-use App\Models\Tags\Tag;
-use App\Enums\CrmDocumentTypeEnum;
-use App\Models\Tags\TagList;
 use App\Models\Ticket\Revival\Revival;
 use DateInterval;
 use DateTime;
@@ -15,9 +12,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Cnsi\Attachments\Model\Document;
-use Cnsi\Attachments\Trait\Documentable;
 
 /**
  * @property int $id
@@ -26,16 +20,13 @@ use Cnsi\Attachments\Trait\Documentable;
  * @property int $revival_message_count
  * @property string $channel_thread_number
  * @property string $name
- * @property string $customer_issue
  * @property Datetime $created_at
  * @property Datetime $updated_at
  * @property array $channel_data
  *
- * @property Collection|Comment[] $comments
  * @property Ticket $ticket
  * @property Collection|Message[] $messages
  * @property Revival $revival
- * @property Collection|TagList[] $tagList
  */
 class Thread extends Model
 {
@@ -48,7 +39,6 @@ class Thread extends Model
         'revival_message_count',
         'channel_thread_number',
         'name',
-        'customer_issue',
         'channel_data',
         'created_at',
         'updated_at'
@@ -58,8 +48,6 @@ class Thread extends Model
         'revival_start_date' => 'date',
         'channel_data' => 'array'
     ];
-
-    use Documentable;
 
     /**
      * create or get thread
@@ -88,11 +76,6 @@ class Thread extends Model
             );
     }
 
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
-    }
-
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class)->orderBy('id', 'DESC');
@@ -111,11 +94,6 @@ class Thread extends Model
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
-    }
-
-    public function tagLists(): HasMany
-    {
-        return $this->hasMany(TagList::class);
     }
 
     public function revival(): BelongsTo
@@ -205,29 +183,5 @@ class Thread extends Model
             }
         }
         return $numberOfUnreadMessages;
-    }
-
-    public function checkTagList(int $tagId, TagList $tagList = null){
-        if (is_null($tagList)) {
-            if ($this->tagLists->first()) {
-                $tagList = $this->tagLists->first();
-            } else {
-                $tagList = new TagList();
-                $tagList->thread_id = $this->id;
-                $tagList->save();
-            }
-        }
-        return $tagList->addTag($tagId);
-    }
-    protected function getAllowedDocumentTypes(): array
-    {
-        return [
-            CrmDocumentTypeEnum::CUSTOMER_SERVICE_REPORT,
-            CrmDocumentTypeEnum::CUSTOMER_SERVICE_STATION,
-            CrmDocumentTypeEnum::CLIENT_BANK_ACCOUNT_NUMBER,
-            CrmDocumentTypeEnum::CUSTOMER_FILING,
-            CrmDocumentTypeEnum::PRODUCT_PHOTO,
-            CrmDocumentTypeEnum::OTHER,
-        ];
     }
 }
