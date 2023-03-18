@@ -43,8 +43,7 @@ return [
     'navbar' => [
         'dashboard' => 'Tableau de bord',
         'settings' => 'Paramètres',
-        'permissions' => 'Permissions',
-        'config' => 'Configurations',
+        'config' => 'Configuration',
         'admin' => 'Administration'
     ],
 

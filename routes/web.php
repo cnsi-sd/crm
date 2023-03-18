@@ -17,7 +17,6 @@ use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
-use App\Policies\Configuration\ConfigurationPolicy;
 use Illuminate\Support\Facades\Route;
 
 
