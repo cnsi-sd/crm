@@ -5,7 +5,7 @@ use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\Configuration\TagsController;
-use App\Http\Controllers\Configuration\VariableController;
+use App\Http\Controllers\Configuration\MiscController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
@@ -88,7 +88,10 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice')->can('bot_config');
             Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information')->can('bot_config');
         });
-        Route::match(['get', 'post'], 'variables', [VariableController::class, 'config'])->name('variables_config')->can('variables_config');
+        Route::prefix('misc')->group(function () {
+            Route::match(['get', 'post'], '', [MiscController::class, 'home'])->name('misc_home')->can('misc_config');
+            Route::match(['get', 'post'], 'variables', [MiscController::class, 'variables'])->name('variables_config')->can('misc_config');
+        });
     });
     // CALL AJAX
     Route::get('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');

@@ -71,10 +71,10 @@ abstract class Menu
                         'permission' => PermissionEnum::BOT_CONFIG
                     ],
                     [
-                        'text' => __('app.config.misc.variables.variables'),
-                        'route' => route('variables_config'),
-                        'ref' => 'variables',
-                        'permission' => PermissionEnum::VARIABLES_CONFIG
+                        'text' => __('app.config.misc.misc'),
+                        'route' => route('misc_home'),
+                        'ref' => 'misc',
+                        'permission' => PermissionEnum::MISC_CONFIG
                     ],
                 ]
             ],

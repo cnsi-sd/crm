@@ -63,7 +63,7 @@ abstract class Permission
                         'title' => __('app.config.config'),
                         'items' => [
                             PermissionEnum::BOT_CONFIG,
-                            PermissionEnum::VARIABLES_CONFIG,
+                            PermissionEnum::MISC_CONFIG,
                         ],
                     ],
                 ],

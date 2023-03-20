@@ -134,10 +134,14 @@ Breadcrumbs::for('bot_shipping_information', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.bot.shipping_information.shipping_information'), route('bot_shipping_information'));
 });
 
-/** Variables */
-Breadcrumbs::for('variables_config', function (BreadcrumbTrail $trail) {
+/** Misc Config */
+Breadcrumbs::for('misc_home', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(__('app.config.misc.variables.variables'), route('variables_config'));
+    $trail->push(__('app.config.misc.misc'), route('misc_home'));
+});
+Breadcrumbs::for('variables_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.variables'), route('variables_config'));
 });
 
 /** Channel */

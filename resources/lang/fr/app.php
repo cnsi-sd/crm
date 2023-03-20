@@ -167,11 +167,8 @@ return [
 
         'misc' => [
             'misc' => 'Divers',
-
-            'variables' => [
-                'variables' => 'Variables',
-                'saved' => 'Variables enregistrées'
-            ]
+            'saved' => 'Configuration enregistrée',
+            'variables' => 'Variables',
         ],
     ],
 
