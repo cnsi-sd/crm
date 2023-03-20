@@ -71,7 +71,7 @@ abstract class Menu
                         'permission' => PermissionEnum::BOT_CONFIG
                     ],
                     [
-                        'text' => trans_choice('app.variable.variable', 2),
+                        'text' => __('app.config.misc.variables.variables'),
                         'route' => route('variables_config'),
                         'ref' => 'variables',
                         'permission' => PermissionEnum::VARIABLES_CONFIG

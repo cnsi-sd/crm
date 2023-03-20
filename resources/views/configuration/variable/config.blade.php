@@ -1,4 +1,4 @@
-@extends('layouts.horizontal', ["page_title"=> trans_choice('app.variable.variable', 2) ])
+@extends('layouts.horizontal', ["page_title"=> __('app.config.misc.variables.variables') ])
 
 @section('content')
     <div class="container-fluid">

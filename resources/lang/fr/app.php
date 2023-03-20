@@ -164,6 +164,15 @@ return [
     'config' => [
         'config' => 'Configuration',
         'channel' => 'Canal|Canaux',
+
+        'misc' => [
+            'misc' => 'Divers',
+
+            'variables' => [
+                'variables' => 'Variables',
+                'saved' => 'Variables enregistrées'
+            ]
+        ],
     ],
 
     'bot' => [
@@ -196,11 +205,6 @@ return [
 
             'late_order_tag' => 'Tag retard de préparation',
         ],
-    ],
-
-    'variable' => [
-        'variable' => 'Variable|Variables',
-        'saved' => 'Variables enregistrées'
     ],
 
     'defaultAnswer' => [

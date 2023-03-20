@@ -137,7 +137,7 @@ Breadcrumbs::for('bot_shipping_information', function (BreadcrumbTrail $trail) {
 /** Variables */
 Breadcrumbs::for('variables_config', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(trans_choice('app.variable.variable', 2), route('variables_config'));
+    $trail->push(__('app.config.misc.variables.variables'), route('variables_config'));
 });
 
 /** Channel */
