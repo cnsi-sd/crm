@@ -52,9 +52,19 @@ class AbstractImportMailMessages extends AbstractImportMessages
 
     protected function parseOrderId($email): bool|string{}
 
-    protected function canImport($email): bool{}
+    protected function canImport($email): bool{
 
-    protected function isSpam($email): bool{}
+        if(in_array($email->senderAddress, config('email-import.domain_blacklist')))
+            return false;
+        if(in_array($email->senderAddress, config('email-import.email_blacklist')))
+            return false;
+
+        return true;
+    }
+
+    protected function isSpam($email): bool{
+        return false;
+    }
 
     protected function getSpecificActions(){}
 
