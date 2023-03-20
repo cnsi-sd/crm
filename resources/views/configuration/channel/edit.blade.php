@@ -1,4 +1,4 @@
-@extends('layouts.horizontal', ["page_title"=> trans_choice('app.configuration.channel', 1)])
+@extends('layouts.horizontal', ["page_title"=> trans_choice('app.config.channel', 1)])
 
 @section('content')
     <div class="container-fluid">
@@ -8,7 +8,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            {{ trans_choice('app.configuration.channel', 1) }} #{{ $channel->id }}
+                            {{ trans_choice('app.config.channel', 1) }} #{{ $channel->id }}
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-3">

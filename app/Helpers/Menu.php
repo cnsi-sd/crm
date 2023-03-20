@@ -53,7 +53,7 @@ abstract class Menu
                         'permission' => PermissionEnum::REVIVAL_READ
                     ],
                     [
-                        'text' => trans_choice('app.configuration.channel', 2),
+                        'text' => trans_choice('app.config.channel', 2),
                         'route' => route('channels'),
                         'ref' => 'channel',
                         'permission' => PermissionEnum::CHANNEL_READ

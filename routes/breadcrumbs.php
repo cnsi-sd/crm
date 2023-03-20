@@ -147,7 +147,7 @@ Breadcrumbs::for('variables_config', function (BreadcrumbTrail $trail) {
 /** Channel */
 Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(trans_choice('app.configuration.channel', 2), route('channels'));
+    $trail->push(trans_choice('app.config.channel', 2), route('channels'));
 });
 /** Channel */
 Breadcrumbs::for('edit_channel', function (BreadcrumbTrail $trail) {
