@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('ticket_id')->constrained('tickets');
             $table->string('channel_thread_number')->nullable();
             $table->string('name');
-            $table->string('customer_issue');
             $table->timestamps();
         });
     }

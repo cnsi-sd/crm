@@ -10,13 +10,14 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            {{ isset($defaultAnswer->id) ? trans_choice('app.defaultAnswer.message', 1) . " #$defaultAnswer->id" : trans_choice('app.defaultAnswer.message', 1) }}
+                            {{ isset($defaultAnswer->id) ? trans_choice('app.defaultAnswer.defaultAnswer', 1) . " #$defaultAnswer->id" : trans_choice('app.defaultAnswer.defaultAnswer', 1) }}
                         </div>
                         <div class="card-body">
 
                             @csrf
                             <div class="form-group mb-3">
-                                <label for="name">{{__('app.defaultAnswer.name')}}
+                                <label for="name">
+                                    {{__('app.defaultAnswer.name')}}
                                     <span class="required_field">*</span>
                                 </label>
                                 <input
@@ -30,8 +31,9 @@
                             <div class="form-group mb-3">
                                 <label for="name">
                                     {{__('app.defaultAnswer.content')}}
+                                    <span class="required_field">*</span>
                                 </label>
-                                <textarea id="message_to_customer" name="content">{{ \App\Helpers\TinyMCE::toHtml(old('content', $defaultAnswer->content)) }}</textarea>
+                                <textarea id="message_to_customer" name="content" required>{{ \App\Helpers\TinyMCE::toHtml(old('content', $defaultAnswer->content)) }}</textarea>
                             </div>
 
                         </div>
@@ -40,26 +42,24 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="m-2">
-                            <label for="name">{{__('app.defaultAnswer.select_channel')}}
-
-                                <span class="required_field">*</span>
-                            </label>
+                            <label for="channels">{{__('app.defaultAnswer.select_channel')}}</label>
                             <select
-                                name="channel[]"
-                                id="select-mp"
+                                name="channels[]"
+                                id="channels"
                                 class="form-control form-control-sm form-select"
                                 multiple
-                                required
                             >
-                                <option value="">-- {{trans_choice('app.defaultAnswer.select_channel', 1)}} --
-                                </option>
                                 @foreach(\App\Models\Channel\Channel::all() as $channel)
-                                    <option value="{{$channel->id}}"
-                                            @if($defaultAnswer->isChannelSelected($channel)) selected @endif>
+                                    <option value="{{$channel->id}}" @selected($defaultAnswer->isChannelAuthorized($channel)) >
                                         {{$channel->name}}
                                     </option>
                                 @endforeach
                             </select>
+                            <span class="help-block">
+                                <small>
+                                    {{ __('app.defaultAnswer.select_all_channel') }}
+                                </small>
+                            </span>
                         </div>
                     </div>
                 </div>

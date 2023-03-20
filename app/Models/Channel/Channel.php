@@ -77,6 +77,13 @@ class Channel extends Model
         return $this->hasMany(Order::class);
     }
 
+    public static function getByExtName(string $ext_name) : Channel|null
+    {
+        return Channel::query()
+            ->where('ext_names', 'LIKE', '%' . $ext_name . '%')
+            ->first();
+    }
+
     /**
      * @throws Exception
      */

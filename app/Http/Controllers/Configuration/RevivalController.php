@@ -36,7 +36,7 @@ class RevivalController extends AbstractController
             $revival = new Revival();
         }
 
-        if ($request->exists('save_default_answer'))
+        if ($request->exists('save_revival'))
         {
             $this->save_revival($request, $revival);
             alert::toastSuccess(__('app.save'));
@@ -46,6 +46,7 @@ class RevivalController extends AbstractController
         return view('configuration.revival.edit')
             ->with('revival', $revival);
     }
+
     public function save_revival(Request $request, Revival $revival)
     {
         // Validate request
@@ -68,7 +69,7 @@ class RevivalController extends AbstractController
         // Save
         $revival->save();
 
-        $channelSelected = $request->toArray()['channel'];
+        $channelSelected = $request->input('channels');
         $revival->channels()->sync($channelSelected);
     }
 

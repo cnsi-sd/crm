@@ -6,4 +6,12 @@
 <script src="{{ Vite::asset('resources/js/hyper.js') }}"></script>
 @yield('script-bottom')
 
+@stack('custom-scripts')
+
 @include('sweetalert::alert')
+
+<script>
+    window.translations = {
+        app: {!! json_encode(__('app')) !!},
+    }
+</script>

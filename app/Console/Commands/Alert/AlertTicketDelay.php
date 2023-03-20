@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 class AlertTicketDelay extends Command
 {
     protected $signature = 'alert:ticket:delay';
-    protected $description = 'Alert receipient when the delay is more on 15 days';
+    protected $description = 'Alert recipient when the delay is more on 15 days';
 
     public function handle()
     {
@@ -20,7 +20,6 @@ class AlertTicketDelay extends Command
         $ticketquery = Ticket::query()
             ->select('tickets.*','channels.name as channel_name', 'ticket_threads.name as thread_name', 'users.name as user_name')
             ->join('ticket_threads', 'ticket_threads.ticket_id', '=', 'tickets.id') // thread
-            ->leftJoin('ticket_thread_comments', 'ticket_thread_comments.thread_id', '=', 'ticket_threads.id') // ticket
             ->join('channels', 'channels.id', '=','tickets.channel_id')
             ->join('users','users.id', '=','tickets.user_id')
             ->where('tickets.updated_at', '<', $from_date)

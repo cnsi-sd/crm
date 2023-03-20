@@ -1,6 +1,10 @@
 import _ from 'lodash';
 window._ = _;
 
+// Sweet Alert 2
+import swal from 'sweetalert2';
+window.swal = swal;
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
