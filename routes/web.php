@@ -17,7 +17,6 @@ use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
 use App\Models\User\Role;
 use App\Models\User\User;
-use App\Policies\Configuration\ConfigurationPolicy;
 use Illuminate\Support\Facades\Route;
 
 
@@ -36,12 +35,12 @@ require __DIR__ . '/auth.php';
 Route::prefix('/')->group(function () {
     Route::get('', [HomeController::class, 'home'])->name('home');
 
-    Route::prefix('redirect')->group(function() {
-       Route::match(['get', 'post'], '{channel}/{channel_order_number}', [TicketController::class, 'redirectOrCreateTicket'])->name('redirect_or_create_ticket')->can('read', Ticket::class);
-    });
+   Route::match(['get', 'post'], 'redirect/{channel}/{channel_order_number}', [TicketController::class, 'redirectOrCreateTicket'])->name('redirect_or_create_ticket')->can('read', Ticket::class);
+
     Route::prefix('tickets')->group(function() {
         Route::match(['get', 'post'], 'get_external_infos/{ticket}', [TicketController::class, 'get_external_infos'])->name('get_external_infos')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'toggle_comment/{comment}', [TicketController::class, 'toggle_comment'])->name('toggle_comment')->can('read', Ticket::class);
+        Route::match(['get', 'post'], 'click_and_call', [TicketController::class, 'clickAndCall'])->name('click_and_call')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);

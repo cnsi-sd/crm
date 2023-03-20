@@ -1,19 +1,40 @@
 $(document).ready(function () {
-    var attachmentIndex = 1;
     $('.thread-comments .card-header').click(function () {
         const route = $(this).data("toggle-comment-route")
-        $.get(route, function (data) {
-
-        });
+        $.get(route);
     });
 
-    $('#order-info-tab').one("click", function () {
+    let externalOrderInfoLoaded = false;
+    $('#order-info-tab').click(function () {
+        if(externalOrderInfoLoaded)
+            return;
+
         const route = $(this).data("get-external-infos-route")
         $.get(route, function (data) {
             $('#order-info').html(data)
+
+            $('.phone_number').click(function() {
+                window.axios.post(url_click_and_call, {
+                    'phone_number' : $(this).text(),
+                })
+                .then(function (response) {
+                    window.swal.fire({
+                        icon: response.data.status,
+                        title: response.data.message,
+                        toast: true,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: 'top-end',
+                    })
+                })
+                .catch(window.axios_response.error)
+            });
+
+            externalOrderInfoLoaded = true;
         });
     })
 
+    var attachmentIndex = 1;
     $('#addAttachment').on("click", function () {
         $( ".attachment_bloc" ).first().clone().appendTo( ".attachments" );
         attachmentIndex = attachmentIndex+1;
@@ -22,21 +43,20 @@ $(document).ready(function () {
     });
 })
 
-let inputLine = document.getElementById('number-list');
 let bodyCard = document.getElementById('card-body-tag');
 
-document.getElementById('add').onclick = addListTagOnThread;
-$('.tags').on('select2:select', saveTicketThreadTags);
+document.getElementById('add').onclick = addListTagOnTicket;
+$('.tags').on('select2:select', saveTicketTicketTags);
 $('.deleteTaglist').on("click", deleteTagLists);
-$('.delete-tag').on("click", deleteThreadTag)
+$('.delete-tag').on("click", deleteTicketTag)
 
-function addListTagOnThread(e) {
+function addListTagOnTicket(e) {
     // create new line in db
     let lineId;
-    let thread_id = e.target.getAttribute("data-thread_id")
+    let ticket_id = e.target.getAttribute("data-ticket_id")
     let url = e.target.getAttribute("data-url_add_tag")
     window.axios.post(url_add_tag_list, {
-        thread_id: thread_id
+        ticket_id: ticket_id
     }).then(function (response) {
         lineId = response.data;
         console.log(response);
@@ -50,7 +70,7 @@ function addListTagOnThread(e) {
         let buttonDeleteTaglist = document.createElement("button");
         buttonDeleteTaglist.type = "button";
         buttonDeleteTaglist.className = "deleteTaglist btn btn-danger";
-        buttonDeleteTaglist.setAttribute("data-thread_id", thread_id);
+        buttonDeleteTaglist.setAttribute("data-ticket_id", ticket_id);
         buttonDeleteTaglist.setAttribute("data-taglist_id", lineId);
         buttonDeleteTaglist.innerText = "x";
         $(buttonDeleteTaglist).on("click", deleteTagLists);
@@ -58,16 +78,16 @@ function addListTagOnThread(e) {
 
         //create select tag
         let selectTag = document.createElement("select");
-        selectTag.name = "thread-tags-" + lineId;
+        selectTag.name = "ticket-tags-" + lineId;
         selectTag.className = "form-select";
-        selectTag.setAttribute("data-thread_id", thread_id);
+        selectTag.setAttribute("data-ticket_id", ticket_id);
         selectTag.setAttribute("data-taglist_id", lineId);
         makeOption(selectTag);
         divLine.appendChild(selectTag);
 
         //add select2 on selectTag
         $(selectTag).select2()
-        $(selectTag).on('select2:select', saveTicketThreadTags)
+        $(selectTag).on('select2:select', saveTicketTicketTags)
 
         //create div view tags
         let divView = document.createElement("div");
@@ -94,10 +114,10 @@ function makeOption(select){
     })
 }
 
-function saveTicketThreadTags(e) {
+function saveTicketTicketTags(e) {
     let tag_id = e.target.options[e.target.options.selectedIndex].value;
     let taglist_id = e.target.getAttribute("data-taglist_id");
-    window.axios.post(url_save_tag_on_ticketThread, {
+    window.axios.post(url_add_tag_on_ticket, {
         taglist_id: taglist_id,
         tag_id: tag_id
     }).then(function (response) {
@@ -122,20 +142,20 @@ function saveTicketThreadTags(e) {
 }
 
 function deleteTagLists(e) {
-    let thread_id = e.target.getAttribute("data-thread_id");
+    let ticket_id = e.target.getAttribute("data-ticket_id");
     let taglist_id = e.target.getAttribute("data-taglist_id");
     window.axios.post(url_delete_tagList, {
-        thread_id: thread_id,
+        ticket_id: ticket_id,
         taglist_id: taglist_id
     }).then(
         e.target.parentNode.remove()
     )
 }
 
-function deleteThreadTag(e) {
+function deleteTicketTag(e) {
     let tag_id = e.target.getAttribute('data-tag_id');
     let taglist_id = e.target.getAttribute("data-taglist_id");
-    window.axios.post(url_delete_TagList_On_Thread, {
+    window.axios.post(url_delete_tag_on_ticket, {
         tag_id: tag_id,
         taglist_id: taglist_id
     }).then(

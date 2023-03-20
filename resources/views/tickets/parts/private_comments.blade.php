@@ -1,10 +1,10 @@
 <div class="card">
     <div class="card-header">{{ __('app.ticket.private_comments') }}</div>
     <div class="card-body">
-        <textarea form="saveTicket" name="ticket-thread-comments-content" class="form-control"></textarea>
+        <textarea form="saveTicket" name="ticket-comments-content" class="form-control"></textarea>
         <div class="row mt-2">
             <div class="col">
-                <select form="saveTicket" name="ticket-thread-comments-type" class="form-select no-select2">
+                <select form="saveTicket" name="ticket-comment-type" class="form-select no-select2">
                     @foreach(\App\Enums\Ticket\TicketCommentTypeEnum::getTranslatedList(false) as $key => $message)
                         <option value="{{ $key }}">{{ $message }}</option>
                     @endforeach
@@ -16,8 +16,8 @@
                 </button>
             </div>
         </div>
-        <div class="thread-comments mt-3 pb-1">
-            @foreach($thread->comments as $comment)
+        <div class="ticket-comments mt-3 pb-1">
+            @foreach($ticket->comments as $comment)
                 <div
                     @class(['title d-flex justify-content-between align-items-center mt-3', 'collapsed' => !$comment->displayed])
                     data-bs-toggle="collapse"

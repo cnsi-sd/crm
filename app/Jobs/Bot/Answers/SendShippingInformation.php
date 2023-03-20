@@ -6,6 +6,7 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Message;
 use Illuminate\Support\Str;
 
@@ -38,13 +39,15 @@ class SendShippingInformation extends AbstractAnswer
             // Otherwise (max_ship_date reached), add tag on ticket, stay open
             else {
                 $tagId = setting('bot.shipping_information.late_order_tag_id');
-                // TODO @Mathias, add tag on $this->message->thread.
+                $tag = Tag::findOrFail($tagId);
+                $this->message->thread->ticket->addTag($tag);
             }
 
             return self::STOP_PROPAGATION;
         }
 
-        if ($this->isStateShipped($prestashopOrder)) {
+        $order_nb_days = Order::getOrderCreatedSinceNbDays($prestashopOrder);
+        if ($this->isStateShipped($prestashopOrder) && $order_nb_days < 3) {
             if ($this->isVirSupplier($prestashopOrder)) {
                 $this->sendAnswer(setting('bot.shipping_information.vir_shipped_answer_id'));
             } else {

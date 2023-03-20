@@ -7,6 +7,7 @@ use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
+use App\Helpers\Prestashop\LiveoGateway;
 use App\Helpers\TinyMCE;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\AbstractSendMessage;
@@ -19,6 +20,7 @@ use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use App\Models\User\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -43,7 +45,7 @@ class TicketController extends AbstractController
 
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));
+            ->with('listTags', Tag::getListTagWithTickets($tickets));
     }
 
     public function user_tickets(Request $request, ?User $user): View
@@ -64,48 +66,29 @@ class TicketController extends AbstractController
 
         return view('tickets.all_tickets')
             ->with('table', $table)
-            ->with('listTags', (new \App\Models\Tags\Tag)->getlistTagWithTickets($tickets));;
+            ->with('listTags', Tag::getListTagWithTickets($tickets));
 
     }
 
-    public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number)
+    public function redirectOrCreateTicket(Request $request, $channel, $channel_order_number): RedirectResponse
     {
-        $ticket = null;
-        $channel_id = Channel::query()->where('ext_names', 'LIKE', '%' . $channel . '%')->first()->id;
-
-        if ($channel_id) {
-            $order = Order::query()
-                ->where('channel_id', $channel_id)
-                ->where('channel_order_number', $channel_order_number)
-                ->first();
-            if ($order) {
-                $ticket = Ticket::query()
-                    ->where('order_id', $order->id)->first();
-            }
+        // Get Channel
+        $channel = Channel::getByExtName($channel);
+        if (!$channel) {
+            Alert::modalError('Canal inconnu.');
+            return redirect()->route('home');
         }
 
-        if(!$ticket){
-            $order = new Order;
-            $order->channel_id = $channel_id;
-            $order->channel_order_number = $channel_order_number;
-            $order->save();
+        // Get order & ticket
+        $order = Order::getOrder($channel_order_number, $channel);
+        $ticket = Ticket::getTicket($order, $channel);
 
-            $ticket = new Ticket();
-            $ticket->channel_id = $channel_id;
-            $ticket->order_id = $order->id;
-            $ticket->user_id = Channel::query()->where('id', $order->channel_id)->first()->user_id;
-            $ticket->state  = TicketStateEnum::WAITING_ADMIN;
-            $ticket->priority = TicketPriorityEnum::P1;
-            $ticket->deadline = new \DateTime('now');
-            $ticket->save();
+        // Create thread if not exists
+        if($ticket->threads->count() === 0)
+            Thread::getOrCreateThread($ticket, $channel_order_number, "Fil de discussion principal");
 
-            $thread = new Thread();
-            $thread->ticket_id = $ticket->id;
-            $thread->name = "Fil de discussion principal";
-            $thread->save();
-        }
-
-        return redirect()->route('ticket', [$ticket]);
+        // Redirect to ticket
+        return redirect()->route('ticket', $ticket);
     }
 
     public function redirectTicket(Request $request, ?Ticket $ticket): RedirectResponse
@@ -137,7 +120,6 @@ class TicketController extends AbstractController
      */
     public function ticket(Request $request, Ticket $ticket, Thread $thread): View|RedirectResponse
     {
-        $upload_doc_route = route('upload_document', [$thread, $thread::class]);
         $ticket->last_thread_displayed = $thread->id;
         $ticket->save();
 
@@ -155,10 +137,10 @@ class TicketController extends AbstractController
             $ticket->user_id = $request->input('ticket-user_id');
             $ticket->deadline = $request->input('ticket-deadline');
             $ticket->direct_customer_email = $request->input('ticket-customer_email');
+            $ticket->customer_issue = $request->input('ticket-customer_issue');
             $ticket->delivery_date = $request->input('ticket-delivery_date');
             $ticket->save();
 
-            $thread->customer_issue = $request->input('ticket-thread-customer_issue');
             $thread->revival_id = $request->input('ticket-revival');
             $thread->revival_start_date = $request->input('revival-delivery_date') . ' 09:00:00';
             $thread->save();
@@ -186,16 +168,17 @@ class TicketController extends AbstractController
 
                 AbstractSendMessage::dispatchMessage($message);
             }
-            if($request->input('ticket-thread-comments-content')) {
+            if($request->input('ticket-comments-content')) {
                 $request->validate([
-                    'ticket-thread-comments-content'     => ['required','string'],
+                    'ticket-comments-content'     => ['required','string'],
+                    'ticket-comment-type'         => ['required','string'],
                 ]);
                 Comment::firstOrCreate([
-                    'thread_id' => $thread->id,
+                    'ticket_id' => $thread->id,
                     'user_id' => $request->user()->id,
-                    'content' => $request->input('ticket-thread-comments-content'),
+                    'content' => $request->input('ticket-comments-content'),
                     'displayed' => 1,
-                    'type' => $request->input('ticket-thread-comments-type'),
+                    'type' => $request->input('ticket-comment-type'),
                 ]);
             }
             Alert::toastSuccess(__('app.ticket.saved'));
@@ -208,13 +191,12 @@ class TicketController extends AbstractController
         return view('tickets.ticket')
             ->with('ticket', $ticket)
             ->with('thread', $thread)
-            ->with('documents_table_comments', $thread->getDocumentsTable($request, $upload_doc_route));
+            ->with('documents_table', $ticket->getDocumentsTable($request, route('upload_document', [$ticket, $ticket::class])));
     }
 
     public function delete_tag(Request $request) {
         $tag = Tag::find($request->input('tag_id'));
         $tag->taglists()->detach($request->input('taglist_id'));
-        return redirect()->route('all_tickets');
     }
 
     public function delete_ThreadTagList(Request $request) {
@@ -225,9 +207,26 @@ class TicketController extends AbstractController
 
     public function saveThreadTags(Request $request) {
         $taglist = TagList::find($request->input('taglist_id'));
-        $tag = Tag::find($request->input('tag_id'));
-        $tag->taglists()->attach($taglist->id);
+        $tag = Tag::findOrFail($request->input('tag_id'));
+        $taglist->addTag($tag);
         return response()->json($tag);
+    }
+
+    public function clickAndCall(Request $request): JsonResponse
+    {
+        try {
+            LiveoGateway::startCall(auth()->user()->email, $request->input('phone_number'));
+            return response()->json([
+                'status' => 'success',
+                'message' => __('app.ticket.click_and_call.success'),
+            ]);
+        }
+        catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     public function uploadFile($request, $message, $typeName, $fileName)

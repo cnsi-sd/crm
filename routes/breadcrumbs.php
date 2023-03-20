@@ -22,12 +22,6 @@ Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.configuration.configuration'));
 });
 
-/** Permissions */
-Breadcrumbs::for('permissions', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin');
-    $trail->push(__('app.navbar.permissions'));
-});
-
 /** Tickets */
 Breadcrumbs::for('tickets', function (BreadcrumbTrail $trail) {
    $trail->parent('home');

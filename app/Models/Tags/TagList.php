@@ -3,38 +3,43 @@
 namespace App\Models\Tags;
 
 use App\Models\Ticket\Thread;
+use App\Models\Ticket\Ticket;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- *
- * @property Thread[] $threads
- * @property Tag[] $tags
- *
+ * @property int $ticket_id
  * @property Datetime $created_at
  * @property Datetime $updated_at
+ *
+ * @property Ticket $ticket
+ * @property Tag[] $tags
  */
 class TagList extends Model
 {
     protected $table = 'tagLists';
 
     protected $fillable = [
-        'thread_id',
+        'ticket_id',
         'created_at',
         'updated_at'
     ];
 
-    public function threads(): BelongsTo
+    public function ticket(): BelongsTo
     {
-        return $this->belongsTo(Thread::class);
+        return $this->belongsTo(Ticket::class);
     }
 
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'tag_tagLists', 'tagList_id', 'tag_id');
+    }
+
+    public function addTag(Tag $tag): void
+    {
+        $this->tags()->attach($tag->id);
     }
 }
