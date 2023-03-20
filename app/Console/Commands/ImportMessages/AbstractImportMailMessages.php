@@ -5,23 +5,8 @@ namespace App\Console\Commands\ImportMessages;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 
-class AbstractImportMailMessages extends AbstractImportMessages
+abstract class AbstractImportMailMessages extends AbstractImportMessages
 {
-    protected function getCredentials(): array
-    {
-        // TODO: Implement getCredentials() method.
-    }
-
-    protected function initApiClient()
-    {
-        // TODO: Implement initApiClient() method.
-    }
-
-    protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread)
-    {
-        // TODO: Implement convertApiResponseToMessage() method.
-    }
-
     protected function search($query = []): array
     {
         if(empty($query)) {
@@ -52,9 +37,19 @@ class AbstractImportMailMessages extends AbstractImportMessages
 
     protected function parseOrderId($email): bool|string{}
 
-    protected function canImport($email): bool{}
+    protected function canImport($email): bool{
 
-    protected function isSpam($email): bool{}
+        if(in_array($email->senderAddress, config('email-import.domain_blacklist')))
+            return false;
+        if(in_array($email->senderAddress, config('email-import.email_blacklist')))
+            return false;
+
+        return true;
+    }
+
+    protected function isSpam($email): bool{
+        return false;
+    }
 
     protected function getSpecificActions(){}
 
