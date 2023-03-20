@@ -112,15 +112,15 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         );
     }
 
-    private function getEmails($emailIds): array
-    {
-        $emails = [];
-        foreach ($emailIds as $emailId) {
-            $this->logger->info('Get Email : '. $emailId);
-            $emails[$emailId] = $this->mailbox->getMail($emailId,false);
-        }
-        return $emails;
-    }
+//    private function getEmails($emailIds): array
+//    {
+//        $emails = [];
+//        foreach ($emailIds as $emailId) {
+//            $this->logger->info('Get Email : '. $emailId);
+//            $emails[$emailId] = $this->mailbox->getMail($emailId,false);
+//        }
+//        return $emails;
+//    }
 
     private function parseOrderId(IncomingMail $email): bool|string
     {

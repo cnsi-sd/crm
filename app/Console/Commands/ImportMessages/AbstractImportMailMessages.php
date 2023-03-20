@@ -39,4 +39,14 @@ class AbstractImportMailMessages extends AbstractImportMessages
 
         return $this->mailbox->searchMailbox(implode(' ', $criterias));
     }
+
+    protected function getEmails($emailIds): array
+    {
+        $emails = [];
+        foreach ($emailIds as $emailId) {
+            $this->logger->info('Get Email : '. $emailId);
+            $emails[$emailId] = $this->mailbox->getMail($emailId,false);
+        }
+        return $emails;
+    }
 }
