@@ -18,10 +18,10 @@ use PhpImap\Exceptions\InvalidParameterException;
 use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 
-class ManomanoImportMessages extends AbstractImportMessages
+class ManomanoImportMessages extends AbstractImportMailMessages
 {
     /** @var Mailbox */
-    private Mailbox $mailbox;
+    protected Mailbox $mailbox;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
 
     public function __construct()
@@ -59,14 +59,12 @@ class ManomanoImportMessages extends AbstractImportMessages
             $this->logger->info('Get Emails details');
 
             foreach($this->getEmails($emailIds) as $emailId => $email){
-                // Check if sender is "ne-pas-repondre@manomano.fr"
-                $doNotReply = str_contains($email->senderAddress, 'repondre');
-                if($doNotReply)
+
+                if(!$this->canImport($email)){
                     continue;
+                }
 
                 $orderId = $this->parseOrderId($email);
-                if(!$orderId)
-                    continue;
 
                 if(str_contains($email->senderAddress, '@monechelle.zendesk.com'))
                     $threadPrefix = 'Support';
@@ -112,35 +110,7 @@ class ManomanoImportMessages extends AbstractImportMessages
         );
     }
 
-    private function search($query = []): array
-    {
-        if(empty($query)) {
-            $query = ['All' => null];
-        }
-
-        $criterias = [];
-        foreach($query as $criteria => $value) {
-            if(empty($value)) {
-                $criterias[] = strtoupper($criteria);
-                continue;
-            }
-            $criterias[] = strtoupper($criteria).' "'.$value.'"';
-        }
-
-        return $this->mailbox->searchMailbox(implode(' ', $criterias));
-    }
-
-    private function getEmails($emailIds): array
-    {
-        $emails = [];
-        foreach ($emailIds as $emailId) {
-            $this->logger->info('Get Email : '. $emailId);
-            $emails[$emailId] = $this->mailbox->getMail($emailId,false);
-        }
-        return $emails;
-    }
-
-    private function parseOrderId(IncomingMail $email): bool|string
+    protected function parseOrderId($email): bool|string
     {
         $subject = $email->subject;
 
@@ -184,8 +154,7 @@ class ManomanoImportMessages extends AbstractImportMessages
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        $support = str_contains($email->senderAddress,'support');
-        if($support)
+        if(str_contains($email->senderAddress,'support'))
             $authorType = TicketMessageAuthorTypeEnum::OPERATOR;
         else
             $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
@@ -203,5 +172,18 @@ class ManomanoImportMessages extends AbstractImportMessages
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);
+    }
+
+    protected function canImport($email): bool
+    {
+        // Check if sender is "ne-pas-repondre@manomano.fr"
+        if(str_contains($email->senderAddress, 'repondre'))
+            return false;
+
+        // Check if there is an OrderId
+        if(!$this->parseOrderId($email))
+            return false;
+
+        return true;
     }
 }
