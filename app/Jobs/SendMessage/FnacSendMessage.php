@@ -28,8 +28,8 @@ class FnacSendMessage extends AbstractSendMessage
      */
     public function sendMessage(): void
     {
-        // If we are in local environment, we only can send messages to a test order
-        if (env('APP_ENV') == 'local')
+        // If we are nit in production environment, we only can send messages to a test order
+        if (env('APP_ENV') == 'production')
             if( $this->message->thread->channel_thread_number != 'FICGB4UDKJXMM')
                 return;
 

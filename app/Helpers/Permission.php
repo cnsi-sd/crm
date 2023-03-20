@@ -57,13 +57,13 @@ abstract class Permission
                 ],
             ],
             [
-                'title' => __('app.configuration.configuration'),
+                'title' => __('app.config.config'),
                 'sub_sections' => [
                     [
-                        'title' => __('app.configuration.configuration'),
+                        'title' => __('app.config.config'),
                         'items' => [
                             PermissionEnum::BOT_CONFIG,
-                            PermissionEnum::VARIABLES_CONFIG,
+                            PermissionEnum::MISC_CONFIG,
                         ],
                     ],
                 ],
@@ -86,7 +86,7 @@ abstract class Permission
                         ],
                     ],
                     [
-                        'title' => trans_choice('app.configuration.channel', 2),
+                        'title' => trans_choice('app.config.channel', 2),
                         'items' => [
                             PermissionEnum::CHANNEL_READ,
                             PermissionEnum::CHANNEL_EDIT,
