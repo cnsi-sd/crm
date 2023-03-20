@@ -118,7 +118,7 @@ class ImportIncidents extends Command
 
         if ($ticket->threads->count() === 0) {
             // TODO : this make no senses
-            Thread::getOrCreateThread($ticket, 'default', 'Discussion');
+            Thread::getOrCreateThread($ticket, 'default', 'Fil de discussion principal');
         }
     }
 
