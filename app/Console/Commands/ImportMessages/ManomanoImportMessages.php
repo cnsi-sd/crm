@@ -60,16 +60,11 @@ class ManomanoImportMessages extends AbstractImportMailMessages
 
             foreach($this->getEmails($emailIds) as $emailId => $email){
 
-
-
-                // Check if sender is "ne-pas-repondre@manomano.fr"
-                $doNotReply = str_contains($email->senderAddress, 'repondre');
-                if($doNotReply)
+                if(!$this->canImport($email)){
                     continue;
+                }
 
                 $orderId = $this->parseOrderId($email);
-                if(!$orderId)
-                    continue;
 
                 if(str_contains($email->senderAddress, '@monechelle.zendesk.com'))
                     $threadPrefix = 'Support';
@@ -159,8 +154,7 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        $support = str_contains($email->senderAddress,'support');
-        if($support)
+        if(str_contains($email->senderAddress,'support'))
             $authorType = TicketMessageAuthorTypeEnum::OPERATOR;
         else
             $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
@@ -178,5 +172,18 @@ class ManomanoImportMessages extends AbstractImportMailMessages
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);
+    }
+
+    protected function canImport($email): bool
+    {
+        // Check if sender is "ne-pas-repondre@manomano.fr"
+        if(str_contains($email->senderAddress, 'repondre'))
+            return false;
+
+        // Check if there is an OrderId
+        if(!$this->parseOrderId($email))
+            return false;
+
+        return true;
     }
 }
