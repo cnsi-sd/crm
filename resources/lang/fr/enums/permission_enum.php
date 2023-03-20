@@ -13,7 +13,7 @@ return [
     'TAG_READ' => 'Consulter les tags',
     'TAG_EDIT' => 'Modifier un tag',
     'BOT_CONFIG' => 'Configurer le bot',
-    'VARIABLES_CONFIG' => 'Configurer les variables',
+    'MISC_CONFIG' => 'Configuration diverses',
     'CHANNEL_READ' => 'Consulter les canaux',
     'CHANNEL_EDIT' => 'Éditer un canal',
 ];
