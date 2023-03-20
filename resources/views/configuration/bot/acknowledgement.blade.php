@@ -4,7 +4,7 @@
     <div class="col-4">
         <div class="card">
             <div class="card-header">
-                {{ __('app.configuration.configuration') }}
+                {{ __('app.config.config') }}
             </div>
 
             <div class="card-body">

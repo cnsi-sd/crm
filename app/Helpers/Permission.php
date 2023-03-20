@@ -57,10 +57,10 @@ abstract class Permission
                 ],
             ],
             [
-                'title' => __('app.configuration.configuration'),
+                'title' => __('app.config.config'),
                 'sub_sections' => [
                     [
-                        'title' => __('app.configuration.configuration'),
+                        'title' => __('app.config.config'),
                         'items' => [
                             PermissionEnum::BOT_CONFIG,
                             PermissionEnum::VARIABLES_CONFIG,

@@ -19,7 +19,7 @@ Breadcrumbs::for('admin', function (BreadcrumbTrail $trail) {
 /** Configuration */
 Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push(__('app.configuration.configuration'));
+    $trail->push(__('app.config.config'));
 });
 
 /** Tickets */

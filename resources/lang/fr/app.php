@@ -161,8 +161,8 @@ return [
         'remember_me' => 'Se souvenir de moi',
     ],
 
-    'configuration' => [
-        'configuration' => 'Configuration',
+    'config' => [
+        'config' => 'Configuration',
         'channel' => 'Canal|Canaux',
     ],
 
