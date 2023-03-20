@@ -6,6 +6,8 @@ use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Prestashop\CrmLinkGateway;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tag;
+use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
@@ -40,8 +42,8 @@ class ImportIncidents extends Command
             }
 
             if(isset($incident)) {
-                $this->logger->info('Save last incident ID (' . $incident->id . ')');
-                $this->saveLastIncidentId($incident->id);
+                $this->logger->info('Save last incident ID (' . $incident['id'] . ')');
+                $this->saveLastIncidentId($incident['id']);
             }
 
             $this->logger->info('DONE');
@@ -57,7 +59,7 @@ class ImportIncidents extends Command
 
         // Prevent from importing old incidents in a production environment
         if ($lastIncidentId <= 0) {
-            throw new Exception('Please define an initial incident ID');
+            throw new Exception('Please define an initial incident ID (setting `' .self::LAST_INCIDENT_SETTING . '`)');
         }
 
         return (int)$lastIncidentId;
@@ -74,23 +76,39 @@ class ImportIncidents extends Command
         return $incidents;
     }
 
-    protected function processIncident(stdClass $incident)
+    protected function processIncident(array $incident)
     {
-        $id = $incident->id;
-        $channel_order_number = $incident->id_order_marketplace;
-        $ext_channel_name = $incident->marketplace;
+        $id = $incident['id'];
+        $channel_order_number = $incident['id_order_marketplace'];
+        $ext_channel_name = $incident['marketplace'];
 
         $this->logger->info(sprintf('Process incident #%d (%s : %s)', $id, $ext_channel_name, $channel_order_number));
 
-        // Get ticket
+        // Get channel
         $channel = Channel::getByExtName($ext_channel_name);
+        if(!$channel) {
+            $this->logger->error('Incident ' . $id . ' unprocessable, channel not found for `' . $ext_channel_name . '`');
+            return;
+        }
+
+        // Get ticket
         $order = Order::getOrder($channel_order_number, $channel);
         $ticket = Ticket::getTicket($order, $channel);
 
-        // TODO : add tag
+        // Grab incident tag
+        $tag = Tag::query()->where('name', 'Incident')->firstOrFail();
+
+        // Update ticket
+        if (!$ticket->hasTag($tag))
+            $ticket->addTag($tag);
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->deadline = Ticket::getAutoDeadline();
         $ticket->save();
+
+        if ($ticket->threads->count() === 0) {
+            // TODO : this make no senses
+            Thread::getOrCreateThread($ticket, 'default', 'Discussion');
+        }
     }
 
     protected function saveLastIncidentId($lastIncidentId): void

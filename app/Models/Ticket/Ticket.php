@@ -296,6 +296,17 @@ class Ticket extends Model
         ];
     }
 
+    public function hasTag(Tag $tag): bool
+    {
+        foreach($this->tagLists as $tagList) {
+            $tagExists = $tagList->tags()->where('tags.id', $tag->id)->exists();
+            if($tagExists)
+                return true;
+        }
+
+        return false;
+    }
+
     public function addTag(Tag $tag, ?TagList $tagList = null)
     {
         if (is_null($tagList)) {

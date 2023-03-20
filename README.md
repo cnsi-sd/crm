@@ -40,8 +40,7 @@ php8.1 composer.phar install
 php8.1 artisan key:generate
 npm install
 npm run dev
-php8.1 artisan migrate
-php8.1 artisan db:seed --class=DevSeeder
+php8.1 artisan migrate --seed
 php8.1 artisan db:safe
 php8.1 artisan serve
 ```
