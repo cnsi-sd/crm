@@ -53,7 +53,7 @@ abstract class Menu
                         'permission' => PermissionEnum::REVIVAL_READ
                     ],
                     [
-                        'text' => trans_choice('app.configuration.channel', 2),
+                        'text' => trans_choice('app.config.channel', 2),
                         'route' => route('channels'),
                         'ref' => 'channel',
                         'permission' => PermissionEnum::CHANNEL_READ
@@ -71,10 +71,10 @@ abstract class Menu
                         'permission' => PermissionEnum::BOT_CONFIG
                     ],
                     [
-                        'text' => trans_choice('app.variable.variable', 2),
-                        'route' => route('variables_config'),
-                        'ref' => 'variables',
-                        'permission' => PermissionEnum::VARIABLES_CONFIG
+                        'text' => __('app.config.misc.misc'),
+                        'route' => route('misc_home'),
+                        'ref' => 'misc',
+                        'permission' => PermissionEnum::MISC_CONFIG
                     ],
                 ]
             ],

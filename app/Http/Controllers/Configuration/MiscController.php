@@ -9,9 +9,14 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class VariableController extends AbstractController
+class MiscController extends AbstractController
 {
-    public function config(Request $request): View|RedirectResponse
+    public function home(): View
+    {
+        return view('configuration.misc.home');
+    }
+
+    public function variables(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
             foreach (MessageVariable::cases() as $variable) {
@@ -26,10 +31,10 @@ class VariableController extends AbstractController
                 }
             }
 
-            Alert::toastSuccess(__('app.variable.saved'));
-            return redirect()->route('variables_config');
+            Alert::toastSuccess(__('app.config.misc.saved'));
+            return redirect()->back();
         }
 
-        return view('configuration.variable.config');
+        return view('configuration.misc.variables');
     }
 }

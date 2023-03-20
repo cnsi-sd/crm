@@ -161,9 +161,15 @@ return [
         'remember_me' => 'Se souvenir de moi',
     ],
 
-    'configuration' => [
-        'configuration' => 'Configuration',
+    'config' => [
+        'config' => 'Configuration',
         'channel' => 'Canal|Canaux',
+
+        'misc' => [
+            'misc' => 'Divers',
+            'saved' => 'Configuration enregistrée',
+            'variables' => 'Variables',
+        ],
     ],
 
     'bot' => [
@@ -196,11 +202,6 @@ return [
 
             'late_order_tag' => 'Tag retard de préparation',
         ],
-    ],
-
-    'variable' => [
-        'variable' => 'Variable|Variables',
-        'saved' => 'Variables enregistrées'
     ],
 
     'defaultAnswer' => [

@@ -19,7 +19,7 @@ Breadcrumbs::for('admin', function (BreadcrumbTrail $trail) {
 /** Configuration */
 Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push(__('app.configuration.configuration'));
+    $trail->push(__('app.config.config'));
 });
 
 /** Tickets */
@@ -134,16 +134,20 @@ Breadcrumbs::for('bot_shipping_information', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.bot.shipping_information.shipping_information'), route('bot_shipping_information'));
 });
 
-/** Variables */
-Breadcrumbs::for('variables_config', function (BreadcrumbTrail $trail) {
+/** Misc Config */
+Breadcrumbs::for('misc_home', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(trans_choice('app.variable.variable', 2), route('variables_config'));
+    $trail->push(__('app.config.misc.misc'), route('misc_home'));
+});
+Breadcrumbs::for('variables_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.variables'), route('variables_config'));
 });
 
 /** Channel */
 Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(trans_choice('app.configuration.channel', 2), route('channels'));
+    $trail->push(trans_choice('app.config.channel', 2), route('channels'));
 });
 /** Channel */
 Breadcrumbs::for('edit_channel', function (BreadcrumbTrail $trail) {
