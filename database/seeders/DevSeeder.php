@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\dev\TagDatasetSeeder;
 use Database\Seeders\dev\UserSeeder;
 use Database\Seeders\dev\VariableSeeder;
 use Database\Seeders\prod\RoleSeeder;
@@ -25,6 +26,7 @@ class DevSeeder extends DatabaseSeeder
             RoleSeeder::class,
             UserSeeder::class,
             VariableSeeder::class,
+            TagDatasetSeeder::class,
         ]);
 
         parent::run();

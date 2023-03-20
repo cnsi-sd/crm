@@ -1,0 +1,180 @@
+name,background_color,text_color
+Attente rép client,#E1B0E7,#FFFFFF
+SAV,#FF8000,#000000
+Casse P30,#FF8000,#000000
+Non reçu,#000000,#FFFFFF
+Rétractation,#BDBFBB,#000000
+Attente suivi,#15BFD6,#000000
+Attente Photos,#E1B0E7,#FFFFFF
+Attente Retour Colis,#BDBFBB,#000000
+Attente réappro,#15BFD6,#000000
+A rembourser,#BDEB19,#000000
+A renvoyer,#BDEB19,#000000
+EVAL,#FE2E2E,#FFFFFF
+Rupture,#000000,#FF0000
+Attente avoir,#BDEB19,#000000
+Ticket ancien ADV,#15BFD6,#000000
+Attente paiement LIV Premium,#ff99ff,#000000
+Avis de souffrance,#000000,#FFFFFF
+ATTENTE RETOUR CHARLES,#FE2E2E,#FFFFFF
+Casse M30,#FF8000,#000000
+ATTENTE RETOUR vanessa,#FE2E2E,#FFFFFF
+MISE EN DEMEURE,#b266ff,#FFFFFF
+ticket CHRONO,#15D6BA,#000000
+RECOUVREMENT,#b266ff,#FFFFFF
+récla refusé,#FE2E75,#000000
+Fausse Expé,#15BFD6,#000000
+Appeler Client,#C60800,#FFFFFF
+recommander a repondre,#D6AD15,#000000
+Erreur fiche produit,#F8607B,#E9F2EE
+RECLAMATION,#FE2E2E,#000000
+MESSAGE DU standard ,#DA0E45,#EAF4F4
+Retour colis Jerome,#BDBFBB,#151315
+URGENT,#C60800,#000000
+Autorisation de retour traité,#000000,#fff
+Attente findis EIS,#FFFF00,#000000
+Mauvaise ref livré,#F8607B,#E9F2EE
+attente ubaldi,#FFFF00,#000000
+AVOIR RECU PAS CREE,#100FF5,#F9FF1D
+Recouvrement a faire ,#b266ff,#000000
+gérer les retour,#FF501D,#E9FF00
+REQUETTE EN COURS,#b266ff,#FFFFFF
+Colis a faire reprendre,#15D6BA,#FFFFFF
+Attente compta,#100FF5,#00FFEE
+Pièce manquante,#FF8000,#000000
+Retard de livraison,#15BFD6,#000000
+Retard de prépa,#15BFD6,#000000
+corse,#FFFFFF,#FF8000
+attente fnac pro ,#FFFF00,#000000
+attente darty pro ,#FFFF00,#000000
+Demande annulation en cours,#100FF5,#DDF50F
+Appeler Sav Marque,#40A494,#FFFFFF
+Colis Perdu,#567899,#F3F8F8
+Attente Facture SAV pour compt,#E1B0E7,#FFFFll
+attente Amazon,#FFFF00,#000000
+attente pccomp.,#FFFF00,#000000
+PMS,#FF8000,#000000
+Renvoi ou Remboursement?,#BDEB19,#000000
+Attente Régularisation Command,#b266ff,#000000
+Attente Doc Client,#E1B0E7,#FFFFFF
+ATTENTE DEPOT PLAINTE ,#E1B0E7,#FFFFFF
+Attente Station SAV,#40A494,#FFFFFF
+Attente retour DEV,#FE2E2E,#21031
+En reliquat,#15BFD6,#FFFFll
+Attente acer,#FFFF00,#000000
+colis refusé cassé,#BDBFBB,#000000
+Suivre cloture Recla ,#FE2E9E,#FFFFFF
+En cours de réparation,#99ccff,#FFFFFF
+Attente Computer Universe,#FFFF00,#000000
+Attente  Fournisseur,#FFFF00,#000000
+Solution Commercial en cours,#40A494,#FFFFFF
+Relance auto colis sav,#000000,#000000
+Attente BL,#b266ff,#FFFFll
+Attente Rétracte client sur MP,#567899,#21236
+Frais de retour à déduire,#F43E71,#21031
+Proposition de Geste co,#F81G89,#36847
+Faire facture MP,#E666UU,#15BFD6
+Colis refusé en retour,#ffb266,#FFFFFF
+Livraison non honorée,#000000,#FFFFFF
+A verifier onglet finance,#b266ff,#21231
+Client a un colis en TROP,#b266ff,#000000
+Tel/adresse invalide,#FFFFFF,#FF8000
+Récla acepté Colis chez client,#FE2E2E,#000000
+Récl acpté Colis retour Fourni,#15D6BA,#FFFFFF
+Récla accepté Coli retour CNSI,#FE2E2E,#000000
+Récla accepté Colis en SAV,#FE2E2E,#000000
+Faire rapport d'expertise,#F8607B,#21031
+Attente rep. Dépot,#FFFF00,#000000
+Remboursement à contester,#FE2E2E,#FFFFFF
+Contestation faite a suivre,#FE2E2E,#FFFFFF
+RECLA accepté frais de port ,#FE2E2E,#000000
+Attente retour Cyril,#FE2E2E,#FFFFFF
+Your à repondre,#FE2E2E,#FFFFFF
+Mettre BO A JOUR,#5g5d45,#Fmp569
+Your Répondu en attente,#FE2E2E,#FFFFFF
+Financé par Amazon,#9900,#FFFFFF
+Suivre si colis accept ou refu,#F43E71,#21231
+Attente retour MP,#FE2E2E,#21031
+Retour ACCEPTÉ,#000000,#FFFFFF
+Retour ACCEPTÉ AVEC RESERVES,#000000,#FFFFFF
+Retour REFUSÉ,#000000,#FFFFFF
+Retour AVEC REMARQUE,#000000,#FFFFFF
+À facturer à CRC,#000000,#FFFFFF
+Suivi renvoi,#15BFD6,#000000
+Attente prise en charge litige,#BDEB19,#21236
+Recherche à quai en cours,#3399ff,#FFFFFF
+Attention commande multiple,#FE2E2E,#21236
+Procédure SAV complète,#49edf8,#000000
+Attente retour Jerome,#FE2E2E,#21236
+Attente Cas amazon,#FE2E2E,#000000
+En cours de revision,#FE2E2E,#FFFFFF
+Client déjà remboursé,#FFFFFF,#FE2E2E
+Attente paiement client,#ff99ff,#21236
+Litige transport refusé,#FFFFFF,#FE2E2E
+Attente retrait éval client,#FE2E2E,#000000
+"Suivi "" bien reçu""",#15BFD6,#000000
+Attente Validation Facture VIR,#BDEB19,#000000
+Réparation ou avoir ?,#FFFFFF,#56
+Piece en Commande,#FF8000,#000000
+Collecte en cours,#40A494,#000000
+Prestation premium pas honoré,#ff99ff,#000000
+Att Modification Info Client,#FE2E2E,#000000
+Défaut conformité,#FF8000,#000000
+Reprise Eco taxe,#ff99ff,#000000
+Attente facture Transport,#E666UU,#000000
+Erreur Log,#000000,#FF0000
+Renvoi déjà fait,#FFFFF,#FE2E2E
+Attente rep. VIR,#15BFD6,#000000
+Attente Gpdis,#FFFF00,#000000
+Changement d'adresse,#15BFD6,#000000
+Echange client via Mail,#BDBFBB,#FF0000
+Sav a faire pour jerome,#15BFD6,#000000
+Echange: en cours garage,#15BFD6,#000000
+Echange : en cours reçu,#15BFD6,#000000
+Echange fait attente avoir,#15BFD6,#21236
+Discussion cloturé,#BDBFBB,#000000
+Chez CRC-attente reprise marqu,#FF8000,#000000
+RA ARRIVAGE VIR,#000000,#FFFFFF
+Rajout LV2,#ff99ff,#000000
+Rajout LV3,#ff99ff,#000000
+Attente paiement de la mp ,#BDEB19,#000000
+Vérifier Facturation FDP VIR ,#ff99ff,#000000
+Attente plaque signalétique ,#E1B0E7,#FFFFFF
+Dossier transmis grand compte,#15BFD6,#FF0000
+Attente imcopex,#FFFF00,#000000
+Date Limite SAV ,#FE2E2E,#000000
+Classe énergétique,#ff99ff,#FF0000
+Autorisation retour AMAZON,#870A61,#FFFFFF
+La MP veut rembourser,#FE2E2E,#21236
+Incident ,#FE2E2E,#FFFFFF
+En cours d'arbitrage,#FE2E2E,#21232
+Suivre clôture Incident,#F43E71,#FFFFFF
+Echange via Seller  MP,#FF8000,#FFFFFF
+attente retour Fanny,#FE2E2E,#000000
+Attente Com à Récuperer,#15BFD6,#21231
+Att Prise en charge FDP VIR,#BDEB19,#000000
+Convocation Tribunal,#FE2E2E,#000000
+Décote à faire,#BDBFBB,#FF0000
+REMBOURSEMENT SUR MP MIRAKL,#1f166e,#FFFFFF
+Attente validation mandat SAV,#BDBFBB,#21236
+Att paiement frais de retour,#E666UU,#21232
+Réponse sur Boite Mail,#15BFD6,#FF0000
+Attente AO DISTRIBUTION,#FFFF00,#000000
+Attente Compagnie du SAV,#FF8000,#000000
+Prise de rdv en cours,#99ccff,#FFFFFF
+RDV validé,#99ccff,#FFFFFF
+Non réparable,#064A2A,#FAF8F8
+Attente marque,#5D3B3B,#FCF7F7
+Attente Findis ADC,#FFFF00,#000000
+Attente Devis,#99ccff,#FFFFFF
+Attente rapport d'intervention,#99ccff,#FFFFFF
+Amazon Business,#FE2E2E,#FFFFFF
+Devis refusé,#99ccff,#FFFFFF
+Attente Retrait Récla ,#15BFD6,#000000
+Récla en cours d'ouverture,#FF8000,#000000
+Colis en Point Relais,#ff99ff,#21236
+PIECE CASSE,#FF8000,#000000
+Casse Occulte Choc Transport,#FF8000,#21236
+Fausse expé sur MP,#FFFF00,#000000
+Livraison à son adresse imposs,#ff99ff,#21236
+SAV FAUTE CLIENT,#DA0E45,#EAF4F4
