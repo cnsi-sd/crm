@@ -7,12 +7,11 @@ use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
-use App\Helpers\Stringer;
+use App\Helpers\Tools;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
-use App\Models\Tags\TagList;
 use App\Models\Ticket\Comment;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
@@ -21,14 +20,15 @@ use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use PhpImap\Exceptions\InvalidParameterException;
-use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 
-class AmazonImportMessage extends AbstractImportMessages
+class AmazonImportMessage extends AbstractImportMailMessages
 {
     /** @var Mailbox */
     private Mailbox $mailbox;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
+    const RETURN = 'retour';
+    const IMPORT = 'import';
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'amazon');
@@ -57,33 +57,36 @@ class AmazonImportMessage extends AbstractImportMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
-                'SINCE' => $from_date
+                //'SINCE' => $from_date
             ]);
 
             $this->logger->info('--- Get Emails details');
             foreach(array_reverse($this->getEmails($emailIds)) as $emailId => $email) {
                 try {
-                    // Parse incomming mail
-                    $parseMail = $this->parseIncomingMail($email);
-                    if(!$parseMail[0])
+                    // Check can import mail
+                    if(!$this->canImport($email))
+                        continue;
+
+                    $this->logger->info('Retrieve command number from email');
+                    $mpOrder = $this->parseOrderId($email);
+
+                    if (!$mpOrder)
                         continue;
 
                     $this->logger->info('Begin Transaction');
                     DB::beginTransaction();
+                    $this->logger->info('--- start import email : ' . $email->id);
+                    $order = Order::getOrder($mpOrder, $this->channel);
+                    $ticket = Ticket::getTicket($order, $this->channel);
+                    $thread = Thread::getOrCreateThread($ticket, $mpOrder, $email->subject, $email->fromAddress);
 
-                    $this->logger->info('Retrieve command number from email');
-                    $mpOrder = $this->showCommandNumber($email);
-
-                    if ($mpOrder) {
-                        $this->logger->info('--- start import email : '. $email->id);
-                        $order   = Order::getOrder($mpOrder, $this->channel);
-                        $ticket  = Ticket::getTicket($order, $this->channel);
-                        $thread  = Thread::getOrCreateThread($ticket, $mpOrder, $email->subject, $email->fromAddress);
-                        if (!$parseMail[1])
-                            $this->importMessageByThread($ticket, $thread, $email);
-                        else
+                    switch ($this->getSpecificActions($email)) {
+                        case self::RETURN :
                             $this->addReturnOnTicket($ticket, $email);
-                    }
+                            break;
+                        default:
+                            $this->importMessageByThread($ticket, $thread, $email);
+                        }
                     $this->logger->info('--- end import email');
                     DB::commit();
                 } catch (Exception $e) {
@@ -120,91 +123,63 @@ class AmazonImportMessage extends AbstractImportMessages
         );
     }
 
-    private function search($query = []): array
-    {
-        if(empty($query)) {
-            $query = ['All' => null];
-        }
-
-        $criterias = [];
-        foreach($query as $criteria => $value) {
-            if(empty($value)) {
-                $criterias[] = strtoupper($criteria);
-                continue;
-            }
-            $criterias[] = strtoupper($criteria).' "'.$value.'"';
-        }
-
-        return $this->mailbox->searchMailbox(implode(' ', $criterias));
-    }
-
-    private function getEmails($emailIds): array
-    {
-        $emails = [];
-        foreach ($emailIds as $emailId) {
-            $this->logger->info('--- Get Email : '. $emailId);
-            $emails[$emailId] = $this->mailbox->getMail($emailId,false);
-        }
-        return $emails;
-    }
-
-    public function parseIncomingMail(IncomingMail $mail): array
-    {
-        $patterns = array();
-        $patterns[] = array('pattern' => '#remboursementinitieacutepourlacommande#'); //Remboursement initié pour la commande <num_cmd>
-        $patterns[] = array('pattern' => '#actionrequise#'); //Action requise: ...
-        $patterns[] = array('pattern' => '#amazonfruneouplusieursdevosoffresamazononteacuteteacutesupprimeacuteesdelarecherche#'); // [Amazon.fr] Une ou plusieurs de vos offres Amazon ont été supprimées de la recherche
-        //$patterns[] = array('pattern' => '#demandedrsquoautorisationderetourpourlacommande#'); //Demande d’autorisation de retour pour la commande
-        $patterns[] = array('pattern' => '#offredeacutesactiveacuteesenraisonduneerreurdeprixpotentielle#'); //Offre désactivées en raison d'une erreur de prix potentielle
-        $patterns[] = array('pattern' => '#votreemaila#'); // Votre e-mail à AUPEE
-        $patterns[] = array('pattern' => '#spam#'); // [SPAM]
-
-        $normalizedSubject = $this->normalizeSubject($mail->subject);
-
-        $canImport = true;
-        foreach ($patterns as $pattern) {
-            if (preg_match($pattern['pattern'], $normalizedSubject)) {
-                $canImport = false;
-            }
-            // check if is not a don't reply sender
-            $doNotReply = str_contains($mail->senderAddress, 'reply');
-            if($doNotReply)
-                $canImport = false;
-        }
-        $autorisationReturnAmazon = false;
-        if (preg_match('#autorisationderetourpourlacommande#', $normalizedSubject)){
-            $autorisationReturnAmazon = true;
-            $canImport = true;
-        }
-        return [$canImport, $autorisationReturnAmazon];
-    }
     /**
-     * Normalize subject with lower case and only a -> z chars
-     * @param string $subject
+     * @param $email
+     * @return bool
+     */
+    public function canImport($email): bool
+    {
+        /*
+         * No authorized subjects
+         */
+        $patterns = [
+            '#remboursementinitieacutepourlacommande#',
+            '#actionrequise#',
+            '#amazonfruneouplusieursdevosoffresamazononteacuteteacutesupprimeacuteesdelarecherche#',
+            '#offredeacutesactiveacuteesenraisonduneerreurdeprixpotentielle#',
+            '#votreemaila#'
+        ];
+        $normalizedSubject = Tools::normalize($email->subject);
+        foreach ($patterns as $pattern)
+            if (preg_match($pattern, $normalizedSubject))
+                return false;
+
+        return parent::canImport($email);
+    }
+
+    /**
+     * @param $email
+     * @return bool|string
+     */
+    public function parseOrderId($email): bool|string
+    {
+        $pattern = '#(?<orderId>\d{3}-\d{7}-\d{7})#';
+        preg_match($pattern, $email->subject, $orderId);
+        if (isset($orderId['orderId'])) {
+            $this->logger->info('Amazon : orderId found from Subject '.$orderId['orderId']);
+            return $orderId['orderId'];
+        }
+
+        preg_match($pattern, $email->textHtml, $orderId);
+        if (isset($orderId['orderId'])) {
+            $this->logger->info('Amazon : orderId found from Body '.$orderId['orderId']);
+            return $orderId['orderId'];
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $email
      * @return string
      */
-    public function normalizeSubject(string $subject): string
+    protected function getSpecificActions($email): string
     {
-        return Stringer::normalize($subject);
-    }
+        $normalizedSubject = Tools::normalize($email->subject);
+        if (str_contains($normalizedSubject, 'autorisationderetourpourlacommande'))
+            return self::RETURN;
 
-    public function showCommandNumber($email): ?string
-    {
-        $pattern = '#(\d{3}-\d{7}-\d{7})#';
-        preg_match($pattern,$email->subject, $commandNumber);
-        if(isset($commandNumber[0])){
-            $this->logger->info('Amazon : orderId found from Subject '.$commandNumber[0]);
-            return $commandNumber[0];
-        }
-
-        preg_match($pattern, $email->textHtml, $commandNumber);
-        if (isset($commandNumber[0])){
-            $this->logger->info('Amazon : orderId found from Body '.$commandNumber[0]);
-            return $commandNumber[0];
-        }
-
-        return null;
-
+        return self::IMPORT;
     }
 
     /**
@@ -224,7 +199,14 @@ class AmazonImportMessage extends AbstractImportMessages
             $this->addImportedMessageChannelNumber($imported_id);
         }
     }
-    protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread)
+
+    /**
+     * @param Ticket $ticket
+     * @param $message_api_api
+     * @param Thread $thread
+     * @return void
+     */
+    protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread): void
     {
         $this->logger->info('Retrieve message from email');
         $infoMail = $message_api_api->textHtml;
@@ -249,7 +231,12 @@ class AmazonImportMessage extends AbstractImportMessages
         AnswerToNewMessage::dispatch($message);
     }
 
-    private function addReturnOnTicket(Ticket $ticket, mixed $email)
+    /**
+     * @param Ticket $ticket
+     * @param mixed $email
+     * @return void
+     */
+    private function addReturnOnTicket(Ticket $ticket, mixed $email): void
     {
         $tagId = setting('tag.retour_amazon');
         $tag = Tag::findOrFail($tagId);
@@ -266,4 +253,5 @@ class AmazonImportMessage extends AbstractImportMessages
             $comment->save();
         }
     }
+
 }

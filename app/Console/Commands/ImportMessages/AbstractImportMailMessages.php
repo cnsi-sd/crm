@@ -7,6 +7,9 @@ use App\Models\Ticket\Ticket;
 
 abstract class AbstractImportMailMessages extends AbstractImportMessages
 {
+    const SPAM_TAG = 'X-Spam-Tag';
+    const SPAM_STATUS = 'X-Spam-Status';
+
     protected function search($query = []): array
     {
         if(empty($query)) {
@@ -43,14 +46,22 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
             return false;
         if(in_array($email->senderAddress, config('email-import.email_blacklist')))
             return false;
-
+        if (!$this->isSpam($email))
+            return false;
         return true;
     }
 
-    protected function isSpam($email): bool{
+    protected function isSpam($email): bool
+    {
+        $spamSign = [self::SPAM_TAG, self::SPAM_STATUS];
+        foreach ($spamSign as $spam){
+            if (str_contains($spam, $email->headersRaw)) {
+                return true;
+            }
+        }
         return false;
     }
 
-    protected function getSpecificActions(){}
+    protected function getSpecificActions($email){}
 
 }
