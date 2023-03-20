@@ -169,6 +169,9 @@ return [
             'misc' => 'Divers',
             'saved' => 'Configuration enregistrée',
             'variables' => 'Variables',
+
+            'incidents' => 'Incidents',
+            'incident_tag' => 'Tag Incident',
         ],
     ],
 
