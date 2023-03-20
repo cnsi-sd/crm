@@ -20,7 +20,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property int $frequency
  * @property string $send_type
+ * @property int $default_answer_id
  * @property int $max_revival
+ * @property int $end_default_answer_id
  * @property string $end_state
  * @property DateTime $created_at
  * @property Datetime $updated_at
@@ -47,11 +49,6 @@ class Revival extends Model
         'updated_at'
     ];
 
-    public function isChannelSelected(Channel $channel)
-    {
-        return $this->channels->keyBy('id')->has($channel->id);
-    }
-
     public function isAnswerSelected(DefaultAnswer $defaultAnswer): bool
     {
         return $this->default_answer_id === $defaultAnswer->id;
@@ -67,8 +64,6 @@ class Revival extends Model
         return $this->end_state === $state;
     }
 
-
-
     public function default_answer(): BelongsTo
     {
         return $this->belongsTo(DefaultAnswer::class);
@@ -82,6 +77,16 @@ class Revival extends Model
     public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class, 'channel_revival', 'revival_id', 'channel_id');
+    }
+
+    public function isChannelAuthorized(Channel $channel)
+    {
+        return $this->channels->keyBy('id')->has($channel->id);
+    }
+
+    public function getAuthorizedChannels()
+    {
+        return $this->channels->count() === 0 ? Channel::all() : $this->channels;
     }
 
     public function threads(): HasMany
@@ -99,10 +104,14 @@ class Revival extends Model
             ->setLabel(__('app.revival.name'))
             ->setKey('name');
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(trans_choice('app.revival.channel', 1))
-            ->setCallback(function (Revival $revival) {
-                $channels = $revival->channels->pluck('name')->toArray();
-                return implode(", ", $channels);
+            ->setLabel(__('app.revival.select_channel'))
+            ->setCallback(function (Revival $tag) {
+                $channels = $tag->getAuthorizedChannels();
+                if (count($channels) === Channel::all()->count()) {
+                    return __('app.all');
+                } else {
+                    return $channels->pluck('name')->implode(', ');
+                }
             })
             ->setKey('default_answer');
         $columns[] = (new TableColumnBuilder())
@@ -112,7 +121,7 @@ class Revival extends Model
             ->setLabel(__('app.revival.max_revival'))
             ->setKey('max_revival');
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.revival.default_answer'))
+            ->setLabel(trans_choice('app.defaultAnswer.defaultAnswer', 1))
             ->setType(ColumnTypeEnum::TEXT)
             ->setCallback(function (Revival $revival) {
                 return $revival->default_answer->name;
@@ -127,7 +136,10 @@ class Revival extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.end_state'))
             ->setType(ColumnTypeEnum::SELECT)
-            ->setOptions(TicketStateEnum::getList())
+            ->setOptions(TicketStateEnum::getTranslatedList())
+            ->setCallback(function (Revival $revival) {
+                return TicketStateEnum::getMessage($revival->end_state);
+            })
             ->setKey('end_state');
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Revival $revival) {

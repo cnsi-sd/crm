@@ -16,7 +16,8 @@
                             @csrf
                             <div class="row form-group mb-3">
                                 <div class="col-4">
-                                    <label for="name">{{__('app.tags.name')}}
+                                    <label for="name">
+                                        {{__('app.tags.name')}}
                                         <span class="required_field">*</span>
                                     </label>
                                 </div>
@@ -33,7 +34,8 @@
                             </div>
                             <div class="row form-group mb-3">
                                 <div class="col-4">
-                                    <label for="name">{{__('app.tags.backgroundColor')}}
+                                    <label for="name">
+                                        {{__('app.tags.backgroundColor')}}
                                         <span class="required_field">*</span>
                                     </label>
                                 </div>
@@ -44,14 +46,15 @@
                                         name="background_color"
                                         class="form-control form-control-sm"
                                         min="1"
-                                        value="{{ old('name', $tags->backgroung_color ?? '') }}"
+                                        value="{{ old('name', $tags->background_color ?? '#000000') }}"
                                         required
                                     />
                                 </div>
                             </div>
                             <div class="row form-group mb-3">
                                 <div class="col-4">
-                                    <label for="name">{{__('app.tags.textColor')}}
+                                    <label for="name">
+                                        {{__('app.tags.textColor')}}
                                         <span class="required_field">*</span>
                                     </label>
                                 </div>
@@ -62,31 +65,33 @@
                                         name="text_color"
                                         min="1"
                                         class="form-control form-control-sm"
-                                        value="{{ old('name', $tags->text_color ?? '') }}"
+                                        value="{{ old('name', $tags->text_color ?? '#ffffff') }}"
                                         required
                                     />
                                 </div>
                             </div>
                             <div class="row form-group mb-3">
                                 <div class="col-4">
-                                    <label for="name">{{__('app.tags.select_channel')}}
-                                        <span class="required_field">*</span>
-                                    </label>
+                                    <label for="channels">{{__('app.tags.select_channel')}}</label>
                                 </div>
                                 <div class="col-8">
                                     <select
-                                        name="channel[]"
-                                        id="select-mp"
+                                        name="channels[]"
+                                        id="channels"
                                         class="form-control form-control-sm form-select no-sort"
                                         multiple
-                                        required
                                     >
                                         @foreach(\App\Models\Channel\Channel::all() as $channel)
-                                            <option value="{{$channel->id}}" @selected($tags->isChannelSelected($channel))>
+                                            <option value="{{$channel->id}}" @selected($tags->isChannelAuthorized($channel))>
                                                 {{$channel->name}}
                                             </option>
                                         @endforeach
                                     </select>
+                                    <span class="help-block">
+                                        <small>
+                                            {{ __('app.tags.select_all_channel') }}
+                                        </small>
+                                    </span>
                                 </div>
                             </div>
                         </div>

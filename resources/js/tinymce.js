@@ -7,7 +7,8 @@ $(function() {
         skin: 'tinymce-5',
         content_style: "body { font-size: .8rem; }",
         paste_as_text: true,
-        height: 250,
+        plugins : "autoresize",
+        min_height: 250,
         setup: function (editor) {
             const onAction = function (autocompleteApi, rng, value) {
                 editor.selection.setRng(rng);
@@ -17,7 +18,9 @@ $(function() {
 
             const getMatchedChars = function (pattern) {
                 return messageVariables.filter(function (char) {
-                    return char.text.toLowerCase().indexOf(pattern.toLowerCase()) !== -1;
+                    return char.text.toLowerCase().indexOf(pattern.toLowerCase()) !== -1
+                        || char.value.toLowerCase().indexOf(pattern.toLowerCase()) !== -1
+                        || char.templateVar.toLowerCase().indexOf(pattern.toLowerCase()) !== -1
                 });
             };
 
@@ -32,7 +35,7 @@ $(function() {
                         var results = getMatchedChars(pattern).map(function (char) {
                             return {
                                 type: 'cardmenuitem',
-                                value: char.value,
+                                value: char.templateVar,
                                 label: char.text,
                                 items: [
                                     {

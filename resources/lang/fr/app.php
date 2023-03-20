@@ -1,7 +1,7 @@
 <?php
 return [
     /** Global */
-
+    'all' => 'Tous',
     'yes' => 'Oui',
     'no' => 'Non',
     'home' => 'Accueil',
@@ -43,9 +43,14 @@ return [
     'navbar' => [
         'dashboard' => 'Tableau de bord',
         'settings' => 'Paramètres',
-        'permissions' => 'Permissions',
-        'config' => 'Configurations',
+        'config' => 'Configuration',
         'admin' => 'Administration'
+    ],
+
+    'axios' => [
+        'unknown_error' => 'Erreur inconnue',
+        'no_response_error' => 'La demande a été faite mais aucune réponse n\'a été reçue',
+        'setting_up_error' => 'Something happened in setting up the request that triggered an Error',
     ],
 
     /** Settings */
@@ -117,6 +122,11 @@ return [
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
         'saved' => 'Ticket enregistré',
+
+        'click_and_call' => [
+            'start' => 'Cliquer pour lancer l\'appel',
+            'success' => 'Appel en cours',
+        ],
     ],
 
     'order' => [
@@ -139,6 +149,8 @@ return [
         'designation' => 'Désignation',
         'qty' => 'Qté',
         'supplier' => 'Fournisseur',
+        'reference' => 'Référence :',
+        'ean' => 'EAN :',
     ],
 
     'login' => [
@@ -186,13 +198,18 @@ return [
         ],
     ],
 
+    'variable' => [
+        'variable' => 'Variable|Variables',
+        'saved' => 'Variables enregistrées'
+    ],
+
     'defaultAnswer' => [
         'defaultAnswer' => 'Réponse par défaut|Réponses par défaut',
         'save' => 'Enregistrer la réponse',
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
-        'select_channel' => 'Canaux sélectionnés',
-        'message' => 'Message '
+        'select_channel' => 'Canaux autorisés',
+        'select_all_channel' => 'Laissez vide pour tout autoriser',
     ],
 
     'revival' => [
@@ -200,19 +217,17 @@ return [
         'name' => 'Nom de la relance automatique',
         'frequency' => 'Fréquence d\'envoi (en jours):',
         'max_revival' => 'Nombre d\'envoi de relance',
-        'default_answer' => 'Message envoyer',
-        'end_default_answer' => 'Message envoyer à la fin du cycle de relance',
-        'choose_end_default_answer' => 'Choisir le Message à envoyer à la fin du cycle de relance',
-        'choose_answer' => 'Choisir le message à envoyer',
+        'end_default_answer' => 'Message envoyé à la fin du cycle de relance',
         'end_state' => 'Statut final',
-        'channel' => 'Canaux d\'application',
         'start_revival' => 'À partir du',
         'select_revival' => 'Aucune',
+        'select_channel' => 'Canaux autorisés',
         'frequency_details' => 'Tous les jours|Tous les :freq jours',
         'MaxRevival' => 'Messages envoyés :',
         'nextReply' => 'Prochaine relance : ',
         'sendType' => 'Type d\'envoi',
-        'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.'
+        'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.',
+        'select_all_channel' => 'Laissez vide pour tout autoriser',
     ],
 
     'tags' => [
@@ -223,8 +238,9 @@ return [
         'name' => 'Nom',
         'backgroundColor' => 'Couleur du fond',
         'textColor' => 'Couleur du texte',
-        'select_channel' => 'Canaux selectioner',
+        'select_channel' => 'Canaux autorisés',
         'show' => 'Prévisualisation',
+        'select_all_channel' => 'Laissez vide pour tout autoriser',
     ],
 
     'recover_password' => [
@@ -245,7 +261,7 @@ return [
 
     'channel' => [
         'name' => 'Nom',
-        'ext_name' => 'Nom externe',
+        'ext_names' => 'Nom(s) externe(s)',
         'saved' => 'Canal enregistré',
         'edit' => 'Modifier un canal',
     ]

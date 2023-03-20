@@ -4,12 +4,10 @@ namespace App\Models\Ticket;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
-use App\Models\Tags\TagList;
 use App\Models\Ticket\Revival\Revival;
 use DateInterval;
 use DateTime;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,16 +20,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $revival_message_count
  * @property string $channel_thread_number
  * @property string $name
- * @property string $customer_issue
  * @property Datetime $created_at
  * @property Datetime $updated_at
  * @property array $channel_data
  *
- * @property Collection|Comment[] $comments
  * @property Ticket $ticket
  * @property Collection|Message[] $messages
  * @property Revival $revival
- * @property Collection|TagList[] $tagList
  */
 class Thread extends Model
 {
@@ -44,7 +39,6 @@ class Thread extends Model
         'revival_message_count',
         'channel_thread_number',
         'name',
-        'customer_issue',
         'channel_data',
         'created_at',
         'updated_at'
@@ -60,10 +54,10 @@ class Thread extends Model
      * @param Ticket $ticket
      * @param string $channel_thread_number
      * @param string $name
-     * @param string $customer_issue
-     * @return Model|Builder|Thread
+     * @param array $channel_data
+     * @return Model|Thread
      */
-    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, string $customer_issue, $channel_data = [] ): Model|Builder|Thread
+    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, $channel_data = [] ): Model|Thread
     {
         return Thread::query()
             ->select('ticket_threads.*')
@@ -77,15 +71,9 @@ class Thread extends Model
                 ],
                 [
                     'name' => $name,
-                    'customer_issue' => $customer_issue,
                     'channel_data' => json_encode($channel_data),
                 ],
             );
-    }
-
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
     }
 
     public function messages(): HasMany
@@ -93,13 +81,19 @@ class Thread extends Model
         return $this->hasMany(Message::class)->orderBy('id', 'DESC');
     }
 
+    public function firstMessage(): ?Message
+    {
+        return $this->messages()->reorder('id', 'ASC')->first();
+    }
+
+    public function lastMessage(): ?Message
+    {
+        return $this->messages()->reorder('id', 'DESC')->first();
+    }
+
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
-    }
-    public function tagList(): HasMany
-    {
-        return $this->hasMany(TagList::class);
     }
 
     public function revival(): BelongsTo
@@ -136,7 +130,7 @@ class Thread extends Model
             $endMessage = 'Configuration de la relance auto incomplète : le champs `Fréquence des relances` es invalide';
 
         //check last message parameters
-        $lastMessage = $this->getLastMessage();
+        $lastMessage = $this->lastMessage();
         if (!$lastMessage || $lastMessage->author_type !== TicketMessageAuthorTypeEnum::ADMIN)
             $endMessage = 'Le dernier message doit être écrit par un administrateur';
 
@@ -170,7 +164,7 @@ class Thread extends Model
             return $this->revival_start_date;
 
         // Revival frequency
-        $lastMessageDate = clone $this->getLastMessage()->updated_at;
+        $lastMessageDate = clone $this->lastMessage()->updated_at;
         $freq = $this->revival->frequency;
         $interval = new DateInterval('P' . $freq . 'D');
         $lastMessageDate->add($interval);
@@ -178,27 +172,16 @@ class Thread extends Model
         return $lastMessageDate;
     }
 
-    public function getLastMessage(): ?Message
-    {
-        return Message::query()
-            ->where('thread_id', $this->id)
-            ->orderBy('created_at', 'DESC')
-            ->first();
-    }
-
-    public function getUnreadMessages()
+    public function getUnreadMessages(): int
     {
         $numberOfUnreadMessages = 0;
-        $queryMessages = Message::query()->where('thread_id', $this->id)->orderBy('created_at', "DESC")->get();
-        /** @var Message $queryMessage */
-        foreach ($queryMessages as $queryMessage) {
-            if ($queryMessage->isExternal()) {
+        foreach ($this->messages()->get() as $message) {
+            if ($message->isExternal()) {
                 $numberOfUnreadMessages += 1;
             } else {
                 break;
             }
         }
-    return $numberOfUnreadMessages;
+        return $numberOfUnreadMessages;
     }
-
 }

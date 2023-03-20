@@ -12,7 +12,7 @@
 /**
  COLLAPSE
  */
-#threadsTabsContent, .thread-comments {
+#threadsTabsContent, .ticket-comments {
     [data-bs-toggle="collapse"] {
         cursor: pointer;
     }
@@ -60,4 +60,9 @@
 
 #order-info-content {
     display: none;
+}
+
+.phone_number {
+    cursor: pointer;
+    color: $link-color;
 }

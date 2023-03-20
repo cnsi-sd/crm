@@ -5,6 +5,7 @@ use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\Configuration\TagsController;
+use App\Http\Controllers\Configuration\VariableController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
@@ -34,12 +35,12 @@ require __DIR__ . '/auth.php';
 Route::prefix('/')->group(function () {
     Route::get('', [HomeController::class, 'home'])->name('home');
 
-    Route::prefix('redirect')->group(function() {
-       Route::match(['get', 'post'], '{channel}/{channel_order_number}', [TicketController::class, 'redirectOrCreateTicket'])->name('redirect_or_create_ticket')->can('read', Ticket::class);
-    });
+   Route::match(['get', 'post'], 'redirect/{channel}/{channel_order_number}', [TicketController::class, 'redirectOrCreateTicket'])->name('redirect_or_create_ticket')->can('read', Ticket::class);
+
     Route::prefix('tickets')->group(function() {
         Route::match(['get', 'post'], 'get_external_infos/{ticket}', [TicketController::class, 'get_external_infos'])->name('get_external_infos')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'toggle_comment/{comment}', [TicketController::class, 'toggle_comment'])->name('toggle_comment')->can('read', Ticket::class);
+        Route::match(['get', 'post'], 'click_and_call', [TicketController::class, 'clickAndCall'])->name('click_and_call')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'all_tickets', [TicketController::class, 'all_tickets'])->name('all_tickets')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);
@@ -82,11 +83,12 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tag::class);
         });
         Route::prefix('bot')->group(function () {
-            Route::match(['get', 'post'], '', [BotController::class, 'home'])->name('bot_home');
-            Route::match(['get', 'post'], 'acknowledgement', [BotController::class, 'acknowledgement'])->name('bot_acknowledgement');
-            Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice');
-            Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information');
+            Route::match(['get', 'post'], '', [BotController::class, 'home'])->name('bot_home')->can('bot_config');
+            Route::match(['get', 'post'], 'acknowledgement', [BotController::class, 'acknowledgement'])->name('bot_acknowledgement')->can('bot_config');
+            Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice')->can('bot_config');
+            Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information')->can('bot_config');
         });
+        Route::match(['get', 'post'], 'variables', [VariableController::class, 'config'])->name('variables_config')->can('variables_config');
     });
     // CALL AJAX
     Route::get('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');

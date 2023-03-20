@@ -4,6 +4,7 @@ namespace App\Models\Ticket;
 
 use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
+use App\Enums\CrmDocumentTypeEnum;
 use App\Enums\FixedWidthEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
@@ -12,12 +13,15 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
+use App\Models\Tags\TagList;
 use App\Models\User\User;
 use Carbon\Carbon;
+use Cnsi\Attachments\Trait\Documentable;
 use Cnsi\Searchable\Trait\Searchable;
 use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -32,11 +36,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $priority
  * @property Datetime $deadline
  * @property Datetime $delivery_date
+ * @property string $customer_issue
  * @property string $direct_customer_email
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
- * @property Thread[] $threads
+ * @property Collection|Thread[] $threads
+ * @property Collection|TagList[] $tagLists
+ * @property Collection|Comment[] $comments
  * @property Channel $channel
  * @property Order $order
  * @property User $user
@@ -45,6 +52,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Ticket extends Model
 {
     use Searchable;
+    use Documentable;
 
     protected $searchable = [
         'id',
@@ -65,11 +73,11 @@ class Ticket extends Model
     ];
 
     protected $casts = [
-        'deadline' => 'datetime',
+        'deadline' => 'date',
         'delivery_date' => 'datetime'
     ];
 
-    public static function getTicket(Order $order, Channel $channel)
+    public static function getTicket(Order $order, Channel $channel): Ticket
     {
         return Ticket::firstOrCreate(
             [
@@ -79,7 +87,7 @@ class Ticket extends Model
             [
                 'state' => TicketStateEnum::WAITING_ADMIN,
                 'priority' => TicketPriorityEnum::P1,
-                'deadline' => Carbon::now()->addHours(24), // TODO : JJ ou J+1
+                'deadline' => Ticket::getAutoDeadline(),
                 'user_id' => $channel->user_id,
             ],
         );
@@ -135,6 +143,16 @@ class Ticket extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function tagLists(): HasMany
+    {
+        return $this->hasMany(TagList::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public static function getTableColumns($mode = 'all'): array
@@ -220,7 +238,7 @@ class Ticket extends Model
             ->setCallback(function (Ticket $ticket) {
                 $listeTag = array();
                 return view('tickets.tag.preview')
-                    ->with('listTags', (new \App\Models\Tags\Tag)->getListTagByThread($ticket, $listeTag, true));
+                    ->with('listTags', Tag::getListTagByThread($ticket, $listeTag, true));
             });
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.created_at'))
@@ -243,7 +261,7 @@ class Ticket extends Model
     public function getlistTagWithTickets(): array
     {
         $listeTag = array();
-        return (new Tag())->getListTagByThread($this, $listeTag,true);
+        return Tag::getListTagByThread($this, $listeTag,true);
     }
 
     public function getOpenedDays(): string
@@ -252,9 +270,44 @@ class Ticket extends Model
         return $now->diff($this->created_at)->format("%a");
     }
 
+    public static function getAutoDeadline(): Carbon
+    {
+        if (Carbon::now()->hour < 16)
+            return Carbon::today();
+        else
+            return Carbon::tomorrow();
+    }
+
     public function close()
     {
         $this->state = TicketStateEnum::CLOSED;
         $this->save();
+    }
+
+    protected function getAllowedDocumentTypes(): array
+    {
+        return [
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_REPORT,
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_STATION,
+            CrmDocumentTypeEnum::CLIENT_BANK_ACCOUNT_NUMBER,
+            CrmDocumentTypeEnum::CUSTOMER_FILING,
+            CrmDocumentTypeEnum::PRODUCT_PHOTO,
+            CrmDocumentTypeEnum::OTHER,
+        ];
+    }
+
+    public function addTag(Tag $tag, ?TagList $tagList = null)
+    {
+        if (is_null($tagList)) {
+            if ($this->tagLists->first()) {
+                $tagList = $this->tagLists->first();
+            } else {
+                $tagList = new TagList();
+                $tagList->ticket_id = $this->id;
+                $tagList->save();
+            }
+        }
+
+        $tagList->addTag($tag);
     }
 }

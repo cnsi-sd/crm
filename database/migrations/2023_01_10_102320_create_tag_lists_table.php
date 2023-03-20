@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tagLists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('thread_id')->constrained('ticket_threads');
+            $table->foreignId('ticket_id')->constrained();
             $table->timestamps();
         });
     }

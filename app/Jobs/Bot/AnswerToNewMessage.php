@@ -11,18 +11,32 @@ use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 class AnswerToNewMessage implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use InteractsWithQueue, Queueable, SerializesModels;
+
+    use Dispatchable {
+        dispatch as protected originalDispatch;
+    }
 
     private Message $message;
+
+    const DELAY = 10;
 
     public function __construct(Message $message)
     {
         $this->message = $message;
+    }
+
+    // Override the default original method to add a delay
+    public static function dispatch(...$arguments): PendingDispatch
+    {
+        $delay = now()->addMinutes(self::DELAY);
+        return self::originalDispatch(...$arguments)->delay($delay);
     }
 
     public function handle()

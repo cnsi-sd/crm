@@ -2,10 +2,11 @@
 
 @section('content')
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
-        <form method="post" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
+        <form id="saveTicket" method="post" enctype="multipart/form-data" action="{{ route('ticket_thread', ['ticket' => $ticket->id, 'thread' => $thread->id]) }}">
             @csrf
+        </form>
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
                     <div class="ticket-divider h4 text-center">
                         {{ __('app.ticket.admin_ticket') }} #{{ $ticket->id }}
                     </div>
@@ -14,7 +15,7 @@
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.state') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
-                                    <select required name="ticket-state" class="form-select no-select2">
+                                    <select form="saveTicket" required name="ticket-state" class="form-select no-select2">
                                             <option value="">---</option>
                                         @foreach(\App\Enums\Ticket\TicketStateEnum::getList() as $ticketState)
                                             <option value="{{ $ticketState }}">{{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticketState)}}</option>
@@ -25,7 +26,7 @@
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.priority') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
-                                    <select name="ticket-priority" class="form-select no-select2">
+                                    <select form="saveTicket" name="ticket-priority" class="form-select no-select2">
                                         @foreach(\App\Enums\Ticket\TicketPriorityEnum::getList() as $ticketPriority)
                                             <option value="{{ $ticketPriority }}" @selected($ticket->priority === $ticketPriority)>{{ $ticketPriority }}</option>
                                         @endforeach
@@ -35,7 +36,7 @@
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.owner') }} <span class="required_field">*</span></label></div>
                                 <div class="col">
-                                    <select name="ticket-user_id" class="form-select">
+                                    <select form="saveTicket" name="ticket-user_id" class="form-select">
                                         @foreach (\App\Models\User\User::all() as $user)
                                             <option value="{{ $user->id }}" @selected($ticket->user_id === $user->id)>{{ $user->name }}</option>
                                         @endforeach
@@ -44,7 +45,7 @@
                             </div>
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.deadline') }} <span class="required_field">*</span></label></div>
-                                <div class="col"><input name="ticket-deadline" class="form-control" type="date" value="{{ $ticket->deadline->format("Y-m-d") }}"></div>
+                                <div class="col"><input form="saveTicket" name="ticket-deadline" class="form-control" type="date" value="{{ $ticket->deadline->format("Y-m-d") }}"></div>
                             </div>
                             <div class="row mb-1">
                                 <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
@@ -62,38 +63,41 @@
                         <div class="card-header">{{ __('app.ticket.base_information') }}</div>
                         <div class="card-body">
                             <div class="row mb-1">
-                                <div class="col"><label>{{ __('app.ticket.customer_mail') }}</label></div>
-                                <div class="col"><input name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/></div>
+                                <div class="col-xl-4"><label>{{ __('app.ticket.created_at') }}</label></div>
+                                <div class="col-xl-8 text-xl-end">{{ $ticket->created_at->format('d/m/y') }} ({{$ticket->getOpenedDays()}}j)</div>
                             </div>
-                            <div class="row">
-                                <div class="col"><label>{{ __('app.ticket.delivery_date') }}</label></div>
-                                <div class="col"><input name="ticket-delivery_date" class="form-control" type="date" value="@if($ticket->delivery_date){{ $ticket->delivery_date->format("Y-m-d") }}@endif"/></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="ticket-divider h4 text-center">
-                        {{ __('app.ticket.admin_thread') }} #{{ $thread->id }}
-                    </div>
-
-                    <div class="card">
-                        <div class="card-body">
                             <div class="row mb-1">
-                                <div class="col"><label>{{ __('app.ticket.created_at') }}</label></div>
-                                <div class="col"><label>{{ $ticket->created_at->format('d/m/y') }} ({{$ticket->getOpenedDays()}}j)</label></div>
+                                <div class="col-xl-4"><label>{{ __('app.ticket.customer_issue') }}</label></div>
+                                <div class="col-xl-8">
+                                    <input form="saveTicket" name="ticket-customer_issue" class="form-control" type="text" value="{{$ticket->customer_issue}}"/>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-xl-4"><label>{{ __('app.ticket.customer_mail') }}</label></div>
+                                <div class="col-xl-8">
+                                    <input form="saveTicket" name="ticket-customer_email" class="form-control" type="text" value="{{ $ticket->direct_customer_email }}"/>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col"><label>{{ __('app.ticket.customer_issue') }}</label></div>
-                                <div class="col"><input name="ticket-thread-customer_issue" class="form-control" type="text" value="{{$thread->customer_issue}}"/></div>
+                                <div class="col-xl-4"><label>{{ __('app.ticket.delivery_date') }}</label></div>
+                                <div class="col-xl-8">
+                                    <input form="saveTicket" name="ticket-delivery_date" class="form-control" type="date" value="{{ $ticket->delivery_date?->format("Y-m-d") }}"/>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     @include('tickets.parts.tags')
-                    @include('tickets.parts.revival')
                     @include('tickets.parts.private_comments')
+                    {!! $documents_table !!}
+
+                    <div class="ticket-divider h4 text-center">
+                        {{ __('app.ticket.admin_thread') }} #{{ $thread->id }}
+                    </div>
+
+                    @include('tickets.parts.revival')
                 </div>
-                <div class="col-9">
+                <div class="col-8">
                     <ul class="nav nav-tabs" id="ticketTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="hide-tab" data-bs-toggle="tab" data-bs-target="#hide" type="button" role="tab" aria-controls="hide" aria-selected="true"><i class="uil-home"></i></button>
@@ -113,11 +117,11 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="customer-service-process" role="tabpanel" aria-labelledby="customer-service-process-tab">
-                            <iframe src="{{ env('PRESTASHOP_URL') }}procedure-sav?mp_order={{$ticket->order->channel_order_number}}&amp;mp_name={{$ticket->channel->ext_name}}&amp;id_ticket={{$ticket->id}}&amp;admintoken={{ env('PRESTASHOP_CUSTOMER_SERVICE_TOKEN') }}" allowfullscreen="" width="100%" height="1000" frameborder="0"></iframe>
+                            <iframe src="{{ \App\Helpers\Prestashop\SavProcessGateway::getUrl($ticket) }}" allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div class="mt-2 text-end">
-                        <button type="submit" class="btn btn-outline-primary">
+                        <button form="saveTicket" type="submit" class="btn btn-outline-primary">
                             {{ "💾 " . __('app.save') }}
                         </button>
                     </div>
@@ -141,14 +145,20 @@
                         <div class="tab-pane fade show active" role="tabpanel" tabindex="0">
                             <div class="card">
                                 <div class="card-body">
-                                    <textarea id="message_to_customer" name="ticket-thread-messages-content"></textarea>
+                                    <textarea form="saveTicket" id="message_to_customer" name="ticket-thread-messages-content"></textarea>
                                     <div class="mt-2 text-end">
-                                        <button type="submit" class="btn btn-outline-primary">
+                                        <button form="saveTicket" type="submit" class="btn btn-outline-primary">
                                             {{ __('app.send_message') }}
                                         </button>
                                     </div>
                                     <div class="attachments">
-                                        <label>{{ trans_choice('app.attachment',2) }}</label> <input type="file"/>
+                                        <label>{{ trans_choice('app.attachment',2) }}</label>
+                                        <input form="saveTicket" name="attachment_1_file" id="attachment_1_file" type="file"/>
+                                        <input form="saveTicket" type="hidden" name="attachment_1_type" value="other">
+                                        <input form="saveTicket" name="attachment_2_file" id="attachment_2_file" type="file"/>
+                                        <input form="saveTicket" type="hidden" name="attachment_2_type" value="other">
+                                        <input form="saveTicket" name="attachment_3_file" id="attachment_3_file" type="file"/>
+                                        <input form="saveTicket" type="hidden" name="attachment_3_type" value="other">
                                     </div>
                                     <label>{{ __('app.ticket.default_replies') }}</label>
                                 </div>
@@ -158,16 +168,16 @@
                     </div>
                 </div>
             </div>
-        </form>
     </div>
 @endsection
 
 @section('script-bottom')
     {!! \App\Helpers\JS::define('url_show_tags', route('ajaxShowTags')) !!}
     {!! \App\Helpers\JS::define('url_add_tag_list', route('addTagList')) !!}
-    {!! \App\Helpers\JS::define('url_save_tag_on_ticketThread', route('saveTagOnticketThread')) !!}
     {!! \App\Helpers\JS::define('url_delete_tagList', route('deleteTagList')) !!}
-    {!! \App\Helpers\JS::define('url_delete_TagList_On_Thread', route('deleteTagListOnThread')) !!}
+    {!! \App\Helpers\JS::define('url_add_tag_on_ticket', route('saveTagOnticketThread')) !!}
+    {!! \App\Helpers\JS::define('url_delete_tag_on_ticket', route('deleteTagListOnThread')) !!}
+    {!! \App\Helpers\JS::define('url_click_and_call', route('click_and_call')) !!}
 
     {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
     <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>

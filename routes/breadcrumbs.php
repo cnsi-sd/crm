@@ -22,12 +22,6 @@ Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.configuration.configuration'));
 });
 
-/** Permissions */
-Breadcrumbs::for('permissions', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin');
-    $trail->push(__('app.navbar.permissions'));
-});
-
 /** Tickets */
 Breadcrumbs::for('tickets', function (BreadcrumbTrail $trail) {
    $trail->parent('home');
@@ -138,6 +132,12 @@ Breadcrumbs::for('bot_invoice', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('bot_shipping_information', function (BreadcrumbTrail $trail) {
     $trail->parent('bot_home');
     $trail->push(__('app.bot.shipping_information.shipping_information'), route('bot_shipping_information'));
+});
+
+/** Variables */
+Breadcrumbs::for('variables_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.variable.variable', 2), route('variables_config'));
 });
 
 /** Channel */

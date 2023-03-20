@@ -68,6 +68,13 @@ abstract class Menu
                         'text' => __('app.bot.bot'),
                         'route' => route('bot_home'),
                         'ref' => 'bot',
+                        'permission' => PermissionEnum::BOT_CONFIG
+                    ],
+                    [
+                        'text' => trans_choice('app.variable.variable', 2),
+                        'route' => route('variables_config'),
+                        'ref' => 'variables',
+                        'permission' => PermissionEnum::VARIABLES_CONFIG
                     ],
                 ]
             ],

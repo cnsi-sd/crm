@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Prestashop;
 
 use Cnsi\Logger\Logger;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
-final class PrestashopGateway
+final class CrmLinkGateway
 {
     protected string $endpoint;
     protected string $token;
@@ -17,7 +17,7 @@ final class PrestashopGateway
         // Get endpoint from environment
         $this->endpoint = env('PRESTASHOP_URL') . 'index.php';
         $this->token = env('PRESTASHOP_CRM_LINK_TOKEN');
-        $this->logger = new Logger('api/out/prestashop/prestashop.log', false, false, true, 14);
+        $this->logger = new Logger('api/out/prestashop/crmlink.log', false, false, true, 14);
     }
 
     protected function get(array $queryParams): Response
@@ -56,12 +56,12 @@ final class PrestashopGateway
         return $response;
     }
 
-    public function getOrderInfo(string $marketplace_order_id, string $channel_name): ?array
+    public function getOrderInfo(string $marketplace_order_id, array $channel_names): ?array
     {
         $queryParams = [
             'controller' => 'order',
             'marketplace_order_id' => $marketplace_order_id,
-            'channel_name' => $channel_name,
+            'channel_names' => implode(',', $channel_names),
         ];
         return $this->get($queryParams)->json();
     }

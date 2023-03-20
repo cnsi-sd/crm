@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Database\Seeders\dev\UserSeeder;
+use Database\Seeders\dev\VariableSeeder;
 use Database\Seeders\prod\RoleSeeder;
 use Exception;
 
@@ -23,6 +24,7 @@ class DevSeeder extends DatabaseSeeder
         $this->call([
             RoleSeeder::class,
             UserSeeder::class,
+            VariableSeeder::class,
         ]);
 
         parent::run();

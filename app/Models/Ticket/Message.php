@@ -2,8 +2,10 @@
 
 namespace App\Models\Ticket;
 
+use App\Enums\CrmDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Models\User\User;
+use Cnsi\Attachments\Trait\Documentable;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,6 +41,8 @@ class Message extends Model
       'updated_at'
     ];
 
+    use Documentable;
+
     public function thread(): BelongsTo
     {
         return $this->belongsTo(Thread::class);
@@ -56,8 +60,27 @@ class Message extends Model
 
     public function isFirstMessageOnThread(): bool
     {
-        $threadMessages = $this->thread->messages;
-        return $threadMessages->count() === 1 && $threadMessages->first()->id === $this->id;
+        return $this->thread->firstMessage()->id === $this->id;
+    }
+
+    public function hasBeenAnswered(): bool
+    {
+        return $this->thread->messages()
+            ->where('id', '>', $this->id)
+            ->whereIn('author_type', [TicketMessageAuthorTypeEnum::SYSTEM, TicketMessageAuthorTypeEnum::ADMIN])
+            ->count() > 0;
+    }
+
+    protected function getAllowedDocumentTypes(): array
+    {
+        return [
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_REPORT,
+            CrmDocumentTypeEnum::CUSTOMER_SERVICE_STATION,
+            CrmDocumentTypeEnum::CLIENT_BANK_ACCOUNT_NUMBER,
+            CrmDocumentTypeEnum::CUSTOMER_FILING,
+            CrmDocumentTypeEnum::PRODUCT_PHOTO,
+            CrmDocumentTypeEnum::OTHER,
+        ];
     }
 }
 

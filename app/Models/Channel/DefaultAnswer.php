@@ -34,7 +34,7 @@ class DefaultAnswer extends Model
         'deleted_at'
     ];
 
-    public function isChannelSelected(Channel $channel) {
+    public function isChannelAuthorized(Channel $channel) {
         return $this->channels->keyBy('id')->has($channel->id);
     }
 
@@ -46,6 +46,11 @@ class DefaultAnswer extends Model
     public function revivals(): HasMany
     {
         return $this->hasMany(Revival::class);
+    }
+
+    public function getAuthorizedChannels()
+    {
+        return $this->channels->count() === 0 ? Channel::all() : $this->channels;
     }
 
     public static function getTableColumns(): array
@@ -63,8 +68,12 @@ class DefaultAnswer extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setCallback(function (DefaultAnswer $defaultAnswer){
-                $channels = $defaultAnswer->channels->pluck('name')->toArray();
-                return implode(", ", $channels);
+                $channels = $defaultAnswer->getAuthorizedChannels();
+                if (count($channels) === Channel::all()->count()) {
+                    return __('app.all');
+                } else {
+                    return $channels->pluck('name')->implode(', ');
+                }
             })
             ->setKey('channels')
             ->setSortable(false)
