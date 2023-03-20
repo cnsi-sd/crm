@@ -7,7 +7,6 @@ use App\Models\Ticket\Ticket;
 
 class AbstractImportMailMessages extends AbstractImportMessages
 {
-
     protected function getCredentials(): array
     {
         // TODO: Implement getCredentials() method.
@@ -21,5 +20,23 @@ class AbstractImportMailMessages extends AbstractImportMessages
     protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread)
     {
         // TODO: Implement convertApiResponseToMessage() method.
+    }
+
+    protected function search($query = []): array
+    {
+        if(empty($query)) {
+            $query = ['All' => null];
+        }
+
+        $criterias = [];
+        foreach($query as $criteria => $value) {
+            if(empty($value)) {
+                $criterias[] = strtoupper($criteria);
+                continue;
+            }
+            $criterias[] = strtoupper($criteria).' "'.$value.'"';
+        }
+
+        return $this->mailbox->searchMailbox(implode(' ', $criterias));
     }
 }

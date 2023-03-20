@@ -18,10 +18,10 @@ use PhpImap\Exceptions\InvalidParameterException;
 use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 
-class ManomanoImportMessages extends AbstractImportMessages
+class ManomanoImportMessages extends AbstractImportMailMessages
 {
     /** @var Mailbox */
-    private Mailbox $mailbox;
+    protected Mailbox $mailbox;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
 
     public function __construct()
@@ -110,24 +110,6 @@ class ManomanoImportMessages extends AbstractImportMessages
             $credentials['login'],
             $credentials['password']
         );
-    }
-
-    private function search($query = []): array
-    {
-        if(empty($query)) {
-            $query = ['All' => null];
-        }
-
-        $criterias = [];
-        foreach($query as $criteria => $value) {
-            if(empty($value)) {
-                $criterias[] = strtoupper($criteria);
-                continue;
-            }
-            $criterias[] = strtoupper($criteria).' "'.$value.'"';
-        }
-
-        return $this->mailbox->searchMailbox(implode(' ', $criterias));
     }
 
     private function getEmails($emailIds): array
