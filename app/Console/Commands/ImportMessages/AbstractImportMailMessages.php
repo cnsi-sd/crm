@@ -49,4 +49,13 @@ class AbstractImportMailMessages extends AbstractImportMessages
         }
         return $emails;
     }
+
+    protected function parseOrderId($email): bool|string{}
+
+    protected function canImport($email): bool{}
+
+    protected function isSpam($email): bool{}
+
+    protected function getSpecificActions(){}
+
 }

@@ -59,6 +59,9 @@ class ManomanoImportMessages extends AbstractImportMailMessages
             $this->logger->info('Get Emails details');
 
             foreach($this->getEmails($emailIds) as $emailId => $email){
+
+
+
                 // Check if sender is "ne-pas-repondre@manomano.fr"
                 $doNotReply = str_contains($email->senderAddress, 'repondre');
                 if($doNotReply)
@@ -112,17 +115,7 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         );
     }
 
-//    private function getEmails($emailIds): array
-//    {
-//        $emails = [];
-//        foreach ($emailIds as $emailId) {
-//            $this->logger->info('Get Email : '. $emailId);
-//            $emails[$emailId] = $this->mailbox->getMail($emailId,false);
-//        }
-//        return $emails;
-//    }
-
-    private function parseOrderId(IncomingMail $email): bool|string
+    protected function parseOrderId($email): bool|string
     {
         $subject = $email->subject;
 
