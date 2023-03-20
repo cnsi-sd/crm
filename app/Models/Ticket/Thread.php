@@ -184,5 +184,4 @@ class Thread extends Model
         }
         return $numberOfUnreadMessages;
     }
-
 }
