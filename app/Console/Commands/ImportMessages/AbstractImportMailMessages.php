@@ -2,12 +2,17 @@
 
 namespace App\Console\Commands\ImportMessages;
 
-use App\Models\Ticket\Thread;
-use App\Models\Ticket\Ticket;
+use PhpImap\Mailbox;
 
 abstract class AbstractImportMailMessages extends AbstractImportMessages
 {
-    protected function search($query = []): array
+    protected Mailbox $mailbox;
+
+    /**
+     * @param array $query
+     * @return array
+     */
+    protected function search(array $query = []): array
     {
         if(empty($query)) {
             $query = ['All' => null];
@@ -35,7 +40,9 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
         return $emails;
     }
 
-    protected function parseOrderId($email): bool|string{}
+    protected function parseOrderId($email): bool|string{
+        return false;
+    }
 
     protected function canImport($email): bool{
 
