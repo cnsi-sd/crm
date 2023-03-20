@@ -73,7 +73,7 @@ class Ticket extends Model
     ];
 
     protected $casts = [
-        'deadline' => 'datetime',
+        'deadline' => 'date',
         'delivery_date' => 'datetime'
     ];
 
@@ -238,7 +238,7 @@ class Ticket extends Model
             ->setCallback(function (Ticket $ticket) {
                 $listeTag = array();
                 return view('tickets.tag.preview')
-                    ->with('listTags', (new \App\Models\Tags\Tag)->getListTagByThread($ticket, $listeTag, true));
+                    ->with('listTags', Tag::getListTagByThread($ticket, $listeTag, true));
             });
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.created_at'))
@@ -261,7 +261,7 @@ class Ticket extends Model
     public function getlistTagWithTickets(): array
     {
         $listeTag = array();
-        return (new Tag())->getListTagByThread($this, $listeTag,true);
+        return Tag::getListTagByThread($this, $listeTag,true);
     }
 
     public function getOpenedDays(): string

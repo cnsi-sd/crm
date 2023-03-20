@@ -90,8 +90,8 @@ class RevivalCommand extends Command
             $ticket->state = $newStatus;
         }
 
-        $deadLine = date('Y-m-d H:i:s', time() + (24 * 3600));
-        $this->logger->info("Updating deadline's ticket " . $ticket->deadline->format('Y-m-d H:i:s') . " to : " . $deadLine);
+        $deadLine = date('Y-m-d', time() + (24 * 3600));
+        $this->logger->info("Updating deadline's ticket " . $ticket->deadline->format('Y-m-d') . " to : " . $deadLine);
         $ticket->deadline = $deadLine;
 
         $this->logger->info('Save ticket modification ...');
