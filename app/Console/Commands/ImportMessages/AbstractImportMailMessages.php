@@ -9,6 +9,9 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
     const SPAM_TAG = 'X-Spam-Tag';
     const SPAM_STATUS = 'X-Spam-Status';
 
+    /**
+     * @var Mailbox
+     */
     protected Mailbox $mailbox;
 
     /**
@@ -33,6 +36,10 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
         return $this->mailbox->searchMailbox(implode(' ', $criterias));
     }
 
+    /**
+     * @param $emailIds
+     * @return array
+     */
     protected function getEmails($emailIds): array
     {
         $emails = [];
@@ -43,10 +50,18 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
         return $emails;
     }
 
+    /**
+     * @param $email
+     * @return bool|string
+     */
     protected function parseOrderId($email): bool|string{
         return false;
     }
 
+    /**
+     * @param $email
+     * @return bool
+     */
     protected function canImport($email): bool{
 
         if(in_array($email->senderAddress, config('email-import.domain_blacklist')))
@@ -58,6 +73,10 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
         return true;
     }
 
+    /**
+     * @param $email
+     * @return bool
+     */
     protected function isSpam($email): bool
     {
         $spamSign = [self::SPAM_TAG, self::SPAM_STATUS];
@@ -69,6 +88,10 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
         return false;
     }
 
+    /**
+     * @param $email
+     * @return void
+     */
     protected function getSpecificActions($email){}
 
 }

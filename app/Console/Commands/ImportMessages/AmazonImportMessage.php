@@ -24,8 +24,6 @@ use PhpImap\Mailbox;
 
 class AmazonImportMessage extends AbstractImportMailMessages
 {
-    /** @var Mailbox */
-    private Mailbox $mailbox;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
     const RETURN = 'retour';
     const IMPORT = 'import';
