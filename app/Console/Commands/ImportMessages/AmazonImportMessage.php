@@ -55,7 +55,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
-                //'SINCE' => $from_date
+                'SINCE' => $from_date
             ]);
 
             $this->logger->info('--- Get Emails details');
