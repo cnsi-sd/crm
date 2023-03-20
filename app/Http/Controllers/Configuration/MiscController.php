@@ -37,4 +37,17 @@ class MiscController extends AbstractController
 
         return view('configuration.misc.variables');
     }
+
+    public function incidents(Request $request): View|RedirectResponse
+    {
+        if ($request->exists('save')) {
+            setting(['incident_tag_id' => $request->input('incident_tag_id')]);
+            setting()->save();
+
+            Alert::toastSuccess(__('app.config.misc.saved'));
+            return redirect()->back();
+        }
+
+        return view('configuration.misc.incidents');
+    }
 }

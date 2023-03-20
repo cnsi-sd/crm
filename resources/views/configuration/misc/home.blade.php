@@ -8,6 +8,9 @@
                     <a href="{{ route('variables_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'variables_config'])>
                         {{ __('app.config.misc.variables') }}
                     </a>
+                    <a href="{{ route('incidents_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'incidents_config'])>
+                        {{ __('app.config.misc.incidents') }}
+                    </a>
                 </ul>
             </div>
             @yield('misc_content')
