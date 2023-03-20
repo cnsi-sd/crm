@@ -4,6 +4,7 @@ namespace App\Console\Commands\Ticket;
 
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Prestashop\CrmLinkGateway;
+use App\Mail\Error;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
@@ -12,7 +13,6 @@ use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
-use stdClass;
 
 class ImportIncidents extends Command
 {
@@ -20,6 +20,7 @@ class ImportIncidents extends Command
     protected $description = 'Import incidents from Prestashop and make actions on ticket';
 
     private Logger $logger;
+    private array $errors = [];
 
     const LAST_INCIDENT_SETTING = 'last_incident_id';
 
@@ -38,12 +39,24 @@ class ImportIncidents extends Command
 
             $this->logger->info('Found ' . count($newIncidents) . ' new incidents');
             foreach ($newIncidents as $incident) {
-                $this->processIncident($incident);
+                try {
+                    $this->processIncident($incident);
+                }
+                catch (Exception $e) {
+                    $message = sprintf('Incident #%d : %s', $incident['id'], $e->getMessage());
+                    $this->errors[] = $message;
+                    $this->logger->error($message);
+                }
             }
 
             if(isset($incident)) {
                 $this->logger->info('Save last incident ID (' . $incident['id'] . ')');
                 $this->saveLastIncidentId($incident['id']);
+            }
+
+            if(!empty($this->errors)) {
+                $this->logger->info('Send error email');
+                Error::sendErrorMail($this->errors, $this->getName(), $this->description);
             }
 
             $this->logger->info('DONE');
@@ -86,10 +99,8 @@ class ImportIncidents extends Command
 
         // Get channel
         $channel = Channel::getByExtName($ext_channel_name);
-        if(!$channel) {
-            $this->logger->error('Incident ' . $id . ' unprocessable, channel not found for `' . $ext_channel_name . '`');
-            return;
-        }
+        if(!$channel)
+            throw new Exception('Channel not found for external name `' . $ext_channel_name . '`');
 
         // Get ticket
         $order = Order::getOrder($channel_order_number, $channel);
