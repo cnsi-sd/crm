@@ -156,14 +156,10 @@ class TicketController extends AbstractController
                     'content' => TinyMCE::toText($messageContent),
                 ]);
 
-                if($request->file('attachment_1_file')) {
-                    $this->uploadFile($request,$message,"attachment_1_type","attachment_1_file");
-                }
-                if($request->file('attachment_2_file')) {
-                    $this->uploadFile($request,$message,"attachment_2_type","attachment_2_file");
-                }
-                if($request->file('attachment_3_file')) {
-                    $this->uploadFile($request,$message,"attachment_3_type","attachment_3_file");
+                foreach ($request->files as $name => $file)
+                {
+                    $attachmentIndex = explode("_file_", $name)[1];
+                    $this->uploadFile($request, $message, "attachment_type_".$attachmentIndex, $name);
                 }
 
                 AbstractSendMessage::dispatchMessage($message);

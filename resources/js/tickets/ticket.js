@@ -40,6 +40,7 @@ $(document).ready(function () {
         attachmentIndex = attachmentIndex+1;
         $( ".attachment_type" ).last().attr('name', "attachment_type_"+attachmentIndex);
         $( ".attachment_file" ).last().attr('name', "attachment_file_"+attachmentIndex);
+        $( ".attachment_file" ).last().val('');
     });
 })
 

@@ -162,7 +162,7 @@
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <input form="saveTicket" name="attachment_file_1" id="attachment_file_1" type="file" class="attachment_file"/>
+                                                <input form="saveTicket" name="attachment_file_1" type="file" class="attachment_file"/>
                                             </div>
                                         </div>
                                     </div>
