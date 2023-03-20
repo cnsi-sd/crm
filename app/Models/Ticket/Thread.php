@@ -185,28 +185,4 @@ class Thread extends Model
         return $numberOfUnreadMessages;
     }
 
-    public function checkTagList(int $tagId, TagList $tagList = null)
-    {
-        if (is_null($tagList)) {
-            if ($this->tagLists->first()) {
-                $tagList = $this->tagLists->first();
-            } else {
-                $tagList = new TagList();
-                $tagList->thread_id = $this->id;
-                $tagList->save();
-            }
-        }
-        return $tagList->addTag($tagId);
-    }
-    protected function getAllowedDocumentTypes(): array
-    {
-        return [
-            CrmDocumentTypeEnum::CUSTOMER_SERVICE_REPORT,
-            CrmDocumentTypeEnum::CUSTOMER_SERVICE_STATION,
-            CrmDocumentTypeEnum::CLIENT_BANK_ACCOUNT_NUMBER,
-            CrmDocumentTypeEnum::CUSTOMER_FILING,
-            CrmDocumentTypeEnum::PRODUCT_PHOTO,
-            CrmDocumentTypeEnum::OTHER,
-        ];
-    }
 }
