@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Jobs\SendMail;
+namespace App\Jobs\SendMessage;
 
 use App\Enums\Channel\ChannelEnum;
-use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\Channel;
 use Cnsi\Logger\Logger;
 use Illuminate\Support\Facades\Mail;
@@ -17,6 +16,10 @@ class AmazonSendMessage extends AbstractSendMessage
      */
     protected function sendMessage(): void
     {
+        // If we are not in production environment, we don't want to send mail
+        if (env('APP_ENV') != 'production')
+            return;
+
         $this->channel = Channel::getByName(ChannelEnum::AMAZON_FR);
         $this->logger = new Logger('send_message/'
             . $this->channel->getSnakeName()
