@@ -96,6 +96,7 @@ class ImportIncidents extends Command
         $ticket = Ticket::getTicket($order, $channel);
 
         // Grab incident tag
+        // TODO : this is dangerous
         $tag = Tag::query()->where('name', 'Incident')->firstOrFail();
 
         // Update ticket
