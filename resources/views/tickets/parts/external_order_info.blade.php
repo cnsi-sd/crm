@@ -2,16 +2,22 @@
     @if(is_array($orders) && count($orders) > 0)
         <div class="col-5">
             <div class="card">
+                @php($order = $orders[0])
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-6">{{ __('app.order.order') }}</div>
-                        <div class="col-6 text-end">
+                        <div class="col-2">{{ __('app.order.order') }}</div>
+                        @if($order['invoice_progress'] == 'generated')
+                            <div class="col-5 text-end">
+                                <a href="{{ $external_invoice_link }}{{ $order['id_order'] }}"
+                                   type="button" class="btn btn-secondary rounded-pill btn-sm" target="_blank">{{ __('app.order.download_invoice') }} <i class="uil-external-link-alt"></i></a>
+                            </div>
+                        @endif
+                        <div class="col-5 text-end">
                             <a href="{{ env('PRESTASHOP_URL') }}index.php?fc=module&module=bmsmagentogateway&controller=order_redirect&reference="
-                               type="button" class="btn btn-primary rounded-pill btn-sm" target="_blank" id="ext-order-link">Lien commande Prestashop <i class="uil-external-link-alt"></i></a>
+                               type="button" class="btn btn-primary rounded-pill btn-sm" target="_blank" id="ext-order-link">{{ __('app.order.external_link') }} <i class="uil-external-link-alt"></i></a>
                         </div>
                     </div>
                 </div>
-                @php($order = $orders[0])
                 <div class="card-body top-cards-height">
                     <div class="row">
                         <div class="col">{{ __('app.order.id_order') }} :</div>
