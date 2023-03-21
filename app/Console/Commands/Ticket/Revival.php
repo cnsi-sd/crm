@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\DB;
 use Twilio\Exceptions\ConfigurationException;
 use Twilio\Exceptions\TwilioException;
 
-class RunRevival extends Command
+class Revival extends Command
 {
     protected $signature = 'ticket:revival';
     protected $description = 'Send revivals on eligible threads';
