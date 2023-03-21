@@ -21,7 +21,7 @@
                         data-taglist_id="{{$taglist->id}}">
                     <option value="">{{ __('app.tags.select_tag') }}</option>
 
-                    @foreach (\App\Models\Tags\Tag::all() as $optionTag)
+                    @foreach ($query as $optionTag)
                         <option value="{{ $optionTag->id }}">
                             {{ $optionTag->name }}
                         </option>
