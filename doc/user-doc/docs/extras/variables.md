@@ -49,7 +49,7 @@ Liste des variables par catégories :
 | SIGNATURE_ADMIN | Signature de l'employé | Baptiste Turcotte |
 
 ### Configuration
-Les valeurs des variables ci-dessous sont configurables dans le menu `Configuration > Variables`.
+Les valeurs des variables ci-dessous sont configurables dans le menu `Configuration > Divers > Variables`.
 
 | nom                | Description              | Exemple        |
 |--------------------|--------------------------|----------------|
