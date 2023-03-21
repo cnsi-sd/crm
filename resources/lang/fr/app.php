@@ -264,6 +264,8 @@ return [
         'ext_names' => 'Nom(s) externe(s)',
         'saved' => 'Canal enregistré',
         'edit' => 'Modifier un canal',
+    ],
+    'sav_note' => [
+        'sav_note' => 'Fiche SAV fabriquant|Fiches SAV fabriquant'
     ]
-
 ];
