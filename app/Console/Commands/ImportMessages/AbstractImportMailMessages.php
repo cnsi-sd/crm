@@ -159,7 +159,6 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
             return false;
 
         if ($this->isSpam($email)){
-            preg_match('/@(.*)/', $email->senderAddress, $match);
             if (in_array($match[1], config('email-import.domain_whitelist')))
                 return true;
             return false;

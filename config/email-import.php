@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'domaine_whitelist' => [
+    'domain_whitelist' => [
       "marketplace.amazon.fr"
     ],
     'email_blacklist' => [
