@@ -80,7 +80,7 @@ class User extends Authenticatable
 
         $names = [];
         foreach($users as $user) {
-            $names[$user->id] = $user->getShortName();
+            $names[$user->id] = $user->__toString();
         }
 
         return $names;
@@ -167,7 +167,7 @@ class User extends Authenticatable
             ->first();
     }
 
-    public function getShortName(): string
+    public function __toString(): string
     {
         return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
     }

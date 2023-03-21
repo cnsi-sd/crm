@@ -50,7 +50,7 @@ abstract class AbstractEnum
     public static function validOrThrow($value): void
     {
         if (!self::isValid($value)) {
-            $enum_name = self::getChildClass()->getShortName();
+            $enum_name = self::getChildClass()->__toString();
             $message = $value . ' is not a valid ' . $enum_name . '. Please use a valid ' . $enum_name . ' : ' . implode(', ', self::getList());
 
             throw new Exception($message);
@@ -77,7 +77,7 @@ abstract class AbstractEnum
             $not_translated_key = current(array_keys($keys));
         }
 
-        $enum_name = self::getChildClass()->getShortName();
+        $enum_name = self::getChildClass()->__toString();
         $translation_file = Str::snake($enum_name);
         $full_translation_key = 'enums/' . $translation_file . '.' . $not_translated_key;
 

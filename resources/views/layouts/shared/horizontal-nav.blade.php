@@ -37,7 +37,7 @@
                         <img src="{{ Vite::asset('resources/images/users/avatar.png') }}" alt="user-image" class="rounded-circle">
                     </span>
                     <span>
-                        <span class="account-user-name">{{ Auth::user()->getShortName() }}</span>
+                        <span class="account-user-name">{{ Auth::user()->__toString() }}</span>
                         <span class="account-position">{{ Auth::user()->role->name }}</span>
                     </span>
                 </a>
