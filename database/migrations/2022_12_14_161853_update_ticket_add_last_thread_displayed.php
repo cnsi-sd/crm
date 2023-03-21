@@ -34,8 +34,5 @@ return new class extends Migration
             $table->dropForeign(['last_thread_displayed']);
             $table->dropColumn('last_thread_displayed');
         });
-        Schema::table('ticket_threads', function (Blueprint $table) {
-            $table->dropIndex('ticket_threads_ticket_id_foreign');
-        });
     }
 };
