@@ -55,6 +55,24 @@ class UserController extends AbstractController
             ->with('user', $user);
     }
 
+    public function my_account(Request $request): View|RedirectResponse
+    {
+        $user = Auth::user();
+
+        if ($request->exists('save_my_account')) {
+            $request->validate([
+                'password'      => ['nullable', Password::default()],
+            ]);
+
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
+            Alert::toastSuccess(__('app.user.saved'));
+            return redirect()->route('my_account');
+        }
+
+        return view('admin.users.my_account')
+            ->with('user', $user);
+    }
     public function save_user(Request $request, User $user)
     {
         // Validate request

@@ -16,12 +16,11 @@
                                     <div class="form-group mb-3">
                                         <label for="lastname">
                                             {{ __('app.user.lastname') }}
-                                            <span class="required_field">*</span>
                                         </label>
                                         <input
                                             type="text" name="lastname" class="form-control form-control-sm"
                                             value="{{ old('lastname', $user->lastname ?? '') }}"
-                                            required
+                                            disabled
                                         />
                                     </div>
                                 </div>
@@ -29,27 +28,14 @@
                                     <div class="form-group mb-3">
                                         <label for="firstname">
                                             {{ __('app.user.firstname') }}
-                                            <span class="required_field">*</span>
                                         </label>
                                         <input
                                             type="text" name="firstname" class="form-control form-control-sm"
                                             value="{{ old('firstname', $user->firstname ?? '') }}"
-                                            required
+                                            disabled
                                         />
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="name">
-                                    {{ __('app.username') }}
-                                    <span class="required_field">*</span>
-                                </label>
-                                <input
-                                    type="text" name="username" class="form-control form-control-sm"
-                                    value="{{ old('username', $user->username ?? '') }}"
-                                    required disabled
-                                />
                             </div>
 
                             <div class="form-group mb-3">
