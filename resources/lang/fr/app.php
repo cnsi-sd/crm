@@ -151,6 +151,8 @@ return [
         'supplier' => 'Fournisseur',
         'reference' => 'Référence :',
         'ean' => 'EAN :',
+        'external_link' => 'Accès backoffice',
+        'download_invoice' => 'Télécharger facture',
     ],
 
     'login' => [

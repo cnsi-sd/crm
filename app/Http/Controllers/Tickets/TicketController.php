@@ -111,7 +111,9 @@ class TicketController extends AbstractController
     public function get_external_infos(Ticket $ticket): View
     {
         $externalOrderInfo = $ticket->order->getPrestashopOrders();
+        $externalInvoiceLink = $ticket->order->getInvoiceExternalLink();
         return view('tickets.parts.external_order_info')
+            ->with('external_invoice_link', $externalInvoiceLink)
             ->with('orders', $externalOrderInfo);
     }
 
