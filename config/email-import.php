@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'domaine_whitelist' => [
+      "marketplace.amazon.fr"
+    ],
     'email_blacklist' => [
         "do-not-reply@amazon.fr",
         "notification-vendeur@amazon.fr",

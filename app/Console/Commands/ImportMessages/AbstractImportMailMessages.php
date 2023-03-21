@@ -73,7 +73,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
             $this->logger->info('--- Get Emails details ---');
             foreach ($this->getEmails($emailIds, $this->reverse) as $emailId => $email) {
                 try {
-                    $this->logger->info('--- Email api_id: '. $emailId . '---');
+                    $this->logger->info('--- Email id: '. $emailId . '---');
                     $this->logger->info('Subject: ' . $email->subject);
 
                     // Check can import mail
@@ -151,14 +151,19 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
      */
     protected function canImport($email): bool{
 
-        if (in_array($email->senderAddress, config('email-import.domain_blacklist')))
+        preg_match('/@(.*)/', $email->senderAddress, $match);
+        if (in_array($match[1], config('email-import.domain_blacklist')))
             return false;
 
         if (in_array($email->senderAddress, config('email-import.email_blacklist')))
             return false;
 
-        if ($this->isSpam($email))
+        if ($this->isSpam($email)){
+            preg_match('/@(.*)/', $email->senderAddress, $match);
+            if (in_array($match[1], config('email-import.domain_whitelist')))
+                return true;
             return false;
+        }
 
         return true;
     }
@@ -184,6 +189,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
                 return true;
             }
         }
+
         return false;
     }
 
@@ -207,7 +213,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
         if($this->isMessagesImported($email->messageId))
             return;
 
-        $this->logger->info('Convert api message to db message');
+        $this->logger->info('Convert email to message');
         $this->convertApiResponseToMessage($ticket, $email, $thread);
         $this->addImportedMessageChannelNumber($email->id);
     }

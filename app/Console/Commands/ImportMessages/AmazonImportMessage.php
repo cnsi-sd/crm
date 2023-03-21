@@ -80,13 +80,13 @@ class AmazonImportMessage extends AbstractImportMailMessages
         $pattern = '#(?<orderId>\d{3}-\d{7}-\d{7})#';
         preg_match($pattern, $email->subject, $orderId);
         if (isset($orderId['orderId'])) {
-            $this->logger->info('Amazon : orderId found from Subject '.$orderId['orderId']);
+            $this->logger->info('OrderId found from Subject '.$orderId['orderId']);
             return $orderId['orderId'];
         }
 
         preg_match($pattern, $email->textHtml, $orderId);
         if (isset($orderId['orderId'])) {
-            $this->logger->info('Amazon : orderId found from Body '.$orderId['orderId']);
+            $this->logger->info('OrderId found from Body '.$orderId['orderId']);
             return $orderId['orderId'];
         }
 
@@ -171,8 +171,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
         $tag = Tag::findOrFail($tagId);
         $ticket->addTag($tag);
 
-        $infoMail = $email->textHtml;
-        $returnComment = AmazonBeautifierMail::getReturnInformation($infoMail);
+        $returnComment = AmazonBeautifierMail::getReturnInformation($email->textHtml);
         if ($returnComment !== "") {
             $comment = new Comment();
             $comment->ticket_id = $ticket->id;

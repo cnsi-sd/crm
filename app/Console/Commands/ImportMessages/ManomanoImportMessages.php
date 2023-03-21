@@ -63,8 +63,8 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         // get the orderId (Mxxxxxxxxxxxx pattern) in subject
         preg_match('/M(\d{12})/',$subject, $orderMatche);
 
-        if(isset($orderMatche[1]))
-            return 'M'. $orderMatche[1];
+        if(isset($orderMatche[0]))
+            return $orderMatche[0];
         return false;
     }
 
