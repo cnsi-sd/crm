@@ -37,7 +37,7 @@
                         <img src="{{ Vite::asset('resources/images/users/avatar.png') }}" alt="user-image" class="rounded-circle">
                     </span>
                     <span>
-                    <span class="account-user-name">{{ Auth::user()->name }}</span>
+                    <span class="account-user-name">{{ Auth::user()->getShortName() }}</span>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">

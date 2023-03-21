@@ -180,7 +180,7 @@ class Ticket extends Model
                 ->setType(ColumnTypeEnum::SELECT)
                 ->setOptions(User::getUsersNames())
                 ->setCallback(function (Ticket $ticket) {
-                    return $ticket->user->name;
+                    return $ticket->user->getShortName();
                 })
                 ->setKey('user_id')
                 ->setSortable(true);

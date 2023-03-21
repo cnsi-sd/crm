@@ -59,7 +59,7 @@ enum MessageVariable: string
             self::DELAI_COMMANDE => Order::getOrderDelay($extOrder),
             self::MARKETPLACE => ucfirst($order->channel->name),
             self::NUM_CMD_MP => $order->channel_order_number,
-            self::SIGNATURE_ADMIN => $message->user->name,
+            self::SIGNATURE_ADMIN => $message->user->getShortName(),
             self::TELEPHONE_MP_FFM => match($order->channel->name) {
                 ChannelEnum::CDISCOUNT_FR => 'par téléphone au 09 70 80 90 50',
                 default => 'par téléphone',

@@ -8,6 +8,7 @@ use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Http\Controllers\AbstractController;
+use App\Models\User\Role;
 use App\Models\User\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -58,9 +59,10 @@ public function save_user(Request $request, User $user)
 {
     // Validate request
     $validation_rules = [
-        'name'          => 'required',
+        'firstname'     => ['required', 'string'],
+        'lastname'      => ['required', 'string'],
         'email'         => ['nullable', 'email'],
-        'role'          => 'required',
+        'role'          => ['required', 'exists:' . Role::class . ',id'],
     ];
     if (!$user->exists) {
         $validation_rules['password'] = ['required', Password::default()];
@@ -68,7 +70,8 @@ public function save_user(Request $request, User $user)
     $request->validate($validation_rules);
 
     // Set name, email, phone number
-    $user->name = $request->input('name');
+    $user->firstname = $request->input('firstname');
+    $user->lastname = $request->input('lastname');
     $user->email = $request->input('email');
     $user->role_id = $request->input('role');
     $user->active = $request->input('active') === 'on';

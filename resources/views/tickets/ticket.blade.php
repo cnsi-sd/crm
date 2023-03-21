@@ -38,7 +38,7 @@
                                 <div class="col">
                                     <select form="saveTicket" name="ticket-user_id" class="form-select">
                                         @foreach (\App\Models\User\User::all() as $user)
-                                            <option value="{{ $user->id }}" @selected($ticket->user_id === $user->id)>{{ $user->name }}</option>
+                                            <option value="{{ $user->id }}" @selected($ticket->user_id === $user->id)>{{ $user->getShortName() }}</option>
                                         @endforeach
                                     </select>
                                 </div>

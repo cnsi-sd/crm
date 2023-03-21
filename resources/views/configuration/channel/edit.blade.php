@@ -47,7 +47,7 @@
                                 >
                                     <option value="">-- {{trans_choice('app.ticket.owner', 1)}} --</option>
                                     @foreach(\App\Models\User\User::all() as $user)
-                                        <option value="{{$user->id}}" @if($channel->user_id === $user->id) selected @endif>{{$user->name}}</option>
+                                        <option value="{{$user->id}}" @if($channel->user_id === $user->id) selected @endif>{{$user->getShortName()}}</option>
                                     @endforeach
                                 </select>
                             </div>
