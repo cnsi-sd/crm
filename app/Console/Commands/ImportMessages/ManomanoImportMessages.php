@@ -131,6 +131,8 @@ class ManomanoImportMessages extends AbstractImportMailMessages
             ]
         );
 
+        $this->logger->info('Message id: '. $message->id . ' created');
+
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);
     }

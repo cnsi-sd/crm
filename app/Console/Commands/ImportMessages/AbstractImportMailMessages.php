@@ -70,10 +70,10 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
                 'SINCE' => $from_date
             ]);
 
-            $this->logger->info('--- Get Emails details');
+            $this->logger->info('--- Get Emails details ---');
             foreach ($this->getEmails($emailIds, $this->reverse) as $emailId => $email) {
                 try {
-                    $this->logger->info($emailId);
+                    $this->logger->info('--- Email api_id: '. $emailId . '---');
                     $this->logger->info('Subject: ' . $email->subject);
 
                     // Check can import mail
