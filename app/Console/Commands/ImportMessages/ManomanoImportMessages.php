@@ -28,10 +28,19 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         $this->signature = sprintf($this->signature, 'manomano');
         $this->channelName = ChannelEnum::MANOMANO_COM;
         $this->reverse = false;
-        $this->mailHost = env('MANOMANO_MAIL_URL');
-        $this->mailUsername = env('MANOMANO_USERNAME');
-        $this->mailPassword = env('MANOMANO_PASSWORD');
         parent::__construct();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCredentials(): array
+    {
+        return [
+            'host' => env('MANOMANO_MAIL_URL'),
+            'username' => env('MANOMANO_USERNAME'),
+            'password' => env('MANOMANO_PASSWORD')
+        ];
     }
 
     protected function canImport($email): bool

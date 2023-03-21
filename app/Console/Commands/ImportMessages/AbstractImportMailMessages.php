@@ -33,30 +33,6 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
     protected bool $reverse;
 
     /**
-     * @var string
-     */
-    protected string $mailHost;
-    /**
-     * @var string
-     */
-    protected string $mailUsername;
-    /**
-     * @var string
-     */
-    protected string $mailPassword;
-    /**
-     * @return array
-     */
-    protected function getCredentials(): array
-    {
-        return [
-            'host' => $this->mailHost,
-            'username' => $this->mailUsername,
-            'password' => $this->mailPassword
-        ];
-    }
-
-    /**
      * @throws InvalidParameterException
      */
     protected function initApiClient()

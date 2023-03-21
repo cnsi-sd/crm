@@ -32,10 +32,19 @@ class AmazonImportMessage extends AbstractImportMailMessages
         $this->signature = sprintf($this->signature, 'amazon');
         $this->channelName = ChannelEnum::AMAZON_FR;
         $this->reverse = true;
-        $this->mailHost = env('AMAZON_MAIL_URL');
-        $this->mailUsername = env('AMAZON_USERNAME');
-        $this->mailPassword = env('AMAZON_PASSWORD');
         parent::__construct();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCredentials(): array
+    {
+        return [
+            'host' => env('AMAZON_MAIL_URL'),
+            'username' => env('AMAZON_USERNAME'),
+            'password' => env('AMAZON_PASSWORD')
+        ];
     }
 
     /**
