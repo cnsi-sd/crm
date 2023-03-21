@@ -151,6 +151,7 @@ return [
         'supplier' => 'Fournisseur',
         'reference' => 'Référence :',
         'ean' => 'EAN :',
+        'external_link' => 'Lien commande Prestashop',
     ],
 
     'login' => [
