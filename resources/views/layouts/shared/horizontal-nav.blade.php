@@ -5,10 +5,10 @@
         <!-- LOGO -->
         <a href="" class="topnav-logo">
             <span class="topnav-logo-lg">
-                <img src="{{ Vite::asset('resources/images/logo-light.png') }}" alt="" height="16">
+                <img src="{{ Vite::asset('resources/images/logo.svg') }}" alt="" height="40">
             </span>
             <span class="topnav-logo-sm">
-                <img src="{{ Vite::asset('resources/images/logo_sm_dark.png') }}" alt="" height="16">
+                <img src="{{ Vite::asset('resources/images/favicon.svg') }}" alt="" height="30">
             </span>
         </a>
 
