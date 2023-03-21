@@ -20,105 +20,22 @@ use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use PhpImap\Exceptions\InvalidParameterException;
+use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 
 class AmazonImportMessage extends AbstractImportMailMessages
 {
-    const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
     const RETURN = 'retour';
     const IMPORT = 'import';
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'amazon');
+        $this->channelName = ChannelEnum::AMAZON_FR;
+        $this->reverse = true;
+        $this->mailHost = env('AMAZON_MAIL_URL');
+        $this->mailUsername = env('AMAZON_USERNAME');
+        $this->mailPassword = env('AMAZON_PASSWORD');
         parent::__construct();
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function handle(){
-        $this->channel = Channel::getByName(ChannelEnum::AMAZON_FR);
-        $this->logger = new Logger('import_message/'
-            . $this->channel->getSnakeName()
-            . '/' . $this->channel->getSnakeName()
-            . '.log', true, true
-        );
-
-        $this->logger->info('--- Start ---');
-        try {
-            $from_time = strtotime(date('d M Y H:i:s') . self::FROM_DATE_TRANSFORMATOR);
-            $from_date = date("d M Y H:i:s", $from_time);
-
-            $this->logger->info('--- Init api client ---');
-
-            $this->initApiClient();
-
-            $this->logger->info('--- Init filters ---');
-            $emailIds = $this->search([
-                'SINCE' => $from_date
-            ]);
-
-            $this->logger->info('--- Get Emails details');
-            foreach(array_reverse($this->getEmails($emailIds)) as $emailId => $email) {
-                try {
-                    // Check can import mail
-                    if(!$this->canImport($email))
-                        continue;
-
-                    $this->logger->info('Retrieve command number from email');
-                    $mpOrder = $this->parseOrderId($email);
-
-                    if (!$mpOrder)
-                        continue;
-
-                    $this->logger->info('Begin Transaction');
-                    DB::beginTransaction();
-                    $this->logger->info('--- start import email : ' . $email->id);
-                    $order = Order::getOrder($mpOrder, $this->channel);
-                    $ticket = Ticket::getTicket($order, $this->channel);
-                    $thread = Thread::getOrCreateThread($ticket, $mpOrder, $email->subject, $email->fromAddress);
-
-                    switch ($this->getSpecificActions($email)) {
-                        case self::RETURN :
-                            $this->addReturnOnTicket($ticket, $email);
-                            break;
-                        default:
-                            $this->importMessageByThread($ticket, $thread, $email);
-                        }
-                    $this->logger->info('--- end import email');
-                    DB::commit();
-                } catch (Exception $e) {
-                    $this->logger->error('An error has occurred. Rolling back.', $e);
-                    DB::rollBack();
-                    \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
-                    return;
-                }
-            }
-        } catch (Exception $e){
-            $this->logger->error('An error has occurred. Rolling back.', $e);
-            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
-        }
-    }
-    protected function getCredentials(): array
-    {
-        return [
-            'API_URL'            => env('AMAZON_MAIL_URL'),
-            'API_USERNAME'       => env('AMAZON_USERNAME'),
-            'API_PASSWORD'       => env('AMAZON_PASSWORD')
-        ];
-    }
-
-    /**
-     * @throws InvalidParameterException
-     */
-    protected function initApiClient()
-    {
-        $credentials = $this->getCredentials();
-        $this->mailbox = new Mailbox(
-            '{'. $credentials['API_URL'].':993/imap/ssl/novalidate-cert}INBOX',
-            $credentials['API_USERNAME'],
-            $credentials['API_PASSWORD']
-        );
     }
 
     /**
@@ -169,6 +86,29 @@ class AmazonImportMessage extends AbstractImportMailMessages
 
     /**
      * @param $email
+     * @param $mpOrder
+     * @return void
+     * @throws Exception
+     */
+    protected function importEmail($email, $mpOrder): void
+    {
+        $this->logger->info('--- start import email : ' . $email->id);
+        $order = Order::getOrder($mpOrder, $this->channel);
+        $ticket = Ticket::getTicket($order, $this->channel);
+        $thread = Thread::getOrCreateThread($ticket, $mpOrder, $email->subject, $email->fromAddress);
+
+        switch ($this->getSpecificActions($email)) {
+            case self::RETURN:
+                $this->addReturnOnTicket($ticket, $email);
+                break;
+            default:
+                $this->importMessageByThread($ticket, $thread, $email);
+        }
+        $this->logger->info('--- end import email');
+    }
+
+    /**
+     * @param $email
      * @return string
      */
     protected function getSpecificActions($email): string
@@ -178,24 +118,6 @@ class AmazonImportMessage extends AbstractImportMailMessages
             return self::RETURN;
 
         return self::IMPORT;
-    }
-
-    /**
-     * @param Ticket $ticket
-     * @param Thread $thread
-     * @param $message
-     * @return void
-     * @throws Exception
-     */
-    private function importMessageByThread(Ticket $ticket, Thread $thread, $message): void
-    {
-        $imported_id = $message->id;
-        $this->logger->info('Check if this message is imported');
-        if (!$this->isMessagesImported($imported_id)) {
-            $this->logger->info('Convert api message to db message');
-            $this->convertApiResponseToMessage($ticket, $message, $thread);
-            $this->addImportedMessageChannelNumber($imported_id);
-        }
     }
 
     /**
