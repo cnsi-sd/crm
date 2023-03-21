@@ -90,10 +90,10 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information')->can('bot_config');
         });
         Route::match(['get', 'post'], 'variables', [VariableController::class, 'config'])->name('variables_config')->can('variables_config');
-        Route::prefix('savNote')->group(function () {
+        Route::prefix('sav_notes')->group(function () {
+            Route::match(['get', 'post'], '', [savNoteController::class, 'list'])->name('sav_notes');
             Route::match(['get', 'post'], 'new', [SavNoteController::class, 'edit'])->name('create_sav_note'); // todo implement permissions
             Route::match(['get', 'post'], '{savNote}', [SavNoteController::class, 'edit'])->name('edit_sav_note');
-            Route::match(['get', 'post'], '', [savNoteController::class, 'list'])->name('sav_notes');
             Route::match(['get', 'post'], 'delete', [savNoteController::class, 'delete'])->name('delete_sav_notes');
         });
     });

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('savnotes', function (Blueprint $table) {
+        Schema::create('sav_notes', function (Blueprint $table) {
             $table->id();
             $table->text('manufacturer');
             $table->text('pms_delay');
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('savnotes');
+        Schema::dropIfExists('sav_notes');
     }
 };

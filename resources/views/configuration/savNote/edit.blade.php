@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="manufacturer_delay">
-                                        {{__('app.sav_note.manufacturer_delay')}}
+                                        {{__('app.sav_note.manufacturer_warranty')}}
                                         <span class="required_field">*</span>
                                     </label>
                                     <input

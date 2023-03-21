@@ -170,3 +170,11 @@ Breadcrumbs::for('search', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push(__('searchable::search.search'));
 });
+/** SavNote */
+
+Breadcrumbs::for('sav_notes', function (BreadcrumbTrail $trail) {
+    $trail->parent('configuration');
+    $trail->push(trans_choice('app.sav_note.sav_note', 2));
+});
+
+

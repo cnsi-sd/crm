@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $manufacturer
  * @property string $pms_delay
  * @property string $manufacturer_warranty
- * @property string $gc_plus
- * @property boolean $gc_plus_delay
+ * @property boolean $gc_plus
+ * @property string $gc_plus_delay
  * @property string $hotline
  * @property string $brand_email
  * @property string $brand_information
@@ -27,7 +27,7 @@ class SavNote extends Model
     protected $fillable = [
         'manufacturer',
         'pms_delay',
-        'manufacturer_delay',
+        'manufacturer_warranty',
         'gc_plus',
         'gc_plus_delay',
         'hotline',
