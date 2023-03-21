@@ -266,6 +266,18 @@ return [
         'edit' => 'Modifier un canal',
     ],
     'sav_note' => [
-        'sav_note' => 'Fiche SAV fabriquant|Fiches SAV fabriquant'
+        'sav_note' => 'Fiche SAV fabriquant|Fiches SAV fabriquant',
+        'new' => 'Nouvelle fiche SAV fabriquant',
+        'edit' => 'Modifier fiche SAV fabriquant',
+        'delete' => 'Supprimer fiche SAV fabriquant',
+        'manufacturer' => 'Fabriquant',
+        'pms_delay' => 'Délai de PMS (Panne / Mise en service)',
+        'manufacturer_delay' => 'Garantie constructeur',
+        'gc_plus' => 'Contrat GCPlus',
+        'gc_plus_delay' => 'Délai pour réaliser contrat GCPlus',
+        'hotline' => 'Hotline',
+        'brand_email' => 'Email marque',
+        'brand_information' => 'Informations marque',
+        'regional_information' => 'Informations régionales',
     ]
 ];

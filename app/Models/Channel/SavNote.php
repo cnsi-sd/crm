@@ -2,7 +2,9 @@
 
 namespace App\Models\Channel;
 
+use Cnsi\Searchable\Trait\Searchable;
 use DateTime;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
@@ -18,8 +20,10 @@ use DateTime;
  * @property Datetime $created_at
  * @property Datetime $updated_at
  */
-class SavNote
+class SavNote extends Model
 {
+    use Searchable;
+
     protected $fillable = [
         'manufacturer',
         'pms_delay',
@@ -31,4 +35,23 @@ class SavNote
         'brand_information',
         'regional_information',
     ];
+
+
+
+    protected $searchable = [
+        'id',
+        'manufacturer',
+    ];
+
+    public function getShowRoute(): string
+    {
+        // TODO: Implement getShowRoute() method.
+    }
+
+    public function __toString(): string
+    {
+        // TODO: Implement __toString() method.
+    }
+
+
 }
