@@ -247,6 +247,8 @@ return [
         'select_channel' => 'Canaux autorisés',
         'show' => 'Prévisualisation',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'addTagList' => 'Ajouter une ligne de tags',
+        'select_tag' => 'Ajouter un tag',
     ],
 
     'recover_password' => [

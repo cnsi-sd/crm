@@ -67,16 +67,6 @@ function addListTagOnTicket(e) {
         divLine.id = "line-" + lineId;
         bodyCard.appendChild(divLine);
 
-        //create button to delete tag list
-        let buttonDeleteTaglist = document.createElement("button");
-        buttonDeleteTaglist.type = "button";
-        buttonDeleteTaglist.className = "deleteTaglist btn btn-danger";
-        buttonDeleteTaglist.setAttribute("data-ticket_id", ticket_id);
-        buttonDeleteTaglist.setAttribute("data-taglist_id", lineId);
-        buttonDeleteTaglist.innerText = "x";
-        $(buttonDeleteTaglist).on("click", deleteTagLists);
-        divLine.appendChild(buttonDeleteTaglist);
-
         //create select tag
         let selectTag = document.createElement("select");
         selectTag.name = "ticket-tags-" + lineId;
@@ -131,6 +121,7 @@ function saveTicketTicketTags(e) {
         buttonDeleteTag.className = "btn delete-tag";
         buttonDeleteTag.setAttribute("data-tag_id", tag_id);
         buttonDeleteTag.setAttribute("data-taglist_id", taglist_id);
+        buttonDeleteTag.setAttribute("data-ticket_id", e.target.getAttribute("data-ticket_id"));
         buttonDeleteTag.style.color = response.data.text_color;
 
         span.className = "tags-style"
@@ -142,9 +133,7 @@ function saveTicketTicketTags(e) {
     })
 }
 
-function deleteTagLists(e) {
-    let ticket_id = e.target.getAttribute("data-ticket_id");
-    let taglist_id = e.target.getAttribute("data-taglist_id");
+function deleteTagLists(ticket_id, taglist_id) {
     window.axios.post(url_delete_tagList, {
         ticket_id: ticket_id,
         taglist_id: taglist_id
@@ -156,11 +145,20 @@ function deleteTagLists(e) {
 function deleteTicketTag(e) {
     let tag_id = e.target.getAttribute('data-tag_id');
     let taglist_id = e.target.getAttribute("data-taglist_id");
+    let ticket_id = e.target.getAttribute("data-ticket_id");
     window.axios.post(url_delete_tag_on_ticket, {
         tag_id: tag_id,
         taglist_id: taglist_id
-    }).then(
-        e.target.parentNode.remove()
+    }).then(function (response){
+        console.log(response.data)
+        if (response.data){
+            e.target.parentNode.remove();
+            deleteTagLists(ticket_id, taglist_id)
+            e.target.parentNode.parentNode.parentNode.remove();
+        }
+        e.target.parentNode.remove();
+    }
+
     )
 }
 

@@ -194,7 +194,11 @@ class TicketController extends AbstractController
 
     public function delete_tag(Request $request) {
         $tag = Tag::find($request->input('tag_id'));
+        $isEmpty = false;
+        if ( $tag->taglists()->count() - 1 == 0)
+            $isEmpty = true;
         $tag->taglists()->detach($request->input('taglist_id'));
+        return $isEmpty;
     }
 
     public function delete_ThreadTagList(Request $request) {
