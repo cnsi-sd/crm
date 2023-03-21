@@ -55,35 +55,35 @@ class UserController extends AbstractController
             ->with('user', $user);
     }
 
-public function save_user(Request $request, User $user)
-{
-    // Validate request
-    $validation_rules = [
-        'firstname'     => ['required', 'string'],
-        'lastname'      => ['required', 'string'],
-        'email'         => ['nullable', 'email'],
-        'role'          => ['required', 'exists:' . Role::class . ',id'],
-    ];
-    if (!$user->exists) {
-        $validation_rules['password'] = ['required', Password::default()];
+    public function save_user(Request $request, User $user)
+    {
+        // Validate request
+        $validation_rules = [
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
+            'email' => ['nullable', 'email'],
+            'role' => ['required', 'exists:' . Role::class . ',id'],
+        ];
+        if (!$user->exists) {
+            $validation_rules['password'] = ['required', Password::default()];
+        }
+        $request->validate($validation_rules);
+
+        // Set name, email, phone number
+        $user->firstname = $request->input('firstname');
+        $user->lastname = $request->input('lastname');
+        $user->email = $request->input('email');
+        $user->role_id = $request->input('role');
+        $user->active = $request->input('active') === 'on';
+
+        // Set password
+        $password = $request->input('password');
+        if (!empty($password)) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        // Enregistrement
+        $user->save();
+
     }
-    $request->validate($validation_rules);
-
-    // Set name, email, phone number
-    $user->firstname = $request->input('firstname');
-    $user->lastname = $request->input('lastname');
-    $user->email = $request->input('email');
-    $user->role_id = $request->input('role');
-    $user->active = $request->input('active') === 'on';
-
-    // Set password
-    $password = $request->input('password');
-    if (!empty($password)) {
-        $user->password = Hash::make($request->input('password'));
-    }
-
-    // Enregistrement
-    $user->save();
-
-}
 }
