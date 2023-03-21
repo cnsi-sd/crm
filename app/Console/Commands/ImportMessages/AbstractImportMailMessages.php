@@ -157,7 +157,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
         if (in_array($email->senderAddress, config('email-import.email_blacklist')))
             return false;
 
-        if (!$this->isSpam($email))
+        if ($this->isSpam($email))
             return false;
 
         return true;
