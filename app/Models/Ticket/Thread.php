@@ -184,4 +184,11 @@ class Thread extends Model
         }
         return $numberOfUnreadMessages;
     }
+
+    public static function getThreads(): array
+    {
+        return self::query()->orderBy('id', 'ASC')
+            ->pluck('name', 'id')
+            ->toArray();
+    }
 }

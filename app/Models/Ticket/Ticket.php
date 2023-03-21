@@ -187,6 +187,7 @@ class Ticket extends Model
         }
 
         $columns[] = (new TableColumnBuilder())
+            ->setSearchable(true)
             ->setLabel(__('app.ticket.subjects'))
             ->setType(ColumnTypeEnum::TEXT)
             ->setCallback(function (Ticket $ticket) {
@@ -196,7 +197,9 @@ class Ticket extends Model
                 }
                 return $displayThreads;
             })
-            ->setKey('deadline')
+            ->setOptions(Thread::getThreads())
+            ->setKey('name')
+            ->setWhereKey('ticket_threads.name')
             ->setSortable(true);
 
         if ($mode != 'user') {
