@@ -77,7 +77,7 @@ abstract class AbstractEnum
             $not_translated_key = current(array_keys($keys));
         }
 
-        $enum_name = self::getChildClass()->__toString();
+        $enum_name = self::getChildClass()->getShortName();
         $translation_file = Str::snake($enum_name);
         $full_translation_key = 'enums/' . $translation_file . '.' . $not_translated_key;
 
