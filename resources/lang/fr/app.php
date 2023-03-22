@@ -279,7 +279,7 @@ return [
         'delete' => 'Supprimer fiche SAV fabriquant',
         'manufacturer' => 'Fabriquant',
         'pms_delay' => 'Délai de PMS (Panne / Mise en service)',
-        'manufacturer_delay' => 'Garantie constructeur',
+        'manufacturer_warranty' => 'Garantie constructeur',
         'gc_plus' => 'Contrat GCPlus',
         'gc_plus_delay' => 'Délai pour réaliser contrat GCPlus',
         'hotline' => 'Hotline',

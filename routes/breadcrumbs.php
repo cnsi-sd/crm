@@ -192,4 +192,15 @@ Breadcrumbs::for('sav_notes', function (BreadcrumbTrail $trail) {
     $trail->push(trans_choice('app.sav_note.sav_note', 2));
 });
 
+Breadcrumbs::for('create_sav_note', function (BreadcrumbTrail $trail) {
+    $trail->parent('sav_notes');
+    $trail->push(trans_choice('app.sav_note.new', 2));
+});
+
+Breadcrumbs::for('edit_sav_note', function (BreadcrumbTrail $trail) {
+    $trail->parent('sav_notes');
+    $trail->push(trans_choice('app.sav_note.edit', 2));
+});
+
+
 

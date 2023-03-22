@@ -59,7 +59,7 @@ class savNoteController extends AbstractController
             ->with('table', $table);
     }
 
-    public function edit($request, ?savNote $savNote)
+    public function edit(Request $request, ?savNote $savNote)
     {
         if (!$savNote)
             $savNote = new savNote();
@@ -71,11 +71,11 @@ class savNoteController extends AbstractController
             return redirect()->route('show_sav_note', $savNote->id);
         }
 
-        return view('configuration.savNotes.edit')
+        return view('configuration.savNote.edit')
             ->with('savNote', $savNote);
     }
 
-    public function savSavNote(Request $request, SavNote $savNote): void
+    public function saveSavNote(Request $request, SavNote $savNote): void
     {
         $request->validate([
             'manufacturer'          => ['required', 'string', 'max:100'],
@@ -88,5 +88,25 @@ class savNoteController extends AbstractController
             'brand_information'     => ['nullable', 'string', 'max:255'],
             'regional_information'  => ['nullable', 'string', 'max:255'],
         ]);
+
+        $savNote->manufacturer          = $request->input('manufacturer');
+        $savNote->pms_delay             = $request->input('pms_delay');
+        $savNote->manufacturer_warranty = $request->input('manufacturer_warranty');
+        $savNote->gc_plus               = $request->input('gc_plus') == 'on';
+        $savNote->gc_plus_delay         = $request->input('gc_plus_delay');
+        $savNote->hotline               = $request->input('hotline');
+        $savNote->brand_email           = $request->input('brand_email');
+        $savNote->brand_information     = $request->input('brand_information');
+        $savNote->regional_information  = $request->input('regional_information');
+
+        $savNote->save();
+
+
+    }
+
+    public function show(Request $request, SavNote $savNote): View
+    {
+        return view('configuration.savNotes.show')
+            ->with('savNote', $savNote);
     }
 }

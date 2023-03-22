@@ -57,6 +57,8 @@
                                     <textarea
                                         name="brand_information"
                                         class="form-control form-control-sm"
+                                        cols="125"
+                                        rows="10"
                                     >
                                         {{ old('brand_information', $savNote->brandInformation ?? '') }}
                                     </textarea>
@@ -65,30 +67,26 @@
 
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label for="gc_plus">
-                                        {{__('app.sav_note.gc_plus')}}
-                                        <span class="required_field">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="gc_plus"
-                                        class="form-control form-control-sm"
-                                        value="{{ old('gc_plus', $savNote->gcPlus ?? '') }}"
-                                        required
-                                    />
+                                <div class="form-group mt-4 mb-3">
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" class="form-check-input" id="gc_plus_checkbox" name="gc_plus" @if($savNote->gcPlus) checked @endif>
+                                        <label class="form-check-label" for="gc_plus">
+                                            {{ __('app.sav_note.gc_plus') }}
+                                            <span class="required_field">*</span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
+                                <div class="form-group mb-3" id="gc_plus_delay">
                                     <label for="gc_plus_delay">
                                         {{__('app.sav_note.gc_plus_delay')}}
-                                        <span class="required_field">*</span>
+                                        <span class="required_field" hidden="true">*</span>
                                     </label>
                                     <input
                                         type="text"
                                         name="gc_plus_delay"
                                         class="form-control form-control-sm"
                                         value="{{ old('gc_plus_delay', $savNote->gcPlusDelay ?? '') }}"
-                                        required
+                                        disabled
                                     />
                                 </div>
                                 <div class="form-group mb-3">
@@ -123,6 +121,8 @@
                                         <textarea
                                             name="regional_information"
                                             class="form-control form-control-sm"
+                                            cols="125"
+                                            rows="6"
                                         >
                                         {{ old('regional_information', $savNote->regionalInformation ?? '') }}
                                     </textarea>
@@ -130,7 +130,7 @@
                                 </div>
                             </div>
                             <div class="d-grid gap-2 mt-3">
-                                <button type="submit" name="save" class="btn btn-primary btn-block">
+                                <button type="submit" name="save_sav_note" class="btn btn-primary btn-block">
                                     {{ __('app.save') }}
                                 </button>
                             </div>
@@ -140,4 +140,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script-bottom')
+    <script src="{{ Vite::asset('resources/js/savNotes.js') }}"></script>
 @endsection

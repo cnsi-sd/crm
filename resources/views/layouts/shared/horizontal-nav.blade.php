@@ -43,7 +43,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
                     <!-- item-->
-                    <a href="{{ route('my_account') }}" class="dropdown-item notify-item">
+{{--                    <a href="{{ route('my_account') }}" class="dropdown-item notify-item">--}}
                         <i class="mdi mdi-account-circle me-1"></i>
                         <span>{{__('app.user.my_account')}}</span>
                     </a>

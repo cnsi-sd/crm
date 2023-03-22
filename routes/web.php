@@ -92,8 +92,9 @@ Route::prefix('/')->group(function () {
         Route::prefix('sav_notes')->group(function () {
             Route::match(['get', 'post'], '', [savNoteController::class, 'list'])->name('sav_notes');
             Route::match(['get', 'post'], 'new', [SavNoteController::class, 'edit'])->name('create_sav_note'); // todo implement permissions
-            Route::match(['get', 'post'], '{savNote}', [SavNoteController::class, 'edit'])->name('edit_sav_note');
-            Route::match(['get', 'post'], 'delete', [savNoteController::class, 'delete'])->name('delete_sav_notes');
+            Route::match(['get', 'post'], '{savNote}/edit', [SavNoteController::class, 'edit'])->name('edit_sav_note');
+            Route::match(['get', 'post'], '{savNote}/delete', [savNoteController::class, 'delete'])->name('delete_sav_notes');
+            Route::match(['get', 'post'], '{savNote}', [SavNoteController::class, 'show'])->name('show_sav_note');
         });
         Route::prefix('misc')->group(function () {
             Route::match(['get', 'post'], '', [MiscController::class, 'home'])->name('misc_home')->can('misc_config');
