@@ -177,7 +177,7 @@ class TicketController extends AbstractController
                     'ticket_id' => $thread->id,
                     'user_id' => $request->user()->id,
                     'content' => $request->input('ticket-comments-content'),
-                    'displayed' => 1,
+                    'displayed' => 1, // todo HERE !!
                     'type' => $request->input('ticket-comment-type'),
                 ]);
             }
