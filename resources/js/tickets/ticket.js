@@ -4,6 +4,13 @@ $(document).ready(function () {
         $.get(route);
     });
 
+    $('#default_answer_select').on('change', function () {
+        if($(this).find(':selected').data("answer-content")) {
+            let answerContent = $(this).find(':selected').data("answer-content")
+            tinymce.get('message_to_customer').insertContent("<br/>" + answerContent);
+        }
+    });
+
     let externalOrderInfoLoaded = false;
     $('#order-info-tab').click(function () {
         if(externalOrderInfoLoaded)

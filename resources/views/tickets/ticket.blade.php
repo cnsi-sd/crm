@@ -197,7 +197,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <label>{{ __('app.ticket.default_replies') }}</label>
+                                <hr/>
+                                <div class="default_answer row">
+                                    <div class="col">
+                                        <label>{{ __('app.ticket.default_replies') }}</label>
+                                    </div>
+                                    <div class="col">
+                                        <select id="default_answer_select" name="default_answer_select" class="form-control form-select">
+                                            <option>---</option>
+                                            @foreach($ticket->channel->defaultAnswers()->get() as $defaultAnswer)
+                                                <option value="{{ $defaultAnswer->id }}" data-answer-content="{{ $defaultAnswer->content }}">
+                                                    {{ $defaultAnswer->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @include('tickets.parts.messages')
