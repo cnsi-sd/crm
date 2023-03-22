@@ -196,7 +196,8 @@ class Ticket extends Model
                 }
                 return $displayThreads;
             })
-            ->setKey('deadline')
+            ->setKey('name')
+            ->setWhereKey('ticket_threads.name')
             ->setSortable(true);
 
         if ($mode != 'user') {
