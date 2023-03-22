@@ -291,6 +291,7 @@ return [
         'delete_confirm' => 'Supprimer la fiche SAV ?',
         'deleted' => 'Fiche SAV fabricant supprimée',
         'saved' => 'Fiche SAV fabricant enregistrée',
-        'show' => 'Fiche SAV fabricant'
+        'show' => 'Fiche SAV fabricant',
+        'short_desc' => 'Fiche SAV Fab.'
     ]
 ];

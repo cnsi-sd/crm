@@ -45,12 +45,12 @@ class SavNote extends Model
 
     public function getShowRoute(): string
     {
-        // TODO: Implement getShowRoute() method.
+        return 'show_sav_note';
     }
 
     public function __toString(): string
     {
-        // TODO: Implement __toString() method.
+        return __('app.sav_note.short_desc') . ' - ' . $this->manufacturer;
     }
 
 
