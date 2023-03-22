@@ -13,7 +13,7 @@
                             </div>
                         @endif
                         <div class="col-5 text-end">
-                            <a href="{{ env('PRESTASHOP_URL') }}index.php?fc=module&module=bmsmagentogateway&controller=order_redirect&reference="
+                            <a href="{{ $external_link }}{{ $order['id_order'] }}"
                                type="button" class="btn btn-primary rounded-pill btn-sm" target="_blank" id="ext-order-link">{{ __('app.order.external_link') }} <i class="uil-external-link-alt"></i></a>
                         </div>
                     </div>
