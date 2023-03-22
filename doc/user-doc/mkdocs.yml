@@ -1,0 +1,29 @@
+site_name: CRM
+
+nav:
+  - Introduction : introduction/index.md
+  - Mon compte : introduction/account.md
+  - Bases:
+      - Qu'est ce qu'un ticket ?: bases/qu-est-ce-qu-un-ticket.md
+      - Trouver un ticket: bases/trouver-un-ticket.md
+      - Travailler sur un ticket: bases/travailler-sur-un-ticket.md
+  - Fonctionnalités:
+      - Info commande: fonctionnalités/info-commande.md
+      - Procédure SAV: fonctionnalités/procedure-sav.md
+      - Tags : fonctionnalités/tags.md
+      - Commentaires privés: fonctionnalités/commentaires-privés.md
+      - Relances automatiques: fonctionnalités/relances-automatiques.md
+      - Documents: fonctionnalités/documents.md
+  - Extras :
+      - Variables : extras/variables.md
+      - Fiches SAV fabricants : extras/fiches-sav-fabricants.md
+
+theme:
+  name: readthedocs
+  locale: fr
+
+markdown_extensions:
+  # Python-Markdown admonition : boxes of different types : attention, caution, danger, error, hint, important, note, tip, and warning; see : https://python-markdown.github.io/extensions/admonition/
+  - admonition
+  - attr_list
+  - def_list

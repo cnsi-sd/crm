@@ -18,6 +18,10 @@ class ManomanoSendMessage extends AbstractSendMessage
      */
     public function sendMessage(): void
     {
+        // If we are not in production environment, we don't want to send mail
+        if (env('APP_ENV') != 'production')
+            return;
+
         // Load channel
         $this->channel = Channel::getByName(ChannelEnum::MANOMANO_COM);
         $this->logger = new Logger('send_message/'

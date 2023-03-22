@@ -4,7 +4,12 @@ namespace App\Console\Commands\ImportMessages\Beautifier;
 
 class AmazonBeautifierMail
 {
-    public static function getCustomerMessage($mail_html) {
+    /**
+     * @param $mail_html
+     * @return string
+     */
+    public static function getCustomerMessage($mail_html): string
+    {
         $get_from = '<h4 style="color:black"><strong>Message: </strong></h4>';
         $cursor_start_reading = strpos($mail_html, $get_from);
         $new_html = self::getHtmlElement('table', $mail_html, $cursor_start_reading);
@@ -29,6 +34,32 @@ class AmazonBeautifierMail
     }
 
 
+    /**
+     * @param $email
+     * @return array
+     */
+    public static function getReturnInformation($email): array
+    {
+
+        $additional_comment = '';
+
+        if (preg_match("'Transporteur du retour&#xa0;: (?<carrier>.*)<br>'i", $email, $data)) {
+            $carrier = $data['carrier'];
+
+            $tracking_number = '';
+            if (preg_match("'Numéro de suivi&#xa0;: (?<tracking>)<br>'i", $email, $data))
+                $tracking_number = $data['tracking'];
+
+            $additional_comment_body = "Retour automatique Amazon<br>Transporteur: %s<br>Numéro de suivi %s<br>";
+
+            $additional_comment = sprintf($additional_comment_body, $carrier, $tracking_number);
+        }
+
+
+        $default_data['additional_comment'] = $additional_comment;
+        return $default_data;
+    }
+
 
     /**
      * From an HTML text, try to get an element by tag name from specified position
@@ -39,7 +70,8 @@ class AmazonBeautifierMail
      *
      * @return boolean|string
      */
-    protected static function getHtmlElement($tag, $html, $cursor_start_reading = 0) {
+    protected static function getHtmlElement(string $tag, string $html, int $cursor_start_reading = 0): bool|string
+    {
         $open_tag = '<' . $tag;
 
         $cursor_open_tag = strpos($html, $open_tag, $cursor_start_reading);
@@ -61,7 +93,8 @@ class AmazonBeautifierMail
      *
      * @return boolean|integer
      */
-    protected static function getPositionClosingTag($tag, $html, $position_start, $depth = 0) {
+    protected static function getPositionClosingTag(string $tag, string $html, int $position_start, int $depth = 0): bool|int
+    {
         $open_tag = '<' . $tag;
         $closing_tag = '</' . $tag . '>';
 
@@ -97,7 +130,8 @@ class AmazonBeautifierMail
      *
      * @return string
      */
-    protected static function cleanHtml($html) {
+    protected static function cleanHtml(string $html): string
+    {
         $res_strip_tag = preg_replace('/<[^>]+>/', "<br/>", $html);
         $res_str_replace = str_replace("\n", "<br/>", $res_strip_tag);
         $res_str_replace = str_replace("\t", "<br/>", $res_str_replace);

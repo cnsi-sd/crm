@@ -40,8 +40,7 @@ php8.1 composer.phar install
 php8.1 artisan key:generate
 npm install
 npm run dev
-php8.1 artisan migrate
-php8.1 artisan db:seed --class=DevSeeder
+php8.1 artisan migrate --seed
 php8.1 artisan db:safe
 php8.1 artisan serve
 ```
@@ -56,4 +55,17 @@ Dans le fichier suivant `.git/config` remplacer `filemode = true` par `filemode 
 # Mailhog
 Outil qui fait un faux serveur SMTP en local. [Installation et configuration](https://docs.google.com/document/d/1ldrS1BUNCsOweyQBWgi59p-xYSW8J0Gz10Wjs-5hknM/edit)
 
+# Documentation MkDocs
+La documentation est écrite en Markdown et est compilée avec [MkDocs](https://www.mkdocs.org/). 
+## Installation
+```bash
+sudo apt update
+sudo apt install python3 python3-pip -y
+pip install mkdocs
+```
+## Serveur de développement
+```bash
+cd doc/user-doc
+mkdocs serve
+```
 

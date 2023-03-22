@@ -89,7 +89,8 @@ return [
         'edited' => 'Utilisateur modifié',
         'saved' => 'Utilisateur enregistré',
         'deleted' => 'Utilisateur supprimé',
-        'name' => 'Nom complet',
+        'firstname' => 'Prénom',
+        'lastname' => 'Nom',
         'email' => 'Email',
         'password' => 'Mot de passe',
         'password_change' => 'Changer de mot de passe',
@@ -151,6 +152,8 @@ return [
         'supplier' => 'Fournisseur',
         'reference' => 'Référence :',
         'ean' => 'EAN :',
+        'external_link' => 'Accès backoffice',
+        'download_invoice' => 'Télécharger facture',
     ],
 
     'login' => [
@@ -161,9 +164,18 @@ return [
         'remember_me' => 'Se souvenir de moi',
     ],
 
-    'configuration' => [
-        'configuration' => 'Configuration',
+    'config' => [
+        'config' => 'Configuration',
         'channel' => 'Canal|Canaux',
+
+        'misc' => [
+            'misc' => 'Divers',
+            'saved' => 'Configuration enregistrée',
+            'variables' => 'Variables',
+
+            'incidents' => 'Incidents',
+            'incident_tag' => 'Tag Incident',
+        ],
     ],
 
     'bot' => [
@@ -196,11 +208,6 @@ return [
 
             'late_order_tag' => 'Tag retard de préparation',
         ],
-    ],
-
-    'variable' => [
-        'variable' => 'Variable|Variables',
-        'saved' => 'Variables enregistrées'
     ],
 
     'defaultAnswer' => [

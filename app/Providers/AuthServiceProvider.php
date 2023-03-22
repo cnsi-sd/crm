@@ -50,8 +50,8 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasPermission(PermissionEnum::BOT_CONFIG);
         });
 
-        Gate::define('variables_config', function (User $user) {
-            return $user->hasPermission(PermissionEnum::VARIABLES_CONFIG);
+        Gate::define('misc_config', function (User $user) {
+            return $user->hasPermission(PermissionEnum::MISC_CONFIG);
         });
     }
 }

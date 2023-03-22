@@ -4,7 +4,6 @@ namespace App\Jobs\SendMessage;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\MessageVariable;
-use App\Jobs\SendMail\AmazonSendMessage;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Message;
 use Exception;
@@ -32,7 +31,7 @@ abstract class AbstractSendMessage implements ShouldQueue
     final public function handle(): void
     {
         $this->replaceVariablesInMessages();
-        $this->sendMessage();
+//        $this->sendMessage();
     }
 
     private function replaceVariablesInMessages()

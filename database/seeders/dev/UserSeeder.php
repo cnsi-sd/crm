@@ -18,7 +18,8 @@ class UserSeeder extends Seeder
          User::firstOrCreate(
              [ 'email' => 'john@cnsi-sd.fr'],
              [
-                 'name' => 'John Doe',
+                 'firstname' => 'John',
+                 'lastname' => 'Doe',
                  'password' => Hash::make('password'),
                  'active' => true,
                  'role_id' => 1,

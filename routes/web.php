@@ -6,7 +6,7 @@ use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\Configuration\savNoteController;
 use App\Http\Controllers\Configuration\TagsController;
-use App\Http\Controllers\Configuration\VariableController;
+use App\Http\Controllers\Configuration\MiscController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
@@ -89,12 +89,16 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice')->can('bot_config');
             Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information')->can('bot_config');
         });
-        Route::match(['get', 'post'], 'variables', [VariableController::class, 'config'])->name('variables_config')->can('variables_config');
         Route::prefix('sav_notes')->group(function () {
             Route::match(['get', 'post'], '', [savNoteController::class, 'list'])->name('sav_notes');
             Route::match(['get', 'post'], 'new', [SavNoteController::class, 'edit'])->name('create_sav_note'); // todo implement permissions
             Route::match(['get', 'post'], '{savNote}', [SavNoteController::class, 'edit'])->name('edit_sav_note');
             Route::match(['get', 'post'], 'delete', [savNoteController::class, 'delete'])->name('delete_sav_notes');
+        });
+        Route::prefix('misc')->group(function () {
+            Route::match(['get', 'post'], '', [MiscController::class, 'home'])->name('misc_home')->can('misc_config');
+            Route::match(['get', 'post'], 'variables', [MiscController::class, 'variables'])->name('variables_config')->can('misc_config');
+            Route::match(['get', 'post'], 'incidents', [MiscController::class, 'incidents'])->name('incidents_config')->can('misc_config');
         });
     });
     // CALL AJAX

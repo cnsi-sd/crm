@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.ticket-comments .card-header').click(function () {
+    $('.thread-comments .card-header').click(function () {
         const route = $(this).data("toggle-comment-route")
         $.get(route);
     });
@@ -33,6 +33,15 @@ $(document).ready(function () {
             externalOrderInfoLoaded = true;
         });
     })
+
+    var attachmentIndex = 1;
+    $('#addAttachment').on("click", function () {
+        $( ".attachment_bloc" ).first().clone().appendTo( ".attachments" );
+        attachmentIndex = attachmentIndex+1;
+        $( ".attachment_type" ).last().attr('name', "attachment_type_"+attachmentIndex);
+        $( ".attachment_file" ).last().attr('name', "attachment_file_"+attachmentIndex);
+        $( ".attachment_file" ).last().val('');
+    });
 })
 
 let bodyCard = document.getElementById('card-body-tag');
