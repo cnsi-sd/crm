@@ -39,6 +39,8 @@ return [
     'order_info' => 'Info commande',
     'product_return' => 'Retour produits',
     'customer_service_process' => 'Procédure SAV',
+    'confirm' => 'Confimer',
+    'cancel' => 'Annuler',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -286,5 +288,9 @@ return [
         'brand_email' => 'Email marque',
         'brand_information' => 'Informations marque',
         'regional_information' => 'Informations régionales',
+        'delete_confirm' => 'Supprimer la fiche SAV ?',
+        'deleted' => 'Fiche SAV fabricant supprimée',
+        'saved' => 'Fiche SAV fabricant enregistrée',
+        'show' => 'Fiche SAV fabricant'
     ]
 ];

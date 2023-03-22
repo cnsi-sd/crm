@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Configuration;
 
 use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
+use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Http\Controllers\AbstractController;
@@ -11,7 +12,6 @@ use App\Models\Channel\SavNote;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 
 
 class savNoteController extends AbstractController
@@ -36,7 +36,7 @@ class savNoteController extends AbstractController
                 ->setKey('manufacturer'),
             (new TableColumnBuilder())
                 ->setLabel( __('app.sav_note.gc_plus'))
-                ->setType(ColumnTypeEnum::TEXT)
+                ->setType(ColumnTypeEnum::BOOLEAN)
                 ->setAlign(AlignEnum::CENTER)
                 ->setKey('cg_plus'),
             (new TableColumnBuilder())
@@ -44,6 +44,11 @@ class savNoteController extends AbstractController
                 ->setType(ColumnTypeEnum::TEXT)
                 ->setAlign(AlignEnum::CENTER)
                 ->setKey('hotline'),
+            (new TableColumnBuilder())
+                ->setLabel( __('app.sav_note.brand_email'))
+                ->setType(ColumnTypeEnum::TEXT)
+                ->setAlign(AlignEnum::CENTER)
+                ->setKey('brand_email'),
             TableColumnBuilder::actions()
                 ->setCallback(function (SavNote $savNote) {
                     return view('configuration.savNote.inline_table_actions')
@@ -67,7 +72,7 @@ class savNoteController extends AbstractController
         if ($request->exists('save_sav_note')) {
             $this->saveSavNote($request, $savNote);
 
-//            Alert::toastSuccess(__('app.sav_note.saved'));
+            Alert::toastSuccess(__('app.sav_note.saved'));
             return redirect()->route('show_sav_note', $savNote->id);
         }
 
@@ -105,5 +110,12 @@ class savNoteController extends AbstractController
     {
         return view('configuration.savNote.show')
             ->with('savNote', $savNote);
+    }
+
+    public function delete(Request $request, SavNote $savNote)
+    {
+        $savNote->delete();
+        Alert::toastSuccess(__('app.sav_note.deleted'));
+        return redirect()->route('sav_notes');
     }
 }

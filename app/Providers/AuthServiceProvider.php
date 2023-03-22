@@ -14,6 +14,7 @@ use App\Models\User\User;
 use App\Policies\Configuration\ChannelPolicy;
 use App\Policies\Configuration\DefaultAnswerPolicy;
 use App\Policies\Configuration\RevivalPolicy;
+use App\Policies\Configuration\SavNotePolicy;
 use App\Policies\Configuration\TagPolicy;
 use App\Policies\Settings\RolePolicy;
 use App\Policies\Settings\UserPolicy;

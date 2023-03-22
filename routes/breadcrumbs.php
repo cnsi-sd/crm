@@ -2,6 +2,7 @@
 
 // https://github.com/diglactic/laravel-breadcrumbs
 
+use App\Models\Channel\SavNote;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 use Illuminate\Support\Facades\Auth;
@@ -189,23 +190,24 @@ Breadcrumbs::for('search', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('sav_notes', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(trans_choice('app.sav_note.sav_note', 2));
+    $trail->push(trans_choice('app.sav_note.sav_note', 2), route('sav_notes'));
 });
 
 Breadcrumbs::for('create_sav_note', function (BreadcrumbTrail $trail) {
     $trail->parent('sav_notes');
-    $trail->push(trans_choice('app.sav_note.new', 1));
+    $trail->push(__('app.sav_note.new'));
 });
 
-Breadcrumbs::for('edit_sav_note', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('show_sav_note', function (BreadcrumbTrail $trail, SavNote $savNote) {
     $trail->parent('sav_notes');
-    $trail->push(trans_choice('app.sav_note.edit', 1));
+    $trail->push($savNote->manufacturer, route('show_sav_note', ['savNote', $savNote]));
 });
 
-Breadcrumbs::for('show_sav_note', function (BreadcrumbTrail $trail) {
-    $trail->parent('sav_notes');
-    $trail->push(trans_choice('app.sav_note.show', 1));
+Breadcrumbs::for('edit_sav_note', function (BreadcrumbTrail $trail, SavNote $savNote) {
+    $trail->parent('show_sav_note', $savNote); // todo vérifier le lien
+    $trail->push(__('app.edit'), route('edit_sav_note', ['savNote', $savNote]));
 });
+
 
 
 

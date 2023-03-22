@@ -8,16 +8,16 @@
                     <div>
                         <i class="uil-document"></i> {{ trans_choice('app.sav_note.sav_note', 1) }}
                         - <span class="text-black"> {{ $savNote->manufacturer }}</span>
+                        @can('edit', $savNote)
+                            <a href="{{ route('edit_sav_note', [$savNote])}}"
+                               class="btn btn-primary btn-sm float-end mt-n1"
+                               title="{{ __('app.edit') }}"
+                            >
+                                <i class="uil-edit"></i>
+                                {{ __('app.sav_note.edit') }}
+                            </a>
+                        @endcan
                     </div>
-{{--                    @can('edit', $productReturn)--}}
-{{--                        <a href="{{ route('edit_product_return', [$productReturn])}}"--}}
-{{--                           class="btn btn-primary btn-sm float-end"--}}
-{{--                           title="{{ __('app.edit') }}"--}}
-{{--                        >--}}
-{{--                            <i class="uil-edit"></i>--}}
-{{--                            {{ __('app.product_return.edit') }}--}}
-{{--                        </a>--}}
-{{--                    @endcan--}}
                 </div>
                 <div class="card-body">
                     <table class="table mb-3">
@@ -58,7 +58,6 @@
                             <td class="table-active text-end">{{ __('app.sav_note.regional_information') }}</td>
                             <td style="word-break:break-word">{!! nl2br($savNote->regional_information) !!}</td>
                         </tr>
-
                         </tbody>
                     </table>
                 </div>

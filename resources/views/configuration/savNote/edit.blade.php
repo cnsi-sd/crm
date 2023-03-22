@@ -1,4 +1,4 @@
-@extends('layouts.horizontal', ["page_title"=> isset($savNote->id) ? __('app.save_note.new') : __('app.sav_note.edit')])
+@extends('layouts.horizontal', ["page_title"=> isset($savNote->id) ? __('app.sav_note.edit') : __('app.sav_note.new')])
 
 @section('content')
     <div class="container-fluid">
@@ -6,6 +6,19 @@
             <div class="card-header">
                 <div class="card-title">
                     {{ trans_choice('app.sav_note.sav_note', 1) }}
+                    @if(isset($savNote->id))
+                        @can('delete', $savNote)
+                            <a
+                                class="btn btn-outline-danger btn-sm float-end"
+                                data-confirm="{{ __('app.sav_note.delete_confirm') }}"
+                                target="_blank"
+                                href="{{ route('delete_sav_note', ['savNote' => $savNote]) }}"
+                            >
+                                <i class="uil-trash"></i>
+                                {{ __('app.delete') }}
+                            </a>
+                        @endcan
+                    @endif
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ isset($savNote->id) ? route('edit_sav_note', [$savNote->id]) : route('create_sav_note') }}">
