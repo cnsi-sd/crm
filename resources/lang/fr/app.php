@@ -154,6 +154,7 @@ return [
         'ean' => 'EAN :',
         'external_link' => 'Accès backoffice',
         'download_invoice' => 'Télécharger facture',
+        'max_shipment_date' => 'Date max d\'expédition',
     ],
 
     'login' => [
