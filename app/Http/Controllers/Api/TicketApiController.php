@@ -5,44 +5,40 @@ namespace App\Http\Controllers\Api;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Ticket;
-use Cnsi\Logger\Logger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Exception;
 
-class TicketApiController
+class TicketApiController extends AbstractApiController
 {
-    protected Logger $logger;
+    protected $logger_channel = 'api/in/ticket/savProcessComplete.log';
     public function savProcessComplete(Request $request, string $token, Ticket $ticket) : JsonResponse
     {
         try {
-            $this->logger = new Logger('api/in/ticket/savProcessComplete.log', true, true);
             $this->logger->info('--- START : updating ticket ' . $ticket->id . ' after sav process completed by customer ---');
             if($token === env('SAVPROCESS_CRM_TOKEN')) {
                 $ticket->deadline = date('Y-m-d');
                 $ticket->state = TicketStateEnum::WAITING_ADMIN;
-                //TODO $tagId = setting('savprocess.processcomplete.tag_id');
-                $tagId = env('SAVPROCESS_CRM_PROCESSCOMPLETE_TAG_ID');
+                $tagId = setting('savprocesscomplete_tag_id');
                 $tag = Tag::findOrFail($tagId);
                 $ticket->addTag($tag);
                 $this->stopTicketRevival($ticket);
                 $ticket->save();
                 $this->logger->info('--- DONE ---');
-                return response()->json(['status' => 'success']);
+                return $this->message('Ticket Updated', 200, ['status' => 'success']);
             } else {
                 $this->logger->info('--- TOKEN NOT DEFINED ---');
-                return response()->json(['status' => 'error', 'error' => 'Token not defined']);
+                return $this->message('Token not defined', 500, ['status' => 'error']);
             }
         } catch (Exception $e) {
             $this->logger->error($e->getMessage(), $e);
-            return response()->json(['status' => 'error', 'error' => $e]);
+            return $this->message('Internal Server Error', 500, ['status' => 'error']);
         }
     }
 
     public function stopTicketRevival(Ticket $ticket)
     {
-        //TODO $revivalIdToDelete = setting('savprocess.delete_revival.revival_ids');
-        $revivalIdToDelete = explode(",",env('SAVPROCESS_CRM_DELETE_REVIVAL_IDS'));
+        $revivalIdToDelete = explode(',',setting('savprocess_stop_revival_ids'));
         foreach ($ticket->threads as $thread) {
             if(in_array($thread->revival_id, $revivalIdToDelete)) {
                 $thread->revival_id = null;
