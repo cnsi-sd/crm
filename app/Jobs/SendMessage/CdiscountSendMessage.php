@@ -26,6 +26,10 @@ class CdiscountSendMessage extends AbstractSendMessage
      */
     public function sendMessage(): void
     {
+        // If we are not in production environment, we don't want to send mail
+        if (env('APP_ENV') != 'production')
+            return;
+
         $client = new ClientCdiscount(env('CDISCOUNT_USERNAME'), env('CDISCOUNT_PASSWORD'));
         $discussion = new DiscussionsApi($client, env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
 

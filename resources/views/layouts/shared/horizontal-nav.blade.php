@@ -5,10 +5,10 @@
         <!-- LOGO -->
         <a href="" class="topnav-logo">
             <span class="topnav-logo-lg">
-                <img src="{{ Vite::asset('resources/images/logo-light.png') }}" alt="" height="16">
+                <img src="{{ Vite::asset('resources/images/logo.svg') }}" alt="" height="40">
             </span>
             <span class="topnav-logo-sm">
-                <img src="{{ Vite::asset('resources/images/logo_sm_dark.png') }}" alt="" height="16">
+                <img src="{{ Vite::asset('resources/images/favicon.svg') }}" alt="" height="30">
             </span>
         </a>
 
@@ -37,12 +37,13 @@
                         <img src="{{ Vite::asset('resources/images/users/avatar.png') }}" alt="user-image" class="rounded-circle">
                     </span>
                     <span>
-                    <span class="account-user-name">{{ Auth::user()->name }}</span>
+                        <span class="account-user-name">{{ Auth::user()->__toString() }}</span>
+                        <span class="account-position">{{ Auth::user()->role->name }}</span>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{ route('my_account') }}" class="dropdown-item notify-item">
                         <i class="mdi mdi-account-circle me-1"></i>
                         <span>{{__('app.user.my_account')}}</span>
                     </a>

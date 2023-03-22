@@ -180,7 +180,7 @@ class Ticket extends Model
                 ->setType(ColumnTypeEnum::SELECT)
                 ->setOptions(User::getUsersNames())
                 ->setCallback(function (Ticket $ticket) {
-                    return $ticket->user->name;
+                    return $ticket->user->__toString();
                 })
                 ->setKey('user_id')
                 ->setSortable(true);
@@ -294,6 +294,17 @@ class Ticket extends Model
             CrmDocumentTypeEnum::PRODUCT_PHOTO,
             CrmDocumentTypeEnum::OTHER,
         ];
+    }
+
+    public function hasTag(Tag $tag): bool
+    {
+        foreach($this->tagLists as $tagList) {
+            $tagExists = $tagList->tags()->where('tags.id', $tag->id)->exists();
+            if($tagExists)
+                return true;
+        }
+
+        return false;
     }
 
     public function addTag(Tag $tag, ?TagList $tagList = null)

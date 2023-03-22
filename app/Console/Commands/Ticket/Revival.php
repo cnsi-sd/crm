@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Revival;
+namespace App\Console\Commands\Ticket;
 
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
@@ -16,23 +16,21 @@ use App\Jobs\SendMessage\MetroSendMessage;
 use App\Jobs\SendMessage\RueducommerceSendMessage;
 use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
+use App\Jobs\SendSMS\SMS;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
-use \App\Jobs\SendSMS\SMS;
 use Cnsi\Logger\Logger;
-use DateInterval;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Twilio\Exceptions\ConfigurationException;
 use Twilio\Exceptions\TwilioException;
 
-class RevivalCommand extends Command
+class Revival extends Command
 {
-    protected $signature = 'ticket:revival:send';
-    protected $description = 'Send revival on eligible threads';
+    protected $signature = 'ticket:revival';
+    protected $description = 'Send revivals on eligible threads';
 
     protected Logger $logger;
 

@@ -1,4 +1,4 @@
-@extends('layouts.horizontal', ["page_title"=> trans_choice('app.configuration.channel', 1)])
+@extends('layouts.horizontal', ["page_title"=> trans_choice('app.config.channel', 1)])
 
 @section('content')
     <div class="container-fluid">
@@ -8,7 +8,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            {{ trans_choice('app.configuration.channel', 1) }} #{{ $channel->id }}
+                            {{ trans_choice('app.config.channel', 1) }} #{{ $channel->id }}
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-3">
@@ -28,9 +28,11 @@
                                 <label for="ext_names">
                                     {{ __('app.channel.ext_names') }}
                                 </label>
-                                <select id="ext_names" name="ext_names[]" class="form-control form-control-sm form-select" multiple>
+                                <select id="ext_names" name="ext_names[]"
+                                        class="form-control form-control-sm form-select" multiple>
                                     @foreach($ext_channels as $ext_channel)
-                                        <option value="{{ $ext_channel }}" @selected(in_array($ext_channel, $channel->ext_names))>
+                                        <option
+                                            value="{{ $ext_channel }}" @selected(in_array($ext_channel, $channel->ext_names))>
                                             {{ $ext_channel }}
                                         </option>
                                     @endforeach
@@ -47,7 +49,8 @@
                                 >
                                     <option value="">-- {{trans_choice('app.ticket.owner', 1)}} --</option>
                                     @foreach(\App\Models\User\User::all() as $user)
-                                        <option value="{{$user->id}}" @if($channel->user_id === $user->id) selected @endif>{{$user->name}}</option>
+                                        <option value="{{$user->id}}"
+                                                @if($channel->user_id === $user->id) selected @endif>{{$user->__toString()}}</option>
                                     @endforeach
                                 </select>
                             </div>

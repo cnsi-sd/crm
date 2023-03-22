@@ -16,11 +16,9 @@ return new class extends Migration
         Schema::rename('channel_revivals', 'channel_revival');
     }
 
-    /*
+
     public function down()
     {
-        Schema::table('many_on_rvival_channel', function (Blueprint $table) {
-            //
-        });
-    }*/
+        Schema::rename('channel_revival', 'channel_revivals');
+    }
 };

@@ -60,6 +60,13 @@ class Order extends Model
         return $this->_prestashopOrders;
     }
 
+    public function getInvoiceExternalLink(): string
+    {
+        $prestashopGateway = new CrmLinkGateway();
+        $externalLink = $prestashopGateway->getInvoiceExternalLink();
+        return $externalLink;
+    }
+
     public function getFirstPrestashopOrder(): ?array
     {
         return $this->getPrestashopOrders() ? $this->getPrestashopOrders()[0] : null;

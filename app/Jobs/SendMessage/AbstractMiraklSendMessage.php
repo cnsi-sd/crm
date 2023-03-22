@@ -18,8 +18,8 @@ abstract class AbstractMiraklSendMessage extends AbstractSendMessage
 
     public function sendMessage(): void
     {
-    // If we are in local environment, we only can send messages to a test order
-        if (env('APP_ENV') == 'local')
+    // If we are not in production environment, we only can send messages to a test order
+        if (env('APP_ENV') != 'production')
             if($this->message->thread->channel_thread_number != '07b62278-0faa-41da-9278-d19550eda712')
                return;
 

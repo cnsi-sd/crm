@@ -66,6 +66,26 @@ final class CrmLinkGateway
         return $this->get($queryParams)->json();
     }
 
+    public function getInvoiceExternalLink(): string
+    {
+
+        $queryParams = [
+            'fc' => 'module',
+            'module' => 'crmlink',
+            'token' => $this->token,
+            'controller' => 'order_invoice',
+            'id_order' => '',
+        ];
+
+        // Transform array to query string
+        $queryString = http_build_query($queryParams);
+
+        // Build full URL
+        $url = sprintf('%s?%s', $this->endpoint, $queryString);
+
+        return $url;
+    }
+
     public function getChannels(): ?array
     {
         $queryParams = [
@@ -81,5 +101,14 @@ final class CrmLinkGateway
             'id_order' => $prestashop_order_id,
         ];
         return $this->get($queryParams)->body();
+    }
+
+    public function getIncidents(int $last_incident_id): ?array
+    {
+        $queryParams = [
+            'controller' => 'incidents',
+            'last_incident_id' => $last_incident_id,
+        ];
+        return $this->get($queryParams)->json();
     }
 }
