@@ -21,4 +21,7 @@ abstract class PermissionEnum extends AbstractEnum
     const TAG_READ              = 'tag_read';
     const BOT_CONFIG            = 'bot_config';
     const MISC_CONFIG           = 'misc_config';
+    const SAV_NOTE_READ         = 'sav_note_read';
+    const SAV_NOTE_EDIT         = 'sav_note_edit';
+    const SAV_NOTE_DELETE       = 'sav_note_delete';
 }

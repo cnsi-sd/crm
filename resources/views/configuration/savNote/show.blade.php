@@ -23,7 +23,7 @@
                     <table class="table mb-3">
                         <tbody>
                         <tr>
-                            <td class="table-active text-end">{{ __('app.sav_note.manufacturer') }}</td>
+                            <td class="table-active text-end col-5">{{ __('app.sav_note.manufacturer') }}</td>
                             <td>{{ $savNote->manufacturer }}</td>
                         </tr>
                         <tr>
@@ -36,7 +36,7 @@
                         </tr>
                         <tr>
                             <td class="table-active text-end">{{ __('app.sav_note.gc_plus') }}</td>
-                            <td>{{ $savNote->gc_plus }}</td>
+                            <td> @if($savNote->gc_plus  == '1') OUI @else NON @endif </td>
                         </tr>
                         <tr>
                             <td class="table-active text-end">{{ __('app.sav_note.gc_plus_delay') }}</td>
@@ -52,11 +52,11 @@
                         </tr>
                         <tr>
                             <td class="table-active text-end">{{ __('app.sav_note.brand_information') }}</td>
-                            <td>{{ $savNote->brand_information }}</td>
+                            <td style="word-break:break-word"><p>{!! nl2br($savNote->brand_information) !!}</p></td>
                         </tr>
                         <tr>
                             <td class="table-active text-end">{{ __('app.sav_note.regional_information') }}</td>
-                            <td>{{ $savNote->regional_information }}</td>
+                            <td style="word-break:break-word">{!! nl2br($savNote->regional_information) !!}</td>
                         </tr>
 
                         </tbody>

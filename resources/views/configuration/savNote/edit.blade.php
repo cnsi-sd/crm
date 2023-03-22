@@ -86,7 +86,6 @@
                                         name="gc_plus_delay"
                                         class="form-control form-control-sm"
                                         value="{{ old('gc_plus_delay', $savNote->gc_plus_delay ?? '') }}"
-                                        disabled
                                     />
                                 </div>
                                 <div class="form-group mb-3">
