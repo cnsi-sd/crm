@@ -155,6 +155,8 @@ return [
         'external_link' => 'Accès backoffice',
         'download_invoice' => 'Télécharger facture',
         'max_shipment_date' => 'Date max d\'expédition',
+        'incident_opened' => 'Incident ouvert',
+        'incident_closed' => 'Incident fermé',
     ],
 
     'login' => [

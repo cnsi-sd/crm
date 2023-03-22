@@ -55,7 +55,7 @@
 }
 
 .top-cards-height {
-    height: 250px;
+    height: 300px;
 }
 
 /**
@@ -99,14 +99,16 @@
     margin-left:5px;
 }
 
-#order-info .incidentopen {
+#order-info .incidentclosed {
+    text-align:center;
     color: darkgreen;
     border: solid 2px darkgreen;
     float: left;
     font-size: 14px;
 }
 
-#order-info .incidentopen {
+#order-info .incidentopened {
+    text-align:center;
     color: darkred;
     border: solid 2px darkred;
     float: left;

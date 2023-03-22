@@ -81,6 +81,22 @@
                             <div class="col"><span class="installed order-badge">INSTALLE</span></div>
                         @endif
                     </div>
+                    <div class="row pt-2">
+                        @if($order['incidents'])
+                            @foreach($order['incidents'] as $incident)
+                                @if ($incident['incident_state'] == "INCIDENT_CLOSE")
+                                    <div class="col"><span class="incidentclosed order-badge">{{ __('app.order.incident_closed') }} :<br/>
+                                            {{unserialize($incident['incident_reason'])['label']}}
+                                    </span></div>
+                                @endif
+                                @if ($incident['incident_state'] == "INCIDENT_OPEN")
+                                    <div class="col"><span class="incidentopened order-badge">{{ __('app.order.incident_opened') }} :<br/>
+                                            {{unserialize($incident['incident_reason'])['label']}}
+                                    </span></div>
+                                @endif
+                            @endforeach
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
