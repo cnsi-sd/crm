@@ -19,11 +19,11 @@ return new class extends Migration
             $table->text('pms_delay');
             $table->text('manufacturer_warranty');
             $table->boolean('gc_plus');
-            $table->text('gc_plus_delay');
+            $table->text('gc_plus_delay')->nullable();
             $table->text('hotline');
             $table->text('brand_email');
-            $table->text('brand_information');
-            $table->text('regional_information');
+            $table->text('brand_information')->nullable();
+            $table->text('regional_information')->nullable();
             $table->timestamps();
         });
     }

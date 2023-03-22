@@ -1,4 +1,4 @@
-@can('edit', \App\Models\Channel\SavNote::class)
+{{--@can('edit', \App\Models\Channel\SavNote::class)--}}
     <a
             href="{{ route('edit_sav_note', ['savNote' => $savNote]) }}"
             class="btn btn-secondary btn-sm"
@@ -15,6 +15,6 @@
     >
         <i class="uil-trash-alt"></i>
     </a>
-    @include('configuration.savNote.modal.delete')
+{{--    @include('configuration.savNote.modal.delete')--}}
 
-@endcan
+{{--@endcan--}}

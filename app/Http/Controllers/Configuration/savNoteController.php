@@ -46,7 +46,7 @@ class savNoteController extends AbstractController
                 ->setKey('hotline'),
             TableColumnBuilder::actions()
                 ->setCallback(function (SavNote $savNote) {
-                    return view('configuration.sav_note.inline_table_actions')
+                    return view('configuration.savNote.inline_table_actions')
                         ->with('savNote', $savNote);
                 }),
         ];
@@ -67,7 +67,7 @@ class savNoteController extends AbstractController
         if ($request->exists('save_sav_note')) {
             $this->saveSavNote($request, $savNote);
 
-            Alert::toastSuccess(__('app.sav_note.saved'));
+//            Alert::toastSuccess(__('app.sav_note.saved'));
             return redirect()->route('show_sav_note', $savNote->id);
         }
 
@@ -81,8 +81,7 @@ class savNoteController extends AbstractController
             'manufacturer'          => ['required', 'string', 'max:100'],
             'pms_delay'             => ['required', 'string', 'max:100'],
             'manufacturer_warranty' => ['required', 'string', 'max:100'],
-            'gc_plus'               => ['required', 'boolean'],
-            'gc_plus_delay'         => ['required', 'string', 'max:255'],
+            'gc_plus_delay'         => ['nullable', 'string', 'max:255'],
             'hotline'               => ['required', 'string', 'max:255'],
             'brand_email'           => ['required', 'string', 'max:255'],
             'brand_information'     => ['nullable', 'string', 'max:255'],
@@ -100,13 +99,11 @@ class savNoteController extends AbstractController
         $savNote->regional_information  = $request->input('regional_information');
 
         $savNote->save();
-
-
     }
 
     public function show(Request $request, SavNote $savNote): View
     {
-        return view('configuration.savNotes.show')
+        return view('configuration.savNote.show')
             ->with('savNote', $savNote);
     }
 }

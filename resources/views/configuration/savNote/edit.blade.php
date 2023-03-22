@@ -34,7 +34,7 @@
                                         type="text"
                                         name="pms_delay"
                                         class="form-control form-control-sm"
-                                        value="{{ old('pms_delay', $savNote->pmsDelay ?? '') }}"
+                                        value="{{ old('pms_delay', $savNote->pms_delay ?? '') }}"
                                         required
                                     />
                                 </div>
@@ -45,9 +45,9 @@
                                     </label>
                                     <input
                                         type="text"
-                                        name="manufacturer_delay"
+                                        name="manufacturer_warranty"
                                         class="form-control form-control-sm"
-                                        value="{{ old('manufacturer_delay', $savNote->manufacturerDelay ?? '') }}"
+                                        value="{{ old('manufacturer_warranty', $savNote->manufacturer_warranty ?? '') }}"
                                         required
                                     />
                                 </div>
@@ -60,7 +60,7 @@
                                         cols="125"
                                         rows="10"
                                     >
-                                        {{ old('brand_information', $savNote->brandInformation ?? '') }}
+                                        {{ old('brand_information', $savNote->brand_information ?? '') }}
                                     </textarea>
                                     </label>
                                 </div>
@@ -69,7 +69,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mt-4 mb-3">
                                     <div class="form-check form-switch">
-                                        <input type="checkbox" class="form-check-input" id="gc_plus_checkbox" name="gc_plus" @if($savNote->gcPlus) checked @endif>
+                                        <input type="checkbox" class="form-check-input" id="gc_plus_checkbox" name="gc_plus" @if($savNote->gc_plus) checked @endif>
                                         <label class="form-check-label" for="gc_plus">
                                             {{ __('app.sav_note.gc_plus') }}
                                             <span class="required_field">*</span>
@@ -85,7 +85,7 @@
                                         type="text"
                                         name="gc_plus_delay"
                                         class="form-control form-control-sm"
-                                        value="{{ old('gc_plus_delay', $savNote->gcPlusDelay ?? '') }}"
+                                        value="{{ old('gc_plus_delay', $savNote->gc_plus_delay ?? '') }}"
                                         disabled
                                     />
                                 </div>
@@ -111,7 +111,7 @@
                                         type="text"
                                         name="brand_email"
                                         class="form-control form-control-sm"
-                                        value="{{ old('brand_email', $savNote->brandEmail ?? '') }}"
+                                        value="{{ old('brand_email', $savNote->brand_email ?? '') }}"
                                         required
                                     />
                                 </div>
@@ -124,7 +124,7 @@
                                             cols="125"
                                             rows="6"
                                         >
-                                        {{ old('regional_information', $savNote->regionalInformation ?? '') }}
+                                        {{ old('regional_information', $savNote->regional_information ?? '') }}
                                     </textarea>
                                     </label>
                                 </div>
