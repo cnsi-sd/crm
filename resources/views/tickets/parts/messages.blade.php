@@ -12,6 +12,7 @@
             @else
                 {{ \App\Enums\Ticket\TicketMessageAuthorTypeEnum::getMessage($message->author_type) }}
             @endif
+            @if($message->default_answer_id)<b>{{ $message->default_answer->name }}</b>@endif
             - {{ $message->created_at->format('d/m/y H:i') }}
         </div>
         <div class="collapse @if($message->isExternal()) show @endif()" id="collapse-message-{{$message->id}}">

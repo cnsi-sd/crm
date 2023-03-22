@@ -153,11 +153,17 @@ class TicketController extends AbstractController
                 $request->validate([
                     'ticket-thread-messages-content'     => ['required','string'],
                 ]);
+                if($request->input('default_answer_select')){
+                    $defaultAnswerId = $request->input('default_answer_select');
+                } else {
+                    $defaultAnswerId = null;
+                }
                 $message = Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
                     'author_type' => TicketMessageAuthorTypeEnum::ADMIN,
                     'content' => TinyMCE::toText($messageContent),
+                    'default_answer_id' => $defaultAnswerId,
                 ]);
 
                 foreach ($request->files as $name => $file)

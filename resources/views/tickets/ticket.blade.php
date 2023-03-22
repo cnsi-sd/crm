@@ -203,8 +203,8 @@
                                         <label>{{ __('app.ticket.default_replies') }}</label>
                                     </div>
                                     <div class="col">
-                                        <select id="default_answer_select" name="default_answer_select" class="form-control form-select">
-                                            <option>---</option>
+                                        <select form="saveTicket" id="default_answer_select" name="default_answer_select" class="form-control form-select">
+                                            <option value="">---</option>
                                             @foreach($ticket->channel->defaultAnswers()->get() as $defaultAnswer)
                                                 <option value="{{ $defaultAnswer->id }}" data-answer-content="{{ $defaultAnswer->content }}">
                                                     {{ $defaultAnswer->name }}
