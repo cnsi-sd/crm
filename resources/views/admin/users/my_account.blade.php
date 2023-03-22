@@ -11,28 +11,31 @@
                             {{ trans_choice('app.user.my_informations', 1) }} #{{ $user->id }}
                         </div>
                         <div class="card-body">
-                            <div class="form-group mb-3">
-                                <label for="name">
-                                    {{ __('app.user.name') }}
-                                    <span class="required_field">*</span>
-                                </label>
-                                <input
-                                    type="text" name="name" class="form-control form-control-sm"
-                                    value="{{ old('name', $user->name ?? '') }}"
-                                    required
-                                />
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="name">
-                                    {{ __('app.username') }}
-                                    <span class="required_field">*</span>
-                                </label>
-                                <input
-                                    type="text" name="username" class="form-control form-control-sm"
-                                    value="{{ old('username', $user->username ?? '') }}"
-                                    required disabled
-                                />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="lastname">
+                                            {{ __('app.user.lastname') }}
+                                        </label>
+                                        <input
+                                            type="text" name="lastname" class="form-control form-control-sm"
+                                            value="{{ old('lastname', $user->lastname ?? '') }}"
+                                            disabled
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="firstname">
+                                            {{ __('app.user.firstname') }}
+                                        </label>
+                                        <input
+                                            type="text" name="firstname" class="form-control form-control-sm"
+                                            value="{{ old('firstname', $user->firstname ?? '') }}"
+                                            disabled
+                                        />
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group mb-3">

@@ -8,6 +8,7 @@ use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Http\Controllers\AbstractController;
+use App\Models\User\Role;
 use App\Models\User\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -54,33 +55,53 @@ class UserController extends AbstractController
             ->with('user', $user);
     }
 
-public function save_user(Request $request, User $user)
-{
-    // Validate request
-    $validation_rules = [
-        'name'          => 'required',
-        'email'         => ['nullable', 'email'],
-        'role'          => 'required',
-    ];
-    if (!$user->exists) {
-        $validation_rules['password'] = ['required', Password::default()];
+    public function my_account(Request $request): View|RedirectResponse
+    {
+        $user = Auth::user();
+
+        if ($request->exists('save_my_account')) {
+            $request->validate([
+                'password'      => ['nullable', Password::default()],
+            ]);
+
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
+            Alert::toastSuccess(__('app.user.saved'));
+            return redirect()->route('my_account');
+        }
+
+        return view('admin.users.my_account')
+            ->with('user', $user);
     }
-    $request->validate($validation_rules);
+    public function save_user(Request $request, User $user)
+    {
+        // Validate request
+        $validation_rules = [
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
+            'email' => ['nullable', 'email'],
+            'role' => ['required', 'exists:' . Role::class . ',id'],
+        ];
+        if (!$user->exists) {
+            $validation_rules['password'] = ['required', Password::default()];
+        }
+        $request->validate($validation_rules);
 
-    // Set name, email, phone number
-    $user->name = $request->input('name');
-    $user->email = $request->input('email');
-    $user->role_id = $request->input('role');
-    $user->active = $request->input('active') === 'on';
+        // Set name, email, phone number
+        $user->firstname = $request->input('firstname');
+        $user->lastname = $request->input('lastname');
+        $user->email = $request->input('email');
+        $user->role_id = $request->input('role');
+        $user->active = $request->input('active') === 'on';
 
-    // Set password
-    $password = $request->input('password');
-    if (!empty($password)) {
-        $user->password = Hash::make($request->input('password'));
+        // Set password
+        $password = $request->input('password');
+        if (!empty($password)) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        // Enregistrement
+        $user->save();
+
     }
-
-    // Enregistrement
-    $user->save();
-
-}
 }

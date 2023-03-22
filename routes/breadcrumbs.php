@@ -10,6 +10,13 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push(__('app.home'), route('home'));
 });
 
+/** My account */
+Breadcrumbs::for('my_account', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('app.user.my_account'));
+});
+
+
 /** Settings */
 Breadcrumbs::for('admin', function (BreadcrumbTrail $trail) {
     $trail->parent('home');

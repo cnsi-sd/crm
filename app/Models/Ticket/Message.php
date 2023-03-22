@@ -2,7 +2,7 @@
 
 namespace App\Models\Ticket;
 
-use App\Enums\CrmDocumentTypeEnum;
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Models\User\User;
 use Cnsi\Attachments\Trait\Documentable;
@@ -74,12 +74,14 @@ class Message extends Model
     protected function getAllowedDocumentTypes(): array
     {
         return [
-            CrmDocumentTypeEnum::CUSTOMER_SERVICE_REPORT,
-            CrmDocumentTypeEnum::CUSTOMER_SERVICE_STATION,
-            CrmDocumentTypeEnum::CLIENT_BANK_ACCOUNT_NUMBER,
-            CrmDocumentTypeEnum::CUSTOMER_FILING,
-            CrmDocumentTypeEnum::PRODUCT_PHOTO,
-            CrmDocumentTypeEnum::OTHER,
+            MessageDocumentTypeEnum::AUTHENTIC_CERTIFICATE,
+            MessageDocumentTypeEnum::CUSTOMER_INVOICE,
+            MessageDocumentTypeEnum::CUSTOMER_RETURN,
+            MessageDocumentTypeEnum::CUSTOMER_UPLOAD,
+            MessageDocumentTypeEnum::MANUAL_USE,
+            MessageDocumentTypeEnum::OTHER,
+            MessageDocumentTypeEnum::PREPAID_RETURN_TICKET,
+            MessageDocumentTypeEnum::SLIP_RETURN,
         ];
     }
 }

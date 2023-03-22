@@ -53,6 +53,7 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '', [RoleController::class, 'list'])->name('roles')->can('read', Role::class);
         });
         Route::prefix('users')->group(function () {
+            Route::match(['get', 'post'], 'my_account', [UserController::class, 'my_account'])->name('my_account');
             Route::match(['get', 'post'], 'new', [UserController::class, 'edit'])->name('create_user')->can('edit', User::class);
             Route::match(['get', 'post'], '{user}', [UserController::class, 'edit'])->name('edit_user')->can('edit', User::class);
             Route::match(['get', 'post'], '', [UserController::class, 'list'])->name('users')->can('read', User::class);

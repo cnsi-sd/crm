@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-class Stringer
+class Tools
 {
     /**
      * Normalize string  with lower case and only a -> z chars

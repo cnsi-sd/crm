@@ -89,7 +89,8 @@ return [
         'edited' => 'Utilisateur modifié',
         'saved' => 'Utilisateur enregistré',
         'deleted' => 'Utilisateur supprimé',
-        'name' => 'Nom complet',
+        'firstname' => 'Prénom',
+        'lastname' => 'Nom',
         'email' => 'Email',
         'password' => 'Mot de passe',
         'password_change' => 'Changer de mot de passe',
@@ -151,7 +152,8 @@ return [
         'supplier' => 'Fournisseur',
         'reference' => 'Référence :',
         'ean' => 'EAN :',
-        'external_link' => 'Lien commande Prestashop',
+        'external_link' => 'Accès backoffice',
+        'download_invoice' => 'Télécharger facture',
     ],
 
     'login' => [
