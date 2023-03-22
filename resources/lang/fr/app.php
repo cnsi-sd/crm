@@ -175,6 +175,10 @@ return [
 
             'incidents' => 'Incidents',
             'incident_tag' => 'Tag Incident',
+
+            'savprocess' => 'Procédure SAV',
+            'savprocess_tag' => 'Tag Procédure SAV complète',
+            'savprocess_stop_revival' => 'Relances auto à stopper',
         ],
     ],
 
