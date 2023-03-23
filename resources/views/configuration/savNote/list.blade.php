@@ -8,7 +8,7 @@
                 {!! $table->getLinesCountBadge() !!}
                 @can('read', \App\Models\Channel\SavNote::class)
                     <a href="{{ route('create_sav_note') }}" class="btn btn-outline-primary btn-sm float-end">
-                        {{ trans_choice('app.new', 2) }}
+                        {{ __('app.sav_note.new') }}
                     </a>
                 @endcan
             </div>

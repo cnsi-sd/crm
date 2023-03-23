@@ -11,6 +11,7 @@ return [
     'no_term' => 'Aucun mot clé recherché',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'show' => 'Détail',
     'create' => 'Création',
     'delete' => 'Suppression',
     'deleteExpression' => 'Êtes vous sûr de vouloir supprimer : ',
