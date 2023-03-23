@@ -33,7 +33,9 @@ return [
     'CHANNEL_EDIT' => 'Éditer un canal',
 
     // SAV Note
-    'SAV_NOTE_READ' => 'Consulter les fiches SAV fabricant',
+    'SAV_NOTE_READ' => 'Consulter la liste des fiches SAV fabricant',
+    'SAV_NOTE_SEARCH' => 'Chercher une fiche SAV fabricant',
+    'SAV_NOTE_SHOW' => 'Consulter le détail d\'une fiches SAV fabricant',
     'SAV_NOTE_EDIT' => 'Modifier une fiche SAV fabricant',
     'SAV_NOTE_DELETE' => 'Supprimer une fiche SAV fabricant',
 ];

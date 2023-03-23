@@ -96,7 +96,7 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'new', [SavNoteController::class, 'edit'])->name('create_sav_note')->can('edit', SavNote::class);
             Route::match(['get', 'post'], '{savNote}/edit', [SavNoteController::class, 'edit'])->name('edit_sav_note')->can('edit', SavNote::class);
             Route::match(['get', 'post'], '{savNote}/delete', [SavNoteController::class, 'delete'])->name('delete_sav_note')->can('delete',SavNote::class);
-            Route::match(['get', 'post'], '{savNote}', [SavNoteController::class, 'show'])->name('show_sav_note')->can('read',SavNote::class);
+            Route::match(['get', 'post'], '{savNote}', [SavNoteController::class, 'show'])->name('show_sav_note')->can('show',SavNote::class);
         });
         Route::prefix('misc')->group(function () {
             Route::match(['get', 'post'], '', [MiscController::class, 'home'])->name('misc_home')->can('misc_config');

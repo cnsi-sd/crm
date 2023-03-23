@@ -15,6 +15,15 @@ class SavNotePolicy
         return $user->hasPermission(PermissionEnum::SAV_NOTE_READ);
     }
 
+    public function show(User $user): bool
+    {
+        return $user->hasPermission(PermissionEnum::SAV_NOTE_SHOW);
+    }
+    public function search(User $user): bool
+    {
+        return $user->hasPermission(PermissionEnum::SAV_NOTE_SEARCH);
+    }
+
     public function edit(User $user): bool
     {
         return $user->hasPermission(PermissionEnum::SAV_NOTE_EDIT);

@@ -34,19 +34,6 @@ abstract class Permission
                 ],
             ],
             [
-              'title' => trans_choice('app.sav_note.sav_note', 2),
-              'sub_sections' => [
-                  [
-                      'title' =>   trans_choice('app.sav_note.sav_note', 2),
-                      'items' => [
-                          PermissionEnum::SAV_NOTE_READ,
-                          PermissionEnum::SAV_NOTE_EDIT,
-                          PermissionEnum::SAV_NOTE_DELETE,
-                      ],
-                  ],
-              ],
-            ],
-            [
                 'title' => trans_choice('app.permission.ticket', 2),
                 'sub_sections' => [
                     [
@@ -77,6 +64,16 @@ abstract class Permission
                         'items' => [
                             PermissionEnum::BOT_CONFIG,
                             PermissionEnum::MISC_CONFIG,
+                        ],
+                    ],
+                    [
+                        'title' =>   trans_choice('app.sav_note.sav_note', 2),
+                        'items' => [
+                            PermissionEnum::SAV_NOTE_SHOW,
+                            PermissionEnum::SAV_NOTE_SEARCH,
+                            PermissionEnum::SAV_NOTE_READ,
+                            PermissionEnum::SAV_NOTE_EDIT,
+                            PermissionEnum::SAV_NOTE_DELETE,
                         ],
                     ],
                 ],
