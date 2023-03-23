@@ -156,6 +156,9 @@ return [
         'ean' => 'EAN :',
         'external_link' => 'Accès backoffice',
         'download_invoice' => 'Télécharger facture',
+        'max_shipment_date' => 'Date max d\'expédition',
+        'incident_opened' => 'Incident ouvert',
+        'incident_closed' => 'Incident fermé',
     ],
 
     'login' => [
@@ -177,6 +180,10 @@ return [
 
             'incidents' => 'Incidents',
             'incident_tag' => 'Tag Incident',
+
+            'savprocess' => 'Procédure SAV',
+            'savprocess_tag' => 'Tag Procédure SAV complète',
+            'savprocess_stop_revival' => 'Relances auto à stopper',
         ],
     ],
 
