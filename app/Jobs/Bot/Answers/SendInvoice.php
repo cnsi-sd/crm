@@ -2,11 +2,14 @@
 
 namespace App\Jobs\Bot\Answers;
 
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Helpers\Prestashop\CrmLinkGateway;
+use App\Helpers\TmpFile;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
+use Cnsi\Attachments\Model\Document;
 
 class SendInvoice extends AbstractAnswer
 {
@@ -97,7 +100,10 @@ class SendInvoice extends AbstractAnswer
         $answer->content = $this->answerInvoiceFound->content;
         $answer->save();
 
-        // TODO : add PDF as message attachment
+        foreach ($pdfs as $pdf) {
+            $tmpFile = new TmpFile((string) $pdf);
+            Document::doUpload($tmpFile, $answer, MessageDocumentTypeEnum::CUSTOMER_INVOICE, 'pdf');
+        }
 
         // Send message
         AbstractSendMessage::dispatchMessage($answer);
