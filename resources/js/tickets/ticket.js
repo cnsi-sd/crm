@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    $('.thread-comments .card-header').click(function () {
+    $('.thread-comments').on("click", function () {
         const route = $(this).data("toggle-comment-route")
         $.get(route);
-    });
+    })
 
     let externalOrderInfoLoaded = false;
     $('#order-info-tab').click(function () {
