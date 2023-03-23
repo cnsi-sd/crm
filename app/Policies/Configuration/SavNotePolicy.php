@@ -12,7 +12,6 @@ class SavNotePolicy
 
     public function read(User $user): bool
     {
-        $test =' ';
         return $user->hasPermission(PermissionEnum::SAV_NOTE_READ);
     }
 

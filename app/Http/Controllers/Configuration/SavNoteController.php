@@ -14,12 +14,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 
-class savNoteController extends AbstractController
+class SavNoteController extends AbstractController
 {
     public function list(request $request): View|Application
     {
         $query = SavNote::query()
-//        ->select('sav_notes.manufacturer', 'sav_notes.pms_delay', 'sav_notes.cg_plus', 'sav_notes.hotline')
         ->select('sav_notes.*')
         ->orderBy('id','DESC');
 

@@ -39,7 +39,6 @@ class SavNote extends Model
 
 
     protected $searchable = [
-        'id',
         'manufacturer',
     ];
 
