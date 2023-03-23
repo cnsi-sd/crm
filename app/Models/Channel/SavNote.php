@@ -36,8 +36,6 @@ class SavNote extends Model
         'regional_information',
     ];
 
-
-
     protected $searchable = [
         'manufacturer',
     ];
@@ -49,8 +47,6 @@ class SavNote extends Model
 
     public function __toString(): string
     {
-        return __('app.sav_note.short_desc') . ' - ' . $this->manufacturer;
+        return $this->manufacturer;
     }
-
-
 }
