@@ -204,12 +204,12 @@ Breadcrumbs::for('create_sav_note', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('show_sav_note', function (BreadcrumbTrail $trail, SavNote $savNote) {
     $trail->parent('sav_notes');
-    $trail->push($savNote->manufacturer, route('show_sav_note', ['savNote', $savNote]));
+    $trail->push($savNote->manufacturer, route('show_sav_note', $savNote));
 });
 
 Breadcrumbs::for('edit_sav_note', function (BreadcrumbTrail $trail, SavNote $savNote) {
-    $trail->parent('show_sav_note', $savNote); // todo vérifier le lien
-    $trail->push(__('app.edit'), route('edit_sav_note', ['savNote', $savNote]));
+    $trail->parent('show_sav_note', $savNote);
+    $trail->push(__('app.edit'), route('edit_sav_note', $savNote));
 });
 
 
