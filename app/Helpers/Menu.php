@@ -80,7 +80,7 @@ abstract class Menu
                         'text' => trans_choice('app.sav_note.sav_note',2),
                         'route' => route('sav_notes'),
                         'ref' => 'savNotes',
-                        // todo do permissions
+                        'permission' => PermissionEnum::SAV_NOTE_READ
                     ]
                 ]
             ],
