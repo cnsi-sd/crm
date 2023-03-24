@@ -5,31 +5,16 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
-use App\Jobs\Bot\AnswerToNewMessage;
-use App\Jobs\SendMessage\ButSendMessage;
-use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\CdiscountSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMessage;
-use App\Jobs\SendMessage\DartySendMessage;
-use App\Jobs\SendMessage\IntermarcheSendMessage;
-use App\Jobs\SendMessage\LaposteSendMessage;
-use App\Jobs\SendMessage\LeclercSendMessage;
-use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueducommerceSendMessage;
-use App\Jobs\SendMessage\ShowroomSendMessage;
-use App\Jobs\SendMessage\UbaldiSendMessage;
+use App\Jobs\AnswerOfferQuestions\CdiscountAnswerOfferQuestions;
 use App\Models\Channel\Channel;
-use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Cdiscount\ClientCdiscount;
-use Cnsi\Cdiscount\Discussion\Discussion;
 use Cnsi\Cdiscount\DiscussionsApi;
 use Cnsi\Logger\Logger;
 use Exception;
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
@@ -94,6 +79,9 @@ class CdiscountImportMessages extends AbstractImportMessages
                     DB::beginTransaction();
                     $this->logger->info('Begin Transaction');
 
+                    if ($discu->getTypologyCode() == "Offer"){ // TODO "order" to test, the real condition is "Offer"
+                        CdiscountAnswerOfferQuestions::AnswerOfferQuestions($discu);
+                    }
                     $orderReference = $discu->getOrderReference();
                     $order = Order::getOrder($orderReference, $this->channel);
                     $ticket = Ticket::getTicket($order, $this->channel);
@@ -182,7 +170,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         );
 
         // Dispatch the job that will try to answer automatically to this new imported
-        AnswerToNewMessage::dispatch($message);
+//        AnswerToNewMessage::dispatch($message);
     }
 
     /**
