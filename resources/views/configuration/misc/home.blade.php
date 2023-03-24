@@ -14,6 +14,9 @@
                     <a href="{{ route('savprocess_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'savprocess_config'])>
                         {{ __('app.config.misc.savprocess') }}
                     </a>
+                    <a href="{{ route('answer_offer_question_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'answer_offer_question_config'])>
+                        {{ __('app.config.misc.answer_offer_question') }}
+                    </a>
                 </ul>
             </div>
             @yield('misc_content')

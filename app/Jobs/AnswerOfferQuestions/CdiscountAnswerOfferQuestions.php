@@ -2,6 +2,8 @@
 
 namespace App\Jobs\AnswerOfferQuestions;
 
+use App\Enums\Channel\ChannelEnum;
+use App\Models\Channel\Channel;
 use Cnsi\Cdiscount\ClientCdiscount;
 use Cnsi\Cdiscount\DiscussionsApi;
 use Illuminate\Bus\Queueable;
@@ -32,8 +34,11 @@ class CdiscountAnswerOfferQuestions implements ShouldQueue
         $client = new ClientCdiscount(env('CDISCOUNT_USERNAME'), env('CDISCOUNT_PASSWORD'));
         $discussion = new DiscussionsApi($client, env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
 
+        $channel = Channel::getByName(ChannelEnum::CDISCOUNT_FR);
+        $responses = $channel->defaultAnswers;
+
         $cdiscountMessage = array(
-            'body' => "Message de test",
+            'body' => 'message auto',
             'discussionId' => $apiMessage->getDiscussionId(),
             'salesChannelEternalDiscussionReference' => $apiMessage->getSalesChannelExternalReference(),
             'salesChannel' => $apiMessage->getSalesChannel(),
