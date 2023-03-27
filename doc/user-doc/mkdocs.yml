@@ -17,6 +17,8 @@ nav:
   - Extras :
       - Variables : extras/variables.md
       - Fiches SAV fabricants : extras/fiches-sav-fabricants.md
+  - Configuration :
+      - Fiches SAV fabricants : configuration/fiches-sav-fabricants.md
 
 theme:
   name: readthedocs
