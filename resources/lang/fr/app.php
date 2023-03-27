@@ -153,6 +153,7 @@ return [
         'designation' => 'Désignation',
         'qty' => 'Qté',
         'supplier' => 'Fournisseur',
+        'brand' => 'Marque :',
         'reference' => 'Référence :',
         'ean' => 'EAN :',
         'external_link' => 'Accès backoffice',
