@@ -63,4 +63,19 @@ class MiscController extends AbstractController
         }
         return view('configuration.misc.savprocess');
     }
+
+    public function answerOfferQuestions(Request $request): View|RedirectResponse
+    {
+
+        if ($request->exists('save')) {
+
+            setting(['channelName' => $request->input('channelName')]);
+            setting([ (new AnswerOfferQuestionController)->getsettingKey($request->input('channelName')) => $request->input('message-content')]);
+            setting()->save();
+
+            Alert::toastSuccess(__('app.config.misc.saved'));
+            return redirect()->back();
+        }
+        return view('configuration.misc.answer_offer_questions');
+    }
 }

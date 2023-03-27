@@ -159,6 +159,10 @@ Breadcrumbs::for('savprocess_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
     $trail->push(__('app.config.misc.savprocess'), route('savprocess_config'));
 });
+Breadcrumbs::for('answer_offer_questions_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.answer_offer_questions'), route('answer_offer_questions_config'));
+});
 
 /** Channel */
 Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {
