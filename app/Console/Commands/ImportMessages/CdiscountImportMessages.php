@@ -81,22 +81,23 @@ class CdiscountImportMessages extends AbstractImportMessages
 
                     if ($discu->getTypologyCode() == "Offer"){ // TODO "order" to test, the real condition is "Offer"
                         CdiscountAnswerOfferQuestions::AnswerOfferQuestions($discu);
+                    } else {
+                        $orderReference = $discu->getOrderReference();
+                        $order = Order::getOrder($orderReference, $this->channel);
+                        $ticket = Ticket::getTicket($order, $this->channel);
+
+                        $this->logger->info('Message recovery');
+                        $messages = $discu->getMessages();
+                        $channel_data = [
+                            "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),
+                            "salesChannel" => $discu->getSalesChannel(),
+                            "userId" => $discu->getCustomerId(),
+                        ];
+                        $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
+
+                        $this->importMessageByThread($ticket, $thread, $messages);
+                        DB::commit();
                     }
-                    $orderReference = $discu->getOrderReference();
-                    $order = Order::getOrder($orderReference, $this->channel);
-                    $ticket = Ticket::getTicket($order, $this->channel);
-
-                    $this->logger->info('Message recovery');
-                    $messages = $discu->getMessages();
-                    $channel_data = [
-                        "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),
-                        "salesChannel" => $discu->getSalesChannel(),
-                        "userId" => $discu->getCustomerId(),
-                    ];
-                    $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
-
-                    $this->importMessageByThread($ticket, $thread, $messages);
-                    DB::commit();
                 }
             } catch (Exception $e){
                 $this->logger->error('An error has occurred. Rolling back.', $e);
@@ -170,7 +171,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         );
 
         // Dispatch the job that will try to answer automatically to this new imported
-//        AnswerToNewMessage::dispatch($message);
+        AnswerToNewMessage::dispatch($message);
     }
 
     /**

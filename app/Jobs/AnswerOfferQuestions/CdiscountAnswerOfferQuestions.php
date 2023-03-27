@@ -3,9 +3,11 @@
 namespace App\Jobs\AnswerOfferQuestions;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
 use App\Models\Channel\Channel;
 use Cnsi\Cdiscount\ClientCdiscount;
 use Cnsi\Cdiscount\DiscussionsApi;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -24,21 +26,21 @@ class CdiscountAnswerOfferQuestions implements ShouldQueue
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
+     * @throws Exception
      */
     static public function AnswerOfferQuestions($apiMessage)
     {
         // If we are not in production environment, we don't want to send mail
-//        if (env('APP_ENV') != 'production')
-//            return;
+        if (env('APP_ENV') != 'production')
+            return;
 
         $client = new ClientCdiscount(env('CDISCOUNT_USERNAME'), env('CDISCOUNT_PASSWORD'));
         $discussion = new DiscussionsApi($client, env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
 
         $channel = Channel::getByName(ChannelEnum::CDISCOUNT_FR);
-        $responses = $channel->defaultAnswers;
 
         $cdiscountMessage = array(
-            'body' => 'message auto',
+            'body' => setting((new AnswerOfferQuestionController)->getSettingKey($channel->name)),
             'discussionId' => $apiMessage->getDiscussionId(),
             'salesChannelEternalDiscussionReference' => $apiMessage->getSalesChannelExternalReference(),
             'salesChannel' => $apiMessage->getSalesChannel(),
