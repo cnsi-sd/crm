@@ -34,8 +34,8 @@ class CdiscountAnswerOfferQuestions implements ShouldQueue
     static public function AnswerOfferQuestions($apiMessage)
     {
         // If we are not in production environment, we don't want to send mail
-//        if (env('APP_ENV') != 'production')
-//            return;
+        if (env('APP_ENV') != 'production')
+            return;
 
         $channel = Channel::getByName(ChannelEnum::CDISCOUNT_FR);
 
