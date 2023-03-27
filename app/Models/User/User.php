@@ -20,6 +20,8 @@ use Illuminate\Notifications\Notifiable;
  * @property int $id
  * @property int $role_id
  * @property string $name
+ * @property string $firstname
+ * @property string $lastname
  * @property string $email
  * @property string $password
  * @property boolean $active
@@ -41,7 +43,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
         'email',
         'password',
         'role_id',
@@ -69,9 +72,18 @@ class User extends Authenticatable
 
     public static function getUsersNames(): array
     {
-        return self::query()->orderBy('name', 'ASC')
-            ->pluck('name', 'id')
-            ->toArray();
+        /** @var User[] $users */
+        $users = self::query()
+            ->orderBy('firstname', 'ASC')
+            ->orderBy('lastname', 'ASC')
+            ->get();
+
+        $names = [];
+        foreach($users as $user) {
+            $names[$user->id] = $user->__toString();
+        }
+
+        return $names;
     }
 
     public function role(): BelongsTo
@@ -93,9 +105,15 @@ class User extends Authenticatable
             ->setSortable(false);
 
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.user.name'))
+            ->setLabel(__('app.user.firstname'))
             ->setType(ColumnTypeEnum::TEXT)
-            ->setKey('name')
+            ->setKey('firstname')
+            ->setSortable(false);
+
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.user.lastname'))
+            ->setType(ColumnTypeEnum::TEXT)
+            ->setKey('lastname')
             ->setSortable(false);
 
         $columns[] = (new TableColumnBuilder())
@@ -149,8 +167,8 @@ class User extends Authenticatable
             ->first();
     }
 
-    public function getShortName()
+    public function __toString(): string
     {
-        return explode(" ", $this->name)[0] . " " . substr(explode(" ", $this->name)[1], 0, 1) . ".";
+        return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
     }
 }

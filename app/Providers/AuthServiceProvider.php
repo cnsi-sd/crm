@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Enums\PermissionEnum;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
+use App\Models\Channel\SavNote;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
@@ -13,6 +14,7 @@ use App\Models\User\User;
 use App\Policies\Configuration\ChannelPolicy;
 use App\Policies\Configuration\DefaultAnswerPolicy;
 use App\Policies\Configuration\RevivalPolicy;
+use App\Policies\Configuration\SavNotePolicy;
 use App\Policies\Configuration\TagPolicy;
 use App\Policies\Settings\RolePolicy;
 use App\Policies\Settings\UserPolicy;
@@ -35,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
         Ticket::class => TicketPolicy::class,
         Channel::class => ChannelPolicy::class,
         Tag::class => TagPolicy::class,
+        SavNote::class => SavNotePolicy::class,
     ];
 
     /**

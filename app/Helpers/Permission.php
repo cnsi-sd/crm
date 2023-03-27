@@ -66,6 +66,16 @@ abstract class Permission
                             PermissionEnum::MISC_CONFIG,
                         ],
                     ],
+                    [
+                        'title' =>   trans_choice('app.sav_note.sav_note', 2),
+                        'items' => [
+                            PermissionEnum::SAV_NOTE_SHOW,
+                            PermissionEnum::SAV_NOTE_SEARCH,
+                            PermissionEnum::SAV_NOTE_READ,
+                            PermissionEnum::SAV_NOTE_EDIT,
+                            PermissionEnum::SAV_NOTE_DELETE,
+                        ],
+                    ],
                 ],
             ],
             [

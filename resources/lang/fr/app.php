@@ -11,6 +11,7 @@ return [
     'no_term' => 'Aucun mot clé recherché',
     'reset' => 'Réinitialiser',
     'edit' => 'Modifier',
+    'show' => 'Détail',
     'create' => 'Création',
     'delete' => 'Suppression',
     'deleteExpression' => 'Êtes vous sûr de vouloir supprimer : ',
@@ -39,6 +40,8 @@ return [
     'order_info' => 'Info commande',
     'product_return' => 'Retour produits',
     'customer_service_process' => 'Procédure SAV',
+    'confirm' => 'Confimer',
+    'cancel' => 'Annuler',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -89,7 +92,8 @@ return [
         'edited' => 'Utilisateur modifié',
         'saved' => 'Utilisateur enregistré',
         'deleted' => 'Utilisateur supprimé',
-        'name' => 'Nom complet',
+        'firstname' => 'Prénom',
+        'lastname' => 'Nom',
         'email' => 'Email',
         'password' => 'Mot de passe',
         'password_change' => 'Changer de mot de passe',
@@ -153,6 +157,9 @@ return [
         'ean' => 'EAN :',
         'external_link' => 'Accès backoffice',
         'download_invoice' => 'Télécharger facture',
+        'max_shipment_date' => 'Date max d\'expédition',
+        'incident_opened' => 'Incident ouvert',
+        'incident_closed' => 'Incident fermé',
     ],
 
     'login' => [
@@ -174,6 +181,10 @@ return [
 
             'incidents' => 'Incidents',
             'incident_tag' => 'Tag Incident',
+
+            'savprocess' => 'Procédure SAV',
+            'savprocess_tag' => 'Tag Procédure SAV complète',
+            'savprocess_stop_revival' => 'Relances auto à stopper',
         ],
     ],
 
@@ -272,6 +283,25 @@ return [
         'ext_names' => 'Nom(s) externe(s)',
         'saved' => 'Canal enregistré',
         'edit' => 'Modifier un canal',
+    ],
+    'sav_note' => [
+        'sav_note' => 'Fiche SAV fabriquant|Fiches SAV fabriquant',
+        'new' => 'Nouvelle fiche SAV fabriquant',
+        'edit' => 'Modifier fiche SAV fabriquant',
+        'delete' => 'Supprimer fiche SAV fabriquant',
+        'manufacturer' => 'Fabriquant',
+        'pms_delay' => 'Délai de PMS (Panne / Mise en service)',
+        'manufacturer_warranty' => 'Garantie constructeur',
+        'gc_plus' => 'Contrat GCPlus',
+        'gc_plus_delay' => 'Délai pour réaliser contrat GCPlus',
+        'hotline' => 'Hotline',
+        'brand_email' => 'Email marque',
+        'brand_information' => 'Informations marque',
+        'regional_information' => 'Informations régionales',
+        'delete_confirm' => 'Supprimer la fiche SAV ?',
+        'deleted' => 'Fiche SAV fabricant supprimée',
+        'saved' => 'Fiche SAV fabricant enregistrée',
+        'show' => 'Fiche SAV fabricant',
+        'short_desc' => 'Fiche SAV Fab.'
     ]
-
 ];

@@ -61,7 +61,7 @@ La documentation est écrite en Markdown et est compilée avec [MkDocs](https://
 ```bash
 sudo apt update
 sudo apt install python3 python3-pip -y
-pip install mkdocs
+sudo pip install mkdocs
 ```
 ## Serveur de développement
 ```bash

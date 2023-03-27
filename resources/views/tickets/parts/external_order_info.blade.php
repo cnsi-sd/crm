@@ -13,7 +13,7 @@
                             </div>
                         @endif
                         <div class="col-5 text-end">
-                            <a href="{{ env('PRESTASHOP_URL') }}index.php?fc=module&module=bmsmagentogateway&controller=order_redirect&reference="
+                            <a href="{{ $external_link }}{{ $order['id_order'] }}"
                                type="button" class="btn btn-primary rounded-pill btn-sm" target="_blank" id="ext-order-link">{{ __('app.order.external_link') }} <i class="uil-external-link-alt"></i></a>
                         </div>
                     </div>
@@ -60,6 +60,42 @@
                     <div class="row">
                         <div class="col">{{ __('app.email') }} :</div>
                         <div class="col">{{ $order['email'] }}</div>
+                    </div>
+                    @if($order['max_shipment_date'])
+                        <div class="row">
+                            <div class="col">{{ __('app.order.max_shipment_date') }} :</div>
+                            <div class="col max_shipment_date">{{ $order['max_shipment_date'] }}</div>
+                        </div>
+                    @endif
+                    <div class="row pt-2">
+                        @if($order['is_fulfillment'] == true)
+                            <div class="col"><span class="fulfillment order-badge">Fulfillment</span></div>
+                        @endif
+                        @if($order['is_express'] == true)
+                            <div class="col"><span class="express order-badge">Livraison Express</span></div>
+                        @endif
+                        @if($order['delivery_shipping_mode'] == "DEBALLE")
+                            <div class="col"><span class="unpacked order-badge">DEBALLE</span></div>
+                        @endif
+                        @if($order['delivery_shipping_mode'] == "INSTALLE")
+                            <div class="col"><span class="installed order-badge">INSTALLE</span></div>
+                        @endif
+                    </div>
+                    <div class="row pt-2">
+                        @if($order['incidents'])
+                            @foreach($order['incidents'] as $incident)
+                                @if ($incident['incident_state'] == "INCIDENT_CLOSE")
+                                    <div class="col"><span class="incidentclosed order-badge">{{ __('app.order.incident_closed') }} :<br/>
+                                            {{unserialize($incident['incident_reason'])['label']}}
+                                    </span></div>
+                                @endif
+                                @if ($incident['incident_state'] == "INCIDENT_OPEN")
+                                    <div class="col"><span class="incidentopened order-badge">{{ __('app.order.incident_opened') }} :<br/>
+                                            {{unserialize($incident['incident_reason'])['label']}}
+                                    </span></div>
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

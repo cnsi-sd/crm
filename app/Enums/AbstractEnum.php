@@ -50,7 +50,7 @@ abstract class AbstractEnum
     public static function validOrThrow($value): void
     {
         if (!self::isValid($value)) {
-            $enum_name = self::getChildClass()->getShortName();
+            $enum_name = self::getChildClass()->__toString();
             $message = $value . ' is not a valid ' . $enum_name . '. Please use a valid ' . $enum_name . ' : ' . implode(', ', self::getList());
 
             throw new Exception($message);
