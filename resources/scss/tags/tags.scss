@@ -1,9 +1,12 @@
 .tags-style {
     border-radius: 15px;
-    padding: 0.3em;
+    padding: .1em .5em;
     margin: 0.1em;
     white-space:nowrap;
     font-weight: bold;
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .tags-style-count {
