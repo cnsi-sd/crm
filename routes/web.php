@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
 use App\Http\Controllers\Configuration\BotController;
 use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
@@ -112,4 +113,5 @@ Route::prefix('/')->group(function () {
     Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags'])->name('saveTagOnticketThread');
     Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList'])->name('deleteTagList');
     Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnThread');
+    Route::match(['get', 'post'], 'getAnswerOfferQuestionContent', [AnswerOfferQuestionController::class, 'getMessageContent'])->name('answer_offer_question_content');
 });

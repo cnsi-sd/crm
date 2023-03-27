@@ -1,7 +1,7 @@
 @extends('configuration.misc.home', ["page_title"=> __('app.config.misc.answer_questions') ])
 
 @section('misc_content')
-    <div class="col-6">
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-header">
                 {{ __('app.config.config') }}
@@ -11,7 +11,13 @@
                     @csrf
                     <div class=" row col-3 mb-3">
                         <label for="channelName">{{ trans_choice('app.config.channel', 1) }}</label>
-                        <select name="channelName" class="form-control form-control-sm form-select" required>
+                        <select
+                            name="channelName"
+                            id="channelName"
+                            data-get-message-content="{{ route('answer_offer_question_content') }}"
+                            class="form-control form-control-sm form-select no-select2"
+                            required
+                        >
                             @foreach(\App\Enums\Channel\ChannelEnum::getList() as $channelName)
                                 <option value="{{ $channelName }}">
                                     {{ $channelName }}
@@ -24,8 +30,14 @@
                             {{__('app.config.misc.answer_offer_questions_message')}}
                             <span class="required_field">*</span>
                         </label>
-{{--                        <textarea id="content" name="content" class="form-control">{{ \App\Helpers\TinyMCE::toHtml(old('content', $defaultAnswer->content))?? ''  }}</textarea>--}}
-                        <textarea id="message-content" rows="10" name="message-content" class="form-control"></textarea>
+                        <textarea
+                            id="message-content"
+                            rows="10"
+                            name="message-content"
+                            class="form-control"
+                            required
+                        >
+                        </textarea>
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
@@ -37,7 +49,5 @@
 @endsection
 
 @section('script-bottom')
-    {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
-    <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>
-    <script src="{{ Vite::asset('resources/js/tinymce.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/answerOfferQuestions.js') }}"></script>
 @endsection
