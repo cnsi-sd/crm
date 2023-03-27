@@ -37,7 +37,7 @@
                                 data-taglist_id="{{$taglist->id}}"
                                 data-ticket_id="{{$ticket->id}}"
                                 style="color: {{ $tag->text_color }};">
-                                x
+                                X
                             </button>
                             </span>
                     @endforeach

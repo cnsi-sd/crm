@@ -1,6 +1,6 @@
 .tags-style {
     border-radius: 15px;
-    padding: .1em .5em;
+    padding: .1em .5em!important;
     margin: 0.1em;
     white-space:nowrap;
     font-weight: bold;
@@ -28,6 +28,6 @@
 }
 
 .delete-tag {
-    --bs-btn-padding-y: .5rem;
-    --bs-btn-padding-x: 0rem;
+    --bs-btn-padding-x: .1rem;
+    --bs-btn-padding-y: .1rem;
 }
