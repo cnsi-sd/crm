@@ -69,8 +69,8 @@ class DefaultAnswerController extends AbstractController
     {
         // Validate request
         $request->validate([
-            'name' => 'required',
-            'content' => 'nullable',
+            'name' => ['required', 'string'],
+            'content' => ['required', 'string'],
         ]);
 
         // Set name, content
