@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     $('.thread-comments').click(function () {
         const route = $(this).data("toggle-comment-route")
@@ -47,9 +48,9 @@ $(document).ready(function () {
 let bodyCard = document.getElementById('card-body-tag');
 
 document.getElementById('add').onclick = addListTagOnTicket;
-$('.tags').on('select2:select', saveTicketTicketTags);
+$('.tags').on('select2:select', saveTicketTags);
 $('.deleteTaglist').on("click", deleteTagLists);
-$('.delete-tag').on("click", deleteTicketTag)
+$('.delete-tag').on("click", deleteTicketTag);
 
 function addListTagOnTicket(e) {
     // create new line in db
@@ -60,7 +61,6 @@ function addListTagOnTicket(e) {
         ticket_id: ticket_id
     }).then(function (response) {
         lineId = response.data;
-        console.log(response);
 
         //create div for create line
         let divLine = document.createElement("div");
@@ -73,12 +73,12 @@ function addListTagOnTicket(e) {
         selectTag.className = "form-select";
         selectTag.setAttribute("data-ticket_id", ticket_id);
         selectTag.setAttribute("data-taglist_id", lineId);
-        makeOption(selectTag);
+        makeOption(selectTag,e.target.getAttribute("data-channel_id"));
         divLine.appendChild(selectTag);
 
         //add select2 on selectTag
         $(selectTag).select2()
-        $(selectTag).on('select2:select', saveTicketTicketTags)
+        $(selectTag).on('select2:select', saveTicketTags)
 
         //create div view tags
         let divView = document.createElement("div");
@@ -90,11 +90,13 @@ function addListTagOnTicket(e) {
 
 }
 
-function makeOption(select){
-    window.axios.get(url_show_tags).then(function (response){
+function makeOption(select, channel_id){
+    window.axios.post(url_show_tags, {
+            channel_id: channel_id
+        }).then(function (response){
         let json = response.data.data;
         let option = document.createElement('option')
-        option.text = "Aucune";
+        option.text = default_option_selected_tag;
         select.add(option)
         json.forEach(function (data) {
             let option = document.createElement('option')
@@ -105,31 +107,19 @@ function makeOption(select){
     })
 }
 
-function saveTicketTicketTags(e) {
+function saveTicketTags(e) {
     let tag_id = e.target.options[e.target.options.selectedIndex].value;
     let taglist_id = e.target.getAttribute("data-taglist_id");
+    let ticket_id = e.target.getAttribute("data-ticket_id");
     window.axios.post(url_add_tag_on_ticket, {
+        ticket_id: ticket_id,
         taglist_id: taglist_id,
         tag_id: tag_id
     }).then(function (response) {
-        let divViewTag = document.getElementById('view-' + taglist_id)
-        let span = document.createElement('span')
+        $('#tags-container').html(response.data)
+        $('#tags-container select').select2();
+        $('#tags-container .delete-tag').on('click', deleteTicketTag)
 
-        let buttonDeleteTag = document.createElement('button')
-        buttonDeleteTag.type = "button";
-        buttonDeleteTag.innerText = "x";
-        buttonDeleteTag.className = "btn delete-tag";
-        buttonDeleteTag.setAttribute("data-tag_id", tag_id);
-        buttonDeleteTag.setAttribute("data-taglist_id", taglist_id);
-        buttonDeleteTag.setAttribute("data-ticket_id", e.target.getAttribute("data-ticket_id"));
-        buttonDeleteTag.style.color = response.data.text_color;
-
-        span.className = "tags-style"
-        span.textContent = response.data.name + " | ";
-        span.style.background = response.data.background_color;
-        span.style.color = response.data.text_color;
-        span.appendChild(buttonDeleteTag)
-        divViewTag.appendChild(span);
     })
 }
 
@@ -137,9 +127,7 @@ function deleteTagLists(ticket_id, taglist_id) {
     window.axios.post(url_delete_tagList, {
         ticket_id: ticket_id,
         taglist_id: taglist_id
-    }).then(
-        e.target.parentNode.remove()
-    )
+    })
 }
 
 function deleteTicketTag(e) {
@@ -147,16 +135,13 @@ function deleteTicketTag(e) {
     let taglist_id = e.target.getAttribute("data-taglist_id");
     let ticket_id = e.target.getAttribute("data-ticket_id");
     window.axios.post(url_delete_tag_on_ticket, {
+        ticket_id: ticket_id,
         tag_id: tag_id,
         taglist_id: taglist_id
     }).then(function (response){
-        console.log(response.data)
-        if (response.data){
-            e.target.parentNode.remove();
-            deleteTagLists(ticket_id, taglist_id)
-            e.target.parentNode.parentNode.parentNode.remove();
-        }
-        e.target.parentNode.remove();
+        deleteTagLists(ticket_id, taglist_id);
+        $('#tags-container').html(response.data);
+        $('#tags-container select').select2();
     }
 
     )

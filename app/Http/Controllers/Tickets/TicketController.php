@@ -196,11 +196,11 @@ class TicketController extends AbstractController
 
     public function delete_tag(Request $request) {
         $tag = Tag::find($request->input('tag_id'));
-        $isEmpty = false;
-        if ( $tag->taglists()->count() - 1 == 0)
-            $isEmpty = true;
+        $ticket = Ticket::find($request->input('ticket_id'));
+
         $tag->taglists()->detach($request->input('taglist_id'));
-        return $isEmpty;
+        return view('tickets.parts.tags')
+            ->with('ticket', $ticket);
     }
 
     public function delete_ThreadTagList(Request $request) {
@@ -210,10 +210,19 @@ class TicketController extends AbstractController
     }
 
     public function saveThreadTags(Request $request) {
+        $ticket = Ticket::find($request->input('ticket_id'));
         $taglist = TagList::find($request->input('taglist_id'));
         $tag = Tag::findOrFail($request->input('tag_id'));
+
+        if($taglist == null){
+            $taglist = new TagList();
+            $taglist->ticket_id = $ticket->id;
+            $taglist->save();
+        }
+
         $taglist->addTag($tag);
-        return response()->json($tag);
+        return view('tickets.parts.tags')
+            ->with('ticket', $ticket);
     }
 
     public function clickAndCall(Request $request): JsonResponse

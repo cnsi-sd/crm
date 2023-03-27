@@ -57,8 +57,15 @@ class TagsController extends AbstractController
         $tags->background_color = $request->input('background_color');
         $tags->save();
 
-        $channels = $request->input('channels');
-        $tags->channels()->sync($channels);
+        if(array_key_exists('channels',$request->toArray())){
+            $channelSelected = $request->toArray()['channels'];
+            $tags->channels()->sync($channelSelected);
+        } else {
+            foreach (Channel::all() as $channel){
+                $allChannelId[] = $channel->id;
+            }
+            $tags->channels()->sync($allChannelId);
+        }
     }
 
     public function delete(Request $request, ?Tag $tags)
@@ -69,18 +76,22 @@ class TagsController extends AbstractController
         return redirect()->route('tags');
     }
 
-    public function ajax_tags()
+    public function ajax_tags(Request $request)
     {
         $data = Tag::all();
+        $data = \App\Models\Tags\Tag::query()
+            ->select('tags.*')
+            ->join('channel_tags', 'tags.id', 'channel_tags.tag_id')
+            ->join('channels', 'channels.id', 'channel_tags.channel_id')
+            ->where('channels.id',$request->input('channel_id'))
+            ->get();
         return response()->json(['data' => $data]);
     }
 
     public function newTagLine(Request $request)
     {
-        $taglist = new TagList();
-        $taglist->ticket_id = $request->input('ticket_id');
-        $taglist->save();
-        return response()->json($taglist->id);
+        $taglist = TagList::query()->max('id');
+        return $taglist + 1;
     }
 
 }

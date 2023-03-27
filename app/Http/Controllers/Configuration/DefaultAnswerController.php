@@ -80,8 +80,15 @@ class DefaultAnswerController extends AbstractController
         // Save
         $defaultAnswer->save();
 
-        $channels = $request->input('channels');
-        $defaultAnswer->channels()->sync($channels);
+        if(array_key_exists('channels',$request->toArray())){
+            $channelSelected = $request->toArray()['channels'];
+            $defaultAnswer->channels()->sync($channelSelected);
+        } else {
+            foreach (Channel::all() as $channel){
+                $allChannelId[] = $channel->id;
+            }
+            $defaultAnswer->channels()->sync($allChannelId);
+        }
     }
 
     public function delete(Request $request, ?DefaultAnswer $defaultAnswer)

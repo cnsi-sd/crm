@@ -1,8 +1,8 @@
-<div class="card">
+
     <div class="card-header d-flex">
         <p class="w-100">{{ trans_choice('app.tags.tags', 2) }}</p>
         <button form="saveTicket" type="button" id="add" class="btn btn-success"
-                data-ticket_id="{{$ticket->id}}" data-url_add_tag="{{route('addTagList')}}">{{ __('app.tags.addTagList') }}
+                data-ticket_id="{{$ticket->id}}" data-url_add_tag="{{route('addTagList')}}" data-channel_id="{{$ticket->channel_id}}">{{ __('app.tags.addTagList') }}
         </button>
     </div>
     <div class="card-body" id="card-body-tag">
@@ -46,4 +46,3 @@
             </div>
         @endforeach
     </div>
-</div>

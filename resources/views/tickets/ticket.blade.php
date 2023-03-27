@@ -100,8 +100,9 @@
                         </div>
                     </div>
                 </div>
-
-                @include('tickets.parts.tags')
+                <div class="card" id="tags-container">
+                    @include('tickets.parts.tags')
+                </div>
                 @include('tickets.parts.private_comments')
                 {!! $documents_table !!}
 
@@ -215,6 +216,7 @@
     {!! \App\Helpers\JS::define('url_add_tag_on_ticket', route('saveTagOnticketThread')) !!}
     {!! \App\Helpers\JS::define('url_delete_tag_on_ticket', route('deleteTagListOnThread')) !!}
     {!! \App\Helpers\JS::define('url_click_and_call', route('click_and_call')) !!}
+    {!! \App\Helpers\JS::define('default_option_selected_tag' , __('app.tags.select_tag')) !!}
 
     {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
     <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>

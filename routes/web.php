@@ -106,7 +106,7 @@ Route::prefix('/')->group(function () {
         });
     });
     // CALL AJAX
-    Route::get('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');
+    Route::post('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');
     Route::post('/addTagList', [TagsController::class, 'newTagLine'])->name('addTagList');
     Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags'])->name('saveTagOnticketThread');
     Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList'])->name('deleteTagList');
