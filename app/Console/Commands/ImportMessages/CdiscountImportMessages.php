@@ -172,7 +172,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         );
 
         // Dispatch the job that will try to answer automatically to this new imported
-//        AnswerToNewMessage::dispatch($message);
+        AnswerToNewMessage::dispatch($message);
     }
 
     /**
