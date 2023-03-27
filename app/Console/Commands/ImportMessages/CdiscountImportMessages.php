@@ -6,6 +6,7 @@ use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Jobs\AnswerOfferQuestions\CdiscountAnswerOfferQuestions;
+use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
@@ -171,7 +172,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         );
 
         // Dispatch the job that will try to answer automatically to this new imported
-        AnswerToNewMessage::dispatch($message);
+//        AnswerToNewMessage::dispatch($message);
     }
 
     /**

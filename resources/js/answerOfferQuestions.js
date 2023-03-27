@@ -11,10 +11,6 @@ $(window).on('load', function (){
     function getMessageContent(){
         const url = channelName.data('get-message-content')
 
-        console.log(channelName.val())
-        // console.log(url)
-        console.log(messageContent.val())
-
         window.axios.get(url, {params: {
             channelName: channelName.val()
             }}

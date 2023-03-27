@@ -7,6 +7,7 @@ use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
 use App\Models\Channel\Channel;
 use Cnsi\Cdiscount\ClientCdiscount;
 use Cnsi\Cdiscount\DiscussionsApi;
+use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,6 +22,8 @@ class CdiscountAnswerOfferQuestions implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
+    private Logger $logger;
+
     /**
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
@@ -31,13 +34,23 @@ class CdiscountAnswerOfferQuestions implements ShouldQueue
     static public function AnswerOfferQuestions($apiMessage)
     {
         // If we are not in production environment, we don't want to send mail
-        if (env('APP_ENV') != 'production')
-            return;
+//        if (env('APP_ENV') != 'production')
+//            return;
 
+        $channel = Channel::getByName(ChannelEnum::CDISCOUNT_FR);
+
+        $logger = new Logger('AnswerOfferQuestion/'
+            . $channel->getSnakeName()
+            . '/' . $channel->getSnakeName()
+            . '.log', true, true
+        );
+        $logger->info('--- Auto answer offer question ---');
         $client = new ClientCdiscount(env('CDISCOUNT_USERNAME'), env('CDISCOUNT_PASSWORD'));
         $discussion = new DiscussionsApi($client, env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
 
-        $channel = Channel::getByName(ChannelEnum::CDISCOUNT_FR);
+        $logger->info(
+            'Answer to discussionId: ' . $apiMessage->getDiscussionId()
+            . ', customerId: ' . $apiMessage->getCustomerId());
 
         $cdiscountMessage = array(
             'body' => setting((new AnswerOfferQuestionController)->getSettingKey($channel->name)),
@@ -53,5 +66,7 @@ class CdiscountAnswerOfferQuestions implements ShouldQueue
         );
 
         $discussion->sendMessageOnExistantDiscussion(json_encode($cdiscountMessage));
+
+        $logger->info('Auto answer sent');
     }
 }
