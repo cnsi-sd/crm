@@ -42,6 +42,12 @@ $(document).ready(function () {
         $( ".attachment_file" ).last().attr('name', "attachment_file_"+attachmentIndex);
         $( ".attachment_file" ).last().val('');
     });
+
+    $('body').on("click", '.order-btn', function() {
+        $('.order-info').hide(500, 'linear');
+        $('[data-order-id=' + $(this).data("order-id") + ']').show(500, 'linear');
+    });
+
 })
 
 let bodyCard = document.getElementById('card-body-tag');
