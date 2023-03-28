@@ -28,14 +28,12 @@
                     <div class="form-group mb-3">
                         <label for="name">
                             {{__('app.config.misc.answer_offer_questions_message')}}
-                            <span class="required_field">*</span>
                         </label>
                         <textarea
                             id="message-content"
                             rows="10"
                             name="message-content"
                             class="form-control"
-                            required
                         >
                         </textarea>
                     </div>
