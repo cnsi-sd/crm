@@ -212,11 +212,11 @@
 @section('script-bottom')
     {!! \App\Helpers\JS::define('url_show_tags', route('ajaxShowTags')) !!}
     {!! \App\Helpers\JS::define('url_add_tag_list', route('addTagList')) !!}
-    {!! \App\Helpers\JS::define('url_delete_tagList', route('deleteTagList')) !!}
-    {!! \App\Helpers\JS::define('url_add_tag_on_ticket', route('saveTagOnticketThread')) !!}
-    {!! \App\Helpers\JS::define('url_delete_tag_on_ticket', route('deleteTagListOnThread')) !!}
+    {!! \App\Helpers\JS::define('url_add_tag_on_ticket', route('saveTagOnticket')) !!}
+    {!! \App\Helpers\JS::define('url_delete_tag_on_ticket', route('deleteTagListOnTicket')) !!}
     {!! \App\Helpers\JS::define('url_click_and_call', route('click_and_call')) !!}
     {!! \App\Helpers\JS::define('default_option_selected_tag' , __('app.tags.select_tag')) !!}
+    {!! \App\Helpers\JS::define('checkHasTag', route('ticketHasTaglist')) !!}
 
     {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
     <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>

@@ -43,23 +43,32 @@ $(document).ready(function () {
         $( ".attachment_file" ).last().attr('name', "attachment_file_"+attachmentIndex);
         $( ".attachment_file" ).last().val('');
     });
+
+    let ticket_id = $('#addTagLine').data('ticket_id');
+    checkHasTaglist(ticket_id);
+
 })
 
-let bodyCard = document.getElementById('card-body-tag');
-
-document.getElementById('add').onclick = addListTagOnTicket;
-$('.tags').on('select2:select', saveTicketTags);
-$('.deleteTaglist').on("click", deleteTagLists);
-$('.delete-tag').on("click", deleteTicketTag);
+$(document).on('click', '#addTagLine', function (e){
+    e.preventDefault()
+    addListTagOnTicket(e);
+})
+$(document).on('select2:select', '.tags', function (e){
+    saveTicketTags(e);
+})
+$(document).on('click', '.delete-tag', function (e){
+    deleteTicketTag(e);
+})
 
 function addListTagOnTicket(e) {
     // create new line in db
     let lineId;
-    let ticket_id = e.target.getAttribute("data-ticket_id")
-    let url = e.target.getAttribute("data-url_add_tag")
+    let ticket_id = e.target.getAttribute("data-ticket_id");
     window.axios.post(url_add_tag_list, {
         ticket_id: ticket_id
     }).then(function (response) {
+        let bodyCard = document.getElementById('card-body-tag');
+
         lineId = response.data;
 
         //create div for create line
@@ -77,15 +86,15 @@ function addListTagOnTicket(e) {
         divLine.appendChild(selectTag);
 
         //add select2 on selectTag
-        $(selectTag).select2()
-        $(selectTag).on('select2:select', saveTicketTags)
+        $(selectTag).select2();
+        $(selectTag).on('select2:select', saveTicketTags);
 
         //create div view tags
         let divView = document.createElement("div");
         divView.id = "view-" + lineId;
         divView.className = "mt-3 mb-2";
         divLine.appendChild(divView);
-        $(divLine).append("<hr/>")
+        $(divLine).append("<hr/>");
     })
 
 }
@@ -97,12 +106,12 @@ function makeOption(select, channel_id){
         let json = response.data.data;
         let option = document.createElement('option')
         option.text = default_option_selected_tag;
-        select.add(option)
+        select.add(option);
         json.forEach(function (data) {
             let option = document.createElement('option')
             option.text = data.name;
             option.value = data.id;
-            select.add(option)
+            select.add(option);
         })
     })
 }
@@ -116,17 +125,9 @@ function saveTicketTags(e) {
         taglist_id: taglist_id,
         tag_id: tag_id
     }).then(function (response) {
-        $('#tags-container').html(response.data)
+        $('#tags-container').html(response.data);
         $('#tags-container select').select2();
-        $('#tags-container .delete-tag').on('click', deleteTicketTag)
 
-    })
-}
-
-function deleteTagLists(ticket_id, taglist_id) {
-    window.axios.post(url_delete_tagList, {
-        ticket_id: ticket_id,
-        taglist_id: taglist_id
     })
 }
 
@@ -139,11 +140,20 @@ function deleteTicketTag(e) {
         tag_id: tag_id,
         taglist_id: taglist_id
     }).then(function (response){
-        deleteTagLists(ticket_id, taglist_id);
         $('#tags-container').html(response.data);
         $('#tags-container select').select2();
+        checkHasTaglist(ticket_id);
     }
 
     )
 }
 
+function checkHasTaglist(ticket_id){
+    window.axios.post(checkHasTag,{
+        ticket_id: ticket_id
+    }).then(function (response){
+        if (!response.data){
+            $('#addTagLine').click();
+        }
+    })
+}

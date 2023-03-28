@@ -1,9 +1,13 @@
 
-    <div class="card-header d-flex">
-        <p class="w-100">{{ trans_choice('app.tags.tags', 2) }}</p>
-        <button form="saveTicket" type="button" id="add" class="btn btn-success"
-                data-ticket_id="{{$ticket->id}}" data-url_add_tag="{{route('addTagList')}}" data-channel_id="{{$ticket->channel_id}}">{{ __('app.tags.addTagList') }}
-        </button>
+    <div class="card-header">
+        <span>{{ trans_choice('app.tags.tags', 2) }}</span>
+        <a id="addTagLine" href="#" class="float-end"
+           data-ticket_id="{{$ticket->id}}"
+           data-url_add_tag="{{route('addTagList')}}"
+           data-channel_id="{{$ticket->channel_id}}"
+        >
+            {{ __('app.tags.addTagList') }}
+        </a>
     </div>
     <div class="card-body" id="card-body-tag">
         @foreach($ticket->tagLists as $taglist)
@@ -30,7 +34,7 @@
                 <div id="view-{{$taglist->id}}" class="mt-3 mb-2">
                     @foreach($taglist->tags as $tag)
                         <span class="tags-style" style="background-color: {{ $tag->background_color }}; color: {{ $tag->text_color }};">
-                            {{ $tag->name }} |
+                            {{ $tag->name }}
                             <button
                                 class="btn delete-tag"
                                 data-tag_id="{{$tag->id}}"
