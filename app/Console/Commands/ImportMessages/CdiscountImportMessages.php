@@ -21,6 +21,7 @@ use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
@@ -39,7 +40,7 @@ class CdiscountImportMessages extends AbstractImportMessages
      * @var ClientCdiscount
      */
     static private ClientCdiscount $client;
-    const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 6 hours';
     const MAX_RETRY_API_CALL = 5;
     const IGNORE_MSG_CONTAINS = [
         '----- The following addresses had permanent fatal errors -----',
@@ -98,6 +99,9 @@ class CdiscountImportMessages extends AbstractImportMessages
                     $order = Order::getOrder($orderReference, $this->channel);
                     $ticket = Ticket::getTicket($order, $this->channel);
 
+                    if (!$discu->isOpen())
+                        $this->checkClosedDiscussion($discu);
+
                     $this->logger->info('Message recovery');
                     $messages = $discu->getMessages();
                     $channel_data = [
@@ -145,11 +149,29 @@ class CdiscountImportMessages extends AbstractImportMessages
         foreach ($messages as $message) {
             $imported_id = $message->getMessageId();
             $this->logger->info('Check if this message is imported');
+
             if (!$this->isMessagesImported($imported_id)) {
                 $this->logger->info('Convert api message to db message');
                 $this->convertApiResponseToMessage($ticket, $message, $thread);
                 $this->addImportedMessageChannelNumber($imported_id);
             }
+        }
+    }
+
+    private function checkClosedDiscussion($discussion)
+    {
+        $ticket = Ticket::select('tickets.*')
+            ->join('orders', 'orders.id', 'tickets.order_id')
+            ->where('tickets.channel_id', $this->channel->id)
+            ->where('orders.channel_order_number', $discussion->getOrderReference())
+            ->first();
+
+        if ($ticket){
+            $closedTagId = setting('Discussion close (Cdiscount)');
+            $closedTag = Tag::findOrfail($closedTagId);
+
+            if(!$ticket->hastag($closedTag))
+                $ticket->addTag($closedTag);
         }
     }
 
