@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property DefaultAnswer $default_answer
  * @property DefaultAnswer $end_default_answer
+ * @property DefaultAnswer $isLocked
  * @property Channel[] $channels
  * @property Thread[] $threads
  */

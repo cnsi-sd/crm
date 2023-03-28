@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property DateTime $updated_at
  * @property DateTime $deleted_at
  *
+ * @property boolean $isLocked
  * @property Channel[] $channels
  * @property Revival[] $revivals
  */
@@ -26,6 +27,9 @@ class DefaultAnswer extends Model
 {
     use SoftDeletes;
 
+    /**
+     * @var mixed|true
+     */
     protected $fillable = [
         'name',
         'content',
@@ -53,6 +57,16 @@ class DefaultAnswer extends Model
         return $this->channels->count() === 0 ? Channel::all() : $this->channels;
     }
 
+    public function setIsLocked(): bool
+    {
+        return $this->isLocked = true;
+    }
+
+    public function getIsLocked(): bool
+    {
+        return $this->isLocked;
+    }
+
     public static function getTableColumns(): array
     {
         $columns = [];
@@ -60,13 +74,13 @@ class DefaultAnswer extends Model
         $columns[] = TableColumnBuilder::id()
             ->setSearchable(false);
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.defaultAnswer.name'))
+            ->setLabel(__('app.default_answer.name'))
             ->setKey('name');
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.defaultAnswer.content'))
+            ->setLabel(__('app.default_answer.content'))
             ->setKey('content');
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.defaultAnswer.select_channel'))
+            ->setLabel(__('app.default_answer.select_channel'))
             ->setCallback(function (DefaultAnswer $defaultAnswer){
                 $channels = $defaultAnswer->getAuthorizedChannels();
                 if (count($channels) === Channel::all()->count()) {

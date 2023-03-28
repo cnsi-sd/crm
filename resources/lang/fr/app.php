@@ -221,13 +221,14 @@ return [
         ],
     ],
 
-    'defaultAnswer' => [
-        'defaultAnswer' => 'Réponse par défaut|Réponses par défaut',
+    'default_answer' => [
+        'default_answer' => 'Réponse par défaut|Réponses par défaut',
         'save' => 'Enregistrer la réponse',
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Canaux autorisés',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'is_locked' => 'Verrouiller',
     ],
 
     'revival' => [

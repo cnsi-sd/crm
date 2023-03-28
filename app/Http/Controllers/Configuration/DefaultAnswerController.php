@@ -57,8 +57,8 @@ class DefaultAnswerController extends AbstractController
         if ($request->exists('save_default_answer'))
         {
             $this->save_default_answer($request, $defaultAnswer);
-            alert::toastSuccess(__('app.defaultAnswer.save'));
-            return redirect()->route('defaultAnswers');
+            alert::toastSuccess(__('app.default_answer.save'));
+            return redirect()->route('default_answers');
         }
 
         return view('configuration.defaultAnswer.edit')

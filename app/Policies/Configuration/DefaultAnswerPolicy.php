@@ -19,4 +19,14 @@ class DefaultAnswerPolicy
     {
         return $user->hasPermission(PermissionEnum::DEFAULT_ANSWER_EDIT);
     }
+
+    public function lock(User $user): bool
+    {
+        return $user->hasPermission(PermissionEnum::DEFAULT_ANSWER_LOCK);
+    }
+
+    public function editLocked(User $user): bool
+    {
+        return $user->hasPermission(PermissionEnum::DEFAULT_ANSWER_EDIT_LOCKED);
+    }
 }

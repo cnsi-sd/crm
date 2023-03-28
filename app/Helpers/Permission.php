@@ -17,6 +17,8 @@ abstract class Permission
                         'items' => [
                             PermissionEnum::DEFAULT_ANSWER_READ,
                             PermissionEnum::DEFAULT_ANSWER_EDIT,
+                            PermissionEnum::DEFAULT_ANSWER_LOCK,
+                            PermissionEnum::DEFAULT_ANSWER_EDIT_LOCKED,
                         ],
                     ],
                 ],

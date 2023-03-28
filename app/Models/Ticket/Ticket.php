@@ -11,6 +11,7 @@ use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
+use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\Tags\TagList;

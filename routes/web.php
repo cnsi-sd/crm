@@ -64,10 +64,10 @@ Route::prefix('/')->group(function () {
 
     Route::prefix('configuration')->group(function () {
         Route::prefix('default_answer')->group(function () {
-            Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_defaultAnswer')->can('edit', DefaultAnswer::class);
-            Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_defaultAnswer')->can('edit', DefaultAnswer::class);
-            Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('defaultAnswers')->can('read', DefaultAnswer::class);
-            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_default_answer')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_default_answer')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('default_answers')->can('read', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_default_answers')->can('edit', DefaultAnswer::class);
         });
         Route::prefix('revival')->group(function () {
             Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival')->can('edit', Revival::class);
