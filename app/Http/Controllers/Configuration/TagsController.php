@@ -57,15 +57,8 @@ class TagsController extends AbstractController
         $tags->background_color = $request->input('background_color');
         $tags->save();
 
-        if(array_key_exists('channels',$request->toArray())){
-            $channelSelected = $request->toArray()['channels'];
-            $tags->channels()->sync($channelSelected);
-        } else {
-            foreach (Channel::all() as $channel){
-                $allChannelId[] = $channel->id;
-            }
-            $tags->channels()->sync($allChannelId);
-        }
+        $channels = $request->input('channels');
+        $tags->channels()->sync($channels);
     }
 
     public function delete(Request $request, ?Tag $tags)
