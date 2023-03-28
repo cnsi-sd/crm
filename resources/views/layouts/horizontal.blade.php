@@ -17,6 +17,7 @@
 
                     @include('layouts.shared/horizontal-nav')
                     @include('layouts.parts.breadcrumb')
+                    @include('layouts.parts.alerts')
                     @yield('content')
 
                 </div>
