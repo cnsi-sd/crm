@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.thread-comments').on("click", function () {
+    $('.thread-comments').click(function () {
         const route = $(this).data("toggle-comment-route")
         $.get(route);
     })

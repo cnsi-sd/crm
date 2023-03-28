@@ -175,6 +175,8 @@
                                             <td>
                                                 {{ $product['name'] }}
                                                 <br>
+                                                <b>{{ __('app.order.brand') }}</b> {{ $product['brand'] }}
+                                                <br>
                                                 <b>{{ __('app.order.reference') }}</b> {{ $product['reference'] }}
                                                 <br>
                                                 <b>{{ __('app.order.ean') }}</b> {{ $product['ean'] }}
