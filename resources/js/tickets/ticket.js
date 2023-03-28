@@ -13,6 +13,10 @@ $(document).ready(function () {
         $.get(route, function (data) {
             $('#order-info').html(data)
 
+            $('.order-info:not(:first)').hide();
+            $('.order-btn:first').removeClass("btn-outline-primary");
+            $('.order-btn:first').addClass("btn-primary");
+
             $('.phone_number').click(function() {
                 window.axios.post(url_click_and_call, {
                     'phone_number' : $(this).text(),
@@ -44,8 +48,12 @@ $(document).ready(function () {
     });
 
     $('body').on("click", '.order-btn', function() {
-        $('.order-info').hide(500, 'linear');
-        $('[data-order-id=' + $(this).data("order-id") + ']').show(500, 'linear');
+        $('.order-btn').removeClass("btn-primary");
+        $('.order-btn').addClass("btn-outline-primary");
+        $('.order-btn[data-order-id=' + $(this).data("order-id") + ']').removeClass("btn-outline-primary");
+        $('.order-btn[data-order-id=' + $(this).data("order-id") + ']').addClass("btn-primary");
+        $('.order-info').hide();
+        $('[data-order-id=' + $(this).data("order-id") + ']').show();
     });
 
 })

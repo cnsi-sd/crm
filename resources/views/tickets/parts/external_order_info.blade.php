@@ -4,7 +4,7 @@
             <div class="row pt-2 pb-2">
                 <div class="col">
                     @foreach($orders as $order)
-                        <button type="button" data-order-id="{{ $order['id_order'] }}" class="btn btn-primary order-btn">
+                        <button type="button" data-order-id="{{ $order['id_order'] }}" class="btn btn-outline-primary order-btn">
                             {{__('app.ticket.order')}} #{{ $order['id_order'] }}</button>
                     @endforeach
                 </div>
@@ -75,7 +75,7 @@
                             @if($order['max_shipment_date'])
                                 <div class="row">
                                     <div class="col">{{ __('app.order.max_shipment_date') }} :</div>
-                                    <div class="col max_shipment_date">{{ $order['max_shipment_date'] }}</div>
+                                    <div class="col max_shipment_date">{{ (new DateTime($order['max_shipment_date']))->format('d/m/Y') }}</div>
                                 </div>
                             @endif
                             <div class="row pt-2">
