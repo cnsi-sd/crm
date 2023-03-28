@@ -57,7 +57,7 @@
                                     <div class="input-group input-group-merge">
                                         <input type="password" id="password" name="password" class="form-control" placeholder="{{__('app.enter_password')}}">
                                         <div class="input-group-text" data-password="false">
-                                            <span class="password-eye"></span>
+                                            <span class="uil-eye"></span>
                                         </div>
                                     </div>
                                 </div>
