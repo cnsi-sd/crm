@@ -6,31 +6,16 @@ use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Jobs\Bot\AnswerToNewMessage;
-use App\Jobs\SendMessage\ButSendMessage;
-use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\CdiscountSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMessage;
-use App\Jobs\SendMessage\DartySendMessage;
-use App\Jobs\SendMessage\IntermarcheSendMessage;
-use App\Jobs\SendMessage\LaposteSendMessage;
-use App\Jobs\SendMessage\LeclercSendMessage;
-use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueducommerceSendMessage;
-use App\Jobs\SendMessage\ShowroomSendMessage;
-use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\Channel;
-use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Cdiscount\ClientCdiscount;
-use Cnsi\Cdiscount\Discussion\Discussion;
 use Cnsi\Cdiscount\DiscussionsApi;
 use Cnsi\Logger\Logger;
 use Exception;
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
@@ -40,7 +25,7 @@ class CdiscountImportMessages extends AbstractImportMessages
      * @var ClientCdiscount
      */
     static private ClientCdiscount $client;
-    const FROM_DATE_TRANSFORMATOR = ' - 6 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
     const MAX_RETRY_API_CALL = 5;
     const IGNORE_MSG_CONTAINS = [
         '----- The following addresses had permanent fatal errors -----',
@@ -160,6 +145,7 @@ class CdiscountImportMessages extends AbstractImportMessages
 
     private function checkClosedDiscussion($discussion)
     {
+        $this->logger->info('Discussion is closed : add tag to existing ticket');
         $ticket = Ticket::select('tickets.*')
             ->join('orders', 'orders.id', 'tickets.order_id')
             ->where('tickets.channel_id', $this->channel->id)
