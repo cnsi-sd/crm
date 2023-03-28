@@ -205,7 +205,7 @@
                                     <div class="col">
                                         <select form="saveTicket" id="default_answer_select" name="default_answer_select" class="form-control form-select">
                                             <option value="">---</option>
-                                            @foreach($ticket->channel->defaultAnswers()->get() as $defaultAnswer)
+                                            @foreach($ticket->channel->getAuthorizedDefaultAnswers() as $defaultAnswer)
                                                 <option value="{{ $defaultAnswer->id }}" data-answer-content="{{ $defaultAnswer->content }}">
                                                     {{ $defaultAnswer->name }}
                                                 </option>
