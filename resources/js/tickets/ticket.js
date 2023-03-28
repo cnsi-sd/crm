@@ -63,6 +63,23 @@ $(document).ready(function () {
         $('[data-order-id=' + $(this).data("order-id") + ']').show();
     });
 
+    var channelInMessage = 0;
+
+    function checkChannelInMessage(channel){
+        if(tinymce.get('message_to_customer').getContent().includes(channel)) {
+            channelInMessage++;
+        }
+    }
+
+    $('button[type=submit][form=saveTicket]').on("click", function(event) {
+        let othersChannels = $("#others-channels").data("others-channels").split(',');
+        othersChannels.forEach(element => checkChannelInMessage(element));
+        if(channelInMessage > 0) {
+            if(!confirm($("#others-channels").data("confirm-message"))){
+                event.preventDefault();
+            };
+        }
+    });
 })
 
 let bodyCard = document.getElementById('card-body-tag');

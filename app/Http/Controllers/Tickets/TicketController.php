@@ -194,9 +194,18 @@ class TicketController extends AbstractController
         if($thread->ticket->id !== $ticket->id)
             abort(404);
 
+        $othersChannels = Channel::all()->except($ticket->channel->id);
+        $othersChannelsNames = [];
+        foreach($othersChannels as $otherChannel) {
+            foreach ($otherChannel->ext_names as $ext_name) {
+                $othersChannelsNames[] = $ext_name;
+            }
+        }
+
         return view('tickets.ticket')
             ->with('ticket', $ticket)
             ->with('thread', $thread)
+            ->with('othersChannelsNames', $othersChannelsNames)
             ->with('documents_table', $ticket->getDocumentsTable($request, route('upload_document', [$ticket, $ticket::class])));
     }
 
