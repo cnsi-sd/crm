@@ -89,7 +89,7 @@ class SavNoteController extends AbstractController
             'hotline'               => ['required', 'string', 'max:255'],
             'brand_email'           => ['required', 'string', 'max:255'],
             'brand_information'     => ['nullable', 'string', 'max:255'],
-            'regional_information'  => ['nullable', 'string', 'max:255'],
+            'supplier_information'  => ['nullable', 'string', 'max:255'],
         ]);
 
         $savNote->manufacturer          = $request->input('manufacturer');
@@ -100,7 +100,7 @@ class SavNoteController extends AbstractController
         $savNote->hotline               = $request->input('hotline');
         $savNote->brand_email           = $request->input('brand_email');
         $savNote->brand_information     = $request->input('brand_information');
-        $savNote->regional_information  = $request->input('regional_information');
+        $savNote->regional_information  = $request->input('supplier_information');
 
         $savNote->save();
     }
