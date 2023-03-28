@@ -1,19 +1,20 @@
 @foreach($thread->messages as $message)
     <div class="card">
         <div
-            @class(['card-header d-flex justify-content-between align-items-center', 'collapsed' => $message->author_type === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN])
+            @class(['card-header justify-content-between align-items-center', 'collapsed' => $message->author_type === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN])
             data-bs-toggle="collapse"
             data-bs-target="#collapse-message-{{$message->id}}"
             aria-expanded="false"
             aria-controls="collapse-message-{{$message->id}}"
         >
             @if($message->author_type === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN && $message->user)
-                {{ $message->user->__toString() }}
+                <span class="uil-user"> {{ $message->user->__toString() }}</span>
             @else
-                {{ \App\Enums\Ticket\TicketMessageAuthorTypeEnum::getMessage($message->author_type) }}
+                <span class="uil-user"> {{ \App\Enums\Ticket\TicketMessageAuthorTypeEnum::getMessage($message->author_type) }}</span>
             @endif
-            @if($message->default_answer_id)<b>{{ $message->default_answer->name }}</b>@endif
-            - {{ $message->created_at->format('d/m/y H:i') }}
+            <span class="ms-2 me-2"> - </span>
+            @if($message->default_answer_id)<span class="uil-edit"> {{ $message->default_answer->name }}</span><span class="ms-2 me-2"> - </span>@endif
+            <span class="uil-calender"> {{ $message->created_at->format('d/m/y H:i') }}</span>
         </div>
         <div class="collapse @if($message->isExternal()) show @endif()" id="collapse-message-{{$message->id}}">
             <div class="card-body {{$message->author_type}}">
