@@ -15,13 +15,15 @@
                             name="channelName"
                             id="channelName"
                             data-get-message-content="{{ route('answer_offer_question_content') }}"
-                            class="form-control form-control-sm form-select no-select2"
+                            class="form-control form-control-sm form-select no-select2 ms-2"
                             required
                         >
                             @foreach(\App\Enums\Channel\ChannelEnum::getList() as $channelName)
-                                <option value="{{ $channelName }}">
-                                    {{ $channelName }}
-                                </option>
+                                @if($channelName == \App\Enums\Channel\ChannelEnum::CDISCOUNT_FR)
+                                    <option value="{{ $channelName }}">
+                                        {{ $channelName }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

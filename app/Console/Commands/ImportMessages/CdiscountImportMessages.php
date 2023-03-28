@@ -80,7 +80,7 @@ class CdiscountImportMessages extends AbstractImportMessages
                     DB::beginTransaction();
                     $this->logger->info('Begin Transaction');
 
-                    if ($discu->getTypologyCode() == "Offer"){ // TODO "order" to test, the real condition is "Offer"
+                    if ($discu->getTypologyCode() == "Offer"){
                         CdiscountAnswerOfferQuestions::AnswerOfferQuestions($discu);
                     } else {
                         $orderReference = $discu->getOrderReference();

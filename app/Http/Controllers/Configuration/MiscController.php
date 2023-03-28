@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Configuration;
 use App\Enums\Ticket\MessageVariable;
 use App\Helpers\Alert;
 use App\Http\Controllers\AbstractController;
+use App\Jobs\Bot\AnswerToNewMessage;
+use App\Models\Channel\DefaultAnswer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -66,11 +68,17 @@ class MiscController extends AbstractController
 
     public function answerOfferQuestions(Request $request): View|RedirectResponse
     {
-
         if ($request->exists('save')) {
 
-            setting(['channelName' => $request->input('channelName')]);
-            setting([ (new AnswerOfferQuestionController)->getsettingKey($request->input('channelName')) => $request->input('message-content')]);
+            $defaultAnswer = DefaultAnswer::updateOrCreate(
+                [
+                    'name' => $request->input('channelName') .'.defaultAnswerOfferQuestion'
+                ],[
+                    'content' =>  $request->input('message-content')
+                ]
+            );
+
+            setting([$request->input('channelName').'.defaultAnswerOfferQuestion' => $defaultAnswer->id]);
             setting()->save();
 
             Alert::toastSuccess(__('app.config.misc.saved'));

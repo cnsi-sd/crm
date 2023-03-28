@@ -16,7 +16,6 @@ $(window).on('load', function (){
             }}
         )
         .then((response)=> {
-            console.log(response.data)
             messageContent.val(response.data)
         })
     }

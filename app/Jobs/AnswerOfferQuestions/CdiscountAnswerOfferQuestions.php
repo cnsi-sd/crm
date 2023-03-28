@@ -5,6 +5,7 @@ namespace App\Jobs\AnswerOfferQuestions;
 use App\Enums\Channel\ChannelEnum;
 use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
 use App\Models\Channel\Channel;
+use App\Models\Channel\DefaultAnswer;
 use Cnsi\Cdiscount\ClientCdiscount;
 use Cnsi\Cdiscount\DiscussionsApi;
 use Cnsi\Logger\Logger;
@@ -52,8 +53,11 @@ class CdiscountAnswerOfferQuestions implements ShouldQueue
             'Answer to discussionId: ' . $apiMessage->getDiscussionId()
             . ', customerId: ' . $apiMessage->getCustomerId());
 
+        $defaultAnswerId = setting('cdiscount.defaultAnswerOfferQuestion');
+        $messageBody = DefaultAnswer::findOrFail($defaultAnswerId);
+
         $cdiscountMessage = array(
-            'body' => setting((new AnswerOfferQuestionController)->getSettingKey($channel->name)),
+            'body' => $messageBody,
             'discussionId' => $apiMessage->getDiscussionId(),
             'salesChannelEternalDiscussionReference' => $apiMessage->getSalesChannelExternalReference(),
             'salesChannel' => $apiMessage->getSalesChannel(),
