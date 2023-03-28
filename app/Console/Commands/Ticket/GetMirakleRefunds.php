@@ -4,6 +4,7 @@ namespace App\Console\Commands\Ticket;
 
 use App\Enums\Channel\MirakleChannelEnum;
 use App\Models\Channel\Channel;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use DateTime;
@@ -39,7 +40,7 @@ class GetMirakleRefunds extends Command
 
         } catch (Exception $e) {
             $this->logger->error('An error has occurred', $e);
-//            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
         }
     }
 
@@ -78,15 +79,24 @@ class GetMirakleRefunds extends Command
             foreach($shopOrder->getOrderLines()->getItems() as $orderLine) {
                 if(count($orderLine->getRefunds()->getItems()) > 0) {
                     $this->logger->info('Get Mirakl refund: Refund find for ' . $shopOrder->getId());
-                    $ticket = Ticket::where('channel_id', $this->channel->id)
-                        ->where('order_id', $shopOrder->getId())
+                    $ticket = Ticket::select('tickets.*')
+                        ->join('orders','tickets.order_id', 'orders.id')
+                        ->where('tickets.channel_id', $this->channel->id)
+                        ->where('orders.channel_order_number', $shopOrder->getId())
                         ->first();
-                    if($ticket)
-                        $test = '';
+                    if($ticket){
+                        $this->logger->info('Ticket id: ' . $ticket->id . 'associated to orderId:' . $shopOrder->getId());
+                        $tagId = setting('tag.mirakl_refund');
+                        $refundTag = Tag::findOrFail($tagId);
+
+                        if(!$ticket->hasTag($refundTag)){
+                            $this->logger->info('No refund tag on the ticket: try to add tag to ticket');
+                            $ticket->addTag($refundTag);
+                        }
+                    }
                 }
             }
         }
-
     }
 
     protected function getCredentials(): array
