@@ -94,21 +94,31 @@ class CdiscountImportMessages extends AbstractImportMessages
                     DB::beginTransaction();
                     $this->logger->info('Begin Transaction');
 
-                    $orderReference = $discu->getOrderReference();
-                    $order = Order::getOrder($orderReference, $this->channel);
-                    $ticket = Ticket::getTicket($order, $this->channel);
-
                     $this->logger->info('Message recovery');
                     $messages = $discu->getMessages();
-                    $channel_data = [
-                        "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),
-                        "salesChannel" => $discu->getSalesChannel(),
-                        "userId" => $discu->getCustomerId(),
-                    ];
-                    $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
+                    foreach ($messages as $message) {
+                        $this->logger->info('Check message sender');
+                        $authorType = $message->getSender()->getUserType();
 
-                    $this->importMessageByThread($ticket, $thread, $messages);
-                    DB::commit();
+                        $this->logger->info('Check if dicussion have message and if is seller message sender');
+                        if (count($messages) !== 0 && $authorType == 'Seller')
+                            continue;
+
+                        $orderReference = $discu->getOrderReference();
+                        $order = Order::getOrder($orderReference, $this->channel);
+                        $ticket = Ticket::getTicket($order, $this->channel);
+
+                        $channel_data = [
+                            "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),
+                            "salesChannel" => $discu->getSalesChannel(),
+                            "userId" => $discu->getCustomerId(),
+                        ];
+                        $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
+
+                        $this->importMessageByThread($ticket, $thread, $message);
+                        $this->logger->info('---- End Import Message');
+                        DB::commit();
+                    }
                 }
             } catch (Exception $e){
                 $this->logger->error('An error has occurred. Rolling back.', $e);
@@ -140,9 +150,8 @@ class CdiscountImportMessages extends AbstractImportMessages
      * @param array $messages
      * @throws Exception
      */
-    private function importMessageByThread(Ticket $ticket, Thread $thread,array $messages)
+    private function importMessageByThread(Ticket $ticket, Thread $thread,$message)
     {
-        foreach ($messages as $message) {
             $imported_id = $message->getMessageId();
             $this->logger->info('Check if this message is imported');
             if (!$this->isMessagesImported($imported_id)) {
@@ -150,7 +159,6 @@ class CdiscountImportMessages extends AbstractImportMessages
                 $this->convertApiResponseToMessage($ticket, $message, $thread);
                 $this->addImportedMessageChannelNumber($imported_id);
             }
-        }
     }
 
     /**
@@ -162,11 +170,6 @@ class CdiscountImportMessages extends AbstractImportMessages
      */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
-        $authorType = $message_api->getSender()->getUserType();
-
-        if ($authorType == 'Seller')
-            return;
-
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
@@ -176,7 +179,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         ],
             [
                 'user_id' => null,
-                'author_type' => self::getAuthorType($authorType),
+                'author_type' => self::getAuthorType($message_api->getSender()->getUserType()),
                 'content' => strip_tags($message_api->getBody()),
             ]
         );

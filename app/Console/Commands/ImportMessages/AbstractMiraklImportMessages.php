@@ -71,18 +71,25 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 DB::beginTransaction();
                 $this->logger->info('Begin Transaction');
 
-                $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
-                $order = Order::getOrder($mpOrderId, $this->channel);
-                $ticket = Ticket::getTicket($order, $this->channel);
-
                 $this->logger->info('Message recovery');
                 /** @var ThreadMessage[] $messages */
                 $messages = array_reverse($miraklThread->getMessages()->getItems());
 
-                /** @var ThreadTopic $topic */
-                $thread = \App\Models\Ticket\Thread::getOrCreateThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue());
+                foreach ($messages as $message) {
+                    $authorType = $message->getFrom()->getType();
 
-                $this->importMessageByThread($ticket, $thread, $messages);
+                    if (count($message) !== 0 && $authorType == 'SHOP_USER')
+                        continue;
+
+                    $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
+                    $order = Order::getOrder($mpOrderId, $this->channel);
+                    $ticket = Ticket::getTicket($order, $this->channel);
+
+                    /** @var ThreadTopic $topic */
+                    $thread = \App\Models\Ticket\Thread::getOrCreateThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue());
+
+                    $this->importMessageByThread($ticket, $thread, $message);
+                }
 
                 DB::commit();
             } catch (Exception $e) {
@@ -124,21 +131,21 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
     /**
      * @param Ticket $ticket
      * @param \App\Models\Ticket\Thread $thread
-     * @param  $messages
+     * @param $message
      * @return void
      * @throws Exception
      */
-    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages): void
+    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $message): void
     {
-        foreach ($messages as $message) {
-            $imported_id = $message->getId();
-            $this->logger->info('Check if this message is imported');
-            if (!$this->isMessagesImported($imported_id)) {
-                $this->logger->info('Convert api message to db message');
-                $this->convertApiResponseToMessage($ticket, $message, $thread);
-                $this->addImportedMessageChannelNumber($imported_id);
-            }
-        }
+        $imported_id = $message->getId();
+        $this->logger->info('Check if this message is imported');
+        if ($this->isMessagesImported($imported_id))
+            return;
+
+        $this->logger->info('Convert api message to db message');
+        $this->convertApiResponseToMessage($ticket, $message, $thread);
+        $this->addImportedMessageChannelNumber($imported_id);
+
     }
 
     /**
