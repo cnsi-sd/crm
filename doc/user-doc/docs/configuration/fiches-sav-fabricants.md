@@ -2,7 +2,7 @@
 
 ## Consulter la liste des fiches disponibles
 
-Un onglet est disponible dans le menu "Configuration" de la navbar :
+Un onglet est disponible dans le menu "Configuration" de la barre de menu :
 
 ![Onglet_fiche](assets/fiche_sav_fabricant/onglet_fiche_sav_fabricant.png)
 
@@ -15,7 +15,7 @@ Un onglet est disponible dans le menu "Configuration" de la navbar :
 
 ## Créer une fiche SAV fabricant
 
-Pour créer une fiche, il faut se rendre dans l'onglet Configuration, puis Fiche Sav fabricant.
+Pour créer une fiche, il faut se rendre dans l'onglet Configuration, puis Fiches SAV fabricant.
 Cliquer sur le bouton "Nouvelle fiche SAV fabricant" en haut à droite de la page.
 
 ![Nouvelle_fiche](assets/fiche_sav_fabricant/nouvelle_fiche_SAV.png)
