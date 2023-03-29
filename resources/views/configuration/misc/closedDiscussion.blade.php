@@ -6,11 +6,9 @@
             <div class="card-header">
                 {{ __('app.config.config') }}
             </div>
-
             <div class="card-body">
                 <form class="form-horizontal" method="post">
                     @csrf
-
                     <div class="mb-3">
                         <label for="closed_discussion_tag_id" class="form-label">
                             {{ __('app.config.misc.closed_discussion_tag') }}
@@ -23,7 +21,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
                     </div>
