@@ -52,4 +52,6 @@ deploy_tkg:
     - ~/.composer/vendor/bin/envoy run app:deploy --on=tkg-production
   only:
     - master
+  dependencies:
+    - build
   when: on_success
