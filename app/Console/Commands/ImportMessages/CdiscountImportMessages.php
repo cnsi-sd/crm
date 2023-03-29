@@ -77,12 +77,13 @@ class CdiscountImportMessages extends AbstractImportMessages
 
                 $this->logger->info('--- check chat modification time ---');
                 if ($discu->getUpdatedAt()->getTimestamp() > $from_time) {
-                    DB::beginTransaction();
                     $this->logger->info('Begin Transaction');
 
                     if ($discu->getTypologyCode() == "Offer"){
                         CdiscountAnswerOfferQuestions::AnswerOfferQuestions($discu);
+
                     } else {
+                        DB::beginTransaction();
                         $orderReference = $discu->getOrderReference();
                         $order = Order::getOrder($orderReference, $this->channel);
                         $ticket = Ticket::getTicket($order, $this->channel);
