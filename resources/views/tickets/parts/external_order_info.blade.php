@@ -82,6 +82,9 @@
                                 @if($order['is_fulfillment'] == true)
                                     <div class="col"><span class="fulfillment order-badge">Fulfillment</span></div>
                                 @endif
+                                @if($order['is_sellerflex'] == true)
+                                    <div class="col"><span class="sellerflex order-badge">SellerFlex</span></div>
+                                @endif
                                 @if($order['is_express'] == true)
                                     <div class="col"><span class="express order-badge">Livraison Express</span></div>
                                 @endif

@@ -24,6 +24,7 @@ Ce bloc résume les informations principales de la commande :
 Des encarts colorés peuvent apparaitre en dessous et donnent d'autres indications si nécessaire :
 
 * Fulfillment : Si la commande est en Fulfillment (produit stocké chez la marketplace)
+* SellerFlex : Si la commande est de type Seller Flex (produit stocké dans nos entrepôts, livraison par Amazon)
 * Livraison Express : Si le client à fait le choix d'une livraison express (24/48h)
 * DEBALLE : Si le client à choisi une livraison avec déballage du produit
 * INSTALLE : Si le client à choisi une livraison avec installation du produit
