@@ -153,6 +153,7 @@ return [
         'designation' => 'Désignation',
         'qty' => 'Qté',
         'supplier' => 'Fournisseur',
+        'brand' => 'Marque :',
         'reference' => 'Référence :',
         'ean' => 'EAN :',
         'external_link' => 'Accès backoffice',
@@ -187,6 +188,9 @@ return [
             'savprocess_stop_revival' => 'Relances auto à stopper',
 
             'default_answer_offer_questions' => 'Réponse par défaut aux questions sur les offres',
+
+            'closed_discussion' => 'Discussion clôturée',
+            'closed_discussion_tag' => 'Tag discussion clôturée',
         ],
     ],
 

@@ -8,7 +8,7 @@
             aria-controls="collapse-message-{{$message->id}}"
         >
             @if($message->author_type === \App\Enums\Ticket\TicketMessageAuthorTypeEnum::ADMIN && $message->user)
-                {{ $message->user->name }}
+                {{ $message->user->__toString() }}
             @else
                 {{ \App\Enums\Ticket\TicketMessageAuthorTypeEnum::getMessage($message->author_type) }}
             @endif

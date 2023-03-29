@@ -9,6 +9,7 @@ use App\Jobs\AnswerOfferQuestions\CdiscountAnswerOfferQuestions;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
@@ -84,12 +85,28 @@ class CdiscountImportMessages extends AbstractImportMessages
 
                     } else {
                         DB::beginTransaction();
-                        $orderReference = $discu->getOrderReference();
-                        $order = Order::getOrder($orderReference, $this->channel);
-                        $ticket = Ticket::getTicket($order, $this->channel);
+
+                        if (!$discu->isOpen())
+                            $this->checkClosedDiscussion($discu);
 
                         $this->logger->info('Message recovery');
                         $messages = $discu->getMessages();
+                        foreach ($messages as $message) {
+                            $this->logger->info('Check message sender');
+                            $authorType = $message->getSender()->getUserType();
+
+                            $this->logger->info('Check if dicussion have message and if is seller message sender');
+                            if (count($messages) !== 0 && $authorType == 'Seller')
+                                continue;
+
+                            $orderReference = $discu->getOrderReference();
+                            $order = Order::getOrder($orderReference, $this->channel);
+                            $ticket = Ticket::getTicket($order, $this->channel);
+
+
+                            $this->logger->info('Message recovery');
+                            $messages = $discu->getMessages();
+
                         $channel_data = [
                             "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),
                             "salesChannel" => $discu->getSalesChannel(),
@@ -97,7 +114,8 @@ class CdiscountImportMessages extends AbstractImportMessages
                         ];
                         $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
 
-                        $this->importMessageByThread($ticket, $thread, $messages);
+                        $this->importMessageByThread($ticket, $thread, $message);
+                        $this->logger->info('---- End Import Message');
                         DB::commit();
                     }
                 }
@@ -131,16 +149,33 @@ class CdiscountImportMessages extends AbstractImportMessages
      * @param array $messages
      * @throws Exception
      */
-    private function importMessageByThread(Ticket $ticket, Thread $thread,array $messages)
+    private function importMessageByThread(Ticket $ticket, Thread $thread,$message)
     {
-        foreach ($messages as $message) {
-            $imported_id = $message->getMessageId();
-            $this->logger->info('Check if this message is imported');
-            if (!$this->isMessagesImported($imported_id)) {
-                $this->logger->info('Convert api message to db message');
-                $this->convertApiResponseToMessage($ticket, $message, $thread);
-                $this->addImportedMessageChannelNumber($imported_id);
-            }
+        $imported_id = $message->getMessageId();
+        $this->logger->info('Check if this message is imported');
+
+        if (!$this->isMessagesImported($imported_id)) {
+            $this->logger->info('Convert api message to db message');
+            $this->convertApiResponseToMessage($ticket, $message, $thread);
+            $this->addImportedMessageChannelNumber($imported_id);
+        }
+    }
+
+    private function checkClosedDiscussion($discussion)
+    {
+        $this->logger->info('Discussion is closed : add tag to existing ticket');
+        $ticket = Ticket::select('tickets.*')
+            ->join('orders', 'orders.id', 'tickets.order_id')
+            ->where('tickets.channel_id', $this->channel->id)
+            ->where('orders.channel_order_number', $discussion->getOrderReference())
+            ->first();
+
+        if ($ticket){
+            $closedTagId = setting('closed_discussion_tag_id');
+            $closedTag = Tag::findOrfail($closedTagId);
+
+            if(!$ticket->hastag($closedTag))
+                $ticket->addTag($closedTag);
         }
     }
 
@@ -153,11 +188,6 @@ class CdiscountImportMessages extends AbstractImportMessages
      */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
     {
-        $authorType = $message_api->getSender()->getUserType();
-
-        if ($authorType == 'Seller')
-            return;
-
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;
         $ticket->save();
@@ -167,7 +197,7 @@ class CdiscountImportMessages extends AbstractImportMessages
         ],
             [
                 'user_id' => null,
-                'author_type' => self::getAuthorType($authorType),
+                'author_type' => self::getAuthorType($message_api->getSender()->getUserType()),
                 'content' => strip_tags($message_api->getBody()),
             ]
         );

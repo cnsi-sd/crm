@@ -14,9 +14,17 @@
                     <a href="{{ route('savprocess_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'savprocess_config'])>
                         {{ __('app.config.misc.savprocess') }}
                     </a>
+
+
+
                     <a href="{{ route('answer_offer_questions_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'answer_offer_questions_config'])>
                         {{ __('app.config.misc.default_answer_offer_questions') }}
                     </a>
+                    <a href="{{ route('closed_discussion_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'closed_discussion_config'])>
+                        {{ __('app.config.misc.closed_discussion') }}
+                    </a>
+
+
                 </ul>
             </div>
             @yield('misc_content')

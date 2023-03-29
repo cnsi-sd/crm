@@ -105,6 +105,7 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'incidents', [MiscController::class, 'incidents'])->name('incidents_config')->can('misc_config');
             Route::match(['get', 'post'], 'savprocess', [MiscController::class, 'savprocess'])->name('savprocess_config')->can('misc_config');
             Route::match(['get', 'post'], 'answer_offer_questions', [MiscController::class, 'answerOfferQuestions'])->name('answer_offer_questions_config')->can('misc_config');
+            Route::match(['get', 'post'], 'closed_discussion', [MiscController::class, 'closedDiscussion'])->name('closed_discussion_config')->can('misc_config');
         });
     });
     // CALL AJAX
