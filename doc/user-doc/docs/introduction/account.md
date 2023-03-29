@@ -11,14 +11,13 @@ Saisissez vos identifiants sur la page de connexion pour vous connecter.
 ## Mot de passe oublié
 En cas d'oubli de mot de passe, utilisez le lien `Mot de passe oublié ?` pour le réinitialiser. Saisissez votre email puis suivez les instructions que vous recevrez sur celui-ci.
 
-Les développeurs ne peuvent pas retrouver un mot de passe.
+!!! note
+    Les développeurs ne peuvent pas retrouver un mot de passe.
 
 ## Changement de mot de passe
-Une fois connecté, la seule option possible sur votre profil est le changement de votre mot de passe. Pour effectuer cette action, rendez-vous dans votre profil, onglet `Mon compte`.
 
-![Bouton mon compte](assets/mon_compte.png)
+Le lien dans le mail que vous avez reçu vous permet de changer de mot de passe :
 
-Utiliser ensuite le formulaire `Changer de mot de passe` pour en définir un nouveau.
 ![Formulaire changer de mot de passe](assets/changer_de_mot_de_passe.png)
 
 !!! warning "Sécurité"
