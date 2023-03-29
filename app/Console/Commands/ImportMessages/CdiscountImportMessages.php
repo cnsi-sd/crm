@@ -96,12 +96,16 @@ class CdiscountImportMessages extends AbstractImportMessages
 
                     $this->logger->info('Message recovery');
                     $messages = $discu->getMessages();
+                    
+                    if (count($messages) == 0)
+                        continue;
+
                     foreach ($messages as $message) {
                         $this->logger->info('Check message sender');
                         $authorType = $message->getSender()->getUserType();
 
                         $this->logger->info('Check if dicussion have message and if is seller message sender');
-                        if (count($messages) !== 0 && $authorType == 'Seller')
+                        if ($authorType == 'Seller')
                             continue;
 
                         $orderReference = $discu->getOrderReference();
