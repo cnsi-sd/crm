@@ -14,7 +14,7 @@
     switch($on) {
         case 'tkg-production':
             $php = "php8.2";
-            $app_dir = '/var/www/html/crm.tkg.cnsi-sd.fr';
+            $app_dir = '/var/www/html/crm';
             break;
         case 'local':
         default:
