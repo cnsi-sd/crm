@@ -14,14 +14,9 @@ class AnswerOfferQuestionController extends AbstractController
         $channelName = $request->input('channelName');
         $defaultAnswerId = setting($channelName . '.defaultAnswerOfferQuestion');
         $defaultAnswer = DefaultAnswer::find($defaultAnswerId);
-        if($defaultAnswer)
+        if ($defaultAnswer)
             return $defaultAnswer->content;
         else
             return null;
-    }
-
-    public function getSettingKey($channelName): string
-    {
-        return $channelName . '.defaultAnswerOfferQuestion';
     }
 }
