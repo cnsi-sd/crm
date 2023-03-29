@@ -6,6 +6,7 @@ use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
 use App\Enums\FixedWidthEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
+use App\Helpers\Lockable;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Ticket;
 use DateTime;
@@ -29,7 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Tag extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Lockable;
 
     protected $fillable = [
         'name',
@@ -66,11 +67,6 @@ class Tag extends Model
     public function getAuthorizedChannels()
     {
         return $this->channels->count() === 0 ? Channel::all() : $this->channels;
-    }
-
-    public function getIsLocked(): bool
-    {
-        return $this->is_locked;
     }
 
     public static function getTableColumns(): array

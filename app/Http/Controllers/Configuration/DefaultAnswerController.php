@@ -88,7 +88,7 @@ class DefaultAnswerController extends AbstractController
     public function delete(Request $request, ?DefaultAnswer $defaultAnswer)
     {
         if($defaultAnswer->softDeleted()){
-            alert::toastSuccess(__('app.defaultAnswer.delete'));
+            alert::toastSuccess(__('app.default_answer.delete'));
         }
         return redirect()->route('defaultAnswers');
     }

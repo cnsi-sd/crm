@@ -4,6 +4,7 @@ namespace App\Models\Channel;
 
 use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
+use App\Helpers\Lockable;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class DefaultAnswer extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Lockable;
 
     /**
      * @var mixed|true
@@ -56,11 +57,6 @@ class DefaultAnswer extends Model
     public function getAuthorizedChannels()
     {
         return $this->channels->count() === 0 ? Channel::all() : $this->channels;
-    }
-
-    public function getIsLocked(): bool
-    {
-        return $this->is_locked;
     }
 
     public static function getTableColumns(): array
