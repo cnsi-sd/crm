@@ -75,10 +75,13 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 /** @var ThreadMessage[] $messages */
                 $messages = array_reverse($miraklThread->getMessages()->getItems());
 
+                if (count($messages) == 0)
+                    continue;
+
                 foreach ($messages as $message) {
                     $authorType = $message->getFrom()->getType();
 
-                    if (count($message) !== 0 && $authorType == 'SHOP_USER')
+                    if ($authorType == 'SHOP_USER')
                         continue;
 
                     $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
