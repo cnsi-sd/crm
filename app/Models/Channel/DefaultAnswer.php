@@ -2,7 +2,6 @@
 
 namespace App\Models\Channel;
 
-use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Database\Eloquent\Model;

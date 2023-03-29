@@ -6,30 +6,16 @@ use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Jobs\Bot\AnswerToNewMessage;
-use App\Jobs\SendMessage\ButSendMessage;
-use App\Jobs\SendMessage\CarrefourSendMessage;
-use App\Jobs\SendMessage\CdiscountSendMessage;
-use App\Jobs\SendMessage\ConforamaSendMessage;
-use App\Jobs\SendMessage\DartySendMessage;
-use App\Jobs\SendMessage\IntermarcheSendMessage;
-use App\Jobs\SendMessage\LaposteSendMessage;
-use App\Jobs\SendMessage\LeclercSendMessage;
-use App\Jobs\SendMessage\MetroSendMessage;
-use App\Jobs\SendMessage\RueducommerceSendMessage;
-use App\Jobs\SendMessage\ShowroomSendMessage;
-use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Models\Channel\Channel;
-use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Cdiscount\ClientCdiscount;
-use Cnsi\Cdiscount\Discussion\Discussion;
 use Cnsi\Cdiscount\DiscussionsApi;
 use Cnsi\Logger\Logger;
 use Exception;
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
@@ -94,6 +80,9 @@ class CdiscountImportMessages extends AbstractImportMessages
                     DB::beginTransaction();
                     $this->logger->info('Begin Transaction');
 
+                    if (!$discu->isOpen())
+                        $this->checkClosedDiscussion($discu);
+
                     $this->logger->info('Message recovery');
                     $messages = $discu->getMessages();
                     foreach ($messages as $message) {
@@ -154,11 +143,30 @@ class CdiscountImportMessages extends AbstractImportMessages
     {
             $imported_id = $message->getMessageId();
             $this->logger->info('Check if this message is imported');
+
             if (!$this->isMessagesImported($imported_id)) {
                 $this->logger->info('Convert api message to db message');
                 $this->convertApiResponseToMessage($ticket, $message, $thread);
                 $this->addImportedMessageChannelNumber($imported_id);
             }
+    }
+
+    private function checkClosedDiscussion($discussion)
+    {
+        $this->logger->info('Discussion is closed : add tag to existing ticket');
+        $ticket = Ticket::select('tickets.*')
+            ->join('orders', 'orders.id', 'tickets.order_id')
+            ->where('tickets.channel_id', $this->channel->id)
+            ->where('orders.channel_order_number', $discussion->getOrderReference())
+            ->first();
+
+        if ($ticket){
+            $closedTagId = setting('closed_discussion_tag_id');
+            $closedTag = Tag::findOrfail($closedTagId);
+
+            if(!$ticket->hastag($closedTag))
+                $ticket->addTag($closedTag);
+        }
     }
 
     /**
