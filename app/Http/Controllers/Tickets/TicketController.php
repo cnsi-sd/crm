@@ -153,11 +153,7 @@ class TicketController extends AbstractController
                 $request->validate([
                     'ticket-thread-messages-content'     => ['required','string'],
                 ]);
-                if($request->input('default_answer_select')){
-                    $defaultAnswerId = $request->input('default_answer_select');
-                } else {
-                    $defaultAnswerId = null;
-                }
+                $defaultAnswerId = $request->input('default_answer_select');
                 $message = Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
