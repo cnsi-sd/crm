@@ -63,4 +63,6 @@ class MiscController extends AbstractController
         }
         return view('configuration.misc.savprocess');
     }
+
+    // TODO implement closedDiscussion
 }
