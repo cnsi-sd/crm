@@ -4,6 +4,7 @@ namespace App\Models\Ticket;
 
 use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
+use App\Helpers\TinyMCE;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\User\User;
 use Cnsi\Attachments\Trait\Documentable;
@@ -92,6 +93,13 @@ class Message extends Model
             MessageDocumentTypeEnum::PREPAID_RETURN_TICKET,
             MessageDocumentTypeEnum::SLIP_RETURN,
         ];
+    }
+
+    public function save(array $options = []): bool
+    {
+        // Before save : convert message to text
+        $this->content = TinyMCE::toText($this->content);
+        return parent::save();
     }
 }
 
