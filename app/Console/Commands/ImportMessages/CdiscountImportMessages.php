@@ -75,12 +75,11 @@ class CdiscountImportMessages extends AbstractImportMessages
         }
         foreach ($allDiscussion as $discu){
             try {
-
                 $this->logger->info('--- check chat modification time ---');
                 if ($discu->getUpdatedAt()->getTimestamp() > $from_time) {
                     $this->logger->info('Begin Transaction');
 
-                    if ($discu->getTypologyCode() == "Offer"){
+                    if ($discu->getTypologyCode() == "Offer") {
                         CdiscountAnswerOfferQuestions::AnswerOfferQuestions($discu);
 
                     } else {
@@ -107,16 +106,17 @@ class CdiscountImportMessages extends AbstractImportMessages
                             $this->logger->info('Message recovery');
                             $messages = $discu->getMessages();
 
-                        $channel_data = [
-                            "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),
-                            "salesChannel" => $discu->getSalesChannel(),
-                            "userId" => $discu->getCustomerId(),
-                        ];
-                        $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
+                            $channel_data = [
+                                "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),
+                                "salesChannel" => $discu->getSalesChannel(),
+                                "userId" => $discu->getCustomerId(),
+                            ];
+                            $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
 
-                        $this->importMessageByThread($ticket, $thread, $message);
-                        $this->logger->info('---- End Import Message');
-                        DB::commit();
+                            $this->importMessageByThread($ticket, $thread, $message);
+                            $this->logger->info('---- End Import Message');
+                            DB::commit();
+                        }
                     }
                 }
             } catch (Exception $e){
