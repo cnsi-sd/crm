@@ -3,6 +3,7 @@
 namespace App\Models\Channel;
 
 use App\Helpers\Builder\Table\TableColumnBuilder;
+use App\Models\Ticket\Message;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property Channel[] $channels
  * @property Revival[] $revivals
+ * @property Message[] $messages
  */
 class DefaultAnswer extends Model
 {
