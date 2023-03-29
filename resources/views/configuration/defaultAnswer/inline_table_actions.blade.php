@@ -1,6 +1,6 @@
 @can('edit', App\Models\Channel\DefaultAnswer::class)
     <a
-            href="{{ route('edit_defaultAnswer', ['defaultAnswer' => $defaultAnswer]) }}"
+            href="{{ route('edit_default_answer', ['defaultAnswer' => $defaultAnswer]) }}"
             class="btn btn-secondary btn-sm"
             title="{{ __('app.edit') }}"
     >

@@ -80,6 +80,9 @@ class DefaultAnswerController extends AbstractController
         // Save
         $defaultAnswer->save();
 
+        if($request->input('isLocked') == "on")
+            $defaultAnswer->setIsLocked();
+
         $channels = $request->input('channels');
         $defaultAnswer->channels()->sync($channels);
     }
