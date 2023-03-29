@@ -1,24 +1,31 @@
 # Tags
+---
 
 Lors de l'affichage des tickets, nous avons besoin directement d'identifier le sujet/action à traiter du ticket sans l'ouvrir.
 C'est donc là, qu'intervient les tags.
 
-## Affichage
+### Affichage
 
 Un tag se présente sous la forme suivante :
 
 * Un nom (permet l'identification du/des sujet(s) du ticket)
 * Une couleur (permet l'identification du tag)
 
-  ![tags_affichage](assets/tags_affichage.png)
+
+---
 ## Configuration
 
 ### Ticket
+![tags_affichage](assets/affichage_tag.png)
+
+Sur la page de visualisation des tickets, les tags sont utilisées a plusieurs endroit
+
+//TODO
 
 Pour effectuer l'ajout d'un tag sur un ticket, il faut :
 
 * Rechercher sur le ticket, au niveau de la colonne de gauche l'encadrer qui se nomme : Tags
-![view_tag_on_ticket](assets/view_tags_on_ticket.png)
+![view_tag_on_ticket](assets/create_new_tag.gif)
 
 Il y a plusieurs types d'action réalisable à ce niveau, comme :
 
@@ -42,6 +49,27 @@ La suppression d'une liste est automatique, lorsque le dernier tag de la liste e
 
 Pour effectuer la suppression du tag sur un ticket, il faut cliquer sur le bouton situé à droite du tag .
 ![delete_tag_ticket](assets/tag_delete.png)
-### Création du tag
+
+---
+## Création du tag
 
 Pour effectuer la création d'un tag vous devez aller dans le menu de configuration, puis dans la rubrique Tags.
+
+![configuration_tag](assets/configuration_tag.gif)
+
+Ensuite il faut donc appuyer sur le boutton nouveau, situer en haut à droite.
+
+![create_new_tag](assets/configure_new_tag.png)
+
+---
+
+### Configuration d'un nouveau tag
+
+Lors de la configuration d'un nouveau tag il faut renseigner plusieurs information.
+
+* Le nom du tag 
+* La couleur du fond
+* La couleur du texte
+* Les canaux pour lesquels le tag pourra être utilisé
+
+![configuration_new_tag](assets/configuration_new_tag.gif)
