@@ -76,6 +76,12 @@ abstract class Menu
                         'ref' => 'misc',
                         'permission' => PermissionEnum::MISC_CONFIG
                     ],
+                    [
+                        'text' => trans_choice('app.sav_note.sav_note',2),
+                        'route' => route('sav_notes'),
+                        'ref' => 'savNotes',
+                        'permission' => PermissionEnum::SAV_NOTE_READ
+                    ]
                 ]
             ],
             [

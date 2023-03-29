@@ -19,14 +19,14 @@
         <div class="ticket-comments mt-3 pb-1">
             @foreach($ticket->comments as $comment)
                 <div
-                    @class(['title d-flex justify-content-between align-items-center mt-3', 'collapsed' => !$comment->displayed])
+                    @class(['title d-flex justify-content-between align-items-center mt-3 thread-comments', 'collapsed' => !$comment->displayed])
                     data-bs-toggle="collapse"
-                    data-toggle-comment-route="{{ route("toggle_comment", ['comment' => $comment->id]) }}"
+                    data-toggle-comment-route="{{ route("toggle_comment", ['comment' => $comment]) }}"
                     data-bs-target="#collapse-comment-{{$comment->id}}"
                     aria-expanded="false"
                     aria-controls="collapse-comment-{{$comment->id}}"
                 >
-                    <span class="w-25">{{ $comment->user->getShortName() }}</span>
+                    <span class="w-25">{{ $comment->user->__toString() }}</span>
                     <span>{{ $comment->created_at->format('d/m/y H:i') }}</span>
 
                     <span title="{{ \App\Enums\Ticket\TicketCommentTypeEnum::getMessage($comment->type)}}" class="badge w-25 {{$comment->type}}">

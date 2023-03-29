@@ -50,4 +50,30 @@ class MiscController extends AbstractController
 
         return view('configuration.misc.incidents');
     }
+
+    public function savprocess(Request $request): View|RedirectResponse
+    {
+        if ($request->exists('save')) {
+            setting(['savprocesscomplete_tag_id' => $request->input('savprocesscomplete_tag_id')]);
+            setting(['savprocess_stop_revival_ids' => implode(',',$request->input('savprocess_stop_revival_ids'))]);
+            setting()->save();
+
+            Alert::toastSuccess(__('app.config.misc.saved'));
+            return redirect()->back();
+        }
+        return view('configuration.misc.savprocess');
+    }
+
+    public function closedDiscussion(Request $request): View|RedirectResponse
+    {
+        if ($request->exists('save')) {
+            setting(['closed_discussion_tag_id' => $request->input('closed_discussion_tag_id')]);
+            setting()->save();
+
+            Alert::toastSuccess(__('app.config.misc.saved'));
+            return redirect()->back();
+        }
+
+        return view('configuration.misc.closedDiscussion');
+    }
 }

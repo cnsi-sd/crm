@@ -4,6 +4,7 @@ use App\Http\Controllers\Configuration\BotController;
 use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\RevivalController;
+use App\Http\Controllers\Configuration\SavNoteController;
 use App\Http\Controllers\Configuration\TagsController;
 use App\Http\Controllers\Configuration\MiscController;
 use App\Http\Controllers\HomeController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Tickets\TicketController;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
+use App\Models\Channel\SavNote;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
 use App\Models\Ticket\Ticket;
@@ -53,6 +55,7 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '', [RoleController::class, 'list'])->name('roles')->can('read', Role::class);
         });
         Route::prefix('users')->group(function () {
+            Route::match(['get', 'post'], 'my_account', [UserController::class, 'my_account'])->name('my_account');
             Route::match(['get', 'post'], 'new', [UserController::class, 'edit'])->name('create_user')->can('edit', User::class);
             Route::match(['get', 'post'], '{user}', [UserController::class, 'edit'])->name('edit_user')->can('edit', User::class);
             Route::match(['get', 'post'], '', [UserController::class, 'list'])->name('users')->can('read', User::class);
@@ -88,10 +91,19 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice')->can('bot_config');
             Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information')->can('bot_config');
         });
+        Route::prefix('sav_notes')->group(function () {
+            Route::match(['get', 'post'], '', [SavNoteController::class, 'list'])->name('sav_notes')->can('read', SavNote::class);
+            Route::match(['get', 'post'], 'new', [SavNoteController::class, 'edit'])->name('create_sav_note')->can('edit', SavNote::class);
+            Route::match(['get', 'post'], '{savNote}/edit', [SavNoteController::class, 'edit'])->name('edit_sav_note')->can('edit', SavNote::class);
+            Route::match(['get', 'post'], '{savNote}/delete', [SavNoteController::class, 'delete'])->name('delete_sav_note')->can('delete',SavNote::class);
+            Route::match(['get', 'post'], '{savNote}', [SavNoteController::class, 'show'])->name('show_sav_note')->can('show',SavNote::class);
+        });
         Route::prefix('misc')->group(function () {
             Route::match(['get', 'post'], '', [MiscController::class, 'home'])->name('misc_home')->can('misc_config');
             Route::match(['get', 'post'], 'variables', [MiscController::class, 'variables'])->name('variables_config')->can('misc_config');
             Route::match(['get', 'post'], 'incidents', [MiscController::class, 'incidents'])->name('incidents_config')->can('misc_config');
+            Route::match(['get', 'post'], 'savprocess', [MiscController::class, 'savprocess'])->name('savprocess_config')->can('misc_config');
+            Route::match(['get', 'post'], 'closed_discussion', [MiscController::class, 'closedDiscussion'])->name('closed_discussion_config')->can('misc_config');
         });
     });
     // CALL AJAX

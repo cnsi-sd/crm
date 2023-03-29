@@ -5,4 +5,5 @@ import.meta.glob([
 
 import './bootstrap';
 import './vendor/search';
-import './axios';
+import './components/axios';
+import './components/confirm'

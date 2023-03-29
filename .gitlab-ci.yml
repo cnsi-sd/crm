@@ -7,6 +7,7 @@ variables:
 stages:
   - build
   - test
+  - deploy
 
 build:
   stage: build
@@ -36,3 +37,19 @@ phpstan:
   script:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse app
   allow_failure: true
+
+deploy_tkg:
+  stage: deploy
+  script:
+    # Add the private SSH key to the build environment
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY_TKG")
+    - mkdir -p ~/.ssh
+    - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - vendor/bin/envoy run app:deploy --on=tkg-production --branch="$CI_COMMIT_BRANCH"
+  only:
+    - master
+  dependencies:
+    - build
+  when: on_success

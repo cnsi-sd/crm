@@ -17,8 +17,8 @@
 
                         <!-- Logo -->
                         <div class="card-header pt-4 pb-4 text-center bg-primary">
-                            <a href="{{route('any', 'index')}}">
-                                <span><img src="{{ Vite::asset('resources/images/logo.png') }}" alt="" height="18"></span>
+                            <a href="{{route('home')}}">
+                                <span><img src="{{ Vite::asset('resources/images/logo.svg') }}" alt="" height="40"></span>
                             </a>
                         </div>
 

@@ -63,6 +63,9 @@ class SendShippingInformation extends AbstractAnswer
 
     protected function canBeProcessed(): bool
     {
+        if (!setting('bot.shipping_information.active'))
+            return false;
+
         if (!$this->message->isExternal())
             return false;
 

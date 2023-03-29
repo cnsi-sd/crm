@@ -66,6 +66,24 @@ final class CrmLinkGateway
         return $this->get($queryParams)->json();
     }
 
+    public function getExternalLink(): string
+    {
+        $queryParams = [
+            'fc' => 'module',
+            'module' => 'crmlink',
+            'controller' => 'order_redirect',
+            'idOrder' => '',
+        ];
+
+        // Transform array to query string
+        $queryString = http_build_query($queryParams);
+
+        // Build full URL
+        $url = sprintf('%s?%s', $this->endpoint, $queryString);
+
+        return $url;
+    }
+
     public function getInvoiceExternalLink(): string
     {
 

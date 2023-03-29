@@ -16,6 +16,7 @@ export default defineConfig({
                 'resources/scss/icons.scss',
                 'resources/js/tags.js',
                 'resources/js/tinymce.js',
+                'resources/js/savNotes.js'
             ],
             refresh: true,
         }),

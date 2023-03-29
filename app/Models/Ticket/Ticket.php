@@ -180,7 +180,7 @@ class Ticket extends Model
                 ->setType(ColumnTypeEnum::SELECT)
                 ->setOptions(User::getUsersNames())
                 ->setCallback(function (Ticket $ticket) {
-                    return $ticket->user->name;
+                    return $ticket->user->__toString();
                 })
                 ->setKey('user_id')
                 ->setSortable(true);
@@ -196,7 +196,8 @@ class Ticket extends Model
                 }
                 return $displayThreads;
             })
-            ->setKey('deadline')
+            ->setKey('name')
+            ->setWhereKey('ticket_threads.name')
             ->setSortable(true);
 
         if ($mode != 'user') {
