@@ -20,8 +20,8 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
     const SPAM_STATUS = 'X-Spam-Status';
     const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
 
-    const ALERT_LOCKED_SINCE = 1800;
-    const KILL_LOCKED_SINCE = 3600;
+    const ALERT_LOCKED_SINCE = 600;
+    const KILL_LOCKED_SINCE = 1200;
 
     /**
      * @var Mailbox

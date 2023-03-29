@@ -28,8 +28,8 @@ class RakutenImportMessages extends AbstractImportMessages
     const GET_ITEM_TODO_LIST_VERSION = '2011-09-01';
     const GET_ITEM_INFOS = 'getiteminfos';
     const GET_ITEM_INFOS_VERSION = '2017-08-07';
-    const ALERT_LOCKED_SINCE = 1800;
-    const KILL_LOCKED_SINCE = 3600;
+    const ALERT_LOCKED_SINCE = 600;
+    const KILL_LOCKED_SINCE = 1200;
 
     public function __construct()
     {
@@ -92,7 +92,7 @@ class RakutenImportMessages extends AbstractImportMessages
     {
         $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
         $lock->lock();
-        
+
         $this->channel = Channel::getByName(ChannelEnum::RAKUTEN_COM);
         $this->logger = new Logger(
             'import_message/'

@@ -27,8 +27,8 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
 
-    const ALERT_LOCKED_SINCE = 1800;
-    const KILL_LOCKED_SINCE = 3600;
+    const ALERT_LOCKED_SINCE = 600;
+    const KILL_LOCKED_SINCE = 1200;
 
     abstract protected function getChannelName(): string;
 

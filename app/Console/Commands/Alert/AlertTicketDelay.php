@@ -13,8 +13,8 @@ class AlertTicketDelay extends Command
     protected $signature = 'alert:ticket:delay';
     protected $description = 'Alert recipient when the delay is more on 15 days';
 
-    const ALERT_LOCKED_SINCE = 1800;
-    const KILL_LOCKED_SINCE = 3600;
+    const ALERT_LOCKED_SINCE = 300;
+    const KILL_LOCKED_SINCE = 600;
 
     public function handle()
     {
