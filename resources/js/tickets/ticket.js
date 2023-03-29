@@ -4,6 +4,13 @@ $(document).ready(function () {
         $.get(route);
     })
 
+    $('#default_answer_select').on('change', function () {
+        if($(this).find(':selected').data("answer-content")) {
+            let answerContent = $(this).find(':selected').data("answer-content")
+            tinymce.get('message_to_customer').insertContent("<br/>" + answerContent);
+        }
+    });
+
     let externalOrderInfoLoaded = false;
     $('#order-info-tab').click(function () {
         if(externalOrderInfoLoaded)
@@ -56,6 +63,23 @@ $(document).ready(function () {
         $('[data-order-id=' + $(this).data("order-id") + ']').show();
     });
 
+    var channelInMessage = 0;
+
+    function checkChannelInMessage(channel){
+        if(tinymce.get('message_to_customer').getContent().includes(channel)) {
+            channelInMessage++;
+        }
+    }
+
+    $('button[type=submit][form=saveTicket]').on("click", function(event) {
+        let othersChannels = $("#others-channels").data("others-channels").split(',');
+        othersChannels.forEach(element => checkChannelInMessage(element));
+        if(channelInMessage > 0) {
+            if(!confirm($("#others-channels").data("confirm-message"))){
+                event.preventDefault();
+            };
+        }
+    });
 })
 
 let bodyCard = document.getElementById('card-body-tag');
