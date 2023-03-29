@@ -70,15 +70,7 @@ class MiscController extends AbstractController
     {
         if ($request->exists('save')) {
 
-            $defaultAnswer = DefaultAnswer::updateOrCreate(
-                [
-                    'name' => $request->input('channelName') .'.defaultAnswerOfferQuestion'
-                ],[
-                    'content' =>  $request->input('message-content')
-                ]
-            );
-
-            setting([$request->input('channelName').'.defaultAnswerOfferQuestion' => $defaultAnswer->id]);
+            setting(['default_answer_offer_questions' => $request->input('default_answer_offer_questions')]);
             setting()->save();
 
             Alert::toastSuccess(__('app.config.misc.saved'));

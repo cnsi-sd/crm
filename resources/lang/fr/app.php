@@ -186,8 +186,7 @@ return [
             'savprocess_tag' => 'Tag Procédure SAV complète',
             'savprocess_stop_revival' => 'Relances auto à stopper',
 
-            'answer_offer_questions' => 'Réponse auto questions offres',
-            'answer_offer_questions_message' => 'Message',
+            'default_answer_offer_questions' => 'Réponse par défaut aux questions sur les offres',
         ],
     ],
 

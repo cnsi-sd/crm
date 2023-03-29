@@ -15,7 +15,7 @@
                         {{ __('app.config.misc.savprocess') }}
                     </a>
                     <a href="{{ route('answer_offer_questions_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'answer_offer_questions_config'])>
-                        {{ __('app.config.misc.answer_offer_questions') }}
+                        {{ __('app.config.misc.default_answer_offer_questions') }}
                     </a>
                 </ul>
             </div>
