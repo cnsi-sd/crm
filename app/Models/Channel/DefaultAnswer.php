@@ -15,11 +15,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string $name
  * @property string $content
+ * @property boolean $is_locked
  * @property DateTime $created_at
  * @property DateTime $updated_at
  * @property DateTime $deleted_at
  *
- * @property boolean $isLocked
  * @property Channel[] $channels
  * @property Revival[] $revivals
  */
@@ -57,14 +57,9 @@ class DefaultAnswer extends Model
         return $this->channels->count() === 0 ? Channel::all() : $this->channels;
     }
 
-    public function setIsLocked(): bool
-    {
-        return $this->isLocked = true;
-    }
-
     public function getIsLocked(): bool
     {
-        return $this->isLocked;
+        return $this->is_locked;
     }
 
     public static function getTableColumns(): array
@@ -92,6 +87,10 @@ class DefaultAnswer extends Model
             ->setKey('channels')
             ->setSortable(false)
             ->setSearchable(false);
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.default_answer.is_locked'))
+            ->setkey('is_locked')
+            ->settype(ColumnTypeEnum::BOOLEAN);
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (DefaultAnswer $defaultAnswer) {
                 return view('configuration.defaultAnswer.inline_table_actions')

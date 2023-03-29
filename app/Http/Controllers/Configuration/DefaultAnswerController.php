@@ -76,12 +76,10 @@ class DefaultAnswerController extends AbstractController
         // Set name, content
         $defaultAnswer->name = $request->input('name');
         $defaultAnswer->content = TinyMCE::toText($request->input('content'));
+        $defaultAnswer->is_locked = $request->input('isLocked') == "on";
 
         // Save
         $defaultAnswer->save();
-
-        if($request->input('isLocked') == "on")
-            $defaultAnswer->setIsLocked();
 
         $channels = $request->input('channels');
         $defaultAnswer->channels()->sync($channels);

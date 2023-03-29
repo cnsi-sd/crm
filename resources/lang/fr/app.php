@@ -228,7 +228,8 @@ return [
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Canaux autorisés',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
-        'is_locked' => 'Verrouiller',
+        'is_locked' => 'Verrouillée',
+        'lock' => 'Verrouiller',
     ],
 
     'revival' => [

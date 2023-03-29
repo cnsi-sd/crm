@@ -11,12 +11,12 @@
                     <div class="card">
                         <div class="card-header">
                             {{ isset($defaultAnswer->id) ? trans_choice('app.default_answer.default_answer', 1) . " #$defaultAnswer->id" : trans_choice('app.default_answer.default_answer', 1) }}
-
-                            <div class="form-check form-switch float-end">
-                                <input type="checkbox" class="form-check-input" id="is_locked" name="isLocked" @if($defaultAnswer->isLocked) checked @endif>
-                                <label class="form-check-label" for="is_locked">{{ __('app.default_answer.is_locked') }} ?</label>
-                            </div>
-
+                            @can('lock', $defaultAnswer)
+                                <div class="form-check form-switch float-end">
+                                    <input type="checkbox" class="form-check-input" id="is_locked" name="isLocked" @if($defaultAnswer->is_locked == 1) checked @endif>
+                                    <label class="form-check-label" for="is_locked">{{ __('app.default_answer.lock') }} ?</label>
+                                </div>
+                            @endcan
                         </div>
                         <div class="card-body">
                             @csrf

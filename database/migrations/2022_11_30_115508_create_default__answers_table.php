@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('content');
+            $table->boolean('is_locked');
             $table->timestamps();
             $table->softDeletes();
         });
