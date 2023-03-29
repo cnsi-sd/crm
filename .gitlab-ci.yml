@@ -47,9 +47,7 @@ deploy_tkg:
     - ssh-add <(echo "$SSH_PRIVATE_KEY_TKG")
     - mkdir -p ~/.ssh
     - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-
-    # Run Envoy
-    - ~/.composer/vendor/bin/envoy run app:deploy --on=tkg-production
+    - vendor/bin/envoy run app:deploy --on=tkg-production --branch="$CI_COMMIT_BRANCH"
   only:
     - master
   dependencies:
