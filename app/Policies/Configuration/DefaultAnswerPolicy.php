@@ -3,7 +3,6 @@
 namespace App\Policies\Configuration;
 
 use App\Enums\PermissionEnum;
-use App\Models\Channel\DefaultAnswer;
 use App\Models\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
