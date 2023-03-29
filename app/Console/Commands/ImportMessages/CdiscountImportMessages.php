@@ -80,10 +80,6 @@ class CdiscountImportMessages extends AbstractImportMessages
                     DB::beginTransaction();
                     $this->logger->info('Begin Transaction');
 
-                    $orderReference = $discu->getOrderReference();
-                    $order = Order::getOrder($orderReference, $this->channel);
-                    $ticket = Ticket::getTicket($order, $this->channel);
-
                     if (!$discu->isOpen())
                         $this->checkClosedDiscussion($discu);
 
