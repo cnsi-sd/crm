@@ -18,5 +18,4 @@
         </a>
         @include('configuration.defaultAnswer.modal.delete')
     @endif
-
 @endcan

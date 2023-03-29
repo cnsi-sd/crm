@@ -53,7 +53,9 @@ abstract class Permission
                         'title' => trans_choice('app.permission.tag',2),
                         'items' => [
                             PermissionEnum::TAG_READ,
-                            PermissionEnum::TAG_EDIT
+                            PermissionEnum::TAG_EDIT,
+                            PermissionEnum::TAG_LOCK,
+                            PermissionEnum::TAG_EDIT_LOCKED,
                         ],
                     ],
                 ],

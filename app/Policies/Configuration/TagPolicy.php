@@ -19,4 +19,14 @@ class TagPolicy
     {
         return $user->hasPermission(PermissionEnum::TAG_EDIT);
     }
+
+    public function lock(User $user): bool
+    {
+        return $user->hasPermission(PermissionEnum::TAG_LOCK);
+    }
+
+    public function editLocked(User $user): bool
+    {
+        return $user->hasPermission(PermissionEnum::TAG_EDIT_LOCKED);
+    }
 }

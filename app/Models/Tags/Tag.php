@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $text_color
  * @property string $background_color
+ * @property boolean $is_locked
  *
  * @property Channel[] $channels
  * @property TagList[] $tagLists
@@ -34,6 +35,7 @@ class Tag extends Model
         'name',
         'text_color',
         'background_color',
+        'is_locked',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -66,6 +68,11 @@ class Tag extends Model
         return $this->channels->count() === 0 ? Channel::all() : $this->channels;
     }
 
+    public function getIsLocked(): bool
+    {
+        return $this->is_locked;
+    }
+
     public static function getTableColumns(): array
     {
         $columns = [];
@@ -81,7 +88,7 @@ class Tag extends Model
                     ->with('tags', $tags);
             });
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.defaultAnswer.select_channel'))
+            ->setLabel(__('app.default_answer.select_channel'))
             ->setClass('w-25')
             ->setCallback(function (Tag $tag) {
                 $channels = $tag->getAuthorizedChannels();
@@ -94,7 +101,10 @@ class Tag extends Model
             ->setKey('channels')
             ->setSortable(false)
             ->setSearchable(false);
-
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.tags.is_locked'))
+            ->setkey('is_locked')
+            ->settype(ColumnTypeEnum::BOOLEAN);
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Tag $tags) {
                 return view('configuration.tags.inline_table_actions')

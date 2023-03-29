@@ -33,6 +33,7 @@ class DefaultAnswer extends Model
     protected $fillable = [
         'name',
         'content',
+        'is_locked',
         'created_at',
         'updated_at',
         'deleted_at'

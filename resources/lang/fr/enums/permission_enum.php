@@ -25,6 +25,8 @@ return [
     // Tag
     'TAG_READ' => 'Consulter les tags',
     'TAG_EDIT' => 'Modifier un tag',
+    'TAG_LOCK' => 'Verrouiller un tag',
+    'TAG_EDIT_LOCKED' => 'Modifier un tag verrouillé',
 
     // Configuration
     'BOT_CONFIG' => 'Configurer le bot',

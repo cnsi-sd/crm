@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('text_color',10);
             $table->string('background_color', 10);
+            $table->boolean('is_locked');
             $table->timestamps();
             $table->softDeletes();
         });
