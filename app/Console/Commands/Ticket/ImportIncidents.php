@@ -10,6 +10,7 @@ use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
@@ -24,8 +25,14 @@ class ImportIncidents extends Command
 
     const LAST_INCIDENT_SETTING = 'last_incident_id';
 
+    const ALERT_LOCKED_SINCE = 1800;
+    const KILL_LOCKED_SINCE = 3600;
+
     public function handle()
     {
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+
         $this->logger = new Logger('ticket/incidents/incidents.log', true, true, true, 15);
 
         try {

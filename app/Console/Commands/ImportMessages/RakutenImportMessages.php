@@ -11,6 +11,7 @@ use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
@@ -27,6 +28,8 @@ class RakutenImportMessages extends AbstractImportMessages
     const GET_ITEM_TODO_LIST_VERSION = '2011-09-01';
     const GET_ITEM_INFOS = 'getiteminfos';
     const GET_ITEM_INFOS_VERSION = '2017-08-07';
+    const ALERT_LOCKED_SINCE = 1800;
+    const KILL_LOCKED_SINCE = 3600;
 
     public function __construct()
     {
@@ -87,6 +90,9 @@ class RakutenImportMessages extends AbstractImportMessages
      */
     public function handle()
     {
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+        
         $this->channel = Channel::getByName(ChannelEnum::RAKUTEN_COM);
         $this->logger = new Logger(
             'import_message/'

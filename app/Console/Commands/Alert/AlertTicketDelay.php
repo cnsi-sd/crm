@@ -4,6 +4,7 @@ namespace App\Console\Commands\Alert;
 
 use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Ticket\Ticket;
+use Cnsi\Lock\Lock;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -12,8 +13,14 @@ class AlertTicketDelay extends Command
     protected $signature = 'alert:ticket:delay';
     protected $description = 'Alert recipient when the delay is more on 15 days';
 
+    const ALERT_LOCKED_SINCE = 1800;
+    const KILL_LOCKED_SINCE = 3600;
+
     public function handle()
     {
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+
         $from_time = strtotime(date('Y-m-d H:m:s') . '- 14 days');
         $from_date = date('Y-m-d H:m:i', $from_time);
 

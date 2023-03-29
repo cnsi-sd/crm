@@ -20,6 +20,7 @@ use App\Jobs\SendSMS\SMS;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
+use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
@@ -34,8 +35,13 @@ class Revival extends Command
 
     protected Logger $logger;
 
+    const ALERT_LOCKED_SINCE = 1800;
+    const KILL_LOCKED_SINCE = 3600;
     public function handle()
     {
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+
         $this->logger = new Logger('ticket/revival/revival.log', true, true);
         $this->logger->info('----[ START ]----');
 
