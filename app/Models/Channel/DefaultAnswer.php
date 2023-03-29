@@ -3,6 +3,7 @@
 namespace App\Models\Channel;
 
 use App\Helpers\Builder\Table\TableColumnBuilder;
+use App\Helpers\TinyMCE;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -63,7 +64,8 @@ class DefaultAnswer extends Model
             ->setKey('name');
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.content'))
-            ->setKey('content');
+            ->setKey('content')
+            ->setCallback(fn(DefaultAnswer $defaultAnswer) => TinyMCE::toText($defaultAnswer->content));
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.defaultAnswer.select_channel'))
             ->setCallback(function (DefaultAnswer $defaultAnswer){

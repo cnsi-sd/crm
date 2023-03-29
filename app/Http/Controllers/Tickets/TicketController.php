@@ -157,7 +157,7 @@ class TicketController extends AbstractController
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
                     'author_type' => TicketMessageAuthorTypeEnum::ADMIN,
-                    'content' => TinyMCE::toText($messageContent),
+                    'content' => $messageContent,
                 ]);
 
                 foreach ($request->files as $name => $file)
