@@ -101,7 +101,7 @@
 
     cd {{ $release_dir }};
     npm install --quiet;
-    npm run --silent prod;
+    npm run --silent build;
 
     echo "CSS & JS files have been builded";
 @endtask
