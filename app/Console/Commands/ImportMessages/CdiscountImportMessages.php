@@ -153,7 +153,7 @@ class CdiscountImportMessages extends AbstractImportMessages
             ->first();
 
         if ($ticket){
-            $closedTagId = setting('Discussion close (Cdiscount)');
+            $closedTagId = setting('closed_discussion_tag_id');
             $closedTag = Tag::findOrfail($closedTagId);
 
             if(!$ticket->hastag($closedTag))
