@@ -24,6 +24,9 @@ class MigrateSavNote extends AbstractMigrateStep
         ');
 
         $data = $this->toArrayWithCreatedAndUpdated($data);
+        foreach ($data as &$sav_note) {
+            $sav_note['gc_plus'] = $sav_note['gc_plus'] === 'OUI';
+        }
 
         SavNote::truncate();
         SavNote::insert($data);
