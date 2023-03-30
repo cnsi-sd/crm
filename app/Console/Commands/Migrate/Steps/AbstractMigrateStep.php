@@ -9,9 +9,14 @@ abstract class AbstractMigrateStep
 {
     abstract public function handle(MigrateDTO $dto, Closure $closure);
 
+    protected function toArray($data): array
+    {
+        return json_decode(json_encode($data), 1);
+    }
+
     protected function toArrayWithCreatedAndUpdated($data): array
     {
-        $array = json_decode(json_encode($data), 1);
+        $array = $this->toArray($data);
         foreach($array as &$line) {
             $line['created_at'] = now()->format('Y-m-d H:i:s');
             $line['updated_at'] = now()->format('Y-m-d H:i:s');
