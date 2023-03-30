@@ -31,7 +31,3 @@
         </div>
     </div>
 @endsection
-
-@section('script-bottom')
-    <script src="{{ Vite::asset('resources/js/answerOfferQuestions.js') }}"></script>
-@endsection
