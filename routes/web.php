@@ -105,14 +105,17 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'incidents', [MiscController::class, 'incidents'])->name('incidents_config')->can('misc_config');
             Route::match(['get', 'post'], 'savprocess', [MiscController::class, 'savprocess'])->name('savprocess_config')->can('misc_config');
             Route::match(['get', 'post'], 'answer_offer_questions', [MiscController::class, 'answerOfferQuestions'])->name('answer_offer_questions_config')->can('misc_config');
+            Route::match(['get', 'post'], 'miraklRefunds', [MiscController::class, 'miraklRefunds'])->name('mirakl_refunds_config')->can('misc_config');
             Route::match(['get', 'post'], 'closed_discussion', [MiscController::class, 'closedDiscussion'])->name('closed_discussion_config')->can('misc_config');
         });
     });
     // CALL AJAX
-    Route::get('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');
+    Route::post('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');
     Route::post('/addTagList', [TagsController::class, 'newTagLine'])->name('addTagList');
     Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags'])->name('saveTagOnticketThread');
     Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList'])->name('deleteTagList');
     Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnThread');
-    Route::match(['get', 'post'], 'getAnswerOfferQuestionContent', [AnswerOfferQuestionController::class, 'getMessageContent'])->name('answer_offer_question_content');
+    Route::post('/saveTicketThreadTags', [TicketController::class, 'saveTicketTags'])->name('saveTagOnticket');
+    Route::post('/hastaglist', [TicketController::class, 'hasTagList'])->name('ticketHasTaglist');
+    Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnTicket');
 });

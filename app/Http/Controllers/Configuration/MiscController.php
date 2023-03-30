@@ -79,16 +79,29 @@ class MiscController extends AbstractController
         return view('configuration.misc.closedDiscussion');
     }
 
-    public function answerOfferQuestions(Request $request): View|RedirectResponse
+    public function miraklRefunds(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
-            setting(['default_answer_offer_questions' => $request->input('default_answer_offer_questions')]);
+            setting(['mirakl_refunds_tag_id' => $request->input('mirakl_refunds_tag_id')]);
             setting()->save();
 
             Alert::toastSuccess(__('app.config.misc.saved'));
             return redirect()->back();
         }
-        
+
+        return view('configuration.misc.mirakl_refunds');
+    }
+
+    public function answerOfferQuestions(Request $request): View|RedirectResponse
+    {
+        if ($request->exists('save')) {
+            setting(['default_answer_offer_questions' => $request->input('default_answer_offer_questions')]);
+                        setting()->save();
+
+            Alert::toastSuccess(__('app.config.misc.saved'));
+            return redirect()->back();
+        }
+
         return view('configuration.misc.answer_offer_questions');
     }
 }

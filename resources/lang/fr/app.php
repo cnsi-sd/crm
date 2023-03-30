@@ -190,6 +190,9 @@ return [
 
             'default_answer_offer_questions' => 'Réponse par défaut aux questions sur les offres',
 
+            'mirakl_refunds' => 'Remboursement sur MP Mirakl',
+            'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
+
             'closed_discussion' => 'Discussion clôturée',
             'closed_discussion_tag' => 'Tag discussion clôturée',
         ],
@@ -265,6 +268,8 @@ return [
         'select_channel' => 'Canaux autorisés',
         'show' => 'Prévisualisation',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'addTagList' => 'Ajouter une ligne de tags',
+        'select_tag' => 'Ajouter un tag',
     ],
 
     'recover_password' => [

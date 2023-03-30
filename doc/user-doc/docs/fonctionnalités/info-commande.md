@@ -3,7 +3,7 @@
 Lors du traitement d'un ticket client, il peut être utile d'afficher les informations relatives à sa commande.
 Dans le CRM, vous pouvez cliquer sur l'onglet « Info commande » pour afficher ces informations.
 
-L'affichage peut prendre plusieurs secondes car les informations sont récupérées via le backoffice de Prestashop.
+L'affichage peut prendre plusieurs secondes, car les informations sont récupérées via le backoffice de Prestashop.
 
 Les informations sont divisées en quatre blocs distincts :
 
@@ -26,11 +26,11 @@ Des encarts colorés peuvent apparaitre en dessous et donnent d'autres indicatio
 * Fulfillment : Si la commande est en Fulfillment (produit stocké chez la marketplace)
 * SellerFlex : Si la commande est de type Seller Flex (produit stocké dans nos entrepôts, livraison par Amazon)
 * Livraison Express : Si le client à fait le choix d'une livraison express (24/48h)
-* DEBALLE : Si le client à choisi une livraison avec déballage du produit
-* INSTALLE : Si le client à choisi une livraison avec installation du produit
-* Incident  Ouvert/Fermé : Si un incident a été ouvert par le client
+* DEBALLE : Si le client a choisi une livraison avec déballage du produit
+* INSTALLE : Si le client a choisi une livraison avec installation du produit
+* Incident Ouvert/Fermé : Si un incident a été ouvert par le client
 
-Deux boutons permettes d'effectuer des actions :
+Deux boutons permettent d'effectuer des actions :
 
 * « Télécharger facture » : Si la facture est disponible, vous pouvez cliquer sur ce bouton pour y accéder
 * « Accès backoffice » : Ce bouton vous permet d'accéder à la commande directement sur le backoffice de Prestashop

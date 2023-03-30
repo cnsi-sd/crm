@@ -40,6 +40,10 @@ class SavNote extends Model
         'manufacturer',
     ];
 
+    protected $casts = [
+        'gc_plus' => 'boolean',
+    ];
+
     public function getShowRoute(): string
     {
         return 'show_sav_note';

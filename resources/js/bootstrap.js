@@ -37,4 +37,3 @@ $(document).ready(function() {
         document.querySelector('.select2-container--open .select2-search__field').focus();
     });
 });
-
