@@ -62,9 +62,9 @@ class MigrateDefaultAnswer extends AbstractMigrateStep
             // Convert magento store code to crm_channel_id
             $authorizedOnAllChannels = true;
             $authorizedChannels = [];
-            foreach ($mapping as $magento_store_code => $crm_channel_id) {
+            foreach ($mapping as $magento_store_code => $crm_channel) {
                 if (in_array($magento_store_code, $store_codes)) {
-                    $authorizedChannels[] = $crm_channel_id;
+                    $authorizedChannels[] = $crm_channel->id;
                 } else {
                     $authorizedOnAllChannels = false;
                 }
