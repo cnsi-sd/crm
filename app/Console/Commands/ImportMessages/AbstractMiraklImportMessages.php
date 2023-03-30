@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands\ImportMessages;
 
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\TmpFile;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
@@ -16,8 +18,10 @@ use Illuminate\Support\Facades\DB;
 use Mirakl\MMP\Common\Domain\Message\Thread\Thread;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadTopic;
+use Mirakl\MMP\Common\Request\Message\DownloadThreadMessageAttachmentRequest;
 use Mirakl\MMP\OperatorShop\Request\Message\GetThreadsRequest;
 use Mirakl\MMP\Shop\Client\ShopApiClient;
+use Cnsi\Attachments\Model\Document;
 
 abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 {
@@ -91,7 +95,17 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                     /** @var ThreadTopic $topic */
                     $thread = \App\Models\Ticket\Thread::getOrCreateThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue());
 
-                    $this->importMessageByThread($ticket, $thread, $message);
+                    $attachments = [];
+                    if($message->getAttachments()) {
+                        foreach ($message->getAttachments() as $attachment) {
+                            $request = new DownloadThreadMessageAttachmentRequest($attachment->getData()["id"]);
+                            $result = $client->downloadThreadMessageAttachment($request);
+                            $attachments[] = $result;
+                        }
+                    }
+
+
+                    $this->importMessageByThread($ticket, $thread, $message, $attachments);
                 }
 
                 DB::commit();
@@ -138,7 +152,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
      * @return void
      * @throws Exception
      */
-    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $message): void
+    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $message, $attachments): void
     {
         $imported_id = $message->getId();
         $this->logger->info('Check if this message is imported');
@@ -146,7 +160,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             return;
 
         $this->logger->info('Convert api message to db message');
-        $this->convertApiResponseToMessage($ticket, $message, $thread);
+        $this->convertApiResponseToMessage($ticket, $message, $thread, $attachments);
         $this->addImportedMessageChannelNumber($imported_id);
 
     }
@@ -158,7 +172,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
      * @param \App\Models\Ticket\Thread $thread
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $message_api, \App\Models\Ticket\Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, \App\Models\Ticket\Thread $thread, $attachments = [])
     {
         $authorType = $message_api->getFrom()->getType();
 
@@ -176,6 +190,13 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 'content' => strip_tags($message_api->getBody()),
             ]
         );
+
+        if($attachments) {
+            foreach($attachments as $attachment){
+                $tmpFile = new TmpFile((string) $attachment->getFile()->fread($attachment->getFile()->fstat()['size']));
+                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachment->getFileName());
+            }
+        }
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);

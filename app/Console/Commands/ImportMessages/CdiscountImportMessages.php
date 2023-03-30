@@ -85,7 +85,7 @@ class CdiscountImportMessages extends AbstractImportMessages
 
                     $this->logger->info('Message recovery');
                     $messages = $discu->getMessages();
-                    
+
                     if (count($messages) == 0)
                         continue;
 
@@ -180,7 +180,7 @@ class CdiscountImportMessages extends AbstractImportMessages
      * @param Thread $thread
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread, $attachments = [])
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;

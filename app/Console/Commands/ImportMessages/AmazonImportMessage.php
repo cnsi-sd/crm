@@ -135,7 +135,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
      * @param Thread $thread
      * @return void
      */
-    protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread): void
+    protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []): void
     {
         $this->logger->info('Retrieve message from email');
         $infoMail = $message_api_api->textHtml;

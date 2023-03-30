@@ -57,7 +57,7 @@ class RakutenImportMessages extends AbstractImportMessages
     /**
      * @throws Exception
      */
-    protected function convertApiResponseToMessage(Ticket $ticket, $messageApi, Thread $thread)
+    protected function convertApiResponseToMessage(Ticket $ticket, $messageApi, Thread $thread, $attachments = [])
     {
         $authorType = $messageApi['MpCustomerId'];
         $this->logger->info('Set ticket\'s status to waiting admin');

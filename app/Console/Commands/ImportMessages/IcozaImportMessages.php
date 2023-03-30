@@ -113,7 +113,7 @@ class IcozaImportMessages extends AbstractImportMessages
     /**
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread, $attachments = [])
     {
         $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
 

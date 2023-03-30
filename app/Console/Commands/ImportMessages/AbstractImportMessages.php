@@ -24,7 +24,7 @@ abstract class AbstractImportMessages extends Command
 
     abstract protected function getCredentials(): array;
     abstract protected function initApiClient();
-    abstract protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread);
+    abstract protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []);
 
     /**
      * @throws Exception
