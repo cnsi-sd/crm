@@ -77,12 +77,12 @@ class CdiscountImportMessages extends AbstractImportMessages
             try {
                 $this->logger->info('--- check chat modification time ---');
                 if ($discu->getUpdatedAt()->getTimestamp() > $from_time) {
-                    $this->logger->info('Begin Transaction');
 
                     if ($discu->getTypologyCode() == "Offer") {
                         CdiscountAnswerOfferQuestions::AnswerOfferQuestions($discu);
 
                     } else {
+                        $this->logger->info('Begin Transaction');
                         DB::beginTransaction();
 
                         if (!$discu->isOpen())
@@ -90,21 +90,21 @@ class CdiscountImportMessages extends AbstractImportMessages
 
                         $this->logger->info('Message recovery');
                         $messages = $discu->getMessages();
+                        
+                        $this->logger->info('Check if dicussion have messages');
+                        if (count($messages) == 0)
+                            continue;
+
                         foreach ($messages as $message) {
                             $this->logger->info('Check message sender');
                             $authorType = $message->getSender()->getUserType();
 
-                            $this->logger->info('Check if dicussion have message and if is seller message sender');
-                            if (count($messages) !== 0 && $authorType == 'Seller')
+                            if ($authorType == 'Seller')
                                 continue;
 
                             $orderReference = $discu->getOrderReference();
                             $order = Order::getOrder($orderReference, $this->channel);
                             $ticket = Ticket::getTicket($order, $this->channel);
-
-
-                            $this->logger->info('Message recovery');
-                            $messages = $discu->getMessages();
 
                             $channel_data = [
                                 "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),

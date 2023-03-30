@@ -1,9 +1,10 @@
 $(function() {
     tinymce.init({
         selector: 'textarea#message_to_customer',
-        toolbar: false,
+        toolbar: "undo redo bold underline forecolor backcolor ",
         statusbar: false,
         menubar: false,
+        promotion: false,
         skin: 'tinymce-5',
         content_style: "body { font-size: .8rem; }",
         paste_as_text: true,

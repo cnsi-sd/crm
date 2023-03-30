@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('hotline');
             $table->text('brand_email');
             $table->text('brand_information')->nullable();
-            $table->text('regional_information')->nullable();
+            $table->text('supplier_information')->nullable();
             $table->timestamps();
         });
     }
