@@ -207,7 +207,7 @@
         </div>
         <button
             type="button"
-            class="btn btn-primary btn-lg d-flex justify-content-center align-items-center"
+            class="btn btn-primary btn-lg justify-content-center align-items-center"
             id="btn-back-to-top"
             style="border-radius:50%; width:70px; height:70px; font-size:xxx-large; position: fixed; bottom: 20px; right: 20px; display: none"
         >
