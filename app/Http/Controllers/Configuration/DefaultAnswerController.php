@@ -75,7 +75,7 @@ class DefaultAnswerController extends AbstractController
 
         // Set name, content
         $defaultAnswer->name = $request->input('name');
-        $defaultAnswer->content = TinyMCE::toText($request->input('content'));
+        $defaultAnswer->content = $request->input('content');
 
         // Save
         $defaultAnswer->save();

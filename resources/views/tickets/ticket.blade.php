@@ -100,7 +100,6 @@
                         </div>
                     </div>
                 </div>
-
                 @include('tickets.parts.tags')
                 @include('tickets.parts.private_comments')
                 {!! $documents_table !!}
@@ -197,7 +196,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <label>{{ __('app.ticket.default_replies') }}</label>
+                                <hr/>
+                                <div class="default_answer row">
+                                    <div class="col">
+                                        <label>{{ __('app.ticket.default_replies') }}</label>
+                                    </div>
+                                    <div class="col">
+                                        <input id="others-channels" type="hidden"
+                                               data-others-channels="{{ implode(',',$othersChannelsNames) }}"
+                                               data-confirm-message="{{ __('app.ticket.confirm_other_channel') }}"
+                                        />
+                                        <select form="saveTicket" id="default_answer_select" name="default_answer_select" class="form-control form-select">
+                                            <option value="">---</option>
+                                            @foreach($ticket->channel->getAuthorizedDefaultAnswers() as $defaultAnswer)
+                                                <option value="{{ $defaultAnswer->id }}" data-answer-content="{{ $defaultAnswer->content }}">
+                                                    {{ $defaultAnswer->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @include('tickets.parts.messages')
