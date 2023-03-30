@@ -1,4 +1,4 @@
-
+<div class="card" id="tags-container">
     <div class="card-header">
         <span>{{ trans_choice('app.tags.tags', 2) }}</span>
         <a id="addTagLine" href="#" class="float-end"
@@ -50,3 +50,4 @@
             </div>
         @endforeach
     </div>
+</div>

@@ -100,9 +100,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card" id="tags-container">
-                    @include('tickets.parts.tags')
-                </div>
+                @include('tickets.parts.tags')
                 @include('tickets.parts.private_comments')
                 {!! $documents_table !!}
 
