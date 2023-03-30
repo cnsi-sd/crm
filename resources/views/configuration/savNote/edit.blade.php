@@ -72,9 +72,7 @@
                                         class="form-control form-control-sm"
                                         cols="125"
                                         rows="10"
-                                    >
-                                        {{ old('brand_information', $savNote->brand_information ?? '') }}
-                                    </textarea>
+                                    >{{ old('brand_information', $savNote->brand_information ?? '') }}</textarea>
                                     </label>
                                 </div>
 
@@ -135,9 +133,7 @@
                                             class="form-control form-control-sm"
                                             cols="125"
                                             rows="6"
-                                        >
-                                        {{ old('supplier_information', $savNote->supplier_information ?? '') }}
-                                    </textarea>
+                                        >{{ old('supplier_information', $savNote->supplier_information ?? '') }}</textarea>
                                     </label>
                                 </div>
                             </div>

@@ -35,7 +35,6 @@
                                 </label>
                                 <textarea id="message_to_customer" name="content">{{ old('content', $defaultAnswer->content) }}</textarea>
                             </div>
-
                         </div>
                     </div>
                 </div>
