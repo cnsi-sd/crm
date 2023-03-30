@@ -24,7 +24,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 {
     public ShopApiClient $client;
 
-    const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
 
     const ALERT_LOCKED_SINCE = 600;
