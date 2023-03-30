@@ -126,6 +126,7 @@ return [
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
         'saved' => 'Ticket enregistré',
+        'confirm_other_channel' => 'Le message contient le nom d\'une autre marketplace, envoyer quand même le message ?',
 
         'click_and_call' => [
             'start' => 'Cliquer pour lancer l\'appel',
@@ -186,6 +187,9 @@ return [
             'savprocess' => 'Procédure SAV',
             'savprocess_tag' => 'Tag Procédure SAV complète',
             'savprocess_stop_revival' => 'Relances auto à stopper',
+
+            'closed_discussion' => 'Discussion clôturée',
+            'closed_discussion_tag' => 'Tag discussion clôturée',
         ],
     ],
 

@@ -2,9 +2,10 @@
 
 namespace App\Models\Channel;
 
-use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Helpers\Lockable;
+use App\Helpers\TinyMCE;
+use App\Models\Ticket\Message;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property Channel[] $channels
  * @property Revival[] $revivals
+ * @property Message[] $messages
  */
 class DefaultAnswer extends Model
 {
@@ -71,6 +73,7 @@ class DefaultAnswer extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.default_answer.content'))
             ->setKey('content');
+            ->setCallback(fn(DefaultAnswer $defaultAnswer) => TinyMCE::toText($defaultAnswer->content));
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.default_answer.select_channel'))
             ->setCallback(function (DefaultAnswer $defaultAnswer){

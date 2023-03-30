@@ -153,11 +153,13 @@ class TicketController extends AbstractController
                 $request->validate([
                     'ticket-thread-messages-content'     => ['required','string'],
                 ]);
+                $defaultAnswerId = $request->input('default_answer_select');
                 $message = Message::firstOrCreate([
                     'thread_id' => $thread->id,
                     'user_id' => $request->user()->id,
                     'author_type' => TicketMessageAuthorTypeEnum::ADMIN,
                     'content' => TinyMCE::toText($messageContent),
+                    'default_answer_id' => $defaultAnswerId,
                 ]);
 
                 foreach ($request->files as $name => $file)
@@ -188,9 +190,18 @@ class TicketController extends AbstractController
         if($thread->ticket->id !== $ticket->id)
             abort(404);
 
+        $othersChannels = Channel::all()->except($ticket->channel->id);
+        $othersChannelsNames = [];
+        foreach($othersChannels as $otherChannel) {
+            foreach ($otherChannel->ext_names as $ext_name) {
+                $othersChannelsNames[] = $ext_name;
+            }
+        }
+
         return view('tickets.ticket')
             ->with('ticket', $ticket)
             ->with('thread', $thread)
+            ->with('othersChannelsNames', $othersChannelsNames)
             ->with('documents_table', $ticket->getDocumentsTable($request, route('upload_document', [$ticket, $ticket::class])));
     }
 

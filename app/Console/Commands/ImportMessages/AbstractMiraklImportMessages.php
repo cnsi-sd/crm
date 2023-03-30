@@ -9,6 +9,7 @@ use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Ticket;
+use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
@@ -26,6 +27,9 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
     const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
 
+    const ALERT_LOCKED_SINCE = 600;
+    const KILL_LOCKED_SINCE = 1200;
+
     abstract protected function getChannelName(): string;
 
     /**
@@ -33,6 +37,9 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
      */
     public function handle()
     {
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+
         $this->channel = Channel::getByName($this->getChannelName());
         $this->logger = new Logger('import_message/'
             . $this->channel->getSnakeName() . '/'
@@ -71,18 +78,28 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                 DB::beginTransaction();
                 $this->logger->info('Begin Transaction');
 
-                $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
-                $order = Order::getOrder($mpOrderId, $this->channel);
-                $ticket = Ticket::getTicket($order, $this->channel);
-
                 $this->logger->info('Message recovery');
                 /** @var ThreadMessage[] $messages */
                 $messages = array_reverse($miraklThread->getMessages()->getItems());
 
-                /** @var ThreadTopic $topic */
-                $thread = \App\Models\Ticket\Thread::getOrCreateThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue());
+                if (count($messages) == 0)
+                    continue;
 
-                $this->importMessageByThread($ticket, $thread, $messages);
+                foreach ($messages as $message) {
+                    $authorType = $message->getFrom()->getType();
+
+                    if ($authorType == 'SHOP_USER')
+                        continue;
+
+                    $mpOrderId = $this->getMarketplaceOrderIdFromThreadEntities($miraklThread->getEntities()->getIterator());
+                    $order = Order::getOrder($mpOrderId, $this->channel);
+                    $ticket = Ticket::getTicket($order, $this->channel);
+
+                    /** @var ThreadTopic $topic */
+                    $thread = \App\Models\Ticket\Thread::getOrCreateThread($ticket, $miraklThread->getId(), $miraklThread->getTopic()->getValue());
+
+                    $this->importMessageByThread($ticket, $thread, $message);
+                }
 
                 DB::commit();
             } catch (Exception $e) {
@@ -124,21 +141,21 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
     /**
      * @param Ticket $ticket
      * @param \App\Models\Ticket\Thread $thread
-     * @param  $messages
+     * @param $message
      * @return void
      * @throws Exception
      */
-    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $messages): void
+    private function importMessageByThread(Ticket $ticket, \App\Models\Ticket\Thread $thread, $message): void
     {
-        foreach ($messages as $message) {
-            $imported_id = $message->getId();
-            $this->logger->info('Check if this message is imported');
-            if (!$this->isMessagesImported($imported_id)) {
-                $this->logger->info('Convert api message to db message');
-                $this->convertApiResponseToMessage($ticket, $message, $thread);
-                $this->addImportedMessageChannelNumber($imported_id);
-            }
-        }
+        $imported_id = $message->getId();
+        $this->logger->info('Check if this message is imported');
+        if ($this->isMessagesImported($imported_id))
+            return;
+
+        $this->logger->info('Convert api message to db message');
+        $this->convertApiResponseToMessage($ticket, $message, $thread);
+        $this->addImportedMessageChannelNumber($imported_id);
+
     }
 
     /**
@@ -151,9 +168,6 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, \App\Models\Ticket\Thread $thread)
     {
         $authorType = $message_api->getFrom()->getType();
-
-        if ($authorType == 'SHOP_USER')
-            return;
 
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::WAITING_ADMIN;

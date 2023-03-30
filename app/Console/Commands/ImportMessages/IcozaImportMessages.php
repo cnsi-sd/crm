@@ -10,6 +10,7 @@ use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use Exception;
 use FnacApiClient\Entity\Message;
@@ -24,6 +25,9 @@ class IcozaImportMessages extends AbstractImportMessages
 
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
     const version = '2011-09-01';
+
+    const ALERT_LOCKED_SINCE = 1800;
+    const KILL_LOCKED_SINCE = 3600;
 
     /**
      * @throws Exception
@@ -61,6 +65,9 @@ class IcozaImportMessages extends AbstractImportMessages
      */
     public function handle()
     {
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+
         // Load Channel
         $this->channel = Channel::getByName(ChannelEnum::ICOZA_FR);
 
