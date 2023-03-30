@@ -37,7 +37,10 @@ class SavNoteController extends AbstractController
                 ->setLabel( __('app.sav_note.gc_plus'))
                 ->setType(ColumnTypeEnum::BOOLEAN)
                 ->setAlign(AlignEnum::CENTER)
-                ->setKey('cg_plus'),
+                ->setKey('cg_plus')
+                ->setCallback(function (SavNote $savNote) {
+                   return $savNote->gc_plus == 1;
+                }),
             (new TableColumnBuilder())
                 ->setLabel( __('app.sav_note.hotline'))
                 ->setType(ColumnTypeEnum::TEXT)
@@ -100,7 +103,7 @@ class SavNoteController extends AbstractController
         $savNote->hotline               = $request->input('hotline');
         $savNote->brand_email           = $request->input('brand_email');
         $savNote->brand_information     = $request->input('brand_information');
-        $savNote->regional_information  = $request->input('supplier_information');
+        $savNote->supplier_information  = $request->input('supplier_information');
 
         $savNote->save();
     }
