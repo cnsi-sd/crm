@@ -100,7 +100,6 @@
                         </div>
                     </div>
                 </div>
-
                 @include('tickets.parts.tags')
                 @include('tickets.parts.private_comments')
                 {!! $documents_table !!}
