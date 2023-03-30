@@ -21,6 +21,7 @@ nav:
       - Fiches SAV fabricants : extras/fiches-sav-fabricants.md
   - Configuration :
       - Fiches SAV fabricants : configuration/fiches-sav-fabricants.md
+      - Réponse question offres : configuration/template-réponse-question-offre.md
 
 theme:
   name: readthedocs
