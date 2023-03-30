@@ -185,6 +185,9 @@ return [
             'savprocess' => 'Procédure SAV',
             'savprocess_tag' => 'Tag Procédure SAV complète',
             'savprocess_stop_revival' => 'Relances auto à stopper',
+
+            'mirakl_refunds' => 'Remboursement sur MP Mirakl',
+            'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
         ],
     ],
 

@@ -63,4 +63,17 @@ class MiscController extends AbstractController
         }
         return view('configuration.misc.savprocess');
     }
+
+    public function miraklRefunds(Request $request): View|RedirectResponse
+    {
+        if ($request->exists('save')) {
+            setting(['mirakl_refunds_tag_id' => $request->input('mirakl_refunds_tag_id')]);
+            setting()->save();
+
+            Alert::toastSuccess(__('app.config.misc.saved'));
+            return redirect()->back();
+        }
+
+        return view('configuration.misc.mirakl_refunds');
+    }
 }

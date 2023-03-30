@@ -159,6 +159,10 @@ Breadcrumbs::for('savprocess_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
     $trail->push(__('app.config.misc.savprocess'), route('savprocess_config'));
 });
+Breadcrumbs::for('mirakl_refunds_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.mirakl_refunds'), route('mirakl_refunds_config'));
+});
 
 /** Channel */
 Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {

@@ -17,7 +17,7 @@ use Mirakl\MMP\Shop\Request\Order\Get\GetOrdersRequest;
 class GetMirakleRefunds extends Command
 {
     protected $signature = 'ticket:getMiraklRefunds';
-    protected $description = 'Import incidents from Prestashop and make actions on ticket';
+    protected $description = 'Get Mirakl refund messages';
 
     private Logger $logger;
     private Channel $channel;
@@ -26,16 +26,19 @@ class GetMirakleRefunds extends Command
 
     const HTTP_CONNECT_TIMEOUT = 15;
 
+    /**
+     * @throws Exception
+     */
     public function handle()
     {
-        $this->logger = new Logger('ticket/getMiraklRefunds/getMiraklRefunds.log', true, true);
+        $this->logger = new Logger('ticket/getMiraklRefunds/getMiraklRefunds.log', true, true, true, 15);
 
         try{
             $this->logger->info('---- START ----');
 
             foreach (MirakleChannelEnum::getList() as $marketPlace) {
                 $this->logger->info('Getting refunds for '. $marketPlace .' marketplace');
-                $this->getMikarklRefund($marketPlace);
+                $this->getMiraklRefund($marketPlace);
             }
 
         } catch (Exception $e) {
@@ -47,18 +50,19 @@ class GetMirakleRefunds extends Command
     /**
      * @throws Exception
      */
-    protected function getMikarklRefund($marketPlace)
+    protected function getMiraklRefund($marketPlace)
     {
         $date_time = new DateTime();
         $date_time->modify('-1 month');
         $this->channel = Channel::getByName($marketPlace);
 
-        if ( str_contains($this->channel->name, '.fr') || str_contains($this->channel->name, '.com'))
-           $this->channelBaseName = explode('.', $this->channel->name)[0];
+        if ( str_contains($this->channel->name, '.fr') || str_contains($this->channel->name, '.com')){
+            $this->channelBaseName = explode('.', $this->channel->name)[0];
+        }
         elseif (str_contains($this->channel->name, 'leclerc'))
-           $this->channelBaseName = 'e_leclerc';
+            $this->channelBaseName = 'e_leclerc';
         else
-           throw new Exception('No channel match');
+            throw new Exception('No channel match');
 
         if(!env(strtoupper($this->channelBaseName).'_API_URL')
             || !env(strtoupper($this->channelBaseName).'_API_KEY')
@@ -79,14 +83,10 @@ class GetMirakleRefunds extends Command
             foreach($shopOrder->getOrderLines()->getItems() as $orderLine) {
                 if(count($orderLine->getRefunds()->getItems()) > 0) {
                     $this->logger->info('Get Mirakl refund: Refund find for ' . $shopOrder->getId());
-                    $ticket = Ticket::select('tickets.*')
-                        ->join('orders','tickets.order_id', 'orders.id')
-                        ->where('tickets.channel_id', $this->channel->id)
-                        ->where('orders.channel_order_number', $shopOrder->getId())
-                        ->first();
+                    $ticket = Ticket::getTicketByOrder($this->channel, $shopOrder->getId());
                     if($ticket){
                         $this->logger->info('Ticket id: ' . $ticket->id . 'associated to orderId:' . $shopOrder->getId());
-                        $tagId = setting('tag.mirakl_refund');
+                        $tagId = setting('mirakl_refunds_tag_id');
                         $refundTag = Tag::findOrFail($tagId);
 
                         if(!$ticket->hasTag($refundTag)){

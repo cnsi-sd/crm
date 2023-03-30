@@ -14,6 +14,9 @@
                     <a href="{{ route('savprocess_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'savprocess_config'])>
                         {{ __('app.config.misc.savprocess') }}
                     </a>
+                    <a href="{{ route('mirakl_refunds_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'mirakl_refunds_config'])>
+                        {{ __('app.config.misc.mirakl_refunds') }}
+                    </a>
                 </ul>
             </div>
             @yield('misc_content')
