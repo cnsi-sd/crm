@@ -20,7 +20,7 @@ class MigrateFromMagento extends Command
     protected $description = 'Fill CRM with Magento data';
 
     private array $steps = [
-        MigrateUser::class,
+//        MigrateUser::class,
         MigrateDefaultAnswer::class,
         MigrateTag::class,
         MigrateRevival::class,

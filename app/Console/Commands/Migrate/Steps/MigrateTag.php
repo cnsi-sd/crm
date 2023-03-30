@@ -82,7 +82,7 @@ class MigrateTag extends AbstractMigrateStep
             }
         }
 
-        $dto->logger->info($not_filtered . ' Not filtered tags');
-        $dto->logger->info($filtered . ' Filtered tags');
+        $dto->logger->info('-- ' . $not_filtered . ' Not filtered tags');
+        $dto->logger->info('-- ' . $filtered . ' Filtered tags');
     }
 }

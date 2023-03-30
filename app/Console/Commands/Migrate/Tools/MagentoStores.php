@@ -20,8 +20,8 @@ abstract class MagentoStores
             "but"           => Channel::getByName(ChannelEnum::BUT_FR, false)->id,
             "rueducommerce" => Channel::getByName(ChannelEnum::RUEDUCOMMERCE_FR, false)->id,
             "metro"         => Channel::getByName(ChannelEnum::METRO_FR, false)->id,
-            "leclerc"       => Channel::getByName(ChannelEnum::E_LECLERC, false)->id,
-            "icoza"         => Channel::getByName(ChannelEnum::ICOZA_FR, false)->id,
+//            "leclerc"       => Channel::getByName(ChannelEnum::E_LECLERC, false)->id,
+//            "icoza"         => Channel::getByName(ChannelEnum::ICOZA_FR, false)->id,
         ];
     }
 }
