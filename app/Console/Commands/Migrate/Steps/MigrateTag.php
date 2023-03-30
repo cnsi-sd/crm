@@ -58,6 +58,9 @@ class MigrateTag extends AbstractMigrateStep
 
         $magentoTagAssociations = $this->toArray($magentoTagAssociations);
         foreach ($magentoTagAssociations as $magentoTagAssociation) {
+            if(!$tags->offsetExists($magentoTagAssociation['name']))
+                continue;
+
             /** @var Tag $tag */
             $tag = $tags->offsetGet($magentoTagAssociation['name']);
             $store_codes = explode(',', $magentoTagAssociation['store_codes']);

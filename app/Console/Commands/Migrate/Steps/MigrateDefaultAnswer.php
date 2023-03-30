@@ -52,6 +52,9 @@ class MigrateDefaultAnswer extends AbstractMigrateStep
 
         $magentoDefaultAnswerAssociations = $this->toArray($magentoDefaultAnswerAssociations);
         foreach ($magentoDefaultAnswerAssociations as $magentoDefaultAnswerAssociation) {
+            if(!$defaultAnswers->offsetExists($magentoDefaultAnswerAssociation['name']))
+                continue;
+
             /** @var DefaultAnswer $defaultAnswer */
             $defaultAnswer = $defaultAnswers->offsetGet($magentoDefaultAnswerAssociation['name']);
             $store_codes = explode(',', $magentoDefaultAnswerAssociation['store_codes']);
