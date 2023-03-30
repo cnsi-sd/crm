@@ -5,6 +5,13 @@ $(document).ready(function () {
         $.get(route);
     })
 
+    $('#default_answer_select').on('change', function () {
+        if($(this).find(':selected').data("answer-content")) {
+            let answerContent = $(this).find(':selected').data("answer-content")
+            tinymce.get('message_to_customer').insertContent("<br/>" + answerContent);
+        }
+    });
+
     let externalOrderInfoLoaded = false;
     $('#order-info-tab').click(function () {
         if(externalOrderInfoLoaded)
@@ -60,6 +67,32 @@ $(document).ready(function () {
     let ticket_id = $('#addTagLine').data('ticket_id');
     checkHasTaglist(ticket_id);
 
+    let myButton = document.getElementById("btn-back-to-top");
+
+// When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+        scrollFunction(myButton);
+    };
+    // When the user clicks on the button, scroll to the top of the document
+    myButton.addEventListener("click", backToTop);
+
+    var channelInMessage = 0;
+
+    function checkChannelInMessage(channel){
+        if(tinymce.get('message_to_customer').getContent().includes(channel)) {
+            channelInMessage++;
+        }
+    }
+
+    $('button[type=submit][form=saveTicket]').on("click", function(event) {
+        let othersChannels = $("#others-channels").data("others-channels").split(',');
+        othersChannels.forEach(element => checkChannelInMessage(element));
+        if(channelInMessage > 0) {
+            if(!confirm($("#others-channels").data("confirm-message"))){
+                event.preventDefault();
+            };
+        }
+    });
 })
 
 $(document).on('click', '#addTagLine', function (e){
@@ -161,6 +194,7 @@ function deleteTicketTag(e) {
     )
 }
 
+<<<<<<< resources/js/tickets/ticket.js
 function checkHasTaglist(ticket_id){
     window.axios.post(checkHasTag,{
         ticket_id: ticket_id
@@ -170,3 +204,22 @@ function checkHasTaglist(ticket_id){
         }
     })
 }
+=======
+function scrollFunction(myButton) {
+    if (
+        document.body.scrollTop > 20 ||
+        document.documentElement.scrollTop > 20
+    ) {
+        myButton.style.display = "flex";
+    } else {
+        myButton.style.display = "none";
+    }
+}
+
+
+function backToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+>>>>>>> resources/js/tickets/ticket.js

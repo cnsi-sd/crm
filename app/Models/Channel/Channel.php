@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
- * @property DefaultAnswer $defaultAnswers
+ * @property DefaultAnswer[] $defaultAnswers
  * @property Revival $revivals
  * @property Ticket[] $tickets
  * @property Order[] $orders
@@ -97,6 +97,11 @@ class Channel extends Model
         return $channel;
     }
 
+    public function getAuthorizedDefaultAnswers()
+    {
+        return $this->defaultAnswers->count() === 0 ? DefaultAnswer::all() : $this->defaultAnswers;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -134,5 +139,4 @@ class Channel extends Model
 
         return $columns;
     }
-
 }

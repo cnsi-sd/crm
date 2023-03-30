@@ -4,6 +4,8 @@ namespace App\Models\Ticket;
 
 use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
+use App\Helpers\TinyMCE;
+use App\Models\Channel\DefaultAnswer;
 use App\Models\User\User;
 use Cnsi\Attachments\Trait\Documentable;
 use DateTime;
@@ -17,11 +19,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $channel_message_number
  * @property string $author_type
  * @property string $content
+ * @property int $default_answer_id
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
  * @property Thread $thread
  * @property User $user
+ * @property DefaultAnswer $default_answer
  */
 
 class Message extends Model
@@ -37,6 +41,7 @@ class Message extends Model
       'channel_message_number',
       'author_type',
       'content',
+      'default_answer_id',
       'created_at',
       'updated_at'
     ];
@@ -51,6 +56,11 @@ class Message extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function default_answer(): BelongsTo
+    {
+        return $this->belongsTo(DefaultAnswer::class);
     }
 
     public function isExternal(): bool
@@ -83,6 +93,13 @@ class Message extends Model
             MessageDocumentTypeEnum::PREPAID_RETURN_TICKET,
             MessageDocumentTypeEnum::SLIP_RETURN,
         ];
+    }
+
+    public function save(array $options = []): bool
+    {
+        // Before save : convert message to text
+        $this->content = TinyMCE::toText($this->content);
+        return parent::save();
     }
 }
 

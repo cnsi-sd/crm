@@ -33,9 +33,8 @@
                                     {{__('app.defaultAnswer.content')}}
                                     <span class="required_field">*</span>
                                 </label>
-                                <textarea id="message_to_customer" name="content">{{ \App\Helpers\TinyMCE::toHtml(old('content', $defaultAnswer->content)) }}</textarea>
+                                <textarea id="message_to_customer" name="content">{{ old('content', $defaultAnswer->content) }}</textarea>
                             </div>
-
                         </div>
                     </div>
                 </div>

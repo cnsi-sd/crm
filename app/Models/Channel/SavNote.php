@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $hotline
  * @property string $brand_email
  * @property string $brand_information
- * @property string $regional_information
+ * @property string $supplier_information
  * @property Datetime $created_at
  * @property Datetime $updated_at
  */
@@ -33,11 +33,15 @@ class SavNote extends Model
         'hotline',
         'brand_email',
         'brand_information',
-        'regional_information',
+        'supplier_information',
     ];
 
     protected $searchable = [
         'manufacturer',
+    ];
+
+    protected $casts = [
+        'gc_plus' => 'boolean',
     ];
 
     public function getShowRoute(): string

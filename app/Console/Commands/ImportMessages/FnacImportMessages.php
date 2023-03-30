@@ -10,6 +10,7 @@ use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use Exception;
 use FnacApiClient\Client\SimpleClient;
@@ -21,6 +22,9 @@ use Illuminate\Support\Facades\DB;
 class FnacImportMessages extends AbstractImportMessages
 {
     private SimpleClient $client;
+
+    const ALERT_LOCKED_SINCE = 1800;
+    const KILL_LOCKED_SINCE = 3600;
 
     /**
      * @throws Exception
@@ -72,6 +76,9 @@ class FnacImportMessages extends AbstractImportMessages
      */
     public function handle()
     {
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+
         // Load channel
         $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
 
