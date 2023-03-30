@@ -92,18 +92,18 @@ Breadcrumbs::for('customer_service_process', function (BreadcrumbTrail $trail, $
 });
 
 /** defaultAnswers */
-Breadcrumbs::for('defaultAnswers', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('default_answers', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(trans_choice('app.defaultAnswer.defaultAnswer', 2), route('defaultAnswers'));
+    $trail->push(trans_choice('app.default_answer.default_answer', 2), route('default_answers'));
 });
 
-Breadcrumbs::for('create_defaultAnswer', function (BreadcrumbTrail $trail) {
-    $trail->parent('defaultAnswers');
+Breadcrumbs::for('create_default_answer', function (BreadcrumbTrail $trail) {
+    $trail->parent('default_answers');
     $trail->push(__('app.create'));
 });
 
-Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail, \App\Models\Channel\DefaultAnswer $defaultAnswer) {
-    $trail->parent('defaultAnswers');
+Breadcrumbs::for('edit_default_answer', function (BreadcrumbTrail $trail, \App\Models\Channel\DefaultAnswer $defaultAnswer) {
+    $trail->parent('default_answers');
     $trail->push($defaultAnswer->id);
     $trail->push(__('app.edit'));
 });

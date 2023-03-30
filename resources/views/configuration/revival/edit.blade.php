@@ -84,7 +84,7 @@
                         </div>
                         <div class="m-2">
                             <label for="name">
-                                {{trans_choice('app.defaultAnswer.defaultAnswer', 1)}}
+                                {{trans_choice('app.default_answer.default_answer', 1)}}
                                 <span class="required_field">*</span>
                             </label>
                             <select

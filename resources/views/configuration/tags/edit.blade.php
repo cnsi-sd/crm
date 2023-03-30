@@ -11,6 +11,12 @@
                     <div class="card">
                         <div class="card-header">
                             {{ isset($tags->id) ? trans_choice('app.tags.tags', 1) . " #$tags->id" : trans_choice('app.tags.tags', 1) }}
+                            @can('lock', $tags)
+                                <div class="form-check form-switch float-end">
+                                    <input type="checkbox" class="form-check-input" id="is_locked" name="isLocked" @if($tags->is_locked == 1) checked @endif>
+                                    <label class="form-check-label" for="is_locked">{{ __('app.tags.lock') }} ?</label>
+                                </div>
+                            @endcan
                         </div>
                         <div class="card-body">
                             @csrf

@@ -121,7 +121,7 @@ class Revival extends Model
             ->setLabel(__('app.revival.max_revival'))
             ->setKey('max_revival');
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(trans_choice('app.defaultAnswer.defaultAnswer', 1))
+            ->setLabel(trans_choice('app.default_answer.default_answer', 1))
             ->setType(ColumnTypeEnum::TEXT)
             ->setCallback(function (Revival $revival) {
                 return $revival->default_answer->name;

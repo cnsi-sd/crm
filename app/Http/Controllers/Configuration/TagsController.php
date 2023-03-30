@@ -55,6 +55,7 @@ class TagsController extends AbstractController
         $tags->name = $request->input('name');
         $tags->text_color = $request->input('text_color');
         $tags->background_color = $request->input('background_color');
+        $tags->is_locked = $request->input('isLocked') == "on";
         $tags->save();
 
         $channels = $request->input('channels');
@@ -64,7 +65,7 @@ class TagsController extends AbstractController
     public function delete(Request $request, ?Tag $tags)
     {
         if($tags->delete()){
-            alert::toastSuccess(__('app.delete'));
+            alert::toastSuccess(__('app.tags.deleted'));
         }
         return redirect()->route('tags');
     }

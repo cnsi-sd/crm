@@ -230,13 +230,16 @@ return [
         ],
     ],
 
-    'defaultAnswer' => [
-        'defaultAnswer' => 'Réponse par défaut|Réponses par défaut',
+    'default_answer' => [
+        'default_answer' => 'Réponse par défaut|Réponses par défaut',
         'save' => 'Enregistrer la réponse',
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Canaux autorisés',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'is_locked' => 'Verrouillée',
+        'lock' => 'Verrouiller',
+        'deleted' => 'Réponse par défaut supprimée'
     ],
 
     'revival' => [
@@ -268,6 +271,9 @@ return [
         'select_channel' => 'Canaux autorisés',
         'show' => 'Prévisualisation',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'is_locked' => 'Verrouillé',
+        'lock' => 'Verrouiller',
+        'deleted' => 'Tag supprimé',
         'addTagList' => 'Ajouter une ligne de tags',
         'select_tag' => 'Ajouter un tag',
     ],
