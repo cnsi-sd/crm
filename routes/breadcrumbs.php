@@ -159,6 +159,15 @@ Breadcrumbs::for('savprocess_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
     $trail->push(__('app.config.misc.savprocess'), route('savprocess_config'));
 });
+
+Breadcrumbs::for('answer_offer_questions_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.answer_offer_questions'), route('answer_offer_questions_config'));
+});
+Breadcrumbs::for('mirakl_refunds_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.mirakl_refunds'), route('mirakl_refunds_config'));
+});
 Breadcrumbs::for('closed_discussion_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
     $trail->push(__('app.config.misc.closed_discussion'), route('closed_discussion_config'));
@@ -216,7 +225,3 @@ Breadcrumbs::for('edit_sav_note', function (BreadcrumbTrail $trail, SavNote $sav
     $trail->parent('show_sav_note', $savNote);
     $trail->push(__('app.edit'), route('edit_sav_note', $savNote));
 });
-
-
-
-

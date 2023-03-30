@@ -78,54 +78,6 @@ class Ticket extends Model
         'delivery_date' => 'datetime'
     ];
 
-    public static function getTicket(Order $order, Channel $channel): Ticket
-    {
-        return Ticket::firstOrCreate(
-            [
-                'order_id' => $order->id,
-                'channel_id' => $channel->id,
-            ],
-            [
-                'state' => TicketStateEnum::WAITING_ADMIN,
-                'priority' => TicketPriorityEnum::P1,
-                'deadline' => Ticket::getAutoDeadline(),
-                'user_id' => $channel->user_id,
-            ],
-        );
-    }
-
-    public function getShowRoute(): string
-    {
-        return "ticket";
-    }
-
-    public function __toString(): string
-    {
-        $default_name = '#' . $this->id . ' - ' . $this->order->channel_order_number . ' - ' . $this->order->channel->name;
-        return $default_name;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public static function getLastApiMessageByTicket($threadNumber, $channelName): Model|Builder
-    {
-        $channel = Channel::getByName($channelName);
-        $thread = Thread::firstWhere('channel_thread_number' , $threadNumber);
-
-        return Ticket::query()
-           ->select('ticket_thread_messages.content as messageContent',
-               'ticket_thread_messages.channel_message_number as messageId',
-                'ticket_threads.channel_thread_number as threadId')
-           ->join('ticket_threads', 'ticket_threads.ticket_id' , 'tickets.id')
-           ->join('ticket_thread_messages', 'ticket_thread_messages.thread_id', 'ticket_threads.id')
-           ->where('ticket_thread_messages.thread_id', $thread->id)
-           ->where('tickets.channel_id', $channel->id)
-           ->where('author_type', TicketMessageAuthorTypeEnum::CUSTOMER)
-           ->orderBy('ticket_thread_messages.id', 'desc')
-           ->firstOrFail();
-    }
-
     public function threads(): HasMany
     {
         return $this->hasMany(Thread::class);
@@ -154,6 +106,55 @@ class Ticket extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function getShowRoute(): string
+    {
+        return "ticket";
+    }
+
+    public function __toString(): string
+    {
+        $default_name = '#' . $this->id . ' - ' . $this->order->channel_order_number . ' - ' . $this->order->channel->name;
+        return $default_name;
+    }
+
+
+    public static function getTicket(Order $order, Channel $channel): Ticket
+    {
+        return Ticket::firstOrCreate(
+            [
+                'order_id' => $order->id,
+                'channel_id' => $channel->id,
+            ],
+            [
+                'state' => TicketStateEnum::WAITING_ADMIN,
+                'priority' => TicketPriorityEnum::P1,
+                'deadline' => Ticket::getAutoDeadline(),
+                'user_id' => $channel->user_id,
+            ],
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function getLastApiMessageByTicket($threadNumber, $channelName): Model|Builder
+    {
+        $channel = Channel::getByName($channelName);
+        $thread = Thread::firstWhere('channel_thread_number' , $threadNumber);
+
+        return Ticket::query()
+            ->select('ticket_thread_messages.content as messageContent',
+                'ticket_thread_messages.channel_message_number as messageId',
+                'ticket_threads.channel_thread_number as threadId')
+            ->join('ticket_threads', 'ticket_threads.ticket_id' , 'tickets.id')
+            ->join('ticket_thread_messages', 'ticket_thread_messages.thread_id', 'ticket_threads.id')
+            ->where('ticket_thread_messages.thread_id', $thread->id)
+            ->where('tickets.channel_id', $channel->id)
+            ->where('author_type', TicketMessageAuthorTypeEnum::CUSTOMER)
+            ->orderBy('ticket_thread_messages.id', 'desc')
+            ->firstOrFail();
     }
 
     public static function getTableColumns($mode = 'all'): array
@@ -232,7 +233,7 @@ class Ticket extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.tags.view'))
             ->setKey('tags_id')
-            ->setWhereKey('tags.id') // TODO c'est ca qui cause l'id ambigüe?
+            ->setWhereKey('tags.id')
             ->setType(ColumnTypeEnum::SELECT)
             ->setOptions(Tag::getTagsNames())
             ->setAlign(AlignEnum::CENTER)
@@ -322,5 +323,14 @@ class Ticket extends Model
         }
 
         $tagList->addTag($tag);
+    }
+
+    public static function getTicketByOrder(Channel $channel, string $order_number)
+    {
+        return Ticket::select('tickets.*')
+            ->join('orders','tickets.order_id', 'orders.id')
+            ->where('tickets.channel_id', $channel->id)
+            ->where('orders.channel_order_number', $order_number)
+            ->first();
     }
 }

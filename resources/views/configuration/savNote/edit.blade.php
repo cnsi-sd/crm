@@ -126,14 +126,14 @@
                                     />
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="regional_information">
-                                        {{__('app.sav_note.regional_information')}}
+                                    <label for="supplier_information">
+                                        {{__('app.sav_note.supplier_information')}}
                                         <textarea
-                                            name="regional_information"
+                                            name="supplier_information"
                                             class="form-control form-control-sm"
                                             cols="125"
                                             rows="6"
-                                        >{{ old('regional_information', $savNote->regional_information ?? '') }}</textarea>
+                                        >{{ old('supplier_information', $savNote->supplier_information ?? '') }}</textarea>
                                     </label>
                                 </div>
                             </div>

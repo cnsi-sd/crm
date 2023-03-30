@@ -5,6 +5,7 @@ namespace App\Console\Commands\ImportMessages;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Jobs\AnswerOfferQuestions\CdiscountAnswerOfferQuestions;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
@@ -74,43 +75,48 @@ class CdiscountImportMessages extends AbstractImportMessages
         }
         foreach ($allDiscussion as $discu){
             try {
-
                 $this->logger->info('--- check chat modification time ---');
                 if ($discu->getUpdatedAt()->getTimestamp() > $from_time) {
-                    DB::beginTransaction();
-                    $this->logger->info('Begin Transaction');
 
-                    if (!$discu->isOpen())
-                        $this->checkClosedDiscussion($discu);
+                    if ($discu->getTypologyCode() == "Offer") {
+                        CdiscountAnswerOfferQuestions::AnswerOfferQuestions($discu);
 
-                    $this->logger->info('Message recovery');
-                    $messages = $discu->getMessages();
-                    
-                    if (count($messages) == 0)
-                        continue;
+                    } else {
+                        $this->logger->info('Begin Transaction');
+                        DB::beginTransaction();
 
-                    foreach ($messages as $message) {
-                        $this->logger->info('Check message sender');
-                        $authorType = $message->getSender()->getUserType();
+                        if (!$discu->isOpen())
+                            $this->checkClosedDiscussion($discu);
 
-                        $this->logger->info('Check if dicussion have message and if is seller message sender');
-                        if ($authorType == 'Seller')
+                        $this->logger->info('Message recovery');
+                        $messages = $discu->getMessages();
+                        
+                        $this->logger->info('Check if dicussion have messages');
+                        if (count($messages) == 0)
                             continue;
 
-                        $orderReference = $discu->getOrderReference();
-                        $order = Order::getOrder($orderReference, $this->channel);
-                        $ticket = Ticket::getTicket($order, $this->channel);
+                        foreach ($messages as $message) {
+                            $this->logger->info('Check message sender');
+                            $authorType = $message->getSender()->getUserType();
 
-                        $channel_data = [
-                            "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),
-                            "salesChannel" => $discu->getSalesChannel(),
-                            "userId" => $discu->getCustomerId(),
-                        ];
-                        $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
+                            if ($authorType == 'Seller')
+                                continue;
 
-                        $this->importMessageByThread($ticket, $thread, $message);
-                        $this->logger->info('---- End Import Message');
-                        DB::commit();
+                            $orderReference = $discu->getOrderReference();
+                            $order = Order::getOrder($orderReference, $this->channel);
+                            $ticket = Ticket::getTicket($order, $this->channel);
+
+                            $channel_data = [
+                                "salesChannelExternalReference" => $discu->getSalesChannelExternalReference(),
+                                "salesChannel" => $discu->getSalesChannel(),
+                                "userId" => $discu->getCustomerId(),
+                            ];
+                            $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
+
+                            $this->importMessageByThread($ticket, $thread, $message);
+                            $this->logger->info('---- End Import Message');
+                            DB::commit();
+                        }
                     }
                 }
             } catch (Exception $e){
@@ -145,14 +151,14 @@ class CdiscountImportMessages extends AbstractImportMessages
      */
     private function importMessageByThread(Ticket $ticket, Thread $thread,$message)
     {
-            $imported_id = $message->getMessageId();
-            $this->logger->info('Check if this message is imported');
+        $imported_id = $message->getMessageId();
+        $this->logger->info('Check if this message is imported');
 
-            if (!$this->isMessagesImported($imported_id)) {
-                $this->logger->info('Convert api message to db message');
-                $this->convertApiResponseToMessage($ticket, $message, $thread);
-                $this->addImportedMessageChannelNumber($imported_id);
-            }
+        if (!$this->isMessagesImported($imported_id)) {
+            $this->logger->info('Convert api message to db message');
+            $this->convertApiResponseToMessage($ticket, $message, $thread);
+            $this->addImportedMessageChannelNumber($imported_id);
+        }
     }
 
     private function checkClosedDiscussion($discussion)

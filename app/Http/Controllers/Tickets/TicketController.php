@@ -207,20 +207,35 @@ class TicketController extends AbstractController
 
     public function delete_tag(Request $request) {
         $tag = Tag::find($request->input('tag_id'));
+        $ticket = Ticket::find($request->input('ticket_id'));
         $tag->taglists()->detach($request->input('taglist_id'));
-    }
 
-    public function delete_ThreadTagList(Request $request) {
         $taglist = TagList::find($request->input('taglist_id'));
-        $taglist->tags()->detach();
-        $taglist->delete();
+        if ($taglist->tags()->count() == 0)
+            $taglist->delete();
+        return view('tickets.parts.tags')
+            ->with('ticket', $ticket);
     }
 
-    public function saveThreadTags(Request $request) {
+    public function saveTicketTags(Request $request) {
+        $ticket = Ticket::find($request->input('ticket_id'));
         $taglist = TagList::find($request->input('taglist_id'));
         $tag = Tag::findOrFail($request->input('tag_id'));
+
+        if($taglist == null){
+            $taglist = new TagList();
+            $taglist->ticket_id = $ticket->id;
+            $taglist->save();
+        }
+
         $taglist->addTag($tag);
-        return response()->json($tag);
+        return view('tickets.parts.tags')
+            ->with('ticket', $ticket);
+    }
+
+    public function hasTagList(Request $request){
+        $ticket = Ticket::find($request->input('ticket_id'));
+        return $ticket->taglists()->count();
     }
 
     public function clickAndCall(Request $request): JsonResponse
