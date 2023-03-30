@@ -1,5 +1,5 @@
 @can('edit', \App\Models\Tags\Tag::class)
-    @if(\Illuminate\Support\Facades\Auth::user()->hasPermission(\App\Enums\PermissionEnum::TAG_EDIT_LOCKED) || !$tags->getIsLocked())
+    @if(\Illuminate\Support\Facades\Auth::user()->hasPermission(\App\Enums\PermissionEnum::TAG_EDIT_LOCKED) || !$tags->is_locked)
         <a
             href="{{ route('edit_tags', ['tags' => $tags]) }}"
             class="btn btn-secondary btn-sm"

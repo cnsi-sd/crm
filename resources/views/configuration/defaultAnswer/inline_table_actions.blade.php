@@ -1,5 +1,5 @@
 @can('edit', App\Models\Channel\DefaultAnswer::class)
-    @if(\Illuminate\Support\Facades\Auth::user()->hasPermission(\App\Enums\PermissionEnum::DEFAULT_ANSWER_EDIT_LOCKED) || !$defaultAnswer->getIsLocked())
+    @if(\Illuminate\Support\Facades\Auth::user()->hasPermission(\App\Enums\PermissionEnum::DEFAULT_ANSWER_EDIT_LOCKED) || !$defaultAnswer->is_locked)
         <a
             href="{{ route('edit_default_answer', ['defaultAnswer' => $defaultAnswer]) }}"
             class="btn btn-secondary btn-sm"

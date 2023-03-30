@@ -39,6 +39,10 @@ class Tag extends Model
         'deleted_at'
     ];
 
+    protected $casts = [
+        'is_locked' => 'boolean',
+    ];
+
     public function isChannelAuthorized(Channel $channel)
     {
         return $this->channels->keyBy('id')->has($channel->id);
@@ -66,10 +70,6 @@ class Tag extends Model
         return $this->channels->count() === 0 ? Channel::all() : $this->channels;
     }
 
-    public function getIsLocked() : bool
-    {
-        return $this->is_locked;
-    }
     public static function getTableColumns(): array
     {
         $columns = [];
