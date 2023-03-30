@@ -36,7 +36,8 @@
         "symfony/mailgun-mailer": "^6.1",
         "tinymce/tinymce": "^6.3",
         "twilio/sdk": "^6.44",
-        "webklex/php-imap": "^5.0"
+        "webklex/php-imap": "^5.0",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
