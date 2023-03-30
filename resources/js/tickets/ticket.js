@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     $('.thread-comments').click(function () {
         const route = $(this).data("toggle-comment-route")
@@ -69,7 +68,7 @@ $(document).ready(function () {
 
     let myButton = document.getElementById("btn-back-to-top");
 
-// When the user scrolls down 20px from the top of the document, show the button
+    // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function () {
         scrollFunction(myButton);
     };
@@ -194,7 +193,6 @@ function deleteTicketTag(e) {
     )
 }
 
-<<<<<<< resources/js/tickets/ticket.js
 function checkHasTaglist(ticket_id){
     window.axios.post(checkHasTag,{
         ticket_id: ticket_id
@@ -204,7 +202,7 @@ function checkHasTaglist(ticket_id){
         }
     })
 }
-=======
+
 function scrollFunction(myButton) {
     if (
         document.body.scrollTop > 20 ||
@@ -221,5 +219,3 @@ function backToTop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
-
->>>>>>> resources/js/tickets/ticket.js
