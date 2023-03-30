@@ -65,7 +65,7 @@ class TagsController extends AbstractController
     public function delete(Request $request, ?Tag $tags)
     {
         if($tags->delete()){
-            alert::toastSuccess(__('app.delete'));
+            alert::toastSuccess(__('app.tags.deleted'));
         }
         return redirect()->route('tags');
     }

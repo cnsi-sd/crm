@@ -234,6 +234,7 @@ return [
         'select_all_channel' => 'Laissez vide pour tout autoriser',
         'is_locked' => 'Verrouillée',
         'lock' => 'Verrouiller',
+        'deleted' => 'Réponse par défaut supprimée'
     ],
 
     'revival' => [
@@ -267,6 +268,7 @@ return [
         'select_all_channel' => 'Laissez vide pour tout autoriser',
         'is_locked' => 'Verrouillé',
         'lock' => 'Verrouiller',
+        'deleted' => 'Tag supprimé',
     ],
 
     'recover_password' => [

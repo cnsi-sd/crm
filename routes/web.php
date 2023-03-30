@@ -65,9 +65,9 @@ Route::prefix('/')->group(function () {
     Route::prefix('configuration')->group(function () {
         Route::prefix('default_answer')->group(function () {
             Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_default_answer')->can('edit', DefaultAnswer::class);
-            Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_default_answer')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_default_answer')->can('edit', ['defaultAnswer']);
             Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('default_answers')->can('read', DefaultAnswer::class);
-            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_default_answers')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_default_answers')->can('edit', ['defaultAnswer']);
         });
         Route::prefix('revival')->group(function () {
             Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival')->can('edit', Revival::class);
@@ -81,9 +81,9 @@ Route::prefix('/')->group(function () {
         });
         Route::prefix('tags')->group(function () {
             Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tag::class);
-            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', Tag::class);
+            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', ['tags']);
             Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags')->can('read', Tag::class);
-            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tag::class);
+            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', ['tags']);
         });
         Route::prefix('bot')->group(function () {
             Route::match(['get', 'post'], '', [BotController::class, 'home'])->name('bot_home')->can('bot_config');
