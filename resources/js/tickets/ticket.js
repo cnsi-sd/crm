@@ -63,6 +63,15 @@ $(document).ready(function () {
         $('[data-order-id=' + $(this).data("order-id") + ']').show();
     });
 
+    let myButton = document.getElementById("btn-back-to-top");
+
+// When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+        scrollFunction(myButton);
+    };
+    // When the user clicks on the button, scroll to the top of the document
+    myButton.addEventListener("click", backToTop);
+
     var channelInMessage = 0;
 
     function checkChannelInMessage(channel){
@@ -200,5 +209,22 @@ function deleteTicketTag(e) {
     }).then(
         e.target.parentNode.remove()
     )
+}
+
+function scrollFunction(myButton) {
+    if (
+        document.body.scrollTop > 20 ||
+        document.documentElement.scrollTop > 20
+    ) {
+        myButton.style.display = "flex";
+    } else {
+        myButton.style.display = "none";
+    }
+}
+
+
+function backToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
 }
 
