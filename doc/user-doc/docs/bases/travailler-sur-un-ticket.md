@@ -20,9 +20,24 @@ Deux possibilités :
 Pour répondre à un client, il faut remplir le champ texte, puis redéfinir le statut du ticket, et enfin cliquer sur le bouton « Envoyer un message ».
 ![Reponse_client](assets/reponse_client.png)
 
+!!!warning
+    Avant l'envoi du message, le CRM vérifie si le nom d'une autre marketplace que celle affectée du ticket est présent dans le message.
+    Si c'est le cas, vous avez possibilité d'annuler ou de confirmer tout de même l'envoi.
+
 ### Réponses par défaut
 
-**TODO**
+Il est possible de choisir une réponse déjà rédigée à envoyer au client.  
+Pour cela, cliquez sur la liste de sélection à droite de « Réponses par défaut » puis choisissez le nom d'une des réponses par défaut.
+Le texte apparaitra dans le champ message.
+
+![reponse_par_defaut_utilisation](assets/reponse_par_defaut_utilisation.gif)
+
+!!!note
+    Certaines réponses par défaut ne sont accessibles que sur certaines marketplaces.
+
+Une fois le message envoyé, il est possible d'identifier lorsqu'une réponse par défaut a été envoyée :
+
+![reponse_par_defaut](assets/reponse_par_defaut.png)
 
 ### Pièces jointes
 
@@ -54,7 +69,7 @@ Il existe actuellement trois statuts différents de ticket :
 
 ### Priorité
 
-Les tickets sont classé par ordre de priorité, P1 étant le plus urgent, P2 étant secondaire.
+Les tickets sont classés par ordre de priorité, P1 étant le plus urgent, P2 étant secondaire.
 
 ### Responsable
 
@@ -64,7 +79,7 @@ puis en validant avec la touche Entrée.
 
 ### Deadline
 
-Le champ Deadline correspond à la date butoire pour traiter le ticket.
+Le champ Deadline correspond à la date butoir pour traiter le ticket.
 Cette date peut être redéfinie en cliquant sur l'icône calendrier du champ ou
 en remplissant la date manuellement.
 
