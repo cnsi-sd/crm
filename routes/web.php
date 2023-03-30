@@ -108,9 +108,9 @@ Route::prefix('/')->group(function () {
         });
     });
     // CALL AJAX
-    Route::get('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');
+    Route::post('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');
     Route::post('/addTagList', [TagsController::class, 'newTagLine'])->name('addTagList');
-    Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags'])->name('saveTagOnticketThread');
-    Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList'])->name('deleteTagList');
-    Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnThread');
+    Route::post('/saveTicketThreadTags', [TicketController::class, 'saveTicketTags'])->name('saveTagOnticket');
+    Route::post('/hastaglist', [TicketController::class, 'hasTagList'])->name('ticketHasTaglist');
+    Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnTicket');
 });

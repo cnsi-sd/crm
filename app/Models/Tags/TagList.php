@@ -40,6 +40,15 @@ class TagList extends Model
 
     public function addTag(Tag $tag): void
     {
-        $this->tags()->attach($tag->id);
+        $data = Tag::query()
+            ->select('tags.*')
+            ->join('tag_tagLists', 'tag_tagLists.tag_id', 'tags.id')
+            ->join('tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
+            ->where('tags.id', $tag->id)
+            ->count();
+        $c = 'cd';
+        if ($data == 0){
+            $this->tags()->attach($tag->id);
+        }
     }
 }
