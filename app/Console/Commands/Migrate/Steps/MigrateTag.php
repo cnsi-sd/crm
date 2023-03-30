@@ -41,7 +41,7 @@ class MigrateTag extends AbstractMigrateStep
     {
         // Load tags and mapping
         $tags = Tag::all()->keyBy('name');
-        $mapping = MagentoStores::getMapping();
+        $mapping = MagentoStores::getStoreMapping();
 
         // prepare statistics vars
         $not_filtered = 0;

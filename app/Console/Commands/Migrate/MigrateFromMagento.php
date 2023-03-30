@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Migrate;
 
 use App\Console\Commands\Migrate\Steps\MigrateDefaultAnswer;
+use App\Console\Commands\Migrate\Steps\MigrateTicketAndMessage;
 use App\Console\Commands\Migrate\Steps\MigrateRevival;
 use App\Console\Commands\Migrate\Steps\MigrateSavNote;
 use App\Console\Commands\Migrate\Steps\MigrateTag;
@@ -25,6 +26,7 @@ class MigrateFromMagento extends Command
         MigrateTag::class,
         MigrateRevival::class,
         MigrateSavNote::class,
+        MigrateTicketAndMessage::class,
     ];
 
     public function handle()

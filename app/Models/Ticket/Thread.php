@@ -32,6 +32,8 @@ class Thread extends Model
 {
     protected $table = 'ticket_threads';
 
+    const DEFAULT_CHANNEL_NUMBER = 'crm_default_thread';
+
     protected $fillable = [
         'ticket_id',
         'revival_id',
