@@ -1,7 +1,8 @@
 site_name: CRM
 
 nav:
-  - Introduction : introduction/index.md
+  - Accueil : index.md
+  - Glossaire : introduction/glossary.md
   - Mon compte : introduction/account.md
   - Bases:
       - Qu'est ce qu'un ticket ?: bases/qu-est-ce-qu-un-ticket.md
@@ -14,6 +15,7 @@ nav:
       - Commentaires privés: fonctionnalités/commentaires-privés.md
       - Relances automatiques: fonctionnalités/relances-automatiques.md
       - Documents: fonctionnalités/documents.md
+      - Réponses automatiques: fonctionnalités/reponses-automatiques.md
   - Extras :
       - Variables : extras/variables.md
       - Fiches SAV fabricants : extras/fiches-sav-fabricants.md
@@ -25,7 +27,9 @@ theme:
   locale: fr
 
 markdown_extensions:
-  # Python-Markdown admonition : boxes of different types : attention, caution, danger, error, hint, important, note, tip, and warning; see : https://python-markdown.github.io/extensions/admonition/
+  # Admonition : boxes of different types : attention, caution, danger, error, hint, important, note, tip, and warning; see : https://python-markdown.github.io/extensions/admonition/
   - admonition
+  # Attribute Lists : add attributes to HTML elements (like image sizes) https://python-markdown.github.io/extensions/definition_lists/
   - attr_list
+  # Definition Lists : create a glossary https://python-markdown.github.io/extensions/definition_lists/
   - def_list

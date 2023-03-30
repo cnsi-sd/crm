@@ -126,6 +126,7 @@ return [
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
         'saved' => 'Ticket enregistré',
+        'confirm_other_channel' => 'Le message contient le nom d\'une autre marketplace, envoyer quand même le message ?',
 
         'click_and_call' => [
             'start' => 'Cliquer pour lancer l\'appel',
@@ -153,6 +154,7 @@ return [
         'designation' => 'Désignation',
         'qty' => 'Qté',
         'supplier' => 'Fournisseur',
+        'brand' => 'Marque :',
         'reference' => 'Référence :',
         'ean' => 'EAN :',
         'external_link' => 'Accès backoffice',
@@ -188,6 +190,9 @@ return [
 
             'mirakl_refunds' => 'Remboursement sur MP Mirakl',
             'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
+
+            'closed_discussion' => 'Discussion clôturée',
+            'closed_discussion_tag' => 'Tag discussion clôturée',
         ],
     ],
 
@@ -291,14 +296,14 @@ return [
         'edit' => 'Modifier fiche SAV fabriquant',
         'delete' => 'Supprimer fiche SAV fabriquant',
         'manufacturer' => 'Fabriquant',
-        'pms_delay' => 'Délai de PMS (Panne / Mise en service)',
+        'pms_delay' => 'Délai de PMS (Panne mise en service)',
         'manufacturer_warranty' => 'Garantie constructeur',
         'gc_plus' => 'Contrat GCPlus',
         'gc_plus_delay' => 'Délai pour réaliser contrat GCPlus',
         'hotline' => 'Hotline',
         'brand_email' => 'Email marque',
         'brand_information' => 'Informations marque',
-        'regional_information' => 'Informations régionales',
+        'supplier_information' => 'Informations fournisseurs',
         'delete_confirm' => 'Supprimer la fiche SAV ?',
         'deleted' => 'Fiche SAV fabricant supprimée',
         'saved' => 'Fiche SAV fabricant enregistrée',

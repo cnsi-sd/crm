@@ -163,6 +163,10 @@ Breadcrumbs::for('mirakl_refunds_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
     $trail->push(__('app.config.misc.mirakl_refunds'), route('mirakl_refunds_config'));
 });
+Breadcrumbs::for('closed_discussion_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.closed_discussion'), route('closed_discussion_config'));
+});
 
 /** Channel */
 Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {

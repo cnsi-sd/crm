@@ -4,6 +4,13 @@ $(document).ready(function () {
         $.get(route);
     })
 
+    $('#default_answer_select').on('change', function () {
+        if($(this).find(':selected').data("answer-content")) {
+            let answerContent = $(this).find(':selected').data("answer-content")
+            tinymce.get('message_to_customer').insertContent("<br/>" + answerContent);
+        }
+    });
+
     let externalOrderInfoLoaded = false;
     $('#order-info-tab').click(function () {
         if(externalOrderInfoLoaded)
@@ -12,6 +19,10 @@ $(document).ready(function () {
         const route = $(this).data("get-external-infos-route")
         $.get(route, function (data) {
             $('#order-info').html(data)
+
+            $('.order-info:not(:first)').hide();
+            $('.order-btn:first').removeClass("btn-outline-primary");
+            $('.order-btn:first').addClass("btn-primary");
 
             $('.phone_number').click(function() {
                 window.axios.post(url_click_and_call, {
@@ -41,6 +52,33 @@ $(document).ready(function () {
         $( ".attachment_type" ).last().attr('name', "attachment_type_"+attachmentIndex);
         $( ".attachment_file" ).last().attr('name', "attachment_file_"+attachmentIndex);
         $( ".attachment_file" ).last().val('');
+    });
+
+    $('body').on("click", '.order-btn', function() {
+        $('.order-btn').removeClass("btn-primary");
+        $('.order-btn').addClass("btn-outline-primary");
+        $('.order-btn[data-order-id=' + $(this).data("order-id") + ']').removeClass("btn-outline-primary");
+        $('.order-btn[data-order-id=' + $(this).data("order-id") + ']').addClass("btn-primary");
+        $('.order-info').hide();
+        $('[data-order-id=' + $(this).data("order-id") + ']').show();
+    });
+
+    var channelInMessage = 0;
+
+    function checkChannelInMessage(channel){
+        if(tinymce.get('message_to_customer').getContent().includes(channel)) {
+            channelInMessage++;
+        }
+    }
+
+    $('button[type=submit][form=saveTicket]').on("click", function(event) {
+        let othersChannels = $("#others-channels").data("others-channels").split(',');
+        othersChannels.forEach(element => checkChannelInMessage(element));
+        if(channelInMessage > 0) {
+            if(!confirm($("#others-channels").data("confirm-message"))){
+                event.preventDefault();
+            };
+        }
     });
 })
 
