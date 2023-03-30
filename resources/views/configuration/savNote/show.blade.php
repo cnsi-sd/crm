@@ -36,9 +36,9 @@
                         </tr>
                         <tr>
                             <td class="table-active text-end">{{ __('app.sav_note.gc_plus') }}</td>
-                            <td> @if($savNote->gc_plus  == 1) OUI @else NON @endif </td>
+                            <td> @if($savNote->gc_plus) OUI @else NON @endif </td>
                         </tr>
-                        @if($savNote->gc_plus  == 1)
+                        @if($savNote->gc_plus)
                             <tr>
                                 <td class="table-active text-end">{{ __('app.sav_note.gc_plus_delay') }}</td>
                                 <td>{{ $savNote->gc_plus_delay }}</td>

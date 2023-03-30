@@ -39,7 +39,7 @@ class SavNoteController extends AbstractController
                 ->setAlign(AlignEnum::CENTER)
                 ->setKey('cg_plus')
                 ->setCallback(function (SavNote $savNote) {
-                   return $savNote->gc_plus == 1;
+                   return $savNote->gc_plus;
                 }),
             (new TableColumnBuilder())
                 ->setLabel( __('app.sav_note.hotline'))
