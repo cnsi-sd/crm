@@ -187,13 +187,24 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
                 $thread = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, 'Fil de discussion principal');
             }
 
-            $is_admin = $magentoAdminMessage->ctm_author === 'admin';
+            if($magentoAdminMessage->email === 'support@boostmyshop.com') {
+                $user_id = null;
+                $author_type = TicketMessageAuthorTypeEnum::SYSTEM;
+            }
+            elseif($magentoAdminMessage->ctm_author === 'admin') {
+                $user_id = $this->users[$magentoAdminMessage->email] ?? null;
+                $author_type = TicketMessageAuthorTypeEnum::ADMIN;
+            }
+            else {
+                $user_id = null;
+                $author_type = TicketMessageAuthorTypeEnum::CUSTOMER;
+            }
 
             Message::insert([
                 'thread_id'   => $thread->id,
                 'created_at'  => $magentoAdminMessage->ctm_created_at,
-                'user_id'     => $is_admin ? ($this->users[$magentoAdminMessage->email] ?? null) : null,
-                'author_type' => $is_admin ? TicketMessageAuthorTypeEnum::ADMIN : TicketMessageAuthorTypeEnum::CUSTOMER,
+                'user_id'     => $user_id,
+                'author_type' => $author_type,
                 'content'     => TinyMCE::toText($magentoAdminMessage->ctm_content),
             ]);
         }
