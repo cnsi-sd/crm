@@ -10,11 +10,13 @@ use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\TinyMCE;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use App\Models\User\User;
 use Closure;
+use Illuminate\Support\Facades\DB;
 use stdClass;
 
 class MigrateTicketAndMessage extends AbstractMigrateStep
@@ -23,7 +25,9 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
     private array $magentoApiMessages;
     private array $magentoAdminMessages;
     private array $orderByTickets = [];
+    private array $ticketConversion = [];
     private array $users;
+    private array $magentoTicketTags;
 
     public function handle(MigrateDTO $dto, Closure $next)
     {
@@ -31,6 +35,8 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
         Ticket::truncate();
         Thread::truncate();
         Message::truncate();
+        DB::table('tag_tagLists')->truncate();
+        DB::table('tagLists')->truncate();
 
         $this->loadUsers();
         $this->loadMagentoOrders($dto);
@@ -41,13 +47,16 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
         $this->loadMagentoAdminMessages($dto);
         $this->insertAdminMessages($dto);
 
+        $this->loadMagentoTicketTags($dto);
+        $this->insertTicketTags($dto);
+
         return $next($dto);
     }
 
     private function loadUsers()
     {
         $this->users = User::query()
-            ->select('id' , 'email')
+            ->select('id', 'email')
             ->get()
             ->pluck('id', 'email')
             ->toArray();
@@ -71,6 +80,7 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
     {
         $this->magentoApiMessages = $dto->connection->select('
             SELECT
+                t.ct_id,
                 t.ct_status,
                 t.ct_priority,
                 t.ct_deadline,
@@ -120,6 +130,7 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
             );
 
             $this->orderByTickets[$magentoApiMessage->cam_ticket_id] = $order;
+            $this->ticketConversion[$magentoApiMessage->ct_id] = $ticket;
 
             Message::firstOrCreate(
                 [
@@ -140,6 +151,7 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
     {
         $this->magentoAdminMessages = $dto->connection->select('
             SELECT
+                ct_id,
                 ct_subject,
                 ct_object_id,
                 a.email,
@@ -162,14 +174,19 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
     private function insertAdminMessages(MigrateDTO $dto)
     {
         foreach ($this->magentoAdminMessages as $magentoAdminMessage) {
-            $order = $this->getTicketOrder($magentoAdminMessage);
-            if (!$order) {
-                $dto->logger->error('Can not find order for ticket #' . $magentoAdminMessage->ctm_ticket_id);
-                continue;
-            }
+            if (isset($this->ticketConversion[$magentoAdminMessage->ct_id])) {
+                $ticket = $this->ticketConversion[$magentoAdminMessage->ct_id];
+            } else {
+                $order = $this->getTicketOrder($magentoAdminMessage);
+                if (!$order) {
+                    $dto->logger->error('Can not find order for ticket #' . $magentoAdminMessage->ctm_ticket_id);
+                    continue;
+                }
 
-            $channel = $order->channel;
-            $ticket = Ticket::getTicket($order, $channel);
+                $channel = $order->channel;
+                $ticket = Ticket::getTicket($order, $channel);
+                $this->ticketConversion[$magentoAdminMessage->ct_id] = $ticket;
+            }
 
             $thread = Thread::query()
                 ->where('ticket_id', $ticket->id)
@@ -187,15 +204,13 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
                 $thread = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, 'Fil de discussion principal');
             }
 
-            if($magentoAdminMessage->email === 'support@boostmyshop.com') {
+            if ($magentoAdminMessage->email === 'support@boostmyshop.com') {
                 $user_id = null;
                 $author_type = TicketMessageAuthorTypeEnum::SYSTEM;
-            }
-            elseif($magentoAdminMessage->ctm_author === 'admin') {
+            } elseif ($magentoAdminMessage->ctm_author === 'admin') {
                 $user_id = $this->users[$magentoAdminMessage->email] ?? null;
                 $author_type = TicketMessageAuthorTypeEnum::ADMIN;
-            }
-            else {
+            } else {
                 $user_id = null;
                 $author_type = TicketMessageAuthorTypeEnum::CUSTOMER;
             }
@@ -235,5 +250,35 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
 
         $marketplace_order_number = $this->magentoOrders[$ct_object_id];
         return Order::getOrder($marketplace_order_number, $channel);
+    }
+
+    private function loadMagentoTicketTags(MigrateDTO $dto)
+    {
+        $this->magentoTicketTags = $dto->connection->select('
+            SELECT
+                ctt_ct_id as ct_id,
+                ctg_name as tag_name
+            FROM crm_ticket_tag
+            INNER JOIN crm_tag ON ctg_id = ctt_ctg_id
+        ');
+    }
+
+    private function insertTicketTags(MigrateDTO $dto)
+    {
+        $tags = Tag::all()->keyBy('name');
+
+        foreach ($this->magentoTicketTags as $magentoTicketTag) {
+            if(!$tags->offsetExists($magentoTicketTag->tag_name))
+                continue;
+
+            if(!isset($this->ticketConversion[$magentoTicketTag->ct_id]))
+                continue;
+
+            $ticket = $this->ticketConversion[$magentoTicketTag->ct_id];
+            $tag = $tags->offsetGet($magentoTicketTag->tag_name);
+            if(!$ticket->hasTag($tag)) {
+                $ticket->addTag($tag);
+            }
+        }
     }
 }
