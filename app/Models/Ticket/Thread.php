@@ -80,17 +80,20 @@ class Thread extends Model
 
     public function messages(): HasMany
     {
-        return $this->hasMany(Message::class)->orderBy('id', 'DESC');
+        // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
+        return $this->hasMany(Message::class)->orderBy('created_at', 'DESC');
     }
 
     public function firstMessage(): ?Message
     {
-        return $this->messages()->reorder('id', 'ASC')->first();
+        // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
+        return $this->messages()->reorder('created_at', 'ASC')->first();
     }
 
     public function lastMessage(): ?Message
     {
-        return $this->messages()->reorder('id', 'DESC')->first();
+        // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
+        return $this->messages()->reorder('created_at', 'DESC')->first();
     }
 
     public function ticket(): BelongsTo
