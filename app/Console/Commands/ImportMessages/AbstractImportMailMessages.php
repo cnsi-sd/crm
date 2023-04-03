@@ -74,7 +74,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
-                'SINCE' => $from_date
+                'SINCE' => $from_date,
             ]);
 
             $this->logger->info('--- Get Emails details ---');
@@ -157,6 +157,11 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
      * @return bool
      */
     protected function canImport($email): bool{
+
+        $starter_time = strtotime(env('STARTER_DATE_CRM'));
+        $starter_date = date("d M Y H:i:s", $starter_time);
+        if ($starter_date > $email->date)
+            return false;
 
         preg_match('/@(.*)/', $email->senderAddress, $match);
         if (in_array($match[1], config('email-import.domain_blacklist')))
