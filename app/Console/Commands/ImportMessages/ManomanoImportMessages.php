@@ -3,14 +3,17 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\TmpFile;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Attachments\Model\Document;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -130,6 +133,14 @@ class ManomanoImportMessages extends AbstractImportMailMessages
                 'content' => $this->getMessageContent($email),
             ]
         );
+
+        if ($email->hasAttachments()) {
+            $this->logger->info('Download documents from message');
+            foreach ($email->getAttachments() as $attachment) {
+                $tmpFile = new TmpFile((string) $attachment->getContents());
+                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachment->name);
+            }
+        }
 
         $this->logger->info('Message id: '. $message->id . ' created');
 
