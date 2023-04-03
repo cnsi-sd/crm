@@ -27,6 +27,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
 {
     const RETURN = 'retour';
     const IMPORT = 'import';
+
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'amazon');
@@ -61,12 +62,21 @@ class AmazonImportMessage extends AbstractImportMailMessages
             '#actionrequise#',
             '#amazonfruneouplusieursdevosoffresamazononteacuteteacutesupprimeacuteesdelarecherche#',
             '#offredeacutesactiveacuteesenraisonduneerreurdeprixpotentielle#',
-            '#votreemaila#'
+            '#votreemaila#',
         ];
         $normalizedSubject = Tools::normalize($email->subject);
         foreach ($patterns as $pattern)
             if (preg_match($pattern, $normalizedSubject))
                 return false;
+
+        $patterns = [
+            '#autorisationderetourpourlacommande#',
+        ];
+        foreach ($patterns as $pattern)
+            if (preg_match($pattern, $normalizedSubject)) {
+                $this->logger->info('subject return command autorized');
+                return true;
+            }
 
         return parent::canImport($email);
     }
@@ -164,6 +174,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
      * @param Ticket $ticket
      * @param mixed $email
      * @return void
+     * @throws Exception
      */
     private function addReturnOnTicket(Ticket $ticket, mixed $email): void
     {
@@ -172,7 +183,14 @@ class AmazonImportMessage extends AbstractImportMailMessages
         $ticket->addTag($tag);
 
         $returnComment = AmazonBeautifierMail::getReturnInformation($email->textHtml);
-        if ($returnComment !== "") {
+
+        $check = Comment::query()
+            ->select('*')
+            ->where('content' , $returnComment)
+            ->where('ticket_id', $ticket->id)
+            ->get();
+
+        if ($returnComment !== "" && count($check) == 0) {
             $comment = new Comment();
             $comment->ticket_id = $ticket->id;
             $comment->content = $returnComment;
@@ -181,5 +199,8 @@ class AmazonImportMessage extends AbstractImportMailMessages
             $comment->save();
         }
     }
+
+
+
 
 }

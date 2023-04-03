@@ -36,9 +36,9 @@ class AmazonBeautifierMail
 
     /**
      * @param $email
-     * @return array
+     * @return string
      */
-    public static function getReturnInformation($email): array
+    public static function getReturnInformation($email): string
     {
 
         $additional_comment = '';
@@ -47,7 +47,7 @@ class AmazonBeautifierMail
             $carrier = $data['carrier'];
 
             $tracking_number = '';
-            if (preg_match("'Numéro de suivi&#xa0;: (?<tracking>)<br>'i", $email, $data))
+            if (preg_match("'Numéro de suivi&#xa0;: (?<tracking>.*)<br>'i", $email, $data))
                 $tracking_number = $data['tracking'];
 
             $additional_comment_body = "Retour automatique Amazon<br>Transporteur: %s<br>Numéro de suivi %s<br>";
@@ -55,9 +55,7 @@ class AmazonBeautifierMail
             $additional_comment = sprintf($additional_comment_body, $carrier, $tracking_number);
         }
 
-
-        $default_data['additional_comment'] = $additional_comment;
-        return $default_data;
+        return $additional_comment;
     }
 
 
