@@ -8,6 +8,7 @@ use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use PhpImap\Exceptions\InvalidParameterException;
@@ -158,9 +159,11 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
      */
     protected function canImport($email): bool{
 
-        $starter_time = strtotime(env('STARTER_DATE_CRM'));
-        $starter_date = date("d M Y H:i:s", $starter_time);
-        if ($starter_date > $email->date)
+        $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
+        if(!$starter_date)
+            throw new Exception('The environement variable isn\'t in the correct format or does not exist');
+
+        if ($starter_date > date("d M Y H:i:s", strtotime($email->date)))
             return false;
 
         preg_match('/@(.*)/', $email->senderAddress, $match);

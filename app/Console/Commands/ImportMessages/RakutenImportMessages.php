@@ -121,6 +121,7 @@ class RakutenImportMessages extends AbstractImportMessages
             foreach($threads as $messages) {
                 $this->logger->info('Begin Transaction');
 
+
                 if(isset($messages[0])){
                 $order  = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
                 $ticket = Ticket::getTicket($order, $this->channel);
@@ -306,6 +307,14 @@ class RakutenImportMessages extends AbstractImportMessages
     {
         $patterns = $this->getPatterns();
         foreach ($messages as $message) {
+
+            $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
+            if(!$starter_date)
+                throw new Exception('The environement variable isn\'t in the correct format or does not exist');
+
+            if ($starter_date > date("d M Y H:i:s", strtotime($message['Date'])))
+                continue;
+
             $message['id'] = crc32($message['Message'] . $message['MpCustomerId'] . $message['Date']);
 
             if(isset($message['Object'])){ // It's a mail

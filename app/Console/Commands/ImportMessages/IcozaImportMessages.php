@@ -12,6 +12,7 @@ use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use FnacApiClient\Entity\Message;
 use GuzzleHttp\Client;
@@ -95,6 +96,13 @@ class IcozaImportMessages extends AbstractImportMessages
         foreach ($messages->Messages as $message) {
             try {
                 DB::beginTransaction();
+
+                $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
+                if(!$starter_date)
+                    throw new Exception('The environement variable isn\'t in the correct format or does not exist');
+
+                if ($starter_date > date("d M Y H:i:s", strtotime($message->date_add)))
+                    continue;
 
                 $order      = Order::getOrder($message->order, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);

@@ -12,6 +12,7 @@ use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\Message;
@@ -108,6 +109,13 @@ class FnacImportMessages extends AbstractImportMessages
         foreach ($messages as $message) {
             try {
                 DB::beginTransaction();
+
+                $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
+                if(!$starter_date)
+                    throw new Exception('The environement variable isn\'t in the correct format or does not exist');
+
+                if ($starter_date > date("d M Y H:i:s", strtotime($message->getCreatedAt())))
+                    continue;
 
                 $messageId  = $message->getMessageId();;
                 $mpOrderId  = $message->getMessageReferer();;
