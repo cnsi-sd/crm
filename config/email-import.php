@@ -4,6 +4,9 @@ return [
     'domain_whitelist' => [
       "marketplace.amazon.fr"
     ],
+    'email_whitelist' => [
+      'donotreply@amazon.com'
+    ],
     'email_blacklist' => [
         "do-not-reply@amazon.fr",
         "notification-vendeur@amazon.fr",
