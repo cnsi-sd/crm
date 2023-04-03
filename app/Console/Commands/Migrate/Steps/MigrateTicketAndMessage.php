@@ -4,6 +4,7 @@ namespace App\Console\Commands\Migrate\Steps;
 
 use App\Console\Commands\Migrate\Tools\MagentoStores;
 use App\Console\Commands\Migrate\Tools\MigrateDTO;
+use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
@@ -11,6 +12,7 @@ use App\Helpers\TinyMCE;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
+use App\Models\Ticket\Comment;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
@@ -28,6 +30,7 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
     private array $ticketConversion = [];
     private array $users;
     private array $magentoTicketTags;
+    private array $magentoPrivateComments;
 
     public function handle(MigrateDTO $dto, Closure $next)
     {
@@ -35,6 +38,7 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
         Ticket::truncate();
         Thread::truncate();
         Message::truncate();
+        Comment::truncate();
         DB::table('tag_tagLists')->truncate();
         DB::table('tagLists')->truncate();
 
@@ -42,13 +46,16 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
         $this->loadMagentoOrders($dto);
 
         $this->loadMagentoCustomerApiMessages($dto);
-        $this->insertCustomerApiMessages();
+        $this->insertCustomerApiMessages($dto);
 
         $this->loadMagentoAdminMessages($dto);
         $this->insertAdminMessages($dto);
 
         $this->loadMagentoTicketTags($dto);
         $this->insertTicketTags($dto);
+
+        $this->loadMagentoTicketComments($dto);
+        $this->insertTicketComments($dto);
 
         return $next($dto);
     }
@@ -100,12 +107,12 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
         ');
     }
 
-    private function insertCustomerApiMessages()
+    private function insertCustomerApiMessages(MigrateDTO $dto)
     {
         $mapping = MagentoStores::getApiMarketplaceMapping();
+        $inserted = 0;
 
         foreach ($this->magentoApiMessages as $magentoApiMessage) {
-
             $channel = $mapping[$magentoApiMessage->cam_marketplace];
             $threadNumber = $magentoApiMessage->cam_thread_id ?: $magentoApiMessage->cam_marketplace_order_id;
             $author = in_array($magentoApiMessage->cam_message_from, ['Operator', 'Service client Cdiscount', 'CALLCENTER']) ? TicketMessageAuthorTypeEnum::OPERATOR : TicketMessageAuthorTypeEnum::CUSTOMER;
@@ -144,7 +151,11 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
                     'content'     => TinyMCE::toText($magentoApiMessage->cam_message_description),
                 ]
             );
+
+            $inserted++;
         }
+
+        $dto->logger->info($inserted . ' API messages inserted');
     }
 
     private function loadMagentoAdminMessages(MigrateDTO $dto)
@@ -173,11 +184,13 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
 
     private function insertAdminMessages(MigrateDTO $dto)
     {
+        $inserted = 0;
+
         foreach ($this->magentoAdminMessages as $magentoAdminMessage) {
             if (isset($this->ticketConversion[$magentoAdminMessage->ct_id])) {
                 $ticket = $this->ticketConversion[$magentoAdminMessage->ct_id];
             } else {
-                $order = $this->getTicketOrder($magentoAdminMessage);
+                $order = $this->getTicketOrder($magentoAdminMessage->ctm_ticket_id, $magentoAdminMessage->store_code, $magentoAdminMessage->ct_object_id);
                 if (!$order) {
                     $dto->logger->error('Can not find order for ticket #' . $magentoAdminMessage->ctm_ticket_id);
                     continue;
@@ -222,7 +235,11 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
                 'author_type' => $author_type,
                 'content'     => TinyMCE::toText($magentoAdminMessage->ctm_content),
             ]);
+
+            $inserted++;
         }
+
+        $dto->logger->info($inserted . ' mails inserted');
     }
 
     private function getTicketChannel(string $store_code): ?Channel
@@ -235,16 +252,16 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
         return $channelMapping[$store_code];
     }
 
-    private function getTicketOrder(stdClass $magentoAdminMessage): ?Order
+    private function getTicketOrder($ct_id, $store_code, $ct_object_id): ?Order
     {
-        if (isset($this->orderByTickets[$magentoAdminMessage->ctm_ticket_id]))
-            return $this->orderByTickets[$magentoAdminMessage->ctm_ticket_id];
+        if (isset($this->orderByTickets[$ct_id]))
+            return $this->orderByTickets[$ct_id];
 
-        $ct_object_id = str_replace('order_', '', $magentoAdminMessage->ct_object_id);
+        $ct_object_id = str_replace('order_', '', $ct_object_id);
         if (!isset($this->magentoOrders[$ct_object_id]))
             return null;
 
-        $channel = $this->getTicketChannel($magentoAdminMessage->store_code);
+        $channel = $this->getTicketChannel($store_code);
         if (!$channel)
             return null;
 
@@ -266,19 +283,58 @@ class MigrateTicketAndMessage extends AbstractMigrateStep
     private function insertTicketTags(MigrateDTO $dto)
     {
         $tags = Tag::all()->keyBy('name');
+        $inserted = 0;
 
         foreach ($this->magentoTicketTags as $magentoTicketTag) {
-            if(!$tags->offsetExists($magentoTicketTag->tag_name))
+            if (!$tags->offsetExists($magentoTicketTag->tag_name))
                 continue;
 
-            if(!isset($this->ticketConversion[$magentoTicketTag->ct_id]))
+            if (!isset($this->ticketConversion[$magentoTicketTag->ct_id]))
                 continue;
 
             $ticket = $this->ticketConversion[$magentoTicketTag->ct_id];
             $tag = $tags->offsetGet($magentoTicketTag->tag_name);
-            if(!$ticket->hasTag($tag)) {
+            if (!$ticket->hasTag($tag)) {
                 $ticket->addTag($tag);
+                $inserted++;
             }
         }
+
+        $dto->logger->info($inserted . ' tags associated to tickets');
+    }
+
+    private function loadMagentoTicketComments(MigrateDTO $dto)
+    {
+        $this->magentoPrivateComments = $dto->connection->select('
+            SELECT ct_id, ct_private_comments
+            FROM crm_ticket
+            WHERE ct_private_comments != ""
+        ');
+    }
+
+    private function insertTicketComments(MigrateDTO $dto)
+    {
+        $comments = [];
+        foreach ($this->magentoPrivateComments as $magentoPrivateComment) {
+            if(!isset($this->ticketConversion[$magentoPrivateComment->ct_id])) {
+                $dto->logger->error('Comment of ticket #' . $magentoPrivateComment->ct_id . ' can not be imported');
+                continue;
+            }
+
+            $comments[] = [
+                'ticket_id' => $this->ticketConversion[$magentoPrivateComment->ct_id]->id,
+                'content' => TinyMCE::toText($magentoPrivateComment->ct_private_comments),
+                'displayed' => true,
+                'type' => TicketCommentTypeEnum::OTHERS,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        $chunks = array_chunk($comments, 1000);
+        foreach ($chunks as $chunk)
+            Comment::insert($chunk);
+
+        $dto->logger->info(count($comments) . ' comments inserted');
     }
 }
