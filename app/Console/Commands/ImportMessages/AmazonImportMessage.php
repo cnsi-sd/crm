@@ -28,7 +28,6 @@ class AmazonImportMessage extends AbstractImportMailMessages
     const RETURN = 'retour';
     const IMPORT = 'import';
 
-    protected static mixed $_alreadyImportedComment = false;
     public function __construct()
     {
         $this->signature = sprintf($this->signature, 'amazon');
@@ -180,7 +179,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
     private function addReturnOnTicket(Ticket $ticket, mixed $email): void
     {
         $tagId = setting('tag.retour_amazon');
-        $tag = Tag::findOrFail(146);
+        $tag = Tag::findOrFail($tagId);
         $ticket->addTag($tag);
 
         $returnComment = AmazonBeautifierMail::getReturnInformation($email->textHtml);
