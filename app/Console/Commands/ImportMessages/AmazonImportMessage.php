@@ -4,9 +4,11 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Console\Commands\ImportMessages\Beautifier\AmazonBeautifierMail;
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\TmpFile;
 use App\Helpers\Tools;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
@@ -16,6 +18,7 @@ use App\Models\Ticket\Comment;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Attachments\Model\Document;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -155,6 +158,14 @@ class AmazonImportMessage extends AbstractImportMailMessages
                 'content' => strip_tags($message),
             ],
         );
+
+        if ($message_api_api->hasAttachments()) {
+            $this->logger->info('Download documents from message');
+            foreach ($message_api_api->getAttachments() as $attachment) {
+                $tmpFile = new TmpFile((string) $attachment->getContents());
+                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachment->name);
+            }
+        }
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);
