@@ -11,7 +11,7 @@
                     @csrf
                     <div class=" row col-3 mb-3">
                         <label for="defaultAnswer">
-                            {{ trans_choice('app.defaultAnswer.defaultAnswer', 1)
+                            {{ trans_choice('app.default_answer.default_answer', 1)
                               . ' ' . \App\Enums\Channel\ChannelEnum::CDISCOUNT_FR
                             }}
                         </label>
