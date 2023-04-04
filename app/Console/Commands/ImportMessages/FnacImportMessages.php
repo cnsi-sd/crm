@@ -3,13 +3,16 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\TmpFile;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Attachments\Model\Document;
 use Cnsi\Logger\Logger;
 use Exception;
 use FnacApiClient\Client\SimpleClient;
@@ -151,6 +154,20 @@ class FnacImportMessages extends AbstractImportMessages
             'content' => strip_tags($message_api->getMessageDescription())
         ]
         );
+        if($message_api->getMessageFile()) {
+            $this->logger->info('Download documents from message');
+            $message_files = $message_api->getMessageFile();
+
+            // Patch : if the message contains only one message, make an array
+            if(!is_null($message_files) && isset($message_files['name'])) {
+                $message_files = [ $message_files ];
+            }
+
+            foreach ($message_files as $message_file) {
+                $tmpFile = new TmpFile((string) file_get_contents($message_file['url']));
+                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $message_file['name']);
+            }
+        }
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);
