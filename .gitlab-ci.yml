@@ -76,7 +76,7 @@ agent:
     # Delete previous prod version
     - ssh -o StrictHostKeyChecking=no doc@doc.cnsi-sd.fr -p 2206 "rm -f /var/www/doc.cnsi-sd.fr/crm/agent/*.*.*"
     # Deploy prod over SSH
-    - scp -r -P 2206 doc/user-doc/site/* doc@doc.cnsi-sd.fr:/var/www/doc.cnsi-sd.fr/crm/agent/
+    - scp -r -P 2206 site/* doc@doc.cnsi-sd.fr:/var/www/doc.cnsi-sd.fr/crm/agent/
 
 admin:
   image: python:3.11-buster
@@ -93,8 +93,8 @@ admin:
     - chmod 644 ~/.ssh/known_hosts
   script:
     # Build doc
-    - cd doc/user-doc && mkdocs build --strict --verbose
+    - cd doc/admin && mkdocs build --strict --verbose
     # Delete previous prod version
     - ssh -o StrictHostKeyChecking=no doc@doc.cnsi-sd.fr -p 2206 "rm -f /var/www/doc.cnsi-sd.fr/crm/admin/*.*.*"
     # Deploy prod over SSH
-    - scp -r -P 2206 doc/user-doc/site/* doc@doc.cnsi-sd.fr:/var/www/doc.cnsi-sd.fr/crm/admin/
+    - scp -r -P 2206 site/* doc@doc.cnsi-sd.fr:/var/www/doc.cnsi-sd.fr/crm/admin/
