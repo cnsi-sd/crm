@@ -10,11 +10,11 @@
         </a>
     </div>
     <div class="card-body" id="card-body-tag">
+        @php
+            $query = $ticket->channel->getAuthorizedTags();
+        @endphp
         @foreach($ticket->tagLists as $taglist)
             <div id="list-{{$taglist->id}}">
-                @php
-                $query = \App\Models\Channel\Channel::find($ticket->channel_id)->getAuthorizedTags();
-                @endphp
                 <select form="saveTicket" name="ticket-revival" class="form-select no-sort tags"
                         data-ticket_id="{{$ticket->id}}"
                         data-taglist_id="{{$taglist->id}}">
