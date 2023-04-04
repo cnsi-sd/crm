@@ -25,8 +25,6 @@ use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Twilio\Exceptions\ConfigurationException;
-use Twilio\Exceptions\TwilioException;
 
 class Revival extends Command
 {
