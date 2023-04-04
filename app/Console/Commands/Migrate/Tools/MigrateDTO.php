@@ -8,8 +8,9 @@ use Illuminate\Database\Connection;
 class MigrateDTO
 {
     public function __construct(
-        public Connection $connection,
-        public Logger     $logger,
+        public Connection   $connection,
+        public Logger       $logger,
+        public TicketFinder $ticketFinder,
     )
     {
     }

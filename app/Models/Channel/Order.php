@@ -5,6 +5,7 @@ namespace App\Models\Channel;
 use App\Helpers\Prestashop\CrmLinkGateway;
 use App\Models\Ticket\Ticket;
 use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
- * @property Ticket[] $tickets
+ * @property Ticket[]|Collection $tickets
  * @property Channel $channel
  */
 

@@ -7,7 +7,7 @@ use Closure;
 
 abstract class AbstractMigrateStep
 {
-    abstract public function handle(MigrateDTO $dto, Closure $closure);
+    abstract public function handle(MigrateDTO $dto, Closure $next);
 
     protected function toArray($data): array
     {

@@ -3,12 +3,18 @@
 namespace App\Console\Commands\Migrate;
 
 use App\Console\Commands\Migrate\Steps\MigrateDefaultAnswer;
+use App\Console\Commands\Migrate\Steps\MigrateTicketAdminMessages;
 use App\Console\Commands\Migrate\Steps\MigrateTicketAndMessage;
 use App\Console\Commands\Migrate\Steps\MigrateRevival;
 use App\Console\Commands\Migrate\Steps\MigrateSavNote;
 use App\Console\Commands\Migrate\Steps\MigrateTag;
+use App\Console\Commands\Migrate\Steps\MigrateTicketApiMessages;
+use App\Console\Commands\Migrate\Steps\MigrateTicketComments;
+use App\Console\Commands\Migrate\Steps\MigrateTickets;
+use App\Console\Commands\Migrate\Steps\MigrateTicketTags;
 use App\Console\Commands\Migrate\Steps\MigrateUser;
 use App\Console\Commands\Migrate\Tools\MigrateDTO;
+use App\Console\Commands\Migrate\Tools\TicketFinder;
 use Cnsi\Logger\Logger;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connection;
@@ -26,7 +32,11 @@ class MigrateFromMagento extends Command
         MigrateTag::class,
         MigrateRevival::class,
         MigrateSavNote::class,
-        MigrateTicketAndMessage::class,
+        MigrateTickets::class,
+        MigrateTicketApiMessages::class,
+        MigrateTicketAdminMessages::class,
+        MigrateTicketComments::class,
+        MigrateTicketTags::class,
     ];
 
     public function handle()
@@ -36,9 +46,11 @@ class MigrateFromMagento extends Command
 
         // Build an object that will be sent through steps
         // DTO = Data Transfer Object
+        $connection = $this->getConnection();
         $dto = new MigrateDTO(
-            $this->getConnection(),
+            $connection,
             $this->getLogger(),
+            new TicketFinder($connection),
         );
 
         // Disable foreign key constraints to be able to truncate tables

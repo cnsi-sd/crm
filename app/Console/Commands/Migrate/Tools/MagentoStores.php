@@ -12,7 +12,7 @@ abstract class MagentoStores
 
     public static function getStoreMapping(): array
     {
-        if(!isset(self::$store_mapping)) {
+        if (!isset(self::$store_mapping)) {
             self::$store_mapping = [
                 "amazon"        => Channel::getByName(ChannelEnum::AMAZON_FR, false),
                 "cdiscount"     => Channel::getByName(ChannelEnum::CDISCOUNT_FR, false),
@@ -24,6 +24,7 @@ abstract class MagentoStores
                 "but"           => Channel::getByName(ChannelEnum::BUT_FR, false),
                 "rueducommerce" => Channel::getByName(ChannelEnum::RUEDUCOMMERCE_FR, false),
                 "metro"         => Channel::getByName(ChannelEnum::METRO_FR, false),
+                "carrefour"     => Channel::getByName(ChannelEnum::CARREFOUR_FR, false),
 //                "leclerc"       => Channel::getByName(ChannelEnum::E_LECLERC, false),
 //                "icoza"         => Channel::getByName(ChannelEnum::ICOZA_FR, false),
             ];
@@ -34,7 +35,7 @@ abstract class MagentoStores
 
     public static function getApiMarketplaceMapping(): array
     {
-        if(!isset(self::$api_marketplace_mapping)) {
+        if (!isset(self::$api_marketplace_mapping)) {
             self::$api_marketplace_mapping = [
                 "cdiscount"     => Channel::getByName(ChannelEnum::CDISCOUNT_FR, false),
                 "fnac"          => Channel::getByName(ChannelEnum::FNAC_COM, false),
@@ -47,6 +48,7 @@ abstract class MagentoStores
                 "metro"         => Channel::getByName(ChannelEnum::METRO_FR, false),
                 "leclerc"       => Channel::getByName(ChannelEnum::E_LECLERC, false),
                 "icoza"         => Channel::getByName(ChannelEnum::ICOZA_FR, false),
+                "carrefour"     => Channel::getByName(ChannelEnum::CARREFOUR_FR, false),
             ];
         }
 
