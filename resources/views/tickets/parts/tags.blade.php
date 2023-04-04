@@ -11,7 +11,7 @@
     </div>
     <div class="card-body" id="card-body-tag">
         @php
-            $query = $ticket->channel->getAuthorizedTags();
+            $autorizedTag = $ticket->channel->getAuthorizedTags();
         @endphp
         @foreach($ticket->tagLists as $taglist)
             <div id="list-{{$taglist->id}}">
@@ -20,9 +20,9 @@
                         data-taglist_id="{{$taglist->id}}">
                     <option value="">{{ __('app.tags.select_tag') }}</option>
 
-                    @foreach ($query as $optionTag)
-                        <option value="{{ $optionTag->id }}">
-                            {{ $optionTag->name }}
+                    @foreach ($autorizedTag as $tag)
+                        <option value="{{ $tag->id }}">
+                            {{ $tag->name }}
                         </option>
                     @endforeach
                 </select>
