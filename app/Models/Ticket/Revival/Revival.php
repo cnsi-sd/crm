@@ -2,11 +2,14 @@
 
 namespace App\Models\Ticket\Revival;
 
+use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
+use App\Enums\FixedWidthEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Thread;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property DateTime $created_at
  * @property Datetime $updated_at
  *
+ * @property Tag $tag
  * @property DefaultAnswer $default_answer
  * @property DefaultAnswer $end_default_answer
  * @property Channel[] $channels
@@ -43,6 +47,7 @@ class Revival extends Model
         'send_type',
         'default_answer_id',
         'max_revival',
+        'end_tag_id',
         'end_default_answer_id',
         'end_state',
         'created_at',
@@ -77,6 +82,11 @@ class Revival extends Model
     public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class, 'channel_revival', 'revival_id', 'channel_id');
+    }
+
+    public function tags(): BelongsTo
+    {
+        return $this->belongsTo(Tag::class);
     }
 
     public function isChannelAuthorized(Channel $channel)
@@ -141,6 +151,19 @@ class Revival extends Model
                 return TicketStateEnum::getMessage($revival->end_state);
             })
             ->setKey('end_state');
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.tags.view'))
+            ->setKey('tags_id')
+            ->setWhereKey('tags.id')
+            ->setType(ColumnTypeEnum::SELECT)
+            ->setOptions(Tag::getTagsNames())
+            ->setAlign(AlignEnum::CENTER)
+            ->setFixedWidth(FixedWidthEnum::LG)
+            ->setCallback(function (Revival $revival) {
+                $listeTag = array();
+                return view('configuration.revival.tag.preview')
+                    ->with('tag', Tag::find($revival->end_tag_id));
+            });
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Revival $revival) {
                 return view('configuration.revival.inline_table_actions')
