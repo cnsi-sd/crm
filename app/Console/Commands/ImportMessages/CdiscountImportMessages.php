@@ -3,8 +3,10 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\TmpFile;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
@@ -12,6 +14,7 @@ use App\Models\Tags\Tag;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Attachments\Model\Document;
 use Cnsi\Cdiscount\ClientCdiscount;
 use Cnsi\Cdiscount\DiscussionsApi;
 use Cnsi\Logger\Logger;
@@ -93,6 +96,8 @@ class CdiscountImportMessages extends AbstractImportMessages
                         $this->logger->info('Check message sender');
                         $authorType = $message->getSender()->getUserType();
 
+                        $attachments = $discussion->getAttachmentsFromMessage($message->getSalesChannelExternalReference(),$message->getMessageId());
+
                         $this->logger->info('Check if dicussion have message and if is seller message sender');
                         if ($authorType == 'Seller')
                             continue;
@@ -108,7 +113,7 @@ class CdiscountImportMessages extends AbstractImportMessages
                         ];
                         $thread = Thread::getOrCreateThread($ticket, $discu->getDiscussionId(), $discu->getSubject(), $channel_data);
 
-                        $this->importMessageByThread($ticket, $thread, $message);
+                        $this->importMessageByThread($ticket, $thread, $message, $attachments);
                         $this->logger->info('---- End Import Message');
                         DB::commit();
                     }
@@ -143,14 +148,14 @@ class CdiscountImportMessages extends AbstractImportMessages
      * @param array $messages
      * @throws Exception
      */
-    private function importMessageByThread(Ticket $ticket, Thread $thread,$message)
+    private function importMessageByThread(Ticket $ticket, Thread $thread,$message, $attachments)
     {
             $imported_id = $message->getMessageId();
             $this->logger->info('Check if this message is imported');
 
             if (!$this->isMessagesImported($imported_id)) {
                 $this->logger->info('Convert api message to db message');
-                $this->convertApiResponseToMessage($ticket, $message, $thread);
+                $this->convertApiResponseToMessage($ticket, $message, $thread, $attachments);
                 $this->addImportedMessageChannelNumber($imported_id);
             }
     }
@@ -195,6 +200,14 @@ class CdiscountImportMessages extends AbstractImportMessages
                 'content' => strip_tags($message_api->getBody()),
             ]
         );
+
+        if ($attachments) {
+            $this->logger->info('Download documents from message');
+            foreach ($attachments as $attachment) {
+                $tmpFile = new TmpFile((string) base64_decode($attachment['content']));
+                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, $attachment['fileFormat'], $attachment['attachmentName']);
+            }
+        }
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);
