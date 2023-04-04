@@ -6,9 +6,11 @@ use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
+use App\Models\Ticket\Revival\Revival;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -20,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property Channel[] $channels
  * @property TagList[] $tagLists
+ * @property Revival[] $revivals
  *
  * @property Datetime $created_at
  * @property Datetime $updated_at
@@ -56,6 +59,11 @@ class Tag extends Model
     public function tagLists(): BelongsToMany
     {
         return $this->belongsToMany(TagList::class, 'tag_tagLists', 'tag_id', 'tagList_id');
+    }
+
+    public function revivals(): HasMany
+    {
+        return $this->hasMany(Revival::class);
     }
 
     public static function getTagsNames(): array

@@ -258,6 +258,7 @@ return [
         'sendType' => 'Type d\'envoi',
         'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'endTag' => 'Tag à ajouter',
     ],
 
     'tags' => [
