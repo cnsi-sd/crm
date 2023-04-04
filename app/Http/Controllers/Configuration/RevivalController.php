@@ -63,6 +63,7 @@ class RevivalController extends AbstractController
         $revival->send_type = $request->input('revivalType');
         $revival->default_answer_id = $request->input('default_answer_id');
         $revival->max_revival = $request->input('max_revival');
+        $revival->end_tag_id = $request->input('revivalEndTag');
         $revival->end_default_answer_id = $request->input('end_default_answer_id');
         $revival->end_state = $request->input('end_state');
 
