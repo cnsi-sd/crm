@@ -1,5 +1,3 @@
-image: devilbox/php-fpm:8.1-prod
-
 variables:
   SECURE_LOG_LEVEL: error
   COMPOSER_DEFAULT_OPTIONS: '--optimize-autoloader --no-scripts'
@@ -10,6 +8,7 @@ stages:
   - deploy
 
 build:
+  image: devilbox/php-fpm:8.1-prod
   stage: build
   before_script:
     - apt-get update
@@ -26,6 +25,7 @@ build:
   allow_failure: false
 
 phpcs:
+  image: devilbox/php-fpm:8.1-prod
   stage: test
   script:
     # exclude side effects because phpcs doesnt manage enum well
@@ -33,12 +33,14 @@ phpcs:
   allow_failure: true
 
 phpstan:
+  image: devilbox/php-fpm:8.1-prod
   stage: test
   script:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse app
   allow_failure: true
 
 deploy_tkg:
+  image: devilbox/php-fpm:8.1-prod
   stage: deploy
   script:
     # Add the private SSH key to the build environment
