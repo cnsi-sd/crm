@@ -167,17 +167,28 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
             return false;
 
         preg_match('/@(.*)/', $email->senderAddress, $match);
-        if (in_array($match[1], config('email-import.domain_blacklist')))
-            return false;
-
-        if (in_array($email->senderAddress, config('email-import.email_blacklist')))
-            return false;
-
-        if ($this->isSpam($email)){
-            if (in_array($match[1], config('email-import.domain_whitelist')))
-                return true;
+        if (in_array($match[1], config('email-import.domain_blacklist'))) {
+            $this->logger->info('Domaine blacklist');
             return false;
         }
+
+        if (in_array($email->senderAddress, config('email-import.email_blacklist'))) {
+            $this->logger->info('Email blacklist');
+            return false;
+        }
+
+        if ($this->isSpam($email)){
+            if (in_array($match[1], config('email-import.domain_whitelist'))) {
+                $this->logger->info('Domaine blacklist');
+                return true;
+            }
+            if (in_array($match[1], config('email-import.email_whitelist'))) {
+                $this->logger->info('Domaine blacklist');
+                return true;
+            }
+            return false;
+        }
+
 
         return true;
     }
