@@ -17,6 +17,8 @@ abstract class Permission
                         'items' => [
                             PermissionEnum::DEFAULT_ANSWER_READ,
                             PermissionEnum::DEFAULT_ANSWER_EDIT,
+                            PermissionEnum::DEFAULT_ANSWER_LOCK,
+                            PermissionEnum::DEFAULT_ANSWER_EDIT_LOCKED,
                         ],
                     ],
                 ],
@@ -51,7 +53,9 @@ abstract class Permission
                         'title' => trans_choice('app.permission.tag',2),
                         'items' => [
                             PermissionEnum::TAG_READ,
-                            PermissionEnum::TAG_EDIT
+                            PermissionEnum::TAG_EDIT,
+                            PermissionEnum::TAG_LOCK,
+                            PermissionEnum::TAG_EDIT_LOCKED,
                         ],
                     ],
                 ],

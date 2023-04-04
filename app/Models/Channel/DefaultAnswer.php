@@ -2,6 +2,7 @@
 
 namespace App\Models\Channel;
 
+use App\Enums\ColumnTypeEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Helpers\TinyMCE;
 use App\Models\Ticket\Message;
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string $name
  * @property string $content
+ * @property boolean $is_locked
  * @property DateTime $created_at
  * @property DateTime $updated_at
  * @property DateTime $deleted_at
@@ -28,12 +30,20 @@ class DefaultAnswer extends Model
 {
     use SoftDeletes;
 
+    /**
+     * @var mixed|true
+     */
     protected $fillable = [
         'name',
         'content',
+        'is_locked',
         'created_at',
         'updated_at',
         'deleted_at'
+    ];
+
+    protected $casts = [
+        'is_locked' => 'boolean',
     ];
 
     public function isChannelAuthorized(Channel $channel) {
@@ -62,14 +72,14 @@ class DefaultAnswer extends Model
         $columns[] = TableColumnBuilder::id()
             ->setSearchable(false);
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.defaultAnswer.name'))
+            ->setLabel(__('app.default_answer.name'))
             ->setKey('name');
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.defaultAnswer.content'))
+            ->setLabel(__('app.default_answer.content'))
             ->setKey('content')
             ->setCallback(fn(DefaultAnswer $defaultAnswer) => TinyMCE::toText($defaultAnswer->content));
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.defaultAnswer.select_channel'))
+            ->setLabel(__('app.default_answer.select_channel'))
             ->setCallback(function (DefaultAnswer $defaultAnswer){
                 $channels = $defaultAnswer->getAuthorizedChannels();
                 if (count($channels) === Channel::all()->count()) {
@@ -81,6 +91,10 @@ class DefaultAnswer extends Model
             ->setKey('channels')
             ->setSortable(false)
             ->setSearchable(false);
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.default_answer.is_locked'))
+            ->setkey('is_locked')
+            ->settype(ColumnTypeEnum::BOOLEAN);
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (DefaultAnswer $defaultAnswer) {
                 return view('configuration.defaultAnswer.inline_table_actions')

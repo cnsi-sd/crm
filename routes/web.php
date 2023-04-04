@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
 use App\Http\Controllers\Configuration\BotController;
 use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
@@ -64,10 +65,10 @@ Route::prefix('/')->group(function () {
 
     Route::prefix('configuration')->group(function () {
         Route::prefix('default_answer')->group(function () {
-            Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_defaultAnswer')->can('edit', DefaultAnswer::class);
-            Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_defaultAnswer')->can('edit', DefaultAnswer::class);
-            Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('defaultAnswers')->can('read', DefaultAnswer::class);
-            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_defaultAnswers')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], 'new', [DefaultAnswerController::class, 'edit'])->name('create_default_answer')->can('edit', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}', [DefaultAnswerController::class, 'edit'])->name('edit_default_answer')->can('edit', ['defaultAnswer']);
+            Route::match(['get', 'post'], '', [DefaultAnswerController::class, 'list'])->name('default_answers')->can('read', DefaultAnswer::class);
+            Route::match(['get', 'post'], '{defaultAnswer}/delete', [DefaultAnswerController::class, 'delete'])->name('delete_default_answers')->can('edit', ['defaultAnswer']);
         });
         Route::prefix('revival')->group(function () {
             Route::match(['get', 'post'], 'new', [RevivalController::class, 'edit'])->name('create_revival')->can('edit', Revival::class);
@@ -81,9 +82,9 @@ Route::prefix('/')->group(function () {
         });
         Route::prefix('tags')->group(function () {
             Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tag::class);
-            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', Tag::class);
+            Route::match(['get', 'post'], '{tags}', [TagsController::class, 'edit'])->name('edit_tags')->can('edit', ['tags']);
             Route::match(['get', 'post'], '', [TagsController::class, 'list'])->name('tags')->can('read', Tag::class);
-            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', Tag::class);
+            Route::match(['get', 'post'], '{tags}/delete', [TagsController::class, 'delete'])->name('delete_tags')->can('edit', ['tags']);
         });
         Route::prefix('bot')->group(function () {
             Route::match(['get', 'post'], '', [BotController::class, 'home'])->name('bot_home')->can('bot_config');
@@ -103,13 +104,18 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'variables', [MiscController::class, 'variables'])->name('variables_config')->can('misc_config');
             Route::match(['get', 'post'], 'incidents', [MiscController::class, 'incidents'])->name('incidents_config')->can('misc_config');
             Route::match(['get', 'post'], 'savprocess', [MiscController::class, 'savprocess'])->name('savprocess_config')->can('misc_config');
+            Route::match(['get', 'post'], 'answer_offer_questions', [MiscController::class, 'answerOfferQuestions'])->name('answer_offer_questions_config')->can('misc_config');
+            Route::match(['get', 'post'], 'miraklRefunds', [MiscController::class, 'miraklRefunds'])->name('mirakl_refunds_config')->can('misc_config');
             Route::match(['get', 'post'], 'closed_discussion', [MiscController::class, 'closedDiscussion'])->name('closed_discussion_config')->can('misc_config');
         });
     });
     // CALL AJAX
-    Route::get('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');
+    Route::post('/ajaxTags', [TagsController::class, 'ajax_tags'])->name('ajaxShowTags');
     Route::post('/addTagList', [TagsController::class, 'newTagLine'])->name('addTagList');
     Route::post('/saveTicketThreadTags', [TicketController::class, 'saveThreadTags'])->name('saveTagOnticketThread');
     Route::post('/deleteTagList', [TicketController::class, 'delete_ThreadTagList'])->name('deleteTagList');
     Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnThread');
+    Route::post('/saveTicketThreadTags', [TicketController::class, 'saveTicketTags'])->name('saveTagOnticket');
+    Route::post('/hastaglist', [TicketController::class, 'hasTagList'])->name('ticketHasTaglist');
+    Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnTicket');
 });
