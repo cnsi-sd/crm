@@ -15,7 +15,7 @@ Il existe plusieurs instances du CRM. Vous retrouverez ci-dessous les différent
 - Smart Tech : [https://crm.smarttech.cnsi-sd.fr/](https://crm.smarttech.cnsi-sd.fr/)
 - TKG : [https://crm.tkg.cnsi-sd.fr/](https://crm.tkg.cnsi-sd.fr/)
 
-Cette documentation décrit le fonctionnement général qui est applicable à toutes les instances. Toutefois, la configuration peut varier selon la boutique.
+Cette documentation décrit le fonctionnement général qui est applicable à toutes les instances. Pour autant, la configuration peut varier selon la boutique.
 
 ## Anomalies / Bug / Contact
 Vous pouvez contacter l'équipe de développement si vous rencontrez un problème d'utilisation ou pour toute suggestion d'amélioration.

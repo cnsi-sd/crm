@@ -2,8 +2,8 @@ site_name: CRM
 
 nav:
   - Accueil : index.md
-  - Glossaire : introduction/glossary.md
-  - Mon compte : introduction/account.md
+  - Glossaire : introduction/glossaire.md
+  - Mon compte : introduction/mon-compte.md
   - Bases:
       - Qu'est ce qu'un ticket ?: bases/qu-est-ce-qu-un-ticket.md
       - Trouver un ticket: bases/trouver-un-ticket.md
