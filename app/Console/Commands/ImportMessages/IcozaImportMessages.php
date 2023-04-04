@@ -97,11 +97,8 @@ class IcozaImportMessages extends AbstractImportMessages
             try {
                 DB::beginTransaction();
 
-                $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
-                if(!$starter_date)
-                    throw new Exception('The environement variable isn\'t in the correct format or does not exist');
-
-                if ($starter_date > date("d M Y H:i:s", strtotime($message->date_add)))
+                $starter_date = $this->checkIfSendAfterStarterDate(strtotime($message->date_add));
+                if (!$starter_date)
                     continue;
 
                 $order      = Order::getOrder($message->order, $this->channel);

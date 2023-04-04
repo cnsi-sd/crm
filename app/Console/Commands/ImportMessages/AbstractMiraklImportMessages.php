@@ -86,11 +86,9 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                     continue;
 
                 foreach ($messages as $message) {
-                    $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
-                    if(!$starter_date)
-                        throw new Exception('The environement variable isn\'t in the correct format or does not exist');
 
-                    if ($starter_date > date("d M Y H:i:s", $message->getDateCreated()->getTimestamp()))
+                    $starter_date = $this->checkIfSendAfterStarterDate($message->getDateCreated()->getTimestamp());
+                    if (!$starter_date)
                         continue;
 
                     $authorType = $message->getFrom()->getType();

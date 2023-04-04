@@ -156,14 +156,12 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
     /**
      * @param $email
      * @return bool
+     * @throws Exception
      */
     protected function canImport($email): bool{
 
-        $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
-        if(!$starter_date)
-            throw new Exception('The environement variable isn\'t in the correct format or does not exist');
-
-        if ($starter_date > date("d M Y H:i:s", strtotime($email->date)))
+        $starter_date = $this->checkIfSendAfterStarterDate(strtotime($email->date));
+        if (!$starter_date)
             return false;
 
         preg_match('/@(.*)/', $email->senderAddress, $match);

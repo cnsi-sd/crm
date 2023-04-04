@@ -10,6 +10,7 @@ use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use Illuminate\Console\Command;
 
@@ -48,6 +49,17 @@ abstract class AbstractImportMessages extends Command
     protected function addImportedMessageChannelNumber(string $channel_message_number): void
     {
         static::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
+    }
+
+    protected function checkIfSendAfterStarterDate($messageDate): bool
+    {
+        $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
+        if(!$starter_date)
+            throw new Exception('The environement variable isn\'t in the correct format or does not exist');
+
+        if ($starter_date > date("d M Y H:i:s", $messageDate))
+            return false;
+        return true;
     }
 }
 

@@ -110,11 +110,8 @@ class FnacImportMessages extends AbstractImportMessages
             try {
                 DB::beginTransaction();
 
-                $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
-                if(!$starter_date)
-                    throw new Exception('The environement variable isn\'t in the correct format or does not exist');
-
-                if ($starter_date > date("d M Y H:i:s", strtotime($message->getCreatedAt())))
+                $starter_date = $this->checkIfSendAfterStarterDate(strtotime($message->getCreatedAt()));
+                if (!$starter_date)
                     continue;
 
                 $messageId  = $message->getMessageId();;

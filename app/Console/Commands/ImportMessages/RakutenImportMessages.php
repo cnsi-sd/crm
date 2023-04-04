@@ -308,11 +308,8 @@ class RakutenImportMessages extends AbstractImportMessages
         $patterns = $this->getPatterns();
         foreach ($messages as $message) {
 
-            $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
-            if(!$starter_date)
-                throw new Exception('The environement variable isn\'t in the correct format or does not exist');
-
-            if ($starter_date > date("d M Y H:i:s", strtotime($message['Date'])))
+            $starter_date = $this->checkIfSendAfterStarterDate(strtotime($message['Date']));
+            if (!$starter_date)
                 continue;
 
             $message['id'] = crc32($message['Message'] . $message['MpCustomerId'] . $message['Date']);
