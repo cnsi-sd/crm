@@ -11,6 +11,7 @@ use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Ticket;
+use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
@@ -27,8 +28,11 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 {
     public ShopApiClient $client;
 
-    const FROM_DATE_TRANSFORMATOR = ' -  2 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
     const HTTP_CONNECT_TIMEOUT = 15;
+
+    const ALERT_LOCKED_SINCE = 600;
+    const KILL_LOCKED_SINCE = 1200;
 
     abstract protected function getChannelName(): string;
 
@@ -37,6 +41,9 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
      */
     public function handle()
     {
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+
         $this->channel = Channel::getByName($this->getChannelName());
         $this->logger = new Logger('import_message/'
             . $this->channel->getSnakeName() . '/'

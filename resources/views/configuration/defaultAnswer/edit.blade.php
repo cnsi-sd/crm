@@ -2,7 +2,7 @@
 
 @section('content')
     <form
-        action="{{ isset($defaultAnswer->id) ? route('edit_defaultAnswer', [$defaultAnswer->id]) : route('create_defaultAnswer') }}"
+        action="{{ isset($defaultAnswer->id) ? route('edit_default_answer', [$defaultAnswer->id]) : route('create_default_answer') }}"
         method="POST"
     >
         <div class="container-fluid">
@@ -10,14 +10,19 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            {{ isset($defaultAnswer->id) ? trans_choice('app.defaultAnswer.defaultAnswer', 1) . " #$defaultAnswer->id" : trans_choice('app.defaultAnswer.defaultAnswer', 1) }}
+                            {{ isset($defaultAnswer->id) ? trans_choice('app.default_answer.default_answer', 1) . " #$defaultAnswer->id" : trans_choice('app.default_answer.default_answer', 1) }}
+                            @can('lock', $defaultAnswer)
+                                <div class="form-check form-switch float-end">
+                                    <input type="checkbox" class="form-check-input" id="is_locked" name="is_locked" @if($defaultAnswer->is_locked == 1) checked @endif>
+                                    <label class="form-check-label" for="is_locked">{{ __('app.default_answer.lock') }} ?</label>
+                                </div>
+                            @endcan
                         </div>
                         <div class="card-body">
-
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="name">
-                                    {{__('app.defaultAnswer.name')}}
+                                    {{__('app.default_answer.name')}}
                                     <span class="required_field">*</span>
                                 </label>
                                 <input
@@ -30,19 +35,18 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="name">
-                                    {{__('app.defaultAnswer.content')}}
+                                    {{__('app.default_answer.content')}}
                                     <span class="required_field">*</span>
                                 </label>
                                 <textarea id="message_to_customer" name="content">{{ old('content', $defaultAnswer->content) }}</textarea>
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card">
                         <div class="m-2">
-                            <label for="channels">{{__('app.defaultAnswer.select_channel')}}</label>
+                            <label for="channels">{{__('app.default_answer.select_channel')}}</label>
                             <select
                                 name="channels[]"
                                 id="channels"
@@ -57,7 +61,7 @@
                             </select>
                             <span class="help-block">
                                 <small>
-                                    {{ __('app.defaultAnswer.select_all_channel') }}
+                                    {{ __('app.default_answer.select_all_channel') }}
                                 </small>
                             </span>
                         </div>

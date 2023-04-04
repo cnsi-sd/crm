@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
+ * @property User $user
  * @property DefaultAnswer[] $defaultAnswers
  * @property Revival $revivals
  * @property Ticket[] $tickets
@@ -127,7 +128,7 @@ class Channel extends Model
             ->setType(ColumnTypeEnum::SELECT)
             ->setOptions(User::getUsersNames())
             ->setCallback(function (Channel $channel) {
-                return $channel->user->name;
+                return $channel->user->__toString();
             })
             ->setKey('user_id')
             ->setSortable(true);
@@ -139,5 +140,4 @@ class Channel extends Model
 
         return $columns;
     }
-
 }

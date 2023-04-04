@@ -57,8 +57,8 @@ class DefaultAnswerController extends AbstractController
         if ($request->exists('save_default_answer'))
         {
             $this->save_default_answer($request, $defaultAnswer);
-            alert::toastSuccess(__('app.defaultAnswer.save'));
-            return redirect()->route('defaultAnswers');
+            alert::toastSuccess(__('app.default_answer.save'));
+            return redirect()->route('default_answers');
         }
 
         return view('configuration.defaultAnswer.edit')
@@ -75,7 +75,8 @@ class DefaultAnswerController extends AbstractController
 
         // Set name, content
         $defaultAnswer->name = $request->input('name');
-        $defaultAnswer->content = $request->input('content');
+        $defaultAnswer->content = TinyMCE::toText($request->input('content'));
+        $defaultAnswer->is_locked = $request->input('is_locked') == "on";
 
         // Save
         $defaultAnswer->save();
@@ -87,9 +88,9 @@ class DefaultAnswerController extends AbstractController
     public function delete(Request $request, ?DefaultAnswer $defaultAnswer)
     {
         if($defaultAnswer->softDeleted()){
-            alert::toastSuccess(__('app.defaultAnswer.delete'));
+            alert::toastSuccess(__('app.default_answer.deleted'));
         }
-        return redirect()->route('defaultAnswers');
+        return redirect()->route('default_answers');
     }
 
 }

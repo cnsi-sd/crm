@@ -9,11 +9,16 @@ use Illuminate\Database\Seeder;
 class RoleSeeder extends Seeder
 {
     public function run(){
-        /** @var Role $admin_role */
-        $admin_role = Role::firstOrNew([
+        /** @var Role $role */
+        $role = Role::firstOrNew([
             'name' => 'Admin',
         ]);
-        $admin_role->permissions = implode(';', PermissionEnum::getList());
-        $admin_role->save();
+        $role->permissions = implode(';', PermissionEnum::getList());
+        $role->save();
+
+        /** @var Role $role */
+        $role = Role::firstOrCreate([
+            'name' => 'ADV',
+        ]);
     }
 }

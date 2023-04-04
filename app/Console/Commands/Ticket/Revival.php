@@ -20,12 +20,11 @@ use App\Jobs\SendSMS\SMS;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
+use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Twilio\Exceptions\ConfigurationException;
-use Twilio\Exceptions\TwilioException;
 
 class Revival extends Command
 {
@@ -34,8 +33,13 @@ class Revival extends Command
 
     protected Logger $logger;
 
+    const ALERT_LOCKED_SINCE = 1800;
+    const KILL_LOCKED_SINCE = 3600;
     public function handle()
     {
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+
         $this->logger = new Logger('ticket/revival/revival.log', true, true);
         $this->logger->info('----[ START ]----');
 
@@ -92,6 +96,8 @@ class Revival extends Command
         $this->logger->info("Updating deadline's ticket " . $ticket->deadline->format('Y-m-d') . " to : " . $deadLine);
         $ticket->deadline = $deadLine;
 
+        $ticket->addTag($revival->end_tag_id);
+
         $this->logger->info('Save ticket modification ...');
         $ticket->save();
 
@@ -128,10 +134,6 @@ class Revival extends Command
         $thread->save();
     }
 
-    /**
-     * @throws TwilioException
-     * @throws ConfigurationException
-     */
     private function sendRevivalMessage(Thread $thread, DefaultAnswer $message): void
     {
         $this->logger->info('Save message in DB');

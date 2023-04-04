@@ -27,7 +27,7 @@
                                 />
                             </div>
                             <div class="form-group mb-3">
-                                <label for="name">
+                                <label for="frequency">
                                     {{__('app.revival.frequency')}}
                                     <span class="required_field">*</span>
                                 </label>
@@ -41,7 +41,7 @@
                                 />
                             </div>
                             <div class="form-group mb-3">
-                                <label for="name">
+                                <label for="max_revival">
                                     {{__('app.revival.max_revival')}}
                                     <span class="required_field">*</span>
                                 </label>
@@ -83,8 +83,8 @@
                             </span>
                         </div>
                         <div class="m-2">
-                            <label for="name">
-                                {{trans_choice('app.defaultAnswer.defaultAnswer', 1)}}
+                            <label for="default_answer_id">
+                                {{trans_choice('app.default_answer.default_answer', 1)}}
                                 <span class="required_field">*</span>
                             </label>
                             <select
@@ -112,7 +112,7 @@
                             @endif
                         </div>
                         <div class="m-2">
-                            <label for="name">
+                            <label for="end_default_answer_id">
                                 {{trans_choice('app.revival.end_default_answer', 1)}}
                                 <span class="required_field">*</span>
                             </label>
@@ -142,7 +142,7 @@
                             @endif
                         </div>
                         <div class="m-2">
-                            <label for="name">
+                            <label for="end_state">
                                 {{trans_choice('app.revival.end_state', 1)}}
                                 <span class="required_field">*</span>
                             </label>
@@ -162,7 +162,28 @@
                             </select>
                         </div>
                         <div class="m-2">
-                            <label for="name">
+                            <label for="revivalEndTag">
+                                {{trans_choice('app.revival.endTag', 1)}}
+                                <span class="required_field">*</span>
+                            </label>
+
+                            <select
+                                name="revivalEndTag"
+                                id="select-revivalEndTag"
+                                class="form-control form-control-sm form-select"
+                                required
+                            >
+                                <option value="">-- {{trans_choice('app.revival.select_revival', 1)}} --</option>
+                                @foreach( \App\Models\Tags\Tag::all() as $tag)
+                                    <option value="{{ $tag->id }}"
+                                        @selected($revival->end_tag_id == $tag->id)>
+                                        {{ $tag->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="m-2">
+                            <label for="revivalType">
                                 {{trans_choice('app.revival.sendType', 1)}}
                                 <span class="required_field">*</span>
                             </label>

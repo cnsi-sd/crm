@@ -188,6 +188,11 @@ return [
             'savprocess_tag' => 'Tag Procédure SAV complète',
             'savprocess_stop_revival' => 'Relances auto à stopper',
 
+            'default_answer_offer_questions' => 'Réponse par défaut aux questions sur les offres',
+
+            'mirakl_refunds' => 'Remboursement sur MP Mirakl',
+            'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
+
             'closed_discussion' => 'Discussion clôturée',
             'closed_discussion_tag' => 'Tag discussion clôturée',
         ],
@@ -225,13 +230,16 @@ return [
         ],
     ],
 
-    'defaultAnswer' => [
-        'defaultAnswer' => 'Réponse par défaut|Réponses par défaut',
+    'default_answer' => [
+        'default_answer' => 'Réponse par défaut|Réponses par défaut',
         'save' => 'Enregistrer la réponse',
         'name' => 'Nom de la réponse',
         'content' => 'Contenu de la réponse',
         'select_channel' => 'Canaux autorisés',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'is_locked' => 'Verrouillée',
+        'lock' => 'Verrouiller',
+        'deleted' => 'Réponse par défaut supprimée'
     ],
 
     'revival' => [
@@ -250,6 +258,7 @@ return [
         'sendType' => 'Type d\'envoi',
         'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'endTag' => 'Tag à ajouter',
     ],
 
     'tags' => [
@@ -263,6 +272,11 @@ return [
         'select_channel' => 'Canaux autorisés',
         'show' => 'Prévisualisation',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'is_locked' => 'Verrouillé',
+        'lock' => 'Verrouiller',
+        'deleted' => 'Tag supprimé',
+        'addTagList' => 'Ajouter une ligne de tags',
+        'select_tag' => 'Ajouter un tag',
     ],
 
     'recover_password' => [
@@ -293,14 +307,14 @@ return [
         'edit' => 'Modifier fiche SAV fabriquant',
         'delete' => 'Supprimer fiche SAV fabriquant',
         'manufacturer' => 'Fabriquant',
-        'pms_delay' => 'Délai de PMS (Panne / Mise en service)',
+        'pms_delay' => 'Délai de PMS (Panne mise en service)',
         'manufacturer_warranty' => 'Garantie constructeur',
         'gc_plus' => 'Contrat GCPlus',
         'gc_plus_delay' => 'Délai pour réaliser contrat GCPlus',
         'hotline' => 'Hotline',
         'brand_email' => 'Email marque',
         'brand_information' => 'Informations marque',
-        'regional_information' => 'Informations régionales',
+        'supplier_information' => 'Informations fournisseurs',
         'delete_confirm' => 'Supprimer la fiche SAV ?',
         'deleted' => 'Fiche SAV fabricant supprimée',
         'saved' => 'Fiche SAV fabricant enregistrée',

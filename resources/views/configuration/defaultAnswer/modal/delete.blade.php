@@ -1,5 +1,5 @@
 {{-- !-- Delete Warning Modal -->  --}}
-<form action="{{ route('delete_defaultAnswers', ['defaultAnswer' => $defaultAnswer]) }}" method="get"
+<form action="{{ route('delete_default_answers', ['defaultAnswer' => $defaultAnswer]) }}" method="get"
       enctype="multipart/form-data">
     @csrf
     @method('DELETE')

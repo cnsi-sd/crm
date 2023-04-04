@@ -92,18 +92,18 @@ Breadcrumbs::for('customer_service_process', function (BreadcrumbTrail $trail, $
 });
 
 /** defaultAnswers */
-Breadcrumbs::for('defaultAnswers', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('default_answers', function (BreadcrumbTrail $trail) {
     $trail->parent('configuration');
-    $trail->push(trans_choice('app.defaultAnswer.defaultAnswer', 2), route('defaultAnswers'));
+    $trail->push(trans_choice('app.default_answer.default_answer', 2), route('default_answers'));
 });
 
-Breadcrumbs::for('create_defaultAnswer', function (BreadcrumbTrail $trail) {
-    $trail->parent('defaultAnswers');
+Breadcrumbs::for('create_default_answer', function (BreadcrumbTrail $trail) {
+    $trail->parent('default_answers');
     $trail->push(__('app.create'));
 });
 
-Breadcrumbs::for('edit_defaultAnswer', function (BreadcrumbTrail $trail, \App\Models\Channel\DefaultAnswer $defaultAnswer) {
-    $trail->parent('defaultAnswers');
+Breadcrumbs::for('edit_default_answer', function (BreadcrumbTrail $trail, \App\Models\Channel\DefaultAnswer $defaultAnswer) {
+    $trail->parent('default_answers');
     $trail->push($defaultAnswer->id);
     $trail->push(__('app.edit'));
 });
@@ -158,6 +158,14 @@ Breadcrumbs::for('incidents_config', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('savprocess_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
     $trail->push(__('app.config.misc.savprocess'), route('savprocess_config'));
+});
+Breadcrumbs::for('answer_offer_questions_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.default_answer_offer_questions'), route('answer_offer_questions_config'));
+});
+Breadcrumbs::for('mirakl_refunds_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.mirakl_refunds'), route('mirakl_refunds_config'));
 });
 Breadcrumbs::for('closed_discussion_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
@@ -216,7 +224,3 @@ Breadcrumbs::for('edit_sav_note', function (BreadcrumbTrail $trail, SavNote $sav
     $trail->parent('show_sav_note', $savNote);
     $trail->push(__('app.edit'), route('edit_sav_note', $savNote));
 });
-
-
-
-

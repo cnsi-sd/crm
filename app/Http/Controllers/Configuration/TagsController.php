@@ -55,6 +55,7 @@ class TagsController extends AbstractController
         $tags->name = $request->input('name');
         $tags->text_color = $request->input('text_color');
         $tags->background_color = $request->input('background_color');
+        $tags->is_locked = $request->input('isLocked') == "on";
         $tags->save();
 
         $channels = $request->input('channels');
@@ -64,23 +65,27 @@ class TagsController extends AbstractController
     public function delete(Request $request, ?Tag $tags)
     {
         if($tags->delete()){
-            alert::toastSuccess(__('app.delete'));
+            alert::toastSuccess(__('app.tags.deleted'));
         }
         return redirect()->route('tags');
     }
 
-    public function ajax_tags()
+    public function ajax_tags(Request $request)
     {
         $data = Tag::all();
+        $data = \App\Models\Tags\Tag::query()
+            ->select('tags.*')
+            ->join('channel_tags', 'tags.id', 'channel_tags.tag_id')
+            ->join('channels', 'channels.id', 'channel_tags.channel_id')
+            ->where('channels.id',$request->input('channel_id'))
+            ->get();
         return response()->json(['data' => $data]);
     }
 
     public function newTagLine(Request $request)
     {
-        $taglist = new TagList();
-        $taglist->ticket_id = $request->input('ticket_id');
-        $taglist->save();
-        return response()->json($taglist->id);
+        $taglist = TagList::query()->max('id');
+        return $taglist + 1;
     }
 
 }

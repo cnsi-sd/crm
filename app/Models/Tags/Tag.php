@@ -4,13 +4,13 @@ namespace App\Models\Tags;
 
 use App\Enums\AlignEnum;
 use App\Enums\ColumnTypeEnum;
-use App\Enums\FixedWidthEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
-use App\Models\Ticket\Ticket;
+use App\Models\Ticket\Revival\Revival;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -18,9 +18,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $text_color
  * @property string $background_color
+ * @property boolean $is_locked
  *
  * @property Channel[] $channels
  * @property TagList[] $tagLists
+ * @property Revival[] $revivals
  *
  * @property Datetime $created_at
  * @property Datetime $updated_at
@@ -34,9 +36,14 @@ class Tag extends Model
         'name',
         'text_color',
         'background_color',
+        'is_locked',
         'created_at',
         'updated_at',
         'deleted_at'
+    ];
+
+    protected $casts = [
+        'is_locked' => 'boolean',
     ];
 
     public function isChannelAuthorized(Channel $channel)
@@ -52,6 +59,11 @@ class Tag extends Model
     public function tagLists(): BelongsToMany
     {
         return $this->belongsToMany(TagList::class, 'tag_tagLists', 'tag_id', 'tagList_id');
+    }
+
+    public function revivals(): HasMany
+    {
+        return $this->hasMany(Revival::class);
     }
 
     public static function getTagsNames(): array
@@ -81,7 +93,7 @@ class Tag extends Model
                     ->with('tags', $tags);
             });
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.defaultAnswer.select_channel'))
+            ->setLabel(__('app.default_answer.select_channel'))
             ->setClass('w-25')
             ->setCallback(function (Tag $tag) {
                 $channels = $tag->getAuthorizedChannels();
@@ -94,7 +106,10 @@ class Tag extends Model
             ->setKey('channels')
             ->setSortable(false)
             ->setSearchable(false);
-
+        $columns[] = (new TableColumnBuilder())
+            ->setLabel(__('app.tags.is_locked'))
+            ->setkey('is_locked')
+            ->settype(ColumnTypeEnum::BOOLEAN);
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Tag $tags) {
                 return view('configuration.tags.inline_table_actions')

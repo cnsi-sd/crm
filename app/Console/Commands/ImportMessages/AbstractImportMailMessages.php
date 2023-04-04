@@ -6,6 +6,7 @@ use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,9 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
     const SPAM_TAG = 'X-Spam-Tag';
     const SPAM_STATUS = 'X-Spam-Status';
     const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
+
+    const ALERT_LOCKED_SINCE = 600;
+    const KILL_LOCKED_SINCE = 1200;
 
     /**
      * @var Mailbox
@@ -49,6 +53,9 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
      * @throws Exception
      */
     public function handle(){
+        $lock = new Lock($this->getName(), self::ALERT_LOCKED_SINCE, self::KILL_LOCKED_SINCE, env('ERROR_RECIPIENTS'));
+        $lock->lock();
+
         $this->channel = Channel::getByName($this->channelName);
         $this->logger = new Logger('import_message/'
             . $this->channel->getSnakeName()
@@ -152,17 +159,28 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
     protected function canImport($email): bool{
 
         preg_match('/@(.*)/', $email->senderAddress, $match);
-        if (in_array($match[1], config('email-import.domain_blacklist')))
-            return false;
-
-        if (in_array($email->senderAddress, config('email-import.email_blacklist')))
-            return false;
-
-        if ($this->isSpam($email)){
-            if (in_array($match[1], config('email-import.domain_whitelist')))
-                return true;
+        if (in_array($match[1], config('email-import.domain_blacklist'))) {
+            $this->logger->info('Domaine blacklist');
             return false;
         }
+
+        if (in_array($email->senderAddress, config('email-import.email_blacklist'))) {
+            $this->logger->info('Email blacklist');
+            return false;
+        }
+
+        if ($this->isSpam($email)){
+            if (in_array($match[1], config('email-import.domain_whitelist'))) {
+                $this->logger->info('Domaine blacklist');
+                return true;
+            }
+            if (in_array($match[1], config('email-import.email_whitelist'))) {
+                $this->logger->info('Domaine blacklist');
+                return true;
+            }
+            return false;
+        }
+
 
         return true;
     }
