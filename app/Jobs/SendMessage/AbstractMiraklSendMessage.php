@@ -21,7 +21,7 @@ abstract class AbstractMiraklSendMessage extends AbstractSendMessage
     {
     // If we are not in production environment, we only can send messages to a test order
         if (env('APP_ENV') != 'production')
-            if($this->message->thread->channel_thread_number != '07b62278-0faa-41da-9278-d19550eda712')
+            if($this->message->thread->channel_thread_number != '07b62278-0faa-41da-9278-d19550eda712') // commande laposte 1055472612-A
                return;
 
         $thread_id = $this->message->thread->channel_thread_number;
