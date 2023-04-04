@@ -6,6 +6,7 @@ stages:
   - build
   - test
   - deploy
+  - doc
 
 build:
   image: devilbox/php-fpm:8.1-prod
@@ -55,3 +56,24 @@ deploy_tkg:
   dependencies:
     - build
   when: on_success
+
+agent-doc:
+  image: python:3.11-buster
+  stage: doc
+  before_script:
+    - pip install -r doc/requirements.txt
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_DOC" > ~/.ssh/id_rsa
+    - chmod -R 700 ~/.ssh
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -p 2206 -t rsa doc.cnsi-sd.fr >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    # Build doc
+    - cd doc/user-doc && mkdocs build --strict --verbose
+    # Delete previous prod version
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST -p $SSH_PORT "rm -f /var/www/doc.cnsi-sd.fr/crm/agent/*.*.*"
+    # Deploy prod over SSH
+    - scp -r -P $SSH_PORT doc/user-doc/site/* $SSH_USER@$SSH_HOST:/var/www/doc.cnsi-sd.fr/crm/agent/
