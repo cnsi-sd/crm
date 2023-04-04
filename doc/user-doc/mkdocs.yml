@@ -22,6 +22,7 @@ nav:
       - Automatisations : extras/automatisations.md
   - Configuration :
       - Fiches SAV fabricants : configuration/fiches-sav-fabricants.md
+      - Relances automatiques : configuration/relances-automatiques.md
 
 theme:
   name: readthedocs
