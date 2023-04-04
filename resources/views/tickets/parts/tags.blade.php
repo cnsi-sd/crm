@@ -13,12 +13,7 @@
         @foreach($ticket->tagLists as $taglist)
             <div id="list-{{$taglist->id}}">
                 @php
-                $query = \App\Models\Tags\Tag::query()
-                    ->select('tags.*')
-                    ->join('channel_tags', 'tags.id', 'channel_tags.tag_id')
-                    ->join('channels', 'channels.id', 'channel_tags.channel_id')
-                    ->where('channels.id',$ticket->channel_id)
-                    ->get();
+                $query = \App\Models\Channel\Channel::find($ticket->channel_id)->getAuthorizedTags();
                 @endphp
                 <select form="saveTicket" name="ticket-revival" class="form-select no-sort tags"
                         data-ticket_id="{{$ticket->id}}"

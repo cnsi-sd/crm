@@ -10,6 +10,7 @@ use App\Models\Ticket\Ticket;
 use App\Models\User\User;
 use DateTime;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -97,9 +98,34 @@ class Channel extends Model
         return $channel;
     }
 
-    public function getAuthorizedDefaultAnswers()
+    /**
+     * @return Collection|DefaultAnswer[]
+     */
+    public function getAuthorizedDefaultAnswers(): Collection
     {
-        return $this->defaultAnswers->count() === 0 ? DefaultAnswer::all() : $this->defaultAnswers;
+        return DefaultAnswer::query()
+            ->select('default_answers.*')
+            ->leftJoin('channel_default_answer', 'channel_default_answer.default_answer_id', 'default_answers.id')
+            ->whereNull('channel_default_answer.id')
+            ->orWhere('channel_default_answer.channel_id', $this->id)
+            ->groupBy('default_answers.id')
+            ->orderBy('default_answers.name')
+            ->get();
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getAuthorizedTags(): Collection
+    {
+        return Tag::query()
+            ->select('tags.*')
+            ->leftJoin('channel_tags', 'channel_tags.tag_id', 'tags.id')
+            ->whereNull('channel_tags.id')
+            ->orWhere('channel_tags.channel_id', $this->id)
+            ->groupBy('tags.id')
+            ->orderBy('tags.name')
+            ->get();
     }
 
     public function user(): BelongsTo
