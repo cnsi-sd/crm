@@ -2,6 +2,7 @@
 
 namespace App\Jobs\SendMessage;
 
+use Mirakl\Core\Domain\FileWrapper;
 use Mirakl\MMP\Common\Domain\Collection\Message\Thread\ThreadRecipientCollection;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadRecipient;
 use Mirakl\MMP\Common\Domain\Message\Thread\ThreadReplyMessageInput;
@@ -44,8 +45,20 @@ abstract class AbstractMiraklSendMessage extends AbstractSendMessage
         $messageToAnswer->setTo($recipients);
         $messageToAnswer->setBody($this->message->content);
 
+        $attachments = $this->message->documents()->get();
+
         // Send request
         $request = new ThreadReplyRequest($thread_id, $messageToAnswer);
+
+        // Add attachments
+        if($attachments->count() > 0) {
+            foreach ($attachments as $attachment) {
+                $file = response()->file($attachment->getFilePath())->getFile()->openFile();
+                $f = new FileWrapper($file);
+                $request->addFile($f);
+            }
+        }
+
         $client->replyToThread($request);
     }
 
