@@ -13,13 +13,6 @@ Rubrique Domaine et DNS > Configuration DNS > Ajouter une Zone A.
 crm.{boutique}.cnsi-sd.fr
 ```
 
-## Python PIP
-Requis pour build la documentation
-```bash
-sudo apt install python3-pip
-pip3 install mkdocs
-```
-
 ## PHP8.2
 ```bash
 # Upgrade paquet existants
@@ -178,6 +171,15 @@ sudo mkdir /var/log/nginx/crm.{boutique}.cnsi-sd.fr
 sudo systemctl reload nginx
 sudo systemctl restart nginx
 sudo systemctl restart php8.2-fpm
+```
+
+## Python PIP
+Requis pour build la documentation
+```bash
+# Avec l'utiliasteur debian
+sudo apt install python3-pip
+# Avec l'utilisation crm
+pip3 install mkdocs
 ```
 
 ## Configurer le déploiement

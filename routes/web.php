@@ -121,6 +121,6 @@ Route::prefix('/')->group(function () {
     Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnTicket');
 
     // Documentation
-    Route::any('doc/agent/{path?}', [DocumentationController::class, 'agent'])->where('path', '.*');
-    Route::any('doc/admin/{path?}', [DocumentationController::class, 'admin'])->where('path', '.*');
+    Route::any('doc/agent/{path?}', [DocumentationController::class, 'agent'])->where('path', '.*')->name('agent_doc')->can('agent_doc');
+    Route::any('doc/admin/{path?}', [DocumentationController::class, 'admin'])->where('path', '.*')->name('admin_doc')->can('admin_doc');
 });

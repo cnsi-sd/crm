@@ -30,4 +30,7 @@ abstract class PermissionEnum extends AbstractEnum
     const SAV_NOTE_SHOW                 = 'sav_note_show';
     const SAV_NOTE_EDIT                 = 'sav_note_edit';
     const SAV_NOTE_DELETE               = 'sav_note_delete';
+
+    const AGENT_DOC                     = 'agent_doc';
+    const ADMIN_DOC                     = 'admin_doc';
 }

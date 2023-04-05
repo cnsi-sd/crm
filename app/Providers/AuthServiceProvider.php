@@ -56,5 +56,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('misc_config', function (User $user) {
             return $user->hasPermission(PermissionEnum::MISC_CONFIG);
         });
+
+        Gate::define('agent_doc', function (User $user) {
+            return $user->hasPermission(PermissionEnum::AGENT_DOC);
+        });
+
+        Gate::define('admin_doc', function (User $user) {
+            return $user->hasPermission(PermissionEnum::ADMIN_DOC);
+        });
     }
 }

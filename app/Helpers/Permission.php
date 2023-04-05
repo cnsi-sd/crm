@@ -108,6 +108,18 @@ abstract class Permission
                     ],
                 ],
             ],
+            [
+                'title' => __('app.navbar.doc'),
+                'sub_sections' => [
+                    [
+                        'title' => __('app.navbar.doc'),
+                        'items' => [
+                            PermissionEnum::AGENT_DOC,
+                            PermissionEnum::ADMIN_DOC,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 
