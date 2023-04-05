@@ -50,6 +50,12 @@
         'artisan view:clear',
     ];
 
+    /* Dossier de documentation à build */
+    $mkdocs = [
+        'doc/user-doc/',
+        'doc/admin/',
+    ];
+
     /* Sentinel scripts */
     $sentinel_scripts_dir = '/home/scripts';
 @endsetup
@@ -63,6 +69,7 @@
     hack:monolog
     npm:build
     php:execute_scripts
+    mkdocs:build
     symlinks:current
     queue:restart
     clean:releases
@@ -143,6 +150,19 @@
     rm -rf $(ls -t | tail -n +{{ $keep }});
 
     echo "Old releases have been cleaned";
+@endtask
+
+{{-- Buil MKdocs --}}
+@task('mkdocs:build', ['on' => $on])
+    @foreach($mkdocs as $folder)
+        echo "Build Mkdocs (" . $folder . ")";
+        cd {{ $releases_dir }};
+        cd {{ $folder }};
+
+        mkdocs build --strict
+    @endforeach
+
+    echo "Documentations has been build";
 @endtask
 
 {{-- Configure shared assets --}}
