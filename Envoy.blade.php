@@ -155,8 +155,8 @@
 {{-- Buil MKdocs --}}
 @task('mkdocs:build', ['on' => $on])
     @foreach($mkdocs as $folder)
-        echo "Build Mkdocs (" . $folder . ")";
-        cd {{ $releases_dir }};
+        echo "Build Mkdocs ({{ $folder }})";
+        cd {{ $release_dir }};
         cd {{ $folder }};
 
         mkdocs build --strict

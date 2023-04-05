@@ -13,6 +13,13 @@ Rubrique Domaine et DNS > Configuration DNS > Ajouter une Zone A.
 crm.{boutique}.cnsi-sd.fr
 ```
 
+## Python PIP
+Requis pour build la documentation
+```bash
+sudo apt install python3-pip
+pip3 install mkdocs
+```
+
 ## PHP8.2
 ```bash
 # Upgrade paquet existants
