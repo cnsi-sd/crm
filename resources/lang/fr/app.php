@@ -47,7 +47,8 @@ return [
         'dashboard' => 'Tableau de bord',
         'settings' => 'Paramètres',
         'config' => 'Configuration',
-        'admin' => 'Administration'
+        'admin' => 'Administration',
+        'doc' => 'Documentation',
     ],
 
     'axios' => [

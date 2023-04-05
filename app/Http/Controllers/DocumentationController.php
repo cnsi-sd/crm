@@ -23,13 +23,16 @@ class DocumentationController extends AbstractController
             $base_path .= '/index.html';
         }
 
+        // Fetch mime type
         $extension = pathinfo($base_path, PATHINFO_EXTENSION);
         $mime_type = match($extension) {
             'js' => 'text/javascript',
             'css' => 'text/css',
             default => mime_content_type($base_path),
         };
+
         return response(file_get_contents($base_path))
+            ->header('Cache-Control', 'max-age=3600') // cache for one hour
             ->header('Content-Type', $mime_type);
     }
 }
