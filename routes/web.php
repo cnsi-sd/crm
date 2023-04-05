@@ -8,6 +8,7 @@ use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\Configuration\SavNoteController;
 use App\Http\Controllers\Configuration\TagsController;
 use App\Http\Controllers\Configuration\MiscController;
+use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
@@ -118,4 +119,8 @@ Route::prefix('/')->group(function () {
     Route::post('/saveTicketThreadTags', [TicketController::class, 'saveTicketTags'])->name('saveTagOnticket');
     Route::post('/hastaglist', [TicketController::class, 'hasTagList'])->name('ticketHasTaglist');
     Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnTicket');
+
+    // Documentation
+    Route::any('doc/agent/{path?}', [DocumentationController::class, 'agent'])->where('path', '.*');
+    Route::any('doc/admin/{path?}', [DocumentationController::class, 'admin'])->where('path', '.*');
 });
