@@ -3,10 +3,10 @@ variables:
   COMPOSER_DEFAULT_OPTIONS: '--optimize-autoloader --no-scripts'
 
 stages:
-  - doc
   - build
   - test
   - deploy
+  - doc
 
 build:
   image: devilbox/php-fpm:8.1-prod
@@ -77,6 +77,8 @@ agent:
     - ssh -o StrictHostKeyChecking=no doc@doc.cnsi-sd.fr -p 2206 "rm -f /var/www/doc.cnsi-sd.fr/crm/agent/*.*.*"
     # Deploy prod over SSH
     - scp -r -P 2206 site/* doc@doc.cnsi-sd.fr:/var/www/doc.cnsi-sd.fr/crm/agent/
+  only:
+    - master
 
 admin:
   image: python:3.11-buster
@@ -98,3 +100,5 @@ admin:
     - ssh -o StrictHostKeyChecking=no doc@doc.cnsi-sd.fr -p 2206 "rm -f /var/www/doc.cnsi-sd.fr/crm/admin/*.*.*"
     # Deploy prod over SSH
     - scp -r -P 2206 site/* doc@doc.cnsi-sd.fr:/var/www/doc.cnsi-sd.fr/crm/admin/
+  only:
+    - master
