@@ -1,15 +1,15 @@
-image: devilbox/php-fpm:8.1-prod
-
 variables:
   SECURE_LOG_LEVEL: error
   COMPOSER_DEFAULT_OPTIONS: '--optimize-autoloader --no-scripts'
 
 stages:
+  - doc
   - build
   - test
   - deploy
 
 build:
+  image: devilbox/php-fpm:8.1-prod
   stage: build
   before_script:
     - apt-get update
@@ -26,6 +26,7 @@ build:
   allow_failure: false
 
 phpcs:
+  image: devilbox/php-fpm:8.1-prod
   stage: test
   script:
     # exclude side effects because phpcs doesnt manage enum well
@@ -33,12 +34,14 @@ phpcs:
   allow_failure: true
 
 phpstan:
+  image: devilbox/php-fpm:8.1-prod
   stage: test
   script:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse app
   allow_failure: true
 
 deploy_tkg:
+  image: devilbox/php-fpm:8.1-prod
   stage: deploy
   script:
     # Add the private SSH key to the build environment
@@ -53,3 +56,45 @@ deploy_tkg:
   dependencies:
     - build
   when: on_success
+
+agent:
+  image: python:3.11-buster
+  stage: doc
+  before_script:
+    - pip install -r doc/requirements.txt
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_DOC" > ~/.ssh/id_rsa
+    - chmod -R 700 ~/.ssh
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -p 2206 -t rsa doc.cnsi-sd.fr >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    # Build doc
+    - cd doc/user-doc && mkdocs build --strict --verbose
+    # Delete previous prod version
+    - ssh -o StrictHostKeyChecking=no doc@doc.cnsi-sd.fr -p 2206 "rm -f /var/www/doc.cnsi-sd.fr/crm/agent/*.*.*"
+    # Deploy prod over SSH
+    - scp -r -P 2206 site/* doc@doc.cnsi-sd.fr:/var/www/doc.cnsi-sd.fr/crm/agent/
+
+admin:
+  image: python:3.11-buster
+  stage: doc
+  before_script:
+    - pip install -r doc/requirements.txt
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_DOC" > ~/.ssh/id_rsa
+    - chmod -R 700 ~/.ssh
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -p 2206 -t rsa doc.cnsi-sd.fr >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    # Build doc
+    - cd doc/admin && mkdocs build --strict --verbose
+    # Delete previous prod version
+    - ssh -o StrictHostKeyChecking=no doc@doc.cnsi-sd.fr -p 2206 "rm -f /var/www/doc.cnsi-sd.fr/crm/admin/*.*.*"
+    # Deploy prod over SSH
+    - scp -r -P 2206 site/* doc@doc.cnsi-sd.fr:/var/www/doc.cnsi-sd.fr/crm/admin/

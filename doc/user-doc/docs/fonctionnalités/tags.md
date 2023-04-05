@@ -38,7 +38,8 @@ Il y a plusieurs types d'action réalisable à ce niveau, comme :
     Une liste de tags permet d'ajouter de nouveaux tags à un ticket (Exemple : le ticket est déjà clos, mais le client a fait une nouvelle action relative à celui-ci) sans supprimer les anciens tags du ticket ou encore surcharger l'ancienne liste déjà présente.
 
 L'ajout d'une liste se fait via le button `Ajouter une ligne de tags`, présent dans l'encadré.
-![add_tags_list_on_ticket](assets/add_tagList.png)
+
+[//]: # (![add_tags_list_on_ticket]&#40;assets/add_tagList.png&#41;)
 
 La suppression d'une liste est automatique, lorsque le dernier tag de la liste est supprimé.
 
