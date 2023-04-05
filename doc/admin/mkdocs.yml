@@ -1,6 +1,7 @@
 site_name: Admin CRM
 
 nav:
+  - Accueil : index.md
   - Mise en production :
       - Installation : mise-en-production/installation.md
       - Migration Magento > CRM : mise-en-production/migration.md
