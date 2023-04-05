@@ -159,7 +159,7 @@
         cd {{ $release_dir }};
         cd {{ $folder }};
 
-        mkdocs build --strict
+        mkdocs build --strict;
     @endforeach
 
     echo "Documentations has been build";
