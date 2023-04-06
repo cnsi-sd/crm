@@ -34,9 +34,18 @@ class ManomanoSendMessage extends AbstractSendMessage
         $toMailAddress = str_replace('"',"", $this->message->thread->channel_data);
         $this->logger->info('Message sending to '. $toMailAddress);
 
+        $this->attachments = $this->message->documents()->get();
+
         $response = Mail::raw($this->message->content, function ($message) use ($toMailAddress) {
          $message->to($toMailAddress)
          ->subject('RE: '. $this->message->thread->name);
+
+            if($this->attachments->count() > 0) {
+                foreach ($this->attachments as $attachment) {
+                    $message->attach($attachment->getFilePath());
+                }
+            }
+
         });
 
         $response
