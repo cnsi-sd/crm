@@ -83,11 +83,21 @@ class IcozaSendMessage extends AbstractSendMessage
             $this->logger->info('Init api');
             $client = self::initApiClient();
 
+            $attachments = $this->message->documents()->get();
+            $doc = array();
+            foreach ($attachments as $attachment) {
+                $doc[] = array(
+                    'name' => $attachment->name,
+                    'binary' => response()->file($attachment->getFilePath())->getFile()->getContent()
+                );
+            }
+
             $route = $this->getCredentials()['host'] . 'Reply';
             $response = $client->request('POST', $route, [
                 RequestOptions::FORM_PARAMS => [
                     "content" => $this->translateContent($this->message->content),
                     "order" => $lastApiMessage->threadId,
+                    "documents" => $doc,
                 ],
             ]);
 
