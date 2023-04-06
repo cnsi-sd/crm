@@ -10,6 +10,7 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
+use App\Jobs\CreateEmailThread;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
@@ -120,9 +121,9 @@ class Ticket extends Model
     }
 
 
-    public static function getTicket(Order $order, Channel $channel): Ticket
+    public static function getTicket(Order $order, Channel $channel, bool $createEmailThreadSync = false): Ticket
     {
-        return Ticket::firstOrCreate(
+        $ticket = Ticket::firstOrNew(
             [
                 'order_id' => $order->id,
                 'channel_id' => $channel->id,
@@ -134,6 +135,16 @@ class Ticket extends Model
                 'user_id' => $channel->user_id,
             ],
         );
+
+        // If ticket does not exist, create it (save) and dispatch the job to create the EmailThread
+        if(!$ticket->exists) {
+            $ticket->save();
+
+            $method = $createEmailThreadSync ? 'dispatchSync' : 'dispatch';
+            CreateEmailThread::$method($ticket);
+        }
+
+        return $ticket;
     }
 
     /**

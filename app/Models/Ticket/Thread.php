@@ -35,6 +35,8 @@ class Thread extends Model
     const DEFAULT_CHANNEL_NUMBER = 'crm_default_thread';
     const DEFAULT_NAME = 'Fil de discussion principal';
 
+    const EMAIL = 'Email';
+
     protected $fillable = [
         'ticket_id',
         'revival_id',

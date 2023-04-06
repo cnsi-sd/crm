@@ -6,6 +6,7 @@ use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\MessageVariable;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Message;
+use App\Models\Ticket\Thread;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -58,6 +59,11 @@ abstract class AbstractSendMessage implements ShouldQueue
      */
     public static function dispatchMessage(Message $message)
     {
+        if($message->thread->channel_thread_number === Thread::EMAIL) {
+            EmailSendMessage::dispatch($message);
+            return;
+        }
+
         match($message->thread->ticket->channel->name) {
             ChannelEnum::BUT_FR             => ButSendMessage::dispatch($message),
             ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($message),
