@@ -14,14 +14,10 @@ use Cnsi\Attachments\Model\Document;
 class SendInvoice extends AbstractAnswer
 {
     private CrmLinkGateway $prestashopGateway;
-    private DefaultAnswer $answerInvoiceFound;
-    private DefaultAnswer $answerOrderNotShipped;
 
     public function handle(): bool
     {
         $this->prestashopGateway = new CrmLinkGateway();
-        $this->answerInvoiceFound = DefaultAnswer::findOrFail(setting('bot.invoice.found_answer_id'));
-        $this->answerOrderNotShipped = DefaultAnswer::findOrFail(setting('bot.invoice.not_shipped_answer_id'));
 
         if (!$this->canBeProcessed())
             return self::SKIP;
@@ -85,42 +81,24 @@ class SendInvoice extends AbstractAnswer
         $generatedInvoices = array_filter($invoicesProgress, fn($progress) => $progress === 'generated');
         $id_orders = array_keys($generatedInvoices);
 
+        $defaultAnswer = DefaultAnswer::findOrFail(setting('bot.invoice.found_answer_id'));
+        $message = $this->addDefaultAnswerToThread($defaultAnswer);
+
         // Load PDF invoices
-        $pdfs = [];
         foreach ($id_orders as $id_order) {
-            $pdfs[] = $this->prestashopGateway->getOrderInvoice($id_order);
-        }
-
-        // Build message
-        $answer = new Message();
-        $answer->thread_id = $this->message->thread_id;
-        $answer->user_id = null;
-        $answer->channel_message_number = '';
-        $answer->author_type = TicketMessageAuthorTypeEnum::SYSTEM;
-        $answer->content = $this->answerInvoiceFound->content;
-        $answer->save();
-
-        foreach ($pdfs as $pdf) {
-            $tmpFile = new TmpFile((string) $pdf);
-            Document::doUpload($tmpFile, $answer, MessageDocumentTypeEnum::CUSTOMER_INVOICE, 'pdf');
+            $invoiceContent = $this->prestashopGateway->getOrderInvoice($id_order);
+            $tmpFile = new TmpFile($invoiceContent);
+            Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::CUSTOMER_INVOICE, 'pdf');
         }
 
         // Send message
-        AbstractSendMessage::dispatchMessage($answer);
+        AbstractSendMessage::dispatchMessage($message);
     }
 
     private function sendOrderNotShippedAnswer()
     {
-        // Build message
-        $answer = new Message();
-        $answer->thread_id = $this->message->thread_id;
-        $answer->user_id = null;
-        $answer->channel_message_number = '';
-        $answer->author_type = TicketMessageAuthorTypeEnum::SYSTEM;
-        $answer->content = $this->answerOrderNotShipped->content;
-        $answer->save();
-
-        // Send message
-        AbstractSendMessage::dispatchMessage($answer);
+        $defaultAnswer = DefaultAnswer::findOrFail(setting('bot.invoice.not_shipped_answer_id'));
+        $message = $this->addDefaultAnswerToThread($defaultAnswer);
+        AbstractSendMessage::dispatchMessage($message);
     }
 }
