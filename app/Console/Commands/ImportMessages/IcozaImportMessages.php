@@ -101,7 +101,7 @@ class IcozaImportMessages extends AbstractImportMessages
 
                 $order      = Order::getOrder($message->order, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);
-                $thread     = Thread::getOrCreateThread($ticket, $message->order, 'Discussion Icoza');
+                $thread     = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, Thread::DEFAULT_NAME);
 
                 if (!$this->isMessagesImported($message->id)) {
                     $this->logger->info('Convert api message to db message');

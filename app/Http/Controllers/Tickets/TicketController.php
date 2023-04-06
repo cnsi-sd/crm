@@ -85,7 +85,7 @@ class TicketController extends AbstractController
 
         // Create thread if not exists
         if($ticket->threads->count() === 0)
-            Thread::getOrCreateThread($ticket, $channel_order_number, "Fil de discussion principal");
+            Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, Thread::DEFAULT_NAME);
 
         // Redirect to ticket
         return redirect()->route('ticket', $ticket);

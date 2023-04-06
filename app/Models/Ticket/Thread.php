@@ -33,6 +33,7 @@ class Thread extends Model
     protected $table = 'ticket_threads';
 
     const DEFAULT_CHANNEL_NUMBER = 'crm_default_thread';
+    const DEFAULT_NAME = 'Fil de discussion principal';
 
     protected $fillable = [
         'ticket_id',
