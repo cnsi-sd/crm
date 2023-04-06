@@ -81,7 +81,7 @@ class Thread extends Model
     public function messages(): HasMany
     {
         // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
-        return $this->hasMany(Message::class)->orderBy('created_at', 'DESC');
+        return $this->hasMany(Message::class)->orderBy('created_at', 'DESC')->orderBy('id', 'DESC');
     }
 
     public function firstMessage(): ?Message

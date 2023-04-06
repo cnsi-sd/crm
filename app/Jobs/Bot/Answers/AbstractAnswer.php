@@ -28,6 +28,7 @@ abstract class AbstractAnswer
         $message = new Message();
         $message->thread_id = $this->message->thread_id;
         $message->user_id = null;
+        $message->default_answer_id = $defaultAnswer->id;
         $message->channel_message_number = '';
         $message->author_type = TicketMessageAuthorTypeEnum::SYSTEM;
         $message->content = $defaultAnswer->content;
