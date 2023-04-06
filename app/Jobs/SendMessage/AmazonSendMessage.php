@@ -27,6 +27,8 @@ class AmazonSendMessage extends AbstractSendMessage
             . '.log', true, true
         );
 
+        $this->attachments = $this->message->documents()->get();
+
         $data["email"] = str_replace('"',"", $this->message->thread->channel_data);
         $data["title"] = "RE: " . $this->message->thread->name;
         $data["body"] = $this->message->content;
@@ -34,6 +36,13 @@ class AmazonSendMessage extends AbstractSendMessage
         Mail::raw( $data["body"], function ($message) use ($data) {
             $message->to($data["email"])
                 ->subject($data["title"]);
+
+            if($this->attachments->count() > 0) {
+                foreach ($this->attachments as $attachment) {
+                    $message->attach($attachment->getFilePath());
+                }
+            }
+
         });
     }
 }
