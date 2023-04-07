@@ -14,7 +14,7 @@ class IcozaSendMessage extends AbstractSendMessage
 {
 
     protected Logger $logger;
-    static private  ?Client $client = null;
+    static private ?Client $client = null;
 
     /**
      * @throws Exception
@@ -35,17 +35,17 @@ class IcozaSendMessage extends AbstractSendMessage
     protected function getCredentials(): array
     {
         return [
-            'host'  => env('ICOZA_API_URL'),
-            'key'   => env('ICOZA_API_KEY'),
+            'host' => env('ICOZA_API_URL'),
+            'key'  => env('ICOZA_API_KEY'),
         ];
     }
+
     protected function initApiClient()
     {
-        if(self::$client == null) {
-
+        if (self::$client == null) {
             $client = new Client([
                 RequestOptions::HEADERS => [
-                    'token' => self::getCredentials()['key'],
+                    'token'  => self::getCredentials()['key'],
                     'Accept' => 'application/json',
                 ],
             ]);
@@ -60,48 +60,40 @@ class IcozaSendMessage extends AbstractSendMessage
     {
         // If we are not in production environment, we only can send messages to a test order
         if (env('APP_ENV') == 'production')
-            if( $this->message->thread->channel_thread_number != '526-SOOTUCIZG')
+            if ($this->message->thread->channel_thread_number != '526-SOOTUCIZG')
                 return;
 
-        try {
-            $this->logger = new Logger('send_message/'
-                . $this->getSnakeChannelName()
-                . '/' . $this->getSnakeChannelName()
-                . '.log', true, true
-            );
+        $this->logger = new Logger('send_message/'
+            . $this->getSnakeChannelName()
+            . '/' . $this->getSnakeChannelName()
+            . '.log', true, true
+        );
 
-            $this->logger->info('--- Start ---');
+        $this->logger->info('--- Start ---');
 
-          // If we are in local environment, we only can send messages to a test order
-            if (env('APP_ENV') == 'local')
-                if($this->message->thread->channel_thread_number != '526-SOOTUCIZG')
-                    return;
+        // If we are in local environment, we only can send messages to a test order
+        if (env('APP_ENV') == 'local')
+            if ($this->message->thread->channel_thread_number != '526-SOOTUCIZG')
+                return;
 
-            $threadNumber = $this->message->thread->channel_thread_number;
+        $threadNumber = $this->message->thread->channel_thread_number;
 
-            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->getChannelName());
-            $this->logger->info('Init api');
-            $client = self::initApiClient();
+        $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber, $this->getChannelName());
+        $this->logger->info('Init api');
+        $client = self::initApiClient();
 
-            $route = $this->getCredentials()['host'] . 'Reply';
-            $response = $client->request('POST', $route, [
-                RequestOptions::FORM_PARAMS => [
-                    "content" => $this->translateContent($this->message->content),
-                    "order" => $lastApiMessage->threadId,
-                ],
-            ]);
+        $route = $this->getCredentials()['host'] . 'Reply';
+        $response = $client->request('POST', $route, [
+            RequestOptions::FORM_PARAMS => [
+                "content" => $this->translateContent($this->message->content),
+                "order"   => $lastApiMessage->threadId,
+            ],
+        ]);
 
-            $success = $response->getBody()->getContents();
+        $response->getBody()->getContents();
 
-            // Check response
-            if ($response->getReasonPhrase() !== "OK")
-                throw new Exception("API push message error");
-
-        } catch (Exception $e) {
-            $this->logger->error('An error has occurred while sending message.', $e);
-
-//            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
-            return;
-        }
+        // Check response
+        if ($response->getReasonPhrase() !== "OK")
+            throw new Exception("API push message error");
     }
 }
