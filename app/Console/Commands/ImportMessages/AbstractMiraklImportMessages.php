@@ -87,7 +87,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
 
                 foreach ($messages as $message) {
 
-                    $starter_date = $this->checkIfSendAfterStarterDate($message->getDateCreated()->getTimestamp());
+                    $starter_date = $this->checkMessageDate($message->getDateCreated());
                     if (!$starter_date)
                         continue;
 

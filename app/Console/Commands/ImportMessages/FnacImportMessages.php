@@ -110,7 +110,7 @@ class FnacImportMessages extends AbstractImportMessages
             try {
                 DB::beginTransaction();
 
-                $starter_date = $this->checkIfSendAfterStarterDate(strtotime($message->getCreatedAt()));
+                $starter_date = $this->checkMessageDate(new DateTime($message->getCreatedAt()));
                 if (!$starter_date)
                     continue;
 

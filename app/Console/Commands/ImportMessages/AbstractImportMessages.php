@@ -51,15 +51,14 @@ abstract class AbstractImportMessages extends Command
         static::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
     }
 
-    protected function checkIfSendAfterStarterDate($messageDate): bool
+    protected function checkMessageDate(DateTime $messageDate): bool
     {
-        $starter_date = DateTime::createFromFormat("d M Y H:i:s", env('STARTER_DATE_CRM'));
+        $startDateFormat = "Y-m-d H:i:s";
+        $starter_date = DateTime::createFromFormat($startDateFormat, env('STARTER_DATE_CRM'));
         if(!$starter_date)
-            throw new Exception('The environement variable isn\'t in the correct format or does not exist');
+            throw new Exception('The environment variable isn\'t in the correct format or does not exist (expected format : ' . $startDateFormat . ')');
 
-        if ($starter_date > date("d M Y H:i:s", $messageDate))
-            return false;
-        return true;
+        return $starter_date < $messageDate;
     }
 }
 

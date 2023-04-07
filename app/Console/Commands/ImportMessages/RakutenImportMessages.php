@@ -308,7 +308,8 @@ class RakutenImportMessages extends AbstractImportMessages
         $patterns = $this->getPatterns();
         foreach ($messages as $message) {
 
-            $starter_date = $this->checkIfSendAfterStarterDate(strtotime($message['Date']));
+            $messageDate = DateTime::createFromFormat('d/m/Y-H:i', $message['Date']);
+            $starter_date = $this->checkMessageDate($messageDate);
             if (!$starter_date)
                 continue;
 

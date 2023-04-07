@@ -160,7 +160,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
      */
     protected function canImport($email): bool{
 
-        $starter_date = $this->checkIfSendAfterStarterDate(strtotime($email->date));
+        $starter_date = $this->checkMessageDate(new DateTime($email->date));
         if (!$starter_date)
             return false;
 
