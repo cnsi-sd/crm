@@ -90,13 +90,13 @@ class Thread extends Model
     public function firstMessage(): ?Message
     {
         // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
-        return $this->messages()->reorder('created_at', 'ASC')->first();
+        return $this->messages()->reorder('created_at', 'ASC')->orderBy('id', 'ASC')->first();
     }
 
     public function lastMessage(): ?Message
     {
         // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
-        return $this->messages()->reorder('created_at', 'DESC')->first();
+        return $this->messages()->reorder('created_at', 'DESC')->orderBy('id', 'DESC')->first();
     }
 
     public function ticket(): BelongsTo
