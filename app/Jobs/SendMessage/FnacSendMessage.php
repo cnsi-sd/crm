@@ -33,55 +33,47 @@ class FnacSendMessage extends AbstractSendMessage
             if( $this->message->thread->channel_thread_number != 'FICGB4UDKJXMM')
                 return;
 
-        try {
-            // Load channel
-            $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
-            $this->logger = new Logger('send_message/'
-                . $this->channel->getSnakeName()
-                . '/' . $this->channel->getSnakeName()
-                . '.log', true, true
-            );
+        // Load channel
+        $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
+        $this->logger = new Logger('send_message/'
+            . $this->channel->getSnakeName()
+            . '/' . $this->channel->getSnakeName()
+            . '.log', true, true
+        );
 
-            $this->logger->info('--- Start ---');
+        $this->logger->info('--- Start ---');
 
-            // Variables
-            $sendTo = MessageToType::CLIENT;
-            $threadNumber = $this->message->thread->channel_thread_number;
+        // Variables
+        $sendTo = MessageToType::CLIENT;
+        $threadNumber = $this->message->thread->channel_thread_number;
 
-            $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->channel->name);
+        $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber , $this->channel->name);
 
-            // Init API client
-            $this->logger->info('Init api');
-            $client = $this->initApiClient();
+        // Init API client
+        $this->logger->info('Init api');
+        $client = $this->initApiClient();
 
-            $query = new MessageUpdate();
+        $query = new MessageUpdate();
 
-            // Answer to message
-            $message2 = new Message();
-            $message2->setMessageId($lastApiMessage->messageId);
-            $message2->setAction(MessageActionType::REPLY);
-            $message2->setMessageTo($sendTo);
-            $message2->setMessageSubject(MessageSubjectType::OTHER_QUESTION);
-            $message2->setMessageType(MessageType::ORDER);
-            $message2->setMessageDescription( $this->translateContent($this->message->content));
-            $query->addMessage($message2);
+        // Answer to message
+        $message2 = new Message();
+        $message2->setMessageId($lastApiMessage->messageId);
+        $message2->setAction(MessageActionType::REPLY);
+        $message2->setMessageTo($sendTo);
+        $message2->setMessageSubject(MessageSubjectType::OTHER_QUESTION);
+        $message2->setMessageType(MessageType::ORDER);
+        $message2->setMessageDescription( $this->translateContent($this->message->content));
+        $query->addMessage($message2);
 
-            /** @var MessageUpdateResponse $messageUpdateResponse */
-            $messageUpdateResponse = $client->callService($query);
+        /** @var MessageUpdateResponse $messageUpdateResponse */
+        $messageUpdateResponse = $client->callService($query);
 
-            // Check response
-            if ($messageUpdateResponse->getStatus() !== ResponseStatusType::OK)
-                throw new Exception("API push message error");
+        // Check response
+        if ($messageUpdateResponse->getStatus() !== ResponseStatusType::OK)
+            throw new Exception("API push message error");
 
-            $this->logger->info('Message ' . $lastApiMessage->messageId . ' sent with API response ' . $messageUpdateResponse->getStatus());
-            $this->logger->info('--- END ---');
-
-        } catch (Exception $e) {
-            $this->logger->error('An error has occurred while sending message.', $e);
-
-//            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
-            return;
-        }
+        $this->logger->info('Message ' . $lastApiMessage->messageId . ' sent with API response ' . $messageUpdateResponse->getStatus());
+        $this->logger->info('--- END ---');
     }
 
     protected function getCredentials(): array
