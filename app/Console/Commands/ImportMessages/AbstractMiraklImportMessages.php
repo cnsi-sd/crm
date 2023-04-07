@@ -90,6 +90,11 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                     continue;
 
                 foreach ($messages as $message) {
+
+                    $starter_date = $this->checkMessageDate($message->getDateCreated());
+                    if (!$starter_date)
+                        continue;
+
                     $authorType = $message->getFrom()->getType();
 
                     if ($authorType == 'SHOP_USER')

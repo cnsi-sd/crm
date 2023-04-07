@@ -15,6 +15,7 @@ use App\Models\Ticket\Ticket;
 use Cnsi\Attachments\Model\Document;
 use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use FnacApiClient\Entity\Message;
 use GuzzleHttp\Client;
@@ -98,6 +99,10 @@ class IcozaImportMessages extends AbstractImportMessages
         foreach ($messages->Messages as $message) {
             try {
                 DB::beginTransaction();
+
+                $starter_date = $this->checkMessageDate(strtotime($message->date_add));
+                if (!$starter_date)
+                    continue;
 
                 $order      = Order::getOrder($message->order, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);

@@ -8,6 +8,7 @@ use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use PhpImap\Exceptions\InvalidParameterException;
@@ -74,7 +75,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
-                'SINCE' => $from_date
+                'SINCE' => $from_date,
             ]);
 
             $this->logger->info('--- Get Emails details ---');
@@ -155,8 +156,13 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
     /**
      * @param $email
      * @return bool
+     * @throws Exception
      */
     protected function canImport($email): bool{
+
+        $starter_date = $this->checkMessageDate(new DateTime($email->date));
+        if (!$starter_date)
+            return false;
 
         preg_match('/@(.*)/', $email->senderAddress, $match);
         if (in_array($match[1], config('email-import.domain_blacklist'))) {

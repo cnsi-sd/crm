@@ -15,6 +15,7 @@ use App\Models\Ticket\Ticket;
 use Cnsi\Attachments\Model\Document;
 use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\Message;
@@ -111,6 +112,10 @@ class FnacImportMessages extends AbstractImportMessages
         foreach ($messages as $message) {
             try {
                 DB::beginTransaction();
+
+                $starter_date = $this->checkMessageDate(new DateTime($message->getCreatedAt()));
+                if (!$starter_date)
+                    continue;
 
                 $messageId  = $message->getMessageId();;
                 $mpOrderId  = $message->getMessageReferer();;
