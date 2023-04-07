@@ -20,7 +20,6 @@ abstract class AbstractSendMessage implements ShouldQueue
 
     public Message $message;
     protected Channel $channel;
-    protected string $testOrder;
 
     abstract protected function sendMessage(): void;
 
@@ -38,8 +37,8 @@ abstract class AbstractSendMessage implements ShouldQueue
     private function replaceVariablesInMessages()
     {
         // Replace variables by values
-        foreach(MessageVariable::cases() as $variable) {
-            if(str_contains($this->message->content, $variable->templateVar())) {
+        foreach (MessageVariable::cases() as $variable) {
+            if (str_contains($this->message->content, $variable->templateVar())) {
                 $this->message->content = str_replace($variable->templateVar(), $variable->getValue($this->message), $this->message->content);
             }
         }
@@ -59,30 +58,29 @@ abstract class AbstractSendMessage implements ShouldQueue
      */
     public static function dispatchMessage(Message $message)
     {
-        if($message->thread->channel_thread_number === Thread::EMAIL) {
+        if ($message->thread->channel_thread_number === Thread::EMAIL) {
             EmailSendMessage::dispatch($message);
             return;
         }
 
-        match($message->thread->ticket->channel->name) {
-            ChannelEnum::BUT_FR             => ButSendMessage::dispatch($message),
-            ChannelEnum::CARREFOUR_FR       => CarrefourSendMessage::dispatch($message),
-            ChannelEnum::CONFORAMA_FR       => ConforamaSendMessage::dispatch($message),
-            ChannelEnum::DARTY_COM          => DartySendMessage::dispatch($message),
-            ChannelEnum::INTERMARCHE_FR     => IntermarcheSendMessage::dispatch($message),
-            ChannelEnum::LAPOSTE_FR         => LaposteSendMessage::dispatch($message),
-            ChannelEnum::E_LECLERC          => LeclercSendMessage::dispatch($message),
-            ChannelEnum::METRO_FR           => MetroSendMessage::dispatch($message),
-            ChannelEnum::RUEDUCOMMERCE_FR   => RueducommerceSendMessage::dispatch($message),
-            ChannelEnum::SHOWROOMPRIVE_COM  => ShowroomSendMessage::dispatch($message),
-            ChannelEnum::UBALDI_COM         => UbaldiSendMessage::dispatch($message),
-            ChannelEnum::CDISCOUNT_FR       => CdiscountSendMessage::dispatch($message),
-            ChannelEnum::FNAC_COM           => FnacSendMessage::dispatch($message),
-            ChannelEnum::ICOZA_FR           => IcozaSendMessage::dispatch($message),
-            ChannelEnum::MANOMANO_COM       => ManomanoSendMessage::dispatch($message),
-            ChannelEnum::RAKUTEN_COM        => RakutenSendMessage::dispatch($message),
-            ChannelEnum::AMAZON_FR          => AmazonSendMessage::dispatch($message),
-            default => throw new Exception('Channel given does not exists.'),
+        match ($message->thread->ticket->channel->name) {
+            ChannelEnum::BUT_FR                               => ButSendMessage::dispatch($message),
+            ChannelEnum::CARREFOUR_FR                         => CarrefourSendMessage::dispatch($message),
+            ChannelEnum::CONFORAMA_FR                         => ConforamaSendMessage::dispatch($message),
+            ChannelEnum::DARTY_COM                            => DartySendMessage::dispatch($message),
+            ChannelEnum::INTERMARCHE_FR                       => IntermarcheSendMessage::dispatch($message),
+            ChannelEnum::LAPOSTE_FR                           => LaposteSendMessage::dispatch($message),
+            ChannelEnum::E_LECLERC                            => LeclercSendMessage::dispatch($message),
+            ChannelEnum::METRO_FR                             => MetroSendMessage::dispatch($message),
+            ChannelEnum::RUEDUCOMMERCE_FR                     => RueducommerceSendMessage::dispatch($message),
+            ChannelEnum::SHOWROOMPRIVE_COM                    => ShowroomSendMessage::dispatch($message),
+            ChannelEnum::UBALDI_COM                           => UbaldiSendMessage::dispatch($message),
+            ChannelEnum::CDISCOUNT_FR                         => CdiscountSendMessage::dispatch($message),
+            ChannelEnum::FNAC_COM                             => FnacSendMessage::dispatch($message),
+            ChannelEnum::ICOZA_FR                             => IcozaSendMessage::dispatch($message),
+            ChannelEnum::MANOMANO_COM, ChannelEnum::AMAZON_FR => EmailSendMessage::dispatch($message),
+            ChannelEnum::RAKUTEN_COM                          => RakutenSendMessage::dispatch($message),
+            default                                           => throw new Exception('Channel given does not exists.'),
         };
     }
 }

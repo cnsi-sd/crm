@@ -2,9 +2,9 @@
 
 namespace App\Jobs\SendMessage;
 
-use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\MessageVariable;
-use App\Models\Channel\Channel;
+use App\Mail\RawMail;
+use App\Models\Ticket\Thread;
 use Illuminate\Support\Facades\Mail;
 
 class EmailSendMessage extends AbstractSendMessage
@@ -15,19 +15,18 @@ class EmailSendMessage extends AbstractSendMessage
         if (env('APP_ENV') != 'production')
             return;
 
-        $this->channel = Channel::getByName(ChannelEnum::AMAZON_FR);
+        $to = str_replace('"', "", $this->message->thread->channel_data);
 
-        $email = str_replace('"', "", $this->message->thread->channel_data);
-        $body = $this->message->content;
-
-        $title = "Nouveau message au sujet de votre commande";
-        if ($shopName = MessageVariable::NOM_BOUTIQUE->getSettingValue()) {
-            $title .= " " . $shopName;
+        if ($this->message->thread->name === Thread::EMAIL) {
+            $subject = "Nouveau message au sujet de votre commande";
+            if ($shopName = MessageVariable::NOM_BOUTIQUE->getSettingValue()) {
+                $subject .= ' ' . $shopName;
+            }
+        } else {
+            $subject = 'RE: ' . $this->message->thread->name;
         }
 
-        Mail::raw($body, function ($message) use ($title, $email) {
-            $message->to($email)
-                ->subject($title);
-        });
+        $mail = new RawMail($subject, $this->message->content);
+        Mail::to($to)->send($mail);
     }
 }
