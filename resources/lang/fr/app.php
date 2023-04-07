@@ -298,6 +298,8 @@ return [
 
     'channel' => [
         'name' => 'Nom',
+        'order_url' => 'URL Commande',
+        'order_url_desc' => '@ sera remplacé par le numéro de commande.',
         'ext_names' => 'Nom(s) externe(s)',
         'saved' => 'Canal enregistré',
         'edit' => 'Modifier un canal',

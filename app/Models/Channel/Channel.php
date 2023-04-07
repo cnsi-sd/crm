@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $name
  * @property array $ext_names
+ * @property ?string $order_url
  * @property int $user_id
  * @property Datetime $created_at
  * @property Datetime $updated_at
