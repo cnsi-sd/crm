@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property int $id
@@ -132,7 +133,7 @@ class Ticket extends Model
                 'state' => TicketStateEnum::WAITING_ADMIN,
                 'priority' => TicketPriorityEnum::P1,
                 'deadline' => Ticket::getAutoDeadline(),
-                'user_id' => $channel->user_id,
+                'user_id' => Auth::hasUser() ? Auth::id() : $channel->user_id,
             ],
         );
 
