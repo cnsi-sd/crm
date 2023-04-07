@@ -119,7 +119,7 @@ class ImportIncidents extends Command
         // Update ticket
         if (!$ticket->hasTag($tag))
             $ticket->addTag($tag);
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->deadline = Ticket::getAutoDeadline();
         $ticket->save();
 

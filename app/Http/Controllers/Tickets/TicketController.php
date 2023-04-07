@@ -56,7 +56,7 @@ class TicketController extends AbstractController
             ->select('tickets.*')
             ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
             ->where('user_id', $user->id)
-            ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
+            ->where('state', TicketStateEnum::OPENED)
             ->groupBy('tickets.id');
 
         $table = (new TableBuilder('user_tickets', $request))

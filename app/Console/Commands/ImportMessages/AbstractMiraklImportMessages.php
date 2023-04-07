@@ -190,7 +190,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
         $authorType = $message_api->getFrom()->getType();
 
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
         $message = Message::firstOrCreate([

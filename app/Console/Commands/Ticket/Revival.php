@@ -113,7 +113,7 @@ class Revival extends Command
 
         // Update ticket
         $ticket = $thread->ticket;
-        $ticket->state = TicketStateEnum::WAITING_CUSTOMER;
+        $ticket->state = TicketStateEnum::OPENED;
 
         //$lastDeadline = Carbon::createFromFormat('Y.m.d', $ticket->deadline)->addDays($revival->frequency);
         //$ticket->deadline = $lastDeadline;

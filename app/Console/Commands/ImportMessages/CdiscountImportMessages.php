@@ -92,7 +92,7 @@ class CdiscountImportMessages extends AbstractImportMessages
 
                         $this->logger->info('Message recovery');
                         $messages = $discu->getMessages();
-                        
+
                         $this->logger->info('Check if dicussion have messages');
                         if (count($messages) == 0)
                             continue;
@@ -193,7 +193,7 @@ class CdiscountImportMessages extends AbstractImportMessages
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread, $attachments = [])
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $message = Message::firstOrCreate([
             'thread_id' => $thread->id,

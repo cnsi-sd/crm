@@ -142,8 +142,8 @@ class Thread extends Model
         if (!$lastMessage || $lastMessage->author_type !== TicketMessageAuthorTypeEnum::ADMIN)
             $endMessage = 'Le dernier message doit être écrit par un administrateur';
 
-        if ($this->ticket->state !== TicketStateEnum::WAITING_CUSTOMER)
-            $endMessage = 'Le ticket doit être en Attente client';
+        if ($this->ticket->state !== TicketStateEnum::OPENED)
+            $endMessage = 'Le ticket doit être Ouvert';
 
         //check the nex revival date
         if ($check_dates) {

@@ -18,7 +18,7 @@ class TicketApiController extends AbstractApiController
             $this->logger->info('--- START : updating ticket ' . $ticket->id . ' after sav process completed by customer ---');
             if($token === env('SAVPROCESS_CRM_TOKEN')) {
                 $ticket->deadline = date('Y-m-d');
-                $ticket->state = TicketStateEnum::WAITING_ADMIN;
+                $ticket->state = TicketStateEnum::OPENED;
                 $tagId = setting('savprocesscomplete_tag_id');
                 $tag = Tag::findOrFail($tagId);
                 $ticket->addTag($tag);

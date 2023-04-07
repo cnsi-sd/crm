@@ -133,7 +133,7 @@ class IcozaImportMessages extends AbstractImportMessages
         $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
 
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
 

@@ -130,7 +130,7 @@ class Ticket extends Model
                 'channel_id' => $channel->id,
             ],
             [
-                'state' => TicketStateEnum::WAITING_ADMIN,
+                'state' => TicketStateEnum::OPENED,
                 'priority' => TicketPriorityEnum::P1,
                 'deadline' => Ticket::getAutoDeadline(),
                 'user_id' => Auth::hasUser() ? Auth::id() : $channel->user_id,
@@ -218,7 +218,7 @@ class Ticket extends Model
             $columns[] = (new TableColumnBuilder())
                 ->setLabel(__('app.ticket.state'))
                 ->setType(ColumnTypeEnum::SELECT)
-                ->setOptions(TicketStateEnum::getTranslatedList())
+                ->setOptions(TicketStateEnum::getTranslatedList(false))
                 ->setKey('state')
                 ->setSortable(true)
                 ->setCallback(function (Ticket $ticket) {

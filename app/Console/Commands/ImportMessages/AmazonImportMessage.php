@@ -155,7 +155,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
         $message = AmazonBeautifierMail::getCustomerMessage($infoMail);
 
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
         $message = Message::firstOrCreate([

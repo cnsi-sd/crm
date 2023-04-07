@@ -130,10 +130,9 @@ class TicketFinder
 
         // Manage state
         $state = match ($magentoTicket->ct_status) {
-            'waiting_for_admin'  => TicketStateEnum::WAITING_ADMIN,
-            'waiting_for_client' => TicketStateEnum::WAITING_CUSTOMER,
-            'closed'             => TicketStateEnum::CLOSED,
-            default              => throw new Exception('Unknown status, got `' . $magentoTicket->ct_status . '`'),
+            'waiting_for_admin', 'waiting_for_client' => TicketStateEnum::OPENED,
+            'closed'                                  => TicketStateEnum::CLOSED,
+            default                                   => throw new Exception('Unknown status, got `' . $magentoTicket->ct_status . '`'),
         };
 
         // Manager priority

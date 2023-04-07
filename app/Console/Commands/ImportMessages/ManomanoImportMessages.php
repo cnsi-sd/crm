@@ -113,7 +113,7 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     public function convertApiResponseToMessage(Ticket $ticket, $email, Thread $thread, $attachments = [])
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
 
