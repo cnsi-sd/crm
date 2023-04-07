@@ -17,6 +17,7 @@ use Cnsi\Attachments\Model\Document;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use PhpImap\Exceptions\InvalidParameterException;
 use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
@@ -78,14 +79,12 @@ class ManomanoImportMessages extends AbstractImportMailMessages
      */
     protected function importEmail(IncomingMail $email, string $mpOrder): void
     {
-        if(str_contains($email->senderAddress, '@monechelle.zendesk.com'))
-            $threadPrefix = 'Support';
-        else
-            $threadPrefix = 'Client';
+        $threadName = str_contains($email->senderAddress, '@monechelle.zendesk.com') ? 'Support' : 'Client';
+        $threadNumber = Str::before($email->senderAddress, '@');
 
         $order      = Order::getOrder($mpOrder, $this->channel);
         $ticket     = Ticket::getTicket($order, $this->channel);
-        $thread     = Thread::getOrCreateThread($ticket, $threadPrefix.'-'.$mpOrder, $threadPrefix, $email->senderAddress);
+        $thread     = Thread::getOrCreateThread($ticket, $threadNumber, $threadName, $email->senderAddress);
 
         $this->importMessageByThread($ticket, $thread, $email);
     }
