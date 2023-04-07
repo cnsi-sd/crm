@@ -59,9 +59,9 @@ class ChannelController extends AbstractController
         // Set ext_names
         $channel->ext_names = $request->input('ext_names');
         $channel->order_url = $request->input('order_url');
+        $channel->is_active = $request->input('is_active') === 'on';
 
         // Enregistrement
         $channel->save();
-
     }
 }

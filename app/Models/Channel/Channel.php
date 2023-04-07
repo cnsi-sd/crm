@@ -3,6 +3,7 @@
 namespace App\Models\Channel;
 
 use App\Enums\ColumnTypeEnum;
+use App\Enums\FixedWidthEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property array $ext_names
  * @property ?string $order_url
  * @property int $user_id
+ * @property bool $is_active
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
@@ -133,6 +135,11 @@ class Channel extends Model
             })
             ->setKey('user_id')
             ->setSortable(true);
+        $columns[] = TableColumnBuilder::boolean()
+                ->setFixedWidth(FixedWidthEnum::XL)
+                ->setLabel(__('app.channel.is_active'))
+                ->setKey('is_active')
+                ->setSortable(false);
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Channel $channel) {
                 return view('configuration.channel.inline_table_actions')

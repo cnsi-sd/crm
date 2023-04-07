@@ -301,6 +301,7 @@ return [
         'order_url' => 'URL Commande',
         'order_url_desc' => '@ sera remplacé par le numéro de commande.',
         'ext_names' => 'Nom(s) externe(s)',
+        'is_active' => 'Activé',
         'saved' => 'Canal enregistré',
         'edit' => 'Modifier un canal',
     ],

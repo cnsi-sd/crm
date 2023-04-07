@@ -27,6 +27,7 @@
                             <div class="form-group mb-3">
                                 <label for="ext_names">
                                     {{ __('app.channel.ext_names') }}
+                                    <span class="required_field">*</span>
                                 </label>
                                 <select id="ext_names" name="ext_names[]"
                                         class="form-control form-control-sm form-select" multiple>
@@ -65,6 +66,19 @@
                                                 @if($channel->user_id === $user->id) selected @endif>{{$user->__toString()}}</option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="is_active">{{__('app.channel.is_active')}}
+                                    <span class="required_field">*</span>
+                                </label>
+                                <div class="form-check form-switch">
+                                    <input
+                                        type="checkbox"
+                                        name="is_active"
+                                        class="form-check-input"
+                                        @if(old('is_active', $channel->is_active ?? false )) checked @endif>
+                                </div>
                             </div>
                         </div>
                     </div>
