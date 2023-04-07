@@ -40,6 +40,18 @@
                             </div>
 
                             <div class="form-group mb-3">
+                                <label for="order_url">
+                                    {{ __('app.channel.order_url') }}
+                                </label>
+                                <input
+                                    type="text"
+                                    name="order_url"
+                                    class="form-control form-control-sm"
+                                    value="{{ old('order_url', $channel->order_url) }}"
+                                />
+                            </div>
+
+                            <div class="form-group mb-3">
                                 <label for="role">{{trans_choice('app.ticket.owner', 1)}}
                                 </label>
                                 <select
