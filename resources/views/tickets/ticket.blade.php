@@ -8,8 +8,17 @@
         </form>
         <div class="row">
             <div class="col-4">
-                <div class="ticket-divider h4 text-center">
-                    {{ __('app.ticket.admin_ticket') }} #{{ $ticket->id }}
+                <div class="row">
+                    <div class="col-8">
+                        <div class="ticket-divider h4 text-center">
+                            {{ __('app.ticket.admin_ticket') }} #{{ $ticket->id }}
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="ticket-divider h4 text-center text-uppercase">
+                            {{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticket->state) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
