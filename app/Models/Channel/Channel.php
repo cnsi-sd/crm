@@ -66,7 +66,9 @@ class Channel extends Model
 
     public static function getChannelsNames(): array
     {
-        return self::query()->orderBy('name', 'ASC')
+        return self::query()
+            ->where('is_active', true)
+            ->orderBy('name', 'ASC')
             ->pluck('name', 'id')
             ->toArray();
     }
@@ -85,6 +87,7 @@ class Channel extends Model
     {
         return Channel::query()
             ->where('ext_names', 'LIKE', '%' . $ext_name . '%')
+            ->where('is_active', true)
             ->first();
     }
 
@@ -97,6 +100,9 @@ class Channel extends Model
         $channel = self::query()->where('name', $name)->first();
         if(!$channel)
             throw new Exception('Channel `' . $name . '` does not exists');
+
+        if($filter_active && !$channel->is_active)
+            throw new Exception('Channel `' . $name . '` is not active');
 
         return $channel;
     }
