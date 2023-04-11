@@ -10,24 +10,19 @@
         </a>
     </div>
     <div class="card-body" id="card-body-tag">
+        @php
+            $authorizedTags = $ticket->channel->getAuthorizedTags();
+        @endphp
         @foreach($ticket->tagLists as $taglist)
             <div id="list-{{$taglist->id}}">
-                @php
-                $query = \App\Models\Tags\Tag::query()
-                    ->select('tags.*')
-                    ->join('channel_tags', 'tags.id', 'channel_tags.tag_id')
-                    ->join('channels', 'channels.id', 'channel_tags.channel_id')
-                    ->where('channels.id',$ticket->channel_id)
-                    ->get();
-                @endphp
                 <select form="saveTicket" name="ticket-revival" class="form-select no-sort tags"
                         data-ticket_id="{{$ticket->id}}"
                         data-taglist_id="{{$taglist->id}}">
                     <option value="">{{ __('app.tags.select_tag') }}</option>
 
-                    @foreach ($query as $optionTag)
-                        <option value="{{ $optionTag->id }}">
-                            {{ $optionTag->name }}
+                    @foreach ($authorizedTags as $tag)
+                        <option value="{{ $tag->id }}">
+                            {{ $tag->name }}
                         </option>
                     @endforeach
                 </select>
