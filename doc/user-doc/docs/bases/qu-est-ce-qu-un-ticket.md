@@ -3,6 +3,8 @@
 1 ticket = 1 commande
 
 ## Historique des messages
+Afin de pouvoir identifier plus rapidement qui est l'auteur d'un message, nous avons un code couleur qui a été mis en place.
+Voici donc les différents codes couleur utiliser :
 
 | Auteur    | Couleur |
 |-----------|---------|
@@ -16,7 +18,9 @@
 
 ## Fil de discussion
 
-=> Expliquer ce qu'est un fil de discussion
+Un fil de discussion est relié à une demande d'un client sur une commande.
+
+![identifier_un_fil_de_discussion](assets/identifier_un_fil_de_discussion.png)
 
 => Zoom sur les canaux : 
 
