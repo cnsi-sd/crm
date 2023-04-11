@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Tickets;
 
+use App\Enums\Channel\ChannelEnum;
+use App\Enums\Channel\MirakleChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
@@ -54,7 +56,7 @@ class TicketController extends AbstractController
             ->select('tickets.*')
             ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
             ->where('user_id', $user->id)
-            ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
+            ->where('state', TicketStateEnum::OPENED)
             ->groupBy('tickets.id');
 
         $table = (new TableBuilder('user_tickets', $request))
@@ -81,11 +83,7 @@ class TicketController extends AbstractController
 
         // Get order & ticket
         $order = Order::getOrder($channel_order_number, $channel);
-        $ticket = Ticket::getTicket($order, $channel);
-
-        // Create thread if not exists
-        if($ticket->threads->count() === 0)
-            Thread::getOrCreateThread($ticket, $channel_order_number, "Fil de discussion principal");
+        $ticket = Ticket::getTicket($order, $channel, true);
 
         // Redirect to ticket
         return redirect()->route('ticket', $ticket);

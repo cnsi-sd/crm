@@ -5,6 +5,7 @@ variables:
   COMPOSER_DEFAULT_OPTIONS: '--optimize-autoloader --no-scripts'
 
 stages:
+  - doc
   - build
   - test
   - deploy
@@ -26,6 +27,7 @@ build:
   allow_failure: false
 
 phpcs:
+  image: devilbox/php-fpm:8.1-prod
   stage: test
   script:
     # exclude side effects because phpcs doesnt manage enum well

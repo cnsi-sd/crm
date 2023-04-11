@@ -32,6 +32,11 @@ class Thread extends Model
 {
     protected $table = 'ticket_threads';
 
+    const DEFAULT_CHANNEL_NUMBER = 'crm_default_thread';
+    const DEFAULT_NAME = 'Fil de discussion principal';
+
+    const EMAIL = 'Email';
+
     protected $fillable = [
         'ticket_id',
         'revival_id',
@@ -78,17 +83,20 @@ class Thread extends Model
 
     public function messages(): HasMany
     {
-        return $this->hasMany(Message::class)->orderBy('id', 'DESC');
+        // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
+        return $this->hasMany(Message::class)->orderBy('created_at', 'DESC')->orderBy('id', 'DESC');
     }
 
     public function firstMessage(): ?Message
     {
-        return $this->messages()->reorder('id', 'ASC')->first();
+        // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
+        return $this->messages()->reorder('created_at', 'ASC')->orderBy('id', 'ASC')->first();
     }
 
     public function lastMessage(): ?Message
     {
-        return $this->messages()->reorder('id', 'DESC')->first();
+        // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
+        return $this->messages()->reorder('created_at', 'DESC')->orderBy('id', 'DESC')->first();
     }
 
     public function ticket(): BelongsTo
@@ -134,8 +142,8 @@ class Thread extends Model
         if (!$lastMessage || $lastMessage->author_type !== TicketMessageAuthorTypeEnum::ADMIN)
             $endMessage = 'Le dernier message doit être écrit par un administrateur';
 
-        if ($this->ticket->state !== TicketStateEnum::WAITING_CUSTOMER)
-            $endMessage = 'Le ticket doit être en Attente client';
+        if ($this->ticket->state !== TicketStateEnum::OPENED)
+            $endMessage = 'Le ticket doit être Ouvert';
 
         //check the nex revival date
         if ($check_dates) {

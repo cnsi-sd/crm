@@ -47,7 +47,8 @@ return [
         'dashboard' => 'Tableau de bord',
         'settings' => 'Paramètres',
         'config' => 'Configuration',
-        'admin' => 'Administration'
+        'admin' => 'Administration',
+        'doc' => 'Documentation',
     ],
 
     'axios' => [
@@ -188,7 +189,7 @@ return [
             'savprocess_tag' => 'Tag Procédure SAV complète',
             'savprocess_stop_revival' => 'Relances auto à stopper',
 
-            'default_answer_offer_questions' => 'Réponse par défaut aux questions sur les offres',
+            'default_answer_offer_questions' => 'Réponse aux questions sur les offres',
 
             'mirakl_refunds' => 'Remboursement sur MP Mirakl',
             'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
@@ -258,6 +259,7 @@ return [
         'sendType' => 'Type d\'envoi',
         'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
+        'endTag' => 'Tag à ajouter',
     ],
 
     'tags' => [
@@ -296,7 +298,10 @@ return [
 
     'channel' => [
         'name' => 'Nom',
+        'order_url' => 'URL Commande',
+        'order_url_desc' => '@ sera remplacé par le numéro de commande.',
         'ext_names' => 'Nom(s) externe(s)',
+        'is_active' => 'Activé',
         'saved' => 'Canal enregistré',
         'edit' => 'Modifier un canal',
     ],

@@ -3,6 +3,7 @@
 namespace App\Models\Channel;
 
 use App\Enums\ColumnTypeEnum;
+use App\Enums\FixedWidthEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
@@ -20,10 +21,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $name
  * @property array $ext_names
+ * @property ?string $order_url
  * @property int $user_id
+ * @property bool $is_active
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
+ * @property User $user
  * @property DefaultAnswer[] $defaultAnswers
  * @property Revival $revivals
  * @property Ticket[] $tickets
@@ -63,7 +67,9 @@ class Channel extends Model
 
     public static function getChannelsNames(): array
     {
-        return self::query()->orderBy('name', 'ASC')
+        return self::query()
+            ->where('is_active', true)
+            ->orderBy('name', 'ASC')
             ->pluck('name', 'id')
             ->toArray();
     }
@@ -82,6 +88,7 @@ class Channel extends Model
     {
         return Channel::query()
             ->where('ext_names', 'LIKE', '%' . $ext_name . '%')
+            ->where('is_active', true)
             ->first();
     }
 
@@ -94,6 +101,9 @@ class Channel extends Model
         $channel = self::query()->where('name', $name)->first();
         if(!$channel)
             throw new Exception('Channel `' . $name . '` does not exists');
+
+        if($filter_active && !$channel->is_active)
+            throw new Exception('Channel `' . $name . '` is not active');
 
         return $channel;
     }
@@ -153,10 +163,15 @@ class Channel extends Model
             ->setType(ColumnTypeEnum::SELECT)
             ->setOptions(User::getUsersNames())
             ->setCallback(function (Channel $channel) {
-                return $channel->user->name;
+                return $channel->user->__toString();
             })
             ->setKey('user_id')
             ->setSortable(true);
+        $columns[] = TableColumnBuilder::boolean()
+                ->setFixedWidth(FixedWidthEnum::XL)
+                ->setLabel(__('app.channel.is_active'))
+                ->setKey('is_active')
+                ->setSortable(false);
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Channel $channel) {
                 return view('configuration.channel.inline_table_actions')

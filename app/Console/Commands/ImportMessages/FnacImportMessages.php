@@ -3,15 +3,19 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\TmpFile;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Attachments\Model\Document;
 use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\Message;
@@ -109,11 +113,15 @@ class FnacImportMessages extends AbstractImportMessages
             try {
                 DB::beginTransaction();
 
+                $starter_date = $this->checkMessageDate(new DateTime($message->getCreatedAt()));
+                if (!$starter_date)
+                    continue;
+
                 $messageId  = $message->getMessageId();;
                 $mpOrderId  = $message->getMessageReferer();;
                 $order      = Order::getOrder($mpOrderId, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);
-                $thread     = Thread::getOrCreateThread($ticket, $mpOrderId, $message->getMessageSubject());
+                $thread     = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, $message->getMessageSubject());
 
                 if (!$this->isMessagesImported($messageId)) {
                     $this->logger->info('Convert api message to db message');
@@ -134,17 +142,17 @@ class FnacImportMessages extends AbstractImportMessages
     /**
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread, $attachments = [])
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
 
         $authorType = $message_api->getMessageFromType();
 
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
 
@@ -158,6 +166,20 @@ class FnacImportMessages extends AbstractImportMessages
             'content' => strip_tags($message_api->getMessageDescription())
         ]
         );
+        if($message_api->getMessageFile()) {
+            $this->logger->info('Download documents from message');
+            $message_files = $message_api->getMessageFile();
+
+            // Patch : if the message contains only one message, make an array
+            if(!is_null($message_files) && isset($message_files['name'])) {
+                $message_files = [ $message_files ];
+            }
+
+            foreach ($message_files as $message_file) {
+                $tmpFile = new TmpFile((string) file_get_contents($message_file['url']));
+                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $message_file['name']);
+            }
+        }
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);

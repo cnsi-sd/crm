@@ -4,6 +4,7 @@ namespace App\Console\Commands\Alert;
 
 use App\Enums\Ticket\TicketStateEnum;
 use App\Models\Ticket\Ticket;
+use Cnsi\Csvgenerator\CSVGenerator;
 use Cnsi\Lock\Lock;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -24,35 +25,30 @@ class AlertTicketDelay extends Command
         $from_time = strtotime(date('Y-m-d H:m:s') . '- 14 days');
         $from_date = date('Y-m-d H:m:i', $from_time);
 
-        $ticketquery = Ticket::query()
+        $ticketQuery = Ticket::query()
             ->select('tickets.*','channels.name as channel_name', 'ticket_threads.name as thread_name', 'users.name as user_name')
             ->join('ticket_threads', 'ticket_threads.ticket_id', '=', 'tickets.id') // thread
             ->join('channels', 'channels.id', '=','tickets.channel_id')
             ->join('users','users.id', '=','tickets.user_id')
             ->where('tickets.updated_at', '<', $from_date)
+            ->where('tickets.state', TicketStateEnum::OPENED)
             ->get()
         ;
 
-        if($ticketquery->count() > 0){
+        if($ticketQuery->count() > 0){
             $filename = "Alert-ticket-delay_" . date('d-m-Y');
 
             // Set header collunm
-            $fields = array('TICKET_ID','RESPONSABLE','SUJET','STATUS','PRIORITÉ','CANAL DE DIFFUSION');
-            $listTicket = array();
-            foreach ($ticketquery as $ticket) {
-                if($ticket['state'] === TicketStateEnum::WAITING_CUSTOMER)
-                    $state = 'ATTENTE CLIENT';
-                elseif ($ticket['state'] === TicketStateEnum::WAITING_ADMIN)
-                    $state = 'ATTENTE ADMIN';
-                if($ticket['state'] === TicketStateEnum::WAITING_CUSTOMER || $ticket['state'] === TicketStateEnum::WAITING_ADMIN){
-                    $listTicket[] = array($ticket['id'], $ticket['user_name'], $ticket['thread_name'], $state , $ticket['priority'], $ticket['channel_name']);
-                }
+            $fields = ['TICKET_ID','RESPONSABLE','SUJET','STATUT','PRIORITÉ','CANAL DE DIFFUSION'];
+            $listTicket = [];
+            foreach ($ticketQuery as $ticket) {
+                $listTicket[] = [$ticket['id'], $ticket['user_name'], $ticket['thread_name'], TicketStateEnum::getMessage($ticket['state']) , $ticket['priority'], $ticket['channel_name']];
             }
-            $csvFile = \Cnsi\Csvgenerator\CSVGenerator::createCsvFromArray($filename, $listTicket, $fields);
+            $csvFile = CSVGenerator::createCsvFromArray($filename, $listTicket, $fields);
             $recipients = explode(',', env('TICKET_DELAY_RECIPIENTS'));
             $data["email"] = $recipients;
             $data["title"] = "Ticket décalé : " . date('d-m-Y') ;
-            $data["body"] = "Vous avez ". $ticketquery->count() . " ticket". ($ticketquery->count() > 1 ? "s " : " " ) ."qui ont été repousser de plus de 15jours, vous les trouverez ci-joint au mail.";
+            $data["body"] = "Vous avez ". $ticketQuery->count() . " ticket". ($ticketQuery->count() > 1 ? "s " : " " ) ."qui ont été repousser de plus de 15jours, vous les trouverez ci-joint au mail.";
 
 
             Mail::send('emails.ticketDelay', $data, function($message)use($data, $csvFile) {

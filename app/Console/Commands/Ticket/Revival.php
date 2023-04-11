@@ -25,8 +25,6 @@ use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Twilio\Exceptions\ConfigurationException;
-use Twilio\Exceptions\TwilioException;
 
 class Revival extends Command
 {
@@ -98,6 +96,8 @@ class Revival extends Command
         $this->logger->info("Updating deadline's ticket " . $ticket->deadline->format('Y-m-d') . " to : " . $deadLine);
         $ticket->deadline = $deadLine;
 
+        $ticket->addTag($revival->end_tag_id);
+
         $this->logger->info('Save ticket modification ...');
         $ticket->save();
 
@@ -113,7 +113,7 @@ class Revival extends Command
 
         // Update ticket
         $ticket = $thread->ticket;
-        $ticket->state = TicketStateEnum::WAITING_CUSTOMER;
+        $ticket->state = TicketStateEnum::OPENED;
 
         //$lastDeadline = Carbon::createFromFormat('Y.m.d', $ticket->deadline)->addDays($revival->frequency);
         //$ticket->deadline = $lastDeadline;
@@ -134,10 +134,6 @@ class Revival extends Command
         $thread->save();
     }
 
-    /**
-     * @throws TwilioException
-     * @throws ConfigurationException
-     */
     private function sendRevivalMessage(Thread $thread, DefaultAnswer $message): void
     {
         $this->logger->info('Save message in DB');

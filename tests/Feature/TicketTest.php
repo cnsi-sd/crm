@@ -43,4 +43,25 @@ class TicketTest extends TestCase
         $calculatedDeadline = Ticket::getAutoDeadline()->format('Y-m-d');
         $this->assertEquals('2023-01-02', $calculatedDeadline);
     }
+
+    public function test_addTag()
+    {
+        $channel = Channel::firstOrFail();
+        $order = fake()->word;
+        $order = Order::getOrder($order, $channel);
+        $ticket = Ticket::getTicket($order, $channel);
+
+        $tag = Tag::firstOrFail();
+        $ticket->addTag($tag);
+
+        $this->assertTrue($ticket->hasTag($tag));
+        $this->assertCount(1, $ticket->tagLists);
+        $this->assertCount(1, $ticket->tagLists->first()->tags);
+        $this->assertEquals($tag->id, $ticket->tagLists->first()->tags->first()->id);
+
+        $tag = Tag::skip(1)->first();
+        $ticket->addTag($tag);
+        $this->assertCount(1, $ticket->tagLists);
+        $this->assertCount(2, $ticket->tagLists->first()->tags);
+    }
 }

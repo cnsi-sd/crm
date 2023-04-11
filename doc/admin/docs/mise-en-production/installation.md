@@ -173,6 +173,15 @@ sudo systemctl restart nginx
 sudo systemctl restart php8.2-fpm
 ```
 
+## Python PIP
+Requis pour build la documentation
+```bash
+# Avec l'utiliasteur debian
+sudo apt install python3-pip
+# Avec l'utilisation crm
+pip3 install mkdocs
+```
+
 ## Configurer le déploiement
 !!! warning
     Les commandes de cette section sont à executer avec l'utilisateur **crm**.

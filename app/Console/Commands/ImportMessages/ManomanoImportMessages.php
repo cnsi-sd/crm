@@ -3,17 +3,21 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\TmpFile;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Attachments\Model\Document;
 use Cnsi\Logger\Logger;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use PhpImap\Exceptions\InvalidParameterException;
 use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
@@ -75,14 +79,12 @@ class ManomanoImportMessages extends AbstractImportMailMessages
      */
     protected function importEmail(IncomingMail $email, string $mpOrder): void
     {
-        if(str_contains($email->senderAddress, '@monechelle.zendesk.com'))
-            $threadPrefix = 'Support';
-        else
-            $threadPrefix = 'Client';
+        $threadName = str_contains($email->senderAddress, '@monechelle.zendesk.com') ? 'Support' : 'Client';
+        $threadNumber = Str::before($email->senderAddress, '@');
 
         $order      = Order::getOrder($mpOrder, $this->channel);
         $ticket     = Ticket::getTicket($order, $this->channel);
-        $thread     = Thread::getOrCreateThread($ticket, $threadPrefix.'-'.$mpOrder, $threadPrefix, $email->senderAddress);
+        $thread     = Thread::getOrCreateThread($ticket, $threadNumber, $threadName, $email->senderAddress);
 
         $this->importMessageByThread($ticket, $thread, $email);
     }
@@ -108,10 +110,10 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     /**
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $email, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $email, Thread $thread, $attachments = [])
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
 
@@ -130,6 +132,14 @@ class ManomanoImportMessages extends AbstractImportMailMessages
                 'content' => $this->getMessageContent($email),
             ]
         );
+
+        if ($email->hasAttachments()) {
+            $this->logger->info('Download documents from message');
+            foreach ($email->getAttachments() as $attachment) {
+                $tmpFile = new TmpFile((string) $attachment->getContents());
+                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachment->name);
+            }
+        }
 
         $this->logger->info('Message id: '. $message->id . ' created');
 

@@ -8,8 +8,17 @@
         </form>
         <div class="row">
             <div class="col-4">
-                <div class="ticket-divider h4 text-center">
-                    {{ __('app.ticket.admin_ticket') }} #{{ $ticket->id }}
+                <div class="row">
+                    <div class="col-8">
+                        <div class="ticket-divider h4 text-center">
+                            {{ __('app.ticket.admin_ticket') }} #{{ $ticket->id }}
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="ticket-divider h4 text-center text-uppercase">
+                            {{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticket->state) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -64,7 +73,16 @@
                         </div>
                         <div class="row mb-1">
                             <div class="col"><label>{{ __('app.ticket.order') }}</label></div>
-                            <div class="col"><label>{{ $ticket->order->channel_order_number }}</label></div>
+                            <div class="col">
+                                @if($url = $ticket->order->getOrderChannelUrl())
+                                    <a href="{{ $url }}" target="_blank">
+                                        {{ $ticket->order->channel_order_number }}
+                                        <i class="uil-external-link-alt"></i>
+                                    </a>
+                                @else
+                                    <label>{{ $ticket->order->channel_order_number }}</label>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

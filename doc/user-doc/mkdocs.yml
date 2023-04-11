@@ -2,8 +2,8 @@ site_name: CRM
 
 nav:
   - Accueil : index.md
-  - Glossaire : introduction/glossary.md
-  - Mon compte : introduction/account.md
+  - Glossaire : introduction/glossaire.md
+  - Mon compte : introduction/mon-compte.md
   - Bases:
       - Qu'est ce qu'un ticket ?: bases/qu-est-ce-qu-un-ticket.md
       - Trouver un ticket: bases/trouver-un-ticket.md
@@ -19,10 +19,10 @@ nav:
   - Extras :
       - Variables : extras/variables.md
       - Fiches SAV fabricants : extras/fiches-sav-fabricants.md
-      - Automatisations :
-          - Réponses automatique aux questions sur les offres : extras/automatisation/réponse_par_défaut_questions_offres.md
+      - Automatisations : extras/automatisations.md
   - Configuration :
       - Fiches SAV fabricants : configuration/fiches-sav-fabricants.md
+      - Relances automatiques : configuration/relances-automatiques.md
 
 theme:
   name: readthedocs

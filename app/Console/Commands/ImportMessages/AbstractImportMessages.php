@@ -10,6 +10,7 @@ use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use Illuminate\Console\Command;
 
@@ -24,7 +25,7 @@ abstract class AbstractImportMessages extends Command
 
     abstract protected function getCredentials(): array;
     abstract protected function initApiClient();
-    abstract protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread);
+    abstract protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []);
 
     /**
      * @throws Exception
@@ -48,6 +49,16 @@ abstract class AbstractImportMessages extends Command
     protected function addImportedMessageChannelNumber(string $channel_message_number): void
     {
         static::$_alreadyImportedMessages[$channel_message_number] = $channel_message_number;
+    }
+
+    protected function checkMessageDate(DateTime $messageDate): bool
+    {
+        $startDateFormat = "Y-m-d H:i:s";
+        $starter_date = DateTime::createFromFormat($startDateFormat, env('STARTER_DATE_CRM'));
+        if(!$starter_date)
+            throw new Exception('The environment variable isn\'t in the correct format or does not exist (expected format : ' . $startDateFormat . ')');
+
+        return $starter_date < $messageDate;
     }
 }
 
