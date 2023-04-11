@@ -321,8 +321,9 @@ class Ticket extends Model
                 $tagList->save();
             }
         }
-
         $tagList->addTag($tag);
+        $this->save();
+        $this->refresh();
     }
 
     public static function getTicketByOrder(Channel $channel, string $order_number)

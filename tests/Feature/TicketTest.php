@@ -54,14 +54,14 @@ class TicketTest extends TestCase
         $tag = Tag::firstOrFail();
         $ticket->addTag($tag);
 
-        $this->assertTrue($ticket->fresh()->hasTag($tag));
-        $this->assertCount(1, $ticket->fresh()->tagLists);
-        $this->assertCount(1, $ticket->fresh()->tagLists->first()->tags);
-        $this->assertEquals($tag->id, $ticket->fresh()->tagLists->first()->tags->first()->id);
+        $this->assertTrue($ticket->hasTag($tag));
+        $this->assertCount(1, $ticket->tagLists);
+        $this->assertCount(1, $ticket->tagLists->first()->tags);
+        $this->assertEquals($tag->id, $ticket->tagLists->first()->tags->first()->id);
 
         $tag = Tag::skip(1)->first();
-        $ticket->fresh()->addTag($tag);
-        $this->assertCount(1, $ticket->fresh()->tagLists);
-        $this->assertCount(2, $ticket->fresh()->tagLists->first()->tags);
+        $ticket->addTag($tag);
+        $this->assertCount(1, $ticket->tagLists);
+        $this->assertCount(2, $ticket->tagLists->first()->tags);
     }
 }
