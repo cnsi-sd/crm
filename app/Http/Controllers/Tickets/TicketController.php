@@ -37,13 +37,16 @@ class TicketController extends AbstractController
         $query = Ticket::query()
             ->select('tickets.*')
             ->join('ticket_threads', 'ticket_threads.ticket_id', '=','tickets.id')
+            ->leftJoin('tagLists', 'tagLists.ticket_id', '=', 'tickets.id')
+            ->leftJoin('tag_tagLists', 'tag_tagLists.taglist_id', '=', 'tagLists.id')
+            ->leftJoin('tags', 'tag_tagLists.tag_id', '=', 'tags.id')
             ->groupBy('tickets.id');
         $table = (new TableBuilder('all_tickets', $request))
             ->setColumns(Ticket::getTableColumns())
             ->setExportable(false)
             ->setQuery($query);
 
-        $tickets = $query->get();
+        $tickets = $table->getQueryBeforePagination()->get();
 
         return view('tickets.all_tickets')
             ->with('table', $table)
@@ -55,6 +58,9 @@ class TicketController extends AbstractController
         $query = Ticket::query()
             ->select('tickets.*')
             ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
+            ->leftJoin('tagLists', 'tagLists.ticket_id', '=', 'tickets.id')
+            ->leftJoin('tag_tagLists', 'tag_tagLists.taglist_id', '=', 'tagLists.id')
+            ->leftJoin('tags', 'tag_tagLists.tag_id', '=', 'tags.id')
             ->where('user_id', $user->id)
             ->where('state', TicketStateEnum::OPENED)
             ->groupBy('tickets.id');
@@ -64,7 +70,7 @@ class TicketController extends AbstractController
             ->setExportable(false)
             ->setQuery($query);
 
-        $tickets = $query->get();
+        $tickets = $table->getQueryBeforePagination()->get();
 
         return view('tickets.all_tickets')
             ->with('table', $table)
