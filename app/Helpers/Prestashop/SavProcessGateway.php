@@ -15,7 +15,7 @@ final class SavProcessGateway
         $queryParams = [
             'mp_order' => $ticket->order->channel_order_number,
             'mp_names' => implode(',', $ticket->channel->ext_names),
-            'id_ticket' => $ticket->id,
+            'id_ticket_crm' => $ticket->id,
             'admintoken' => env('PRESTASHOP_CUSTOMER_SERVICE_TOKEN'),
         ];
 
