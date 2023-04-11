@@ -245,6 +245,7 @@ return [
 
     'revival' => [
         'revival' => 'Relance automatique|Relances automatiques',
+        'endrevival' => 'Action en fin de relance',
         'name' => 'Nom de la relance automatique',
         'frequency' => 'Fréquence d\'envoi (en jours):',
         'max_revival' => 'Nombre d\'envoi de relance',

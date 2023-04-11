@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('revivals', function (Blueprint $table) {
-            $table->foreignId('end_tag_id')->after('max_revival')->constrained('tags');
+            $table->foreignId('end_tag_id')->after('max_revival')->nullable()->constrained('tags');
+            $table->foreignId('end_default_answer_id')->nullable()->change();
+            $table->string('end_state')->nullable()->change();
         });
     }
 
@@ -26,8 +28,10 @@ return new class extends Migration
     public function down()
     {
         Schema::table('revivals', function (Blueprint $table) {
-            $table->dropForeign('end_tag_id_foreign');
+            $table->dropForeign('revivals_end_tag_id_foreign');
             $table->dropColumn('end_tag_id');
+            $table->foreignId('end_default_answer_id')->nullable(false)->change();
+            $table->string('end_state')->nullable(false)->change();
         });
     }
 };
