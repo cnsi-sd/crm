@@ -4,10 +4,10 @@
 <div class="container-fluid">
     <div class="mt-3 mb-2">
         <button type="button" class="btn btn-danger" id="resetTagFilter" hidden>Reset filter</button>
-        @foreach($listTags as $key => $value)
+        @foreach($listTags as $value)
             <button type="button" class="btn tags-style list-tag"
-                    data-tag_id="{{$value['tag_id']}}"
-                    style="background-color: {{ $value['background_color'] }}; color: {{ $value['text_color'] }};">{{ $key }} <span class="tags-style-count">{{$value['count']}}</span></button>
+                    data-tag_id="{{$value[0]->id}}"
+                    style="background-color: {{ $value[0]->background_color }}; color: {{ $value[0]->text_color }};">{{ $value[0]->name }} <span class="tags-style-count">{{$value[1]}}</span></button>
         @endforeach
     </div>
     <div class="card">
