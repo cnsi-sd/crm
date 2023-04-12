@@ -147,6 +147,14 @@
                                 aria-controls="customer-service-process"
                                 aria-selected="false">{{ __('app.customer_service_process') }}</button>
                     </li>
+                    @if(setting('pm.active'))
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="parcel-management-tab" data-bs-toggle="tab"
+                                    data-bs-target="#parcel-management" type="button" role="tab"
+                                    aria-controls="parcel-management"
+                                    aria-selected="false">{{ __('app.config.misc.pm.pm') }}</button>
+                        </li>
+                    @endif
                 </ul>
                 <div class="tab-content" id="ticketTabContent">
                     <div class="tab-pane fade show active" id="hide" role="tabpanel" aria-labelledby="hide-tab"></div>
@@ -160,6 +168,12 @@
                         <iframe src="{{ \App\Helpers\Prestashop\SavProcessGateway::getUrl($ticket) }}"
                                 allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
                     </div>
+                    @if(setting('pm.active'))
+                        <div class="tab-pane fade" id="parcel-management" role="tabpanel"
+                             aria-labelledby="parcel-management-tab">
+                            <iframe src="{{ \App\Helpers\ParcelManagementGateway::getIframeUrl($ticket) }}" allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
+                        </div>
+                    @endif
                 </div>
                 <div class="mt-2 text-end">
                     <button form="saveTicket" type="submit" class="btn btn-outline-primary">
