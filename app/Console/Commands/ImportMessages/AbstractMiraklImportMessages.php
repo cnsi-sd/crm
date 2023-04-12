@@ -208,7 +208,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             $this->logger->info('Download documents from message');
             foreach($attachments as $attachment){
                 $tmpFile = new TmpFile((string) $attachment->getFile()->fread($attachment->getFile()->fstat()['size']));
-                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachment->getFileName());
+                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, utf8_encode($attachment->getFileName()));
             }
         }
 

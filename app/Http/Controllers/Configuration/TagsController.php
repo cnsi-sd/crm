@@ -72,13 +72,7 @@ class TagsController extends AbstractController
 
     public function ajax_tags(Request $request)
     {
-        $data = Tag::all();
-        $data = \App\Models\Tags\Tag::query()
-            ->select('tags.*')
-            ->join('channel_tags', 'tags.id', 'channel_tags.tag_id')
-            ->join('channels', 'channels.id', 'channel_tags.channel_id')
-            ->where('channels.id',$request->input('channel_id'))
-            ->get();
+        $data = Channel::find($request->input('channel_id'))->getAuthorizedTags();
         return response()->json(['data' => $data]);
     }
 

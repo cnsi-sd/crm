@@ -100,7 +100,7 @@ class IcozaImportMessages extends AbstractImportMessages
             try {
                 DB::beginTransaction();
 
-                $starter_date = $this->checkMessageDate(strtotime($message->date_add));
+                $starter_date = $this->checkMessageDate(new DateTime($message->date_add));
                 if (!$starter_date)
                     continue;
 

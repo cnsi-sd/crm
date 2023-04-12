@@ -34,6 +34,7 @@ class TableBuilder
     private ArrayAccess $lines;
     private Request $request;
     private EloquentBuilder|QueryBuilder $query;
+    private QueryBuilder|EloquentBuilder $queryBeforePagination;
 
     public function __construct(string $identifier, Request $request)
     {
@@ -125,6 +126,8 @@ class TableBuilder
             $query->orderBy($this->order_by, $this->order_way);
         }
 
+        $this->setQueryBeforePagination(clone $query);
+
         $this->lines = $this->isPaginable() ? $query->paginate($this->getPerPage(), ['*'], 'page_' . $this->identifier) : $query->get();
         return $this;
     }
@@ -143,6 +146,22 @@ class TableBuilder
     {
         $total = $this->isPaginable() ? $this->getLines()->total() : $this->getLines()->count();
         return '<span class="badge bg-primary">' . $total . '</span>';
+    }
+
+    /**
+     * @return EloquentBuilder|QueryBuilder
+     */
+    public function getQueryBeforePagination(): EloquentBuilder|QueryBuilder
+    {
+        return $this->queryBeforePagination;
+    }
+
+    /**
+     * @param EloquentBuilder|QueryBuilder $queryBeforePagination
+     */
+    public function setQueryBeforePagination(EloquentBuilder|QueryBuilder $queryBeforePagination): void
+    {
+        $this->queryBeforePagination = $queryBeforePagination;
     }
 
     private function setPaginationUrl(): string

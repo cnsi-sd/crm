@@ -45,8 +45,8 @@ class TagList extends Model
             ->join('tag_tagLists', 'tag_tagLists.tag_id', 'tags.id')
             ->join('tagLists', 'tag_tagLists.tagList_id', 'tagLists.id')
             ->where('tags.id', $tag->id)
+            ->where('tagLists.id', $this->id)
             ->count();
-        $c = 'cd';
         if ($data == 0){
             $this->tags()->attach($tag->id);
         }

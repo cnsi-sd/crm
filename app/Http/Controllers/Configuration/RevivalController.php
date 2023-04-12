@@ -53,8 +53,7 @@ class RevivalController extends AbstractController
         $request->validate([
             'name' => 'required',
             'frequency' => ['required', 'min:1'],
-            'max_revival' => ['required', 'min:1'],
-            'end_state' => 'required'
+            'max_revival' => ['required', 'min:1']
         ]);
 
         // Set name, content
