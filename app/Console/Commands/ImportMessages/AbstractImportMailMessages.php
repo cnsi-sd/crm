@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use PhpImap\Exceptions\InvalidParameterException;
 use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
+use Webklex\PHPIMAP\ClientManager;
 
 abstract class AbstractImportMailMessages extends AbstractImportMessages
 {
@@ -36,6 +37,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
      * @var boolean
      */
     protected bool $reverse;
+    protected ClientManager $cm;
 
     /**
      * @throws InvalidParameterException
@@ -48,6 +50,27 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
             $credentials['username'],
             $credentials['password']
         );
+    }
+    /**
+     * @throws InvalidParameterException|\Webklex\PHPIMAP\Exceptions\MaskNotFoundException
+     */
+    protected function initAutreApiClient()
+    {
+        $credentials = $this->getCredentials();
+        /**
+         * @var ClientManager $cm
+         */
+        $this->cm = new ClientManager();
+        $test = $this->cm->make([
+           'host' => 'outlook.office365.com',
+           'port' => 993,
+           'encryption' => 'ssl',
+           'validate_cert' => true,
+           'username' => $credentials['username'],
+           'password' => $credentials['password'],
+            'protocol' => 'imap',
+            'authentification' => "oauth"
+        ]);
     }
 
     /**
@@ -71,7 +94,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 
             $this->logger->info('--- Init api client ---');
 
-            $this->initApiClient();
+            $this->initAutreApiClient();
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
