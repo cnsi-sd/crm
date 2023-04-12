@@ -108,6 +108,7 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'answer_offer_questions', [MiscController::class, 'answerOfferQuestions'])->name('answer_offer_questions_config')->can('misc_config');
             Route::match(['get', 'post'], 'miraklRefunds', [MiscController::class, 'miraklRefunds'])->name('mirakl_refunds_config')->can('misc_config');
             Route::match(['get', 'post'], 'closed_discussion', [MiscController::class, 'closedDiscussion'])->name('closed_discussion_config')->can('misc_config');
+            Route::match(['get', 'post'], 'parcel_management', [MiscController::class, 'parcelManagement'])->name('parcel_management_config')->can('misc_config');
         });
     });
     // CALL AJAX

@@ -196,6 +196,17 @@ return [
 
             'closed_discussion' => 'Discussion clôturée',
             'closed_discussion_tag' => 'Tag discussion clôturée',
+
+            'external_features' => 'Fonctionnalités externes',
+
+            'pm' => [
+                'pm' => 'Parcel Management',
+                'active' => 'Activer l\'onglet Parcel Management',
+                'app_url' => 'URL Application',
+                'api_url' => 'URL API',
+                'api_token' => 'Token API',
+                'id_shop' => 'ID Shop',
+            ],
         ],
     ],
 
