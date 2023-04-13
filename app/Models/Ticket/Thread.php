@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property int $ticket_id
+ * @property int $revival_id
  * @property DateTime $revival_start_date
  * @property int $revival_message_count
  * @property string $channel_thread_number
@@ -51,7 +52,7 @@ class Thread extends Model
 
     protected $casts = [
         'revival_start_date' => 'date',
-        'channel_data' => 'array'
+        'channel_data'       => 'array'
     ];
 
     /**
@@ -62,7 +63,7 @@ class Thread extends Model
      * @param array $channel_data
      * @return Model|Thread
      */
-    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, $channel_data = [] ): Model|Thread
+    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, $channel_data = []): Model|Thread
     {
         return Thread::query()
             ->select('ticket_threads.*')
@@ -72,10 +73,10 @@ class Thread extends Model
             ->firstOrCreate(
                 [
                     'channel_thread_number' => $channel_thread_number,
-                    'ticket_id' => $ticket->id,
+                    'ticket_id'             => $ticket->id,
                 ],
                 [
-                    'name' => $name,
+                    'name'         => $name,
                     'channel_data' => json_encode($channel_data),
                 ],
             );
@@ -154,7 +155,7 @@ class Thread extends Model
                 $endMessage = "La date de la prochaine relance n'est pas atteinte";
         }
 
-        if(empty($endMessage))
+        if (empty($endMessage))
             return false;
         else
             return $starterMessage . $endMessage;
@@ -191,6 +192,14 @@ class Thread extends Model
             }
         }
         return $numberOfUnreadMessages;
+    }
+
+    public function stopRevival()
+    {
+        $this->revival_id = null;
+        $this->revival_start_date = null;
+        $this->revival_message_count = 0;
+        $this->save();
     }
 
 }

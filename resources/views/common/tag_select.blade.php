@@ -1,0 +1,12 @@
+<div class="mb-3">
+    <label for="{{ $id }}" class="form-label">
+        {{ $translation }}
+    </label>
+    <select id="{{ $id }}" name="{{ $name }}" class="form-control form-select" required>
+        @foreach(\App\Models\Tags\Tag::all() as $tag)
+            <option value="{{ $tag->id }}" @selected($value == $tag->id)>
+                {{ $tag->name }}
+            </option>
+        @endforeach
+    </select>
+</div>

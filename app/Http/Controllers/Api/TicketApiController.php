@@ -41,10 +41,7 @@ class TicketApiController extends AbstractApiController
         $revivalIdToDelete = explode(',',setting('savprocess_stop_revival_ids'));
         foreach ($ticket->threads as $thread) {
             if(in_array($thread->revival_id, $revivalIdToDelete)) {
-                $thread->revival_id = null;
-                $thread->revival_start_date = null;
-                $thread->revival_message_count = 0;
-                $thread->save();
+                $thread->stopRevival();
             }
         }
     }
