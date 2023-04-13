@@ -127,7 +127,10 @@ class TicketController extends AbstractController
                 'type' => $request->input('type'),
             ]);
         }
-        return response()->json(['message' => 'success', 'comment' => $comment->id]);
+        return response()->json(['message' => 'success',
+                                'comment' => $comment->id,
+                                'toggle_route' => route("toggle_comment", ['comment' => $comment]),
+                                'username' => $request->user()->__toString()]);
     }
 
     public function get_external_infos(Ticket $ticket): View

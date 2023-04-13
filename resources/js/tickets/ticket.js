@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.thread-comments').click(function () {
+    $("body").on("click", ".thread-comments", function () {
         const route = $(this).data("toggle-comment-route")
         $.get(route);
     })
@@ -9,8 +9,22 @@ $(document).ready(function () {
         const content = $("#ticket-comments-content").val();
         const type = $('#ticket-comment-type :selected').val();
         const token = $( "input[name='_token']" ).val();
+        const currentDate = new Date();
+        const formattedDate = currentDate.getDate() + "/" + (currentDate.getMonth() + 1).toString().padStart(2, '0') +
+            "/" + currentDate.getFullYear() + " " + currentDate.getHours() + ":" + currentDate.getMinutes().toString().padStart(2, '0');
         $.post(route, {content: content, type: type, _token: token}).done(function( data ) {
-            console.log(data);
+            let commentHtml = '';
+            commentHtml += '<div class="title d-flex justify-content-between align-items-center mt-3 thread-comments"' +
+                ' data-bs-toggle="collapse" data-toggle-comment-route="'+ data.toggle_route +'"' +
+                ' data-bs-target="#collapse-comment-"'+data.comment+'" aria-expanded="true"' +
+                ' aria-controls="collapse-comment-"'+data.comment+'">';
+            commentHtml += '<span class="w-25"> '+ data.username +'</span>';
+            commentHtml += '<span>'+formattedDate+'</span>';
+            commentHtml += '<span title="'+$('#ticket-comment-type :selected').text()+'" class="badge w-25 '+
+                $('#ticket-comment-type :selected').val()+'">'+$('#ticket-comment-type :selected').text()+'</span>';
+            commentHtml += '</div>';
+            commentHtml += '<div class="collapse show" id="collapse-comment-"'+data.comment+'">'+$("#ticket-comments-content").val()+'</div>';
+            $('.ticket-comments').append(commentHtml);
         });
     })
 
