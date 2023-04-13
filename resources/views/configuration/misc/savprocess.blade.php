@@ -11,18 +11,11 @@
                 <form class="form-horizontal" method="post">
                     @csrf
 
-                    <div class="mb-3">
-                        <label for="late_order_tag_id" class="form-label">
-                            {{ __('app.config.misc.savprocess_tag') }}
-                        </label>
-                        <select name="savprocesscomplete_tag_id" class="form-control form-select" required>
-                            @foreach(\App\Models\Tags\Tag::all() as $tag)
-                                <option value="{{ $tag->id }}" @selected(setting('savprocesscomplete_tag_id') == $tag->id)>
-                                    {{ $tag->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.tag_select', [
+                        'translation' => __('app.config.misc.savprocess_tag'),
+                        'name' => 'savprocesscomplete_tag_id',
+                        'value' => old('savprocesscomplete_tag_id', setting('savprocesscomplete_tag_id')),
+                    ])
 
                     <div class="mb-3">
                         <label for="late_order_tag_id" class="form-label">

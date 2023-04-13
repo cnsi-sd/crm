@@ -65,29 +65,25 @@
                             <input name="close_api_token" class="form-control" value="{{ old('close_api_token', setting('pm.close_api_token')) }}">
                         </div>
 
-                        @include('common.tag_select', [
-                            'id' => 'accepted_return_tag',
+                        @include('form_components.tag_select', [
                             'translation' => __('app.config.misc.pm.accepted_return_tag'),
                             'name' => 'accepted_return_tag',
                             'value' => old('accepted_return_tag', setting('pm.accepted_return_tag')),
                         ])
 
-                        @include('common.tag_select', [
-                            'id' => 'refused_return_tag',
+                        @include('form_components.tag_select', [
                             'translation' => __('app.config.misc.pm.refused_return_tag'),
                             'name' => 'refused_return_tag',
                             'value' => old('refused_return_tag', setting('pm.refused_return_tag')),
                         ])
 
-                        @include('common.tag_select', [
-                            'id' => 'return_with_reserves_tag',
+                        @include('form_components.tag_select', [
                             'translation' => __('app.config.misc.pm.return_with_reserves_tag'),
                             'name' => 'return_with_reserves_tag',
                             'value' => old('return_with_reserves_tag', setting('pm.return_with_reserves_tag')),
                         ])
 
-                        @include('common.tag_select', [
-                            'id' => 'return_with_remark_tag',
+                        @include('form_components.tag_select', [
                             'translation' => __('app.config.misc.pm.return_with_remark_tag'),
                             'name' => 'return_with_remark_tag',
                             'value' => old('return_with_remark_tag', setting('pm.return_with_remark_tag')),

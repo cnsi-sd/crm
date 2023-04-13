@@ -84,18 +84,11 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="late_order_tag_id" class="form-label">
-                            {{ __('app.bot.shipping_information.late_order_tag') }}
-                        </label>
-                        <select name="late_order_tag_id" class="form-control form-select" required>
-                            @foreach(\App\Models\Tags\Tag::all() as $tag)
-                                <option value="{{ $tag->id }}" @selected(setting('bot.shipping_information.late_order_tag_id') == $tag->id)>
-                                    {{ $tag->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.tag_select', [
+                        'translation' => __('app.bot.shipping_information.late_order_tag'),
+                        'name' => 'late_order_tag_id',
+                        'value' => old('late_order_tag_id', setting('bot.shipping_information.late_order_tag_id')),
+                    ])
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
