@@ -224,3 +224,9 @@ Breadcrumbs::for('edit_sav_note', function (BreadcrumbTrail $trail, SavNote $sav
     $trail->parent('show_sav_note', $savNote);
     $trail->push(__('app.edit'), route('edit_sav_note', $savNote));
 });
+/** JobWatcher */
+Breadcrumbs::for('jobs', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(trans_choice('jobwatcher::jobs.job', 2));
+});
+
