@@ -4,6 +4,16 @@ $(document).ready(function () {
         $.get(route);
     })
 
+    $('#postCommentButton').click(function () {
+        const route = $(this).data("post-comment-route")
+        const content = $("#ticket-comments-content").val();
+        const type = $('#ticket-comment-type :selected').val();
+        const token = $( "input[name='_token']" ).val();
+        $.post(route, {content: content, type: type, _token: token}).done(function( data ) {
+            console.log(data);
+        });
+    })
+
     $('#default_answer_select').on('change', function () {
         if($(this).find(':selected').data("answer-content")) {
             let answerContent = $(this).find(':selected').data("answer-content")

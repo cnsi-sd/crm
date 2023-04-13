@@ -112,6 +112,24 @@ class TicketController extends AbstractController
         return response()->json(['message' => 'success']);
     }
 
+    public function post_comment(Request $request, Ticket $ticket): JsonResponse
+    {
+        if($request->input('content')) {
+            $request->validate([
+                'content'     => ['required','string'],
+                'type'         => ['required','string'],
+            ]);
+            $comment = Comment::firstOrCreate([
+                'ticket_id' => $ticket->id,
+                'user_id' => $request->user()->id,
+                'content' => $request->input('content'),
+                'displayed' => 1,
+                'type' => $request->input('type'),
+            ]);
+        }
+        return response()->json(['message' => 'success', 'comment' => $comment->id]);
+    }
+
     public function get_external_infos(Ticket $ticket): View
     {
         $externalOrderInfo = $ticket->order->getPrestashopOrders();
