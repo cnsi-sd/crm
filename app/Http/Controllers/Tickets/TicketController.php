@@ -112,7 +112,7 @@ class TicketController extends AbstractController
         return response()->json(['message' => 'success']);
     }
 
-    public function post_comment(Request $request, Ticket $ticket): JsonResponse
+    public function post_comment(Request $request, Ticket $ticket): View
     {
         if($request->input('content')) {
             $request->validate([
@@ -127,10 +127,12 @@ class TicketController extends AbstractController
                 'type' => $request->input('type'),
             ]);
         }
-        return response()->json(['message' => 'success',
-                                'comment' => $comment->id,
-                                'toggle_route' => route("toggle_comment", ['comment' => $comment]),
-                                'username' => $request->user()->__toString()]);
+//        return response()->json(['message' => 'success',
+//                                'comment' => $comment->id,
+//                                'toggle_route' => route("toggle_comment", ['comment' => $comment]),
+//                                'username' => $request->user()->__toString()]);
+        return view('tickets.parts.private_comment')
+            ->with('comment', $comment);
     }
 
     public function get_external_infos(Ticket $ticket): View
