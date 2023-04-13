@@ -18,7 +18,7 @@ class TicketApiController extends AbstractApiController
             $this->logger->info('--- START : updating ticket ' . $ticket->id . ' after sav process completed by customer ---');
             if($token === env('SAVPROCESS_CRM_TOKEN')) {
                 $ticket->deadline = date('Y-m-d');
-                $ticket->state = TicketStateEnum::WAITING_ADMIN;
+                $ticket->state = TicketStateEnum::OPENED;
                 $tagId = setting('savprocesscomplete_tag_id');
                 $tag = Tag::findOrFail($tagId);
                 $ticket->addTag($tag);
@@ -41,10 +41,7 @@ class TicketApiController extends AbstractApiController
         $revivalIdToDelete = explode(',',setting('savprocess_stop_revival_ids'));
         foreach ($ticket->threads as $thread) {
             if(in_array($thread->revival_id, $revivalIdToDelete)) {
-                $thread->revival_id = null;
-                $thread->revival_start_date = null;
-                $thread->revival_message_count = 0;
-                $thread->save();
+                $thread->stopRevival();
             }
         }
     }

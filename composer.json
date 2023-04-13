@@ -37,9 +37,11 @@
         "tinymce/tinymce": "^6.3",
         "twilio/sdk": "^6.44",
         "webklex/php-imap": "^5.0",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-fileinfo": "*"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.8",
         "fakerphp/faker": "^1.9.1",
         "laravel/envoy": "^2.8",
         "laravel/pint": "^1.0",

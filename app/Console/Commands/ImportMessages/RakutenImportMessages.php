@@ -60,11 +60,11 @@ class RakutenImportMessages extends AbstractImportMessages
     /**
      * @throws Exception
      */
-    protected function convertApiResponseToMessage(Ticket $ticket, $messageApi, Thread $thread)
+    protected function convertApiResponseToMessage(Ticket $ticket, $messageApi, Thread $thread, $attachments = [])
     {
         $authorType = $messageApi['MpCustomerId'];
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
         $message = Message::firstOrCreate([
@@ -120,6 +120,7 @@ class RakutenImportMessages extends AbstractImportMessages
             DB::beginTransaction();
             foreach($threads as $messages) {
                 $this->logger->info('Begin Transaction');
+
 
                 if(isset($messages[0])){
                 $order  = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
@@ -306,6 +307,12 @@ class RakutenImportMessages extends AbstractImportMessages
     {
         $patterns = $this->getPatterns();
         foreach ($messages as $message) {
+
+            $messageDate = DateTime::createFromFormat('d/m/Y-H:i', $message['Date']);
+            $starter_date = $this->checkMessageDate($messageDate);
+            if (!$starter_date)
+                continue;
+
             $message['id'] = crc32($message['Message'] . $message['MpCustomerId'] . $message['Date']);
 
             if(isset($message['Object'])){ // It's a mail

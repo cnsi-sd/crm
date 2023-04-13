@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->json('ext_names')->default("[]");
+            $table->string('order_url')->nullable();
             $table->foreignId('user_id')->constrained('users');
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }

@@ -10,6 +10,7 @@ use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
+use App\Jobs\CreateEmailThread;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Channel\Order;
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property int $id
@@ -120,20 +122,30 @@ class Ticket extends Model
     }
 
 
-    public static function getTicket(Order $order, Channel $channel): Ticket
+    public static function getTicket(Order $order, Channel $channel, bool $createEmailThreadSync = false): Ticket
     {
-        return Ticket::firstOrCreate(
+        $ticket = Ticket::firstOrNew(
             [
                 'order_id' => $order->id,
                 'channel_id' => $channel->id,
             ],
             [
-                'state' => TicketStateEnum::WAITING_ADMIN,
+                'state' => TicketStateEnum::OPENED,
                 'priority' => TicketPriorityEnum::P1,
                 'deadline' => Ticket::getAutoDeadline(),
-                'user_id' => $channel->user_id,
+                'user_id' => Auth::hasUser() ? Auth::id() : $channel->user_id,
             ],
         );
+
+        // If ticket does not exist, create it (save) and dispatch the job to create the EmailThread
+        if(!$ticket->exists) {
+            $ticket->save();
+
+            $method = $createEmailThreadSync ? 'dispatchSync' : 'dispatch';
+            CreateEmailThread::$method($ticket);
+        }
+
+        return $ticket;
     }
 
     /**
@@ -206,7 +218,7 @@ class Ticket extends Model
             $columns[] = (new TableColumnBuilder())
                 ->setLabel(__('app.ticket.state'))
                 ->setType(ColumnTypeEnum::SELECT)
-                ->setOptions(TicketStateEnum::getTranslatedList())
+                ->setOptions(TicketStateEnum::getTranslatedList(false))
                 ->setKey('state')
                 ->setSortable(true)
                 ->setCallback(function (Ticket $ticket) {
@@ -321,8 +333,9 @@ class Ticket extends Model
                 $tagList->save();
             }
         }
-
         $tagList->addTag($tag);
+        $this->save();
+        $this->refresh();
     }
 
     public static function getTicketByOrder(Channel $channel, string $order_number)

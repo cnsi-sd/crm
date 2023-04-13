@@ -3,6 +3,7 @@
 namespace App\Models\Channel;
 
 use App\Enums\ColumnTypeEnum;
+use App\Enums\FixedWidthEnum;
 use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Revival\Revival;
@@ -10,6 +11,7 @@ use App\Models\Ticket\Ticket;
 use App\Models\User\User;
 use DateTime;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,7 +21,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $name
  * @property array $ext_names
+ * @property ?string $order_url
  * @property int $user_id
+ * @property bool $is_active
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
@@ -63,7 +67,9 @@ class Channel extends Model
 
     public static function getChannelsNames(): array
     {
-        return self::query()->orderBy('name', 'ASC')
+        return self::query()
+            ->where('is_active', true)
+            ->orderBy('name', 'ASC')
             ->pluck('name', 'id')
             ->toArray();
     }
@@ -82,6 +88,7 @@ class Channel extends Model
     {
         return Channel::query()
             ->where('ext_names', 'LIKE', '%' . $ext_name . '%')
+            ->where('is_active', true)
             ->first();
     }
 
@@ -95,12 +102,40 @@ class Channel extends Model
         if(!$channel)
             throw new Exception('Channel `' . $name . '` does not exists');
 
+        if($filter_active && !$channel->is_active)
+            throw new Exception('Channel `' . $name . '` is not active');
+
         return $channel;
     }
 
-    public function getAuthorizedDefaultAnswers()
+    /**
+     * @return Collection|DefaultAnswer[]
+     */
+    public function getAuthorizedDefaultAnswers(): Collection
     {
-        return $this->defaultAnswers->count() === 0 ? DefaultAnswer::all() : $this->defaultAnswers;
+        return DefaultAnswer::query()
+            ->select('default_answers.*')
+            ->leftJoin('channel_default_answer', 'channel_default_answer.default_answer_id', 'default_answers.id')
+            ->whereNull('channel_default_answer.id')
+            ->orWhere('channel_default_answer.channel_id', $this->id)
+            ->groupBy('default_answers.id')
+            ->orderBy('default_answers.name')
+            ->get();
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getAuthorizedTags(): Collection
+    {
+        return Tag::query()
+            ->select('tags.*')
+            ->leftJoin('channel_tags', 'channel_tags.tag_id', 'tags.id')
+            ->whereNull('channel_tags.id')
+            ->orWhere('channel_tags.channel_id', $this->id)
+            ->groupBy('tags.id')
+            ->orderBy('tags.name')
+            ->get();
     }
 
     public function user(): BelongsTo
@@ -132,6 +167,11 @@ class Channel extends Model
             })
             ->setKey('user_id')
             ->setSortable(true);
+        $columns[] = TableColumnBuilder::boolean()
+                ->setFixedWidth(FixedWidthEnum::XL)
+                ->setLabel(__('app.channel.is_active'))
+                ->setKey('is_active')
+                ->setSortable(false);
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Channel $channel) {
                 return view('configuration.channel.inline_table_actions')

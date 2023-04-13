@@ -11,42 +11,25 @@
                 <form class="form-horizontal" method="post">
                     @csrf
 
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="active" id="active" @checked(setting('bot.invoice.active'))>
-                            <label class="form-check-label" for="active">{{ __('app.bot.active') }}</label>
-                        </div>
-                    </div>
+                    @include('form_components.switch', [
+                        'translation' => __('app.bot.active'),
+                        'name' => 'active',
+                        'value' => old('active', setting('bot.invoice.active')),
+                    ])
 
-                    <div class="mb-3">
-                        <label for="found_answer_id" class="form-label">
-                            {{ __('app.bot.invoice.found_answer') }}
-                        </label>
-                        <select name="found_answer_id" class="form-control form-select" required>
-                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('bot.invoice.found_answer_id') == $reply->id)>
-                                    {{ $reply->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.default_reply_select', [
+                        'translation' => __('app.bot.invoice.found_answer'),
+                        'name' => 'found_answer_id',
+                        'value' => old('found_answer_id', setting('bot.invoice.found_answer_id')),
+                    ])
 
-                    <div class="mb-3">
-                        <label for="not_shipped_answer_id" class="form-label">
-                            {{ __('app.bot.invoice.not_shipped_answer') }}
-                        </label>
-                        <select name="not_shipped_answer_id" class="form-control form-select" required>
-                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('bot.invoice.not_shipped_answer_id') == $reply->id)>
-                                    {{ $reply->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.default_reply_select', [
+                        'translation' => __('app.bot.invoice.not_shipped_answer'),
+                        'name' => 'not_shipped_answer_id',
+                        'value' => old('not_shipped_answer_id', setting('bot.invoice.not_shipped_answer_id')),
+                    ])
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
-                    </div>
+                    @include('form_components.submit')
                 </form>
             </div>
         </div>

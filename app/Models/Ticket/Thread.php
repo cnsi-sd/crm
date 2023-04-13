@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property int $ticket_id
+ * @property int $revival_id
  * @property DateTime $revival_start_date
  * @property int $revival_message_count
  * @property string $channel_thread_number
@@ -33,6 +34,9 @@ class Thread extends Model
     protected $table = 'ticket_threads';
 
     const DEFAULT_CHANNEL_NUMBER = 'crm_default_thread';
+    const DEFAULT_NAME = 'Fil de discussion principal';
+
+    const EMAIL = 'Email';
 
     protected $fillable = [
         'ticket_id',
@@ -48,7 +52,7 @@ class Thread extends Model
 
     protected $casts = [
         'revival_start_date' => 'date',
-        'channel_data' => 'array'
+        'channel_data'       => 'array'
     ];
 
     /**
@@ -59,7 +63,7 @@ class Thread extends Model
      * @param array $channel_data
      * @return Model|Thread
      */
-    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, $channel_data = [] ): Model|Thread
+    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, $channel_data = []): Model|Thread
     {
         return Thread::query()
             ->select('ticket_threads.*')
@@ -69,10 +73,10 @@ class Thread extends Model
             ->firstOrCreate(
                 [
                     'channel_thread_number' => $channel_thread_number,
-                    'ticket_id' => $ticket->id,
+                    'ticket_id'             => $ticket->id,
                 ],
                 [
-                    'name' => $name,
+                    'name'         => $name,
                     'channel_data' => json_encode($channel_data),
                 ],
             );
@@ -81,19 +85,19 @@ class Thread extends Model
     public function messages(): HasMany
     {
         // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
-        return $this->hasMany(Message::class)->orderBy('created_at', 'DESC');
+        return $this->hasMany(Message::class)->orderBy('created_at', 'DESC')->orderBy('id', 'DESC');
     }
 
     public function firstMessage(): ?Message
     {
         // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
-        return $this->messages()->reorder('created_at', 'ASC')->first();
+        return $this->messages()->reorder('created_at', 'ASC')->orderBy('id', 'ASC')->first();
     }
 
     public function lastMessage(): ?Message
     {
         // Prefer the order by created_at, because the migration process could have imported messages in the wrong order.
-        return $this->messages()->reorder('created_at', 'DESC')->first();
+        return $this->messages()->reorder('created_at', 'DESC')->orderBy('id', 'DESC')->first();
     }
 
     public function ticket(): BelongsTo
@@ -139,8 +143,8 @@ class Thread extends Model
         if (!$lastMessage || $lastMessage->author_type !== TicketMessageAuthorTypeEnum::ADMIN)
             $endMessage = 'Le dernier message doit être écrit par un administrateur';
 
-        if ($this->ticket->state !== TicketStateEnum::WAITING_CUSTOMER)
-            $endMessage = 'Le ticket doit être en Attente client';
+        if ($this->ticket->state !== TicketStateEnum::OPENED)
+            $endMessage = 'Le ticket doit être Ouvert';
 
         //check the nex revival date
         if ($check_dates) {
@@ -151,7 +155,7 @@ class Thread extends Model
                 $endMessage = "La date de la prochaine relance n'est pas atteinte";
         }
 
-        if(empty($endMessage))
+        if (empty($endMessage))
             return false;
         else
             return $starterMessage . $endMessage;
@@ -188,6 +192,14 @@ class Thread extends Model
             }
         }
         return $numberOfUnreadMessages;
+    }
+
+    public function stopRevival()
+    {
+        $this->revival_id = null;
+        $this->revival_start_date = null;
+        $this->revival_message_count = 0;
+        $this->save();
     }
 
 }

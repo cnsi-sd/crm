@@ -40,14 +40,16 @@ return [
     'order_info' => 'Info commande',
     'product_return' => 'Retour produits',
     'customer_service_process' => 'Procédure SAV',
-    'confirm' => 'Confimer',
+    'confirm' => 'Confirmer',
     'cancel' => 'Annuler',
+    'download' => 'Télécharger',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
         'settings' => 'Paramètres',
         'config' => 'Configuration',
-        'admin' => 'Administration'
+        'admin' => 'Administration',
+        'doc' => 'Documentation',
     ],
 
     'axios' => [
@@ -188,13 +190,33 @@ return [
             'savprocess_tag' => 'Tag Procédure SAV complète',
             'savprocess_stop_revival' => 'Relances auto à stopper',
 
-            'default_answer_offer_questions' => 'Réponse par défaut aux questions sur les offres',
+            'default_answer_offer_questions' => 'Réponse aux questions sur les offres',
 
             'mirakl_refunds' => 'Remboursement sur MP Mirakl',
             'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
 
             'closed_discussion' => 'Discussion clôturée',
             'closed_discussion_tag' => 'Tag discussion clôturée',
+
+            'external_features' => 'Fonctionnalités externes',
+
+            'pm' => [
+                'pm' => 'Parcel Management',
+
+                'out' => 'Configuration sortante',
+                'active' => 'Activer l\'onglet Parcel Management',
+                'app_url' => 'URL Application',
+                'api_url' => 'URL API',
+                'api_token' => 'Token API',
+                'id_shop' => 'ID Shop',
+
+                'in' => 'Configuration entrante',
+                'close_api_token' => 'Token API',
+                'accepted_return_tag' => 'Tag Retour accepté',
+                'refused_return_tag' => 'Tag Retour refusé',
+                'return_with_reserves_tag' => 'Tag Retour avec réserves',
+                'return_with_remark_tag' => 'Tag Retour avec remarques',
+            ],
         ],
     ],
 
@@ -244,6 +266,7 @@ return [
 
     'revival' => [
         'revival' => 'Relance automatique|Relances automatiques',
+        'endrevival' => 'Action en fin de relance',
         'name' => 'Nom de la relance automatique',
         'frequency' => 'Fréquence d\'envoi (en jours):',
         'max_revival' => 'Nombre d\'envoi de relance',
@@ -297,7 +320,10 @@ return [
 
     'channel' => [
         'name' => 'Nom',
+        'order_url' => 'URL Commande',
+        'order_url_desc' => '@ sera remplacé par le numéro de commande.',
         'ext_names' => 'Nom(s) externe(s)',
+        'is_active' => 'Activé',
         'saved' => 'Canal enregistré',
         'edit' => 'Modifier un canal',
     ],

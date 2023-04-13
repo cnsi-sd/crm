@@ -58,7 +58,7 @@ class MigrateTicketAdminMessages extends AbstractMigrateStep
                 $message_date->add(new DateInterval('PT1H'));
 
                 $thread_number = $this->getThreadNumber($ticket, $magentoAdminMessage->ctm_source_type, $message_date);
-                $thread = Thread::getOrCreateThread($ticket, $thread_number, $magentoAdminMessage->ct_subject);
+                $thread = Thread::getOrCreateThread($ticket, $thread_number, Thread::DEFAULT_NAME);
 
                 // Manage author and author type
                 if ($magentoAdminMessage->admin_email === 'support@boostmyshop.com') {

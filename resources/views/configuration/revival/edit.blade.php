@@ -54,152 +54,153 @@
                                     required
                                 />
                             </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="m-2 ">
-                            <label for="channels">
-                                {{__('app.revival.select_channel')}}
-                            </label>
-                            <select
-                                name="channels[]"
-                                id="channels"
-                                class="form-control form-control-sm form-select no-sort"
-                                multiple
-                            >
-                                @foreach(\App\Models\Channel\Channel::all() as $channel)
-                                    <option value="{{$channel->id}}" @selected($revival->isChannelAuthorized($channel))>
-                                        {{$channel->name}}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <span class="help-block">
+                            <div class="form-group mb-3">
+                                <label for="channels">
+                                    {{__('app.revival.select_channel')}}
+                                </label>
+                                <select
+                                    name="channels[]"
+                                    id="channels"
+                                    class="form-control form-control-sm form-select no-sort"
+                                    multiple
+                                >
+                                    @foreach(\App\Models\Channel\Channel::all() as $channel)
+                                        <option
+                                            value="{{$channel->id}}" @selected($revival->isChannelAuthorized($channel))>
+                                            {{$channel->name}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <span class="help-block mb-3">
                                 <small>
                                     {{ __('app.revival.select_all_channel') }}
                                 </small>
                             </span>
-                        </div>
-                        <div class="m-2">
-                            <label for="default_answer_id">
-                                {{trans_choice('app.default_answer.default_answer', 1)}}
-                                <span class="required_field">*</span>
-                            </label>
-                            <select
-                                name="default_answer_id"
-                                id="select-default_answer_id"
-                                class="form-control form-control-sm form-select"
-                                required
-                            >
-                                <option value=""></option>
-                                @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
-                                    <option value="{{$answer->id}}" @selected($revival->isAnswerSelected($answer))>
-                                        {{$answer->name}}
-                                    </option>
-                                @endforeach
-                            </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="default_answer_id">
+                                    {{trans_choice('app.default_answer.default_answer', 1)}}
+                                    <span class="required_field">*</span>
+                                </label>
+                                <select
+                                    name="default_answer_id"
+                                    id="select-default_answer_id"
+                                    class="form-control form-control-sm form-select"
+                                    required
+                                >
+                                    <option value=""></option>
+                                    @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
+                                        <option value="{{$answer->id}}" @selected($revival->isAnswerSelected($answer))>
+                                            {{$answer->name}}
+                                        </option>
+                                    @endforeach
+                                </select>
 
-                            @if (strlen($revival?->default_answer?->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <div class="alert alert-warning" role="alert">
-                                            {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival?->default_answer?->content) / 160)])}}
+                                @if (strlen($revival?->default_answer?->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <div class="alert alert-warning" role="alert">
+                                                {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival?->default_answer?->content) / 160)])}}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endif
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="revivalType">
+                                    {{trans_choice('app.revival.sendType', 1)}}
+                                    <span class="required_field">*</span>
+                                </label>
+                                <select
+                                    name="revivalType"
+                                    id="select-revivalType"
+                                    class="form-control form-control-sm form-select"
+                                    required
+                                >
+                                    @foreach( \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::getList() as $type)
+                                        <option value="{{ $type }}"
+                                            @selected($revival->send_type == $type)>
+                                            {{ $type }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                        <div class="m-2">
-                            <label for="end_default_answer_id">
-                                {{trans_choice('app.revival.end_default_answer', 1)}}
-                                <span class="required_field">*</span>
-                            </label>
-                            <select
-                                name="end_default_answer_id"
-                                id="select-end_default_answer_id"
-                                class="form-control form-control-sm form-select"
-                                required
-                            >
-                                <option value=""></option>
-                                @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
-                                    <option value="{{$answer->id}}"
-                                        @selected($revival->isEndAnswerSelected($answer))>
-                                        {{$answer->name}}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @if (strlen($revival?->end_default_answer?->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <div class="alert alert-warning" role="alert">
-                                            {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival->default_answer->content) / 160)])}}
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            {{trans_choice('app.revival.endrevival', 1)}}
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group mb-3">
+                                <label for="end_default_answer_id">
+                                    {{trans_choice('app.revival.end_default_answer', 1)}}
+                                </label>
+                                <select
+                                    name="end_default_answer_id"
+                                    id="select-end_default_answer_id"
+                                    class="form-control form-control-sm form-select"
+                                >
+                                    <option value=""></option>
+                                    @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
+                                        <option value="{{$answer->id}}"
+                                            @selected($revival->isEndAnswerSelected($answer))>
+                                            {{$answer->name}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if (strlen($revival?->end_default_answer?->content) > 160 && $revival->send_type === \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::SMS)
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <div class="alert alert-warning" role="alert">
+                                                {{ __('app.revival.warningLengthSMS',['nbMessage' => ceil(strlen($revival->default_answer->content) / 160)])}}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                            @endif
-                        </div>
-                        <div class="m-2">
-                            <label for="end_state">
-                                {{trans_choice('app.revival.end_state', 1)}}
-                                <span class="required_field">*</span>
-                            </label>
-                            <select
-                                name="end_state"
-                                id="select-end_state"
-                                class="form-control form-control-sm form-select"
-                                required
-                            >
-                                <option value=""></option>
-                                @foreach(\App\Enums\Ticket\TicketStateEnum::getTranslatedList() as $key => $value)
-                                    <option value="{{ $key }}"
-                                        @selected($revival->isStateSelected($key))>
-                                        {{ $value }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="m-2">
-                            <label for="revivalEndTag">
-                                {{trans_choice('app.revival.endTag', 1)}}
-                                <span class="required_field">*</span>
-                            </label>
+                                @endif
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="end_state">
+                                    {{trans_choice('app.revival.end_state', 1)}}
+                                </label>
+                                <select
+                                    name="end_state"
+                                    id="select-end_state"
+                                    class="form-control form-control-sm form-select"
+                                >
+                                    <option value=""></option>
+                                    @foreach(\App\Enums\Ticket\TicketStateEnum::getTranslatedList() as $key => $value)
+                                        <option value="{{ $key }}"
+                                            @selected($revival->isStateSelected($key))>
+                                            {{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="revivalEndTag">
+                                    {{trans_choice('app.revival.endTag', 1)}}
+                                </label>
 
-                            <select
-                                name="revivalEndTag"
-                                id="select-revivalEndTag"
-                                class="form-control form-control-sm form-select"
-                                required
-                            >
-                                <option value="">-- {{trans_choice('app.revival.select_revival', 1)}} --</option>
-                                @foreach( \App\Models\Tags\Tag::all() as $tag)
-                                    <option value="{{ $tag->id }}"
-                                        @selected($revival->end_tag_id == $tag->id)>
-                                        {{ $tag->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="m-2">
-                            <label for="revivalType">
-                                {{trans_choice('app.revival.sendType', 1)}}
-                                <span class="required_field">*</span>
-                            </label>
-                            <select
-                                name="revivalType"
-                                id="select-revivalType"
-                                class="form-control form-control-sm form-select"
-                                required
-                            >
-                                @foreach( \App\Enums\TableBuilder\Revival\RevivalSendTypeEnum::getList() as $type)
-                                    <option value="{{ $type }}"
-                                        @selected($revival->send_type == $type)>
-                                        {{ $type }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                <select
+                                    name="revivalEndTag"
+                                    id="select-revivalEndTag"
+                                    class="form-control form-control-sm form-select"
+                                >
+                                    <option value="">-- {{trans_choice('app.revival.select_revival', 1)}} --</option>
+                                    @foreach( \App\Models\Tags\Tag::all() as $tag)
+                                        <option value="{{ $tag->id }}"
+                                            @selected($revival->end_tag_id == $tag->id)>
+                                            {{ $tag->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                         </div>
                     </div>
                 </div>

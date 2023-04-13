@@ -42,4 +42,8 @@ return [
     'SAV_NOTE_SHOW' => 'Consulter le détail d\'une fiches SAV fabricant',
     'SAV_NOTE_EDIT' => 'Modifier une fiche SAV fabricant',
     'SAV_NOTE_DELETE' => 'Supprimer une fiche SAV fabricant',
+
+    // Doc
+    'AGENT_DOC' => 'Documentation agent',
+    'ADMIN_DOC' => 'Documentation admin',
 ];

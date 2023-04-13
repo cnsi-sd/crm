@@ -103,6 +103,25 @@ abstract class Menu
                     ],
                 ],
             ],
+            [
+                'text' => __('app.navbar.doc'),
+                'icon' => 'uil-medical-square',
+                'ref' => 'documentation',
+                'sub_items' => [
+                    [
+                        'text' => PermissionEnum::getMessage(PermissionEnum::AGENT_DOC),
+                        'route' => route('agent_doc') . '/',
+                        'ref' => 'documentation',
+                        'permission' => PermissionEnum::USER_READ
+                    ],
+                    [
+                        'text' => PermissionEnum::getMessage(PermissionEnum::ADMIN_DOC),
+                        'route' => route('admin_doc') . '/',
+                        'ref' => 'documentation',
+                        'permission' => PermissionEnum::ROLE_READ
+                    ],
+                ],
+            ],
         ];
 
         return self::checkAuthorization($menu);

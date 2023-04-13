@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Ticket[]|Collection $tickets
  * @property Channel $channel
  */
-
 class Order extends Model
 {
     protected $fillable = [
@@ -42,10 +41,10 @@ class Order extends Model
         return Order::firstOrCreate(
             [
                 'channel_order_number' => $orderId,
-                'channel_id' => $channel->id,
+                'channel_id'           => $channel->id,
             ],
             [
-                'channel_id' => $channel->id,
+                'channel_id'           => $channel->id,
                 'channel_order_number' => $orderId,
             ],
         );
@@ -53,12 +52,21 @@ class Order extends Model
 
     public function getPrestashopOrders(): ?array
     {
-        if(!$this->_prestashopOrders) {
+        if (!$this->_prestashopOrders) {
             $prestashopGateway = new CrmLinkGateway();
             $this->_prestashopOrders = $prestashopGateway->getOrderInfo($this->channel_order_number, $this->channel->ext_names);
         }
 
         return $this->_prestashopOrders;
+    }
+
+    public function getOrderChannelUrl(): ?string
+    {
+        if ($url = $this->channel->order_url) {
+            return str_replace('@', $this->channel_order_number, $url);
+        }
+
+        return null;
     }
 
     public function getPrestashopExternalLink(): string
@@ -67,6 +75,7 @@ class Order extends Model
         $externalLink = $prestashopGateway->getExternalLink();
         return $externalLink;
     }
+
     public function getInvoiceExternalLink(): string
     {
         $prestashopGateway = new CrmLinkGateway();
@@ -86,12 +95,11 @@ class Order extends Model
         $max_shipment_date = new DateTime($prestashopOrder['max_shipment_date']);
 
         if ($max_shipment_date->getTimestamp() > 0) {
-            if($now < $max_shipment_date) {
+            if ($now < $max_shipment_date) {
                 $diff = $now->diff($max_shipment_date);
                 $days_diff = $diff->format('%a');
                 return (int)$days_diff;
-            }
-            else {
+            } else {
                 return 0; // Deadline exceeded
             }
         }

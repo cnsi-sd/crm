@@ -146,7 +146,7 @@ class Revival extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.end_state'))
             ->setType(ColumnTypeEnum::SELECT)
-            ->setOptions(TicketStateEnum::getTranslatedList())
+            ->setOptions(TicketStateEnum::getTranslatedList(false))
             ->setCallback(function (Revival $revival) {
                 return TicketStateEnum::getMessage($revival->end_state);
             })

@@ -18,6 +18,7 @@ use App\Jobs\SendMessage\ShowroomSendMessage;
 use App\Jobs\SendMessage\UbaldiSendMessage;
 use App\Jobs\SendSMS\SMS;
 use App\Models\Channel\DefaultAnswer;
+use App\Models\Tags\Tag;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use Cnsi\Lock\Lock;
@@ -80,14 +81,14 @@ class Revival extends Command
         $ticket = $thread->ticket;
         $revival = $thread->revival;
 
-        $endReply = $revival->end_default_answer;
-        if (!empty($endReply)) {
+        if (isset($revival->end_default_answer) && !empty($revival->end_default_answer)) {
+            $endReply = $revival->end_default_answer;
             $this->logger->info('Sending response name : ' . $endReply->name);
             $this->sendRevivalMessage($thread, $endReply);
         }
 
-        $newStatus = $revival->end_state;
-        if (!$newStatus) {
+        if (isset($revival->end_state) && !empty($revival->end_state)) {
+            $newStatus = $revival->end_state;
             $this->logger->info("Updating the status's ticket " . $ticket->state . " to : " . $newStatus);
             $ticket->state = $newStatus;
         }
@@ -96,7 +97,10 @@ class Revival extends Command
         $this->logger->info("Updating deadline's ticket " . $ticket->deadline->format('Y-m-d') . " to : " . $deadLine);
         $ticket->deadline = $deadLine;
 
-        $ticket->addTag($revival->end_tag_id);
+        if(isset($revival->end_tag_id) && !empty($revival->end_tag_id)) {
+            $endTag = Tag::findOrFail($revival->end_tag_id);
+            $ticket->addTag($endTag);
+        }
 
         $this->logger->info('Save ticket modification ...');
         $ticket->save();
@@ -113,7 +117,7 @@ class Revival extends Command
 
         // Update ticket
         $ticket = $thread->ticket;
-        $ticket->state = TicketStateEnum::WAITING_CUSTOMER;
+        $ticket->state = TicketStateEnum::OPENED;
 
         //$lastDeadline = Carbon::createFromFormat('Y.m.d', $ticket->deadline)->addDays($revival->frequency);
         //$ticket->deadline = $lastDeadline;

@@ -11,29 +11,19 @@
                 <form class="form-horizontal" method="post">
                     @csrf
 
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="active" id="active" @checked(setting('bot.acknowledgment.active'))>
-                            <label class="form-check-label" for="active">{{ __('app.bot.active') }}</label>
-                        </div>
-                    </div>
+                    @include('form_components.switch', [
+                        'translation' => __('app.bot.active'),
+                        'name' => 'active',
+                        'value' => old('active', setting('bot.acknowledgment.active')),
+                    ])
 
-                    <div class="mb-3">
-                        <label for="answer_id" class="form-label">
-                            {{ __('app.bot.acknowledgement.answer') }}
-                        </label>
-                        <select name="answer_id" class="form-control form-select" required>
-                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('bot.acknowledgment.answer_id') == $reply->id)>
-                                    {{ $reply->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.default_reply_select', [
+                        'translation' => __('app.bot.acknowledgement.answer'),
+                        'name' => 'answer_id',
+                        'value' => old('answer_id', setting('bot.acknowledgment.answer_id')),
+                    ])
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
-                    </div>
+                    @include('form_components.submit')
                 </form>
             </div>
         </div>

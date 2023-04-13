@@ -134,17 +134,7 @@ class SendShippingInformation extends AbstractAnswer
     private function sendAnswer(int $defaultAnswerId)
     {
         $defaultAnswer = DefaultAnswer::findOrFail($defaultAnswerId);
-
-        // Build message
-        $answer = new Message();
-        $answer->thread_id = $this->message->thread_id;
-        $answer->user_id = null;
-        $answer->channel_message_number = '';
-        $answer->author_type = TicketMessageAuthorTypeEnum::SYSTEM;
-        $answer->content = $defaultAnswer->content;
-        $answer->save();
-
-        // Send message
-        AbstractSendMessage::dispatchMessage($answer);
+        $message = $this->addDefaultAnswerToThread($defaultAnswer);
+        AbstractSendMessage::dispatchMessage($message);
     }
 }

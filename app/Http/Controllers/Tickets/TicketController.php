@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Tickets;
 
+use App\Enums\Channel\ChannelEnum;
+use App\Enums\Channel\MirakleChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
@@ -35,13 +37,16 @@ class TicketController extends AbstractController
         $query = Ticket::query()
             ->select('tickets.*')
             ->join('ticket_threads', 'ticket_threads.ticket_id', '=','tickets.id')
+            ->leftJoin('tagLists', 'tagLists.ticket_id', '=', 'tickets.id')
+            ->leftJoin('tag_tagLists', 'tag_tagLists.taglist_id', '=', 'tagLists.id')
+            ->leftJoin('tags', 'tag_tagLists.tag_id', '=', 'tags.id')
             ->groupBy('tickets.id');
         $table = (new TableBuilder('all_tickets', $request))
             ->setColumns(Ticket::getTableColumns())
             ->setExportable(false)
             ->setQuery($query);
 
-        $tickets = $query->get();
+        $tickets = $table->getQueryBeforePagination()->get();
 
         return view('tickets.all_tickets')
             ->with('table', $table)
@@ -53,8 +58,11 @@ class TicketController extends AbstractController
         $query = Ticket::query()
             ->select('tickets.*')
             ->join('ticket_threads', 'ticket_threads.ticket_id', 'tickets.id')
+            ->leftJoin('tagLists', 'tagLists.ticket_id', '=', 'tickets.id')
+            ->leftJoin('tag_tagLists', 'tag_tagLists.taglist_id', '=', 'tagLists.id')
+            ->leftJoin('tags', 'tag_tagLists.tag_id', '=', 'tags.id')
             ->where('user_id', $user->id)
-            ->whereIn('state', [TicketStateEnum::WAITING_ADMIN, TicketStateEnum::WAITING_CUSTOMER])
+            ->where('state', TicketStateEnum::OPENED)
             ->groupBy('tickets.id');
 
         $table = (new TableBuilder('user_tickets', $request))
@@ -62,7 +70,7 @@ class TicketController extends AbstractController
             ->setExportable(false)
             ->setQuery($query);
 
-        $tickets = $query->get();
+        $tickets = $table->getQueryBeforePagination()->get();
 
         return view('tickets.all_tickets')
             ->with('table', $table)
@@ -81,11 +89,7 @@ class TicketController extends AbstractController
 
         // Get order & ticket
         $order = Order::getOrder($channel_order_number, $channel);
-        $ticket = Ticket::getTicket($order, $channel);
-
-        // Create thread if not exists
-        if($ticket->threads->count() === 0)
-            Thread::getOrCreateThread($ticket, $channel_order_number, "Fil de discussion principal");
+        $ticket = Ticket::getTicket($order, $channel, true);
 
         // Redirect to ticket
         return redirect()->route('ticket', $ticket);
@@ -106,6 +110,25 @@ class TicketController extends AbstractController
         $comment->displayed = !$comment->displayed;
         $comment->save();
         return response()->json(['message' => 'success']);
+    }
+
+    public function post_comment(Request $request, Ticket $ticket): View
+    {
+        if($request->input('content')) {
+            $request->validate([
+                'content'     => ['required','string'],
+                'type'         => ['required','string'],
+            ]);
+            $comment = Comment::firstOrCreate([
+                'ticket_id' => $ticket->id,
+                'user_id' => $request->user()->id,
+                'content' => $request->input('content'),
+                'displayed' => 1,
+                'type' => $request->input('type'),
+            ]);
+        }
+        return view('tickets.parts.private_comment')
+            ->with('comment', $comment);
     }
 
     public function get_external_infos(Ticket $ticket): View
@@ -169,19 +192,6 @@ class TicketController extends AbstractController
                 }
 
                 AbstractSendMessage::dispatchMessage($message);
-            }
-            if($request->input('ticket-comments-content')) {
-                $request->validate([
-                    'ticket-comments-content'     => ['required','string'],
-                    'ticket-comment-type'         => ['required','string'],
-                ]);
-                Comment::firstOrCreate([
-                    'ticket_id' => $thread->id,
-                    'user_id' => $request->user()->id,
-                    'content' => $request->input('ticket-comments-content'),
-                    'displayed' => 1,
-                    'type' => $request->input('ticket-comment-type'),
-                ]);
             }
             Alert::toastSuccess(__('app.ticket.saved'));
             return redirect()->back();

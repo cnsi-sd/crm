@@ -119,13 +119,13 @@ class ImportIncidents extends Command
         // Update ticket
         if (!$ticket->hasTag($tag))
             $ticket->addTag($tag);
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->deadline = Ticket::getAutoDeadline();
         $ticket->save();
 
         if ($ticket->threads->count() === 0) {
             // TODO : this make no senses
-            Thread::getOrCreateThread($ticket, 'default', 'Fil de discussion principal');
+            Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, Thread::DEFAULT_NAME);
         }
     }
 

@@ -8,8 +8,17 @@
         </form>
         <div class="row">
             <div class="col-4">
-                <div class="ticket-divider h4 text-center">
-                    {{ __('app.ticket.admin_ticket') }} #{{ $ticket->id }}
+                <div class="row">
+                    <div class="col-8">
+                        <div class="ticket-divider h4 text-center">
+                            {{ __('app.ticket.admin_ticket') }} #{{ $ticket->id }}
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="ticket-divider h4 text-center text-uppercase">
+                            {{ \App\Enums\Ticket\TicketStateEnum::getMessage($ticket->state) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -64,7 +73,16 @@
                         </div>
                         <div class="row mb-1">
                             <div class="col"><label>{{ __('app.ticket.order') }}</label></div>
-                            <div class="col"><label>{{ $ticket->order->channel_order_number }}</label></div>
+                            <div class="col">
+                                @if($url = $ticket->order->getOrderChannelUrl())
+                                    <a href="{{ $url }}" target="_blank">
+                                        {{ $ticket->order->channel_order_number }}
+                                        <i class="uil-external-link-alt"></i>
+                                    </a>
+                                @else
+                                    <label>{{ $ticket->order->channel_order_number }}</label>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -129,6 +147,14 @@
                                 aria-controls="customer-service-process"
                                 aria-selected="false">{{ __('app.customer_service_process') }}</button>
                     </li>
+                    @if(setting('pm.active'))
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="parcel-management-tab" data-bs-toggle="tab"
+                                    data-bs-target="#parcel-management" type="button" role="tab"
+                                    aria-controls="parcel-management"
+                                    aria-selected="false">{{ __('app.config.misc.pm.pm') }}</button>
+                        </li>
+                    @endif
                 </ul>
                 <div class="tab-content" id="ticketTabContent">
                     <div class="tab-pane fade show active" id="hide" role="tabpanel" aria-labelledby="hide-tab"></div>
@@ -142,6 +168,12 @@
                         <iframe src="{{ \App\Helpers\Prestashop\SavProcessGateway::getUrl($ticket) }}"
                                 allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
                     </div>
+                    @if(setting('pm.active'))
+                        <div class="tab-pane fade" id="parcel-management" role="tabpanel"
+                             aria-labelledby="parcel-management-tab">
+                            <iframe src="{{ \App\Helpers\ParcelManagementGateway::getIframeUrl($ticket) }}" allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
+                        </div>
+                    @endif
                 </div>
                 <div class="mt-2 text-end">
                     <button form="saveTicket" type="submit" class="btn btn-outline-primary">

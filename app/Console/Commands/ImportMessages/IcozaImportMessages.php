@@ -3,15 +3,19 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Channel\ChannelEnum;
+use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\TmpFile;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
+use Cnsi\Attachments\Model\Document;
 use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
+use DateTime;
 use Exception;
 use FnacApiClient\Entity\Message;
 use GuzzleHttp\Client;
@@ -96,9 +100,13 @@ class IcozaImportMessages extends AbstractImportMessages
             try {
                 DB::beginTransaction();
 
+                $starter_date = $this->checkMessageDate(new DateTime($message->date_add));
+                if (!$starter_date)
+                    continue;
+
                 $order      = Order::getOrder($message->order, $this->channel);
                 $ticket     = Ticket::getTicket($order, $this->channel);
-                $thread     = Thread::getOrCreateThread($ticket, $message->order, 'Discussion Icoza');
+                $thread     = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, Thread::DEFAULT_NAME);
 
                 if (!$this->isMessagesImported($message->id)) {
                     $this->logger->info('Convert api message to db message');
@@ -120,12 +128,12 @@ class IcozaImportMessages extends AbstractImportMessages
     /**
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread)
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread, $attachments = [])
     {
         $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
 
         $this->logger->info('Set ticket\'s status to waiting admin');
-        $ticket->state = TicketStateEnum::WAITING_ADMIN;
+        $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
 
@@ -140,6 +148,14 @@ class IcozaImportMessages extends AbstractImportMessages
                 'author_type' => TicketMessageAuthorTypeEnum::CUSTOMER,
                 'content' => strip_tags($message_api->content)
             ]);
+
+        if($message_api->attachements) {
+            $this->logger->info('Download documents from message');
+            foreach ($message_api->attachements as $attachement) {
+                $tmpFile = new TmpFile((string) file_get_contents($attachement->url));
+                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachement->image_name);
+            }
+        }
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);
