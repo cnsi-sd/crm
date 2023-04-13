@@ -40,8 +40,9 @@ return [
     'order_info' => 'Info commande',
     'product_return' => 'Retour produits',
     'customer_service_process' => 'Procédure SAV',
-    'confirm' => 'Confimer',
+    'confirm' => 'Confirmer',
     'cancel' => 'Annuler',
+    'download' => 'Télécharger',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',

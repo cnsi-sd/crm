@@ -19,40 +19,17 @@
         <div class="collapse @if($message->isExternal()) show @endif()" id="collapse-message-{{$message->id}}">
             <div class="card-body {{$message->author_type}}">
                 {!! nl2br($message->content) !!}
+
+                @if($message->documents()->get()->count() > 0)
+                    <hr>
+                    <label>{{ trans_choice('attachments::attachments.document.document', 2) }}</label>
+                    @foreach($message->documents()->get() as $document)
+                        <a href="{{ route('show_document', [$document->documentable, $document]) }}" target="_blank" class="d-block">
+                            {{$document->name}}
+                        </a>
+                    @endforeach
+                @endif
             </div>
-            @if($message->documents()->get()->count() > 0)
-                <hr>
-                <div class="container text-start">
-                    <label>Pièces jointes :</label>
-                    <table>
-                        <tbody>
-                        @foreach($message->documents()->get() as $document)
-                            <tr>
-                                <td>{{$document->name}}</td>
-                                <td>
-                                    <a
-                                        href="{{ route('show_document', [$document->documentable, $document]) }}"
-                                        class="btn btn-secondary btn-sm"
-                                        title="{{ __('attachments::attachments.display') }}"
-                                        target="_blank"
-                                    >
-                                        <i class="uil-eye"></i>
-                                    </a>
-                                    <a
-                                        href="{{ route('download_document', [$document->documentable, $document]) }}"
-                                        class="btn btn-secondary btn-sm"
-                                        title="{{ __('attachments::attachments.download') }}"
-                                        target="_blank"
-                                    >
-                                        <i class="uil-download-alt"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
         </div>
     </div>
 @endforeach
