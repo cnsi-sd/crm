@@ -16,9 +16,11 @@ use App\Policies\Configuration\DefaultAnswerPolicy;
 use App\Policies\Configuration\RevivalPolicy;
 use App\Policies\Configuration\SavNotePolicy;
 use App\Policies\Configuration\TagPolicy;
+use App\Policies\Settings\JobPolicy;
 use App\Policies\Settings\RolePolicy;
 use App\Policies\Settings\UserPolicy;
 use App\Policies\Tickets\TicketPolicy;
+use Cnsi\JobWatcher\Models\Job;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -38,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
         Channel::class => ChannelPolicy::class,
         Tag::class => TagPolicy::class,
         SavNote::class => SavNotePolicy::class,
+        Job::class => JobPolicy::class,
     ];
 
     /**

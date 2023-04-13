@@ -46,4 +46,7 @@ return [
     // Doc
     'AGENT_DOC' => 'Documentation agent',
     'ADMIN_DOC' => 'Documentation admin',
+
+    // Jobs
+    'JOB_READ' => 'Gérer les tâches',
 ];
