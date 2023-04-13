@@ -12,12 +12,11 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="active" id="active" @checked(setting('pm.active'))>
-                                <label class="form-check-label" for="active">{{ __('app.config.misc.pm.active') }}</label>
-                            </div>
-                        </div>
+                        @include('form_components.switch', [
+                            'translation' => __('app.config.misc.pm.active'),
+                            'name' => 'active',
+                            'value' => old('active', setting('pm.active')),
+                        ])
 
                         <div class="mb-3">
                             <label for="app_url" class="form-label">
@@ -65,29 +64,25 @@
                             <input name="close_api_token" class="form-control" value="{{ old('close_api_token', setting('pm.close_api_token')) }}">
                         </div>
 
-                        @include('common.tag_select', [
-                            'id' => 'accepted_return_tag',
+                        @include('form_components.tag_select', [
                             'translation' => __('app.config.misc.pm.accepted_return_tag'),
                             'name' => 'accepted_return_tag',
                             'value' => old('accepted_return_tag', setting('pm.accepted_return_tag')),
                         ])
 
-                        @include('common.tag_select', [
-                            'id' => 'refused_return_tag',
+                        @include('form_components.tag_select', [
                             'translation' => __('app.config.misc.pm.refused_return_tag'),
                             'name' => 'refused_return_tag',
                             'value' => old('refused_return_tag', setting('pm.refused_return_tag')),
                         ])
 
-                        @include('common.tag_select', [
-                            'id' => 'return_with_reserves_tag',
+                        @include('form_components.tag_select', [
                             'translation' => __('app.config.misc.pm.return_with_reserves_tag'),
                             'name' => 'return_with_reserves_tag',
                             'value' => old('return_with_reserves_tag', setting('pm.return_with_reserves_tag')),
                         ])
 
-                        @include('common.tag_select', [
-                            'id' => 'return_with_remark_tag',
+                        @include('form_components.tag_select', [
                             'translation' => __('app.config.misc.pm.return_with_remark_tag'),
                             'name' => 'return_with_remark_tag',
                             'value' => old('return_with_remark_tag', setting('pm.return_with_remark_tag')),
@@ -96,9 +91,7 @@
                 </div>
             </div>
 
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
-            </div>
+            @include('form_components.submit')
         </form>
     </div>
 @endsection

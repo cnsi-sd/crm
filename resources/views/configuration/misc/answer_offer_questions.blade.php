@@ -9,6 +9,7 @@
             <div class="card-body">
                 <form class="form-horizontal" method="post">
                     @csrf
+
                     <div class=" row col-3 mb-3">
                         <label for="defaultAnswer">
                             {{ trans_choice('app.default_answer.default_answer', 1)
@@ -23,9 +24,8 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
-                    </div>
+
+                    @include('form_components.submit')
                 </form>
             </div>
         </div>
