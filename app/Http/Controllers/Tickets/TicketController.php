@@ -195,19 +195,6 @@ class TicketController extends AbstractController
 
                 AbstractSendMessage::dispatchMessage($message);
             }
-            if($request->input('ticket-comments-content')) {
-                $request->validate([
-                    'ticket-comments-content'     => ['required','string'],
-                    'ticket-comment-type'         => ['required','string'],
-                ]);
-                Comment::firstOrCreate([
-                    'ticket_id' => $thread->id,
-                    'user_id' => $request->user()->id,
-                    'content' => $request->input('ticket-comments-content'),
-                    'displayed' => 1,
-                    'type' => $request->input('ticket-comment-type'),
-                ]);
-            }
             Alert::toastSuccess(__('app.ticket.saved'));
             return redirect()->back();
         }
