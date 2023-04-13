@@ -23,9 +23,7 @@
                         'value' => old('answer_id', setting('bot.acknowledgment.answer_id')),
                     ])
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
-                    </div>
+                    @include('form_components.submit')
                 </form>
             </div>
         </div>

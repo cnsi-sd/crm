@@ -53,9 +53,7 @@
                         'value' => old('late_order_tag_id', setting('bot.shipping_information.late_order_tag_id')),
                     ])
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
-                    </div>
+                    @include('form_components.submit')
                 </form>
             </div>
         </div>

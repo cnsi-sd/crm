@@ -17,9 +17,7 @@
                         'value' => old('mirakl_refunds_tag_id', setting('mirakl_refunds_tag_id')),
                     ])
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
-                    </div>
+                    @include('form_components.submit')
                 </form>
             </div>
         </div>
