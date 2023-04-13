@@ -12,12 +12,11 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="active" id="active" @checked(setting('pm.active'))>
-                                <label class="form-check-label" for="active">{{ __('app.config.misc.pm.active') }}</label>
-                            </div>
-                        </div>
+                        @include('form_components.switch', [
+                            'translation' => __('app.config.misc.pm.active'),
+                            'name' => 'active',
+                            'value' => old('active', setting('pm.active')),
+                        ])
 
                         <div class="mb-3">
                             <label for="app_url" class="form-label">

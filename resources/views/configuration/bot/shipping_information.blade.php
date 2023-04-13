@@ -11,12 +11,11 @@
                 <form class="form-horizontal" method="post">
                     @csrf
 
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="active" id="active" @checked(setting('bot.shipping_information.active'))>
-                            <label class="form-check-label" for="active">{{ __('app.bot.active') }}</label>
-                        </div>
-                    </div>
+                    @include('form_components.switch', [
+                        'translation' => __('app.bot.active'),
+                        'name' => 'active',
+                        'value' => old('active', setting('bot.shipping_information.active')),
+                    ])
 
                     @include('form_components.default_reply_select', [
                         'translation' => __('app.bot.shipping_information.fulfillment_answer'),
