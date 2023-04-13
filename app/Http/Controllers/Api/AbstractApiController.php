@@ -38,12 +38,12 @@ class AbstractApiController extends BaseController
         $this->logger->info('Calling middlewares...');
     }
 
-    protected function message($message, $status = 200, ?array $data = null): \Illuminate\Http\JsonResponse
+    protected function message($message, $status = 200, ?array $data = null, array $headers = []): \Illuminate\Http\JsonResponse
     {
         $this->logger->info('=================');
         $this->logger->info('[RESPONSE][CODE]    ' . $status);
         $this->logger->info('[RESPONSE][MESSAGE] ' . json_encode(['message' => $message],  JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
         $this->logger->info('------ DONE ------');
-        return response()->json(['message' => $message, 'data' => $data], $status);
+        return response()->json(['message' => $message, 'data' => $data], $status, $headers);
     }
 }
