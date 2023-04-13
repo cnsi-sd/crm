@@ -66,4 +66,38 @@ class ParcelManagementApiController extends AbstractApiController
             return $this->message('Internal Server Error', 500, ['status' => 'error']);
         }
     }
+
+    public function has_been_notified(Request $request, string $token, Ticket $ticket, string $comment): JsonResponse
+    {
+        try {
+            $headers = ['Access-Control-Allow-Origin' => '*'];
+            $this->logger->info('START has been notified ticket ' . $ticket->id);
+
+            // Check if PM is active
+            if (!setting('pm.active')) {
+                $this->logger->error('Parcel Management Inactive');
+                return $this->message('Parcel Management Inactive', 403, ['status' => 'error'], $headers);
+            }
+
+            // Check token
+            if ($token !== setting('pm.close_api_token')) {
+                $this->logger->error('Invalid token, got `' . $token . '`');
+                return $this->message('Invalid token', 401, ['status' => 'error'], $headers);
+            }
+
+            $isNotified = false;
+            foreach($ticket->comments as $dbComment) {
+                if($dbComment->content === $comment) {
+                    $isNotified = true;
+                    break;
+                }
+            }
+
+            $this->logger->info('--- DONE ---');
+            return response()->json(['status' => 'success', 'isNotified' => $isNotified], 200, $headers);
+        } catch (Exception $e) {
+            $this->logger->error($e->getMessage(), $e);
+            return $this->message('Internal Server Error', 500, ['status' => 'error']);
+        }
+    }
 }

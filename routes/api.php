@@ -21,4 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/savprocess/close/{token}/{ticket}', [TicketApiController::class, 'savProcessComplete']);
-Route::get('/parcelmanagement/notify/ticket_id/{ticket}/token/{token}/comment/{comment}/tag/{tag}', [ParcelManagementApiController::class, 'notify']);
+
+Route::prefix('parcelmanagement')->group(function() {
+    Route::get('notify/ticket_id/{ticket}/token/{token}/comment/{comment}/tag/{tag}', [ParcelManagementApiController::class, 'notify']);
+    Route::get('has_been_notified/token/{token}/ticket_id/{ticket}/comment/{comment}', [ParcelManagementApiController::class, 'has_been_notified']);
+});
