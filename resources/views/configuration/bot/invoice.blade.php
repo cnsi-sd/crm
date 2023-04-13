@@ -18,31 +18,17 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="found_answer_id" class="form-label">
-                            {{ __('app.bot.invoice.found_answer') }}
-                        </label>
-                        <select name="found_answer_id" class="form-control form-select" required>
-                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('bot.invoice.found_answer_id') == $reply->id)>
-                                    {{ $reply->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.default_reply_select', [
+                        'translation' => __('app.bot.invoice.found_answer'),
+                        'name' => 'found_answer_id',
+                        'value' => old('found_answer_id', setting('bot.invoice.found_answer_id')),
+                    ])
 
-                    <div class="mb-3">
-                        <label for="not_shipped_answer_id" class="form-label">
-                            {{ __('app.bot.invoice.not_shipped_answer') }}
-                        </label>
-                        <select name="not_shipped_answer_id" class="form-control form-select" required>
-                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('bot.invoice.not_shipped_answer_id') == $reply->id)>
-                                    {{ $reply->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.default_reply_select', [
+                        'translation' => __('app.bot.invoice.not_shipped_answer'),
+                        'name' => 'not_shipped_answer_id',
+                        'value' => old('not_shipped_answer_id', setting('bot.invoice.not_shipped_answer_id')),
+                    ])
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>

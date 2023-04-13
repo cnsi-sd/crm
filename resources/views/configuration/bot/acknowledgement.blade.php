@@ -18,18 +18,11 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="answer_id" class="form-label">
-                            {{ __('app.bot.acknowledgement.answer') }}
-                        </label>
-                        <select name="answer_id" class="form-control form-select" required>
-                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $reply)
-                                <option value="{{ $reply->id }}" @selected(setting('bot.acknowledgment.answer_id') == $reply->id)>
-                                    {{ $reply->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.default_reply_select', [
+                        'translation' => __('app.bot.acknowledgement.answer'),
+                        'name' => 'answer_id',
+                        'value' => old('answer_id', setting('bot.acknowledgment.answer_id')),
+                    ])
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
