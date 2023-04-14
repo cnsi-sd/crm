@@ -70,7 +70,6 @@ return [
         'revival' => 'Relance automatique',
         'ticket'=> 'Ticket',
         'tag'=>'Tag',
-        'jobs' => 'Tâches',
     ],
 
     'role' => [
