@@ -70,7 +70,7 @@ return [
         'default_message_answer' => 'Message par défaut',
         'revival' => 'Relance automatique',
         'ticket'=> 'Ticket',
-        'tag'=>'Tag'
+        'tag'=>'Tag',
     ],
 
     'role' => [
