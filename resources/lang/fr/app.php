@@ -40,8 +40,9 @@ return [
     'order_info' => 'Info commande',
     'product_return' => 'Retour produits',
     'customer_service_process' => 'Procédure SAV',
-    'confirm' => 'Confimer',
+    'confirm' => 'Confirmer',
     'cancel' => 'Annuler',
+    'download' => 'Télécharger',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -69,7 +70,7 @@ return [
         'default_message_answer' => 'Message par défaut',
         'revival' => 'Relance automatique',
         'ticket'=> 'Ticket',
-        'tag'=>'Tag'
+        'tag'=>'Tag',
     ],
 
     'role' => [
@@ -196,6 +197,26 @@ return [
 
             'closed_discussion' => 'Discussion clôturée',
             'closed_discussion_tag' => 'Tag discussion clôturée',
+
+            'external_features' => 'Fonctionnalités externes',
+
+            'pm' => [
+                'pm' => 'Parcel Management',
+
+                'out' => 'Configuration sortante',
+                'active' => 'Activer l\'onglet Parcel Management',
+                'app_url' => 'URL Application',
+                'api_url' => 'URL API',
+                'api_token' => 'Token API',
+                'id_shop' => 'ID Shop',
+
+                'in' => 'Configuration entrante',
+                'close_api_token' => 'Token API',
+                'accepted_return_tag' => 'Tag Retour accepté',
+                'refused_return_tag' => 'Tag Retour refusé',
+                'return_with_reserves_tag' => 'Tag Retour avec réserves',
+                'return_with_remark_tag' => 'Tag Retour avec remarques',
+            ],
         ],
     ],
 

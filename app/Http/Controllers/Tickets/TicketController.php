@@ -112,6 +112,25 @@ class TicketController extends AbstractController
         return response()->json(['message' => 'success']);
     }
 
+    public function post_comment(Request $request, Ticket $ticket): View
+    {
+        if($request->input('content')) {
+            $request->validate([
+                'content'     => ['required','string'],
+                'type'         => ['required','string'],
+            ]);
+            $comment = Comment::firstOrCreate([
+                'ticket_id' => $ticket->id,
+                'user_id' => $request->user()->id,
+                'content' => $request->input('content'),
+                'displayed' => 1,
+                'type' => $request->input('type'),
+            ]);
+        }
+        return view('tickets.parts.private_comment')
+            ->with('comment', $comment);
+    }
+
     public function get_external_infos(Ticket $ticket): View
     {
         $externalOrderInfo = $ticket->order->getPrestashopOrders();
@@ -173,19 +192,6 @@ class TicketController extends AbstractController
                 }
 
                 AbstractSendMessage::dispatchMessage($message);
-            }
-            if($request->input('ticket-comments-content')) {
-                $request->validate([
-                    'ticket-comments-content'     => ['required','string'],
-                    'ticket-comment-type'         => ['required','string'],
-                ]);
-                Comment::firstOrCreate([
-                    'ticket_id' => $thread->id,
-                    'user_id' => $request->user()->id,
-                    'content' => $request->input('ticket-comments-content'),
-                    'displayed' => 1,
-                    'type' => $request->input('ticket-comment-type'),
-                ]);
             }
             Alert::toastSuccess(__('app.ticket.saved'));
             return redirect()->back();

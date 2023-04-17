@@ -33,4 +33,5 @@ abstract class PermissionEnum extends AbstractEnum
 
     const AGENT_DOC                     = 'agent_doc';
     const ADMIN_DOC                     = 'admin_doc';
+    const JOB_READ                      = 'job_read';
 }

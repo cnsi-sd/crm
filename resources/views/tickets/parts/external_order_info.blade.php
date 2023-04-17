@@ -75,7 +75,7 @@
                             @if($order['max_shipment_date'])
                                 <div class="row">
                                     <div class="col">{{ __('app.order.max_shipment_date') }} :</div>
-                                    <div class="col max_shipment_date">{{ (new DateTime($order['max_shipment_date']))->format('d/m/Y') }}</div>
+                                    <div class="col @if((new DateTime()) >= (new DateTime($order['max_shipment_date']))) max_shipment_date @endif">{{ (new DateTime($order['max_shipment_date']))->format('d/m/Y') }}</div>
                                 </div>
                             @endif
                             <div class="row pt-2">

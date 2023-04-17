@@ -171,6 +171,10 @@ Breadcrumbs::for('closed_discussion_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
     $trail->push(__('app.config.misc.closed_discussion'), route('closed_discussion_config'));
 });
+Breadcrumbs::for('parcel_management_config', function (BreadcrumbTrail $trail) {
+    $trail->parent('misc_home');
+    $trail->push(__('app.config.misc.pm.pm'), route('parcel_management_config'));
+});
 
 /** Channel */
 Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {
@@ -224,3 +228,9 @@ Breadcrumbs::for('edit_sav_note', function (BreadcrumbTrail $trail, SavNote $sav
     $trail->parent('show_sav_note', $savNote);
     $trail->push(__('app.edit'), route('edit_sav_note', $savNote));
 });
+/** JobWatcher */
+Breadcrumbs::for('jobs', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(trans_choice('jobwatcher::jobs.job', 2));
+});
+

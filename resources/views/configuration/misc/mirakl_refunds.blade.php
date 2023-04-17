@@ -11,22 +11,13 @@
                 <form class="form-horizontal" method="post">
                     @csrf
 
-                    <div class="mb-3">
-                        <label for="late_order_tag_id" class="form-label">
-                            {{ __('app.config.misc.mirakl_refunds_tag') }}
-                        </label>
-                        <select name="mirakl_refunds_tag_id" class="form-control form-select" required>
-                            @foreach(\App\Models\Tags\Tag::all() as $tag)
-                                <option value="{{ $tag->id }}" @selected(setting('mirakl_refunds_tag_id') == $tag->id)>
-                                    {{ $tag->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.tag_select', [
+                        'translation' => __('app.config.misc.mirakl_refunds_tag'),
+                        'name' => 'mirakl_refunds_tag_id',
+                        'value' => old('mirakl_refunds_tag_id', setting('mirakl_refunds_tag_id')),
+                    ])
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary" name="save">{{ __('app.save') }}</button>
-                    </div>
+                    @include('form_components.submit')
                 </form>
             </div>
         </div>

@@ -2,19 +2,36 @@
 
 1 ticket = 1 commande
 
-Un ticket est la relation entre un client et le service après-ventes, 
+Un ticket est utilisé pour faire la relation entre un client et le service après-ventes.
+Quand un client fait une commande et qu'il a besoin de plus d'information concernant c'elle-ci, le service après-vente aura accès à cette demande via un ticket.
 
-## Historique des messages
-Afin de pouvoir identifier plus rapidement qui est l'auteur d'un message, nous avons un code couleur qui a été mis en place.
-Voici donc les différents codes couleur utiliser :
+## Liste de ticket 
 
-| **Auteur**  | **Couleur** |
-|-------------|-------------|
-| Client      | Orange      |
-| Opérateur   | Rouge       |
-| Admin       | Vert        |
+Pour lister tous les tickets, ils sont affichés de la façon suivante :
+![affichage-liste-ticket]
 
-## Fil de discussion
+Comme on peut le voir, il y a plusieurs colonnes dans le tableau d'affichage, ce qui peut permettre l'identification plus ciblée d'un ticket.
+Nous avons donc dans l'ordre d'affichage,
+- ' # ' : Numéro d'identification du ticket.
+- Deadline : Date limite de traitement du ticket.
+- Responsable : Partie ou sera affiché à qui ce ticket a été affecté.
+- Sujets : Titre de la demande ou identification du ticket.
+- Statut : État du ticket, ouvert pour dire que la demande client est en cours de traitement, fermé pour dire que la demande a été pris en compte et une solution a été trouvé.
+- Priorité : Affiche l'urgence du traitement (détaillé les priorités)
+- Canal de diffusion : le nom de la MarketPlace d'où vient cette demande
+- Aperçu du tag : affiche les tags assignée au ticket.
+- Date d'ouverture : date à laquelle la demande a été faite.
+
+
+## Vue en détail d'un ticket
+
+Un ticket est séparé en 2 colonnes, la partie avec toutes les informations du ticket (partie gauche) et la partie avec les fils de discussion (partie de droite).
+
+### Infomation du ticket
+
+WIP !!!!!
+
+### Fil de discussion
 
 Un fil de discussion est relié à une demande d'un client sur une commande.
 
@@ -34,3 +51,12 @@ Selon le canal de diffusion le systems de fil de discussion est différent.
     Ce fil de discussion n'est disponible que pour les commandes qui existent dans le Backoffice.
     Ne permet que l'envoi de messages, pas de réception.
 
+### Historique des messages
+Afin de pouvoir identifier plus rapidement qui est l'auteur d'un message, nous avons un code couleur qui a été mis en place.
+Voici donc les différents codes couleur utiliser :
+
+| **Auteur**  | **Couleur** |
+|-------------|-------------|
+| Client      | Orange      |
+| Opérateur   | Rouge       |
+| Admin       | Vert        |

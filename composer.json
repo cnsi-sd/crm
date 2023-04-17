@@ -21,6 +21,7 @@
         "cnsi/lock": "dev-main",
         "cnsi/logger": "dev-main",
         "cnsi/searchable": "dev-main",
+        "cnsi/jobwatcher": "dev-main",
         "diglactic/laravel-breadcrumbs": "8.0.1",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
@@ -126,6 +127,10 @@
         {
             "type": "vcs",
             "url": "https://gitlab+deploy-token-22:A2A2b-TQL8-BXZM34Zgu@git.cnsi-sd.net/packages/lock.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token:glpat-ydDRZCtsMHFFMswWAxrc@git.cnsi-sd.net/packages/jobwatcher.git"
         }
     ]
 }

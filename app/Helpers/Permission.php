@@ -106,6 +106,12 @@ abstract class Permission
                             PermissionEnum::CHANNEL_EDIT,
                         ],
                     ],
+                    [
+                        'title' => __('app.permission.jobs'),
+                        'items' => [
+                            PermissionEnum::JOB_READ,
+                        ],
+                    ],
                 ],
             ],
             [

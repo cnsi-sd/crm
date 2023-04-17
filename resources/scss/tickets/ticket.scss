@@ -38,16 +38,18 @@
 /**
  THREADS TABS CONTENT
  */
-#threadsTabsContent .tab-pane .card .card-body.customer {
-    background-color: #ffe6cc;
-}
+#threadsTabsContent {
+    .customer {
+        background-color: #ffe6cc;
+    }
 
-#threadsTabsContent .tab-pane .card .card-body.operator {
-    background-color: #FADBD9;
-}
+    .operator {
+        background-color: #FADBD9;
+    }
 
-#threadsTabsContent .tab-pane .card .card-body.admin {
-    background-color: #CCFFCC;
+    .admin {
+        background-color: #CCFFCC;
+    }
 }
 
 #threadsTabs .badge {

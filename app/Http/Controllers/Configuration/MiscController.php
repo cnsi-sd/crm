@@ -104,4 +104,29 @@ class MiscController extends AbstractController
 
         return view('configuration.misc.answer_offer_questions');
     }
+
+    public function parcelManagement(Request $request): View|RedirectResponse
+    {
+        if ($request->exists('save')) {
+            // Output config
+            setting(['pm.active' => $request->input('active') === 'on']);
+            setting(['pm.app_url' => $request->input('app_url')]);
+            setting(['pm.api_url' => $request->input('api_url')]);
+            setting(['pm.api_token' => $request->input('api_token')]);
+            setting(['pm.id_shop' => $request->input('id_shop')]);
+
+            // Input config
+            setting(['pm.accepted_return_tag' => $request->input('accepted_return_tag')]);
+            setting(['pm.refused_return_tag' => $request->input('refused_return_tag')]);
+            setting(['pm.return_with_reserves_tag' => $request->input('return_with_reserves_tag')]);
+            setting(['pm.return_with_remark_tag' => $request->input('return_with_remark_tag')]);
+            setting(['pm.close_api_token' => $request->input('close_api_token')]);
+            setting()->save();
+
+            Alert::toastSuccess(__('app.config.misc.saved'));
+            return redirect()->back();
+        }
+
+        return view('configuration.misc.parcel_management');
+    }
 }

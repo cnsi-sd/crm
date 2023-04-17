@@ -101,6 +101,12 @@ abstract class Menu
                         'ref' => 'roles',
                         'permission' => PermissionEnum::ROLE_READ
                     ],
+                    [
+                        'text' => trans_choice('jobwatcher::jobs.job', 2),
+                        'route' => route('jobs'),
+                        'ref' => 'jobs',
+                        'permission' => PermissionEnum::JOB_READ
+                    ],
                 ],
             ],
             [
