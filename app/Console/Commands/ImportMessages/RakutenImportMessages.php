@@ -16,6 +16,7 @@ use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\DB;
 
 
@@ -87,6 +88,7 @@ class RakutenImportMessages extends AbstractImportMessages
 
     /**
      * @throws Exception
+     * @throws GuzzleException
      */
     public function handle()
     {
@@ -104,16 +106,16 @@ class RakutenImportMessages extends AbstractImportMessages
 
         // GET LAST MESSAGES
         $this->logger->info('Init api');
-        $client = $this->initApiClient();
+        $this->initApiClient();
 
         $fromTime = strtotime(date('Y-m-d H:m:s') . self::FROM_DATE_TRANSFORMATOR);
         $fromDate = date('Y-m-d H:i:s', $fromTime);
 
         //get item list
-        $items = $this->getItems($client);
+        $items = $this->getItems();
 
         //get infos
-        $threadList = $this->getInfos($items, $client);
+        $threadList = $this->getInfos($items);
         $threads = $this->sortMessagesByDate($threadList);
 
         try {
@@ -142,12 +144,13 @@ class RakutenImportMessages extends AbstractImportMessages
 
     /**
      * @throws Exception
+     * @throws GuzzleException
      */
-    private function getItems($client): array
+    private function getItems(): array
     {
         $this->logger->info('Get thread list');
 
-        $response = $client->request(
+        $response = $this->client->request(
                 'GET', $this->getCredentials()['host'] . '/'. self::PAGE
                 . '?action='  . self::GET_ITEM_TODO_LIST
                 . '&login='   . env('RAKUTEN_LOGIN')
@@ -243,13 +246,14 @@ class RakutenImportMessages extends AbstractImportMessages
 
     /**
      * @throws Exception
+     * @throws GuzzleException
      */
-    private function getInfos($msgsId, $client): array
+    private function getInfos($msgsId): array
     {
         $this->logger->info('Get messages list');
         $arrayMessages = [];
         foreach ($msgsId as $msgId => $type) {
-            $response = $client->request(
+            $response = $this->client->request(
                 'GET', $this->getCredentials()['host'] . '/' . self::PAGE
                 . '?action='  . self::GET_ITEM_INFOS
                 . '&login='   . env('RAKUTEN_LOGIN')
