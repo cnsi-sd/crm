@@ -74,7 +74,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
             } while ($nextToken);
         } catch (Exception $e) {
             $this->logger->error('An error has occurred on API call', $e);
-//            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
         }
         /** @var Thread $miraklThread */
         foreach ($threads as $miraklThread) {
