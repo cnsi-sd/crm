@@ -58,7 +58,6 @@
                                 <select
                                     name="user"
                                     class="form-control form-control-sm form-select"
-                                    disabled
                                 >
                                     <option value="">-- {{trans_choice('app.ticket.owner', 1)}} --</option>
                                     @foreach(\App\Models\User\User::all() as $user)
