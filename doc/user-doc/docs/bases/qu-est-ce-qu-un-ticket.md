@@ -27,9 +27,36 @@ Nous avons donc dans l'ordre d'affichage,
 
 Un ticket est séparé en 2 colonnes, la partie avec toutes les informations du ticket (partie gauche) et la partie avec les fils de discussion (partie de droite).
 
-### Infomation du ticket
+### Information du ticket
+Tout d'abord, il y a la partie avec les informations principale d'un ticket avec :
+- Le statut du ticket
+- La priorité
+- Le responsable à qui a été assigné le ticket
+- La deadline du ticket
+- Le canal de diffusion du ticket
+- Le numéro de commande
 
-WIP !!!!!
+![information_general](assets/information_general.png)
+
+  Ensuite, nous avons les informations de base :
+- La date d'ouverture du ticket, qui dit depuis quand le ticket à commencer à être traité
+- La problématique du client
+- L'email du client
+- Date de livraison
+
+![information_de_base](assets/information_de_base.png)
+
+Par la suite, nous avons les tags qui sont details dans la partie fonctionnalités.
+![tags](assets/tags.png)
+
+À la suite de ça, on a les commentaires privés qui permet aux ADV de mettre des notes sur le ticket pour savoir où en est le ticket, ou encore des informations qui ont été dites lors d'un appel téléphonique.
+![commentaire_privee](assets/commentaire_privee.png)
+
+Puis, nous avons les documents (a détaillé)
+![documents](assets/documents.png)
+
+Et enfin, nous avons la partie administration avec la relance automatique.
+![relance_automatique](assets/relance_automatique.png)
 
 ### Fil de discussion
 
@@ -60,3 +87,7 @@ Voici donc les différents codes couleur utiliser :
 | Client      | Orange      |
 | Opérateur   | Rouge       |
 | Admin       | Vert        |
+
+### Envoie d'un message
+
+Pour l'envoi de message, il y a un espace pour écrire le message (à terminer)
