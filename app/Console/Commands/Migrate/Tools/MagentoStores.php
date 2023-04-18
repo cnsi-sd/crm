@@ -27,6 +27,7 @@ abstract class MagentoStores
                 "carrefour"     => Channel::getByName(ChannelEnum::CARREFOUR_FR, false),
 //                "leclerc"       => Channel::getByName(ChannelEnum::E_LECLERC, false),
 //                "icoza"         => Channel::getByName(ChannelEnum::ICOZA_FR, false),
+//                "boulanger"     => Channel::getByName(ChannelEnum::BOULANGER_COM, false),
             ];
         }
 
@@ -49,6 +50,7 @@ abstract class MagentoStores
                 "leclerc"       => Channel::getByName(ChannelEnum::E_LECLERC, false),
                 "icoza"         => Channel::getByName(ChannelEnum::ICOZA_FR, false),
                 "carrefour"     => Channel::getByName(ChannelEnum::CARREFOUR_FR, false),
+                "boulanger"     => Channel::getByName(ChannelEnum::BOULANGER_COM, false),
             ];
         }
 
