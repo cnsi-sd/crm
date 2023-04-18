@@ -30,10 +30,9 @@ class AmazonImportMessage extends AbstractImportMailMessages
 {
     const RETURN = 'retour';
     const IMPORT = 'import';
-
     public function __construct()
     {
-        $this->signature = sprintf($this->signature, 'amazon');
+        $this->signature = sprintf($this->signature, 'amazon') . ' {account?}';
         $this->channelName = ChannelEnum::AMAZON_FR;
         $this->reverse = true;
         parent::__construct();
@@ -44,12 +43,27 @@ class AmazonImportMessage extends AbstractImportMailMessages
      */
     protected function getCredentials(): array
     {
+        $accountNumber = $this->argument('account');
+        if (!in_array($accountNumber, [1,2]) && !is_null($accountNumber))
+            throw new Exception('Account not found');
+
+        $host = env('AMAZON_MAIL_URL');
+        $username = env('AMAZON_USERNAME');
+        $password = env('AMAZON_PASSWORD');
+
+        if ($accountNumber == 2){
+            $host = env('AMAZON_2_MAIL_URL');
+            $username = env('AMAZON_2_USERNAME');
+            $password = env('AMAZON_2_PASSWORD');
+        }
+
         return [
-            'host' => env('AMAZON_MAIL_URL'),
-            'username' => env('AMAZON_USERNAME'),
-            'password' => env('AMAZON_PASSWORD')
+            'host' => $host,
+            'username' => $username,
+            'password' => $password
         ];
     }
+
 
     /**
      * @param $email
