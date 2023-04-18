@@ -41,7 +41,9 @@
         "tinymce/tinymce": "^6.3",
         "twilio/sdk": "^6.44",
         "vlucas/phpdotenv": "^5.5",
-        "webklex/php-imap": "^5.0"
+        "webklex/php-imap": "^5.0",
+        "league/oauth2-client": "^2.6",
+        "microsoft/microsoft-graph": "^1.73"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",

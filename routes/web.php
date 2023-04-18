@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
+use App\Http\Controllers\Auth\OAuthMicrosoftController;
 use App\Http\Controllers\Configuration\BotController;
 use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
@@ -121,6 +122,9 @@ Route::prefix('/')->group(function () {
     Route::post('/saveTicketThreadTags', [TicketController::class, 'saveTicketTags'])->name('saveTagOnticket');
     Route::post('/hastaglist', [TicketController::class, 'hasTagList'])->name('ticketHasTaglist');
     Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnTicket');
+
+    // CALL CONNEXION
+    Route::get('/callback', [OAuthMicrosoftController::class, 'callback']);
 
     // Documentation
     Route::any('doc/agent/{path?}', [DocumentationController::class, 'agent'])->where('path', '.*')->name('agent_doc')->can('agent_doc');

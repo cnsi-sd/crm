@@ -33,6 +33,8 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
      * @var string
      */
     protected string $channelName;
+
+    protected $tkg;
     /**
      * @var boolean
      */
@@ -50,27 +52,6 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
             $credentials['username'],
             $credentials['password']
         );
-    }
-    /**
-     * @throws InvalidParameterException|\Webklex\PHPIMAP\Exceptions\MaskNotFoundException
-     */
-    protected function initAutreApiClient()
-    {
-        $credentials = $this->getCredentials();
-        /**
-         * @var ClientManager $cm
-         */
-        $this->cm = new ClientManager();
-        $test = $this->cm->make([
-           'host' => 'outlook.office365.com',
-           'port' => 993,
-           'encryption' => 'ssl',
-           'validate_cert' => true,
-           'username' => $credentials['username'],
-           'password' => $credentials['password'],
-            'protocol' => 'imap',
-            'authentification' => "oauth"
-        ]);
     }
 
     /**
@@ -94,7 +75,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 
             $this->logger->info('--- Init api client ---');
 
-            $this->initAutreApiClient();
+            $this->initApiClient();
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
