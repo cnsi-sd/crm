@@ -80,6 +80,7 @@ abstract class AbstractSendMessage implements ShouldQueue
             ChannelEnum::ICOZA_FR                             => IcozaSendMessage::dispatch($message),
             ChannelEnum::MANOMANO_COM, ChannelEnum::AMAZON_FR => EmailSendMessage::dispatch($message),
             ChannelEnum::RAKUTEN_COM                          => RakutenSendMessage::dispatch($message),
+            ChannelEnum::BOULANGER_COM                        => BoulangerSendMessage::dispatchMessage($message),
             default                                           => throw new Exception('Channel given does not exists.'),
         };
     }

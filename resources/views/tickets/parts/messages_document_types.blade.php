@@ -68,6 +68,11 @@
             {{ \App\Enums\MessageDocumentTypeEnum::getMessage('OTHER') }}
         </option>
         @break
+    @case("boulanger.com")
+        <option value="{{ \App\Enums\MessageDocumentTypeEnum::CUSTOMER_INVOICE }}">
+            {{ \App\Enums\MessageDocumentTypeEnum::getMessage('CUSTOMER_INVOICE') }}
+        </option>
+        @break
     @default
         <option value="{{ \App\Enums\MessageDocumentTypeEnum::OTHER }}">
             {{ \App\Enums\MessageDocumentTypeEnum::getMessage('OTHER') }}

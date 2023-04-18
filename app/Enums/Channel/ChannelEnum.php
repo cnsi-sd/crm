@@ -23,4 +23,5 @@ class ChannelEnum extends AbstractEnum
     const RAKUTEN_COM       = "rakuten.com";
     const AMAZON_FR         = "amazon.fr";
     const MANOMANO_COM      = "manomano.com";
+    const BOULANGER_COM     = "boulanger.com";
 }
