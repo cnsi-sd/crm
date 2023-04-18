@@ -127,7 +127,7 @@ class RakutenImportMessages extends AbstractImportMessages
                 if(isset($messages[0])){
                 $order  = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
                 $ticket = Ticket::getTicket($order, $this->channel);
-                $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpItemId'], $messages[0]['type']);
+                $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpItemId'], __('app.ticket.claim'));
                 $this->importMessageByThread($ticket, $thread, $messages);
                 }
             }
@@ -360,7 +360,7 @@ class RakutenImportMessages extends AbstractImportMessages
         $patterns[] = array('name' => 'Sales', 'pattern' => '#questionsurlacommande#');
         $patterns[] = array('name' => 'Sales', 'pattern' => '#reclamation#');
         $patterns[] = array('name' => 'Sales', 'pattern' => '#cisionssurvotreachat#'); //Précisions sur votre achat
-        $patterns[] = array('name' => 'Sales', 'pattern' => '#nouveaumessagede#'); //question sur les commande
+        $patterns[] = array('name' => 'Sales', 'pattern' => '#nouveaumessagede#'); //question sur les commandes
         $patterns[] = array('name' => 'Sales', 'pattern' => '#articlenonrec#'); // Article non reçu : confirmez l'expédition (595558587) - Gwenaelle (Service Clients Rakuten)
         $patterns[] = array('name' => 'Sales', 'pattern' => '#derniegravererelanceenvoyezuntransporteur#'); // Dernière relance : envoyez un transporteur (598404103) - Yassir (Service Clients Rakuten)
         $patterns[] = array('name' => 'Sales', 'pattern' => '#messageimportant#'); // Message important - Faty (Service Clients Rakuten)
