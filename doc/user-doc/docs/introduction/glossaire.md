@@ -12,5 +12,8 @@ Canal
 CRM
 :   Sigle provenant de l'Anglais _Customer Relationship Management_, qui pourrait se traduire _Gestion de la relation client_
 
+Parcel Management
+:   Outil de gestion des colis qui font retour à Plessé. Permet notamment la génération d'autorisations de retour et le contrôle de l'état à la réception.
+
 Tag
 :   Un tag est une étiquette permettant de catégoriser un ticket client, il peut y en avoir plusieurs par ticket et sont de couleurs différentes en fonction de leur nommage

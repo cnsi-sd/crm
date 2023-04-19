@@ -57,18 +57,13 @@ Les pièces jointes envoyées au client apparaissent dans le message :
 ## Administrer le ticket
 
 ### Statut
-
-Il existe actuellement trois statuts différents de ticket :
-
-* Attente Admin : le ticket doit être mis à jour par un opérateur
-* Attente Client : le client doit répondre au ticket
+* Ouvert : les échanges avec le client sont en cours
 * Fermé : le ticket a été résolu
 
 !!!note
     Le statut doit être redéfini à chaque mise à jour du ticket.
 
 ### Priorité
-
 Les tickets sont classés par ordre de priorité, P1 étant le plus urgent, P2 étant secondaire.
 
 ### Responsable
