@@ -33,16 +33,16 @@ class CdiscountSendMessage extends AbstractSendMessage
         $client = new ClientCdiscount(env('CDISCOUNT_USERNAME'), env('CDISCOUNT_PASSWORD'));
         $discussion = new DiscussionsApi($client, env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
 
-        $channel_data = json_decode($this->message->thread->channel_data);
+        $channel_data = $this->message->thread->channel_data;
 
         $cdiscountMessage = array(
             'body' => $this->message->content,
             'discussionId' => $this->message->thread->channel_thread_number,
-            'salesChannelEternalDiscussionReference' => $channel_data->salesChannelExternalReference,
-            'salesChannel' => $channel_data->salesChannel,
+            'salesChannelEternalDiscussionReference' => $channel_data['salesChannelExternalReference'],
+            'salesChannel' => $channel_data['salesChannel'],
             'receivers' => array(
                 array(
-                    'userId' => $channel_data->userId,
+                    'userId' => $channel_data['userId'],
                     'userType' => 'Customer'
                 )
             )

@@ -52,7 +52,7 @@ class Thread extends Model
 
     protected $casts = [
         'revival_start_date' => 'date',
-        'channel_data'       => 'array'
+        'channel_data'       => 'json'
     ];
 
     /**
@@ -63,7 +63,7 @@ class Thread extends Model
      * @param array $channel_data
      * @return Model|Thread
      */
-    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, $channel_data = []): Model|Thread
+    public static function getOrCreateThread(Ticket $ticket, string $channel_thread_number, string $name, array $channel_data = []): Model|Thread
     {
         return Thread::query()
             ->select('ticket_threads.*')
@@ -77,7 +77,7 @@ class Thread extends Model
                 ],
                 [
                     'name'         => $name,
-                    'channel_data' => json_encode($channel_data),
+                    'channel_data' => $channel_data,
                 ],
             );
     }
