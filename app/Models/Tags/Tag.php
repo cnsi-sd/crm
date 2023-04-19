@@ -133,6 +133,7 @@ class Tag extends Model
             ->whereIn('tickets.id', $listeTicketId)
             ->groupBy('tag_id')
             ->orderBy('tag_count', 'DESC')
+            ->orderBy('tags.name', 'ASC')
             ->get();
 
         $listeTag = [];
