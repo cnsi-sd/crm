@@ -12,8 +12,14 @@ Canal
 CRM
 :   Sigle provenant de l'Anglais _Customer Relationship Management_, qui pourrait se traduire _Gestion de la relation client_
 
+Fulfillment
+:   Terme utilisé pour décrire une commande qui est préparée et expédiée par la marketplace.
+
 Parcel Management
 :   Outil de gestion des colis qui font retour à Plessé. Il permet notamment la génération d'autorisations de retour et le contrôle de l'état à la réception.
+
+SellerFlex
+:   Terme utilisé pour les commandes préparées dans nos entrepôts, livrées par Amazon.
 
 Tag
 :   Un tag est une étiquette permettant de catégoriser un ticket client, il peut y en avoir plusieurs par ticket et sont de couleurs différentes en fonction de leur nommage
