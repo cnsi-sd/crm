@@ -117,7 +117,8 @@ class AmazonImportMessage extends AbstractImportMailMessages
         $this->logger->info('--- start import email : ' . $email->id);
         $order = Order::getOrder($mpOrder, $this->channel);
         $ticket = Ticket::getTicket($order, $this->channel);
-        $thread = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, $email->subject, $email->fromAddress);
+        $channel_data = ["email" => $email->fromAddress];
+        $thread = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, $email->subject, $channel_data);
 
         switch ($this->getSpecificActions($email)) {
             case self::RETURN:
