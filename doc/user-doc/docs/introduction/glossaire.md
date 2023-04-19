@@ -3,8 +3,8 @@
 API
 :   Une API est une interface logicielle qui permet de « connecter » un logiciel à un autre logiciel afin d’échanger des données. Nous utilisons par exemples les API de certaines marketplaces pour échanger les messages clients avec celles-ci.
 
-Backoffice
-:   Le backoffice est l'interface d'administration de la boutique, il permet d'effectuer les tâches de gestion des commandes clients.
+Backoffice (Prestashop)
+:   Interface d'administration des ventes. Il permet, entre autres, de suivre et gérer les commandes clients.
 
 Canal
 :   Un canal est le circuit défini pour vendre les produits, cela peut être une marketplace ou bien un site en direct pour la vente en ligne
@@ -13,7 +13,7 @@ CRM
 :   Sigle provenant de l'Anglais _Customer Relationship Management_, qui pourrait se traduire _Gestion de la relation client_
 
 Parcel Management
-:   Outil de gestion des colis qui font retour à Plessé. Permet notamment la génération d'autorisations de retour et le contrôle de l'état à la réception.
+:   Outil de gestion des colis qui font retour à Plessé. Il permet notamment la génération d'autorisations de retour et le contrôle de l'état à la réception.
 
 Tag
 :   Un tag est une étiquette permettant de catégoriser un ticket client, il peut y en avoir plusieurs par ticket et sont de couleurs différentes en fonction de leur nommage
