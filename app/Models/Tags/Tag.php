@@ -8,6 +8,7 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Revival\Revival;
 use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -120,20 +121,19 @@ class Tag extends Model
         return $columns;
     }
 
-    public static function getListTagWithTickets($tickets): array
+    public static function getListTagWithTickets(Collection $tickets): array
     {
         $tags = Tag::all()->keyBy('id');
-        $listeTicketId = [];
-        foreach ($tickets as $ticket){
-            $listeTicketId[$ticket->id] = $ticket->id;
-        }
+        $listeTicketId = $tickets->pluck('id');
         $queryTag= Tag::query()
             ->select('tags.id as tag_id', DB::raw('count(*) as tag_count'))
             ->join('tag_tagLists', 'tag_tagLists.tag_id', '=', 'tags.id')
             ->join('tagLists', 'tagLists.id', '=', 'tag_tagLists.taglist_id')
             ->join('tickets', 'tickets.id', '=', 'tagLists.ticket_id')
-            ->whereIn('tickets.id',$listeTicketId)
-            ->groupBy('tag_id')->get();
+            ->whereIn('tickets.id', $listeTicketId)
+            ->groupBy('tag_id')
+            ->orderBy('tag_count', 'DESC')
+            ->get();
 
         $listeTag = [];
         foreach ($queryTag as $tag){
