@@ -129,7 +129,6 @@ return [
         'default_replies' => 'Réponses par défaut',
         'saved' => 'Ticket enregistré',
         'confirm_other_channel' => 'Le message contient le nom d\'une autre marketplace, envoyer quand même le message ?',
-        'claim' => 'Réclamation',
 
         'click_and_call' => [
             'start' => 'Cliquer pour lancer l\'appel',
