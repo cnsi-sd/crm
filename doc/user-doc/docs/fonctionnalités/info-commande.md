@@ -31,8 +31,8 @@ Les informations sont divisées en quatre blocs distincts :
 
 Des encarts colorés peuvent apparaitre en dessous et donnent d'autres indications :
 
-* Fulfillment
-* SellerFlex
+* Fulfillment : Si la commande est Fulfillment
+* SellerFlex : Si la commande est SellerFlex
 * Livraison Express : Si le client à fait le choix d'une livraison express (24/48h)
 * DEBALLE : Si le client a choisi une livraison avec déballage du produit
 * INSTALLE : Si le client a choisi une livraison avec installation du produit

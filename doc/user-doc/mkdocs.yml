@@ -8,12 +8,13 @@ nav:
       - Trouver un ticket: bases/trouver-un-ticket.md
       - Travailler sur un ticket: bases/travailler-sur-un-ticket.md
   - Fonctionnalités:
-      - Info commande: fonctionnalités/info-commande.md
-      - Procédure SAV: fonctionnalités/procedure-sav.md
       - Tags : fonctionnalités/tags.md
       - Commentaires privés: fonctionnalités/commentaires-privés.md
-      - Relances automatiques: fonctionnalités/relances-automatiques.md
       - Documents: fonctionnalités/documents.md
+      - Relances automatiques: fonctionnalités/relances-automatiques.md
+      - Info commande: fonctionnalités/info-commande.md
+      - Procédure SAV: fonctionnalités/procedure-sav.md
+      - Parcel Management: fonctionnalités/parcel-management.md
       - Réponses automatiques: fonctionnalités/reponses-automatiques.md
   - Extras :
       - Variables : extras/variables.md
