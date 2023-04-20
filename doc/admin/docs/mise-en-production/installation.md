@@ -17,7 +17,7 @@ crm.{boutique}.cnsi-sd.fr
 ```bash
 # Upgrade paquet existants
 sudo apt update
-sudo apt upgrade
+sudo apt upgrade -y
 
 # Installation des repository PHP
 sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
@@ -74,8 +74,9 @@ nano /home/crm/.bashrc
 ```
 ```bash
 # Custom variables
-DIR_PHP="/bin/php8.2"
-DIR_CRM="/var/www/html/crm/current"
+PHP="/bin/php8.2"
+HTTPDIR="/var/www/html/crm/current"
+ARTISAN="/var/www/html/crm/current/artisan"
 
 # change CMD prompt (replace BOUTIQUE)
 PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h \[\033[01;33m\]CRM BOUTIQUE\[\033[00m\]\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
@@ -177,7 +178,7 @@ sudo systemctl restart php8.2-fpm
 Requis pour build la documentation
 ```bash
 # Avec l'utiliasteur debian
-sudo apt install python3-pip
+sudo apt install python3-pip -y
 # Avec l'utilisation crm
 pip3 install mkdocs
 ```
