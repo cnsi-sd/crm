@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 mb-3">
                 <ul class="list-group rounded mb-3">
                     <a href="{{ route('variables_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'variables_config'])>
                         {{ __('app.config.misc.variables') }}

@@ -1,11 +1,11 @@
 @extends('configuration.misc.home', ["page_title"=> __('app.config.misc.pm.pm') ])
 
 @section('misc_content')
-    <div class="col-8">
+    <div class="col-lg-8">
         <form class="form-horizontal row" method="post">
             @csrf
 
-            <div class="col-6">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         {{ __('app.config.misc.pm.out') }}
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         {{ __('app.config.misc.pm.in') }}
