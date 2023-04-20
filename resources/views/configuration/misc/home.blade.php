@@ -31,6 +31,7 @@
                     </a>
                     <a href="{{ route('parcel_management_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'parcel_management_config'])>
                         {{ __('app.config.misc.pm.pm') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('pm.active')])
                     </a>
                 </ul>
             </div>
