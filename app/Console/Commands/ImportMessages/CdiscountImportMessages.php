@@ -20,7 +20,6 @@ use Cnsi\Cdiscount\ClientCdiscount;
 use Cnsi\Cdiscount\DiscussionsApi;
 use Cnsi\Logger\Logger;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class CdiscountImportMessages extends AbstractImportMessages

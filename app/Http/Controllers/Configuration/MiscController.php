@@ -102,7 +102,8 @@ class MiscController extends AbstractController
             return redirect()->back();
         }
 
-        return view('configuration.misc.answer_offer_questions');
+        return view('configuration.misc.answer_offer_questions')
+            ->with('defaultAnswer', );
     }
 
     public function parcelManagement(Request $request): View|RedirectResponse
