@@ -2,20 +2,49 @@
 
 @section('misc_content')
     <div class="col-4">
-        <div class="card">
-            <div class="card-header">
-                {{ __('app.config.config') }}
-            </div>
+        <form class="form-horizontal" method="post">
+            @csrf
 
-            <div class="card-body">
-                <form class="form-horizontal" method="post">
-                    @csrf
+            <div class="card">
+                <div class="card-header">
+                    {{ __('app.config.misc.savprocess.out') }}
+                </div>
 
+                <div class="card-body">
                     @include('form_components.switch', [
                         'translation' => __('app.config.misc.savprocess.active'),
                         'name' => 'active',
                         'value' => old('active', setting('savprocess.active')),
                     ])
+
+                    <div class="mb-3">
+                        <label for="url" class="form-label">
+                            {{ __('app.config.misc.savprocess.url') }}
+                        </label>
+                        <input name="url" class="form-control" value="{{ old('url', setting('savprocess.url')) }}" placeholder="https://xxx.mon-sav.online/procedure-sav">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="token" class="form-label">
+                            {{ __('app.config.misc.savprocess.token') }}
+                        </label>
+                        <input name="token" class="form-control" value="{{ old('token', setting('savprocess.token')) }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    {{ __('app.config.config') }}
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="api_token" class="form-label">
+                            {{ __('app.config.misc.savprocess.api_token') }}
+                        </label>
+                        <input name="api_token" class="form-control" value="{{ old('api_token', setting('savprocess.api_token')) }}">
+                    </div>
 
                     @include('form_components.tag_select', [
                         'translation' => __('app.config.misc.savprocess.complete_tag'),
@@ -37,7 +66,8 @@
                     </div>
 
                     @include('form_components.submit')
-                </form>
+                </div>
             </div>
-        </div>
+        </form>
+    </div>
 @endsection

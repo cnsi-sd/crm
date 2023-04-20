@@ -188,7 +188,14 @@ return [
 
             'savprocess' => [
                 'savprocess' => 'Procédure SAV',
+
+                'out' => 'Configuration sortante',
                 'active' => 'Activer l\'onglet Procédure SAV ?',
+                'url' => 'URL',
+                'token' => 'Token',
+
+                'in' => 'Configuration entrante',
+                'api_token' => 'Token API',
                 'complete_tag' => 'Tag Procédure SAV complète',
                 'stop_revival' => 'Relances auto à stopper',
             ],

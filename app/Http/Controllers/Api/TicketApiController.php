@@ -16,7 +16,7 @@ class TicketApiController extends AbstractApiController
     {
         try {
             $this->logger->info('--- START : updating ticket ' . $ticket->id . ' after sav process completed by customer ---');
-            if($token !== env('SAVPROCESS_CRM_TOKEN')) {
+            if($token !== setting('savprocess.api_token')) {
                 $this->logger->info('--- TOKEN NOT DEFINED ---');
                 return $this->message('Token not defined', 500, ['status' => 'error']);
             }
