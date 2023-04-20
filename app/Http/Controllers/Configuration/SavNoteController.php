@@ -91,8 +91,8 @@ class SavNoteController extends AbstractController
             'gc_plus_delay'         => ['nullable', 'string', 'max:255'],
             'hotline'               => ['required', 'string', 'max:255'],
             'brand_email'           => ['required', 'string', 'max:255'],
-            'brand_information'     => ['nullable', 'string', 'max:255'],
-            'supplier_information'  => ['nullable', 'string', 'max:255'],
+            'brand_information'     => ['nullable', 'string', 'max: 1000'],
+            'supplier_information'  => ['nullable', 'string', 'max: 1000'],
         ]);
 
         $savNote->manufacturer          = $request->input('manufacturer');
