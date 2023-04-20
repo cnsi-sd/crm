@@ -58,7 +58,7 @@
                         </tr>
                         <tr>
                             <td class="table-active text-end">{{ __('app.sav_note.supplier_information') }}</td>
-                            <td style="word-break:break-word">{!! nl2br($savNote->regional_information) !!}</td>
+                            <td style="word-break:break-word">{!! nl2br($savNote->supplier_information) !!}</td>
                         </tr>
                         </tbody>
                     </table>
