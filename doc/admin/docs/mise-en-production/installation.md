@@ -215,7 +215,7 @@ Lancé un nouveau déploiement sur GitLab > CI/CD > Pipelines > New. Le job devr
 
 Connecté en crm, créer le fichier d’environnement shared/.env
 ```bash
-nano /var/www/crm.cnsi-sd.fr/shared/.env
+nano /var/www/html/crm/shared/.env
 ```
 
 Un nouveau déploiement peut être relancé manuellement sur GitLab > CI/CD > Pipelines > New, il doit finir avec succès.
@@ -301,12 +301,12 @@ Puis créer le script de sauvegarde :
 
 ```bash
 cd ~
-nano backup_sql.sh
+nano backup_crm.sh
 ```
 
 ```bash
 # Local export configuration
-local_backup_directory="/home/debian/backup/sql/"
+local_backup_directory="/home/debian/backup/crm/"
 date=$(date +%F_%T.sql)
 export_file="${local_backup_directory}crm_${date}"
 keep_file_x_days=7
@@ -340,6 +340,6 @@ rsync -vzr --delete --delete-before -e 'ssh -p 2222' $local_backup_directory $rs
 
 Ajouter dans le crontab :
 ```bash
-# Backup SQL
-00 04,13 * * * /bin/bash /home/debian/backup_sql.sh
+# Backup CRM
+00 04,13 * * * /bin/bash /home/debian/backup_crm.sh
 ```
