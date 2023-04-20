@@ -1,5 +1,8 @@
 # Commentaires privés
 
+!!!warning "Attention"
+    🚧 Le contenu de cette page est en cours de rédaction et n'est pas définitif.
+
 Privé = non visible par les clients
 
 Daté et nommé

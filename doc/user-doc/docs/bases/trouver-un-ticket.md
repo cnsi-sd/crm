@@ -1,5 +1,8 @@
 # Retrouver un ticket
 
+!!!warning "Attention"
+    🚧 Le contenu de cette page est en cours de rédaction et n'est pas définitif.
+
 ## En naviguant dans tous les tickets
 
 ## En naviguant dans mes tickets
