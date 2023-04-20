@@ -1,4 +1,4 @@
-# Relances automatiques
+# Configuration des Relances automatiques
 
 Pour configurer les relances automatiques, il faut aller dans la rubrique `Configuration > Relance automatiques`.
 

@@ -10,7 +10,7 @@ $(document).ready(function () {
         const type = $('#ticket-comment-type :selected').val();
         const token = $( "input[name='_token']" ).val();
         $.post(route, {content: content, type: type, _token: token}).done(function( data ) {
-            $('.ticket-comments').append(data);
+            $('.ticket-comments').prepend(data);
         });
     })
 

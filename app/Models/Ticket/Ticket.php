@@ -107,7 +107,7 @@ class Ticket extends Model
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->orderBy('id', 'DESC');
     }
 
     public function getShowRoute(): string
