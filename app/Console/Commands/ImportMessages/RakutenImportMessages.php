@@ -119,7 +119,6 @@ class RakutenImportMessages extends AbstractImportMessages
         $threads = $this->sortMessagesByDate($threadList);
 
         try {
-            DB::beginTransaction();
             foreach ($threads as $messages) {
                 $this->logger->info('Begin Transaction');
 
@@ -130,10 +129,8 @@ class RakutenImportMessages extends AbstractImportMessages
                     $this->importMessageByThread($ticket, $thread, $messages);
                 }
             }
-            DB::commit();
         } catch (Exception $e) {
-            $this->logger->error('An error has occurred. Rolling back.', $e);
-            DB::rollBack();
+            $this->logger->error('An error has occurred.', $e);
             \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
             return;
         }

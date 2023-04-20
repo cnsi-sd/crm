@@ -97,7 +97,6 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
                         continue;
                     }
 
-                    $this->logger->info('Begin Transaction');
                     $this->importEmail($email, $mpOrder);
                     $this->logger->info('Email imported');
                 } catch (Exception $e) {
@@ -107,7 +106,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
                 }
             }
         } catch (Exception $e){
-            $this->logger->error('An error has occurred. Rolling back.', $e);
+            $this->logger->error('An error has occurred.', $e);
             \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
         }
     }
