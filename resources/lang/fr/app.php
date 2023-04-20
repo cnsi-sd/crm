@@ -186,9 +186,12 @@ return [
             'incidents' => 'Incidents',
             'incident_tag' => 'Tag Incident',
 
-            'savprocess' => 'Procédure SAV',
-            'savprocess_tag' => 'Tag Procédure SAV complète',
-            'savprocess_stop_revival' => 'Relances auto à stopper',
+            'savprocess' => [
+                'savprocess' => 'Procédure SAV',
+                'active' => 'Activer l\'onglet Procédure SAV ?',
+                'complete_tag' => 'Tag Procédure SAV complète',
+                'stop_revival' => 'Relances auto à stopper',
+            ],
 
             'default_answer_offer_questions' => 'Réponse aux questions sur les offres',
 

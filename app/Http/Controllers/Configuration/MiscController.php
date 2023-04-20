@@ -56,8 +56,9 @@ class MiscController extends AbstractController
     public function savprocess(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
-            setting(['savprocesscomplete_tag_id' => $request->input('savprocesscomplete_tag_id')]);
-            setting(['savprocess_stop_revival_ids' => implode(',',$request->input('savprocess_stop_revival_ids'))]);
+            setting(['savprocess.active' => $request->input('active') === 'on']);
+            setting(['savprocess.complete_tag_id' => $request->input('complete_tag_id')]);
+            setting(['savprocess.stop_revival_ids' => implode(',',$request->input('stop_revival_ids', []))]);
             setting()->save();
 
             Alert::toastSuccess(__('app.config.misc.saved'));

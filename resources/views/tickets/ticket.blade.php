@@ -141,12 +141,14 @@
                                 type="button" role="tab" aria-controls="order-info"
                                 aria-selected="false">{{ __('app.order_info') }}</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="customer-service-process-tab" data-bs-toggle="tab"
-                                data-bs-target="#customer-service-process" type="button" role="tab"
-                                aria-controls="customer-service-process"
-                                aria-selected="false">{{ __('app.customer_service_process') }}</button>
-                    </li>
+                    @if(setting('savprocess.active'))
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="customer-service-process-tab" data-bs-toggle="tab"
+                                    data-bs-target="#customer-service-process" type="button" role="tab"
+                                    aria-controls="customer-service-process"
+                                    aria-selected="false">{{ __('app.customer_service_process') }}</button>
+                        </li>
+                    @endif
                     @if(setting('pm.active'))
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="parcel-management-tab" data-bs-toggle="tab"
@@ -163,11 +165,13 @@
                             <div class="spinner-border text-primary" role="status"></div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="customer-service-process" role="tabpanel"
-                         aria-labelledby="customer-service-process-tab">
-                        <iframe src="{{ \App\Helpers\Prestashop\SavProcessGateway::getUrl($ticket) }}"
-                                allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
-                    </div>
+                    @if(setting('savprocess.active'))
+                        <div class="tab-pane fade" id="customer-service-process" role="tabpanel"
+                             aria-labelledby="customer-service-process-tab">
+                            <iframe src="{{ \App\Helpers\Prestashop\SavProcessGateway::getUrl($ticket) }}"
+                                    allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
+                        </div>
+                    @endif
                     @if(setting('pm.active'))
                         <div class="tab-pane fade" id="parcel-management" role="tabpanel"
                              aria-labelledby="parcel-management-tab">

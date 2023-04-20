@@ -16,20 +16,25 @@ class TicketApiController extends AbstractApiController
     {
         try {
             $this->logger->info('--- START : updating ticket ' . $ticket->id . ' after sav process completed by customer ---');
-            if($token === env('SAVPROCESS_CRM_TOKEN')) {
-                $ticket->deadline = date('Y-m-d');
-                $ticket->state = TicketStateEnum::OPENED;
-                $tagId = setting('savprocesscomplete_tag_id');
-                $tag = Tag::findOrFail($tagId);
-                $ticket->addTag($tag);
-                $this->stopTicketRevival($ticket);
-                $ticket->save();
-                $this->logger->info('--- DONE ---');
-                return $this->message('Ticket Updated', 200, ['status' => 'success']);
-            } else {
+            if($token !== env('SAVPROCESS_CRM_TOKEN')) {
                 $this->logger->info('--- TOKEN NOT DEFINED ---');
                 return $this->message('Token not defined', 500, ['status' => 'error']);
             }
+
+            if(!setting('savprocess.active')) {
+                $this->logger->info('--- SAV Process not active ---');
+                return $this->message('Inactive SAV Process', 500, ['status' => 'error']);
+            }
+
+            $ticket->deadline = date('Y-m-d');
+            $ticket->state = TicketStateEnum::OPENED;
+            $tagId = setting('savprocess.complete_tag_id');
+            $tag = Tag::findOrFail($tagId);
+            $ticket->addTag($tag);
+            $this->stopTicketRevival($ticket);
+            $ticket->save();
+            $this->logger->info('--- DONE ---');
+            return $this->message('Ticket Updated', 200, ['status' => 'success']);
         } catch (Exception $e) {
             $this->logger->error($e->getMessage(), $e);
             return $this->message('Internal Server Error', 500, ['status' => 'error']);
@@ -38,7 +43,7 @@ class TicketApiController extends AbstractApiController
 
     public function stopTicketRevival(Ticket $ticket)
     {
-        $revivalIdToDelete = explode(',',setting('savprocess_stop_revival_ids'));
+        $revivalIdToDelete = explode(',',setting('savprocess.stop_revival_ids'));
         foreach ($ticket->threads as $thread) {
             if(in_array($thread->revival_id, $revivalIdToDelete)) {
                 $thread->stopRevival();
