@@ -107,7 +107,7 @@ abstract class Permission
                         ],
                     ],
                     [
-                        'title' => __('app.permission.jobs'),
+                        'title' => trans_choice('jobwatcher::jobs.job', 2),
                         'items' => [
                             PermissionEnum::JOB_READ,
                         ],

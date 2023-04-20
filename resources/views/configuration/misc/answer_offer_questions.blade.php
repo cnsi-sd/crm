@@ -10,20 +10,11 @@
                 <form class="form-horizontal" method="post">
                     @csrf
 
-                    <div class=" row col-3 mb-3">
-                        <label for="defaultAnswer">
-                            {{ trans_choice('app.default_answer.default_answer', 1)
-                              . ' ' . \App\Enums\Channel\ChannelEnum::CDISCOUNT_FR
-                            }}
-                        </label>
-                        <select name="default_answer_offer_questions" class="form-control form-select" required>
-                            @foreach(\App\Models\Channel\DefaultAnswer::all() as $defaultAnswer)
-                                <option value="{{ $defaultAnswer->id }}">
-                                    {{ $defaultAnswer->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @include('form_components.default_reply_select', [
+                        'translation' => trans_choice('app.default_answer.default_answer', 1),
+                        'name' => 'default_answer_offer_questions',
+                        'value' => old('default_answer_offer_questions', setting('default_answer_offer_questions'))
+                    ])
 
                     @include('form_components.submit')
                 </form>

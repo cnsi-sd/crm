@@ -111,8 +111,6 @@ class FnacImportMessages extends AbstractImportMessages
 
         foreach ($messages as $message) {
             try {
-                DB::beginTransaction();
-
                 $starter_date = $this->checkMessageDate(new DateTime($message->getCreatedAt()));
                 if (!$starter_date)
                     continue;
@@ -129,10 +127,8 @@ class FnacImportMessages extends AbstractImportMessages
                     $this->addImportedMessageChannelNumber($messageId);
                 }
 
-                DB::commit();
             } catch (Exception $e) {
-                $this->logger->error('An error has occurred. Rolling back.', $e);
-                DB::rollBack();
+                $this->logger->error('An error has occurred.', $e);
                 \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
             }

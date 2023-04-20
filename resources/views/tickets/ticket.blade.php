@@ -66,7 +66,7 @@
                                                     type="date" value="{{ $ticket->deadline->format("Y-m-d") }}"></div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col"><label>{{ __('app.ticket.channel') }}</label></div>
+                            <div class="col"><label>{{ trans_choice('app.config.channel', 1) }}</label></div>
                             <div class="col">
                                 <label>{{ $ticket->channel->name }}</label>
                             </div>

@@ -98,8 +98,6 @@ class IcozaImportMessages extends AbstractImportMessages
 
         foreach ($messages->Messages as $message) {
             try {
-                DB::beginTransaction();
-
                 $starter_date = $this->checkMessageDate(new DateTime($message->date_add));
                 if (!$starter_date)
                     continue;
@@ -114,10 +112,8 @@ class IcozaImportMessages extends AbstractImportMessages
                     $this->addImportedMessageChannelNumber($message->id);
                 }
 
-                DB::commit();
             } catch (Exception $e) {
-                $this->logger->error('An error has occurred. Rolling back.', $e);
-                DB::rollBack();
+                $this->logger->error('An error has occurred.', $e);
                 \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
             }
@@ -130,8 +126,6 @@ class IcozaImportMessages extends AbstractImportMessages
      */
     public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread, $attachments = [])
     {
-        $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
-
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();

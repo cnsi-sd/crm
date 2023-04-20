@@ -115,7 +115,6 @@ return [
         'created_at' => 'Date d\'ouverture',
         'all_tickets' => 'Tous les tickets',
         'my_tickets' => 'Mes tickets',
-        'channel' => 'Canal de diffusion',
         'subjects' => 'Sujets',
         'mapping' => 'Association',
         'order' => 'Commande',
