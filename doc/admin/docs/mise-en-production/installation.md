@@ -212,7 +212,7 @@ Ajouter la clé SSH privé de l'utilisateur **crm** dans une [variable de déplo
 
 Lancé un nouveau déploiement sur GitLab > CI/CD > Pipelines > New. Le job devrait échouer, car les variables d’environnement non pas été mises sur le serveur.
 
-Connecté en pricing, créer le fichier d’environnement shared/.env
+Connecté en crm, créer le fichier d’environnement shared/.env
 ```bash
 nano /var/www/crm.cnsi-sd.fr/shared/.env
 ```
@@ -248,6 +248,48 @@ Puis redémarrer Nginx
 ```bash
 sudo systemctl reload nginx
 sudo systemctl restart nginx
+```
+
+## Worker (traitement de la queue)
+Créer le fichier de configuration systemd :
+```bash
+sudo nano /etc/systemd/system/crm@.service
+```
+```bash
+[Unit]
+Description=CRM queue worker
+
+[Service]
+User=crm
+Group=www-data
+Restart=always
+ExecStart=php8.2 /var/www/html/crm/current/artisan queue:work
+StandardOutput=null
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+Recharger la configuration systemd :
+```bash
+sudo systemctl daemon-reload
+```
+
+Activer un worker :
+```bash
+sudo systemctl enable crm@1
+sudo systemctl start crm@1
+```
+
+Autoriser l’utilisateur crm à gérer son worker :
+```bash
+sudo nano /etc/sudoers.d/crm
+```
+
+```bash
+crm ALL=NOPASSWD: /usr/bin/systemctl * crm@*.service
+crm ALL=NOPASSWD: /usr/bin/journalctl -u crm@*.service
+crm ALL=NOPASSWD: /usr/bin/journalctl -fu crm@*.service
 ```
 
 ## Backup
