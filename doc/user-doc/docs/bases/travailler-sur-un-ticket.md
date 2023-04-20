@@ -34,12 +34,22 @@ Le modèle qui a été utilisé pour rédiger un message est visible dans l'hist
 ![reponse_par_defaut](assets/reponse_par_defaut.png)
 
 ### Pièces jointes
+
+![documents_message](assets/travailler_sur_un_ticket/documents_message.png)
+
 Il est possible d'envoyer une ou plusieurs pièces jointes au client.
 Pour cela, sélectionnez le type de pièce jointe, puis cliquez sur « Parcourir » pour choisir le document à envoyer.
 
-Pour ajouter des fichiers supplémentaires, cliquez sur le bouton « + » vert puis appliquer la même procédure.
+!!!note
+    Les types de document disponibles peuvent varier selon le canal.
+
+Pour ajouter un document supplémentaire, il suffit de cliquer sur le bouton « + » en vert et de répéter l'opération.
 
 Les pièces jointes sélectionnées sont envoyées au client lors de l'envoi du message.
 
 Les pièces jointes envoyées au client apparaissent dans l'historique :
 ![piece_jointe](assets/piece_jointe.png)
+
+!!!note
+    Il est possible d'envoyer n'importe quel type de fichier, attention cependant à utiliser des formats lisibles
+    par le client : .jpg, .png, .pdf par exemple.
