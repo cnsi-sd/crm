@@ -197,7 +197,7 @@
 
 {{-- Restart queue workers --}}
 @task('queue:restart', ['on' => $on])
-{{--    sudo systemctl restart pricing@*--}}
+    sudo systemctl restart crm@*.service
     echo "Queue workers have been restarted"
 @endtask
 
