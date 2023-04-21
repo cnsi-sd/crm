@@ -5,17 +5,15 @@ nav:
   - Mise en production :
       - Installation : mise-en-production/installation.md
       - Migration Magento > CRM : mise-en-production/migration.md
-  - Command :
-      - Import Message :
-        - Introduction : command/importMessage/introduction.md
-        - Api : command/importMessage/api.md
-        - Mail : command/importMessage/mail.md
-      - Ticket :
-          - Import Incident : command/ticket/import-incident.md
-          - Revival : command/ticket/revival.md
+  - Import Messages :
+      - Introduction : command/importMessage/introduction.md
+      - Api : command/importMessage/api.md
+      - Mail : command/importMessage/mail.md
+  - Ticket :
+      - Import Incident : command/ticket/import-incident.md
+      - Revival : command/ticket/revival.md
   - Intégration Nouveau Canal :
-          - Intégration nouveau canal : integration-nouveau-canal/integration-nouveau-canal.md
-
+      - Intégration nouveau canal : integration-nouveau-canal/integration-nouveau-canal.md
 
 theme:
   name: readthedocs
