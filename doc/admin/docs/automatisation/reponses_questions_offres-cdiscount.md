@@ -14,7 +14,7 @@ Se rendre dans l'onglet 'Configuration' > 'Réponses par défaut' puis cliquer s
 - **Contenu de la réponse** : Le texte que recevra le client
 
 !!! note
-    Exemple de réponse par défaut :
+    Exemple de contenu :
 
     "Cher client,
     Vous retrouverez les informations relatives aux conditions générales de vente sur notre espace vendeur (lien cliquable: https://www.cdiscount.com/mpv-33222-icoza.html#_his_ ), rubrique: Infos vendeur / CGV & Politique de retour.
@@ -32,8 +32,11 @@ Se rendre dans l'onglet 'Configuration' > 'Réponses par défaut' puis cliquer s
 
 ## Mapping de la réponse à un canal
 
-1. Se rendre dans l'onglet 'Configuration' > Divers > Réponses aux questions sur les offres Cdiscount.
+1. Se rendre dans l'onglet 'Configuration' > Divers > Réponses aux questions sur les offres Cdiscount
+2. Choisir la réponse par défaut que vous avez préalablement créée
+3. Activer la réponse par défaut aux questions sur les offres Cdiscount
+4. Enregister
 
-2. Choisir la réponse que vous avez préalablement créée, puis enregister.
+!!! note
+    **Ne pas laisser actif si aucun contenu n'est sélectionné**
 
-3. Activer 
