@@ -211,7 +211,7 @@ return [
             'mirakl_refunds' => [
                 'mirakl_refunds' => 'Remboursement sur MP Mirakl',
                 'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
-                'active' => 'Activer l\'onglet Remboursement sur MP Mirakl ?', // todo il ne s'agit pas d'un onglet, voir l activation et désactivation
+                'active' => 'Activer l\'attribution automatique du tag Remboursement sur MP Mirakl ?', // todo il ne s'agit pas d'un onglet, voir l activation et désactivation
             ],
 
             'closed_discussion' => [

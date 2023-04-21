@@ -14,7 +14,7 @@ use Mirakl\MMP\Shop\Client\ShopApiClient;
 use Mirakl\MMP\Shop\Domain\Order\ShopOrder;
 use Mirakl\MMP\Shop\Request\Order\Get\GetOrdersRequest;
 
-class GetMirakleRefunds extends Command
+class GetMiraklRefunds extends Command
 {
     protected $signature = 'ticket:getMiraklRefunds';
     protected $description = 'Get Mirakl refund messages';
@@ -31,7 +31,13 @@ class GetMirakleRefunds extends Command
      */
     public function handle()
     {
+
         $this->logger = new Logger('ticket/getMiraklRefunds/getMiraklRefunds.log', true, true, true, 15);
+
+        if(!setting('mirakl_refunds.active')){
+            $this->logger->info('Mirakl refund setting is not activated');
+            return;
+        }
 
         try{
             $this->logger->info('---- START ----');
