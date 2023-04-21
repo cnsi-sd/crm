@@ -43,6 +43,7 @@ class MiscController extends AbstractController
     public function incidents(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
+            setting(['incidents.active' => $request->input('active') === 'on']);
             setting(['incident_tag_id' => $request->input('incident_tag_id')]);
             setting()->save();
 

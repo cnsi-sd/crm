@@ -183,8 +183,11 @@ return [
             'saved' => 'Configuration enregistrée',
             'variables' => 'Variables',
 
-            'incidents' => 'Incidents',
-            'incident_tag' => 'Tag Incident',
+            'incidents' => [
+                'incidents' => 'Incidents',
+                'incident_tag' => 'Tag Incident',
+                'active' => 'Activer l\'onglet Incidents ?'
+            ],
 
             'savprocess' => [
                 'savprocess' => 'Procédure SAV',

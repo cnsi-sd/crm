@@ -9,7 +9,8 @@
                         {{ __('app.config.misc.variables') }}
                     </a>
                     <a href="{{ route('incidents_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'incidents_config'])>
-                        {{ __('app.config.misc.incidents') }}
+                        {{ __('app.config.misc.incidents.incidents') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('incidents.active')])
                     </a>
                     <a href="{{ route('answer_offer_questions_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'answer_offer_questions_config'])>
                         {{ __('app.config.misc.default_answer_offer_questions.default_answer_offer_questions') }}
