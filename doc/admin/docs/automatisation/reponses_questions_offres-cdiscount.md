@@ -36,4 +36,4 @@ Se rendre dans l'onglet 'Configuration' > 'Réponses par défaut' puis cliquer s
 
 2. Choisir la réponse que vous avez préalablement créée, puis enregister.
 
- // TODO on off? //
+3. Activer 

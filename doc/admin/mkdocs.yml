@@ -14,7 +14,7 @@ nav:
       - Revival : ticket/revival.md
       - Alert ticket delay : ticket/alert-ticket-delay.md
   - Automatisation :
-      - Réponses sur les offres Cdiscount : automatisation/reponses_questions_offre-cdiscount.md
+      - Réponses sur les offres Cdiscount : automatisation/reponses_questions_offres-cdiscount.md
   - Intégration Nouveau Canal :
       - Intégration nouveau canal : integration-nouveau-canal/integration-nouveau-canal.md
 

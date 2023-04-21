@@ -186,7 +186,7 @@ return [
             'incidents' => [
                 'incidents' => 'Incidents',
                 'incident_tag' => 'Tag Incident',
-                'active' => 'Activer l\'onglet Incidents ?'
+                'active' => 'Activer l\'onglet Incidents ?'  // todo il ne s'agit pas d onglet, vois l activation et désactivation
             ],
 
             'savprocess' => [
@@ -205,19 +205,19 @@ return [
 
             'default_answer_offer_questions' => [
                 'default_answer_offer_questions' => 'Réponse aux questions sur les offres Cdiscount',
-                'active' => 'Activer l\'onglet Réponse aux questions sur les offres Cdiscount ?',
+                'active' => 'Activer la Réponse par défaut aux questions sur les offres Cdiscount ?',
             ],
 
             'mirakl_refunds' => [
                 'mirakl_refunds' => 'Remboursement sur MP Mirakl',
                 'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
-                'active' => 'Activer l\'onglet Remboursement sur MP Mirakl ?',
+                'active' => 'Activer l\'onglet Remboursement sur MP Mirakl ?', // todo il ne s'agit pas d'un onglet, voir l activation et désactivation
             ],
 
             'closed_discussion' => [
                 'closed_discussion' => 'Discussion clôturée',
                 'closed_discussion_tag' => 'Tag discussion clôturée',
-                'active' => 'Activer l\'onglet Discussion clôturée ?',
+                'active' => 'Activer l\'onglet Discussion clôturée ?', // todo il ne s'agit pas d'un onglet, voir l activation et désactivation
                 ],
 
 
