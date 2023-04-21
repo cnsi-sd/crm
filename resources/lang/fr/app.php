@@ -186,7 +186,7 @@ return [
             'incidents' => [
                 'incidents' => 'Incidents',
                 'incident_tag' => 'Tag Incident',
-                'active' => 'Activer l\'onglet Incidents ?'  // todo il ne s'agit pas d onglet, vois l activation et désactivation
+                'active' => 'Activer la récupération automatique des Incidents ?'
             ],
 
             'savprocess' => [
