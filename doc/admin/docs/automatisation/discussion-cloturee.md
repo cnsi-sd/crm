@@ -1,4 +1,4 @@
-## Discussion clôturée
+# Discussion clôturée
 
 Grâce à cette fonctionnalité, vous pouvez automatiser l'attribution du tag "Discussion clôturée" aux tickets mentionnés comme tel par la marketplace Cdiscount.
 
