@@ -15,6 +15,7 @@ nav:
       - Alert ticket delay : ticket/alert-ticket-delay.md
   - Automatisation :
       - Réponses sur les offres Cdiscount : automatisation/reponses_questions_offres-cdiscount.md
+      - Discussion clôturée : automatisation/discussion_cloturee.md
   - Intégration Nouveau Canal :
       - Intégration nouveau canal : integration-nouveau-canal/integration-nouveau-canal.md
 

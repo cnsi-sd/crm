@@ -217,9 +217,8 @@ return [
             'closed_discussion' => [
                 'closed_discussion' => 'Discussion clôturée',
                 'closed_discussion_tag' => 'Tag discussion clôturée',
-                'active' => 'Activer l\'onglet Discussion clôturée ?', // todo il ne s'agit pas d'un onglet, voir l activation et désactivation
+                'active' => 'Activer l\'attribution automatique du tag Discussion clôturée ?',
                 ],
-
 
             'external_features' => 'Fonctionnalités externes',
 

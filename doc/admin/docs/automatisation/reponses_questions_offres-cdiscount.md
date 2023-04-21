@@ -37,6 +37,6 @@ Se rendre dans l'onglet 'Configuration' > 'Réponses par défaut' puis cliquer s
 3. Activer la réponse par défaut aux questions sur les offres Cdiscount
 4. Enregister
 
-!!! note
+!!! warning
     **Ne pas laisser actif si aucun contenu n'est sélectionné**
 
