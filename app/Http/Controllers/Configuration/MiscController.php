@@ -102,15 +102,15 @@ class MiscController extends AbstractController
     public function answerOfferQuestions(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
+            setting(['daoq.active' => $request->input('active') === 'on']);
             setting(['default_answer_offer_questions' => $request->input('default_answer_offer_questions')]);
-                        setting()->save();
+            setting()->save();
 
             Alert::toastSuccess(__('app.config.misc.saved'));
             return redirect()->back();
         }
 
-        return view('configuration.misc.answer_offer_questions')
-            ->with('defaultAnswer', );
+        return view('configuration.misc.answer_offer_questions');
     }
 
     public function parcelManagement(Request $request): View|RedirectResponse

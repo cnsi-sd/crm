@@ -12,7 +12,8 @@
                         {{ __('app.config.misc.incidents') }}
                     </a>
                     <a href="{{ route('answer_offer_questions_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'answer_offer_questions_config'])>
-                        {{ __('app.config.misc.default_answer_offer_questions') }}
+                        {{ __('app.config.misc.default_answer_offer_questions.default_answer_offer_questions') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('daoq.active')])
                     </a>
                     <a href="{{ route('mirakl_refunds_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'mirakl_refunds_config'])>
                         {{ __('app.config.misc.mirakl_refunds') }}

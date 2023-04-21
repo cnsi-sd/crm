@@ -161,7 +161,7 @@ Breadcrumbs::for('savprocess_config', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('answer_offer_questions_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
-    $trail->push(__('app.config.misc.default_answer_offer_questions'), route('answer_offer_questions_config'));
+    $trail->push(__('app.config.misc.default_answer_offer_questions.default_answer_offer_questions'), route('answer_offer_questions_config'));
 });
 Breadcrumbs::for('mirakl_refunds_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');

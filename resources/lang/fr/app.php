@@ -200,7 +200,10 @@ return [
                 'stop_revival' => 'Relances auto à stopper',
             ],
 
-            'default_answer_offer_questions' => 'Réponse aux questions sur les offres Cdiscount',
+            'default_answer_offer_questions' => [
+                'default_answer_offer_questions' => 'Réponse aux questions sur les offres Cdiscount',
+                'active' => 'Activer l\'onglet Réponse aux questions sur les offres Cdiscount ?',
+            ],
 
             'mirakl_refunds' => 'Remboursement sur MP Mirakl',
             'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
