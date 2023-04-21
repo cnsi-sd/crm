@@ -89,6 +89,7 @@ class MiscController extends AbstractController
     public function miraklRefunds(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
+            setting(['mirakl_refunds.active' => $request->input('active') === 'on']);
             setting(['mirakl_refunds_tag_id' => $request->input('mirakl_refunds_tag_id')]);
             setting()->save();
 
