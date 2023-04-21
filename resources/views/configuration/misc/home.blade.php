@@ -20,7 +20,8 @@
                         @include('configuration.misc.parts.active_badge', ['active' => setting('mirakl_refunds.active')])
                     </a>
                     <a href="{{ route('closed_discussion_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'closed_discussion_config'])>
-                        {{ __('app.config.misc.closed_discussion') }}
+                        {{ __('app.config.misc.closed_discussion.closed_discussion') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('closed_discussion.active')])
                     </a>
                 </ul>
 

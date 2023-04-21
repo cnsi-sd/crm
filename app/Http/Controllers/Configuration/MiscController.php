@@ -76,6 +76,7 @@ class MiscController extends AbstractController
     public function closedDiscussion(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
+            setting(['closed_discussion.active' => $request->input('active') === 'on']);
             setting(['closed_discussion_tag_id' => $request->input('closed_discussion_tag_id')]);
             setting()->save();
 
@@ -83,7 +84,7 @@ class MiscController extends AbstractController
             return redirect()->back();
         }
 
-        return view('configuration.misc.closedDiscussion');
+        return view('configuration.misc.closed_discussion');
     }
 
     public function miraklRefunds(Request $request): View|RedirectResponse

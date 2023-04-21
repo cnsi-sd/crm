@@ -211,8 +211,12 @@ return [
                 'active' => 'Activer l\'onglet Remboursement sur MP Mirakl ?',
             ],
 
-            'closed_discussion' => 'Discussion clôturée',
-            'closed_discussion_tag' => 'Tag discussion clôturée',
+            'closed_discussion' => [
+                'closed_discussion' => 'Discussion clôturée',
+                'closed_discussion_tag' => 'Tag discussion clôturée',
+                'active' => 'Activer l\'onglet Discussion clôturée ?',
+                ],
+
 
             'external_features' => 'Fonctionnalités externes',
 
