@@ -291,6 +291,9 @@ return [
         'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
         'endTag' => 'Tag à ajouter',
+        'no_end_default_answer' => 'Pas de message de fin',
+        'no_end_state' => 'Pas de status de fin',
+        'no_end_tag' => 'Pas de tag de fin',
     ],
 
     'tags' => [
