@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Configuration;
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Http\Controllers\AbstractController;
+use App\Models\Channel\Channel;
+use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Revival\Revival;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -79,6 +81,13 @@ class RevivalController extends AbstractController
             alert::toastSuccess(__('app.delete'));
         }
         return redirect()->route('revival');
+    }
+
+    public function listDefaultAnswer(Request $request): \Illuminate\Http\JsonResponse
+    {
+
+        $data = (new Channel())->getAuthorizedDefaultAnswers($request->input('channel_id'));
+        return response()->json(['data' => $data]);
     }
 
 }
