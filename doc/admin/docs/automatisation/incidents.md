@@ -6,11 +6,11 @@ Grâce à cette fonctionnalité, vous pouvez activer l'automatisation de la réc
 
 * Se rendre dans l'onglet 'Configuration' > 'Divers' > 'Incidents'
 
-* Choisir le tag correspondant dans la liste de tags disponibles (Si le tag n'existe pas, il faudra sûrement le créer, cf. : [documentation tags](/doc/user-doc/docs/fonctionnalités/tags.md)) TODO LINK ?
+* Choisir le tag correspondant dans la liste de tags disponibles (Si le tag n'existe pas, il faut le créer, cf. : Documentation sur les Tags)
 
-* Activer l'attribution automatique du tag Remboursement Mirakl
+* Activer la récupération des tickets Incidents et l'attribution automatique du tag Incidents
 
 * Enregistrer
 
 !!! warning
-N'activer que si le tag est attribué
+    N'activer que si le tag est attribué

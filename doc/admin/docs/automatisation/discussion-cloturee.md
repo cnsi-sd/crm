@@ -6,7 +6,7 @@ Grâce à cette fonctionnalité, vous pouvez automatiser l'attribution du tag "D
 
 * Se rendre dans l'onglet 'Configuration' > 'Divers' > 'Discussion Clôturée'
 
-* Choisir le tag correspondant dans la liste de tags disponibles (Si le tag n'existe pas, il faudra sûrement le créer, cf. : [documentation tags](/doc/user-doc/docs/fonctionnalités/tags.md) TODO LINK ?
+* Choisir le tag correspondant dans la liste de tags disponibles (Si le tag n'existe pas, il faut le créer, cf. : Documentation sur les Tags)
 
 * Activer l'attribution automatique du tag Discussion clôturée
 
