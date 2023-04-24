@@ -8,10 +8,12 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Revival\Revival;
 use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property int $id
@@ -119,29 +121,39 @@ class Tag extends Model
         return $columns;
     }
 
-    public static function getListTagWithTickets($tickets): array
+    public static function getListTagWithTickets(Collection $tickets): array
     {
-        $listeTag = array();
-        foreach ($tickets as $ticket) {
-            self::getListTagByThread($ticket, $listeTag);
+        $tags = Tag::all()->keyBy('id');
+        $listeTicketId = $tickets->pluck('id');
+        $queryTag= Tag::query()
+            ->select('tags.id as tag_id', DB::raw('count(*) as tag_count'))
+            ->join('tag_tagLists', 'tag_tagLists.tag_id', '=', 'tags.id')
+            ->join('tagLists', 'tagLists.id', '=', 'tag_tagLists.taglist_id')
+            ->join('tickets', 'tickets.id', '=', 'tagLists.ticket_id')
+            ->whereIn('tickets.id', $listeTicketId)
+            ->groupBy('tag_id')
+            ->orderBy('tag_count', 'DESC')
+            ->orderBy('tags.name', 'ASC')
+            ->get();
+
+        $listeTag = [];
+        foreach ($queryTag as $tag){
+            $listeTag[$tag['tag_id']] = [$tags[$tag['tag_id']], $tag['tag_count']];
         }
         return $listeTag;
     }
 
-    public static function getListTagByThread($ticket, &$listeTag, $returnList = false)
+    public static function getListTagByTicket($ticket): array
     {
+        $listeTag = [];
         foreach ($ticket->taglists as $tagList) {
             foreach ($tagList->tags as $tag) {
-                if (!array_key_exists($tag->name, $listeTag)) {
-                    $listeTag[$tag->name] = ['tag_id' => $tag->id, 'background_color' => $tag->background_color, 'text_color' => $tag->text_color, 'count' => 1];
-                } else {
-                    $listeTag[$tag->name]['count']++;
-                }
+                if (!array_key_exists($tag->id, $listeTag))
+                    $listeTag[$tag->id] = [$tag, 1];
+                else
+                    $listeTag[$tag->id][1]++;
             }
         }
-
-        if ($returnList) {
-            return $listeTag;
-        }
+        return $listeTag;
     }
 }

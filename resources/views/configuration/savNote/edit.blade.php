@@ -132,7 +132,7 @@
                                             name="supplier_information"
                                             class="form-control form-control-sm"
                                             cols="125"
-                                            rows="6"
+                                            rows="10"
                                         >{{ old('supplier_information', $savNote->supplier_information ?? '') }}</textarea>
                                     </label>
                                 </div>

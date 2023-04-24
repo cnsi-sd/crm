@@ -4,6 +4,7 @@ namespace App\Console\Commands\Migrate\Tools;
 
 use App\Enums\Ticket\TicketPriorityEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Jobs\CreateEmailThread;
 use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Ticket;
@@ -150,6 +151,8 @@ class TicketFinder
             'user_id'    => $this->users[$magentoTicket->admin_email] ?? $order->channel->user_id,
         ]);
         $ticket->save();
+
+        CreateEmailThread::dispatch($ticket);
 
         return $ticket;
     }

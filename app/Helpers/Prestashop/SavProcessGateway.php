@@ -9,14 +9,14 @@ final class SavProcessGateway
     public static function getUrl(Ticket $ticket): string
     {
         // Build endpoint
-        $endpoint = env('PRESTASHOP_URL') . 'procedure-sav';
+        $endpoint = setting('savprocess.url');
 
         // Build query parameters
         $queryParams = [
             'mp_order' => $ticket->order->channel_order_number,
             'mp_names' => implode(',', $ticket->channel->ext_names),
             'id_ticket_crm' => $ticket->id,
-            'admintoken' => env('PRESTASHOP_CUSTOMER_SERVICE_TOKEN'),
+            'admintoken' => setting('savprocess.token'),
         ];
 
         // Transform parameters array to query string

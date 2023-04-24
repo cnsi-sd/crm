@@ -15,7 +15,7 @@ class EmailSendMessage extends AbstractSendMessage
         if (env('APP_ENV') != 'production')
             return;
 
-        $to = str_replace('"', "", $this->message->thread->channel_data);
+        $to = $this->message->thread->channel_data["email"];
 
         if ($this->message->thread->name === Thread::EMAIL) {
             $subject = "Nouveau message au sujet de votre commande";

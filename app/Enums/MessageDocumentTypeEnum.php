@@ -7,7 +7,7 @@ use Cnsi\Attachments\Enum\DocumentTypeEnum;
 class MessageDocumentTypeEnum extends DocumentTypeEnum
 {
     const AUTHENTIC_CERTIFICATE = "authentic_certificate"; // confo
-    const CUSTOMER_INVOICE = "customer_invoice"; // confo, darty, ubaldi, but, leclerc, metro
+    const CUSTOMER_INVOICE = "customer_invoice"; // confo, darty, ubaldi, but, leclerc,metro ,boulanger
     const CUSTOMER_RETURN = "customer_return"; // ubaldi
     const CUSTOMER_UPLOAD = "customer_upload"; // but, leclerc
     const MANUAL_USE = "manual_use"; // confo

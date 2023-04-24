@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 mb-3">
                 <ul class="list-group rounded mb-3">
                     <a href="{{ route('variables_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'variables_config'])>
                         {{ __('app.config.misc.variables') }}
@@ -27,10 +27,12 @@
                 </div>
                 <ul class="list-group rounded">
                     <a href="{{ route('savprocess_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'savprocess_config'])>
-                        {{ __('app.config.misc.savprocess') }}
+                        {{ __('app.config.misc.savprocess.savprocess') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('savprocess.active')])
                     </a>
                     <a href="{{ route('parcel_management_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'parcel_management_config'])>
                         {{ __('app.config.misc.pm.pm') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('pm.active')])
                     </a>
                 </ul>
             </div>

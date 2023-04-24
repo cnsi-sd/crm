@@ -101,20 +101,16 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
                         continue;
                     }
 
-                    $this->logger->info('Begin Transaction');
-                    DB::beginTransaction();
                     $this->importEmail($email, $mpOrder);
                     $this->logger->info('Email imported');
-                    DB::commit();
                 } catch (Exception $e) {
-                    $this->logger->error('An error has occurred. Rolling back.', $e);
-                    DB::rollBack();
+                    $this->logger->error('An error has occurred.', $e);
                     \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                     return;
                 }
             }
         } catch (Exception $e){
-            $this->logger->error('An error has occurred. Rolling back.', $e);
+            $this->logger->error('An error has occurred.', $e);
             \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
         }
     }

@@ -55,3 +55,19 @@ deploy_tkg:
   dependencies:
     - build
   when: on_success
+
+deploy_smarttech:
+  stage: deploy
+  script:
+    # Add the private SSH key to the build environment
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY_SMARTTECH")
+    - mkdir -p ~/.ssh
+    - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - vendor/bin/envoy run app:deploy --on=smarttech-production --branch="$CI_COMMIT_BRANCH"
+  only:
+    - master
+  dependencies:
+    - build
+  when: on_success

@@ -1,21 +1,9 @@
 # Commentaires privés
 
-Privé = non visible par les clients
+![Commentaires privés](assets/commentaire_prive/bloc.png)
 
-Daté et nommé
+Les commentaires privés permettent de partager des informations concernant le client, sa commande, les procédures en cours, etc. Ils sont visibles uniquement par les ADVs ayant accès aux tickets.
 
-Affichés du plus récent au plus ancien
+Chaque commentaire est nommé (qui), daté (quand) et typé (quoi).
 
-# Nouveau commentaire
-
-## Types
-
-Lors de l'envoi d'un nouveau commentaire, vous pouvez choisir parmi différents types.
-L'objectif est de mettre en avant le contenu du commentaire avec différentes couleurs.
-
-* Contact externe
-* Information du responsable
-* Process à suivre
-* Info importante
-* Résumé
-* Autre
+Les commentaires sont affichés du plus récent (en haut) au plus ancien (en bas).

@@ -1,5 +1,8 @@
 # Automatisations
 
+!!!warning "Attention"
+    🚧 Le contenu de cette page est en cours de rédaction et n'est pas définitif.
+
 ## Réponses aux questions sur les offres Cdiscount
 
 Lors de l'import des messages Cdiscount, une vérification est faite sur la nature du message. S'il s'agit d'une question sur une offre, nous envoyons une réponse automatique et le message n'est pas importé dans le CRM.

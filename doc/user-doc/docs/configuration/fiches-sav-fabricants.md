@@ -1,4 +1,4 @@
-# Fiches SAV fabricants
+# Configuration des Fiches SAV fabricants
 
 ## Consulter la liste des fiches disponibles
 

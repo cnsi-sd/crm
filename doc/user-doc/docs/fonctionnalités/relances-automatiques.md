@@ -1,27 +1,21 @@
 # Relances automatiques
 
-## Description
-
 Les relances automatiques permettent de relancer un client à interval régulier sans avoir besoin de revenir sur le ticket. Une fois qu'une relance est activée sur un ticket, celui-ci évolue en toute transparence pour l'utilisateur, jusqu'à la fin du cycle.
 Il existe plusieurs relances automatiques, elles sont configurées par votre responsable.
 
----
-
 ## Activation
 
-Sur un ticket, l'emplacement de la configuration se trouve dans la colonne de gauche, rubrique "Administration Fil de discussion".
-
-!!! warning "Fil de discussion"
-    La relance automatique est gérée au niveau du fil de discussion. Il peut donc y avoir plusieurs relances auto activées sur un même ticket.
-
-Pour activer une relance automatique, il faut :
+Sur un ticket, l'activation d'une relance est possible dans la colonne de gauche, rubrique "Administration Fil de discussion" :
 
 * Se rendre sur le fil de discussion à relancer
 * Sélectionner la relance à activer
-* Définir le statut du ticket en "Attente client"
+* S'assurer que le ticket est "Ouvert"
 * Enregistrer le ticket
 
 ![select_reviaval_on_ticket](assets/select_revival_on_ticket.gif)
+
+!!! warning "Attention"
+    La relance automatique est gérée au niveau du fil de discussion. Il peut donc y avoir plusieurs relances auto activées sur un même ticket.
 
 ## Suivi
 
@@ -37,6 +31,6 @@ Une fois l'activation effectuée, les paramètres de la relance sont rappelés :
 ## Fin du cycle
 À la fin du cycle de relance, plusieurs actions peuvent être effectuées selon la configuration :
 
-- Changement du statut du ticket : Attente client / Attente admin / Fermé
+- Changement du statut du ticket : Ouvert / Fermé
 - Envoi d'un dernier message au client : Message identique ou différent selon la configuration.
 - Ajout d'un tag au ticket

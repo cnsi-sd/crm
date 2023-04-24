@@ -20,7 +20,6 @@ use Cnsi\Cdiscount\ClientCdiscount;
 use Cnsi\Cdiscount\DiscussionsApi;
 use Cnsi\Logger\Logger;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class CdiscountImportMessages extends AbstractImportMessages
@@ -84,16 +83,13 @@ class CdiscountImportMessages extends AbstractImportMessages
                     if ($discu->getTypologyCode() == "Offer") {
                         CdiscountAnswerOfferQuestions::AnswerOfferQuestions($discu);
                     } else {
-                        $this->logger->info('Begin Transaction');
-                        DB::beginTransaction();
-
                         if (!$discu->isOpen())
                             $this->checkClosedDiscussion($discu);
 
                         $this->logger->info('Message recovery');
                         $messages = $discu->getMessages();
 
-                        $this->logger->info('Check if dicussion have messages');
+                        $this->logger->info('Check if discussion have messages');
                         if (count($messages) == 0)
                             continue;
 
@@ -119,13 +115,11 @@ class CdiscountImportMessages extends AbstractImportMessages
 
                             $this->importMessageByThread($ticket, $thread, $message, $attachments);
                             $this->logger->info('---- End Import Message');
-                            DB::commit();
                         }
                     }
                 }
             } catch (Exception $e){
-                $this->logger->error('An error has occurred. Rolling back.', $e);
-                DB::rollBack();
+                $this->logger->error('An error has occurred.', $e);
                 \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
             }
@@ -150,10 +144,11 @@ class CdiscountImportMessages extends AbstractImportMessages
     /**
      * @param Ticket $ticket
      * @param Thread $thread
-     * @param array $messages
+     * @param $message
+     * @param $attachments
      * @throws Exception
      */
-    private function importMessageByThread(Ticket $ticket, Thread $thread,$message, $attachments)
+    private function importMessageByThread(Ticket $ticket, Thread $thread, $message, $attachments)
     {
         $imported_id = $message->getMessageId();
         $this->logger->info('Check if this message is imported');

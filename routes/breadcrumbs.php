@@ -157,7 +157,7 @@ Breadcrumbs::for('incidents_config', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('savprocess_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
-    $trail->push(__('app.config.misc.savprocess'), route('savprocess_config'));
+    $trail->push(__('app.config.misc.savprocess.savprocess'), route('savprocess_config'));
 });
 Breadcrumbs::for('answer_offer_questions_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');

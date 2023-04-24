@@ -79,9 +79,6 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
         /** @var Thread $miraklThread */
         foreach ($threads as $miraklThread) {
             try {
-                DB::beginTransaction();
-                $this->logger->info('Begin Transaction');
-
                 $this->logger->info('Message recovery');
                 /** @var ThreadMessage[] $messages */
                 $messages = array_reverse($miraklThread->getMessages()->getItems());
@@ -117,14 +114,11 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
                         }
                     }
 
-
                     $this->importMessageByThread($ticket, $thread, $message, $attachments);
                 }
-
-                DB::commit();
             } catch (Exception $e) {
-                $this->logger->error('An error has occurred. Rolling back.', $e);
-                DB::rollBack();
+                $this->logger->error('An error has occurred', $e);
+
                 \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
                 return;
             }

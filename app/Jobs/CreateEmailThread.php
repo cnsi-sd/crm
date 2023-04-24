@@ -38,8 +38,9 @@ class CreateEmailThread implements ShouldQueue
 
         // Create thread
         if ($prestashopOrders && count($prestashopOrders) > 0) {
-            $email = $prestashopOrders[0]['email'];
-            Thread::getOrCreateThread($this->ticket, Thread::EMAIL, Thread::EMAIL, $email);
+
+            $channel_data = ["email" => $prestashopOrders[0]['email']];
+            Thread::getOrCreateThread($this->ticket, Thread::EMAIL, Thread::EMAIL, $channel_data);
         }
     }
 }
