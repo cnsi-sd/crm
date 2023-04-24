@@ -1,30 +1,38 @@
 # Info commande
 
-Lors du traitement d'un ticket client, il peut être utile d'afficher les informations relatives à sa commande.
-Dans le CRM, vous pouvez cliquer sur l'onglet « Info commande » pour afficher ces informations.
+Lors du traitement d'un ticket client, il peut être utile d'afficher les informations relatives à la commande.
+Cliquez sur l'onglet « Info commande » pour afficher ces informations.
 
-L'affichage peut prendre plusieurs secondes, car les informations sont récupérées via le backoffice de Prestashop.
+![Bouton d'ouverture Info commande](assets/info_commande/tab_button.png)
+
+!!!warning "Information"
+    Les informations sont récupérées en direct sur le Backoffice Prestashop, l'affichage des informations peut ainsi prendre quelques secondes.
+
+!!!note
+    Si la commande du client a été éclaté en plusieurs commandes dans notre Backoffice Prestashop, il est possible de naviguer entre les différents ID order.
+    ![definitive_supplier](assets/info_commande/order_switch.gif)
+
 
 Les informations sont divisées en quatre blocs distincts :
 
 ## Commande
 
-Ce bloc résume les informations principales de la commande :
+![Informations principales](assets/info_commande/main_block.png)
 
-* ID Order : l'identifiant unique de la commande sur le Backoffice Prestashop
-* Statut : le statut de la commande sur Prestashop (le code couleur est le même)
-* Date commande : la date où la commande a été passée par le client
-* Transporteur : le transporteur affecté au fournisseur du produit de la commande
-* Suivi : le numéro de suivi de la commande, avec un lien cliquable vers le suivi du transporteur
-* Total TTC : le total TTC payé par le client
-* Marge HT : la marge HT réalisée
-* Email : l'email du client fourni par la marketplace (attention cette adresse est anonymisée et n'est pas l'adresse mail réelle du client)
-* Date max d'expédition : La date maximale d'expédition fournie par la marketplace
+* ID Order : Identifiant unique de la commande sur le Backoffice Prestashop
+* Statut : Statut de la commande (code couleur identique)
+* Date commande : Date de la commande
+* Transporteur : Le transporteur (transporteur prévisionnel si la commande n'est pas encore expédiée)
+* Suivi : Le numéro de suivi de la commande. Il est cliquable si le lien est disponible
+* Total TTC : Le total TTC payé par le client
+* Marge HT : La marge HT réalisée
+* Email : L'email client fourni par le canal (selon le canal il peut être anonymisé)
+* Date max d'expédition : Date maximale pour expédier le produit
 
-Des encarts colorés peuvent apparaitre en dessous et donnent d'autres indications si nécessaire :
+Des encarts colorés peuvent apparaitre en dessous et donnent d'autres indications :
 
-* Fulfillment : Si la commande est en Fulfillment (produit stocké chez la marketplace)
-* SellerFlex : Si la commande est de type Seller Flex (produit stocké dans nos entrepôts, livraison par Amazon)
+* Fulfillment : Si la commande est Fulfillment
+* SellerFlex : Si la commande est SellerFlex
 * Livraison Express : Si le client à fait le choix d'une livraison express (24/48h)
 * DEBALLE : Si le client a choisi une livraison avec déballage du produit
 * INSTALLE : Si le client a choisi une livraison avec installation du produit
@@ -32,25 +40,17 @@ Des encarts colorés peuvent apparaitre en dessous et donnent d'autres indicatio
 
 Deux boutons permettent d'effectuer des actions :
 
-* « Télécharger facture » : Si la facture est disponible, vous pouvez cliquer sur ce bouton pour y accéder
-* « Accès backoffice » : Ce bouton vous permet d'accéder à la commande directement sur le backoffice de Prestashop
-
-!!!note
-    Ces deux boutons ouvrent les liens dans un nouvel onglet.
+* Télécharger facture : Si la facture est disponible, vous pouvez cliquer sur ce bouton pour y accéder
+* Accès backoffice : Ce bouton vous redirige sur la commande dans le Backoffice Prestashop
 
 ## Commentaire privé Prestashop
-
-Ce bloc permet d'afficher le contenu du commentaire privé de la commande du backoffice.
-Si le commentaire est plus long que le bloc, il est possible de scroller à l'intérieur en utilisant la molette de la souris.
-
-!!!note
-    Il n'est pas possible de modifier ce commentaire via le CRM, si besoin, rendez-vous sur la commande via le bouton « Accès backoffice » pour le faire.
+Ce bloc affiche le commentaire privé de la commande Prestashop.
+![Commentaire privé](assets/info_commande/commentaire_prive.png)
 
 ## Client
-
-Ce bloc permet d'afficher les informations de facturation et de livraison du client.
+Ce bloc affiche les adresses du client (facturation / livraison). Les numéros de téléphone sont cliquables pour lancer l'appel.
+![Adresses](assets/info_commande/adresses.png)
 
 ## Produits
-
-Ce bloc permet d'afficher les produits de la commande client, le badge jaune à droite du fournisseur indique que le fournisseur est définitif et qu'il n'est plus possible d'en changer.
-![definitive_supplier](assets/definitive_supplier.png)
+Ce bloc affiche le détail des produits et quantités commandés. Le badge jaune indique que le fournisseur est définitif et qu'il ne changera plus.
+![definitive_supplier](assets/info_commande/order_details.png)

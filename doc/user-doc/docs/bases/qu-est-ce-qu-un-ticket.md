@@ -1,36 +1,78 @@
 # Qu'est-ce qu'un ticket ?
 
-1 ticket = 1 commande
+Dans notre CRM, les tickets sont utilisés pour échanger avec un client à propos de sa commande. La première fois qu'un client nous contacte, un nouveau ticket est créé.
+Un ADV peut également créer un ticket s'il a besoin de contacter un client.
 
-Un ticket est la relation entre un client et le service après-ventes, 
+- Une commande = Un ticket
+- Un ticket = Une commande
 
-## Historique des messages
-Afin de pouvoir identifier plus rapidement qui est l'auteur d'un message, nous avons un code couleur qui a été mis en place.
-Voici donc les différents codes couleur utiliser :
+Les interlocuteurs possibles sur un ticket sont :
 
-| **Auteur**  | **Couleur** |
-|-------------|-------------|
-| Client      | Orange      |
-| Opérateur   | Rouge       |
-| Admin       | Vert        |
+- Le client
+- Les ADVs
+- Les opérateurs du canal d'achat
 
-## Fil de discussion
+!!!note
+    Des messages systèmes peuvent aussi être présent. Il s'agit de messages rédigés et envoyés automatiquement par le CRM pour répondre à un client.
 
-Un fil de discussion est relié à une demande d'un client sur une commande.
+## Organisation de l'interface
+Un ticket est séparé en plusieurs sections, mises en avant ci-dessous.
+
+![interface ticket](assets/interface_ticket.png)
+
+- À gauche : les paramètres et informations disponibles sur le ticket
+- À droite 
+    - Les intégrations d'outils externes (Backoffice, Parcel Management)
+    - La zone de réponse au client
+    - L'historique des échanges avec le client
+
+## Paramètres d'un ticket
+
+![Paramètres d'un ticket](assets/parametres_ticket.png)
+
+Statut
+:   Le client attend-il toujours une réponse (ouvert) ou le ticket a-t-il été résolu (fermé) ?
+
+Priorité
+:   P1 pour les nouveaux tickets, P2 pour ceux qui doivent être suivi.
+
+Responsable
+:   L'ADV qui est actuellement responsable du ticket.
+
+Deadline
+:   Date où le ticket doit être traité.
+
+Canal de diffusion / Commande
+:   Identification de la commande client par son numéro et son canal. Selon le canal, le numéro de commande peut être cliquable, ce lien permet d'accéder au détail de la commande sur le canal d'achat.
+
+## Informations de base
+
+![Informations de base](assets/informations_de_base.png)
+
+Date d'ouverture
+:   La date d'ouverture du ticket sur le CRM. Suivi du nombre de jours depuis lequel il a été créé.
+
+Problématique client
+:   Champ libre qui permet de résumer en quelques mots la problématique rencontrée.
+
+Email client
+:   Champ libre qui permet d'enregistrer l'email direct du client.
+
+Date de livraison
+:   Champ libre qui permet d'enregistrer la date à laquelle le client a été livré.
+
+## Fils de discussion
+Un ticket est séparé en plusieurs fils de discussions. Selon les canaux, ils permettent : 
+
+- De séparer les différents sujets évoqués avec le client
+- De contacter le client avec différentes méthodes
+- De contacter les opérateurs du canal
 
 ![identifier_un_fil_de_discussion](assets/identifier_un_fil_de_discussion.png)
 
-Selon le canal de diffusion le systems de fil de discussion est différent.
 
-- Pour les canaux comme Amazon, Fnac et Icoza, il n'y a pas de gestion de file de discussion, on les appelle donc ("Fil de discussion principal")
-- Pour les canaux qui sont gérés via Mirakl, les fils de discussion sont directement créés par la MarketPlace
-- Pour ManoMano c'est pareil que pour les canaux de type Amazon..., sauf qu'il y a une distinction qui est faite sur l'auteur du message Support / Client:
-  - support : Message écrit par la MarketPlace
-  - Client : Message écrit par le client
+Les tickets ont également un fil de discussion "Email" :
+Il permet d'envoyer un email au client. Ce fil de discussion n'est disponible que pour les commandes qui existent dans le Backoffice. Il ne permet que l'envoi de messages, pas de réception.
 
-!!! note Fil de discussion créé par défaut = Email. 
-    Il permet d'envoyer un email au client.
-    L'email est envoyé à l'adresse email définie dans le Backoffice, visible dans la rubrique Info commande.
-    Ce fil de discussion n'est disponible que pour les commandes qui existent dans le Backoffice.
-    Ne permet que l'envoi de messages, pas de réception.
-
+!!!note
+    📖 Pour une discussion en profondeur sur les fonctionnalités plus complexes, référez-vous à la section Fonctionnalités de cette documentation. 

@@ -15,7 +15,7 @@ class EmailSendMessage extends AbstractSendMessage
         if (env('APP_ENV') != 'production')
             return;
 
-        $to = str_replace('"', "", $this->message->thread->channel_data);
+        $to = $this->message->thread->channel_data["email"];
 
         $this->attachments = $this->message->documents()->get();
 

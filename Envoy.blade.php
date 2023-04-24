@@ -3,6 +3,7 @@
     $__container->servers([
         'local' => '127.0.0.1',
         'tkg-production' => 'crm@51.38.54.12 -p 2232',
+        'smarttech-production' => 'crm@152.228.225.9 -p 2231',
     ]);
 
     /* Git config */
@@ -13,6 +14,7 @@
     /* Servers configuration */
     switch($on) {
         case 'tkg-production':
+        case 'smarttech-production':
             $php = "php8.2";
             $app_dir = '/var/www/html/crm';
             break;
@@ -197,7 +199,7 @@
 
 {{-- Restart queue workers --}}
 @task('queue:restart', ['on' => $on])
-{{--    sudo systemctl restart pricing@*--}}
+    sudo systemctl restart crm@*.service
     echo "Queue workers have been restarted"
 @endtask
 

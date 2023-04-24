@@ -16,6 +16,7 @@ use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\DB;
 
 
@@ -23,8 +24,8 @@ class RakutenImportMessages extends AbstractImportMessages
 {
     private Client $client;
     const FROM_DATE_TRANSFORMATOR = ' - 2 hour';
-    const PAGE ='sales_ws';
-    const GET_ITEM_TODO_LIST ='getitemtodolist';
+    const PAGE = 'sales_ws';
+    const GET_ITEM_TODO_LIST = 'getitemtodolist';
     const GET_ITEM_TODO_LIST_VERSION = '2011-09-01';
     const GET_ITEM_INFOS = 'getiteminfos';
     const GET_ITEM_INFOS_VERSION = '2017-08-07';
@@ -40,10 +41,10 @@ class RakutenImportMessages extends AbstractImportMessages
     protected function getCredentials(): array
     {
         return [
-            'host' => env('RAKUTEN_API_URL'),
-            'login' => env('RAKUTEN_LOGIN'),
+            'host'     => env('RAKUTEN_API_URL'),
+            'login'    => env('RAKUTEN_LOGIN'),
             'password' => env('RAKUTEN_PASSWORD'),
-            'token' => env('RAKUTEN_TOKEN')
+            'token'    => env('RAKUTEN_TOKEN')
         ];
     }
 
@@ -68,16 +69,16 @@ class RakutenImportMessages extends AbstractImportMessages
         $ticket->save();
         $this->logger->info('Ticket save');
         $message = Message::firstOrCreate([
-            'thread_id' => $thread->id,
+            'thread_id'              => $thread->id,
             'channel_message_number' => $messageApi['id'],
         ],
             [
-                'user_id' => null,
+                'user_id'     => null,
                 'author_type' =>
                     $authorType == 'Rakuten'
                         ? TicketMessageAuthorTypeEnum::OPERATOR
                         : TicketMessageAuthorTypeEnum::CUSTOMER,
-                'content' => strip_tags($messageApi['Message']),
+                'content'     => strip_tags($messageApi['Message']),
             ],
         );
 
@@ -87,6 +88,7 @@ class RakutenImportMessages extends AbstractImportMessages
 
     /**
      * @throws Exception
+     * @throws GuzzleException
      */
     public function handle()
     {
@@ -104,36 +106,32 @@ class RakutenImportMessages extends AbstractImportMessages
 
         // GET LAST MESSAGES
         $this->logger->info('Init api');
-        $client = $this->initApiClient();
+        $this->initApiClient();
 
         $fromTime = strtotime(date('Y-m-d H:m:s') . self::FROM_DATE_TRANSFORMATOR);
         $fromDate = date('Y-m-d H:i:s', $fromTime);
 
         //get item list
-        $items = $this->getItems($client);
+        $items = $this->getItems();
 
         //get infos
-        $threadList = $this->getInfos($items, $client);
+        $threadList = $this->getInfos($items);
         $threads = $this->sortMessagesByDate($threadList);
 
         try {
-            DB::beginTransaction();
-            foreach($threads as $messages) {
+            foreach ($threads as $messages) {
                 $this->logger->info('Begin Transaction');
 
-
-                if(isset($messages[0])){
-                $order  = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
-                $ticket = Ticket::getTicket($order, $this->channel);
-                $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpItemId'], $messages[0]['type']);
-                $this->importMessageByThread($ticket, $thread, $messages);
+                if (isset($messages[0])) {
+                    $order = Order::getOrder($messages[0]['MpOrderId'], $this->channel);
+                    $ticket = Ticket::getTicket($order, $this->channel);
+                    $thread = Thread::getOrCreateThread($ticket, $messages[0]['MpItemId'], $messages[0]['MpItemId']);
+                    $this->importMessageByThread($ticket, $thread, $messages);
                 }
             }
-            DB::commit();
         } catch (Exception $e) {
-            $this->logger->error('An error has occurred. Rolling back.', $e);
-            DB::rollBack();
-                \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
+            $this->logger->error('An error has occurred.', $e);
+            \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
             return;
         }
 
@@ -142,20 +140,21 @@ class RakutenImportMessages extends AbstractImportMessages
 
     /**
      * @throws Exception
+     * @throws GuzzleException
      */
-    private function getItems($client): array
+    private function getItems(): array
     {
         $this->logger->info('Get thread list');
 
-        $response = $client->request(
-                'GET', $this->getCredentials()['host'] . '/'. self::PAGE
-                . '?action='  . self::GET_ITEM_TODO_LIST
-                . '&login='   . env('RAKUTEN_LOGIN')
-                . '&pwd='     . env('RAKUTEN_PASSWORD')
-                . '&version=' . self::GET_ITEM_TODO_LIST_VERSION
-            );
+        $response = $this->client->request(
+            'GET', $this->getCredentials()['host'] . '/' . self::PAGE
+            . '?action=' . self::GET_ITEM_TODO_LIST
+            . '&login=' . env('RAKUTEN_LOGIN')
+            . '&pwd=' . env('RAKUTEN_PASSWORD')
+            . '&version=' . self::GET_ITEM_TODO_LIST_VERSION
+        );
 
-        if($response->getStatusCode() != '200')
+        if ($response->getStatusCode() != '200')
             throw new Exception('getitemtodolist api request gone bad');
 
         $items = $response->getBody()->getContents();
@@ -229,7 +228,7 @@ class RakutenImportMessages extends AbstractImportMessages
                             $message['Object'] = trim($this->removeCdata($mail->object));
                             $message['Message'] = trim($this->removeCdata($mail->content));
                             $message['Status'] = (string)$mail->status;
-                            if ($message['MpCustomerId'] !='Icoza') {
+                            if ($message['MpCustomerId'] != 'Icoza') {
                                 $messages[] = $message;//get only message from customer (don't re import our own answer)
                             }
                         }
@@ -243,29 +242,30 @@ class RakutenImportMessages extends AbstractImportMessages
 
     /**
      * @throws Exception
+     * @throws GuzzleException
      */
-    private function getInfos($msgsId, $client): array
+    private function getInfos($msgsId): array
     {
         $this->logger->info('Get messages list');
         $arrayMessages = [];
         foreach ($msgsId as $msgId => $type) {
-            $response = $client->request(
+            $response = $this->client->request(
                 'GET', $this->getCredentials()['host'] . '/' . self::PAGE
-                . '?action='  . self::GET_ITEM_INFOS
-                . '&login='   . env('RAKUTEN_LOGIN')
-                . '&pwd='     . env('RAKUTEN_PASSWORD')
+                . '?action=' . self::GET_ITEM_INFOS
+                . '&login=' . env('RAKUTEN_LOGIN')
+                . '&pwd=' . env('RAKUTEN_PASSWORD')
                 . '&version=' . self::GET_ITEM_INFOS_VERSION
-                . '&itemid='  . $msgId
+                . '&itemid=' . $msgId
             );
 
-            if($response->getStatusCode() != '200')
+            if ($response->getStatusCode() != '200')
                 throw new Exception('getiteminfos api request gone bad');
 
             $messages = $response->getBody()->getContents();
 
             $messagesList = $this->xmlThreadToArray($messages);
             if (isset($messagesList[0]))
-                foreach($messagesList as &$msg){
+                foreach ($messagesList as &$msg) {
                     $msg['type'] = $type;
                 }
 
@@ -315,13 +315,13 @@ class RakutenImportMessages extends AbstractImportMessages
 
             $message['id'] = crc32($message['Message'] . $message['MpCustomerId'] . $message['Date']);
 
-            if(isset($message['Object'])){ // It's a mail
+            if (isset($message['Object'])) { // It's a mail
                 $subject = $message['Object'];
                 $normalizedSubject = $this->normalize(mb_convert_encoding($subject, 'HTML-ENTITIES'));//HTML-ENTITIES to be the same of mails import
 
                 if (!$action = $this->getAction($patterns, $normalizedSubject)) {
                     throw new Exception('item id: ' . $message['MpItemId'] . ', no Rakuten pattern found for subject "' . $normalizedSubject . '" (' . $subject . ')');
-                } else if ($this->isMessagesImported($message['id'])){
+                } else if ($this->isMessagesImported($message['id'])) {
                     $this->logger->info('Check if this message is imported');
                     $action = "Ignore";
                 }
@@ -356,7 +356,7 @@ class RakutenImportMessages extends AbstractImportMessages
         $patterns[] = array('name' => 'Sales', 'pattern' => '#questionsurlacommande#');
         $patterns[] = array('name' => 'Sales', 'pattern' => '#reclamation#');
         $patterns[] = array('name' => 'Sales', 'pattern' => '#cisionssurvotreachat#'); //Précisions sur votre achat
-        $patterns[] = array('name' => 'Sales', 'pattern' => '#nouveaumessagede#'); //question sur les commande
+        $patterns[] = array('name' => 'Sales', 'pattern' => '#nouveaumessagede#'); //question sur les commandes
         $patterns[] = array('name' => 'Sales', 'pattern' => '#articlenonrec#'); // Article non reçu : confirmez l'expédition (595558587) - Gwenaelle (Service Clients Rakuten)
         $patterns[] = array('name' => 'Sales', 'pattern' => '#derniegravererelanceenvoyezuntransporteur#'); // Dernière relance : envoyez un transporteur (598404103) - Yassir (Service Clients Rakuten)
         $patterns[] = array('name' => 'Sales', 'pattern' => '#messageimportant#'); // Message important - Faty (Service Clients Rakuten)

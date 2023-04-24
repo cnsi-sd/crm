@@ -17,7 +17,7 @@ crm.{boutique}.cnsi-sd.fr
 ```bash
 # Upgrade paquet existants
 sudo apt update
-sudo apt upgrade
+sudo apt upgrade -y
 
 # Installation des repository PHP
 sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
@@ -74,8 +74,9 @@ nano /home/crm/.bashrc
 ```
 ```bash
 # Custom variables
-DIR_PHP="/bin/php8.2"
-DIR_CRM="/var/www/html/crm/current"
+PHP="/bin/php8.2"
+HTTPDIR="/var/www/html/crm/current"
+ARTISAN="/var/www/html/crm/current/artisan"
 
 # change CMD prompt (replace BOUTIQUE)
 PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h \[\033[01;33m\]CRM BOUTIQUE\[\033[00m\]\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
@@ -177,7 +178,7 @@ sudo systemctl restart php8.2-fpm
 Requis pour build la documentation
 ```bash
 # Avec l'utiliasteur debian
-sudo apt install python3-pip
+sudo apt install python3-pip -y
 # Avec l'utilisation crm
 pip3 install mkdocs
 ```
@@ -212,9 +213,9 @@ Ajouter la clé SSH privé de l'utilisateur **crm** dans une [variable de déplo
 
 Lancé un nouveau déploiement sur GitLab > CI/CD > Pipelines > New. Le job devrait échouer, car les variables d’environnement non pas été mises sur le serveur.
 
-Connecté en pricing, créer le fichier d’environnement shared/.env
+Connecté en crm, créer le fichier d’environnement shared/.env
 ```bash
-nano /var/www/crm.cnsi-sd.fr/shared/.env
+nano /var/www/html/crm/shared/.env
 ```
 
 Un nouveau déploiement peut être relancé manuellement sur GitLab > CI/CD > Pipelines > New, il doit finir avec succès.
@@ -250,6 +251,48 @@ sudo systemctl reload nginx
 sudo systemctl restart nginx
 ```
 
+## Worker (traitement de la queue)
+Créer le fichier de configuration systemd :
+```bash
+sudo nano /etc/systemd/system/crm@.service
+```
+```bash
+[Unit]
+Description=CRM queue worker
+
+[Service]
+User=crm
+Group=www-data
+Restart=always
+ExecStart=php8.2 /var/www/html/crm/current/artisan queue:work
+StandardOutput=null
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+Recharger la configuration systemd :
+```bash
+sudo systemctl daemon-reload
+```
+
+Activer un worker :
+```bash
+sudo systemctl enable crm@1
+sudo systemctl start crm@1
+```
+
+Autoriser l’utilisateur crm à gérer son worker :
+```bash
+sudo nano /etc/sudoers.d/crm
+```
+
+```bash
+crm ALL=NOPASSWD: /usr/bin/systemctl * crm@*.service
+crm ALL=NOPASSWD: /usr/bin/journalctl -u crm@*.service
+crm ALL=NOPASSWD: /usr/bin/journalctl -fu crm@*.service
+```
+
 ## Backup
 
 Mettre la clé SSH publique de debian sur le NAS dans .ssh/authorized_keys.
@@ -258,12 +301,12 @@ Puis créer le script de sauvegarde :
 
 ```bash
 cd ~
-nano backup_sql.sh
+nano backup_crm.sh
 ```
 
 ```bash
 # Local export configuration
-local_backup_directory="/home/debian/backup/sql/"
+local_backup_directory="/home/debian/backup/crm/"
 date=$(date +%F_%T.sql)
 export_file="${local_backup_directory}crm_${date}"
 keep_file_x_days=7
@@ -297,6 +340,6 @@ rsync -vzr --delete --delete-before -e 'ssh -p 2222' $local_backup_directory $rs
 
 Ajouter dans le crontab :
 ```bash
-# Backup SQL
-00 04,13 * * * /bin/bash /home/debian/backup_sql.sh
+# Backup CRM
+00 04,13 * * * /bin/bash /home/debian/backup_crm.sh
 ```

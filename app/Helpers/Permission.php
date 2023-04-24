@@ -106,6 +106,12 @@ abstract class Permission
                             PermissionEnum::CHANNEL_EDIT,
                         ],
                     ],
+                    [
+                        'title' => trans_choice('jobwatcher::jobs.job', 2),
+                        'items' => [
+                            PermissionEnum::JOB_READ,
+                        ],
+                    ],
                 ],
             ],
             [

@@ -3,7 +3,6 @@
 namespace App\Jobs\AnswerOfferQuestions;
 
 use App\Enums\Channel\ChannelEnum;
-use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use Cnsi\Cdiscount\ClientCdiscount;
@@ -53,7 +52,7 @@ class CdiscountAnswerOfferQuestions implements ShouldQueue
             'Answer to discussionId: ' . $apiMessage->getDiscussionId()
             . ', customerId: ' . $apiMessage->getCustomerId());
 
-        $defaultAnswerId = setting('cdiscount.defaultAnswerOfferQuestion');
+        $defaultAnswerId = setting('default_answer_offer_questions');
         $messageBody = DefaultAnswer::findOrFail($defaultAnswerId);
 
         $cdiscountMessage = array(

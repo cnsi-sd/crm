@@ -70,7 +70,7 @@ return [
         'default_message_answer' => 'Message par défaut',
         'revival' => 'Relance automatique',
         'ticket'=> 'Ticket',
-        'tag'=>'Tag'
+        'tag'=>'Tag',
     ],
 
     'role' => [
@@ -115,7 +115,6 @@ return [
         'created_at' => 'Date d\'ouverture',
         'all_tickets' => 'Tous les tickets',
         'my_tickets' => 'Mes tickets',
-        'channel' => 'Canal de diffusion',
         'subjects' => 'Sujets',
         'mapping' => 'Association',
         'order' => 'Commande',
@@ -186,9 +185,19 @@ return [
             'incidents' => 'Incidents',
             'incident_tag' => 'Tag Incident',
 
-            'savprocess' => 'Procédure SAV',
-            'savprocess_tag' => 'Tag Procédure SAV complète',
-            'savprocess_stop_revival' => 'Relances auto à stopper',
+            'savprocess' => [
+                'savprocess' => 'Procédure SAV',
+
+                'out' => 'Configuration sortante',
+                'active' => 'Activer l\'onglet Procédure SAV ?',
+                'url' => 'URL',
+                'token' => 'Token',
+
+                'in' => 'Configuration entrante',
+                'api_token' => 'Token API',
+                'complete_tag' => 'Tag Procédure SAV complète',
+                'stop_revival' => 'Relances auto à stopper',
+            ],
 
             'default_answer_offer_questions' => 'Réponse aux questions sur les offres',
 

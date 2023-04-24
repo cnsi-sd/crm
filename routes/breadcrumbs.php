@@ -157,7 +157,7 @@ Breadcrumbs::for('incidents_config', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('savprocess_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
-    $trail->push(__('app.config.misc.savprocess'), route('savprocess_config'));
+    $trail->push(__('app.config.misc.savprocess.savprocess'), route('savprocess_config'));
 });
 Breadcrumbs::for('answer_offer_questions_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
@@ -228,3 +228,9 @@ Breadcrumbs::for('edit_sav_note', function (BreadcrumbTrail $trail, SavNote $sav
     $trail->parent('show_sav_note', $savNote);
     $trail->push(__('app.edit'), route('edit_sav_note', $savNote));
 });
+/** JobWatcher */
+Breadcrumbs::for('jobs', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(trans_choice('jobwatcher::jobs.job', 2));
+});
+

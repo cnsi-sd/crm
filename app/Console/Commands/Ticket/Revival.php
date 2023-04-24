@@ -5,6 +5,7 @@ namespace App\Console\Commands\Ticket;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Jobs\SendMessage\BoulangerSendMessage;
 use App\Jobs\SendMessage\ButSendMessage;
 use App\Jobs\SendMessage\CarrefourSendMessage;
 use App\Jobs\SendMessage\ConforamaSendMessage;
@@ -166,6 +167,7 @@ class Revival extends Command
                 ChannelEnum::RUEDUCOMMERCE_FR => RueducommerceSendMessage::dispatch($messageBD),
                 ChannelEnum::SHOWROOMPRIVE_COM => ShowroomSendMessage::dispatch($messageBD),
                 ChannelEnum::UBALDI_COM => UbaldiSendMessage::dispatch($messageBD),
+                ChannelEnum::BOULANGER_COM => BoulangerSendMessage::dispatch($messageBD),
             };
         } elseif ($revival_send_type === 'SMS'){
             SMS::dispatch($messageBD->content);

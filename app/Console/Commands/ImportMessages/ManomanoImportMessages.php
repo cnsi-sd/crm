@@ -81,10 +81,10 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     {
         $threadName = str_contains($email->senderAddress, '@monechelle.zendesk.com') ? 'Support' : 'Client';
         $threadNumber = Str::before($email->senderAddress, '@');
-
+        $channel_data = ["email" => $email->senderAddress];
         $order      = Order::getOrder($mpOrder, $this->channel);
         $ticket     = Ticket::getTicket($order, $this->channel);
-        $thread     = Thread::getOrCreateThread($ticket, $threadNumber, $threadName, $email->senderAddress);
+        $thread     = Thread::getOrCreateThread($ticket, $threadNumber, $threadName, $channel_data);
 
         $this->importMessageByThread($ticket, $thread, $email);
     }

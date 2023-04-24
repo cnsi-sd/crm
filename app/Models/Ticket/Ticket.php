@@ -107,7 +107,7 @@ class Ticket extends Model
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->orderBy('id', 'DESC');
     }
 
     public function getShowRoute(): string
@@ -234,7 +234,7 @@ class Ticket extends Model
             ->setSortable(true);
 
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(__('app.ticket.channel'))
+            ->setLabel(trans_choice('app.config.channel',1))
             ->setType(ColumnTypeEnum::SELECT)
             ->setOptions(Channel::getChannelsNames())
             ->setCallback(function (Ticket $ticket) {
@@ -253,7 +253,7 @@ class Ticket extends Model
             ->setCallback(function (Ticket $ticket) {
                 $listeTag = array();
                 return view('tickets.tag.preview')
-                    ->with('listTags', Tag::getListTagByThread($ticket, $listeTag, true));
+                    ->with('listTags', Tag::getListTagByTicket($ticket, $listeTag));
             });
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.ticket.created_at'))
@@ -271,12 +271,6 @@ class Ticket extends Model
         });
 
         return $columns;
-    }
-
-    public function getlistTagWithTickets(): array
-    {
-        $listeTag = array();
-        return Tag::getListTagByThread($this, $listeTag,true);
     }
 
     public function getOpenedDays(): string

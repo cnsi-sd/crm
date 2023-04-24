@@ -25,9 +25,16 @@ abstract class MagentoStores
                 "rueducommerce" => Channel::getByName(ChannelEnum::RUEDUCOMMERCE_FR, false),
                 "metro"         => Channel::getByName(ChannelEnum::METRO_FR, false),
                 "carrefour"     => Channel::getByName(ChannelEnum::CARREFOUR_FR, false),
-//                "leclerc"       => Channel::getByName(ChannelEnum::E_LECLERC, false),
-//                "icoza"         => Channel::getByName(ChannelEnum::ICOZA_FR, false),
+                "leclerc"       => Channel::getByName(ChannelEnum::E_LECLERC, false),
+                "icoza"         => Channel::getByName(ChannelEnum::ICOZA_FR, false),
+                "boulanger"     => Channel::getByName(ChannelEnum::BOULANGER_COM, false),
             ];
+
+            foreach(self::$store_mapping as $key => $channel) {
+                if(!$channel->is_active) {
+                    unset(self::$store_mapping[$key]);
+                }
+            }
         }
 
         return self::$store_mapping;
@@ -49,7 +56,14 @@ abstract class MagentoStores
                 "leclerc"       => Channel::getByName(ChannelEnum::E_LECLERC, false),
                 "icoza"         => Channel::getByName(ChannelEnum::ICOZA_FR, false),
                 "carrefour"     => Channel::getByName(ChannelEnum::CARREFOUR_FR, false),
+                "boulanger"     => Channel::getByName(ChannelEnum::BOULANGER_COM, false),
             ];
+
+            foreach(self::$api_marketplace_mapping as $key => $channel) {
+                if(!$channel->is_active) {
+                    unset(self::$store_mapping[$key]);
+                }
+            }
         }
 
         return self::$api_marketplace_mapping;

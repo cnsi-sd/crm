@@ -34,7 +34,7 @@ class CdiscountSendMessage extends AbstractSendMessage
         $client = new ClientCdiscount(env('CDISCOUNT_USERNAME'), env('CDISCOUNT_PASSWORD'));
         $discussion = new DiscussionsApi($client, env('CDISCOUNT_API_URL'), env('CDISCOUNT_SELLERID'));
 
-        $channel_data = json_decode($this->message->thread->channel_data);
+        $channel_data = $this->message->thread->channel_data;
 
         $attachments = $this->message->documents()->get();
         $attachmentsToSend = [];
@@ -58,7 +58,7 @@ class CdiscountSendMessage extends AbstractSendMessage
             'salesChannel' => $channel_data->salesChannel,
             'receivers' => array(
                 array(
-                    'userId' => $channel_data->userId,
+                    'userId' => $channel_data['userId'],
                     'userType' => 'Customer'
                 )
             )

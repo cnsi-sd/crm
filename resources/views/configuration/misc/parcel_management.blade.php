@@ -1,11 +1,11 @@
 @extends('configuration.misc.home', ["page_title"=> __('app.config.misc.pm.pm') ])
 
 @section('misc_content')
-    <div class="col-8">
+    <div class="col-lg-8">
         <form class="form-horizontal row" method="post">
             @csrf
 
-            <div class="col-6">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         {{ __('app.config.misc.pm.out') }}
@@ -22,21 +22,21 @@
                             <label for="app_url" class="form-label">
                                 {{ __('app.config.misc.pm.app_url') }}
                             </label>
-                            <input name="app_url" class="form-control" value="{{ old('app_url', setting('pm.app_url')) }}">
+                            <input name="app_url" class="form-control" value="{{ old('app_url', setting('pm.app_url')) }}" placeholder="https://stock.cnsi-sd.net">
                         </div>
 
                         <div class="mb-3">
                             <label for="api_url" class="form-label">
                                 {{ __('app.config.misc.pm.api_url') }}
                             </label>
-                            <input name="api_url" class="form-control" value="{{ old('api_url', setting('pm.api_url')) }}">
+                            <input name="api_url" class="form-control" value="{{ old('api_url', setting('pm.api_url')) }}" placeholder="https://api.stock.cnsi-sd.net">
                         </div>
 
                         <div class="mb-3">
                             <label for="api_token" class="form-label">
                                 {{ __('app.config.misc.pm.api_token') }}
                             </label>
-                            <input name="api_token" class="form-control" value="{{ old('api_token', setting('pm.api_token')) }}">
+                            <input name="api_token" class="form-control" value="{{ old('api_token', setting('pm.api_token')) }}" placeholder="ey...">
                         </div>
 
                         <div class="mb-3">
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         {{ __('app.config.misc.pm.in') }}
