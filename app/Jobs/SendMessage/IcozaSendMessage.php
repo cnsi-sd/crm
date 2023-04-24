@@ -85,15 +85,6 @@ class IcozaSendMessage extends AbstractSendMessage
                 );
             }
 
-            $route = $this->getCredentials()['host'] . 'Reply';
-            $response = $client->request('POST', $route, [
-                RequestOptions::FORM_PARAMS => [
-                    "content" => $this->translateContent($this->message->content),
-                    "order" => $lastApiMessage->threadId,
-                    "documents" => $doc,
-                ],
-            ]);
-
         $threadNumber = $this->message->thread->channel_thread_number;
 
         $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber, $this->getChannelName());
@@ -105,6 +96,7 @@ class IcozaSendMessage extends AbstractSendMessage
             RequestOptions::FORM_PARAMS => [
                 "content" => $this->translateContent($this->message->content),
                 "order"   => $lastApiMessage->threadId,
+                "documents" => $doc,
             ],
         ]);
 
