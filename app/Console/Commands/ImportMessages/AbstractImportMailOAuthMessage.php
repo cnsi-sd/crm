@@ -25,7 +25,6 @@ use DateTime;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use PhpImap\IncomingMail;
 
 class AbstractImportMailOAuthMessage extends AbstractImportMessages
 {
@@ -38,12 +37,13 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
 
     const ALERT_LOCKED_SINCE = 600;
     const KILL_LOCKED_SINCE = 1200;
+
     /**
      * @var string
      */
     protected string $channelName;
+    private $accessToken;
 
-    protected $mailObject;
 
     public function __construct()
     {
@@ -69,16 +69,16 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
 
         $this->logger->info('--- Start ---');
         try {
-            $accessToken = $this->initApiClient();
+            $this->initApiClient();
 
             $from_time = strtotime(date('d M Y H:i:s') . self::FROM_DATE_TRANSFORMATOR);
             $from_date = date("Y-m-d H:i:s", $from_time);
 
-            $messageUrlGraph = 'https://graph.microsoft.com/v1.0/me/messages?top=20';
+            $messageUrlGraph = 'https://graph.microsoft.com/v1.0/me/messages?top=100';
 
             $curl = curl_init($messageUrlGraph);
             curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $accessToken
+                'Authorization: Bearer ' . $this->accessToken
             ));
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($curl);
@@ -94,6 +94,8 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
                 foreach ($email_data['value'] as $email) {
                     try {
                         if (!$this->canImport($email)) {
+                            $this->logger->info($email['sender']['emailAddress']['address']);
+                            $this->logger->info($email['subject']);
                             $this->logger->info('cannot import email');
                             continue;
                         }
@@ -111,7 +113,7 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
                         $this->logger->info('--- start import email : ' . $email['id']);
                         $order = Order::getOrder($mpOrder, $this->channel);
                         $ticket = Ticket::getTicket($order, $this->channel);
-                        $thread = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, $email['subject'], $email['from']['emailAddress']['address']);
+                        $thread = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, $email['subject'], ["email" => $email['from']['emailAddress']['address']]);
 
                         switch ($this->getSpecificActions($email)) {
                             case self::RETURN:
@@ -157,7 +159,7 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
     /**
      * @throws IdentityProviderException
      */
-    protected function initApiClient()
+    protected function initApiClient(): void
     {
         $credentials = $this->getCredentials();
         $oauthClient = new \League\OAuth2\Client\Provider\GenericProvider([
@@ -180,8 +182,7 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
             setting(['TKGTokenExpiredTime' => $accessToken->getExpires()]);
             setting()->save();
         }
-
-        return setting('TKGAccessToken');
+        $this->accessToken = setting('TKGAccessToken');
     }
 
     /**
@@ -243,9 +244,10 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
                 }
                 return false;
             }
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -325,14 +327,38 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
                 'content' => strip_tags($message),
             ],
         );
-
-        /*if ($message_api_api->hasAttachments()) {
+        if ($message_api_api['hasAttachements']) {
             $this->logger->info('Download documents from message');
-            foreach ($message_api_api->getAttachments() as $attachment) {
-                $tmpFile = new TmpFile((string) $attachment->getContents());
+            $url = "https://graph.microsoft.com/v1.0/me/messages/{$message_api_api['id']}/attachments";
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                "Authorization: Bearer {$this->accessToken}",
+                "Content-Type: application/json"
+            ));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            $attachments = json_decode($response)->value;
+
+            foreach ($attachments as $attachment) {
+                $url = "https://graph.microsoft.com/v1.0/me/messages/{$message_api_api['id']}/attachments/{$attachment->id}";
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    "Authorization: Bearer {$this->accessToken}",
+                    "Content-Type: application/json"
+                ));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($ch);
+                curl_close($ch);
+
+                // Récupérer le contenu de la pièce jointe
+                $content = json_decode($response)->contentBytes;
+
+                $tmpFile = new TmpFile((string)$content);
                 Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachment->name);
             }
-        }*/
+        }
 
         // Dispatch the job that will try to answer automatically to this new imported
         AnswerToNewMessage::dispatch($message);
@@ -354,7 +380,7 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
 
         $check = Comment::query()
             ->select('*')
-            ->where('content' , $returnComment)
+            ->where('content', $returnComment)
             ->where('ticket_id', $ticket->id)
             ->get();
 
@@ -378,7 +404,7 @@ class AbstractImportMailOAuthMessage extends AbstractImportMessages
     protected function importMessageByThread(Ticket $ticket, Thread $thread, $email): void
     {
         $this->logger->info('Check if this message is imported');
-        if($this->isMessagesImported($email['id']))
+        if ($this->isMessagesImported($email['id']))
             return;
 
         $this->logger->info('Convert email to message');
