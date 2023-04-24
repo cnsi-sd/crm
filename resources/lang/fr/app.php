@@ -43,6 +43,8 @@ return [
     'confirm' => 'Confirmer',
     'cancel' => 'Annuler',
     'download' => 'Télécharger',
+    'reset_password_sent' => 'Email de réinitialisation envoyé',
+    'reset_password_success' => 'Mot de passe mis à jour',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
