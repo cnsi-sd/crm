@@ -178,8 +178,8 @@ Breadcrumbs::for('parcel_management_config', function (BreadcrumbTrail $trail) {
 
 /** Channel */
 Breadcrumbs::for('channels', function (BreadcrumbTrail $trail) {
-    $trail->parent('configuration');
-    $trail->push(trans_choice('app.config.channel', 2), route('channels'));
+    $trail->parent('admin');
+    $trail->push(trans_choice('app.admin.channel', 2), route('channels'));
 });
 
 Breadcrumbs::for('edit_channel', function (BreadcrumbTrail $trail) {
