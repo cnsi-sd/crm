@@ -100,7 +100,7 @@ abstract class Permission
                         ],
                     ],
                     [
-                        'title' => trans_choice('app.config.channel', 2),
+                        'title' => trans_choice('app.admin.channel', 2),
                         'items' => [
                             PermissionEnum::CHANNEL_READ,
                             PermissionEnum::CHANNEL_EDIT,

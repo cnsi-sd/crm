@@ -174,7 +174,7 @@ class Channel extends Model
                 ->setSortable(false);
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Channel $channel) {
-                return view('configuration.channel.inline_table_actions')
+                return view('admin.channel.inline_table_actions')
                     ->with('channel', $channel);
             });
 

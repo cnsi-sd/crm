@@ -53,12 +53,6 @@ abstract class Menu
                         'permission' => PermissionEnum::REVIVAL_READ
                     ],
                     [
-                        'text' => trans_choice('app.config.channel', 2),
-                        'route' => route('channels'),
-                        'ref' => 'channel',
-                        'permission' => PermissionEnum::CHANNEL_READ
-                    ],
-                    [
                         'text' => trans_choice('app.tags.tags', 2),
                         'route' => route('tags'),
                         'ref' => 'tags',
@@ -106,6 +100,12 @@ abstract class Menu
                         'route' => route('jobs'),
                         'ref' => 'jobs',
                         'permission' => PermissionEnum::JOB_READ
+                    ],
+                    [
+                        'text' => trans_choice('app.admin.channel', 2),
+                        'route' => route('channels'),
+                        'ref' => 'channel',
+                        'permission' => PermissionEnum::CHANNEL_READ
                     ],
                 ],
             ],
