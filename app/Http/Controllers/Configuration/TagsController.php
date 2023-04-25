@@ -76,6 +76,12 @@ class TagsController extends AbstractController
         return response()->json(['data' => $data]);
     }
 
+    public function ajax_tags_revival(Request $request)
+    {
+        $data = (new Channel())->getAuthorizedTags($request->input('channel_id'));
+        return response()->json(['data' => $data]);
+    }
+
     public function newTagLine(Request $request)
     {
         $taglist = TagList::query()->max('id');

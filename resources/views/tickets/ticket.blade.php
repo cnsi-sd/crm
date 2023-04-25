@@ -278,10 +278,13 @@
     {!! \App\Helpers\JS::define('url_click_and_call', route('click_and_call')) !!}
     {!! \App\Helpers\JS::define('default_option_selected_tag' , __('app.tags.select_tag')) !!}
     {!! \App\Helpers\JS::define('checkHasTag', route('ticketHasTaglist')) !!}
+    {!! \App\Helpers\JS::define('save_revival_thread', route('saveRevivalThread')) !!}
+
 
     {!! \App\Helpers\JS::define('messageVariables', \App\Enums\Ticket\MessageVariable::getTinyMceVariables()) !!}
     <script src="{{ asset('build/tinymce/tinymce.js') }}"></script>
     <script src="{{ Vite::asset('resources/js/tinymce.js') }}"></script>
 
     <script src="{{ Vite::asset('resources/js/tickets/ticket.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/revival.js') }}"></script>
 @endsection

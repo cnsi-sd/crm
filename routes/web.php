@@ -80,6 +80,7 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival')->can('edit', Revival::class);
             Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival')->can('read', Revival::class);
             Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival')->can('edit', Revival::class);
+
         });
         Route::prefix('tags')->group(function () {
             Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tag::class);
@@ -120,6 +121,10 @@ Route::prefix('/')->group(function () {
     Route::post('/saveTicketThreadTags', [TicketController::class, 'saveTicketTags'])->name('saveTagOnticket');
     Route::post('/hastaglist', [TicketController::class, 'hasTagList'])->name('ticketHasTaglist');
     Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnTicket');
+
+    Route::post('/defaultAnswerListwithChannel', [RevivalController::class, 'listDefaultAnswer'])->name('list_default_answer');
+    Route::post('/ajaxTagsRevival', [TagsController::class, 'ajax_tags_revival'])->name('ajaxShowTagsRevival');
+    Route::post('/saveRevivalThread', [TicketController::class, 'save_revivalThread'])->name('saveRevivalThread');
 
     // Documentation
     Route::any('doc/agent/{path?}', [DocumentationController::class, 'agent'])->where('path', '.*')->name('agent_doc')->can('agent_doc');

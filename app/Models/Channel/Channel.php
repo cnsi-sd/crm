@@ -111,14 +111,19 @@ class Channel extends Model
     /**
      * @return Collection|DefaultAnswer[]
      */
-    public function getAuthorizedDefaultAnswers(): Collection
+    public function getAuthorizedDefaultAnswers(array $listeId = null): Collection
     {
-        return DefaultAnswer::query()
+        $query = DefaultAnswer::query()
             ->select('default_answers.*')
             ->leftJoin('channel_default_answer', 'channel_default_answer.default_answer_id', 'default_answers.id')
-            ->whereNull('channel_default_answer.id')
-            ->orWhere('channel_default_answer.channel_id', $this->id)
-            ->groupBy('default_answers.id')
+            ->whereNull('channel_default_answer.id');
+
+        if ($listeId)
+            $query->orWhereIn('channel_default_answer.channel_id', $listeId);
+        else
+            $query->orWhere('channel_default_answer.channel_id', $this->id);
+
+        return $query->groupBy('default_answers.id')
             ->orderBy('default_answers.name')
             ->get();
     }
@@ -126,16 +131,39 @@ class Channel extends Model
     /**
      * @return Collection|Tag[]
      */
-    public function getAuthorizedTags(): Collection
+    public function getAuthorizedTags(array $listeId = null): Collection
     {
-        return Tag::query()
+        $query = Tag::query()
             ->select('tags.*')
             ->leftJoin('channel_tags', 'channel_tags.tag_id', 'tags.id')
-            ->whereNull('channel_tags.id')
-            ->orWhere('channel_tags.channel_id', $this->id)
-            ->groupBy('tags.id')
-            ->orderBy('tags.name')
-            ->get();
+            ->whereNull('channel_tags.id');
+
+        if ($listeId)
+            $query->orWhereIn('channel_tags.channel_id', $listeId);
+        else
+            $query->orWhere('channel_tags.channel_id', $this->id);
+
+        return $query->groupBy('tags.id')
+                ->orderBy('tags.name')
+                ->get();
+
+    }
+    public function getAuthorizedRevival(array $listeId = null): Collection
+    {
+        $query = Revival::query()
+            ->select('revivals.*')
+            ->leftJoin('channel_revival', 'channel_revival.revival_id', 'revivals.id')
+            ->whereNull('channel_revival.id');
+
+        if ($listeId)
+            $query->orWhereIn('channel_revival.channel_id', $listeId);
+        else
+            $query->orWhere('channel_revival.channel_id', $this->id);
+
+        return $query->groupBy('revivals.id')
+                ->orderBy('revivals.name')
+                ->get();
+
     }
 
     public function user(): BelongsTo

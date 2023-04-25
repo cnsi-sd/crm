@@ -224,8 +224,30 @@ function scrollFunction(myButton) {
     }
 }
 
-
 function backToTop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
+
+$(document).on('change', '#saveRevivalTicket', (function (e) {
+    console.log(e.target.value)
+    window.axios.post(save_revival_thread, {
+        thread_id: e.target.getAttribute("data-thread_id"),
+        revival_id: e.target.value
+    }).then(function (response){
+        $('#revival-container').html(response.data);
+        $('#revival-container select').select2();
+    })
+}))
+
+$(document).on('change', '#revival_delivery_date', (function (e) {
+    console.log(e.target.value)
+    window.axios.post(save_revival_thread, {
+        thread_id: document.getElementById('saveRevivalTicket').getAttribute("data-thread_id"),
+        revival_id: document.getElementById('saveRevivalTicket').selectedIndex,
+        delivery_date: e.target.value
+    }).then(function (response){
+        $('#revival-container').html(response.data);
+        $('#revival-container select').select2();
+    })
+}))
