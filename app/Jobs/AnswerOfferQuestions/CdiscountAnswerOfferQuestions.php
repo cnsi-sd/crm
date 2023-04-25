@@ -37,6 +37,10 @@ class CdiscountAnswerOfferQuestions implements ShouldQueue
         if (env('APP_ENV') != 'production')
             return;
 
+
+        if (!setting('daoq.active')) // We check if the dedicated setting is activated
+            return;
+
         $channel = Channel::getByName(ChannelEnum::CDISCOUNT_FR);
 
         $logger = new Logger('AnswerOfferQuestion/'

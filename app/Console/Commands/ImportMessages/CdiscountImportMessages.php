@@ -83,7 +83,7 @@ class CdiscountImportMessages extends AbstractImportMessages
                     if ($discu->getTypologyCode() == "Offer") {
                         CdiscountAnswerOfferQuestions::AnswerOfferQuestions($discu);
                     } else {
-                        if (!$discu->isOpen())
+                        if (!$discu->isOpen() && setting('closed_discussion.active'))
                             $this->checkClosedDiscussion($discu);
 
                         $this->logger->info('Message recovery');

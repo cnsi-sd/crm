@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="mt-3 mb-2">
-        <button type="button" class="btn btn-danger" id="resetTagFilter" hidden>Reset filter</button>
+        <button type="button" class="btn btn-danger" id="resetTagFilter" hidden>{{ __('app.ticket.reset_filter') }}</button>
         @foreach($listTags as $value)
             <button type="button" class="btn tags-style list-tag"
                     data-tag_id="{{$value[0]->id}}"
