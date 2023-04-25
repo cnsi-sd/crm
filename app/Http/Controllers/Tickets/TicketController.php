@@ -179,10 +179,6 @@ class TicketController extends AbstractController
             $ticket->delivery_date = $request->input('ticket-delivery_date');
             $ticket->save();
 
-            $thread->revival_id = $request->input('ticket-revival');
-            $thread->revival_start_date = $request->input('revival-delivery_date') . ' 09:00:00';
-            $thread->save();
-
             if($messageContent = $request->input('ticket-thread-messages-content')) {
                 $request->validate([
                     'ticket-thread-messages-content'     => ['required','string'],
