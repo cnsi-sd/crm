@@ -61,6 +61,7 @@ return [
     /** Settings */
     'admin' => [
         'admin' => 'Paramètres',
+        'channel' => 'Canal|Canaux',
     ],
 
     /** Permission */
@@ -175,7 +176,6 @@ return [
 
     'config' => [
         'config' => 'Configuration',
-        'channel' => 'Canal|Canaux',
 
         'misc' => [
             'misc' => 'Divers',

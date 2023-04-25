@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
 use App\Http\Controllers\Configuration\BotController;
-use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
+use App\Http\Controllers\Configuration\MiscController;
 use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\Configuration\SavNoteController;
 use App\Http\Controllers\Configuration\TagsController;
-use App\Http\Controllers\Configuration\MiscController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Settings\ChannelController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Tickets\TicketController;
@@ -63,6 +62,10 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '{user}', [UserController::class, 'edit'])->name('edit_user')->can('edit', User::class);
             Route::match(['get', 'post'], '', [UserController::class, 'list'])->name('users')->can('read', User::class);
         });
+        Route::prefix('channel')->group(function () {
+            Route::match(['get', 'post'], '', [ChannelController::class, 'list'])->name('channels')->can('read', Channel::class);
+            Route::match(['get', 'post'], '{channel}', [ChannelController::class, 'edit'])->name('edit_channel')->can('edit', Channel::class);
+        });
     });
 
     Route::prefix('configuration')->group(function () {
@@ -78,10 +81,6 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival')->can('read', Revival::class);
             Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival')->can('edit', Revival::class);
 
-        });
-        Route::prefix('channel')->group(function () {
-            Route::match(['get', 'post'], '', [ChannelController::class, 'list'])->name('channels')->can('read', Channel::class);
-            Route::match(['get', 'post'], '{channel}', [ChannelController::class, 'edit'])->name('edit_channel')->can('edit', Channel::class);
         });
         Route::prefix('tags')->group(function () {
             Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tag::class);
