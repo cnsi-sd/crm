@@ -124,6 +124,7 @@ Route::prefix('/')->group(function () {
 
     Route::post('/defaultAnswerListwithChannel', [RevivalController::class, 'listDefaultAnswer'])->name('list_default_answer');
     Route::post('/ajaxTagsRevival', [TagsController::class, 'ajax_tags_revival'])->name('ajaxShowTagsRevival');
+    Route::post('/saveRevivalThread', [TicketController::class, 'save_revivalThread'])->name('saveRevivalThread');
 
     // Documentation
     Route::any('doc/agent/{path?}', [DocumentationController::class, 'agent'])->where('path', '.*')->name('agent_doc')->can('agent_doc');

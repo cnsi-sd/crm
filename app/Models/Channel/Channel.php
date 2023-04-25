@@ -148,6 +148,23 @@ class Channel extends Model
                 ->get();
 
     }
+    public function getAuthorizedRevival(array $listeId = null): Collection
+    {
+        $query = Revival::query()
+            ->select('revivals.*')
+            ->leftJoin('channel_revival', 'channel_revival.revival_id', 'revivals.id')
+            ->whereNull('channel_revival.id');
+
+        if ($listeId)
+            $query->orWhereIn('channel_revival.channel_id', $listeId);
+        else
+            $query->orWhere('channel_revival.channel_id', $this->id);
+
+        return $query->groupBy('revivals.id')
+                ->orderBy('revivals.name')
+                ->get();
+
+    }
 
     public function user(): BelongsTo
     {

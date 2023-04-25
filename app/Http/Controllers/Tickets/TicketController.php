@@ -143,6 +143,16 @@ class TicketController extends AbstractController
             ->with('external_invoice_link', $externalInvoiceLink);
     }
 
+    public function save_revivalThread(Request $request){
+        $thread = Thread::find($request->input('thread_id'));
+        $thread->revival_id = $request->input('revival_id');
+        $thread->revival_start_date = $request->input('delivery_date') . ' 09:00:00';
+        $thread->save();
+
+        return view('tickets.parts.revival')
+            ->with('thread', $thread);
+    }
+
     /**
      * @throws \ReflectionException
      */
