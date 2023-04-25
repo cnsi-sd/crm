@@ -49,6 +49,7 @@ Route::prefix('/')->group(function () {
         Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}/{thread}', [TicketController::class, 'ticket'])->name('ticket_thread')->can('read', Ticket::class);
+        Route::match(['get', 'post'], '{ticket}/download_invoice/{order}', [TicketController::class, 'downloadInvoice'])->name('download_invoice')->can('read', Ticket::class);
     });
     Route::prefix('admin')->group(function () {
         Route::prefix('roles')->group(function () {

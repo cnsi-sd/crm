@@ -11,6 +11,7 @@ use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Helpers\Prestashop\LiveoGateway;
 use App\Helpers\TinyMCE;
+use App\Helpers\TmpFile;
 use App\Http\Controllers\AbstractController;
 use App\Jobs\SendMessage\AbstractSendMessage;
 use App\Models\Channel\Channel;
@@ -136,11 +137,10 @@ class TicketController extends AbstractController
     {
         $externalOrderInfo = $ticket->order->getPrestashopOrders();
         $externalOrderLink = $ticket->order->getPrestashopExternalLink();
-        $externalInvoiceLink = $ticket->order->getInvoiceExternalLink();
         return view('tickets.parts.external_order_info')
             ->with('orders', $externalOrderInfo)
             ->with('external_link',$externalOrderLink)
-            ->with('external_invoice_link', $externalInvoiceLink);
+            ->with('ticket', $ticket);
     }
 
     /**
@@ -275,6 +275,13 @@ class TicketController extends AbstractController
             $typeName,
             $fileName
         );
+    }
+
+    public function downloadInvoice(Ticket $ticket, $order)
+    {
+        $externalInvoiceLink = $ticket->order->getInvoiceExternalLink();
+        $tmpFile = new TmpFile((string) file_get_contents($externalInvoiceLink . $order));
+        return response()->file($tmpFile);
     }
 
 }
