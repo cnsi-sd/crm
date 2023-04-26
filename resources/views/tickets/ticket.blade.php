@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col"><label>{{ __('app.ticket.owner') }} <span
+                            <div class="col"><label>{{ __('app.ticket.user_id') }} <span
                                         class="required_field">*</span></label></div>
                             <div class="col">
                                 <select form="saveTicket" name="ticket-user_id" class="form-select">
@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col-xl-4"><label>{{ __('app.ticket.customer_mail') }}</label></div>
+                            <div class="col-xl-4"><label>{{ __('app.ticket.direct_customer_email') }}</label></div>
                             <div class="col-xl-8">
                                 <input form="saveTicket" name="ticket-customer_email" class="form-control" type="text"
                                        value="{{ $ticket->direct_customer_email }}"/>

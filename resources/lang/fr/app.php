@@ -113,7 +113,7 @@ return [
     'ticket' => [
         'ticket' => 'Ticket|Tickets',
         'deadline' => 'Deadline',
-        'owner' => 'Responsable',
+        'user_id' => 'Responsable',
         'state' => 'Statut',
         'priority' => 'Priorité',
         'created_at' => 'Date d\'ouverture',
@@ -123,7 +123,7 @@ return [
         'mapping' => 'Association',
         'order' => 'Commande',
         'base_information' => 'Informations de base',
-        'customer_mail' => 'Email client',
+        'direct_customer_email' => 'Email client',
         'delivery_date' => 'Date de livraison',
         'admin_ticket' => 'Administration Ticket',
         'admin_thread' => 'Administration Fil de discussion',
@@ -388,13 +388,5 @@ return [
         'empty_historical' => 'Aucun historique trouvée ...',
         'null_historical' => 'Erreur lors de la récupération de l\'historique ...'
     ],
-    'historical_type' => [
-        'state' => 'Statut',
-        'user' => 'Utilisateur',
-        'deadline' => 'Date de fin de traitement',
-        'direct_customer_email' => 'Email client',
-        'customer_issue' => 'Problématique client',
-        'delivery_date' => 'Date de livraison',
-    ]
 
 ];

@@ -25,8 +25,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property User $user
  * @property Ticket $ticket
  */
-class Historical extends Model
-{protected $table = 'historical';
+class History extends Model
+{
 
     protected $fillable = [
         'date',
@@ -58,7 +58,7 @@ class Historical extends Model
             ->setKey('date')
             ->setSortable(false)
             ->setFixedWidth(FixedWidthEnum::MD)
-            ->setCallback(function (Historical $historical) {
+            ->setCallback(function (History $historical) {
                 return $historical->created_at->format('d/m/y H:i');
             });
 
@@ -68,7 +68,7 @@ class Historical extends Model
             ->setSearchable(false)
             ->setSortable(false)
             ->setFixedWidth(FixedWidthEnum::MD)
-            ->setCallback(function (Historical $historical) {
+            ->setCallback(function (History $historical) {
                 if (isset($historical->user))
                     return $historical->user->__toString();
                 else
@@ -81,8 +81,8 @@ class Historical extends Model
             ->setSearchable(false)
             ->setSortable(false)
             ->setFixedWidth(FixedWidthEnum::MD)
-            ->setCallback(function (Historical $historical) {
-                return __('app.historical_type.' . $historical->type);
+            ->setCallback(function (History $historical) {
+                return __('app.ticket.' . $historical->type);
             });
 
         $columns[] = (new TableColumnBuilder())
@@ -91,7 +91,7 @@ class Historical extends Model
             ->setSearchable(false)
             ->setSortable(false)
             ->setFixedWidth(FixedWidthEnum::LG)
-            ->setCallback(function (Historical $historical) {
+            ->setCallback(function (History $historical) {
                 return TicketStateEnum::getMessage($historical->modification);
             });
 

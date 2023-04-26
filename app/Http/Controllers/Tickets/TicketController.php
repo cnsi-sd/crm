@@ -19,7 +19,8 @@ use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\Tags\TagList;
 use App\Models\Ticket\Comment;
-use App\Models\Ticket\Historical;
+use App\Models\Ticket\History;
+use App\Models\Ticket\TicketHistory;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
@@ -147,12 +148,12 @@ class TicketController extends AbstractController
 
     public function get_history(Request $request, Ticket $ticket): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $history = Historical::query()
-            ->select('historical.*')
+        $history = History::query()
+            ->select('histories.*')
             ->where('ticket_id', $ticket->id);
 
         $table = (new TableBuilder('history', $request))
-            ->setColumns(Historical::getTableColumns())
+            ->setColumns(History::getTableColumns())
             ->setExportable(false)
             ->setQuery($history);
 

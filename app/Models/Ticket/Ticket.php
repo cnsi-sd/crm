@@ -47,7 +47,7 @@ use Illuminate\Support\Facades\Auth;
  * @property Collection|Thread[] $threads
  * @property Collection|TagList[] $tagLists
  * @property Collection|Comment[] $comments
- * @property Collection|Historical[] $historicals
+ * @property Collection|TicketHistory[] $historicals
  * @property Channel $channel
  * @property Order $order
  * @property User $user
@@ -112,7 +112,7 @@ class Ticket extends Model
     }
     public function historicals(): HasMany
     {
-        return $this->hasMany(Historical::class)->orderBy('id', 'DESC');
+        return $this->hasMany(TicketHistory::class)->orderBy('id', 'DESC');
     }
 
     public function getShowRoute(): string
@@ -357,7 +357,7 @@ class Ticket extends Model
 
     protected function addHistory(string $column, mixed $value): void
     {
-        $historical = new Historical();
+        $historical = new History();
         $historical->user_id = auth()->id();
         $historical->type = $column;
         $historical->modification = $value;
