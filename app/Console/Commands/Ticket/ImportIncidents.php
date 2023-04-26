@@ -35,6 +35,11 @@ class ImportIncidents extends Command
 
         $this->logger = new Logger('ticket/incidents/incidents.log', true, true, true, 15);
 
+        if(!setting('incidents.active')){
+            $this->logger->info('The incidents setting is not activated');
+            return;
+        }
+
         try {
             $this->logger->info('START');
 

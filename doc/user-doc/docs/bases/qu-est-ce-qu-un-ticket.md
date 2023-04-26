@@ -39,10 +39,13 @@ Priorité
 Responsable
 :   L'ADV qui est actuellement responsable du ticket.
 
+!!! note 
+    Les ticket d'un canal (marketplace) sont attribué à l'ADV responsable de ce canal. Si un ADV ouvre lui-même un ticket, il sera automatiquement attribué au compte connecté.
+
 Deadline
 :   Date où le ticket doit être traité.
 
-Canal de diffusion / Commande
+Canal / Commande
 :   Identification de la commande client par son numéro et son canal. Selon le canal, le numéro de commande peut être cliquable, ce lien permet d'accéder au détail de la commande sur le canal d'achat.
 
 ## Informations de base

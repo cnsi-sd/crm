@@ -153,7 +153,7 @@ Breadcrumbs::for('variables_config', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('incidents_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
-    $trail->push(__('app.config.misc.incidents'), route('incidents_config'));
+    $trail->push(__('app.config.misc.incidents.incidents'), route('incidents_config'));
 });
 Breadcrumbs::for('savprocess_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
@@ -161,15 +161,15 @@ Breadcrumbs::for('savprocess_config', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('answer_offer_questions_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
-    $trail->push(__('app.config.misc.default_answer_offer_questions'), route('answer_offer_questions_config'));
+    $trail->push(__('app.config.misc.default_answer_offer_questions.default_answer_offer_questions'), route('answer_offer_questions_config'));
 });
 Breadcrumbs::for('mirakl_refunds_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
-    $trail->push(__('app.config.misc.mirakl_refunds'), route('mirakl_refunds_config'));
+    $trail->push(__('app.config.misc.mirakl_refunds.mirakl_refunds'), route('mirakl_refunds_config'));
 });
 Breadcrumbs::for('closed_discussion_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');
-    $trail->push(__('app.config.misc.closed_discussion'), route('closed_discussion_config'));
+    $trail->push(__('app.config.misc.closed_discussion.closed_discussion'), route('closed_discussion_config'));
 });
 Breadcrumbs::for('parcel_management_config', function (BreadcrumbTrail $trail) {
     $trail->parent('misc_home');

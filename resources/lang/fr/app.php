@@ -43,6 +43,8 @@ return [
     'confirm' => 'Confirmer',
     'cancel' => 'Annuler',
     'download' => 'Télécharger',
+    'reset_password_sent' => 'Email de réinitialisation envoyé',
+    'reset_password_success' => 'Mot de passe mis à jour',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -129,6 +131,7 @@ return [
         'default_replies' => 'Réponses par défaut',
         'saved' => 'Ticket enregistré',
         'confirm_other_channel' => 'Le message contient le nom d\'une autre marketplace, envoyer quand même le message ?',
+        'reset_filter' => 'Réinitialiser les filtres',
 
         'click_and_call' => [
             'start' => 'Cliquer pour lancer l\'appel',
@@ -182,8 +185,11 @@ return [
             'saved' => 'Configuration enregistrée',
             'variables' => 'Variables',
 
-            'incidents' => 'Incidents',
-            'incident_tag' => 'Tag Incident',
+            'incidents' => [
+                'incidents' => 'Incidents',
+                'incident_tag' => 'Tag Incident',
+                'active' => 'Activer la récupération automatique des Incidents ?'
+            ],
 
             'savprocess' => [
                 'savprocess' => 'Procédure SAV',
@@ -199,13 +205,22 @@ return [
                 'stop_revival' => 'Relances auto à stopper',
             ],
 
-            'default_answer_offer_questions' => 'Réponse aux questions sur les offres',
+            'default_answer_offer_questions' => [
+                'default_answer_offer_questions' => 'Réponse aux questions sur les offres Cdiscount',
+                'active' => 'Activer la Réponse par défaut aux questions sur les offres Cdiscount ?',
+            ],
 
-            'mirakl_refunds' => 'Remboursement sur MP Mirakl',
-            'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
+            'mirakl_refunds' => [
+                'mirakl_refunds' => 'Remboursement sur MP Mirakl',
+                'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
+                'active' => 'Activer la récupération automatique des Remboursements sur MP Mirakl ?',
+            ],
 
-            'closed_discussion' => 'Discussion clôturée',
-            'closed_discussion_tag' => 'Tag discussion clôturée',
+            'closed_discussion' => [
+                'closed_discussion' => 'Discussion clôturée',
+                'closed_discussion_tag' => 'Tag discussion clôturée',
+                'active' => 'Activer l\'attribution automatique du tag Discussion clôturée ?',
+                ],
 
             'external_features' => 'Fonctionnalités externes',
 

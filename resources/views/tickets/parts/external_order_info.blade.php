@@ -19,7 +19,7 @@
                                 <div class="col-2">{{ __('app.order.order') }}</div>
                                 @if($order['invoice_progress'] == 'generated')
                                     <div class="col-5 text-end">
-                                        <a href="{{ $external_invoice_link }}{{ $order['id_order'] }}"
+                                        <a href="{{ route('download_invoice', [$ticket, $order['id_order']]) }}"
                                            type="button" class="btn btn-secondary rounded-pill btn-sm" target="_blank">{{ __('app.order.download_invoice') }} <i class="uil-external-link-alt"></i></a>
                                     </div>
                                 @endif
@@ -129,6 +129,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6">
+                                    <x-dynamic-component class="order-info-flag" component="flag-country-{{Str::lower($order['invoice_address']['iso_code'])}}" />
                                     <div class="fw-bold">{{ __('app.order.billing') }}</div>
                                     <div>{{ $order['invoice_address']['firstname'] }} {{ $order['invoice_address']['lastname'] }}</div>
                                     <div>{{ $order['invoice_address']['company'] }}</div>
@@ -143,12 +144,13 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
+                                    <x-dynamic-component class="order-info-flag" component="flag-country-{{Str::lower($order['delivery_address']['iso_code'])}}" />
                                     <div class="fw-bold">{{ __('app.order.shipping') }}</div>
-                                    <div>{{ $order['delivery_address']['firstname'] }} {{ $order['invoice_address']['lastname'] }}</div>
+                                    <div>{{ $order['delivery_address']['firstname'] }} {{ $order['delivery_address']['lastname'] }}</div>
                                     <div>{{ $order['delivery_address']['company'] }}</div>
                                     <div>{{ $order['delivery_address']['address1'] }}</div>
                                     <div>{{ $order['delivery_address']['address2'] }}</div>
-                                    <div>{{ $order['delivery_address']['postcode'] }} {{ $order['invoice_address']['city'] }}</div>
+                                    <div>{{ $order['delivery_address']['postcode'] }} {{ $order['delivery_address']['city'] }}</div>
                                     <div class="phone_number" title="{{ __('app.ticket.click_and_call.start') }}">
                                         {{ $order['delivery_address']['phone'] }}
                                     </div>

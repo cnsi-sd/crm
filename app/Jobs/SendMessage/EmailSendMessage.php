@@ -17,6 +17,8 @@ class EmailSendMessage extends AbstractSendMessage
 
         $to = $this->message->thread->channel_data["email"];
 
+        $attachments = $this->message->documents()->get();
+
         if ($this->message->thread->name === Thread::EMAIL) {
             $subject = "Nouveau message au sujet de votre commande";
             if ($shopName = MessageVariable::NOM_BOUTIQUE->getSettingValue()) {
@@ -27,6 +29,11 @@ class EmailSendMessage extends AbstractSendMessage
         }
 
         $mail = new RawMail($subject, $this->message->content);
+        if($attachments->count() > 0) {
+            foreach ($attachments as $attachment) {
+                $mail->attach($attachment->getFilePath());
+            }
+        }
         Mail::to($to)->send($mail);
     }
 }
