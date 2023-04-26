@@ -358,7 +358,6 @@ class Ticket extends Model
     protected function addHistory(string $column, mixed $value): void
     {
         $historical = new Historical();
-        $historical->date = new DateTime();
         $historical->user_id = auth()->id();
         $historical->type = $column;
         $historical->modification = $value;

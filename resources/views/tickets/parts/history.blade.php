@@ -13,7 +13,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="alert alert-warning" role="alert">
-                    {{ __('app.order.empty_orders') }}
+                    {{ __('app.historical.empty_historical') }}
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="alert alert-danger" role="alert">
-                    {{ __('app.order.null_orders') }}
+                    {{ __('app.historical.null_historical') }}
                 </div>
             </div>
         </div>

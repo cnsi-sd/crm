@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('historical', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('date');
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->text('type');
             $table->text('modification');

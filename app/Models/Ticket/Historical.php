@@ -50,11 +50,6 @@ class Historical extends Model
     public static function getTableColumns(): array
     {
         $columns = [];
-/*
-        $columns[] = TableColumnBuilder::id()
-            ->setSearchable(true)
-            ->setSortable(true)
-            ->setWhereKey('historical.id');*/
 
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.historical.date'))
@@ -64,7 +59,7 @@ class Historical extends Model
             ->setSortable(false)
             ->setFixedWidth(FixedWidthEnum::MD)
             ->setCallback(function (Historical $historical) {
-                return date('d/m/Y h:i:s', strtotime($historical->date));
+                return $historical->created_at->format('d/m/y H:i');
             });
 
         $columns[] = (new TableColumnBuilder())

@@ -384,7 +384,9 @@ return [
         'date' => 'Date',
         'user' => 'Utilisateur',
         'type' => 'type',
-        'update' => 'modification'
+        'update' => 'modification',
+        'empty_historical' => 'Aucun historique trouvée ...',
+        'null_historical' => 'Erreur lors de la récupération de l\'historique ...'
     ],
     'historical_type' => [
         'state' => 'Statut',
