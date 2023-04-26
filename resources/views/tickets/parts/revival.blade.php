@@ -1,9 +1,9 @@
-<div class="card">
+<div class="card" id="revival-container">
     <div class="card-header">{{ trans_choice('app.revival.revival', 1) }}</div>
     <div class="card-body">
-        <select form="saveTicket" name="ticket-revival" class="form-select no-sort">
+        <select id="saveRevivalTicket" name="ticket-revival" class="form-select no-sort" data-thread_id="{{$thread->id}}">
             <option value="">{{ __('app.revival.select_revival') }}</option>
-            @foreach ($thread->ticket->channel->revivals as $revival)
+            @foreach ($thread->ticket->channel->getAuthorizedRevival() as $revival)
                 <option value="{{ $revival->id }}" @if(!empty($thread->revival->id))
                     @selected($revival->id == $thread->revival->id)
                     @endif>
@@ -16,7 +16,7 @@
             <div class="row mt-2">
                 <div class="col"><label>{{ __('app.revival.start_revival') }}</label></div>
                 <div class="col">
-                    <input form="saveTicket" name="revival-delivery_date" class="form-control"
+                    <input form="saveTicket" id="revival_delivery_date" name="revival-delivery_date" class="form-control"
                            type="date"
                            value="{{ date('Y-m-d', strtotime($thread->revival_start_date)) }}"
                     />

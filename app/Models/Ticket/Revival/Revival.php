@@ -140,7 +140,7 @@ class Revival extends Model
         $columns[] = (new TableColumnBuilder())
             ->setLabel(__('app.revival.end_default_answer'))
             ->setCallback(function (Revival $revival) {
-                return $revival->end_default_answer->name;
+                return !is_null($revival->end_default_answer_id) ? $revival->end_default_answer->name : __('app.revival.no_end_default_answer');
             })
             ->setKey('end_default_answer_id');
         $columns[] = (new TableColumnBuilder())
@@ -148,7 +148,7 @@ class Revival extends Model
             ->setType(ColumnTypeEnum::SELECT)
             ->setOptions(TicketStateEnum::getTranslatedList(false))
             ->setCallback(function (Revival $revival) {
-                return TicketStateEnum::getMessage($revival->end_state);
+                return !is_null($revival->end_state) ? TicketStateEnum::getMessage($revival->end_state) : __('app.revival.no_end_state');
             })
             ->setKey('end_state');
         $columns[] = (new TableColumnBuilder())
@@ -160,9 +160,8 @@ class Revival extends Model
             ->setAlign(AlignEnum::CENTER)
             ->setFixedWidth(FixedWidthEnum::LG)
             ->setCallback(function (Revival $revival) {
-                $listeTag = array();
-                return view('configuration.revival.tag.preview')
-                    ->with('tag', Tag::find($revival->end_tag_id));
+                return !is_null($revival->end_tag_id) ? view('configuration.revival.tag.preview')
+                    ->with('tag', Tag::find($revival->end_tag_id)) : __('app.revival.no_end_tag');
             });
         $columns[] = TableColumnBuilder::actions()
             ->setCallback(function (Revival $revival) {

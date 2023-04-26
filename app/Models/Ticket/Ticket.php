@@ -234,7 +234,7 @@ class Ticket extends Model
             ->setSortable(true);
 
         $columns[] = (new TableColumnBuilder())
-            ->setLabel(trans_choice('app.config.channel',1))
+            ->setLabel(trans_choice('app.admin.channel',1))
             ->setType(ColumnTypeEnum::SELECT)
             ->setOptions(Channel::getChannelsNames())
             ->setCallback(function (Ticket $ticket) {

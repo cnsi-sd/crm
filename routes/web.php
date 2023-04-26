@@ -3,14 +3,14 @@
 use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
 use App\Http\Controllers\Auth\OAuthMicrosoftController;
 use App\Http\Controllers\Configuration\BotController;
-use App\Http\Controllers\Configuration\ChannelController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
+use App\Http\Controllers\Configuration\MiscController;
 use App\Http\Controllers\Configuration\RevivalController;
 use App\Http\Controllers\Configuration\SavNoteController;
 use App\Http\Controllers\Configuration\TagsController;
-use App\Http\Controllers\Configuration\MiscController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Settings\ChannelController;
 use App\Http\Controllers\Settings\Permissions\RoleController;
 use App\Http\Controllers\Settings\Permissions\UserController;
 use App\Http\Controllers\Tickets\TicketController;
@@ -51,6 +51,7 @@ Route::prefix('/')->group(function () {
         Route::match(['get', 'post'], 'user/{user}', [TicketController::class, 'user_tickets'])->name('user_tickets')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}', [TicketController::class, 'redirectTicket'])->name('ticket')->can('read', Ticket::class);
         Route::match(['get', 'post'], '{ticket}/{thread}', [TicketController::class, 'ticket'])->name('ticket_thread')->can('read', Ticket::class);
+        Route::match(['get', 'post'], '{ticket}/download_invoice/{order}', [TicketController::class, 'downloadInvoice'])->name('download_invoice')->can('read', Ticket::class);
     });
     Route::prefix('admin')->group(function () {
         Route::prefix('roles')->group(function () {
@@ -63,6 +64,10 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'new', [UserController::class, 'edit'])->name('create_user')->can('edit', User::class);
             Route::match(['get', 'post'], '{user}', [UserController::class, 'edit'])->name('edit_user')->can('edit', User::class);
             Route::match(['get', 'post'], '', [UserController::class, 'list'])->name('users')->can('read', User::class);
+        });
+        Route::prefix('channel')->group(function () {
+            Route::match(['get', 'post'], '', [ChannelController::class, 'list'])->name('channels')->can('read', Channel::class);
+            Route::match(['get', 'post'], '{channel}', [ChannelController::class, 'edit'])->name('edit_channel')->can('edit', Channel::class);
         });
     });
 
@@ -78,10 +83,7 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], '{revival}', [RevivalController::class, 'edit'])->name('edit_revival')->can('edit', Revival::class);
             Route::match(['get', 'post'], '', [RevivalController::class, 'list'])->name('revival')->can('read', Revival::class);
             Route::match(['get', 'post'], '{revival}/delete', [RevivalController::class, 'delete'])->name('delete_revival')->can('edit', Revival::class);
-        });
-        Route::prefix('channel')->group(function () {
-            Route::match(['get', 'post'], '', [ChannelController::class, 'list'])->name('channels')->can('read', Channel::class);
-            Route::match(['get', 'post'], '{channel}', [ChannelController::class, 'edit'])->name('edit_channel')->can('edit', Channel::class);
+
         });
         Route::prefix('tags')->group(function () {
             Route::match(['get', 'post'], 'new', [TagsController::class, 'edit'])->name('create_tags')->can('edit', Tag::class);
@@ -125,6 +127,9 @@ Route::prefix('/')->group(function () {
 
     // CALL CONNEXION
     Route::get('/callback', [OAuthMicrosoftController::class, 'callback']);
+    Route::post('/defaultAnswerListwithChannel', [RevivalController::class, 'listDefaultAnswer'])->name('list_default_answer');
+    Route::post('/ajaxTagsRevival', [TagsController::class, 'ajax_tags_revival'])->name('ajaxShowTagsRevival');
+    Route::post('/saveRevivalThread', [TicketController::class, 'save_revivalThread'])->name('saveRevivalThread');
 
     // Documentation
     Route::any('doc/agent/{path?}', [DocumentationController::class, 'agent'])->where('path', '.*')->name('agent_doc')->can('agent_doc');

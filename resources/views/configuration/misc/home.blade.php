@@ -9,16 +9,20 @@
                         {{ __('app.config.misc.variables') }}
                     </a>
                     <a href="{{ route('incidents_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'incidents_config'])>
-                        {{ __('app.config.misc.incidents') }}
+                        {{ __('app.config.misc.incidents.incidents') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('incidents.active')])
                     </a>
                     <a href="{{ route('answer_offer_questions_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'answer_offer_questions_config'])>
-                        {{ __('app.config.misc.default_answer_offer_questions') }}
+                        {{ __('app.config.misc.default_answer_offer_questions.default_answer_offer_questions') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('daoq.active')])
                     </a>
                     <a href="{{ route('mirakl_refunds_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'mirakl_refunds_config'])>
-                        {{ __('app.config.misc.mirakl_refunds') }}
+                        {{ __('app.config.misc.mirakl_refunds.mirakl_refunds') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('mirakl_refunds.active')])
                     </a>
                     <a href="{{ route('closed_discussion_config') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'closed_discussion_config'])>
-                        {{ __('app.config.misc.closed_discussion') }}
+                        {{ __('app.config.misc.closed_discussion.closed_discussion') }}
+                        @include('configuration.misc.parts.active_badge', ['active' => setting('closed_discussion.active')])
                     </a>
                 </ul>
 

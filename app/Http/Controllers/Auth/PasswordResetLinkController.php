@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Alert;
 use App\Http\Controllers\AbstractController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -41,9 +42,12 @@ class PasswordResetLinkController extends AbstractController
             $request->only('email')
         );
 
-        return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                            ->withErrors(['email' => __($status)]);
+        if ($status == Password::RESET_LINK_SENT) {
+            Alert::toastSuccess(__('app.reset_password_sent'));
+            return back()->with('status', __($status));
+        } else {
+            return back()->withInput($request->only('email'))
+                ->withErrors(['email' => __($status)]);
+        }
     }
 }

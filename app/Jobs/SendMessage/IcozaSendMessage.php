@@ -76,6 +76,15 @@ class IcozaSendMessage extends AbstractSendMessage
             if ($this->message->thread->channel_thread_number != '526-SOOTUCIZG')
                 return;
 
+            $attachments = $this->message->documents()->get();
+            $doc = array();
+            foreach ($attachments as $attachment) {
+                $doc[] = array(
+                    'name' => $attachment->name,
+                    'binary' => response()->file($attachment->getFilePath())->getFile()->getContent()
+                );
+            }
+
         $threadNumber = $this->message->thread->channel_thread_number;
 
         $lastApiMessage = Ticket::getLastApiMessageByTicket($threadNumber, $this->getChannelName());
@@ -87,6 +96,7 @@ class IcozaSendMessage extends AbstractSendMessage
             RequestOptions::FORM_PARAMS => [
                 "content" => $this->translateContent($this->message->content),
                 "order"   => $lastApiMessage->threadId,
+                "documents" => $doc,
             ],
         ]);
 

@@ -43,6 +43,8 @@ return [
     'confirm' => 'Confirmer',
     'cancel' => 'Annuler',
     'download' => 'Télécharger',
+    'reset_password_sent' => 'Email de réinitialisation envoyé',
+    'reset_password_success' => 'Mot de passe mis à jour',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -61,6 +63,7 @@ return [
     /** Settings */
     'admin' => [
         'admin' => 'Paramètres',
+        'channel' => 'Canal|Canaux',
     ],
 
     /** Permission */
@@ -128,6 +131,7 @@ return [
         'default_replies' => 'Réponses par défaut',
         'saved' => 'Ticket enregistré',
         'confirm_other_channel' => 'Le message contient le nom d\'une autre marketplace, envoyer quand même le message ?',
+        'reset_filter' => 'Réinitialiser les filtres',
 
         'click_and_call' => [
             'start' => 'Cliquer pour lancer l\'appel',
@@ -175,15 +179,17 @@ return [
 
     'config' => [
         'config' => 'Configuration',
-        'channel' => 'Canal|Canaux',
 
         'misc' => [
             'misc' => 'Divers',
             'saved' => 'Configuration enregistrée',
             'variables' => 'Variables',
 
-            'incidents' => 'Incidents',
-            'incident_tag' => 'Tag Incident',
+            'incidents' => [
+                'incidents' => 'Incidents',
+                'incident_tag' => 'Tag Incident',
+                'active' => 'Activer la récupération automatique des Incidents ?'
+            ],
 
             'savprocess' => [
                 'savprocess' => 'Procédure SAV',
@@ -199,13 +205,22 @@ return [
                 'stop_revival' => 'Relances auto à stopper',
             ],
 
-            'default_answer_offer_questions' => 'Réponse aux questions sur les offres',
+            'default_answer_offer_questions' => [
+                'default_answer_offer_questions' => 'Réponse aux questions sur les offres Cdiscount',
+                'active' => 'Activer la Réponse par défaut aux questions sur les offres Cdiscount ?',
+            ],
 
-            'mirakl_refunds' => 'Remboursement sur MP Mirakl',
-            'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
+            'mirakl_refunds' => [
+                'mirakl_refunds' => 'Remboursement sur MP Mirakl',
+                'mirakl_refunds_tag' => 'Tag Remboursement sur MP Mirakl',
+                'active' => 'Activer la récupération automatique des Remboursements sur MP Mirakl ?',
+            ],
 
-            'closed_discussion' => 'Discussion clôturée',
-            'closed_discussion_tag' => 'Tag discussion clôturée',
+            'closed_discussion' => [
+                'closed_discussion' => 'Discussion clôturée',
+                'closed_discussion_tag' => 'Tag discussion clôturée',
+                'active' => 'Activer l\'attribution automatique du tag Discussion clôturée ?',
+                ],
 
             'external_features' => 'Fonctionnalités externes',
 
@@ -279,10 +294,14 @@ return [
         'name' => 'Nom de la relance automatique',
         'frequency' => 'Fréquence d\'envoi (en jours):',
         'max_revival' => 'Nombre d\'envoi de relance',
+        'default_answer'=> 'Réponse par défaut',
+        'select_default_answer'=> 'Aucun',
         'end_default_answer' => 'Message envoyé à la fin du cycle de relance',
+        'select_end_default_answer' => 'Aucun',
         'end_state' => 'Statut final',
+        'select_end_state' => 'Aucun',
         'start_revival' => 'À partir du',
-        'select_revival' => 'Aucune',
+        'select_revival' => 'Aucun',
         'select_channel' => 'Canaux autorisés',
         'frequency_details' => 'Tous les jours|Tous les :freq jours',
         'MaxRevival' => 'Messages envoyés :',
@@ -291,6 +310,9 @@ return [
         'warningLengthSMS' => 'Attention votre message dépasse les 160 caractères. Vous enverrez donc : :nbMessage messages.',
         'select_all_channel' => 'Laissez vide pour tout autoriser',
         'endTag' => 'Tag à ajouter',
+        'no_end_default_answer' => 'Pas de message de fin',
+        'no_end_state' => 'Pas de status de fin',
+        'no_end_tag' => 'Pas de tag de fin',
     ],
 
     'tags' => [

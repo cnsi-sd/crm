@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="default_answer_id">
-                                    {{trans_choice('app.default_answer.default_answer', 1)}}
+                                    {{trans_choice('app.revival.default_answer', 1)}}
                                     <span class="required_field">*</span>
                                 </label>
                                 <select
@@ -88,7 +88,7 @@
                                     class="form-control form-control-sm form-select"
                                     required
                                 >
-                                    <option value=""></option>
+                                    <option value="">{{__('app.revival.select_default_answer')}}</option>
                                     @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                         <option value="{{$answer->id}}" @selected($revival->isAnswerSelected($answer))>
                                             {{$answer->name}}
@@ -144,7 +144,7 @@
                                     id="select-end_default_answer_id"
                                     class="form-control form-control-sm form-select"
                                 >
-                                    <option value=""></option>
+                                    <option value="">{{__('app.revival.select_end_default_answer')}}</option>
                                     @foreach(\App\Models\Channel\DefaultAnswer::all() as $answer)
                                         <option value="{{$answer->id}}"
                                             @selected($revival->isEndAnswerSelected($answer))>
@@ -172,7 +172,7 @@
                                     id="select-end_state"
                                     class="form-control form-control-sm form-select"
                                 >
-                                    <option value=""></option>
+                                    <option value="">{{__('app.revival.select_end_state')}}</option>
                                     @foreach(\App\Enums\Ticket\TicketStateEnum::getTranslatedList() as $key => $value)
                                         <option value="{{ $key }}"
                                             @selected($revival->isStateSelected($key))>
@@ -191,7 +191,7 @@
                                     id="select-revivalEndTag"
                                     class="form-control form-control-sm form-select"
                                 >
-                                    <option value="">-- {{trans_choice('app.revival.select_revival', 1)}} --</option>
+                                    <option value="">{{trans_choice('app.revival.select_revival', 1)}}</option>
                                     @foreach( \App\Models\Tags\Tag::all() as $tag)
                                         <option value="{{ $tag->id }}"
                                             @selected($revival->end_tag_id == $tag->id)>
@@ -212,4 +212,15 @@
             </button>
         </div>
     </form>
+@endsection
+
+@section('script-bottom')
+    {!! \App\Helpers\JS::define('defaultAnswerList', route('list_default_answer')) !!}
+    {!! \App\Helpers\JS::define('url_show_tags_revival', route('ajaxShowTagsRevival')) !!}
+    {!! \App\Helpers\JS::define('end_tag_option', trans_choice('app.revival.select_revival', 1)) !!}
+    {!! \App\Helpers\JS::define('end_default_answer', __('app.revival.select_end_default_answer')) !!}
+    {!! \App\Helpers\JS::define('default_answer', __('app.revival.select_default_answer')) !!}
+
+
+    <script src="{{ Vite::asset('resources/js/revival.js') }}"></script>
 @endsection

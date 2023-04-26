@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Configuration;
+namespace App\Http\Controllers\Settings;
 
 use App\Helpers\Alert;
 use App\Helpers\Builder\Table\TableBuilder;
 use App\Helpers\Prestashop\CrmLinkGateway;
 use App\Http\Controllers\AbstractController;
+use App\Http\Controllers\Configuration\User;
 use App\Models\Channel\Channel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class ChannelController extends AbstractController
             ->setExportable(false)
             ->setQuery($query);
 
-        return view('configuration.channel.list')
+        return view('admin.channel.list')
             ->with('table', $table);
     }
 
@@ -42,7 +43,7 @@ class ChannelController extends AbstractController
             return redirect()->route('channels');
         }
 
-        return view('configuration.channel.edit')
+        return view('admin.channel.edit')
             ->with('ext_channels', (new CrmLinkGateway())->getChannels())
             ->with('channel', $channel);
     }

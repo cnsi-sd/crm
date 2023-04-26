@@ -43,6 +43,7 @@ class MiscController extends AbstractController
     public function incidents(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
+            setting(['incidents.active' => $request->input('active') === 'on']);
             setting(['incident_tag_id' => $request->input('incident_tag_id')]);
             setting()->save();
 
@@ -76,6 +77,7 @@ class MiscController extends AbstractController
     public function closedDiscussion(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
+            setting(['closed_discussion.active' => $request->input('active') === 'on']);
             setting(['closed_discussion_tag_id' => $request->input('closed_discussion_tag_id')]);
             setting()->save();
 
@@ -83,12 +85,13 @@ class MiscController extends AbstractController
             return redirect()->back();
         }
 
-        return view('configuration.misc.closedDiscussion');
+        return view('configuration.misc.closed_discussion');
     }
 
     public function miraklRefunds(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
+            setting(['mirakl_refunds.active' => $request->input('active') === 'on']);
             setting(['mirakl_refunds_tag_id' => $request->input('mirakl_refunds_tag_id')]);
             setting()->save();
 
@@ -102,15 +105,15 @@ class MiscController extends AbstractController
     public function answerOfferQuestions(Request $request): View|RedirectResponse
     {
         if ($request->exists('save')) {
+            setting(['daoq.active' => $request->input('active') === 'on']);
             setting(['default_answer_offer_questions' => $request->input('default_answer_offer_questions')]);
-                        setting()->save();
+            setting()->save();
 
             Alert::toastSuccess(__('app.config.misc.saved'));
             return redirect()->back();
         }
 
-        return view('configuration.misc.answer_offer_questions')
-            ->with('defaultAnswer', );
+        return view('configuration.misc.answer_offer_questions');
     }
 
     public function parcelManagement(Request $request): View|RedirectResponse
