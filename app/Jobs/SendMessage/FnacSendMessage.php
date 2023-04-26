@@ -7,16 +7,16 @@ use App\Models\Channel\Channel;
 use App\Models\Ticket\Ticket;
 use Cnsi\Logger\Logger;
 use Exception;
-use FnacApiClient\Client\SimpleClient;
-use FnacApiClient\Entity\Message;
-use FnacApiClient\Exception\ErrorResponseException;
-use FnacApiClient\Service\Request\MessageUpdate;
-use FnacApiClient\Service\Response\MessageUpdateResponse;
-use FnacApiClient\Type\MessageActionType;
-use FnacApiClient\Type\MessageSubjectType;
-use FnacApiClient\Type\MessageToType;
-use FnacApiClient\Type\MessageType;
-use FnacApiClient\Type\ResponseStatusType;
+use BompApiClient\Client\SimpleClient;
+use BompApiClient\Entity\Message;
+use BompApiClient\Exception\ErrorResponseException;
+use BompApiClient\Service\Request\MessageUpdate;
+use BompApiClient\Service\Response\MessageUpdateResponse;
+use BompApiClient\Type\MessageActionType;
+use BompApiClient\Type\MessageSubjectType;
+use BompApiClient\Type\MessageToType;
+use BompApiClient\Type\MessageType;
+use BompApiClient\Type\ResponseStatusType;
 
 class FnacSendMessage extends AbstractSendMessage
 {
