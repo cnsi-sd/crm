@@ -17,7 +17,7 @@
         "cnsi/attachments": "dev-main",
         "cnsi/cdiscount-api-client": "dev-main",
         "cnsi/csvgenerator": "dev-main",
-        "cnsi/fnac-api-client": "dev-master",
+        "cnsi/bomp-api-client": "dev-master",
         "cnsi/jobwatcher": "dev-main",
         "cnsi/lock": "dev-main",
         "cnsi/logger": "dev-main",
@@ -105,7 +105,7 @@
         },
         {
             "type": "vcs",
-            "url": "https://gitlab+deploy-token:glpat-zF9rsc-pxBoUz5h52Xr1@git.cnsi-sd.net/packages/fnacapiclient.git"
+            "url": "https://gitlab+deploy-token:glpat-zF9rsc-pxBoUz5h52Xr1@git.cnsi-sd.net/packages/bompapiclient.git"
         },
         {
             "type": "vcs",
