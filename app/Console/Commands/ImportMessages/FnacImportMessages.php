@@ -17,11 +17,10 @@ use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
-use FnacApiClient\Client\SimpleClient;
-use FnacApiClient\Entity\Message;
-use FnacApiClient\Service\Request\MessageQuery;
-use FnacApiClient\Type\MessageType;
-use Illuminate\Support\Facades\DB;
+use BompApiClient\Client\SimpleClient;
+use BompApiClient\Entity\Message;
+use BompApiClient\Service\Request\MessageQuery;
+use BompApiClient\Type\MessageType;
 
 class FnacImportMessages extends AbstractImportMessages
 {
