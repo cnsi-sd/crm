@@ -47,6 +47,7 @@ use Illuminate\Support\Facades\Auth;
  * @property Collection|Thread[] $threads
  * @property Collection|TagList[] $tagLists
  * @property Collection|Comment[] $comments
+ * @property Collection|Historical[] $historicals
  * @property Channel $channel
  * @property Order $order
  * @property User $user
@@ -108,6 +109,10 @@ class Ticket extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class)->orderBy('id', 'DESC');
+    }
+    public function historicals(): HasMany
+    {
+        return $this->hasMany(Historical::class)->orderBy('id', 'DESC');
     }
 
     public function getShowRoute(): string
@@ -339,5 +344,36 @@ class Ticket extends Model
             ->where('tickets.channel_id', $channel->id)
             ->where('orders.channel_order_number', $order_number)
             ->first();
+    }
+
+    protected $historisable = [
+        'state',
+        'user_id',
+        'deadline',
+        'direct_customer_email',
+        'customer_issue',
+        'delivery_date'
+    ];
+
+    protected function addHistory(string $column, mixed $value): void
+    {
+        $historical = new Historical();
+        $historical->date = new DateTime();
+        $historical->user_id = auth()->id();
+        $historical->type = $column;
+        $historical->modification = $value;
+        $historical->ticket_id = $this->id;
+        $historical->save();
+    }
+
+    public function save(array $options = [])
+    {
+        foreach($this->historisable as $column) {
+            if($this->isDirty($column)) {
+                $this->addHistory($column, $this->$column);
+            }
+        }
+
+        return parent::save($options);
     }
 }
