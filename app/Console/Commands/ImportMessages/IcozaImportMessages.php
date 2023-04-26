@@ -17,11 +17,8 @@ use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
-use FnacApiClient\Entity\Message;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\DB;
-use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class IcozaImportMessages extends AbstractImportMessages
 {
