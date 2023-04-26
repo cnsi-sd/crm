@@ -42,6 +42,7 @@ Route::prefix('/')->group(function () {
 
     Route::prefix('tickets')->group(function() {
         Route::match(['get', 'post'], 'get_external_infos/{ticket}', [TicketController::class, 'get_external_infos'])->name('get_external_infos')->can('read', Ticket::class);
+        Route::match(['get', 'post'], 'get_history/{ticket}', [TicketController::class, 'get_history'])->name('get_history')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'toggle_comment/{comment}', [TicketController::class, 'toggle_comment'])->name('toggle_comment')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'post_comment/{ticket}', [TicketController::class, 'post_comment'])->name('post_comment')->can('read', Ticket::class);
         Route::match(['get', 'post'], 'click_and_call', [TicketController::class, 'clickAndCall'])->name('click_and_call')->can('read', Ticket::class);

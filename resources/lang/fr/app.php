@@ -45,6 +45,7 @@ return [
     'download' => 'Télécharger',
     'reset_password_sent' => 'Email de réinitialisation envoyé',
     'reset_password_success' => 'Mot de passe mis à jour',
+    'history' => 'Historique',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -377,5 +378,21 @@ return [
         'saved' => 'Fiche SAV fabricant enregistrée',
         'show' => 'Fiche SAV fabricant',
         'short_desc' => 'Fiche SAV Fab.'
+    ],
+    'historical' => [
+        'histories' => 'Historique',
+        'date' => 'Date',
+        'user' => 'Utilisateur',
+        'type' => 'type',
+        'update' => 'modification'
+    ],
+    'historical_type' => [
+        'state' => 'Statut',
+        'user' => 'Utilisateur',
+        'deadline' => 'Date de fin de traitement',
+        'direct_customer_email' => 'Email client',
+        'customer_issue' => 'Problématique client',
+        'delivery_date' => 'Date de livraison',
     ]
+
 ];

@@ -21,6 +21,14 @@ $(document).ready(function () {
         }
     });
 
+    $('#ticket-history-btn').click(function (){
+        const link = $(this).data("get-history-route");
+        console.log(link);
+        $.get(link, function (data) {
+            $('#ticket-history').html(data)
+        })
+    })
+
     let externalOrderInfoLoaded = false;
     $('#order-info-tab').click(function () {
         if(externalOrderInfoLoaded)

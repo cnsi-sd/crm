@@ -141,6 +141,12 @@
                                 type="button" role="tab" aria-controls="order-info"
                                 aria-selected="false">{{ __('app.order_info') }}</button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="ticket-history-btn" data-bs-toggle="tab" data-bs-target="#ticket-history"
+                                data-get-history-route="{{ route("get_history", ['ticket' => $ticket->id]) }}"
+                                type="button" role="tab" aria-controls="ticket-history"
+                                aria-selected="false">{{ __('app.history') }}</button>
+                    </li>
                     @if(setting('savprocess.active'))
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="customer-service-process-tab" data-bs-toggle="tab"
@@ -162,6 +168,11 @@
                     <div class="tab-pane fade show active" id="hide" role="tabpanel" aria-labelledby="hide-tab"></div>
                     <div class="tab-pane fade" id="order-info" role="tabpanel" aria-labelledby="order-info-tab">
                         <div class="p-4 d-flex justify-content-center" id="order-info-spinner">
+                            <div class="spinner-border text-primary" role="status"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="ticket-history" role="tabpanel" aria-labelledby="ticket-history-tab">
+                        <div class="p-4 d-flex justify-content-center" id="ticket-history-spinner">
                             <div class="spinner-border text-primary" role="status"></div>
                         </div>
                     </div>
