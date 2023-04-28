@@ -286,5 +286,4 @@
     <script src="{{ Vite::asset('resources/js/tinymce.js') }}"></script>
 
     <script src="{{ Vite::asset('resources/js/tickets/ticket.js') }}"></script>
-    <script src="{{ Vite::asset('resources/js/revival.js') }}"></script>
 @endsection
