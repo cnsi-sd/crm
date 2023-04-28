@@ -53,7 +53,7 @@ Canal / Commande
 ![Informations de base](assets/informations_de_base.png)
 
 Date d'ouverture
-:   La date d'ouverture du ticket sur le CRM. Suivi du nombre de jours depuis lequel il a été créé.
+:   La date d'ouverture du ticket sur le CRM. Suivi du nombre de jours depuis lequel il a été créé (jours calendaires).
 
 Problématique client
 :   Champ libre qui permet de résumer en quelques mots la problématique rencontrée.
