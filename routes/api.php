@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AvisDeSouffranceApiController;
 use App\Http\Controllers\Api\ParcelManagementApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,5 @@ Route::prefix('parcelmanagement')->group(function() {
     Route::get('notify/ticket_id/{ticket}/token/{token}/comment/{comment}/tag/{tag}', [ParcelManagementApiController::class, 'notify']);
     Route::get('has_been_notified/token/{token}/ticket_id/{ticket}/comment/{comment}', [ParcelManagementApiController::class, 'has_been_notified']);
 });
+
+Route::post('avis_de_souffrance', [AvisDeSouffranceApiController::class, 'add_avis_de_souffrance']);

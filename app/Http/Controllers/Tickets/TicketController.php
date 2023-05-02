@@ -121,13 +121,7 @@ class TicketController extends AbstractController
                 'content'     => ['required','string'],
                 'type'         => ['required','string'],
             ]);
-            $comment = Comment::firstOrCreate([
-                'ticket_id' => $ticket->id,
-                'user_id' => $request->user()->id,
-                'content' => $request->input('content'),
-                'displayed' => 1,
-                'type' => $request->input('type'),
-            ]);
+            $comment = Comment::getOrCreate($ticket->id, $request->user()->id, $request->input('content'), $request->input('type'));
         }
         return view('tickets.parts.private_comment')
             ->with('comment', $comment);
