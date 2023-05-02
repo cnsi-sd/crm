@@ -1,7 +1,7 @@
 @if(isset($table) && $table->getQueryBeforePagination()->count() > 0)
     <div class="card">
         <div class="card-header">
-            {{ trans_choice('app.ticket.ticket', 2) }}
+            {{ trans_choice('app.historical.histories', 2) }}
             {!! $table->getLinesCountBadge() !!}
         </div>
         <div class="card-body">

@@ -15,6 +15,7 @@ nav:
       - Info commande: fonctionnalités/info-commande.md
       - Procédure SAV: fonctionnalités/procedure-sav.md
       - Parcel Management: fonctionnalités/parcel-management.md
+      - Historique: fonctionnalités/historiques.md
       - Réponses automatiques: fonctionnalités/reponses-automatiques.md
   - Extras :
       - Variables : extras/variables.md

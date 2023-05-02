@@ -150,7 +150,9 @@ class TicketController extends AbstractController
     {
         $history = History::query()
             ->select('histories.*')
-            ->where('ticket_id', $ticket->id);
+            ->where('ticket_id', $ticket->id)
+            ->orderBy('histories.created_at', 'DESC')
+        ;
 
         $table = (new TableBuilder('history', $request))
             ->setColumns(History::getTableColumns())

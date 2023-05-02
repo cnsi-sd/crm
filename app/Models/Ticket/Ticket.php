@@ -195,7 +195,7 @@ class Ticket extends Model
 
         if ($mode != 'user') {
             $columns[] = (new TableColumnBuilder())
-                ->setLabel(__('app.ticket.owner'))
+                ->setLabel(__('app.ticket.user_id'))
                 ->setType(ColumnTypeEnum::SELECT)
                 ->setOptions(User::getUsersNames())
                 ->setCallback(function (Ticket $ticket) {
