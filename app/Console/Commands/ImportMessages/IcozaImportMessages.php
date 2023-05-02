@@ -17,7 +17,7 @@ use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
-use FnacApiClient\Entity\Message;
+use BompApiClient\Entity\Message;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\DB;
