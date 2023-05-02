@@ -47,7 +47,7 @@ use Illuminate\Support\Facades\Auth;
  * @property Collection|Thread[] $threads
  * @property Collection|TagList[] $tagLists
  * @property Collection|Comment[] $comments
- * @property Collection|TicketHistory[] $historicals
+ * @property Collection|History[] $historicals
  * @property Channel $channel
  * @property Order $order
  * @property User $user
