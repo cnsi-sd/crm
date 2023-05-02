@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
- * @property Datetime $date
  * @property string $type
  * @property string $modification
  * @property Datetime $created_at
@@ -29,7 +28,6 @@ class History extends Model
 {
 
     protected $fillable = [
-        'date',
         'user_id',
         'type',
         'modification',
