@@ -1,13 +1,13 @@
 # Tags
 
 Lors de l'affichage des tickets, nous avons besoin directement d'identifier le sujet/action à traiter du ticket sans l'ouvrir.
-C'est donc là, qu'intervient les tags.
+C'est donc là qu'interviennent les tags.
 
 ### Affichage
 
 Un tag se présente sous la forme suivante :
 
-* Un nom (permet l'identification du/des sujet(s) du ticket)
+* Un titre (permet l'identification du/des sujet(s) du ticket)
 * Une couleur (permet l'identification du tag)
 
 
@@ -17,7 +17,7 @@ Un tag se présente sous la forme suivante :
 ### Ticket
 ![tags_affichage](assets/affichage_tag.png)
 
-Sur la page de visualisation des tickets, les tags sont utilisées a plusieurs endroit
+Sur la page de visualisation des tickets, les tags sont utilisés à plusieurs endroits
 
 //TODO
 

@@ -19,7 +19,7 @@
                                 <div class="col-2">{{ __('app.order.order') }}</div>
                                 @if($order['invoice_progress'] == 'generated')
                                     <div class="col-5 text-end">
-                                        <a href="{{ $external_invoice_link }}{{ $order['id_order'] }}"
+                                        <a href="{{ route('download_invoice', [$ticket, $order['id_order']]) }}"
                                            type="button" class="btn btn-secondary rounded-pill btn-sm" target="_blank">{{ __('app.order.download_invoice') }} <i class="uil-external-link-alt"></i></a>
                                     </div>
                                 @endif
@@ -79,6 +79,9 @@
                                 </div>
                             @endif
                             <div class="row pt-2">
+                                @if($order['is_havinggcpluscontrat'] == true)
+                                    <div class="col"><span class="gcpluscontract order-badge">Contrat GC+</span></div>
+                                @endif
                                 @if($order['is_fulfillment'] == true)
                                     <div class="col"><span class="fulfillment order-badge">Fulfillment</span></div>
                                 @endif

@@ -20,8 +20,6 @@ use Exception;
 use BompApiClient\Entity\Message;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\DB;
-use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
 
 class IcozaImportMessages extends AbstractImportMessages
 {
