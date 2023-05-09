@@ -79,6 +79,9 @@
                                 </div>
                             @endif
                             <div class="row pt-2">
+                                @if($order['is_havinggcpluscontrat'] == true)
+                                    <div class="col"><span class="gcpluscontract order-badge">Contrat GC+</span></div>
+                                @endif
                                 @if($order['is_fulfillment'] == true)
                                     <div class="col"><span class="fulfillment order-badge">Fulfillment</span></div>
                                 @endif
