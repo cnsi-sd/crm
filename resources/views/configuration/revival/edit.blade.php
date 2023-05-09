@@ -220,7 +220,4 @@
     {!! \App\Helpers\JS::define('end_tag_option', trans_choice('app.revival.select_revival', 1)) !!}
     {!! \App\Helpers\JS::define('end_default_answer', __('app.revival.select_end_default_answer')) !!}
     {!! \App\Helpers\JS::define('default_answer', __('app.revival.select_default_answer')) !!}
-
-
-    <script src="{{ Vite::asset('resources/js/revival.js') }}"></script>
 @endsection
