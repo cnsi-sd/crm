@@ -112,7 +112,7 @@ class Ticket extends Model
     }
     public function historicals(): HasMany
     {
-        return $this->hasMany(TicketHistory::class)->orderBy('id', 'DESC');
+        return $this->hasMany(History::class)->orderBy('id', 'DESC');
     }
 
     public function getShowRoute(): string
