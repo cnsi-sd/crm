@@ -48,10 +48,10 @@ class Comment extends Model
         return Comment::firstOrCreate(
             [
                 'ticket_id' => $ticket_id,
+                'content' => $content
             ],
             [
                 'user_id' => $user_id,
-                'content' => $content,
                 'displayed' => 1,
                 'type' => $type,
             ]);

@@ -4,7 +4,7 @@ namespace App\Enums\Ticket;
 
 use App\Enums\AbstractEnum;
 
-class TicketCommentTypeEnum extends AbstractEnum
+class  TicketCommentTypeEnum extends AbstractEnum
 {
     const OTHERS            = "others";
     const EXTERNAL_CONTACT  = "external_contact";

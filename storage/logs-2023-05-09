@@ -1,0 +1,64 @@
+[PID 9114][2023-05-09 09:31:49] INFO: ------ START ------
+[PID 9114][2023-05-09 09:31:49] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 09:31:49] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 09:31:49] INFO: [HEADERS]  {"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["d8419fc9-342e-4fa2-81ed-b2ce7bcd9b64"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 09:31:49] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 09:31:49] INFO: =================
+[PID 9114][2023-05-09 09:31:49] INFO: Calling middlewares...
+[PID 9114][2023-05-09 09:41:25] INFO: ------ START ------
+[PID 9114][2023-05-09 09:41:25] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 09:41:25] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 09:41:25] INFO: [HEADERS]  {"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["5b1d77fd-f4a7-44c8-9f58-7f9c475626a5"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 09:41:25] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 09:41:25] INFO: =================
+[PID 9114][2023-05-09 09:41:25] INFO: Calling middlewares...
+[PID 9114][2023-05-09 09:41:52] INFO: ------ START ------
+[PID 9114][2023-05-09 09:41:52] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 09:41:52] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 09:41:52] INFO: [HEADERS]  {"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["b40cfbe9-8119-4c13-a5e1-1765e317c3d6"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 09:41:52] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 09:41:52] INFO: =================
+[PID 9114][2023-05-09 09:41:52] INFO: Calling middlewares...
+[PID 9114][2023-05-09 09:45:07] INFO: ------ START ------
+[PID 9114][2023-05-09 09:45:07] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 09:45:07] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 09:45:07] INFO: [HEADERS]  {"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["01cd05f0-df03-4246-8dd9-9de495e96634"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 09:45:07] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 09:45:07] INFO: =================
+[PID 9114][2023-05-09 09:45:07] INFO: Calling middlewares...
+[PID 9114][2023-05-09 09:47:21] INFO: ------ START ------
+[PID 9114][2023-05-09 09:47:21] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 09:47:21] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 09:47:21] INFO: [HEADERS]  {"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["710f4c4d-13c2-4e95-be58-52f3a6c9a7ee"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 09:47:21] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 09:47:21] INFO: =================
+[PID 9114][2023-05-09 09:47:21] INFO: Calling middlewares...
+[PID 9114][2023-05-09 09:48:30] INFO: ------ START ------
+[PID 9114][2023-05-09 09:48:30] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 09:48:30] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 09:48:30] INFO: [HEADERS]  {"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["59476c57-462e-4b3e-a7b3-4066477c8330"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 09:48:30] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 09:48:30] INFO: =================
+[PID 9114][2023-05-09 09:48:30] INFO: Calling middlewares...
+[PID 9114][2023-05-09 09:48:30] INFO: =================
+[PID 9114][2023-05-09 09:48:30] INFO: [RESPONSE][CODE]    200
+[PID 9114][2023-05-09 09:48:30] INFO: [RESPONSE][MESSAGE] {"message":"Notice of suffering has been added"}
+[PID 9114][2023-05-09 09:48:30] INFO: ------ DONE ------
+[PID 9114][2023-05-09 09:50:21] INFO: ------ START ------
+[PID 9114][2023-05-09 09:50:21] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 09:50:21] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 09:50:21] INFO: [HEADERS]  {"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["7ef77787-e7dd-4c0a-a277-8e0ad4d1afc2"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 09:50:21] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 09:50:21] INFO: =================
+[PID 9114][2023-05-09 09:50:21] INFO: Calling middlewares...
+[PID 9114][2023-05-09 09:51:37] INFO: ------ START ------
+[PID 9114][2023-05-09 09:51:37] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 09:51:37] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 09:51:37] INFO: [HEADERS]  {"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["3fb1d119-0fc5-453a-b0c5-3e580a9a0229"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 09:51:37] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 09:51:37] INFO: =================
+[PID 9114][2023-05-09 09:51:37] INFO: Calling middlewares...
+[PID 9114][2023-05-09 09:51:41] INFO: =================
+[PID 9114][2023-05-09 09:51:41] INFO: [RESPONSE][CODE]    200
+[PID 9114][2023-05-09 09:51:41] INFO: [RESPONSE][MESSAGE] {"message":"Notice of suffering has been added"}
+[PID 9114][2023-05-09 09:51:41] INFO: ------ DONE ------
