@@ -213,7 +213,10 @@
                                         {{ __('app.send_message') }}
                                     </button>
                                 </div>
-                                @if(!in_array($ticket->channel->name, ["fnac.com"]))
+                                @php($displayAttachments = false);
+                                @if($thread->channel_thread_number == \App\Models\Ticket\Thread::EMAIL) @php($displayAttachments = true) @endif
+                                @if(!in_array($ticket->channel->name, ["fnac.com", "rakuten.com"])) @php($displayAttachments = true) @endif
+                                @if($displayAttachments == true)
                                     <div class="attachments">
                                         <label>{{ trans_choice('app.attachment',2) }}</label>
                                         <button form="saveTicket" type="button" id="addAttachment"
