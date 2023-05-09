@@ -62,3 +62,240 @@
 [PID 9114][2023-05-09 09:51:41] INFO: [RESPONSE][CODE]    200
 [PID 9114][2023-05-09 09:51:41] INFO: [RESPONSE][MESSAGE] {"message":"Notice of suffering has been added"}
 [PID 9114][2023-05-09 09:51:41] INFO: ------ DONE ------
+[PID 9114][2023-05-09 11:59:50] INFO: ------ START ------
+[PID 9114][2023-05-09 11:59:50] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 11:59:50] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 11:59:50] INFO: [HEADERS]  {"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["b06c0e84-0b63-4a4d-b868-12456f452092"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 11:59:50] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 11:59:50] INFO: =================
+[PID 9114][2023-05-09 11:59:50] INFO: Calling middlewares...
+[PID 9114][2023-05-09 12:14:14] INFO: ------ START ------
+[PID 9114][2023-05-09 12:14:14] INFO: [URI]      api/avis_de_souffrance
+[PID 9114][2023-05-09 12:14:14] INFO: [FROM]     127.0.0.1
+[PID 9114][2023-05-09 12:14:14] INFO: [HEADERS]  {"token":["VFKbvKFHbvFBVkhjbvkfjvbVMFJBmljbvsv24vv4dfvxdv54vx4cvvwwvb86bdfgbdCNFvsliVIFSivndmfv4vd5vd2d1vfv"],"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["92a4ce39-eedf-4b7d-87f3-131ff5893ef3"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 9114][2023-05-09 12:14:14] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 9114][2023-05-09 12:14:14] INFO: =================
+[PID 9114][2023-05-09 12:14:14] INFO: Calling middlewares...
+[PID 19207][2023-05-09 12:44:01] INFO: ------ START ------
+[PID 19207][2023-05-09 12:44:01] INFO: [URI]      api/avis_de_souffrance
+[PID 19207][2023-05-09 12:44:01] INFO: [FROM]     127.0.0.1
+[PID 19207][2023-05-09 12:44:01] INFO: [HEADERS]  {"token":["VFKbvKFHbvFBVkhjbvkfjvbVMFJBmljbvsv24vv4dfvxdv54vx4cvvwwvb86bdfgbdCNFvsliVIFSivndmfv4vd5vd2d1vfl"],"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["2bd1781f-d961-461b-9020-2632aa96fbdd"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 19207][2023-05-09 12:44:01] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 19207][2023-05-09 12:44:01] INFO: =================
+[PID 19207][2023-05-09 12:44:01] INFO: Calling middlewares...
+[PID 19207][2023-05-09 12:44:01] INFO: --- TOKEN is not available ---
+[PID 19207][2023-05-09 12:44:01] INFO: =================
+[PID 19207][2023-05-09 12:44:01] INFO: [RESPONSE][CODE]    500
+[PID 19207][2023-05-09 12:44:01] INFO: [RESPONSE][MESSAGE] {"message":"TOKEN is not available"}
+[PID 19207][2023-05-09 12:44:01] INFO: ------ DONE ------
+[PID 19207][2023-05-09 14:16:00] INFO: ------ START ------
+[PID 19207][2023-05-09 14:16:00] INFO: [URI]      api/avis_de_souffrance
+[PID 19207][2023-05-09 14:16:00] INFO: [FROM]     127.0.0.1
+[PID 19207][2023-05-09 14:16:00] INFO: [HEADERS]  {"token":["VFKbvKFHbvFBVkhjbvkfjvbVMFJBmljbvsv24vv4dfvxdv54vx4cvvwwvb86bdfgbdCNFvsliVIFSivndmfv4vd5vd2d1vfv"],"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["6506a638-04f0-427a-a88e-ea82cc580fa6"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["101"]}
+[PID 19207][2023-05-09 14:16:00] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":8}
+[PID 19207][2023-05-09 14:16:00] INFO: =================
+[PID 19207][2023-05-09 14:16:00] INFO: Calling middlewares...
+[PID 19207][2023-05-09 14:16:00] ERROR: Le champ message souffrance doit être une chaîne de caractères.
+Exception : Le champ message souffrance doit être une chaîne de caractères.
+Line : 327
+File : /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Support/helpers.php
+Stack trace : #0 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(495): throw_if()
+#1 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Providers/FoundationServiceProvider.php(122): Illuminate\Validation\Validator->validate()
+#2 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Macroable/Traits/Macroable.php(124): Illuminate\Http\Request->Illuminate\Foundation\Providers\{closure}()
+#3 /var/www/html/crm/app/Http/Controllers/Api/AvisDeSouffranceApiController.php(27): Illuminate\Http\Request->__call()
+#4 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): App\Http\Controllers\Api\AvisDeSouffranceApiController->add_avis_de_souffrance()
+#5 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(43): Illuminate\Routing\Controller->callAction()
+#6 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Route.php(259): Illuminate\Routing\ControllerDispatcher->dispatch()
+#7 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Route.php(205): Illuminate\Routing\Route->runController()
+#8 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(798): Illuminate\Routing\Route->run()
+#9 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Routing\Router->Illuminate\Routing\{closure}()
+#10 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(50): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#11 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Routing\Middleware\SubstituteBindings->handle()
+#12 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(126): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#13 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(92): Illuminate\Routing\Middleware\ThrottleRequests->handleRequest()
+#14 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(54): Illuminate\Routing\Middleware\ThrottleRequests->handleRequestUsingNamedLimiter()
+#15 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Routing\Middleware\ThrottleRequests->handle()
+#16 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#17 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(797): Illuminate\Pipeline\Pipeline->then()
+#18 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(776): Illuminate\Routing\Router->runRouteWithinStack()
+#19 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(740): Illuminate\Routing\Router->runRoute()
+#20 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(729): Illuminate\Routing\Router->dispatchToRoute()
+#21 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(190): Illuminate\Routing\Router->dispatch()
+#22 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Foundation\Http\Kernel->Illuminate\Foundation\Http\{closure}()
+#23 /var/www/html/crm/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(66): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#24 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Barryvdh\Debugbar\Middleware\InjectDebugbar->handle()
+#25 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#26 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#27 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle()
+#28 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#29 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(40): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#30 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\TrimStrings->handle()
+#31 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#32 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle()
+#33 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(86): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#34 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle()
+#35 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#36 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Http\Middleware\HandleCors->handle()
+#37 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(39): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#38 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Http\Middleware\TrustProxies->handle()
+#39 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#40 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(165): Illuminate\Pipeline\Pipeline->then()
+#41 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(134): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#42 /var/www/html/crm/public/index.php(51): Illuminate\Foundation\Http\Kernel->handle()
+#43 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(16): require_once('...')
+#44 {main}
+[PID 19207][2023-05-09 14:16:00] INFO: =================
+[PID 19207][2023-05-09 14:16:00] INFO: [RESPONSE][CODE]    500
+[PID 19207][2023-05-09 14:16:00] INFO: [RESPONSE][MESSAGE] {"message":"Internal Server Error"}
+[PID 19207][2023-05-09 14:16:00] INFO: ------ DONE ------
+[PID 19207][2023-05-09 14:31:50] INFO: ------ START ------
+[PID 19207][2023-05-09 14:31:50] INFO: [URI]      api/avis_de_souffrance
+[PID 19207][2023-05-09 14:31:50] INFO: [FROM]     127.0.0.1
+[PID 19207][2023-05-09 14:31:50] INFO: [HEADERS]  {"token":["VFKbvKFHbvFBVkhjbvkfjvbVMFJBmljbvsv24vv4dfvxdv54vx4cvvwwvb86bdfgbdCNFvsliVIFSivndmfv4vd5vd2d1vfv"],"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["f1ad7594-49be-4a9a-a55c-61bc5cff70ab"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["101"]}
+[PID 19207][2023-05-09 14:31:50] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":8}
+[PID 19207][2023-05-09 14:31:50] INFO: =================
+[PID 19207][2023-05-09 14:31:50] INFO: Calling middlewares...
+[PID 19207][2023-05-09 14:31:50] ERROR: Le champ message souffrance doit être une chaîne de caractères.
+Exception : Le champ message souffrance doit être une chaîne de caractères.
+Line : 327
+File : /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Support/helpers.php
+Stack trace : #0 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(495): throw_if()
+#1 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Providers/FoundationServiceProvider.php(122): Illuminate\Validation\Validator->validate()
+#2 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Macroable/Traits/Macroable.php(124): Illuminate\Http\Request->Illuminate\Foundation\Providers\{closure}()
+#3 /var/www/html/crm/app/Http/Controllers/Api/AvisDeSouffranceApiController.php(27): Illuminate\Http\Request->__call()
+#4 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): App\Http\Controllers\Api\AvisDeSouffranceApiController->add_avis_de_souffrance()
+#5 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(43): Illuminate\Routing\Controller->callAction()
+#6 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Route.php(259): Illuminate\Routing\ControllerDispatcher->dispatch()
+#7 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Route.php(205): Illuminate\Routing\Route->runController()
+#8 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(798): Illuminate\Routing\Route->run()
+#9 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Routing\Router->Illuminate\Routing\{closure}()
+#10 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(50): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#11 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Routing\Middleware\SubstituteBindings->handle()
+#12 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(126): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#13 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(92): Illuminate\Routing\Middleware\ThrottleRequests->handleRequest()
+#14 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(54): Illuminate\Routing\Middleware\ThrottleRequests->handleRequestUsingNamedLimiter()
+#15 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Routing\Middleware\ThrottleRequests->handle()
+#16 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#17 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(797): Illuminate\Pipeline\Pipeline->then()
+#18 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(776): Illuminate\Routing\Router->runRouteWithinStack()
+#19 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(740): Illuminate\Routing\Router->runRoute()
+#20 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(729): Illuminate\Routing\Router->dispatchToRoute()
+#21 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(190): Illuminate\Routing\Router->dispatch()
+#22 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Foundation\Http\Kernel->Illuminate\Foundation\Http\{closure}()
+#23 /var/www/html/crm/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(66): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#24 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Barryvdh\Debugbar\Middleware\InjectDebugbar->handle()
+#25 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#26 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#27 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle()
+#28 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#29 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(40): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#30 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\TrimStrings->handle()
+#31 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#32 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle()
+#33 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(86): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#34 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle()
+#35 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#36 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Http\Middleware\HandleCors->handle()
+#37 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(39): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#38 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Http\Middleware\TrustProxies->handle()
+#39 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#40 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(165): Illuminate\Pipeline\Pipeline->then()
+#41 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(134): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#42 /var/www/html/crm/public/index.php(51): Illuminate\Foundation\Http\Kernel->handle()
+#43 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(16): require_once('...')
+#44 {main}
+[PID 19207][2023-05-09 14:31:50] INFO: =================
+[PID 19207][2023-05-09 14:31:50] INFO: [RESPONSE][CODE]    500
+[PID 19207][2023-05-09 14:31:50] INFO: [RESPONSE][MESSAGE] {"message":"Internal Server Error"}
+[PID 19207][2023-05-09 14:31:50] INFO: ------ DONE ------
+[PID 19207][2023-05-09 14:31:58] INFO: ------ START ------
+[PID 19207][2023-05-09 14:31:58] INFO: [URI]      api/avis_de_souffrance
+[PID 19207][2023-05-09 14:31:58] INFO: [FROM]     127.0.0.1
+[PID 19207][2023-05-09 14:31:58] INFO: [HEADERS]  {"token":["VFKbvKFHbvFBVkhjbvkfjvbVMFJBmljbvsv24vv4dfvxdv54vx4cvvwwvb86bdfgbdCNFvsliVIFSivndmfv4vd5vd2d1vfv"],"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["d7ad0d42-db88-48af-b5cc-f757d1e49f6e"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["113"]}
+[PID 19207][2023-05-09 14:31:58] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":"blablablabla"}
+[PID 19207][2023-05-09 14:31:58] INFO: =================
+[PID 19207][2023-05-09 14:31:58] INFO: Calling middlewares...
+[PID 19207][2023-05-09 14:32:34] INFO: ------ START ------
+[PID 19207][2023-05-09 14:32:34] INFO: [URI]      api/avis_de_souffrance
+[PID 19207][2023-05-09 14:32:34] INFO: [FROM]     127.0.0.1
+[PID 19207][2023-05-09 14:32:34] INFO: [HEADERS]  {"token":["VFKbvKFHbvFBVkhjbvkfjvbVMFJBmljbvsv24vv4dfvxdv54vx4cvvwwvb86bdfgbdCNFvsliVIFSivndmfv4vd5vd2d1vfv"],"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["9660c2f7-3789-477f-9778-8a67892deabc"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["101"]}
+[PID 19207][2023-05-09 14:32:34] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":5}
+[PID 19207][2023-05-09 14:32:34] INFO: =================
+[PID 19207][2023-05-09 14:32:34] INFO: Calling middlewares...
+[PID 19207][2023-05-09 14:32:34] ERROR: Le champ message souffrance doit être une chaîne de caractères.
+Exception : Le champ message souffrance doit être une chaîne de caractères.
+Line : 327
+File : /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Support/helpers.php
+Stack trace : #0 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Validation/Validator.php(495): throw_if()
+#1 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Providers/FoundationServiceProvider.php(122): Illuminate\Validation\Validator->validate()
+#2 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Macroable/Traits/Macroable.php(124): Illuminate\Http\Request->Illuminate\Foundation\Providers\{closure}()
+#3 /var/www/html/crm/app/Http/Controllers/Api/AvisDeSouffranceApiController.php(27): Illuminate\Http\Request->__call()
+#4 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): App\Http\Controllers\Api\AvisDeSouffranceApiController->add_avis_de_souffrance()
+#5 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(43): Illuminate\Routing\Controller->callAction()
+#6 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Route.php(259): Illuminate\Routing\ControllerDispatcher->dispatch()
+#7 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Route.php(205): Illuminate\Routing\Route->runController()
+#8 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(798): Illuminate\Routing\Route->run()
+#9 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Routing\Router->Illuminate\Routing\{closure}()
+#10 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(50): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#11 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Routing\Middleware\SubstituteBindings->handle()
+#12 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(126): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#13 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(92): Illuminate\Routing\Middleware\ThrottleRequests->handleRequest()
+#14 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(54): Illuminate\Routing\Middleware\ThrottleRequests->handleRequestUsingNamedLimiter()
+#15 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Routing\Middleware\ThrottleRequests->handle()
+#16 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#17 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(797): Illuminate\Pipeline\Pipeline->then()
+#18 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(776): Illuminate\Routing\Router->runRouteWithinStack()
+#19 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(740): Illuminate\Routing\Router->runRoute()
+#20 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Routing/Router.php(729): Illuminate\Routing\Router->dispatchToRoute()
+#21 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(190): Illuminate\Routing\Router->dispatch()
+#22 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Foundation\Http\Kernel->Illuminate\Foundation\Http\{closure}()
+#23 /var/www/html/crm/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(66): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#24 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Barryvdh\Debugbar\Middleware\InjectDebugbar->handle()
+#25 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#26 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#27 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle()
+#28 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#29 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(40): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#30 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\TrimStrings->handle()
+#31 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#32 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle()
+#33 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(86): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#34 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle()
+#35 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#36 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Http\Middleware\HandleCors->handle()
+#37 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(39): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#38 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Http\Middleware\TrustProxies->handle()
+#39 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#40 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(165): Illuminate\Pipeline\Pipeline->then()
+#41 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(134): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#42 /var/www/html/crm/public/index.php(51): Illuminate\Foundation\Http\Kernel->handle()
+#43 /var/www/html/crm/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(16): require_once('...')
+#44 {main}
+[PID 19207][2023-05-09 14:32:34] INFO: =================
+[PID 19207][2023-05-09 14:32:34] INFO: [RESPONSE][CODE]    500
+[PID 19207][2023-05-09 14:32:34] INFO: [RESPONSE][MESSAGE] {"message":"Internal Server Error"}
+[PID 19207][2023-05-09 14:32:34] INFO: ------ DONE ------
+[PID 19207][2023-05-09 14:36:22] INFO: ------ START ------
+[PID 19207][2023-05-09 14:36:22] INFO: [URI]      api/avis_de_souffrance
+[PID 19207][2023-05-09 14:36:22] INFO: [FROM]     127.0.0.1
+[PID 19207][2023-05-09 14:36:22] INFO: [HEADERS]  {"token":["VFKbvKFHbvFBVkhjbvkfjvbVMFJBmljbvsv24vv4dfvxdv54vx4cvvwwvb86bdfgbdCNFvsliVIFSivndmfv4vd5vd2d1vfv"],"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["dac3adb8-cbda-49dc-b8b7-c11f964c714d"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["101"]}
+[PID 19207][2023-05-09 14:36:22] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":5}
+[PID 19207][2023-05-09 14:36:22] INFO: =================
+[PID 19207][2023-05-09 14:36:22] INFO: Calling middlewares...
+[PID 19207][2023-05-09 14:36:22] INFO: Validation failed
+[PID 19207][2023-05-09 14:36:22] INFO: =================
+[PID 19207][2023-05-09 14:36:22] INFO: [RESPONSE][CODE]    400
+[PID 19207][2023-05-09 14:36:22] INFO: [RESPONSE][MESSAGE] {"message":{"message_souffrance":["Le champ message souffrance doit être une chaîne de caractères."]}}
+[PID 19207][2023-05-09 14:36:22] INFO: ------ DONE ------
+[PID 19207][2023-05-09 14:37:32] INFO: ------ START ------
+[PID 19207][2023-05-09 14:37:32] INFO: [URI]      api/avis_de_souffrance
+[PID 19207][2023-05-09 14:37:32] INFO: [FROM]     127.0.0.1
+[PID 19207][2023-05-09 14:37:32] INFO: [HEADERS]  {"token":["VFKbvKFHbvFBVkhjbvkfjvbVMFJBmljbvsv24vv4dfvxdv54vx4cvvwwvb86bdfgbdCNFvsliVIFSivndmfv4vd5vd2d1vfv"],"content-type":["application/json"],"user-agent":["PostmanRuntime/7.29.3"],"accept":["*/*"],"postman-token":["07e9d6d6-d0db-4a92-a8c5-0bfcf86a84de"],"host":["127.0.0.1:8000"],"accept-encoding":["gzip, deflate, br"],"connection":["keep-alive"],"content-length":["101"]}
+[PID 19207][2023-05-09 14:37:32] INFO: [DATA]     {"channel":"amazon.fr","num_command":"259-5495419-7030711","message_souffrance":5}
+[PID 19207][2023-05-09 14:37:32] INFO: =================
+[PID 19207][2023-05-09 14:37:32] INFO: Calling middlewares...
+[PID 19207][2023-05-09 14:37:32] INFO: Validation failed
+[PID 19207][2023-05-09 14:37:32] INFO: =================
+[PID 19207][2023-05-09 14:37:32] INFO: [RESPONSE][CODE]    400
+[PID 19207][2023-05-09 14:37:32] INFO: [RESPONSE][MESSAGE] {"message":{"message_souffrance":["Le champ message souffrance doit être une chaîne de caractères."]}}
+[PID 19207][2023-05-09 14:37:32] INFO: ------ DONE ------
