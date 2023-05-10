@@ -112,7 +112,7 @@ return [
     'ticket' => [
         'ticket' => 'Ticket|Tickets',
         'deadline' => 'Deadline',
-        'owner' => 'Responsable',
+        'user_id' => 'Responsable',
         'state' => 'Statut',
         'priority' => 'Priorité',
         'created_at' => 'Date d\'ouverture',
@@ -122,7 +122,7 @@ return [
         'mapping' => 'Association',
         'order' => 'Commande',
         'base_information' => 'Informations de base',
-        'customer_mail' => 'Email client',
+        'direct_customer_email' => 'Email client',
         'delivery_date' => 'Date de livraison',
         'admin_ticket' => 'Administration Ticket',
         'admin_thread' => 'Administration Fil de discussion',
@@ -377,5 +377,15 @@ return [
         'saved' => 'Fiche SAV fabricant enregistrée',
         'show' => 'Fiche SAV fabricant',
         'short_desc' => 'Fiche SAV Fab.'
-    ]
+    ],
+    'historical' => [
+        'histories' => 'Historique',
+        'date' => 'Date',
+        'user' => 'Utilisateur',
+        'type' => 'Type',
+        'update' => 'Modification',
+        'empty_historical' => 'Aucun historique trouvée ...',
+        'null_historical' => 'Erreur lors de la récupération de l\'historique ...'
+    ],
+
 ];

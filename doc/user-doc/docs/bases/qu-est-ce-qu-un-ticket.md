@@ -22,7 +22,7 @@ Un ticket est séparé en plusieurs sections, mises en avant ci-dessous.
 
 - À gauche : les paramètres et informations disponibles sur le ticket
 - À droite 
-    - Les intégrations d'outils externes (Backoffice, Parcel Management)
+    - Les intégrations d'outils externes (Backoffice, Parcel Management) et l'historique du ticket
     - La zone de réponse au client
     - L'historique des échanges avec le client
 
