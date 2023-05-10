@@ -45,7 +45,6 @@ return [
     'download' => 'Télécharger',
     'reset_password_sent' => 'Email de réinitialisation envoyé',
     'reset_password_success' => 'Mot de passe mis à jour',
-    'history' => 'Historique',
 
     'navbar' => [
         'dashboard' => 'Tableau de bord',
@@ -383,8 +382,8 @@ return [
         'histories' => 'Historique',
         'date' => 'Date',
         'user' => 'Utilisateur',
-        'type' => 'type',
-        'update' => 'modification',
+        'type' => 'Type',
+        'update' => 'Modification',
         'empty_historical' => 'Aucun historique trouvée ...',
         'null_historical' => 'Erreur lors de la récupération de l\'historique ...'
     ],

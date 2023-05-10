@@ -145,7 +145,7 @@
                         <button class="nav-link" id="ticket-history-btn" data-bs-toggle="tab" data-bs-target="#ticket-history"
                                 data-get-history-route="{{ route("get_history", ['ticket' => $ticket->id]) }}"
                                 type="button" role="tab" aria-controls="ticket-history"
-                                aria-selected="false">{{ __('app.history') }}</button>
+                                aria-selected="false">{{ __('app.historical.histories') }}</button>
                     </li>
                     @if(setting('savprocess.active'))
                         <li class="nav-item" role="presentation">
