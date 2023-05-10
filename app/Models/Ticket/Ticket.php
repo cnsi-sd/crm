@@ -110,7 +110,7 @@ class Ticket extends Model
     {
         return $this->hasMany(Comment::class)->orderBy('id', 'DESC');
     }
-    public function historicals(): HasMany
+    public function histories(): HasMany
     {
         return $this->hasMany(History::class)->orderBy('id', 'DESC');
     }
