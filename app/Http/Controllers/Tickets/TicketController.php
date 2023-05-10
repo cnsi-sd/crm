@@ -20,7 +20,6 @@ use App\Models\Tags\Tag;
 use App\Models\Tags\TagList;
 use App\Models\Ticket\Comment;
 use App\Models\Ticket\History;
-use App\Models\Ticket\TicketHistory;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
