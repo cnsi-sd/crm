@@ -148,7 +148,6 @@ class TicketController extends AbstractController
     public function get_history(Request $request, Ticket $ticket): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $history = History::query()
-            ->select('histories.*')
             ->where('ticket_id', $ticket->id)
             ->orderBy('histories.created_at', 'DESC')
         ;
