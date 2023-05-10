@@ -147,22 +147,22 @@
                                 type="button" role="tab" aria-controls="ticket-history"
                                 aria-selected="false">{{ __('app.history') }}</button>
                     </li>
-                    {{--@if(setting('savprocess.active'))--}}
+                    @if(setting('savprocess.active'))
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="customer-service-process-tab" data-bs-toggle="tab"
                                     data-bs-target="#customer-service-process" type="button" role="tab"
                                     aria-controls="customer-service-process"
                                     aria-selected="false">{{ __('app.customer_service_process') }}</button>
                         </li>
-                    {{--@endif
-                    @if(setting('pm.active'))--}}
+                    @endif
+                    @if(setting('pm.active'))
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="parcel-management-tab" data-bs-toggle="tab"
                                     data-bs-target="#parcel-management" type="button" role="tab"
                                     aria-controls="parcel-management"
                                     aria-selected="false">{{ __('app.config.misc.pm.pm') }}</button>
                         </li>
-                    {{--@endif--}}
+                    @endif
                 </ul>
                 <div class="tab-content" id="ticketTabContent">
                     <div class="tab-pane fade show active" id="hide" role="tabpanel" aria-labelledby="hide-tab"></div>
@@ -176,19 +176,19 @@
                             <div class="spinner-border text-primary" role="status"></div>
                         </div>
                     </div>
-                    {{--@if(setting('savprocess.active'))--}}
+                    @if(setting('savprocess.active'))
                         <div class="tab-pane fade" id="customer-service-process" role="tabpanel"
                              aria-labelledby="customer-service-process-tab">
                             <iframe src="{{ \App\Helpers\Prestashop\SavProcessGateway::getUrl($ticket) }}"
                                     allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
                         </div>
-                    {{--@endif
-                    @if(setting('pm.active'))--}}
+                    @endif
+                    @if(setting('pm.active'))
                         <div class="tab-pane fade" id="parcel-management" role="tabpanel"
                              aria-labelledby="parcel-management-tab">
                             <iframe src="{{ \App\Helpers\ParcelManagementGateway::getIframeUrl($ticket) }}" allowfullscreen="" loading="lazy" width="100%" height="1000" frameborder="0"></iframe>
                         </div>
-                    {{--@endif--}}
+                    @endif
                 </div>
                 <div class="mt-2 text-end">
                     <button form="saveTicket" type="submit" class="btn btn-outline-primary">
