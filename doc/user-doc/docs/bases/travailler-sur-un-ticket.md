@@ -47,6 +47,9 @@ Pour ajouter un document supplémentaire, il suffit de cliquer sur le bouton « 
 
 Les pièces jointes sélectionnées sont envoyées au client lors de l'envoi du message.
 
+!!!warning
+    Les marketplaces Fnac & Rakuten ne permettent pas l'envoi de pièces jointes, le formulaire d'envoi de pièces jointes ne s'affiche donc pas.
+
 Les pièces jointes envoyées au client apparaissent dans l'historique :
 ![piece_jointe](assets/piece_jointe.png)
 

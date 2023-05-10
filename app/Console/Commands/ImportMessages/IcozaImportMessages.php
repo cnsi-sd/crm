@@ -17,7 +17,6 @@ use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
 use DateTime;
 use Exception;
-use BompApiClient\Entity\Message;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
