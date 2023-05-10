@@ -2,7 +2,7 @@
 
 Cette documentation vise à former les utilisateurs du CRM CNSI V2.
 
-Notre CRM à pour objectif : 
+Notre CRM a pour objectif : 
 
 - De regrouper l'ensemble des échanges clients en un même point
 - De faciliter le suivi des dossiers

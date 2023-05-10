@@ -1,7 +1,6 @@
 # Automatisations
 
-!!!warning "Attention"
-    🚧 Le contenu de cette page est en cours de rédaction et n'est pas définitif.
+Cette section décrit les différentes automatisations en place.
 
 ## Réponses aux questions sur les offres Cdiscount
 

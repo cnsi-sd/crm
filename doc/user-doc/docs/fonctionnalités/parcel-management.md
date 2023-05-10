@@ -2,7 +2,7 @@
 
 Parcel Management est un outil créé et utilisé par CNSI. Il permet de gérer les retours colis à Plessé. Sur le CRM, il est utilisé pour :
 
-- Autorisé un retour (création d'une autorisation de retour)
+- Autoriser un retour (création d'une autorisation de retour)
 - Suivre l'avancement d'un retour
 
 L'outil est intégré au CRM via un onglet "Parcel Management" sur chaque ticket :
