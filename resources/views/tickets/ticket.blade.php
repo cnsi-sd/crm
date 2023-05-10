@@ -263,6 +263,32 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="reply_to_section row">
+                                    <div class="col">
+                                        <label>{{ __('app.ticket.reply_to') }}</label>
+                                    </div>
+                                    <div class="col">
+                                        @if(in_array($ticket->channel->name,
+                                            ["but.fr",
+                                            "carrefour.fr",
+                                            "conforama.fr",
+                                            "darty.com",
+                                            "intermarche.fr",
+                                            "laposte.fr",
+                                            "e.leclerc",
+                                            "metro.fr",
+                                            "rueducommerce.fr",
+                                            "showroomprive.com",
+                                            "ubaldi.com",
+                                            "boulanger.com"]))
+                                            <select form="saveTicket" id="reply_to" name="reply_to[]" class="form-control form-select" multiple>
+                                                <option value="customer" selected>{{ __('app.customer') }}</option>
+                                                <option value="operator">{{ __('app.operator') }}</option>
+                                                {{-- <option value="shop">{{ __('app.shop') }}</option> --}}
+                                            </select>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @include('tickets.parts.messages')

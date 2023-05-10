@@ -35,6 +35,8 @@ return [
     'to' => 'au',
     'attachment' => 'Pièce jointe|Pièces jointes',
     'customer' => 'Client',
+    'operator' => 'Opérateur',
+    'shop' => 'Boutique',
     'send_message' => 'Envoyer un message',
     'send_comment' => 'Envoyer un commentaire',
     'order_info' => 'Info commande',
@@ -130,6 +132,8 @@ return [
         'private_comments' => 'Commentaires privés',
         'default_replies' => 'Réponses par défaut',
         'saved' => 'Ticket enregistré',
+        'reply_to' => 'Répondre à :',
+        'replied_to' => 'Réponse à :',
         'confirm_other_channel' => 'Le message contient le nom d\'une autre marketplace, envoyer quand même le message ?',
         'reset_filter' => 'Réinitialiser les filtres',
 
