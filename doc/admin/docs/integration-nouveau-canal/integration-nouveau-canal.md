@@ -34,6 +34,10 @@ Créer le job d'envoi de messages dans **App\Jobs\SendMessage**, cette class hé
 
 Mapper le job dans **\App\Jobs\SendMessage\AbstractSendMessage::dispatchMessage()**
 
+Vérifier si la MP permet de répondre à un ou plusieurs destinataires, par exemple avec les MP de type Mirakl il est possible de répondre au client et/ou à l'opérateur.
+L'information remonte via reply_to[] de type array dans la création d'un message et doit être géré dans le Job SendMessage de la MP.
+Il est ensuite possible d'ajouter la condition de la MP dans le fichier **resources/view/tickets/ticket.blade.php** dans la div class reply_to_section.
+
 ## Pièces jointes
 
 Ajouter le type de pièce jointe dans **Cnsi\Attachments\Enum\DocumentTypeEnum**.
