@@ -14,6 +14,21 @@
             @endif
             <span class="ms-2 me-2"> - </span>
             @if($message->default_answer_id)<span class="uil-edit"> {{ $message->default_answer->name }}</span><span class="ms-2 me-2"> - </span>@endif
+            @if($message->reply_to)<span class="uil-message"> {{ __('app.ticket.replied_to') }}
+                @foreach($message->reply_to as $reply_to)
+                    @if($reply_to == "customer")
+                        {{ __('app.customer') }}
+                    @endif
+                    @if($reply_to == "operator")
+                        {{ __('app.operator') }}
+                    @endif
+                    @if($reply_to == "shop")
+                        {{ __('app.shop') }}
+                    @endif
+                    @if(!$loop->last),@endif
+                @endforeach
+            </span><span class="ms-2 me-2"> - </span>
+            @endif
             <span class="uil-calender"> {{ $message->created_at->format('d/m/y H:i') }}</span>
         </div>
         <div class="collapse @if($message->isExternal()) show @endif()" id="collapse-message-{{$message->id}}">

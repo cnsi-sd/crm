@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $author_type
  * @property string $content
  * @property int $default_answer_id
+ * @property array $reply_to
  * @property Datetime $created_at
  * @property Datetime $updated_at
  *
@@ -42,8 +43,13 @@ class Message extends Model
       'author_type',
       'content',
       'default_answer_id',
+      'reply_to',
       'created_at',
       'updated_at'
+    ];
+
+    protected $casts = [
+        'reply_to' => 'json',
     ];
 
     use Documentable;
