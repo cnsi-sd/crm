@@ -21,6 +21,7 @@ use BompApiClient\Client\SimpleClient;
 use BompApiClient\Entity\Message;
 use BompApiClient\Service\Request\MessageQuery;
 use BompApiClient\Type\MessageType;
+use Illuminate\Support\Facades\DB;
 
 class FnacImportMessages extends AbstractImportMessages
 {

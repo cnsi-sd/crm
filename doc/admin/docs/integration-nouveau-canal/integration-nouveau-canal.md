@@ -41,6 +41,9 @@ Ajouter le type de pièce jointe dans **Cnsi\Attachments\Enum\DocumentTypeEnum**
 !!! note
     Dans le cas d'une MP **Mirakl**, on trouve cette info en se connectant à Mirakl. Dans le détail d'une commande, onglet 'document', 'ajouter', ensuite inspectez la value de la/les option/s du select du type du document à ajouter.
 
+!!! note
+    Si la MP ne gère pas l'envoi de pièces jointe, il faut l'exclure dans la vue **resources/views/tickets/ticket.blade.php après la variable $displayAttachments
+
 ![inspect_value](assets/document_type_piece_jointe_mirakle.png)
 
 Ajouter le @case relatif à la MP et les options nécessaires dans **resources/views/tickets/parts/messages_document_types.blade.php**

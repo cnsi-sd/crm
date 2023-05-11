@@ -224,25 +224,30 @@
                                         {{ __('app.send_message') }}
                                     </button>
                                 </div>
-                                <div class="attachments">
-                                    <label>{{ trans_choice('app.attachment',2) }}</label>
-                                    <button form="saveTicket" type="button" id="addAttachment"
-                                            class="btn btn-success flex-shrink-1">+
-                                    </button>
-                                    <div class="row attachment_bloc">
-                                        <div class="col">
-                                            <select form="saveTicket" name="attachment_type_1"
-                                                    class="form-select no-select2 attachment_type">
-                                                <option value="">---</option>
-                                                @include('tickets.parts.messages_document_types')
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <input form="saveTicket" name="attachment_file_1" type="file"
-                                                   class="attachment_file"/>
+                                @php($displayAttachments = false);
+                                @if($thread->channel_thread_number == \App\Models\Ticket\Thread::EMAIL) @php($displayAttachments = true) @endif
+                                @if(!in_array($ticket->channel->name, ["fnac.com", "rakuten.com"])) @php($displayAttachments = true) @endif
+                                @if($displayAttachments == true)
+                                    <div class="attachments">
+                                        <label>{{ trans_choice('app.attachment',2) }}</label>
+                                        <button form="saveTicket" type="button" id="addAttachment"
+                                                class="btn btn-success flex-shrink-1">+
+                                        </button>
+                                        <div class="row attachment_bloc">
+                                            <div class="col">
+                                                <select form="saveTicket" name="attachment_type_1"
+                                                        class="form-select no-select2 attachment_type">
+                                                    <option value="">---</option>
+                                                    @include('tickets.parts.messages_document_types')
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <input form="saveTicket" name="attachment_file_1" type="file"
+                                                       class="attachment_file"/>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                                 <hr/>
                                 <div class="default_answer row">
                                     <div class="col">
