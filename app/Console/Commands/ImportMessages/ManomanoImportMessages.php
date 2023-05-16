@@ -43,14 +43,20 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         return [
             'host' => env('MANOMANO_MAIL_URL'),
             'username' => env('MANOMANO_USERNAME'),
-            'password' => env('MANOMANO_PASSWORD')
+            'password' => env('MANOMANO_PASSWORD'),
+            'client' => env('MANOMANO_CLIENT')
         ];
     }
 
+    /**
+     * @param $email
+     * @return bool
+     * @throws Exception
+     */
     protected function canImport($email): bool
     {
         // Check if sender is "ne-pas-repondre@manomano.fr"
-        if(str_contains($email->senderAddress, 'repondre'))
+        if(str_contains($email->getSender(), 'repondre'))
             return false;
 
         // Check if there is an OrderId
@@ -60,9 +66,13 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         return parent::canImport($email);
     }
 
+    /**
+     * @param $email
+     * @return bool|string
+     */
     protected function parseOrderId($email): bool|string
     {
-        $subject = $email->subject;
+        $subject = $email->getSubject();
 
         // get the orderId (Mxxxxxxxxxxxx pattern) in subject
         preg_match('/M(\d{12})/',$subject, $orderMatche);
@@ -73,15 +83,15 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     }
 
     /**
-     * @param IncomingMail $email
+     * @param $email
      * @param string $mpOrder
      * @throws Exception
      */
-    protected function importEmail(IncomingMail $email, string $mpOrder): void
+    protected function importEmail($email, string $mpOrder): void
     {
-        $threadName = str_contains($email->senderAddress, '@monechelle.zendesk.com') ? 'Support' : 'Client';
-        $threadNumber = Str::before($email->senderAddress, '@');
-        $channel_data = ["email" => $email->senderAddress];
+        $threadName = str_contains($email->getSender(), '@monechelle.zendesk.com') ? 'Support' : 'Client';
+        $threadNumber = Str::before($email->getSender(), '@');
+        $channel_data = ["email" => $email->getSender()];
         $order      = Order::getOrder($mpOrder, $this->channel);
         $ticket     = Ticket::getTicket($order, $this->channel);
         $thread     = Thread::getOrCreateThread($ticket, $threadNumber, $threadName, $channel_data);
@@ -89,16 +99,20 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         $this->importMessageByThread($ticket, $thread, $email);
     }
 
-    public function getMessageContent(IncomingMail $email): string
+    /**
+     * @param $email
+     * @return string
+     */
+    public function getMessageContent($email): string
     {
-        $subject = $email->subject;
-        if(empty($email->textPlain)) {
-            $content = strip_tags($email->textHtml); // remove html
+        $subject = $email->getSubject();
+        if(empty($email->getTextPlain())) {
+            $content = strip_tags($email->getContent()); // remove html
             $content = preg_replace('/\s+/', ' ', $content); // remove whitespaces
             $content = preg_replace('/@(.*); }/', '',$content); // remove css
         }
         else {
-            $content = preg_replace('/(\v+)/', PHP_EOL, $email->textPlain);
+            $content = preg_replace('/(\v+)/', PHP_EOL, $email->getTextPlain());
         }
 
         if(str_contains($subject, 'Demande de facture'))
@@ -110,21 +124,21 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     /**
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $email, Thread $thread, $attachments = [])
+    public function convertApiResponseToMessage(Ticket $ticket, $email, Thread $thread, $attachments = []): void
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        if(str_contains($email->senderAddress,'support'))
+        if(str_contains($email->getSender(),'support'))
             $authorType = TicketMessageAuthorTypeEnum::OPERATOR;
         else
             $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
 
         $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
-            'channel_message_number' => $email->messageId,
+            'channel_message_number' => $email->getEmailId(),
         ],
             [
                 'user_id' => null,
@@ -136,8 +150,7 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         if ($email->hasAttachments()) {
             $this->logger->info('Download documents from message');
             foreach ($email->getAttachments() as $attachment) {
-                $tmpFile = new TmpFile((string) $attachment->getContents());
-                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachment->name);
+                Document::doUpload($attachment->getTmpFile(), $message, MessageDocumentTypeEnum::OTHER, null, $attachment->getName());
             }
         }
 

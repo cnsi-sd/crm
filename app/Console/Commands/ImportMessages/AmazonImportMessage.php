@@ -8,6 +8,7 @@ use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\EmailNormalized;
 use App\Helpers\TmpFile;
 use App\Helpers\Tools;
 use App\Jobs\Bot\AnswerToNewMessage;
@@ -40,27 +41,36 @@ class AmazonImportMessage extends AbstractImportMailMessages
 
     /**
      * @return array
+     * @throws Exception
      */
     protected function getCredentials(): array
     {
         $accountNumber = $this->argument('account');
-        if (!in_array($accountNumber, [1,2]) && !is_null($accountNumber))
+        if (!in_array($accountNumber, [1,2,3]) && !is_null($accountNumber))
             throw new Exception('Account not found');
 
         $host = env('AMAZON_MAIL_URL');
         $username = env('AMAZON_USERNAME');
         $password = env('AMAZON_PASSWORD');
+        $client = env('AMAZON_CLIENT');
 
         if ($accountNumber == 2){
             $host = env('AMAZON_2_MAIL_URL');
             $username = env('AMAZON_2_USERNAME');
             $password = env('AMAZON_2_PASSWORD');
+            $client = env('AMAZON_2_CLIENT');
+        } elseif ($accountNumber == 3){
+            $host = env('AMAZON_3_MAIL_URL');
+            $username = env('AMAZON_3_USERNAME');
+            $password = env('AMAZON_3_PASSWORD');
+            $client = env('AMAZON_3_CLIENT');
         }
 
         return [
             'host' => $host,
             'username' => $username,
-            'password' => $password
+            'password' => $password,
+            'client' => $client
         ];
     }
 
@@ -68,6 +78,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
     /**
      * @param $email
      * @return bool
+     * @throws Exception
      */
     public function canImport($email): bool
     {
@@ -81,7 +92,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
             '#offredeacutesactiveacuteesenraisonduneerreurdeprixpotentielle#',
             '#votreemaila#',
         ];
-        $normalizedSubject = Tools::normalize($email->subject);
+        $normalizedSubject = Tools::normalize($email->getSubject());
         foreach ($patterns as $pattern)
             if (preg_match($pattern, $normalizedSubject))
                 return false;
@@ -105,13 +116,13 @@ class AmazonImportMessage extends AbstractImportMailMessages
     public function parseOrderId($email): bool|string
     {
         $pattern = '#(?<orderId>\d{3}-\d{7}-\d{7})#';
-        preg_match($pattern, $email->subject, $orderId);
+        preg_match($pattern, $email->getSubject(), $orderId);
         if (isset($orderId['orderId'])) {
             $this->logger->info('OrderId found from Subject '.$orderId['orderId']);
             return $orderId['orderId'];
         }
 
-        preg_match($pattern, $email->textHtml, $orderId);
+        preg_match($pattern, $email->getContent(), $orderId);
         if (isset($orderId['orderId'])) {
             $this->logger->info('OrderId found from Body '.$orderId['orderId']);
             return $orderId['orderId'];
@@ -128,11 +139,11 @@ class AmazonImportMessage extends AbstractImportMailMessages
      */
     protected function importEmail($email, $mpOrder): void
     {
-        $this->logger->info('--- start import email : ' . $email->id);
+        $this->logger->info('--- start import email : ' . $email->getEmailId());
         $order = Order::getOrder($mpOrder, $this->channel);
         $ticket = Ticket::getTicket($order, $this->channel);
-        $channel_data = ["email" => $email->fromAddress];
-        $thread = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, $email->subject, $channel_data);
+        $channel_data = ["email" => $email->getFromAddress()];
+        $thread = Thread::getOrCreateThread($ticket, Thread::DEFAULT_CHANNEL_NUMBER, $email->getSubject(), $channel_data);
 
         switch ($this->getSpecificActions($email)) {
             case self::RETURN:
@@ -150,7 +161,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
      */
     protected function getSpecificActions($email): string
     {
-        $normalizedSubject = Tools::normalize($email->subject);
+        $normalizedSubject = Tools::normalize($email->getSubject());
         if (str_contains($normalizedSubject, 'autorisationderetourpourlacommande'))
             return self::RETURN;
 
@@ -159,14 +170,15 @@ class AmazonImportMessage extends AbstractImportMailMessages
 
     /**
      * @param Ticket $ticket
-     * @param $message_api_api
+     * @param EmailNormalized $message_api_api
      * @param Thread $thread
+     * @param array $attachments
      * @return void
      */
     protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []): void
     {
         $this->logger->info('Retrieve message from email');
-        $infoMail = $message_api_api->textHtml;
+        $infoMail = $message_api_api->getContent();
         $message = AmazonBeautifierMail::getCustomerMessage($infoMail);
 
         $this->logger->info('Set ticket\'s status to waiting admin');
@@ -175,7 +187,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
         $this->logger->info('Ticket save');
         $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
-            'channel_message_number' => $message_api_api->messageId,
+            'channel_message_number' => $message_api_api->getEmailId(),
         ],
             [
                 'user_id' => null,
@@ -184,11 +196,10 @@ class AmazonImportMessage extends AbstractImportMailMessages
             ],
         );
 
-        if ($message_api_api->hasAttachments()) {
+        if ($message_api_api->HasAttachments()) {
             $this->logger->info('Download documents from message');
             foreach ($message_api_api->getAttachments() as $attachment) {
-                $tmpFile = new TmpFile((string) $attachment->getContents());
-                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachment->name);
+                Document::doUpload($attachment->getTmpFile(), $message, MessageDocumentTypeEnum::OTHER, null, $attachment->getName());
             }
         }
 
@@ -205,10 +216,10 @@ class AmazonImportMessage extends AbstractImportMailMessages
     private function addReturnOnTicket(Ticket $ticket, mixed $email): void
     {
         $tagId = setting('tag.retour_amazon');
-        $tag = Tag::findOrFail($tagId);
+        $tag = Tag::findOrFail(146);
         $ticket->addTag($tag);
 
-        $returnComment = AmazonBeautifierMail::getReturnInformation($email->textHtml);
+        $returnComment = AmazonBeautifierMail::getReturnInformation($email->getContent());
 
         $check = Comment::query()
             ->select('*')
@@ -225,8 +236,5 @@ class AmazonImportMessage extends AbstractImportMailMessages
             $comment->save();
         }
     }
-
-
-
 
 }
