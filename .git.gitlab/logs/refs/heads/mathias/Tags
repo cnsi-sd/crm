@@ -1,0 +1,26 @@
+0000000000000000000000000000000000000000 6fdb73222189cda54585bc480cc8ac9a28a68950 Mathias <mathias.ouanna@cnsi-sd.fr> 1673340192 +0100	branch: Created from mathias/send_type
+6fdb73222189cda54585bc480cc8ac9a28a68950 e5e51d9f843dcb68824f0c502cb6506c1e2c6719 Mathias <mathias.ouanna@cnsi-sd.fr> 1673340204 +0100	merge mathias/sendReplyOnTicket: Fast-forward
+e5e51d9f843dcb68824f0c502cb6506c1e2c6719 3a2192b13080cbfd3703a97d9e5b5a7fa4f61e6a Mathias <mathias.ouanna@cnsi-sd.fr> 1673453185 +0100	commit: set CRUD Tags and start Tags x interfaces ticket
+3a2192b13080cbfd3703a97d9e5b5a7fa4f61e6a 2f78e126de7262bc48ae336983dc296fa5148c37 Mathias <mathias.ouanna@cnsi-sd.fr> 1673885638 +0100	commit: tag review
+2f78e126de7262bc48ae336983dc296fa5148c37 55b4b49a54056232762aa7e6aafb8f591358df82 Mathias <mathias.ouanna@cnsi-sd.fr> 1674486262 +0100	commit: view before changing fore auto reload page
+55b4b49a54056232762aa7e6aafb8f591358df82 24108139256cb903434520199c03a20cc2897b82 Mathias <mathias.ouanna@cnsi-sd.fr> 1674560424 +0100	commit: Interface ticket x Tags
+24108139256cb903434520199c03a20cc2897b82 24108139256cb903434520199c03a20cc2897b82 Mathias <mathias.ouanna@cnsi-sd.fr> 1674560466 +0100	Branch: renamed refs/heads/mathias/Models-tags to refs/heads/mathias/Tags
+24108139256cb903434520199c03a20cc2897b82 607259f3329fea250e2a31320293a34ad5b294e1 Mathias <mathias.ouanna@cnsi-sd.fr> 1674568274 +0100	commit (merge): Merge branch 'testmerge' into mathias/Tags
+607259f3329fea250e2a31320293a34ad5b294e1 41283bca4ac0a4fa02eaa7b4d8a77edb65c853ee Mathias <mathias.ouanna@cnsi-sd.fr> 1674572940 +0100	commit: change to merge
+41283bca4ac0a4fa02eaa7b4d8a77edb65c853ee 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1675085060 +0100	commit: all gestion ticket
+2222826e5fa4884ad858498c73ecfda91378d844 da14641919e2fac29e92f78689ed627badf42fca Mathias <mathias.ouanna@cnsi-sd.fr> 1675769542 +0100	commit: mise en place des permissions sur les tags
+da14641919e2fac29e92f78689ed627badf42fca eef46861aff3b755285a5acf194370c5cc239f08 Mathias <mathias.ouanna@cnsi-sd.fr> 1675769610 +0100	commit: rename table builder request name
+eef46861aff3b755285a5acf194370c5cc239f08 549da373cffd71d7492c86857bb8ff8e9ff9cc88 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770156 +0100	commit: remplacement de l'enregistrement d'une liste de cannaux sur un tag
+549da373cffd71d7492c86857bb8ff8e9ff9cc88 8c21f2e9115877a7827d321ea396821003bae8cb Mathias <mathias.ouanna@cnsi-sd.fr> 1675770324 +0100	commit: rename function saveLineinDB to newTagLigne
+8c21f2e9115877a7827d321ea396821003bae8cb ae0596175937eb86916b0dfff6a8a4f5908c6b32 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770542 +0100	commit: delete todo line
+ae0596175937eb86916b0dfff6a8a4f5908c6b32 cc23e81df218a17989214191bbbc0a9d9b009451 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770655 +0100	commit: add deleted_at
+cc23e81df218a17989214191bbbc0a9d9b009451 8b9ec61355d7846582cbc33a2e2e252240b17026 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770914 +0100	commit: aucune utilité du code softDelete() donc remplacer par delete()
+8b9ec61355d7846582cbc33a2e2e252240b17026 cc23e81df218a17989214191bbbc0a9d9b009451 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770927 +0100	reset: moving to cc23e81df218a17989214191bbbc0a9d9b009451
+cc23e81df218a17989214191bbbc0a9d9b009451 729fddadc0df8531aff04b09ef0d65d73a27ac83 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770934 +0100	commit: aucune utilité du code softDelete() donc remplacer par delete()
+729fddadc0df8531aff04b09ef0d65d73a27ac83 8887e8085c52953f625d07183d41f57fededae9c Mathias <mathias.ouanna@cnsi-sd.fr> 1675775548 +0100	commit: modification des doublons de code
+8887e8085c52953f625d07183d41f57fededae9c e83c1ae733e98265ca8c2e9ba43ea688e3a72e95 Mathias <mathias.ouanna@cnsi-sd.fr> 1675785757 +0100	commit: limit size input color in db
+e83c1ae733e98265ca8c2e9ba43ea688e3a72e95 e92be2b3c5f3c6d11551913146ca7881cece77a8 Mathias <mathias.ouanna@cnsi-sd.fr> 1675785811 +0100	commit: suppression du comment
+e92be2b3c5f3c6d11551913146ca7881cece77a8 11c7459494a367f0af2cd9ca8443267a8c19d20c Mathias <mathias.ouanna@cnsi-sd.fr> 1675786006 +0100	commit: correction faute de frappe
+11c7459494a367f0af2cd9ca8443267a8c19d20c 9ada2254770ab7a25dec423a9e5324bfbcee58b2 Mathias <mathias.ouanna@cnsi-sd.fr> 1675786042 +0100	commit: camel table name
+9ada2254770ab7a25dec423a9e5324bfbcee58b2 c8981666a15dfd52b33ffe0b1068e100dbf28945 Mathias <mathias.ouanna@cnsi-sd.fr> 1675845129 +0100	commit: correction faute de frappe
+c8981666a15dfd52b33ffe0b1068e100dbf28945 efbd6041df2367628ecaecfd86cd92ab2d5ac2b8 Mathias <mathias.ouanna@cnsi-sd.fr> 1675845412 +0100	commit: mise au singulier du model

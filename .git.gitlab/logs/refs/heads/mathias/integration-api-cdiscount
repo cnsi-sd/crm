@@ -1,0 +1,8 @@
+0000000000000000000000000000000000000000 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1675085413 +0100	branch: Created from mathias/Tags
+2222826e5fa4884ad858498c73ecfda91378d844 37ad31117a4135d2fa04c8fa6c1b3f38fa644e81 Mathias <mathias.ouanna@cnsi-sd.fr> 1676990211 +0100	commit (merge): Merge branch 'Ticket#616705-CRM-Fnac-Send-Message' into mathias/integration-api-cdiscount
+37ad31117a4135d2fa04c8fa6c1b3f38fa644e81 0278892fd6fb15aa07ba0b9b359be7d57d1e9e3e Mathias <mathias.ouanna@cnsi-sd.fr> 1677056917 +0100	commit: add cdiscount import message v1
+0278892fd6fb15aa07ba0b9b359be7d57d1e9e3e de506b6a91254659c95bd9010330d9c8cf3df2c7 Mathias <mathias.ouanna@cnsi-sd.fr> 1677057871 +0100	commit: add cdiscount import message v1
+de506b6a91254659c95bd9010330d9c8cf3df2c7 658551874e553dc17448ace265ef5ebe5b47475e Mathias <mathias.ouanna@cnsi-sd.fr> 1677058014 +0100	commit: Update composer.json
+658551874e553dc17448ace265ef5ebe5b47475e 03ccd3e1d46de71bf001cc7fedb9780bc219abae Mathias <mathias.ouanna@cnsi-sd.fr> 1677058870 +0100	commit: update composer.json
+03ccd3e1d46de71bf001cc7fedb9780bc219abae a69596edbfa62f6908af157d79e1629d16f87d7c Mathias <mathias.ouanna@cnsi-sd.fr> 1677060337 +0100	commit (merge): Merge branch 'master' into mathias/integration-api-cdiscount
+a69596edbfa62f6908af157d79e1629d16f87d7c df4a070b31d68737607579e2b8d7c191eca0b16b Mathias <mathias.ouanna@cnsi-sd.fr> 1677067529 +0100	commit: all review to merge request

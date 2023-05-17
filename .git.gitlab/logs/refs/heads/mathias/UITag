@@ -1,0 +1,11 @@
+0000000000000000000000000000000000000000 1d9d09ed7431c89c02542ce9fcbff6107a301888 Mathias <mathias.ouanna@cnsi-sd.fr> 1679406275 +0100	branch: Created from master
+1d9d09ed7431c89c02542ce9fcbff6107a301888 599fb65790c3fac1a9f77e4c270a30c5a7913e77 Mathias <mathias.ouanna@cnsi-sd.fr> 1679415051 +0100	commit: add "Ajouter une ligne de tags" + add "Ajouter un tag" + delete button deleteTagList + Review style
+599fb65790c3fac1a9f77e4c270a30c5a7913e77 b473e9d28a78417bf31c69d0aed1d34bf43db453 Mathias <mathias.ouanna@cnsi-sd.fr> 1679415164 +0100	commit: WIP: tags autorized on ticket channel
+b473e9d28a78417bf31c69d0aed1d34bf43db453 3e43d3d62742b794fa2aad7353db6be7bba95c2b Mathias <mathias.ouanna@cnsi-sd.fr> 1679907438 +0200	commit: update tags.css with magento base
+3e43d3d62742b794fa2aad7353db6be7bba95c2b d796df181e51cb5fa5c62976f9442ee32310dfe0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679908069 +0200	commit: button delete tag css update
+d796df181e51cb5fa5c62976f9442ee32310dfe0 924766d570d054e48113ddf44593d089cb12f790 Mathias <mathias.ouanna@cnsi-sd.fr> 1679914397 +0200	merge master: Merge made by the 'recursive' strategy.
+924766d570d054e48113ddf44593d089cb12f790 58c7fa37d0392fb4728eb585da131812cf9b963b Mathias <mathias.ouanna@cnsi-sd.fr> 1679929634 +0200	commit: Seul les tags autorisés sur le canal actuel doivent être disponible dans la liste + WIP : gestion des tags
+58c7fa37d0392fb4728eb585da131812cf9b963b 871fa4dcadf74960d75b6148924f6d385ccc2145 Mathias <mathias.ouanna@cnsi-sd.fr> 1680008749 +0200	merge master: Merge made by the 'recursive' strategy.
+871fa4dcadf74960d75b6148924f6d385ccc2145 8e86e8f395aeb348ae1f81f3f2659d2a0f05f3eb Mathias <mathias.ouanna@cnsi-sd.fr> 1680008998 +0200	commit: all review tag
+8e86e8f395aeb348ae1f81f3f2659d2a0f05f3eb 198a1895a3bd6b7ce804f49c54ea09991973a317 Mathias <mathias.ouanna@cnsi-sd.fr> 1680011688 +0200	commit (merge): Merge branch 'master' into mathias/UITag
+198a1895a3bd6b7ce804f49c54ea09991973a317 c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 Mathias <mathias.ouanna@cnsi-sd.fr> 1680013398 +0200	commit: re set master etat tag and default answer

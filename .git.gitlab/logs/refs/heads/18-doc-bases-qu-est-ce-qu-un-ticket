@@ -1,0 +1,10 @@
+0000000000000000000000000000000000000000 8850741be6bacc33bc51ff5bfbf12307a4015b4e Mathias <mathias.ouanna@cnsi-sd.fr> 1681197737 +0200	branch: Created from origin/18-doc-bases-qu-est-ce-qu-un-ticket
+8850741be6bacc33bc51ff5bfbf12307a4015b4e 0bfad573bc0f1df96ab5bd40e054c390fda421aa Mathias <mathias.ouanna@cnsi-sd.fr> 1681201334 +0200	commit: start: qu'est-ce qu'un ticket
+0bfad573bc0f1df96ab5bd40e054c390fda421aa e5264fca5c54151b8cf8b8341aa8f43760014a5c Mathias <mathias.ouanna@cnsi-sd.fr> 1681287214 +0200	commit: Update qu-est-ce-qu-un-ticket.md
+e5264fca5c54151b8cf8b8341aa8f43760014a5c 104927bc561f284fe67005b0c13469d0aee4f9d2 Mathias <mathias.ouanna@cnsi-sd.fr> 1681287280 +0200	merge master: Merge made by the 'recursive' strategy.
+104927bc561f284fe67005b0c13469d0aee4f9d2 25fb838b9ba08e42d1d2b60768129a7c121bfe89 Mathias <mathias.ouanna@cnsi-sd.fr> 1681715803 +0200	merge master: Fast-forward
+25fb838b9ba08e42d1d2b60768129a7c121bfe89 f2bb95de69ee07adaea9c5ef517744d71f6f8cc0 Mathias <mathias.ouanna@cnsi-sd.fr> 1681718558 +0200	commit: Update qu-est-ce-qu-un-ticket.md
+f2bb95de69ee07adaea9c5ef517744d71f6f8cc0 25fb838b9ba08e42d1d2b60768129a7c121bfe89 Mathias <mathias.ouanna@cnsi-sd.fr> 1681718567 +0200	reset: moving to 25fb838b9ba08e42d1d2b60768129a7c121bfe89
+25fb838b9ba08e42d1d2b60768129a7c121bfe89 99e31342f3302d11d1717ba1b10f009a444e9d42 Mathias <mathias.ouanna@cnsi-sd.fr> 1681718581 +0200	commit: wip: qu-est-ce-qu-un-ticket.md
+99e31342f3302d11d1717ba1b10f009a444e9d42 e7cb44e8e7bfed0fd8d5001d2f06a6c93768e430 Mathias <mathias.ouanna@cnsi-sd.fr> 1681805364 +0200	commit: WIP : docs qu'est ce qu'un ticket
+e7cb44e8e7bfed0fd8d5001d2f06a6c93768e430 b21a293ec6a5bdfe26033182302258b5f6291e1f Mathias <mathias.ouanna@cnsi-sd.fr> 1682320813 +0200	merge master: Fast-forward

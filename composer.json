@@ -1,0 +1,135 @@
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The Laravel Framework.",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "ext-curl": "*",
+        "ext-dom": "20031129",
+        "ext-fileinfo": "*",
+        "ext-imap": "*",
+        "ext-libxml": "*",
+        "ext-pdo": "*",
+        "ext-simplexml": "*",
+        "akaunting/laravel-setting": "^1.2",
+        "cnsi/attachments": "dev-main",
+        "cnsi/cdiscount-api-client": "dev-main",
+        "cnsi/csvgenerator": "dev-main",
+        "cnsi/bomp-api-client": "dev-master",
+        "cnsi/jobwatcher": "dev-main",
+        "cnsi/lock": "dev-main",
+        "cnsi/logger": "dev-main",
+        "cnsi/searchable": "dev-main",
+        "diglactic/laravel-breadcrumbs": "8.0.1",
+        "doctrine/dbal": "^3.6",
+        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/psr7": "^1.6",
+        "laravel/framework": "^9.19",
+        "laravel/sanctum": "^3.0",
+        "laravel/tinker": "^2.7",
+        "mirakl/sdk-php-shop": "^1.16",
+        "outhebox/blade-flags": "^1.2",
+        "paquettg/php-html-parser": "^3.1",
+        "php-imap/php-imap": "dev-master",
+        "phpoffice/phpspreadsheet": "^1.28",
+        "realrashid/sweet-alert": "^5.1.0",
+        "symfony/dom-crawler": "^6.2",
+        "symfony/http-client": "^6.1",
+        "symfony/mailgun-mailer": "^6.1",
+        "tinymce/tinymce": "^6.3",
+        "twilio/sdk": "^6.44",
+        "webklex/php-imap": "^5.0"
+    },
+    "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.8",
+        "fakerphp/faker": "^1.9.1",
+        "laravel/envoy": "^2.8",
+        "laravel/pint": "^1.0",
+        "laravel/sail": "^1.0.1",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^6.1",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.5.10",
+        "spatie/laravel-ignition": "^1.0",
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "laminas/laminas-dependency-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token-15:9rRyjyjxQbwrkVjczBuf@git.cnsi-sd.net/packages/logger.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token:glpat-zF9rsc-pxBoUz5h52Xr1@git.cnsi-sd.net/packages/bompapiclient.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token-21:_yZqWhVcdSX7sSycsVxw@git.cnsi-sd.net/packages/cdiscountapiclient.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token-20:ivykqToaXkGLasd9cCoK@git.cnsi-sd.net/packages/csvgenerator.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token:glpat-mMrz46pU-V2KDZWgrSZ6@git.cnsi-sd.net/packages/searchable.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token:glpat-7THzXyfi41Suea1Ae1P9@git.cnsi-sd.net/packages/attachments.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token-22:A2A2b-TQL8-BXZM34Zgu@git.cnsi-sd.net/packages/lock.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token:glpat-ydDRZCtsMHFFMswWAxrc@git.cnsi-sd.net/packages/jobwatcher.git"
+        }
+    ]
+}

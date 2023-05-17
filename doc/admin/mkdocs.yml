@@ -1,0 +1,34 @@
+site_name: Admin CRM
+
+nav:
+  - Accueil : index.md
+  - Mise en production :
+      - Installation : mise-en-production/installation.md
+      - Migration Magento > CRM : mise-en-production/migration.md
+  - Import Messages :
+      - Introduction : importMessage/introduction.md
+      - Api : importMessage/api.md
+      - Mail : importMessage/mail.md
+  - Ticket :
+      - Import Incident : ticket/import-incident.md
+      - Revival : ticket/revival.md
+      - Alert ticket delay : ticket/alert-ticket-delay.md
+  - Automatisation :
+      - Réponses sur les offres Cdiscount : automatisation/reponses-questions-offres-cdiscount.md
+      - Discussion clôturée : automatisation/discussion-cloturee.md
+      - Incidents : automatisation/incidents.md
+      - Remboursements Mirakl : automatisation/remboursements-mirakl.md
+  - Intégration Nouveau Canal :
+      - Intégration nouveau canal : integration-nouveau-canal/integration-nouveau-canal.md
+
+theme:
+  name: readthedocs
+  locale: fr
+
+markdown_extensions:
+  # Admonition : boxes of different types : attention, caution, danger, error, hint, important, note, tip, and warning; see : https://python-markdown.github.io/extensions/admonition/
+  - admonition
+  # Attribute Lists : add attributes to HTML elements (like image sizes) https://python-markdown.github.io/extensions/definition_lists/
+  - attr_list
+  # Definition Lists : create a glossary https://python-markdown.github.io/extensions/definition_lists/
+  - def_list

@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 48e84192b4e4e1fd77d8607697f7fa406aeefed0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679395096 +0100	branch: Created from master
+48e84192b4e4e1fd77d8607697f7fa406aeefed0 0aefce8b092b9529bb9aee856edc49e08e7f8295 Mathias <mathias.ouanna@cnsi-sd.fr> 1679405291 +0100	merge master: Fast-forward
+0aefce8b092b9529bb9aee856edc49e08e7f8295 a6427e8fd3ea2d932de0afd61bc9d56f1f9fdb4a Mathias <mathias.ouanna@cnsi-sd.fr> 1679405412 +0100	commit: add Lock on thread
+a6427e8fd3ea2d932de0afd61bc9d56f1f9fdb4a c0d7b5d8dbc7198fcb48c9f505ad6a55ab4e54b3 Mathias <mathias.ouanna@cnsi-sd.fr> 1680096556 +0200	merge master: Merge made by the 'recursive' strategy.
+c0d7b5d8dbc7198fcb48c9f505ad6a55ab4e54b3 129dbabdcdee7d4bd25a40a088faef46b348a2a7 Mathias <mathias.ouanna@cnsi-sd.fr> 1680097574 +0200	commit: add package lock on All command
+129dbabdcdee7d4bd25a40a088faef46b348a2a7 779d485844c30f9e95130ebfe27bf19183272cf0 Mathias <mathias.ouanna@cnsi-sd.fr> 1680100806 +0200	commit: new set value lock

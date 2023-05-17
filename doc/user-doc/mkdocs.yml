@@ -1,0 +1,38 @@
+site_name: CRM
+
+nav:
+  - Accueil : index.md
+  - Glossaire : introduction/glossaire.md
+  - Bases:
+      - Qu'est ce qu'un ticket ?: bases/qu-est-ce-qu-un-ticket.md
+      - Trouver un ticket: bases/trouver-un-ticket.md
+      - Travailler sur un ticket: bases/travailler-sur-un-ticket.md
+  - Fonctionnalités:
+      - Tags : fonctionnalités/tags.md
+      - Commentaires privés: fonctionnalités/commentaires-privés.md
+      - Documents: fonctionnalités/documents.md
+      - Relances automatiques: fonctionnalités/relances-automatiques.md
+      - Info commande: fonctionnalités/info-commande.md
+      - Procédure SAV: fonctionnalités/procedure-sav.md
+      - Parcel Management: fonctionnalités/parcel-management.md
+      - Historique: fonctionnalités/historiques.md
+      - Réponses automatiques: fonctionnalités/reponses-automatiques.md
+  - Extras :
+      - Variables : extras/variables.md
+      - Fiches SAV fabricants : extras/fiches-sav-fabricants.md
+      - Automatisations : extras/automatisations.md
+  - Configuration :
+      - Fiches SAV fabricants : configuration/fiches-sav-fabricants.md
+      - Relances automatiques : configuration/relances-automatiques.md
+
+theme:
+  name: readthedocs
+  locale: fr
+
+markdown_extensions:
+  # Admonition : boxes of different types : attention, caution, danger, error, hint, important, note, tip, and warning; see : https://python-markdown.github.io/extensions/admonition/
+  - admonition
+  # Attribute Lists : add attributes to HTML elements (like image sizes) https://python-markdown.github.io/extensions/definition_lists/
+  - attr_list
+  # Definition Lists : create a glossary https://python-markdown.github.io/extensions/definition_lists/
+  - def_list

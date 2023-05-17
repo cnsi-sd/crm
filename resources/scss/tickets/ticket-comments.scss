@@ -1,0 +1,37 @@
+.ticket-comments {
+    .title {
+        border-bottom: solid 2px var(--bs-card-border-color);
+        cursor: pointer;
+    }
+
+    .badge {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #000000;
+
+        &.others {
+            background-color: #dcdcdc;
+        }
+
+        &.external_contact {
+            background-color: #CCFFCC;
+        }
+
+        &.manager_info {
+            background-color: #eaccff;
+        }
+
+        &.process_to_follow {
+            background-color: #cce5ff;
+        }
+
+        &.info_important {
+            background-color: #FADBD9;
+        }
+
+        &.summary {
+            background-color: #ffe6cc;
+        }
+    }
+}
