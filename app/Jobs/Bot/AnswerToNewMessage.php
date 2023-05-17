@@ -5,6 +5,7 @@ namespace App\Jobs\Bot;
 use App\Jobs\Bot\Answers\AbstractAnswer;
 use App\Jobs\Bot\Answers\SendAcknowledgement;
 use App\Jobs\Bot\Answers\SendInvoice;
+use App\Jobs\Bot\Answers\SendPremiumDelivery;
 use App\Jobs\Bot\Answers\SendShippingInformation;
 use App\Models\Ticket\Message;
 use Exception;
@@ -25,7 +26,7 @@ class AnswerToNewMessage implements ShouldQueue
 
     private Message $message;
 
-    const DELAY = 10;
+    const DELAY = 1;
 
     public function __construct(Message $message)
     {
@@ -48,6 +49,7 @@ class AnswerToNewMessage implements ShouldQueue
             SendInvoice::class,
             SendShippingInformation::class,
             SendAcknowledgement::class,
+            SendPremiumDelivery::class,
         ];
 
         // Loop on each Answer class

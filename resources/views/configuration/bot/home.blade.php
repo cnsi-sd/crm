@@ -16,6 +16,10 @@
                     <a href="{{ route('bot_acknowledgement') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'bot_acknowledgement'])>
                         {{ __('app.bot.acknowledgement.acknowledgement') }}
                     </a>
+
+                    <a href="{{ route('bot_premium_delivery') }}" @class(['list-group-item', 'active' => Route::currentRouteName() === 'bot_premium_delivery'])>
+                        {{ __('app.bot.premium_delivery.premium_delivery') }}
+                    </a>
                 </ul>
             </div>
             @yield('bot_content')

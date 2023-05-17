@@ -19,7 +19,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 {
     const SPAM_TAG = 'X-Spam-Tag';
     const SPAM_STATUS = 'X-Spam-Status';
-    const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
+    const FROM_DATE_TRANSFORMATOR = ' - 2 days';
 
     const ALERT_LOCKED_SINCE = 600;
     const KILL_LOCKED_SINCE = 1200;
@@ -75,7 +75,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
-                'SINCE' => $from_date,
+                'ON' => $from_date,
             ]);
 
             $this->logger->info('--- Get Emails details ---');
@@ -102,7 +102,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
                 } catch (Exception $e) {
                     $this->logger->error('An error has occurred.', $e);
                     \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
-                    return;
+                    continue;
                 }
             }
         } catch (Exception $e){
