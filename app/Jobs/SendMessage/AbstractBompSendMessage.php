@@ -32,11 +32,10 @@ abstract class AbstractBompSendMessage extends AbstractSendMessage
     {
         // If we are not in production environment, we only can send messages to a test order
         if (env('APP_ENV') !== 'production')
-            if( $this->message->thread->channel_thread_number != 'FICGB4UDKJXMM')
+            if( $this->message->thread->channel_thread_number != 'FICGB4UDKJXMM') // commande de test FNAC
                 return;
 
-        // Load channel
-        $this->channel = Channel::getByName(ChannelEnum::FNAC_COM);
+        $this->channel = $this->message->thread->ticket->channel;
         $this->logger = new Logger('send_message/'
             . $this->channel->getSnakeName()
             . '/' . $this->channel->getSnakeName()
@@ -55,6 +54,14 @@ abstract class AbstractBompSendMessage extends AbstractSendMessage
 
         $query = new MessageUpdate();
 
+        $attachments = $this->message->documents()->get();
+        $attachments2 = [];
+        foreach ($attachments as $key => $attachment){
+            $attachments2[$key]['filename'] = $attachment->name;
+            $attachments2[$key]['data'] = response()->file($attachment->getFilePath())->getFile()->getContent();
+            $attachments2[$key]['filetype'] = 'TYPE_OTHER_OR_BLANK';
+        }
+
         // Answer to message
         $message2 = new Message();
         $message2->setMessageId($orderNumber);
@@ -63,6 +70,7 @@ abstract class AbstractBompSendMessage extends AbstractSendMessage
         $message2->setMessageSubject(MessageSubjectType::OTHER_QUESTION);
         $message2->setMessageType(MessageType::ORDER);
         $message2->setMessageDescription( $this->translateContent($this->message->content));
+        $message2->normalizeAttachments($attachments2);
         $query->addMessage($message2);
 
         /** @var MessageUpdateResponse $messageUpdateResponse */
