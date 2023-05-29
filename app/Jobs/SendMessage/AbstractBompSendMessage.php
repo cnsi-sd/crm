@@ -2,16 +2,14 @@
 
 namespace App\Jobs\SendMessage;
 
-use App\Enums\Channel\ChannelEnum;
-use App\Models\Channel\Channel;
-use App\Models\Ticket\Thread;
-use App\Models\Ticket\Ticket;
+use App\Enums\MessageDocumentTypeEnum;
 use BompApiClient\Client\SimpleClient;
 use BompApiClient\Entity\Message;
 use BompApiClient\Exception\ErrorResponseException;
 use BompApiClient\Service\Request\MessageUpdate;
 use BompApiClient\Service\Response\MessageUpdateResponse;
 use BompApiClient\Type\MessageActionType;
+use BompApiClient\Type\MessageFileType;
 use BompApiClient\Type\MessageSubjectType;
 use BompApiClient\Type\MessageToType;
 use BompApiClient\Type\MessageType;
@@ -47,7 +45,6 @@ abstract class AbstractBompSendMessage extends AbstractSendMessage
         // Variables
         $sendTo = MessageToType::CLIENT;
         $orderNumber = $this->message->thread->ticket->order->channel_order_number;
-
         // Init API client
         $this->logger->info('Init api');
         $client = $this->initApiClient();
@@ -55,11 +52,15 @@ abstract class AbstractBompSendMessage extends AbstractSendMessage
         $query = new MessageUpdate();
 
         $attachments = $this->message->documents()->get();
+
+        if ($attachments->count() > 5) // max limit of attachments to send with BOMP
+            throw new Exception("Too much attachement");
+
         $attachments2 = [];
         foreach ($attachments as $key => $attachment){
             $attachments2[$key]['filename'] = $attachment->name;
             $attachments2[$key]['data'] = response()->file($attachment->getFilePath())->getFile()->getContent();
-            $attachments2[$key]['filetype'] = 'TYPE_OTHER_OR_BLANK';
+            $attachments2[$key]['filetype'] = $this->documentTypeMapping($attachment->type);
         }
 
         // Answer to message
@@ -94,5 +95,16 @@ abstract class AbstractBompSendMessage extends AbstractSendMessage
         $this->client->checkAuth();
 
         return $this->client;
+    }
+
+    protected function documentTypeMapping($documentType): string
+    {
+        return match ($documentType) {
+            MessageDocumentTypeEnum::CUSTOMER_INVOICE => MessageFileType::TYPE_INVOICE,
+            MessageDocumentTypeEnum::CUSTOMER_RETURN  => MessageFileType::TYPE_RETURN_DOC,
+            MessageDocumentTypeEnum::MANUAL_USE => MessageFileType::TYPE_INSTRUCTIONS,
+            MessageDocumentTypeEnum::OTHER => MessageFileType::TYPE_OTHER_OR_BLANK,
+            default => $documentType
+        };
     }
 }
