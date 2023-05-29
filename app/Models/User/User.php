@@ -6,7 +6,6 @@ use App\Helpers\Builder\Table\TableColumnBuilder;
 use App\Enums\ColumnTypeEnum;
 use App\Enums\FixedWidthEnum;
 use App\Models\Channel\Channel;
-use App\Models\Ticket\History;
 use App\Models\User\Role;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
@@ -31,7 +30,6 @@ use Illuminate\Notifications\Notifiable;
  *
  * @property Thread[] $threads
  * @property Message[] $messages
- * @property History[] $historicals
  * @property Role[] $roles
  */
 
@@ -98,10 +96,6 @@ class User extends Authenticatable
         return $this->hasMany(User::class);
     }
 
-    public function historicals(): HasMany
-    {
-        return $this->hasMany(History::class);
-    }
     public static function getTableColumns(): array
     {
         $columns = [];
@@ -165,6 +159,7 @@ class User extends Authenticatable
 
     public static function getUserByChannel(Channel $channel): User
     {
+        //TODO : mapping Channel X User
         return User::query()
             ->select('user_id')
             ->join('channel_users', 'channel_users.user_id', 'users.id')

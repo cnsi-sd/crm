@@ -12,8 +12,6 @@ use Mirakl\MMP\Shop\Client\ShopApiClient;
 abstract class AbstractMiraklSendMessage extends AbstractSendMessage
 {
     const CUSTOMER = 'CUSTOMER';
-    const OPERATOR = 'OPERATOR';
-    const SHOP = 'SHOP';
 
     const HTTP_CONNECT_TIMEOUT = 15;
 
@@ -28,21 +26,8 @@ abstract class AbstractMiraklSendMessage extends AbstractSendMessage
 
         $thread_id = $this->message->thread->channel_thread_number;
 
-        $send_to = [];
-        $replyto = $this->message->reply_to;
-
-        foreach ($this->message->reply_to as $reply_to)
-        {
-            if($reply_to == "customer") {
-                $send_to[] = self::CUSTOMER;
-            }
-            if($reply_to == "operator") {
-                $send_to[] = self::OPERATOR;
-            }
-            if($reply_to == "shop") {
-                $send_to[] = self::SHOP;
-            }
-        }
+        // Variables
+        $send_to = [self::CUSTOMER];
 
         // Init API client
         $client = $this->initApiClient();

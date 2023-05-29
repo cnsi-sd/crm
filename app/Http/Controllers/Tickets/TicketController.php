@@ -19,12 +19,10 @@ use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\Tags\TagList;
 use App\Models\Ticket\Comment;
-use App\Models\Ticket\History;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use App\Models\User\User;
-use DateTime;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -145,22 +143,6 @@ class TicketController extends AbstractController
             ->with('ticket', $ticket);
     }
 
-    public function get_history(Request $request, Ticket $ticket): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
-    {
-        $history = History::query()
-            ->where('ticket_id', $ticket->id)
-            ->orderBy('histories.created_at', 'DESC')
-        ;
-
-        $table = (new TableBuilder('history', $request))
-            ->setColumns(History::getTableColumns())
-            ->setExportable(false)
-            ->setQuery($history);
-
-        return view('tickets.parts.history')
-            ->with('table', $table);
-    }
-
     public function save_revivalThread(Request $request){
         $thread = Thread::find($request->input('thread_id'));
         $thread->revival_id = $request->input('revival_id');
@@ -188,8 +170,6 @@ class TicketController extends AbstractController
                 'ticket-customer_email' => ['nullable','string'],
                 'ticket-delivery_date' => ['nullable', 'date'],
             ]);
-
-
             $ticket->state = $request->input('ticket-state');
             $ticket->priority = $request->input('ticket-priority');
             $ticket->user_id = $request->input('ticket-user_id');
@@ -210,7 +190,6 @@ class TicketController extends AbstractController
                     'author_type' => TicketMessageAuthorTypeEnum::ADMIN,
                     'content' => TinyMCE::toText($messageContent),
                     'default_answer_id' => $defaultAnswerId,
-                    'reply_to' => $request->input('reply_to'),
                 ]);
 
                 foreach ($request->files as $name => $file)
