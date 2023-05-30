@@ -1,0 +1,32 @@
+0000000000000000000000000000000000000000 a17318b57c7248f1896282a7f31b16efe85189cd Mathias <mathias.ouanna@cnsi-sd.fr> 1678800775 +0100	branch: Created from master
+a17318b57c7248f1896282a7f31b16efe85189cd d0d95269138a1e4a1b87e3132ca0fa86b0644729 Mathias <mathias.ouanna@cnsi-sd.fr> 1678806892 +0100	merge mathias/addTagOnThread: Merge made by the 'recursive' strategy.
+d0d95269138a1e4a1b87e3132ca0fa86b0644729 1dd63bbf8350877bc23adfa45033f85ee86c8e0b Mathias <mathias.ouanna@cnsi-sd.fr> 1678810023 +0100	commit: WIP: add tag to ticket retour commande amazon
+1dd63bbf8350877bc23adfa45033f85ee86c8e0b e3dbf1591eccf0170a64df6267cb55db3378fc9b Mathias <mathias.ouanna@cnsi-sd.fr> 1678870109 +0100	merge mathias/addTagOnThread: Merge made by the 'recursive' strategy.
+e3dbf1591eccf0170a64df6267cb55db3378fc9b e222bd072b2f527b55f544389e504cdc9db019db Mathias <mathias.ouanna@cnsi-sd.fr> 1678895478 +0100	commit: make function to add comment with import amazon message
+e222bd072b2f527b55f544389e504cdc9db019db b17ec8402cf38b5a1401e7fa22e1e5290a27141e Mathias <mathias.ouanna@cnsi-sd.fr> 1678895856 +0100	commit (merge): Merge branch 'master' into mathias/infoRetourAmazon
+b17ec8402cf38b5a1401e7fa22e1e5290a27141e 9bfeda9ff0bb7573b10b0af618f08fe0f68b5404 Mathias <mathias.ouanna@cnsi-sd.fr> 1678896891 +0100	commit (merge): Merge branch 'master' into mathias/infoRetourAmazon
+9bfeda9ff0bb7573b10b0af618f08fe0f68b5404 d00ecb675ddb80d50114c2a7455140674f978794 Mathias <mathias.ouanna@cnsi-sd.fr> 1678897031 +0100	commit: add down migration
+d00ecb675ddb80d50114c2a7455140674f978794 a0f3426e85926945d85b869081e5126684f50b00 Mathias <mathias.ouanna@cnsi-sd.fr> 1678897213 +0100	commit: delete commentaire
+a0f3426e85926945d85b869081e5126684f50b00 ebdce6fa368cf83cf4527f47736d3cd9bf963e05 Mathias <mathias.ouanna@cnsi-sd.fr> 1678897640 +0100	commit: add verif to add comment + beautify comment
+ebdce6fa368cf83cf4527f47736d3cd9bf963e05 b0351e24f1e44f1ab666219dca4a5aff9897890f Mathias <mathias.ouanna@cnsi-sd.fr> 1678897693 +0100	commit: delete date on comment
+b0351e24f1e44f1ab666219dca4a5aff9897890f ed2cf25a900fc3a867d4f041cf1c62731f258884 Mathias <mathias.ouanna@cnsi-sd.fr> 1679302746 +0100	commit (merge): Merge branch 'mathias/infoRetourAmazon' of ssh://git.cnsi-sd.net:2222/RoyalPriceTeam/crm into mathias/infoRetourAmazon
+ed2cf25a900fc3a867d4f041cf1c62731f258884 08af399fd323d0398cccd559ac76fe825f7c546d Mathias <mathias.ouanna@cnsi-sd.fr> 1679318064 +0100	pull --progress origin: Fast-forward
+08af399fd323d0398cccd559ac76fe825f7c546d c176a0ad1a275c866fed779886a5edd0c4e069e6 Mathias <mathias.ouanna@cnsi-sd.fr> 1679318281 +0100	commit: delete migration + delete fonction on models thread
+c176a0ad1a275c866fed779886a5edd0c4e069e6 9e2380c66e963d0de94116e05e93fe66208775de Mathias <mathias.ouanna@cnsi-sd.fr> 1679318319 +0100	commit: Update Thread.php
+9e2380c66e963d0de94116e05e93fe66208775de b145c16e3dd1ed12722acacf6dfca5a5c1339488 Mathias <mathias.ouanna@cnsi-sd.fr> 1679322375 +0100	merge origin/Ticket#617202-CRM-Refacto-import-messages-email2: Merge made by the 'recursive' strategy.
+b145c16e3dd1ed12722acacf6dfca5a5c1339488 99587afde34e55304e96f91ab23b3baa71816e36 Mathias <mathias.ouanna@cnsi-sd.fr> 1679326950 +0100	merge origin/Ticket#617202-CRM-Refacto-import-messages-email2: Merge made by the 'recursive' strategy.
+99587afde34e55304e96f91ab23b3baa71816e36 ee62f508f0a5c125e1261abb2fbf3dfda9f6953a Mathias <mathias.ouanna@cnsi-sd.fr> 1679327444 +0100	commit: chang Stringer helpers name to Tools
+ee62f508f0a5c125e1261abb2fbf3dfda9f6953a 5fb94f581ee1a7a02269dfb389bd17c6ac2a48c5 Mathias <mathias.ouanna@cnsi-sd.fr> 1679327485 +0100	commit: refacto import amazon message
+5fb94f581ee1a7a02269dfb389bd17c6ac2a48c5 6d43abe3557301d308f77eb0ae265f4253a72f22 Mathias <mathias.ouanna@cnsi-sd.fr> 1679327743 +0100	commit (merge): Merge remote-tracking branch 'origin/Ticket#617202-CRM-Refacto-import-messages-email2' into mathias/infoRetourAmazon
+6d43abe3557301d308f77eb0ae265f4253a72f22 71d75393763b5fc3cdbcdc9b32dcad27ef1b7e10 Mathias <mathias.ouanna@cnsi-sd.fr> 1679327895 +0100	commit: resolve git build failed + add PHPDocs on abstractImportMailMessages
+71d75393763b5fc3cdbcdc9b32dcad27ef1b7e10 363f0e4e85fce097bb09c15d18b94a455140ed6b Mathias <mathias.ouanna@cnsi-sd.fr> 1679328218 +0100	commit: Update AmazonImportMessage.php
+363f0e4e85fce097bb09c15d18b94a455140ed6b 1fb2f7cf9b04f1d7b61fb85091f22208310bc248 Mathias <mathias.ouanna@cnsi-sd.fr> 1679390521 +0100	pull --progress origin: Fast-forward
+1fb2f7cf9b04f1d7b61fb85091f22208310bc248 3301f18733892f261ad1805bdf12ab64027e57f7 Mathias <mathias.ouanna@cnsi-sd.fr> 1679391045 +0100	commit: update refacto
+3301f18733892f261ad1805bdf12ab64027e57f7 982edbd055e07be975a858073a61c1cad345b71a Mathias <mathias.ouanna@cnsi-sd.fr> 1679391612 +0100	pull --progress origin: Fast-forward
+982edbd055e07be975a858073a61c1cad345b71a aa66b91ae9a97eb0e8e5b044e304fe029fef4109 Mathias <mathias.ouanna@cnsi-sd.fr> 1679394852 +0100	pull --progress origin: Fast-forward
+aa66b91ae9a97eb0e8e5b044e304fe029fef4109 fd0a439610f36abd7e10d99da5f6a08a7de85144 Mathias <mathias.ouanna@cnsi-sd.fr> 1679395066 +0100	commit: update bug migration
+fd0a439610f36abd7e10d99da5f6a08a7de85144 126fbc599d1f33a8cbb08b3a8a65dcc78d107ea0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679404406 +0100	commit: resolve comment Alexis
+126fbc599d1f33a8cbb08b3a8a65dcc78d107ea0 c9fd1750144df4df4ae4196c12767d72567eef8c Mathias <mathias.ouanna@cnsi-sd.fr> 1679405092 +0100	commit: update and review
+c9fd1750144df4df4ae4196c12767d72567eef8c 80c62293512eac4d14b3989dacba68012f0aead1 Mathias <mathias.ouanna@cnsi-sd.fr> 1680511073 +0200	merge master: Fast-forward
+80c62293512eac4d14b3989dacba68012f0aead1 0f0c0c12a3e39df9857dda9f04733e7613c71dda Mathias <mathias.ouanna@cnsi-sd.fr> 1680525180 +0200	commit: Modiff add comment and tag for retourn amazon
+0f0c0c12a3e39df9857dda9f04733e7613c71dda d0035783a230a43acad1570550302866c2a276f8 Mathias <mathias.ouanna@cnsi-sd.fr> 1680525642 +0200	commit: Update AmazonImportMessage.php

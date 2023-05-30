@@ -1,0 +1,17 @@
+0000000000000000000000000000000000000000 27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 Mathias <mathias.ouanna@cnsi-sd.fr> 1671545326 +0100	branch: Created from mathias/ticket#616435-CRM]-Permissions
+27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 bfd4809a35279aa3f2abb9d291d1ba94870827c7 Mathias <mathias.ouanna@cnsi-sd.fr> 1671550489 +0100	commit: creation du model revival
+bfd4809a35279aa3f2abb9d291d1ba94870827c7 3918f87c7d54a1d516184233e65779efb3ab89a1 Mathias <mathias.ouanna@cnsi-sd.fr> 1671551628 +0100	commit: création du pivot table channel_revival
+3918f87c7d54a1d516184233e65779efb3ab89a1 a7ec444c92eafc6d4b91fea595b83c8b32a9e74b Mathias <mathias.ouanna@cnsi-sd.fr> 1671617061 +0100	commit: Start Make CRUD | List revival view
+a7ec444c92eafc6d4b91fea595b83c8b32a9e74b cad809343fd1d3cf24bd87575afbe46da4db6fa2 Mathias <mathias.ouanna@cnsi-sd.fr> 1671620312 +0100	commit (merge): Merge branch 'mathias/ticket#616435-CRM]-Permissions' into mathias/Ticket#616553-Relances-auto
+cad809343fd1d3cf24bd87575afbe46da4db6fa2 5e930409843c96c841ab6748e2129a45ec6a1fa3 Mathias <mathias.ouanna@cnsi-sd.fr> 1671631356 +0100	commit: page de creation de relance auto
+5e930409843c96c841ab6748e2129a45ec6a1fa3 06ad2763bb8d5738d95c7b013de29a5205e2709c Mathias <mathias.ouanna@cnsi-sd.fr> 1671631812 +0100	commit: add button update delete
+06ad2763bb8d5738d95c7b013de29a5205e2709c ca077ffc118ddc038b4c8a87937f9448c479ca03 Mathias <mathias.ouanna@cnsi-sd.fr> 1671637121 +0100	commit: edit et suppression
+ca077ffc118ddc038b4c8a87937f9448c479ca03 1427ad0517aa25f31211056a7eb8db46a7b9feb4 Mathias <mathias.ouanna@cnsi-sd.fr> 1671708410 +0100	commit: Association Thread x Revival | resolve bug creation relance | Permission
+1427ad0517aa25f31211056a7eb8db46a7b9feb4 cd47073e152b3009c98b054bf24b06fc577e1bf7 Mathias <mathias.ouanna@cnsi-sd.fr> 1671708444 +0100	merge master: Merge made by the 'recursive' strategy.
+cd47073e152b3009c98b054bf24b06fc577e1bf7 1427ad0517aa25f31211056a7eb8db46a7b9feb4 Mathias <mathias.ouanna@cnsi-sd.fr> 1671708459 +0100	reset: moving to 1427ad0517aa25f31211056a7eb8db46a7b9feb4
+1427ad0517aa25f31211056a7eb8db46a7b9feb4 7e515abc62a302345e2f9d18d93852ac21354ff7 Mathias <mathias.ouanna@cnsi-sd.fr> 1672043863 +0100	commit: module de relance | commentaire de la merge request
+7e515abc62a302345e2f9d18d93852ac21354ff7 73e792cee511bb7747c36b3a0d99153ba7f06fae Mathias <mathias.ouanna@cnsi-sd.fr> 1672053783 +0100	commit: script envoie d'un message
+73e792cee511bb7747c36b3a0d99153ba7f06fae 1229c24ed8c96d7fddc4c418963a243967d78744 Mathias <mathias.ouanna@cnsi-sd.fr> 1672065359 +0100	commit: mise a niveau save message in db
+1229c24ed8c96d7fddc4c418963a243967d78744 cae10f31a0b2264a13183ad637ffbc2286f7cc80 Mathias <mathias.ouanna@cnsi-sd.fr> 1672070775 +0100	commit: start queue
+cae10f31a0b2264a13183ad637ffbc2286f7cc80 51a5fac08cdafe1607d970e3e47ae5906f860cc9 Mathias <mathias.ouanna@cnsi-sd.fr> 1672157147 +0100	commit: factorisation send message
+51a5fac08cdafe1607d970e3e47ae5906f860cc9 8e602f05a71eca5885c50715926b85138d176ecf Mathias <mathias.ouanna@cnsi-sd.fr> 1672216342 +0100	commit: incrr cpt revival message count

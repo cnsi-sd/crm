@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 9570ed01761fb9d1fbeaef853e6c5169055ac75c Mathias <mathias.ouanna@cnsi-sd.fr> 1680505977 +0200	fetch origin --recurse-submodules=no --progress --prune: storing head
+9570ed01761fb9d1fbeaef853e6c5169055ac75c 4ac0ca94ffd7ec3b297057d62cf0d5fcfa39e193 Mathias <mathias.ouanna@cnsi-sd.fr> 1680511079 +0200	fetch --progress --prune origin: fast-forward
+4ac0ca94ffd7ec3b297057d62cf0d5fcfa39e193 d316585cf842359e4172720a124ced3bdf94af90 Mathias <mathias.ouanna@cnsi-sd.fr> 1680613410 +0200	fetch origin --recurse-submodules=no --progress --prune: fast-forward
+d316585cf842359e4172720a124ced3bdf94af90 af9ad5fcacab6465f067d632e70b771e712dc01e Mathias <mathias.ouanna@cnsi-sd.fr> 1680616004 +0200	fetch --progress --prune origin: fast-forward
+af9ad5fcacab6465f067d632e70b771e712dc01e fe902cddb71e459517610ea149c42b97effce5b4 Mathias <mathias.ouanna@cnsi-sd.fr> 1681197477 +0200	fetch origin --recurse-submodules=no --progress --prune: fast-forward

@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 affa6148344ef68f24a9b8c242ec32cfc09f0ad1 Mathias <mathias.ouanna@cnsi-sd.fr> 1669803658 +0100	branch: Created from mathias/importShowroomprivee
+affa6148344ef68f24a9b8c242ec32cfc09f0ad1 b644408e0ab9429990d10f5ea424142692cac367 Mathias <mathias.ouanna@cnsi-sd.fr> 1669824850 +0100	commit: start MVC
+b644408e0ab9429990d10f5ea424142692cac367 9793cc62be05cf6891f41ff894e5606ca82043c7 Mathias <mathias.ouanna@cnsi-sd.fr> 1670335638 +0100	commit: Update composer.json
+9793cc62be05cf6891f41ff894e5606ca82043c7 62e8326ac0f76cd05021e47a20bf6185cecde321 Mathias <mathias.ouanna@cnsi-sd.fr> 1670335686 +0100	revert: Revert "Update composer.json"
+62e8326ac0f76cd05021e47a20bf6185cecde321 d6b31ffb8cf02b3172e7136c161c49c7dd91310d Mathias <mathias.ouanna@cnsi-sd.fr> 1670342549 +0100	commit: mvc presque fini + problem on display array list option of select channel
+d6b31ffb8cf02b3172e7136c161c49c7dd91310d f7ab667ffa6d5c8d6f3a033a52dd42d54cc7b157 Mathias <mathias.ouanna@cnsi-sd.fr> 1670928079 +0100	commit: message par defaut all

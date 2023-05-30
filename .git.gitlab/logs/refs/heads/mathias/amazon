@@ -1,0 +1,12 @@
+0000000000000000000000000000000000000000 e60e9d91faff49c366592e9653a3fbfeb8298269 Mathias <mathias.ouanna@cnsi-sd.fr> 1678094035 +0100	branch: Created from HEAD
+e60e9d91faff49c366592e9653a3fbfeb8298269 37723ef067d9ec42e4eba1aded63aef2e7668dca Mathias <mathias.ouanna@cnsi-sd.fr> 1678094106 +0100	commit: WIP : AmazonImportMessage
+37723ef067d9ec42e4eba1aded63aef2e7668dca 8f8182a6c0bb353453ebd8e902133ad69964f638 Mathias <mathias.ouanna@cnsi-sd.fr> 1678095764 +0100	commit: update composer, add amazon.fr in channelEnum, solve error phpstan in AmazonImportMessage
+8f8182a6c0bb353453ebd8e902133ad69964f638 840c0e25103842bb0f64a80baf31e7ecb64dba10 Mathias <mathias.ouanna@cnsi-sd.fr> 1678111141 +0100	commit: update AmazonimportMessage and composer.json
+840c0e25103842bb0f64a80baf31e7ecb64dba10 925282cf88b8af31042ea1d502fb1fb3a514dcb0 Mathias <mathias.ouanna@cnsi-sd.fr> 1678119052 +0100	commit: import message amazon v1
+925282cf88b8af31042ea1d502fb1fb3a514dcb0 dae5f074338d0a2f90b3c7f78db1cf49788db332 Mathias <mathias.ouanna@cnsi-sd.fr> 1678189230 +0100	commit: import amazon message
+dae5f074338d0a2f90b3c7f78db1cf49788db332 b825b7d419fbbed37c3466325ae6ab37b94c18f5 Mathias <mathias.ouanna@cnsi-sd.fr> 1678203702 +0100	commit: all Import Amazon message
+b825b7d419fbbed37c3466325ae6ab37b94c18f5 5efe93ae9d56cdfdea88c511466799862a525c8d Mathias <mathias.ouanna@cnsi-sd.fr> 1678204984 +0100	commit: send Message Amazon
+5efe93ae9d56cdfdea88c511466799862a525c8d 660ab7e709f5ce5662515311911990445200d4ea Mathias <mathias.ouanna@cnsi-sd.fr> 1678695452 +0100	pull --progress origin: Fast-forward
+660ab7e709f5ce5662515311911990445200d4ea 236c0ded4d016f39ad35f273cff445b8bbcbe105 Mathias <mathias.ouanna@cnsi-sd.fr> 1678717459 +0100	commit: modiff AmazonImportMessage + finish amazon send message + modiff .env.example
+236c0ded4d016f39ad35f273cff445b8bbcbe105 ff5c488e2c86829862ffb40c2254f8791fb19878 Mathias <mathias.ouanna@cnsi-sd.fr> 1678720958 +0100	merge master: Merge made by the 'recursive' strategy.
+ff5c488e2c86829862ffb40c2254f8791fb19878 a29075a72a63f6c89f336f9b6becaedce959683e Mathias <mathias.ouanna@cnsi-sd.fr> 1678721073 +0100	commit: delete Mail.blade + modif amazonImportMessage

@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 f64cd68a76d9799710a29fc75fced4256578f4ee Mathias <mathias.ouanna@cnsi-sd.fr> 1679312026 +0100	fetch origin --recurse-submodules=no --progress --prune: storing head
+f64cd68a76d9799710a29fc75fced4256578f4ee 99b93ad2559ce5b99d36c1cf9ea9a5b132936c80 Mathias <mathias.ouanna@cnsi-sd.fr> 1679312927 +0100	fetch origin --recurse-submodules=no --progress --prune: fast-forward
+99b93ad2559ce5b99d36c1cf9ea9a5b132936c80 ce1f45555feee450a3ea21a1c8900e7fd79250ed Mathias <mathias.ouanna@cnsi-sd.fr> 1679314729 +0100	fetch origin --recurse-submodules=no --progress --prune: fast-forward
+ce1f45555feee450a3ea21a1c8900e7fd79250ed c9d4a29a04167a76e03dad6001e805f5427704fc Mathias <mathias.ouanna@cnsi-sd.fr> 1679324992 +0100	fetch origin --recurse-submodules=no --progress --prune: fast-forward
+c9d4a29a04167a76e03dad6001e805f5427704fc 156d5b3dfe0e6d1d262af7b140f11f4497abb771 Mathias <mathias.ouanna@cnsi-sd.fr> 1679326794 +0100	fetch origin --recurse-submodules=no --progress --prune: fast-forward
+156d5b3dfe0e6d1d262af7b140f11f4497abb771 0660e44fdb4938300a063de7c0ea8b11670dba56 Mathias <mathias.ouanna@cnsi-sd.fr> 1679326956 +0100	fetch --progress --prune origin: fast-forward
+0660e44fdb4938300a063de7c0ea8b11670dba56 33a035b0f441f855790b2fb572081a1ac671107e Mathias <mathias.ouanna@cnsi-sd.fr> 1679327493 +0100	fetch --progress --prune origin: fast-forward

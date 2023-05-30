@@ -1,0 +1,12 @@
+0000000000000000000000000000000000000000 f7ab667ffa6d5c8d6f3a033a52dd42d54cc7b157 Mathias <mathias.ouanna@cnsi-sd.fr> 1670943058 +0100	branch: Created from mathias/reponseParDefault
+f7ab667ffa6d5c8d6f3a033a52dd42d54cc7b157 e31919b7fef9de1d2caba7316925c93c6b3a73de Mathias <mathias.ouanna@cnsi-sd.fr> 1671030627 +0100	commit: modification import mirakl message pour permettrre la modifcation du status d'un ticket lors de l'import d'un message
+e31919b7fef9de1d2caba7316925c93c6b3a73de 4638352701f7e538dfc792697a1d3ef28b376370 Mathias <mathias.ouanna@cnsi-sd.fr> 1671030676 +0100	commit: multiple task done
+4638352701f7e538dfc792697a1d3ef28b376370 96ebbd1863a96723c4156ec6b158aa14cf186e70 Mathias <mathias.ouanna@cnsi-sd.fr> 1671031890 +0100	revert: Revert "multiple task done"
+96ebbd1863a96723c4156ec6b158aa14cf186e70 4638352701f7e538dfc792697a1d3ef28b376370 Mathias <mathias.ouanna@cnsi-sd.fr> 1671031900 +0100	reset: moving to 4638352701f7e538dfc792697a1d3ef28b376370
+4638352701f7e538dfc792697a1d3ef28b376370 5debe23ff57e8210cd3a0ef03f1970bf22d93bfd Mathias <mathias.ouanna@cnsi-sd.fr> 1671032293 +0100	commit: [RERVERT] multiple task done | modification admin -> settings en trop
+5debe23ff57e8210cd3a0ef03f1970bf22d93bfd 2084e2a0807c68452da31d204d4b3745b73cc77b Mathias <mathias.ouanna@cnsi-sd.fr> 1671531360 +0100	commit: review comment of the merge request
+2084e2a0807c68452da31d204d4b3745b73cc77b a4c6ec09baf8e05c1cac9d58e62bf3397d6187fc Mathias <mathias.ouanna@cnsi-sd.fr> 1671536727 +0100	commit: modification default answers -> default answer | add save ticket | review select 2
+a4c6ec09baf8e05c1cac9d58e62bf3397d6187fc 6ce56d56e67c77ea188328e5cc890d76dffe91f1 Mathias <mathias.ouanna@cnsi-sd.fr> 1671543362 +0100	commit: review explode object | review lang
+6ce56d56e67c77ea188328e5cc890d76dffe91f1 27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 Mathias <mathias.ouanna@cnsi-sd.fr> 1671543800 +0100	commit: pluriels
+27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 53b11a9dfbc5941580364a78704a486ccb6bf507 Mathias <mathias.ouanna@cnsi-sd.fr> 1671610633 +0100	commit (merge): Merge branch 'master' into mathias/ticket#616435-CRM]-Permissions
+53b11a9dfbc5941580364a78704a486ccb6bf507 13b4399653f3fd876b906293c00aa3ad05a7775a Mathias <mathias.ouanna@cnsi-sd.fr> 1671620234 +0100	commit: Update app.php

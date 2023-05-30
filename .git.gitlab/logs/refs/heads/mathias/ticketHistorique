@@ -1,0 +1,18 @@
+0000000000000000000000000000000000000000 050a181a9e15f8484efba4e30146fe16769fa1d4 Mathias <mathias.ouanna@cnsi-sd.fr> 1682418316 +0200	branch: Created from master
+050a181a9e15f8484efba4e30146fe16769fa1d4 f5fe7587b80c8a8cd9d8248eaebe06aa2eb0e31c Mathias <mathias.ouanna@cnsi-sd.fr> 1682516665 +0200	commit: create model
+f5fe7587b80c8a8cd9d8248eaebe06aa2eb0e31c 002fbf61442af9627f226df8ad4ccb918447a260 Mathias <mathias.ouanna@cnsi-sd.fr> 1682516689 +0200	commit: modification du model
+002fbf61442af9627f226df8ad4ccb918447a260 5d3876ad19ebd9d6a79ef2d2a43a57f4fa26da54 Mathias <mathias.ouanna@cnsi-sd.fr> 1682519685 +0200	commit: all historique
+5d3876ad19ebd9d6a79ef2d2a43a57f4fa26da54 af99bc3fc6528ea22e31f16ec3e780d3ff6fbbc3 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521370 +0200	merge master: Merge made by the 'recursive' strategy.
+af99bc3fc6528ea22e31f16ec3e780d3ff6fbbc3 5f47c544c770217c04dbd636d04e94aeb63ff1c5 Mathias <mathias.ouanna@cnsi-sd.fr> 1682522387 +0200	commit: draft resolution des commentaires
+5f47c544c770217c04dbd636d04e94aeb63ff1c5 00ef390f56796b49492dbf786f14c796a3df2cdc Mathias <mathias.ouanna@cnsi-sd.fr> 1682523833 +0200	commit: all resolve
+00ef390f56796b49492dbf786f14c796a3df2cdc 1d7c47892a5dff9a86e65ad7971e49c2eadf5373 Mathias <mathias.ouanna@cnsi-sd.fr> 1683013565 +0200	commit: delete date on model
+1d7c47892a5dff9a86e65ad7971e49c2eadf5373 a24b0e8acfb54598583de6ef80db3dbf23b6a028 Mathias <mathias.ouanna@cnsi-sd.fr> 1683014079 +0200	commit: Update Ticket.php
+a24b0e8acfb54598583de6ef80db3dbf23b6a028 d3c70f963c69558cfdde69dc41d66666eaf207b5 Mathias <mathias.ouanna@cnsi-sd.fr> 1683024566 +0200	commit: ajout docs user + modification des traductions
+d3c70f963c69558cfdde69dc41d66666eaf207b5 a21b96f54976d4c4b36488fc6be8ad5945e9e124 Mathias <mathias.ouanna@cnsi-sd.fr> 1683622565 +0200	commit: Update Ticket.php
+a21b96f54976d4c4b36488fc6be8ad5945e9e124 1e96e82753f74069a188990b6a362d923fb9b041 Mathias <mathias.ouanna@cnsi-sd.fr> 1683622744 +0200	commit: Update User.php
+1e96e82753f74069a188990b6a362d923fb9b041 b7a341a42404ff0e973375e5635e5c794dc74ecd Mathias <mathias.ouanna@cnsi-sd.fr> 1683645259 +0200	commit: Update historiques.md
+b7a341a42404ff0e973375e5635e5c794dc74ecd bfe3b5b13c8ece34dca0816286dbfa19aa1477b2 Mathias <mathias.ouanna@cnsi-sd.fr> 1683703041 +0200	commit: delete comment if/else
+bfe3b5b13c8ece34dca0816286dbfa19aa1477b2 610682399e12e2e25d3b164b9d0e1ec0bf3e49e4 Mathias <mathias.ouanna@cnsi-sd.fr> 1683703117 +0200	commit: delete ticketHistory import
+610682399e12e2e25d3b164b9d0e1ec0bf3e49e4 6622e2b01ac2b023ce5cbfc08ed54b8429b6af05 Mathias <mathias.ouanna@cnsi-sd.fr> 1683704357 +0200	commit: historicals to histories
+6622e2b01ac2b023ce5cbfc08ed54b8429b6af05 9199b51efa2dd92d317cf6401b6b8ade5a4577ab Mathias <mathias.ouanna@cnsi-sd.fr> 1683704389 +0200	commit: delete select on query
+9199b51efa2dd92d317cf6401b6b8ade5a4577ab d779c1c3dc55107cf3639db79d46a9edda8d1e5b Mathias <mathias.ouanna@cnsi-sd.fr> 1683707224 +0200	commit: last modiff
