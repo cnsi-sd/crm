@@ -1,0 +1,9 @@
+0000000000000000000000000000000000000000 53430b04526320fc0df103437578c5dadef3cfd6 Mathias <mathias.ouanna@cnsi-sd.fr> 1678783289 +0100	branch: Created from master
+53430b04526320fc0df103437578c5dadef3cfd6 1dcabed7b72ae078e148061ee0d8e4f44ab8175f Mathias <mathias.ouanna@cnsi-sd.fr> 1678787661 +0100	merge master: Fast-forward
+1dcabed7b72ae078e148061ee0d8e4f44ab8175f b7576469efac4320bb9af8e0b1a09f6fca5f8dd4 Mathias <mathias.ouanna@cnsi-sd.fr> 1678791965 +0100	commit: check tagList for bot auto add Tag on thread + refacto on ticketController
+b7576469efac4320bb9af8e0b1a09f6fca5f8dd4 d1841dc1abd86a2cb83805f3b4b53555a66412d3 Mathias <mathias.ouanna@cnsi-sd.fr> 1678793958 +0100	commit: modiff on tag.css + review bug on tag.php
+d1841dc1abd86a2cb83805f3b4b53555a66412d3 daef774459597406a9b89b888dc2cebed22ff0f6 Mathias <mathias.ouanna@cnsi-sd.fr> 1678868720 +0100	merge master: Merge made by the 'recursive' strategy.
+daef774459597406a9b89b888dc2cebed22ff0f6 419e804cc020486d7a2dcf51fbbe427eeeb955fa Mathias <mathias.ouanna@cnsi-sd.fr> 1678868945 +0100	commit: use check taglist on thread for bot
+419e804cc020486d7a2dcf51fbbe427eeeb955fa 68d096e39bb006bb58e134f55f497a7bcd4bd9ba Mathias <mathias.ouanna@cnsi-sd.fr> 1678869404 +0100	commit: change find to findOrFail
+68d096e39bb006bb58e134f55f497a7bcd4bd9ba 4f60f518b606ab5da4a377edae9c2bc26fc152dc Mathias <mathias.ouanna@cnsi-sd.fr> 1678896392 +0100	commit: change thread property type
+4f60f518b606ab5da4a377edae9c2bc26fc152dc e11e06877d8789d5c9bbf1a56a9cfa0d24daade7 Mathias <mathias.ouanna@cnsi-sd.fr> 1678896586 +0100	commit (merge): Merge branch 'master' into mathias/addTagOnThread

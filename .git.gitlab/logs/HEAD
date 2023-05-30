@@ -1,0 +1,581 @@
+0000000000000000000000000000000000000000 0a7afbd15ab827a2cb6e8c18cab2300057836efb Mathias <mathias.ouanna@cnsi-sd.fr> 1667922543 +0100	commit (initial): initial commit and models make
+0a7afbd15ab827a2cb6e8c18cab2300057836efb 0a7afbd15ab827a2cb6e8c18cab2300057836efb Mathias <mathias.ouanna@cnsi-sd.fr> 1667922912 +0100	checkout: moving from master to develop
+0a7afbd15ab827a2cb6e8c18cab2300057836efb 0a7afbd15ab827a2cb6e8c18cab2300057836efb Mathias <mathias.ouanna@cnsi-sd.fr> 1667922928 +0100	checkout: moving from develop to TEST
+0a7afbd15ab827a2cb6e8c18cab2300057836efb 0a7afbd15ab827a2cb6e8c18cab2300057836efb Mathias <mathias.ouanna@cnsi-sd.fr> 1667922935 +0100	checkout: moving from TEST to develop
+0a7afbd15ab827a2cb6e8c18cab2300057836efb 40f1713344b4d9c222a42184e1ba842a3c867364 Mathias <mathias.ouanna@cnsi-sd.fr> 1668419913 +0100	commit: all Models
+40f1713344b4d9c222a42184e1ba842a3c867364 484a131166d8f524f123a47ee650c9399ce37f70 Mathias <mathias.ouanna@cnsi-sd.fr> 1668427585 +0100	commit: link FK with Models
+484a131166d8f524f123a47ee650c9399ce37f70 484a131166d8f524f123a47ee650c9399ce37f70 Mathias <mathias.ouanna@cnsi-sd.fr> 1668610747 +0100	checkout: moving from develop to mathias/importShowroomprivee
+484a131166d8f524f123a47ee650c9399ce37f70 2f03b8f31b8954d3bce9ef1a6719d491032defed Mathias <mathias.ouanna@cnsi-sd.fr> 1668612804 +0100	commit: make import message and add in db
+2f03b8f31b8954d3bce9ef1a6719d491032defed c813c4620186ef2cec7a6f0efda0e5ceabf747e7 Mathias <mathias.ouanna@cnsi-sd.fr> 1668614546 +0100	commit: start generique import
+c813c4620186ef2cec7a6f0efda0e5ceabf747e7 c813c4620186ef2cec7a6f0efda0e5ceabf747e7 Mathias <mathias.ouanna@cnsi-sd.fr> 1669035472 +0100	reset: moving to HEAD
+c813c4620186ef2cec7a6f0efda0e5ceabf747e7 f9b90b32b8a767d716a694973ea0f1ba941ccf34 Mathias <mathias.ouanna@cnsi-sd.fr> 1669035472 +0100	checkout: moving from mathias/importShowroomprivee to 1-ticket-616208-crm-installation-template-hyper-creative
+f9b90b32b8a767d716a694973ea0f1ba941ccf34 c813c4620186ef2cec7a6f0efda0e5ceabf747e7 Mathias <mathias.ouanna@cnsi-sd.fr> 1669036103 +0100	checkout: moving from 1-ticket-616208-crm-installation-template-hyper-creative to mathias/importShowroomprivee
+c813c4620186ef2cec7a6f0efda0e5ceabf747e7 c813c4620186ef2cec7a6f0efda0e5ceabf747e7 Mathias <mathias.ouanna@cnsi-sd.fr> 1669043066 +0100	reset: moving to HEAD
+c813c4620186ef2cec7a6f0efda0e5ceabf747e7 fd04eadf1985be95ff91d09d673a789c089b494f Mathias <mathias.ouanna@cnsi-sd.fr> 1669043162 +0100	commit (merge): Merge branch '1-ticket-616208-crm-installation-template-hyper-creative' into mathias/importShowroomprivee
+fd04eadf1985be95ff91d09d673a789c089b494f 95a06112d5e1b5663d73c2f7b72276d1ee1d0b11 Mathias <mathias.ouanna@cnsi-sd.fr> 1669045974 +0100	commit: add enum
+95a06112d5e1b5663d73c2f7b72276d1ee1d0b11 a289fa271de20b2f3b71b271505b900912bfff47 Mathias <mathias.ouanna@cnsi-sd.fr> 1669113037 +0100	commit: import showroom messages
+a289fa271de20b2f3b71b271505b900912bfff47 25f638351d5ff62b30f2714a9ce2178a248a66d5 Mathias <mathias.ouanna@cnsi-sd.fr> 1669116647 +0100	commit: UPDATE ENUM
+25f638351d5ff62b30f2714a9ce2178a248a66d5 53ae63890b93dcb16d6d63457a5e0f54f0c5d735 Mathias <mathias.ouanna@cnsi-sd.fr> 1669133390 +0100	commit: make list mirakl import message
+53ae63890b93dcb16d6d63457a5e0f54f0c5d735 93580cb8987db0b8e6258cd9af65edd787250fe7 Mathias <mathias.ouanna@cnsi-sd.fr> 1669736484 +0100	commit: mirakl import message
+93580cb8987db0b8e6258cd9af65edd787250fe7 86d0133fd9bb3e0f4edbc926b8901fcb460b4064 Mathias <mathias.ouanna@cnsi-sd.fr> 1669798451 +0100	commit: resolve thread of merge request
+86d0133fd9bb3e0f4edbc926b8901fcb460b4064 3240b7548a2f23e6643c0aa6fabad29f529751c9 Mathias <mathias.ouanna@cnsi-sd.fr> 1669798657 +0100	checkout: moving from mathias/importShowroomprivee to 1-ticket-616208-crm-installation-template-hyper-creative
+3240b7548a2f23e6643c0aa6fabad29f529751c9 3240b7548a2f23e6643c0aa6fabad29f529751c9 Mathias <mathias.ouanna@cnsi-sd.fr> 1669799384 +0100	reset: moving to HEAD
+3240b7548a2f23e6643c0aa6fabad29f529751c9 3240b7548a2f23e6643c0aa6fabad29f529751c9 Mathias <mathias.ouanna@cnsi-sd.fr> 1669799443 +0100	reset: moving to HEAD
+3240b7548a2f23e6643c0aa6fabad29f529751c9 86d0133fd9bb3e0f4edbc926b8901fcb460b4064 Mathias <mathias.ouanna@cnsi-sd.fr> 1669799445 +0100	checkout: moving from 1-ticket-616208-crm-installation-template-hyper-creative to mathias/importShowroomprivee
+86d0133fd9bb3e0f4edbc926b8901fcb460b4064 86d0133fd9bb3e0f4edbc926b8901fcb460b4064 Mathias <mathias.ouanna@cnsi-sd.fr> 1669799461 +0100	reset: moving to HEAD
+86d0133fd9bb3e0f4edbc926b8901fcb460b4064 af06691dd7a8249b0b484fb687aa63cbf85c387b Mathias <mathias.ouanna@cnsi-sd.fr> 1669799476 +0100	commit: Delete app.php
+af06691dd7a8249b0b484fb687aa63cbf85c387b 2405b84baf1fc8925d336f0ace0f55b3a7d24eb5 Mathias <mathias.ouanna@cnsi-sd.fr> 1669799515 +0100	commit (merge): Merge branch '1-ticket-616208-crm-installation-template-hyper-creative' into mathias/importShowroomprivee
+2405b84baf1fc8925d336f0ace0f55b3a7d24eb5 affa6148344ef68f24a9b8c242ec32cfc09f0ad1 Mathias <mathias.ouanna@cnsi-sd.fr> 1669803617 +0100	commit: conflit merge resolve and add mail translator
+affa6148344ef68f24a9b8c242ec32cfc09f0ad1 affa6148344ef68f24a9b8c242ec32cfc09f0ad1 Mathias <mathias.ouanna@cnsi-sd.fr> 1669803658 +0100	checkout: moving from mathias/importShowroomprivee to mathias/reponseParDefault
+affa6148344ef68f24a9b8c242ec32cfc09f0ad1 affa6148344ef68f24a9b8c242ec32cfc09f0ad1 Mathias <mathias.ouanna@cnsi-sd.fr> 1669817860 +0100	reset: moving to HEAD
+affa6148344ef68f24a9b8c242ec32cfc09f0ad1 0a7afbd15ab827a2cb6e8c18cab2300057836efb Mathias <mathias.ouanna@cnsi-sd.fr> 1669817860 +0100	checkout: moving from mathias/reponseParDefault to master
+0a7afbd15ab827a2cb6e8c18cab2300057836efb 1bc177d293699aaab450ed9bc7ad98cfdd17453e Mathias <mathias.ouanna@cnsi-sd.fr> 1669817863 +0100	pull --progress origin: Fast-forward
+1bc177d293699aaab450ed9bc7ad98cfdd17453e affa6148344ef68f24a9b8c242ec32cfc09f0ad1 Mathias <mathias.ouanna@cnsi-sd.fr> 1669819020 +0100	checkout: moving from master to mathias/reponseParDefault
+affa6148344ef68f24a9b8c242ec32cfc09f0ad1 b644408e0ab9429990d10f5ea424142692cac367 Mathias <mathias.ouanna@cnsi-sd.fr> 1669824850 +0100	commit: start MVC
+b644408e0ab9429990d10f5ea424142692cac367 9793cc62be05cf6891f41ff894e5606ca82043c7 Mathias <mathias.ouanna@cnsi-sd.fr> 1670335638 +0100	commit: Update composer.json
+9793cc62be05cf6891f41ff894e5606ca82043c7 62e8326ac0f76cd05021e47a20bf6185cecde321 Mathias <mathias.ouanna@cnsi-sd.fr> 1670335686 +0100	revert: Revert "Update composer.json"
+62e8326ac0f76cd05021e47a20bf6185cecde321 62e8326ac0f76cd05021e47a20bf6185cecde321 Mathias <mathias.ouanna@cnsi-sd.fr> 1670335851 +0100	reset: moving to HEAD
+62e8326ac0f76cd05021e47a20bf6185cecde321 1bc177d293699aaab450ed9bc7ad98cfdd17453e Mathias <mathias.ouanna@cnsi-sd.fr> 1670335851 +0100	checkout: moving from mathias/reponseParDefault to master
+1bc177d293699aaab450ed9bc7ad98cfdd17453e 1bc177d293699aaab450ed9bc7ad98cfdd17453e Mathias <mathias.ouanna@cnsi-sd.fr> 1670335858 +0100	checkout: moving from master to cnsi/logger/setup
+1bc177d293699aaab450ed9bc7ad98cfdd17453e e41d1af16c0c26469b5bee22f21f4c14a6fe86f8 Mathias <mathias.ouanna@cnsi-sd.fr> 1670336023 +0100	commit: Update composer.json
+e41d1af16c0c26469b5bee22f21f4c14a6fe86f8 62e8326ac0f76cd05021e47a20bf6185cecde321 Mathias <mathias.ouanna@cnsi-sd.fr> 1670339728 +0100	checkout: moving from cnsi/logger/setup to mathias/reponseParDefault
+62e8326ac0f76cd05021e47a20bf6185cecde321 d6b31ffb8cf02b3172e7136c161c49c7dd91310d Mathias <mathias.ouanna@cnsi-sd.fr> 1670342549 +0100	commit: mvc presque fini + problem on display array list option of select channel
+d6b31ffb8cf02b3172e7136c161c49c7dd91310d f7ab667ffa6d5c8d6f3a033a52dd42d54cc7b157 Mathias <mathias.ouanna@cnsi-sd.fr> 1670928079 +0100	commit: message par defaut all
+f7ab667ffa6d5c8d6f3a033a52dd42d54cc7b157 f7ab667ffa6d5c8d6f3a033a52dd42d54cc7b157 Mathias <mathias.ouanna@cnsi-sd.fr> 1670943069 +0100	checkout: moving from mathias/reponseParDefault to mathias/ticket#616435-CRM]-Permissions
+f7ab667ffa6d5c8d6f3a033a52dd42d54cc7b157 e31919b7fef9de1d2caba7316925c93c6b3a73de Mathias <mathias.ouanna@cnsi-sd.fr> 1671030627 +0100	commit: modification import mirakl message pour permettrre la modifcation du status d'un ticket lors de l'import d'un message
+e31919b7fef9de1d2caba7316925c93c6b3a73de 4638352701f7e538dfc792697a1d3ef28b376370 Mathias <mathias.ouanna@cnsi-sd.fr> 1671030676 +0100	commit: multiple task done
+4638352701f7e538dfc792697a1d3ef28b376370 4638352701f7e538dfc792697a1d3ef28b376370 Mathias <mathias.ouanna@cnsi-sd.fr> 1671031025 +0100	checkout: moving from mathias/ticket#616435-CRM]-Permissions to mathias/displayed-last-thread
+4638352701f7e538dfc792697a1d3ef28b376370 4638352701f7e538dfc792697a1d3ef28b376370 Mathias <mathias.ouanna@cnsi-sd.fr> 1671031818 +0100	reset: moving to HEAD
+4638352701f7e538dfc792697a1d3ef28b376370 4638352701f7e538dfc792697a1d3ef28b376370 Mathias <mathias.ouanna@cnsi-sd.fr> 1671031818 +0100	checkout: moving from mathias/displayed-last-thread to mathias/ticket#616435-CRM]-Permissions
+4638352701f7e538dfc792697a1d3ef28b376370 96ebbd1863a96723c4156ec6b158aa14cf186e70 Mathias <mathias.ouanna@cnsi-sd.fr> 1671031890 +0100	revert: Revert "multiple task done"
+96ebbd1863a96723c4156ec6b158aa14cf186e70 4638352701f7e538dfc792697a1d3ef28b376370 Mathias <mathias.ouanna@cnsi-sd.fr> 1671031900 +0100	reset: moving to 4638352701f7e538dfc792697a1d3ef28b376370
+4638352701f7e538dfc792697a1d3ef28b376370 5debe23ff57e8210cd3a0ef03f1970bf22d93bfd Mathias <mathias.ouanna@cnsi-sd.fr> 1671032293 +0100	commit: [RERVERT] multiple task done | modification admin -> settings en trop
+5debe23ff57e8210cd3a0ef03f1970bf22d93bfd 5debe23ff57e8210cd3a0ef03f1970bf22d93bfd Mathias <mathias.ouanna@cnsi-sd.fr> 1671032385 +0100	reset: moving to HEAD
+5debe23ff57e8210cd3a0ef03f1970bf22d93bfd 4638352701f7e538dfc792697a1d3ef28b376370 Mathias <mathias.ouanna@cnsi-sd.fr> 1671032385 +0100	checkout: moving from mathias/ticket#616435-CRM]-Permissions to mathias/displayed-last-thread
+4638352701f7e538dfc792697a1d3ef28b376370 e2e6fdaa4b9829541963d8fdd877cb49cd26d9d6 Mathias <mathias.ouanna@cnsi-sd.fr> 1671033703 +0100	commit: Create 2022_12_14_161853_update_ticket_add_last_thread_displayed.php
+e2e6fdaa4b9829541963d8fdd877cb49cd26d9d6 5debe23ff57e8210cd3a0ef03f1970bf22d93bfd Mathias <mathias.ouanna@cnsi-sd.fr> 1671440801 +0100	checkout: moving from mathias/displayed-last-thread to mathias/ticket#616435-CRM]-Permissions
+5debe23ff57e8210cd3a0ef03f1970bf22d93bfd 2084e2a0807c68452da31d204d4b3745b73cc77b Mathias <mathias.ouanna@cnsi-sd.fr> 1671531360 +0100	commit: review comment of the merge request
+2084e2a0807c68452da31d204d4b3745b73cc77b e2e6fdaa4b9829541963d8fdd877cb49cd26d9d6 Mathias <mathias.ouanna@cnsi-sd.fr> 1671532890 +0100	checkout: moving from mathias/ticket#616435-CRM]-Permissions to mathias/displayed-last-thread
+e2e6fdaa4b9829541963d8fdd877cb49cd26d9d6 1cb17b874c003d5b7f1795e45a2cac547a26e4ed Mathias <mathias.ouanna@cnsi-sd.fr> 1671533347 +0100	commit: modification de la migration pour que le down soit opérationnel
+1cb17b874c003d5b7f1795e45a2cac547a26e4ed 2084e2a0807c68452da31d204d4b3745b73cc77b Mathias <mathias.ouanna@cnsi-sd.fr> 1671533586 +0100	checkout: moving from mathias/displayed-last-thread to mathias/ticket#616435-CRM]-Permissions
+2084e2a0807c68452da31d204d4b3745b73cc77b a4c6ec09baf8e05c1cac9d58e62bf3397d6187fc Mathias <mathias.ouanna@cnsi-sd.fr> 1671536727 +0100	commit: modification default answers -> default answer | add save ticket | review select 2
+a4c6ec09baf8e05c1cac9d58e62bf3397d6187fc 6ce56d56e67c77ea188328e5cc890d76dffe91f1 Mathias <mathias.ouanna@cnsi-sd.fr> 1671543362 +0100	commit: review explode object | review lang
+6ce56d56e67c77ea188328e5cc890d76dffe91f1 27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 Mathias <mathias.ouanna@cnsi-sd.fr> 1671543800 +0100	commit: pluriels
+27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 Mathias <mathias.ouanna@cnsi-sd.fr> 1671545326 +0100	checkout: moving from mathias/ticket#616435-CRM]-Permissions to mathias/Ticket#616553-Relances-auto
+27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 bfd4809a35279aa3f2abb9d291d1ba94870827c7 Mathias <mathias.ouanna@cnsi-sd.fr> 1671550489 +0100	commit: creation du model revival
+bfd4809a35279aa3f2abb9d291d1ba94870827c7 3918f87c7d54a1d516184233e65779efb3ab89a1 Mathias <mathias.ouanna@cnsi-sd.fr> 1671551628 +0100	commit: création du pivot table channel_revival
+3918f87c7d54a1d516184233e65779efb3ab89a1 3918f87c7d54a1d516184233e65779efb3ab89a1 Mathias <mathias.ouanna@cnsi-sd.fr> 1671610439 +0100	reset: moving to HEAD
+3918f87c7d54a1d516184233e65779efb3ab89a1 c00388ce08979855b7c0e857db2aacc55643220f Mathias <mathias.ouanna@cnsi-sd.fr> 1671610439 +0100	checkout: moving from mathias/Ticket#616553-Relances-auto to master
+c00388ce08979855b7c0e857db2aacc55643220f 3918f87c7d54a1d516184233e65779efb3ab89a1 Mathias <mathias.ouanna@cnsi-sd.fr> 1671610443 +0100	checkout: moving from master to mathias/Ticket#616553-Relances-auto
+3918f87c7d54a1d516184233e65779efb3ab89a1 c00388ce08979855b7c0e857db2aacc55643220f Mathias <mathias.ouanna@cnsi-sd.fr> 1671610572 +0100	checkout: moving from mathias/Ticket#616553-Relances-auto to master
+c00388ce08979855b7c0e857db2aacc55643220f 27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 Mathias <mathias.ouanna@cnsi-sd.fr> 1671610582 +0100	checkout: moving from master to mathias/ticket#616435-CRM]-Permissions
+27c26c4de53a3e11ea2ec2c46e1e3de549ad1763 53b11a9dfbc5941580364a78704a486ccb6bf507 Mathias <mathias.ouanna@cnsi-sd.fr> 1671610633 +0100	commit (merge): Merge branch 'master' into mathias/ticket#616435-CRM]-Permissions
+53b11a9dfbc5941580364a78704a486ccb6bf507 3918f87c7d54a1d516184233e65779efb3ab89a1 Mathias <mathias.ouanna@cnsi-sd.fr> 1671610997 +0100	checkout: moving from mathias/ticket#616435-CRM]-Permissions to mathias/Ticket#616553-Relances-auto
+3918f87c7d54a1d516184233e65779efb3ab89a1 a7ec444c92eafc6d4b91fea595b83c8b32a9e74b Mathias <mathias.ouanna@cnsi-sd.fr> 1671617061 +0100	commit: Start Make CRUD | List revival view
+a7ec444c92eafc6d4b91fea595b83c8b32a9e74b a7ec444c92eafc6d4b91fea595b83c8b32a9e74b Mathias <mathias.ouanna@cnsi-sd.fr> 1671620129 +0100	reset: moving to HEAD
+a7ec444c92eafc6d4b91fea595b83c8b32a9e74b 53b11a9dfbc5941580364a78704a486ccb6bf507 Mathias <mathias.ouanna@cnsi-sd.fr> 1671620129 +0100	checkout: moving from mathias/Ticket#616553-Relances-auto to mathias/ticket#616435-CRM]-Permissions
+53b11a9dfbc5941580364a78704a486ccb6bf507 13b4399653f3fd876b906293c00aa3ad05a7775a Mathias <mathias.ouanna@cnsi-sd.fr> 1671620234 +0100	commit: Update app.php
+13b4399653f3fd876b906293c00aa3ad05a7775a a7ec444c92eafc6d4b91fea595b83c8b32a9e74b Mathias <mathias.ouanna@cnsi-sd.fr> 1671620244 +0100	checkout: moving from mathias/ticket#616435-CRM]-Permissions to mathias/Ticket#616553-Relances-auto
+a7ec444c92eafc6d4b91fea595b83c8b32a9e74b cad809343fd1d3cf24bd87575afbe46da4db6fa2 Mathias <mathias.ouanna@cnsi-sd.fr> 1671620312 +0100	commit (merge): Merge branch 'mathias/ticket#616435-CRM]-Permissions' into mathias/Ticket#616553-Relances-auto
+cad809343fd1d3cf24bd87575afbe46da4db6fa2 5e930409843c96c841ab6748e2129a45ec6a1fa3 Mathias <mathias.ouanna@cnsi-sd.fr> 1671631356 +0100	commit: page de creation de relance auto
+5e930409843c96c841ab6748e2129a45ec6a1fa3 06ad2763bb8d5738d95c7b013de29a5205e2709c Mathias <mathias.ouanna@cnsi-sd.fr> 1671631812 +0100	commit: add button update delete
+06ad2763bb8d5738d95c7b013de29a5205e2709c ca077ffc118ddc038b4c8a87937f9448c479ca03 Mathias <mathias.ouanna@cnsi-sd.fr> 1671637121 +0100	commit: edit et suppression
+ca077ffc118ddc038b4c8a87937f9448c479ca03 1427ad0517aa25f31211056a7eb8db46a7b9feb4 Mathias <mathias.ouanna@cnsi-sd.fr> 1671708410 +0100	commit: Association Thread x Revival | resolve bug creation relance | Permission
+1427ad0517aa25f31211056a7eb8db46a7b9feb4 cd47073e152b3009c98b054bf24b06fc577e1bf7 Mathias <mathias.ouanna@cnsi-sd.fr> 1671708444 +0100	merge master: Merge made by the 'recursive' strategy.
+cd47073e152b3009c98b054bf24b06fc577e1bf7 1427ad0517aa25f31211056a7eb8db46a7b9feb4 Mathias <mathias.ouanna@cnsi-sd.fr> 1671708459 +0100	reset: moving to 1427ad0517aa25f31211056a7eb8db46a7b9feb4
+1427ad0517aa25f31211056a7eb8db46a7b9feb4 7e515abc62a302345e2f9d18d93852ac21354ff7 Mathias <mathias.ouanna@cnsi-sd.fr> 1672043863 +0100	commit: module de relance | commentaire de la merge request
+7e515abc62a302345e2f9d18d93852ac21354ff7 73e792cee511bb7747c36b3a0d99153ba7f06fae Mathias <mathias.ouanna@cnsi-sd.fr> 1672053783 +0100	commit: script envoie d'un message
+73e792cee511bb7747c36b3a0d99153ba7f06fae 1229c24ed8c96d7fddc4c418963a243967d78744 Mathias <mathias.ouanna@cnsi-sd.fr> 1672065359 +0100	commit: mise a niveau save message in db
+1229c24ed8c96d7fddc4c418963a243967d78744 cae10f31a0b2264a13183ad637ffbc2286f7cc80 Mathias <mathias.ouanna@cnsi-sd.fr> 1672070775 +0100	commit: start queue
+cae10f31a0b2264a13183ad637ffbc2286f7cc80 51a5fac08cdafe1607d970e3e47ae5906f860cc9 Mathias <mathias.ouanna@cnsi-sd.fr> 1672157147 +0100	commit: factorisation send message
+51a5fac08cdafe1607d970e3e47ae5906f860cc9 51a5fac08cdafe1607d970e3e47ae5906f860cc9 Mathias <mathias.ouanna@cnsi-sd.fr> 1672216287 +0100	checkout: moving from mathias/Ticket#616553-Relances-auto to mathias/sendReplyOnTicket
+51a5fac08cdafe1607d970e3e47ae5906f860cc9 51a5fac08cdafe1607d970e3e47ae5906f860cc9 Mathias <mathias.ouanna@cnsi-sd.fr> 1672216308 +0100	checkout: moving from mathias/sendReplyOnTicket to mathias/Ticket#616553-Relances-auto
+51a5fac08cdafe1607d970e3e47ae5906f860cc9 8e602f05a71eca5885c50715926b85138d176ecf Mathias <mathias.ouanna@cnsi-sd.fr> 1672216342 +0100	commit: incrr cpt revival message count
+8e602f05a71eca5885c50715926b85138d176ecf 51a5fac08cdafe1607d970e3e47ae5906f860cc9 Mathias <mathias.ouanna@cnsi-sd.fr> 1672216352 +0100	checkout: moving from mathias/Ticket#616553-Relances-auto to mathias/sendReplyOnTicket
+51a5fac08cdafe1607d970e3e47ae5906f860cc9 51a5fac08cdafe1607d970e3e47ae5906f860cc9 Mathias <mathias.ouanna@cnsi-sd.fr> 1672216377 +0100	reset: moving to HEAD
+51a5fac08cdafe1607d970e3e47ae5906f860cc9 8e602f05a71eca5885c50715926b85138d176ecf Mathias <mathias.ouanna@cnsi-sd.fr> 1672216377 +0100	merge mathias/Ticket#616553-Relances-auto: Fast-forward
+8e602f05a71eca5885c50715926b85138d176ecf 24eeca33df2aff5692597b269934759a471c7c1d Mathias <mathias.ouanna@cnsi-sd.fr> 1672216458 +0100	checkout: moving from mathias/sendReplyOnTicket to 2-ticket-616274-crm-interface-tous-les-tickets
+24eeca33df2aff5692597b269934759a471c7c1d 8e602f05a71eca5885c50715926b85138d176ecf Mathias <mathias.ouanna@cnsi-sd.fr> 1672216485 +0100	checkout: moving from 2-ticket-616274-crm-interface-tous-les-tickets to mathias/sendReplyOnTicket
+8e602f05a71eca5885c50715926b85138d176ecf 00d40a9a3072812390584f70ca758ccff4c679e5 Mathias <mathias.ouanna@cnsi-sd.fr> 1672216875 +0100	commit (merge): Merge branch '2-ticket-616274-crm-interface-tous-les-tickets' into mathias/sendReplyOnTicket
+00d40a9a3072812390584f70ca758ccff4c679e5 322a58fa73fce90e0fe85f497eb02a0b88574a56 Mathias <mathias.ouanna@cnsi-sd.fr> 1672242948 +0100	commit: resolve conflit | Threads X Revival front&back | refacto fonction throwable
+322a58fa73fce90e0fe85f497eb02a0b88574a56 7887df977cb97bfe32d45f7f1dcd3eb177cb357a Mathias <mathias.ouanna@cnsi-sd.fr> 1672389075 +0100	commit: première modification
+7887df977cb97bfe32d45f7f1dcd3eb177cb357a 87345a194dab8d1ee0636c48fd3ec132683040dc Mathias <mathias.ouanna@cnsi-sd.fr> 1672408021 +0100	commit: lastest change
+87345a194dab8d1ee0636c48fd3ec132683040dc 87345a194dab8d1ee0636c48fd3ec132683040dc Mathias <mathias.ouanna@cnsi-sd.fr> 1672409440 +0100	checkout: moving from mathias/sendReplyOnTicket to mathias/autoReply
+87345a194dab8d1ee0636c48fd3ec132683040dc 9987aa2926717746f3af63808cda82dee8d9965b Mathias <mathias.ouanna@cnsi-sd.fr> 1672752739 +0100	commit: reponse automatique a l'import des messages
+9987aa2926717746f3af63808cda82dee8d9965b 9987aa2926717746f3af63808cda82dee8d9965b Mathias <mathias.ouanna@cnsi-sd.fr> 1672752784 +0100	checkout: moving from mathias/autoReply to mathias/DBSafeCommand
+9987aa2926717746f3af63808cda82dee8d9965b 980509abee2d43ee78dedb7f1f2b0da1c5d84aeb Mathias <mathias.ouanna@cnsi-sd.fr> 1672755060 +0100	commit: command db safe
+980509abee2d43ee78dedb7f1f2b0da1c5d84aeb e406f87c9b37fdef3636cc5acf7f9efdf86f7288 Mathias <mathias.ouanna@cnsi-sd.fr> 1672755241 +0100	commit: Update SafeDatabase.php
+e406f87c9b37fdef3636cc5acf7f9efdf86f7288 9987aa2926717746f3af63808cda82dee8d9965b Mathias <mathias.ouanna@cnsi-sd.fr> 1672755324 +0100	checkout: moving from mathias/DBSafeCommand to mathias/autoReply
+9987aa2926717746f3af63808cda82dee8d9965b 487203746ccb0dab92e783f24a9cc51a6ffa88ab Mathias <mathias.ouanna@cnsi-sd.fr> 1672755369 +0100	commit: Update AbstractMiraklImportMessage.php
+487203746ccb0dab92e783f24a9cc51a6ffa88ab e406f87c9b37fdef3636cc5acf7f9efdf86f7288 Mathias <mathias.ouanna@cnsi-sd.fr> 1672755376 +0100	checkout: moving from mathias/autoReply to mathias/DBSafeCommand
+e406f87c9b37fdef3636cc5acf7f9efdf86f7288 50f9db9103ba5b284f20f29dcde5d62a5887becf Mathias <mathias.ouanna@cnsi-sd.fr> 1672755386 +0100	merge mathias/autoReply: Merge made by the 'recursive' strategy.
+50f9db9103ba5b284f20f29dcde5d62a5887becf 487203746ccb0dab92e783f24a9cc51a6ffa88ab Mathias <mathias.ouanna@cnsi-sd.fr> 1672755573 +0100	checkout: moving from mathias/DBSafeCommand to mathias/autoReply
+487203746ccb0dab92e783f24a9cc51a6ffa88ab 7677de43e899835def7ae4698bc8b40508570201 Mathias <mathias.ouanna@cnsi-sd.fr> 1672755596 +0100	commit: update impor mirakl messaqge
+7677de43e899835def7ae4698bc8b40508570201 50f9db9103ba5b284f20f29dcde5d62a5887becf Mathias <mathias.ouanna@cnsi-sd.fr> 1672755631 +0100	checkout: moving from mathias/autoReply to mathias/DBSafeCommand
+50f9db9103ba5b284f20f29dcde5d62a5887becf db1886e4d1410fef73bb8d1d984ebd0f9eca0416 Mathias <mathias.ouanna@cnsi-sd.fr> 1672755637 +0100	merge mathias/autoReply: Merge made by the 'recursive' strategy.
+db1886e4d1410fef73bb8d1d984ebd0f9eca0416 ae97f1954161d0713f8d94b6f4787234254f18bd Mathias <mathias.ouanna@cnsi-sd.fr> 1672757363 +0100	commit: rename log file
+ae97f1954161d0713f8d94b6f4787234254f18bd d1c7881df8ae84eddae17af0c51075d0d3ed8557 Mathias <mathias.ouanna@cnsi-sd.fr> 1672757399 +0100	commit: rename log file 2
+d1c7881df8ae84eddae17af0c51075d0d3ed8557 7677de43e899835def7ae4698bc8b40508570201 Mathias <mathias.ouanna@cnsi-sd.fr> 1672757433 +0100	checkout: moving from mathias/DBSafeCommand to mathias/autoReply
+7677de43e899835def7ae4698bc8b40508570201 d1c7881df8ae84eddae17af0c51075d0d3ed8557 Mathias <mathias.ouanna@cnsi-sd.fr> 1672757441 +0100	checkout: moving from mathias/autoReply to mathias/DBSafeCommand
+d1c7881df8ae84eddae17af0c51075d0d3ed8557 87345a194dab8d1ee0636c48fd3ec132683040dc Mathias <mathias.ouanna@cnsi-sd.fr> 1672757452 +0100	checkout: moving from mathias/DBSafeCommand to mathias/sendReplyOnTicket
+87345a194dab8d1ee0636c48fd3ec132683040dc d1c7881df8ae84eddae17af0c51075d0d3ed8557 Mathias <mathias.ouanna@cnsi-sd.fr> 1672757476 +0100	merge mathias/DBSafeCommand: Fast-forward
+d1c7881df8ae84eddae17af0c51075d0d3ed8557 0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa Mathias <mathias.ouanna@cnsi-sd.fr> 1672757857 +0100	commit: Update AbstractMiraklImportMessage.php
+0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa 0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa Mathias <mathias.ouanna@cnsi-sd.fr> 1672761981 +0100	checkout: moving from mathias/sendReplyOnTicket to mathias/send_type
+0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa 49f53c15866b5e791c218ae4d200de6a58c088e8 Mathias <mathias.ouanna@cnsi-sd.fr> 1672761994 +0100	commit: start send type
+49f53c15866b5e791c218ae4d200de6a58c088e8 91685bac379ee2d88fd6cfbb3da74be52deb635b Mathias <mathias.ouanna@cnsi-sd.fr> 1673270352 +0100	commit: send reply sms type
+91685bac379ee2d88fd6cfbb3da74be52deb635b 6fdb73222189cda54585bc480cc8ac9a28a68950 Mathias <mathias.ouanna@cnsi-sd.fr> 1673278756 +0100	commit: send type
+6fdb73222189cda54585bc480cc8ac9a28a68950 6fdb73222189cda54585bc480cc8ac9a28a68950 Mathias <mathias.ouanna@cnsi-sd.fr> 1673278775 +0100	reset: moving to HEAD
+6fdb73222189cda54585bc480cc8ac9a28a68950 0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa Mathias <mathias.ouanna@cnsi-sd.fr> 1673278775 +0100	checkout: moving from mathias/send_type to mathias/sendReplyOnTicket
+0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa 6fdb73222189cda54585bc480cc8ac9a28a68950 Mathias <mathias.ouanna@cnsi-sd.fr> 1673278783 +0100	merge mathias/send_type: Fast-forward
+6fdb73222189cda54585bc480cc8ac9a28a68950 e5e51d9f843dcb68824f0c502cb6506c1e2c6719 Mathias <mathias.ouanna@cnsi-sd.fr> 1673280208 +0100	commit: Update AbstractMiraklImportMessage.php
+e5e51d9f843dcb68824f0c502cb6506c1e2c6719 6fdb73222189cda54585bc480cc8ac9a28a68950 Mathias <mathias.ouanna@cnsi-sd.fr> 1673340142 +0100	checkout: moving from mathias/sendReplyOnTicket to mathias/send_type
+6fdb73222189cda54585bc480cc8ac9a28a68950 6fdb73222189cda54585bc480cc8ac9a28a68950 Mathias <mathias.ouanna@cnsi-sd.fr> 1673340194 +0100	checkout: moving from mathias/send_type to mathias/Models-tags
+6fdb73222189cda54585bc480cc8ac9a28a68950 e5e51d9f843dcb68824f0c502cb6506c1e2c6719 Mathias <mathias.ouanna@cnsi-sd.fr> 1673340204 +0100	merge mathias/sendReplyOnTicket: Fast-forward
+e5e51d9f843dcb68824f0c502cb6506c1e2c6719 3a2192b13080cbfd3703a97d9e5b5a7fa4f61e6a Mathias <mathias.ouanna@cnsi-sd.fr> 1673453185 +0100	commit: set CRUD Tags and start Tags x interfaces ticket
+3a2192b13080cbfd3703a97d9e5b5a7fa4f61e6a 2f78e126de7262bc48ae336983dc296fa5148c37 Mathias <mathias.ouanna@cnsi-sd.fr> 1673885638 +0100	commit: tag review
+2f78e126de7262bc48ae336983dc296fa5148c37 2f78e126de7262bc48ae336983dc296fa5148c37 Mathias <mathias.ouanna@cnsi-sd.fr> 1674480970 +0100	reset: moving to HEAD
+2f78e126de7262bc48ae336983dc296fa5148c37 5f6e0f114a267410bb906929c698348a5e27733b Mathias <mathias.ouanna@cnsi-sd.fr> 1674480970 +0100	checkout: moving from mathias/Models-tags to testmerge
+5f6e0f114a267410bb906929c698348a5e27733b d4015fc39bebbdf461f7a9e773cf83a9027f29ec Mathias <mathias.ouanna@cnsi-sd.fr> 1674481212 +0100	commit (merge): Merge branch 'master' into testmerge
+d4015fc39bebbdf461f7a9e773cf83a9027f29ec 2f78e126de7262bc48ae336983dc296fa5148c37 Mathias <mathias.ouanna@cnsi-sd.fr> 1674481540 +0100	checkout: moving from testmerge to mathias/Models-tags
+2f78e126de7262bc48ae336983dc296fa5148c37 55b4b49a54056232762aa7e6aafb8f591358df82 Mathias <mathias.ouanna@cnsi-sd.fr> 1674486262 +0100	commit: view before changing fore auto reload page
+55b4b49a54056232762aa7e6aafb8f591358df82 24108139256cb903434520199c03a20cc2897b82 Mathias <mathias.ouanna@cnsi-sd.fr> 1674560424 +0100	commit: Interface ticket x Tags
+24108139256cb903434520199c03a20cc2897b82 0000000000000000000000000000000000000000 Mathias <mathias.ouanna@cnsi-sd.fr> 1674560466 +0100	Branch: renamed refs/heads/mathias/Models-tags to refs/heads/mathias/Tags
+0000000000000000000000000000000000000000 24108139256cb903434520199c03a20cc2897b82 Mathias <mathias.ouanna@cnsi-sd.fr> 1674560466 +0100	Branch: renamed refs/heads/mathias/Models-tags to refs/heads/mathias/Tags
+24108139256cb903434520199c03a20cc2897b82 24108139256cb903434520199c03a20cc2897b82 Mathias <mathias.ouanna@cnsi-sd.fr> 1674560486 +0100	reset: moving to HEAD
+24108139256cb903434520199c03a20cc2897b82 24108139256cb903434520199c03a20cc2897b82 Mathias <mathias.ouanna@cnsi-sd.fr> 1674560657 +0100	reset: moving to HEAD
+24108139256cb903434520199c03a20cc2897b82 607259f3329fea250e2a31320293a34ad5b294e1 Mathias <mathias.ouanna@cnsi-sd.fr> 1674568274 +0100	commit (merge): Merge branch 'testmerge' into mathias/Tags
+607259f3329fea250e2a31320293a34ad5b294e1 41283bca4ac0a4fa02eaa7b4d8a77edb65c853ee Mathias <mathias.ouanna@cnsi-sd.fr> 1674572940 +0100	commit: change to merge
+41283bca4ac0a4fa02eaa7b4d8a77edb65c853ee 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1675085060 +0100	commit: all gestion ticket
+2222826e5fa4884ad858498c73ecfda91378d844 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1675085413 +0100	checkout: moving from mathias/Tags to mathias/integration-api-cdiscount
+2222826e5fa4884ad858498c73ecfda91378d844 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1675767652 +0100	checkout: moving from mathias/integration-api-cdiscount to mathias/Tags
+2222826e5fa4884ad858498c73ecfda91378d844 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1675767664 +0100	checkout: moving from mathias/Tags to mathias/integration-api-cdiscount
+2222826e5fa4884ad858498c73ecfda91378d844 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1675767668 +0100	reset: moving to HEAD
+2222826e5fa4884ad858498c73ecfda91378d844 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1675767668 +0100	checkout: moving from mathias/integration-api-cdiscount to mathias/Tags
+2222826e5fa4884ad858498c73ecfda91378d844 da14641919e2fac29e92f78689ed627badf42fca Mathias <mathias.ouanna@cnsi-sd.fr> 1675769542 +0100	commit: mise en place des permissions sur les tags
+da14641919e2fac29e92f78689ed627badf42fca eef46861aff3b755285a5acf194370c5cc239f08 Mathias <mathias.ouanna@cnsi-sd.fr> 1675769610 +0100	commit: rename table builder request name
+eef46861aff3b755285a5acf194370c5cc239f08 549da373cffd71d7492c86857bb8ff8e9ff9cc88 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770156 +0100	commit: remplacement de l'enregistrement d'une liste de cannaux sur un tag
+549da373cffd71d7492c86857bb8ff8e9ff9cc88 8c21f2e9115877a7827d321ea396821003bae8cb Mathias <mathias.ouanna@cnsi-sd.fr> 1675770324 +0100	commit: rename function saveLineinDB to newTagLigne
+8c21f2e9115877a7827d321ea396821003bae8cb ae0596175937eb86916b0dfff6a8a4f5908c6b32 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770542 +0100	commit: delete todo line
+ae0596175937eb86916b0dfff6a8a4f5908c6b32 cc23e81df218a17989214191bbbc0a9d9b009451 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770655 +0100	commit: add deleted_at
+cc23e81df218a17989214191bbbc0a9d9b009451 8b9ec61355d7846582cbc33a2e2e252240b17026 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770914 +0100	commit: aucune utilité du code softDelete() donc remplacer par delete()
+8b9ec61355d7846582cbc33a2e2e252240b17026 cc23e81df218a17989214191bbbc0a9d9b009451 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770927 +0100	reset: moving to cc23e81df218a17989214191bbbc0a9d9b009451
+cc23e81df218a17989214191bbbc0a9d9b009451 729fddadc0df8531aff04b09ef0d65d73a27ac83 Mathias <mathias.ouanna@cnsi-sd.fr> 1675770934 +0100	commit: aucune utilité du code softDelete() donc remplacer par delete()
+729fddadc0df8531aff04b09ef0d65d73a27ac83 8887e8085c52953f625d07183d41f57fededae9c Mathias <mathias.ouanna@cnsi-sd.fr> 1675775548 +0100	commit: modification des doublons de code
+8887e8085c52953f625d07183d41f57fededae9c e83c1ae733e98265ca8c2e9ba43ea688e3a72e95 Mathias <mathias.ouanna@cnsi-sd.fr> 1675785757 +0100	commit: limit size input color in db
+e83c1ae733e98265ca8c2e9ba43ea688e3a72e95 e92be2b3c5f3c6d11551913146ca7881cece77a8 Mathias <mathias.ouanna@cnsi-sd.fr> 1675785811 +0100	commit: suppression du comment
+e92be2b3c5f3c6d11551913146ca7881cece77a8 11c7459494a367f0af2cd9ca8443267a8c19d20c Mathias <mathias.ouanna@cnsi-sd.fr> 1675786006 +0100	commit: correction faute de frappe
+11c7459494a367f0af2cd9ca8443267a8c19d20c 9ada2254770ab7a25dec423a9e5324bfbcee58b2 Mathias <mathias.ouanna@cnsi-sd.fr> 1675786042 +0100	commit: camel table name
+9ada2254770ab7a25dec423a9e5324bfbcee58b2 c8981666a15dfd52b33ffe0b1068e100dbf28945 Mathias <mathias.ouanna@cnsi-sd.fr> 1675845129 +0100	commit: correction faute de frappe
+c8981666a15dfd52b33ffe0b1068e100dbf28945 efbd6041df2367628ecaecfd86cd92ab2d5ac2b8 Mathias <mathias.ouanna@cnsi-sd.fr> 1675845412 +0100	commit: mise au singulier du model
+efbd6041df2367628ecaecfd86cd92ab2d5ac2b8 efbd6041df2367628ecaecfd86cd92ab2d5ac2b8 Mathias <mathias.ouanna@cnsi-sd.fr> 1675863783 +0100	reset: moving to HEAD
+efbd6041df2367628ecaecfd86cd92ab2d5ac2b8 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1675863783 +0100	checkout: moving from mathias/Tags to mathias/integration-api-cdiscount
+2222826e5fa4884ad858498c73ecfda91378d844 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1676988237 +0100	reset: moving to HEAD
+2222826e5fa4884ad858498c73ecfda91378d844 c71f98c9c5313e07d02d2c073432302be37c4039 Mathias <mathias.ouanna@cnsi-sd.fr> 1676988237 +0100	checkout: moving from mathias/integration-api-cdiscount to Ticket#616705-CRM-Fnac-Send-Message
+c71f98c9c5313e07d02d2c073432302be37c4039 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1676988322 +0100	checkout: moving from Ticket#616705-CRM-Fnac-Send-Message to mathias/integration-api-cdiscount
+2222826e5fa4884ad858498c73ecfda91378d844 2222826e5fa4884ad858498c73ecfda91378d844 Mathias <mathias.ouanna@cnsi-sd.fr> 1676989960 +0100	reset: moving to HEAD
+2222826e5fa4884ad858498c73ecfda91378d844 37ad31117a4135d2fa04c8fa6c1b3f38fa644e81 Mathias <mathias.ouanna@cnsi-sd.fr> 1676990211 +0100	commit (merge): Merge branch 'Ticket#616705-CRM-Fnac-Send-Message' into mathias/integration-api-cdiscount
+37ad31117a4135d2fa04c8fa6c1b3f38fa644e81 0278892fd6fb15aa07ba0b9b359be7d57d1e9e3e Mathias <mathias.ouanna@cnsi-sd.fr> 1677056917 +0100	commit: add cdiscount import message v1
+0278892fd6fb15aa07ba0b9b359be7d57d1e9e3e de506b6a91254659c95bd9010330d9c8cf3df2c7 Mathias <mathias.ouanna@cnsi-sd.fr> 1677057871 +0100	commit: add cdiscount import message v1
+de506b6a91254659c95bd9010330d9c8cf3df2c7 658551874e553dc17448ace265ef5ebe5b47475e Mathias <mathias.ouanna@cnsi-sd.fr> 1677058014 +0100	commit: Update composer.json
+658551874e553dc17448ace265ef5ebe5b47475e 03ccd3e1d46de71bf001cc7fedb9780bc219abae Mathias <mathias.ouanna@cnsi-sd.fr> 1677058870 +0100	commit: update composer.json
+03ccd3e1d46de71bf001cc7fedb9780bc219abae 135eaa87b252a1c35ac10a61e32b0a6dee98438a Mathias <mathias.ouanna@cnsi-sd.fr> 1677060249 +0100	checkout: moving from mathias/integration-api-cdiscount to master
+135eaa87b252a1c35ac10a61e32b0a6dee98438a 03ccd3e1d46de71bf001cc7fedb9780bc219abae Mathias <mathias.ouanna@cnsi-sd.fr> 1677060253 +0100	checkout: moving from master to mathias/integration-api-cdiscount
+03ccd3e1d46de71bf001cc7fedb9780bc219abae a69596edbfa62f6908af157d79e1629d16f87d7c Mathias <mathias.ouanna@cnsi-sd.fr> 1677060337 +0100	commit (merge): Merge branch 'master' into mathias/integration-api-cdiscount
+a69596edbfa62f6908af157d79e1629d16f87d7c df4a070b31d68737607579e2b8d7c191eca0b16b Mathias <mathias.ouanna@cnsi-sd.fr> 1677067529 +0100	commit: all review to merge request
+df4a070b31d68737607579e2b8d7c191eca0b16b df4a070b31d68737607579e2b8d7c191eca0b16b Mathias <mathias.ouanna@cnsi-sd.fr> 1677081335 +0100	checkout: moving from mathias/integration-api-cdiscount to mathias/alertTicket
+df4a070b31d68737607579e2b8d7c191eca0b16b 4b87eca8a085624b3076a514763a08126a209830 Mathias <mathias.ouanna@cnsi-sd.fr> 1677081702 +0100	commit: start ticket alert
+4b87eca8a085624b3076a514763a08126a209830 e32add9f3e946673dc9ba87d002db6ab7afd70f4 Mathias <mathias.ouanna@cnsi-sd.fr> 1677081757 +0100	pull --progress origin: Fast-forward
+e32add9f3e946673dc9ba87d002db6ab7afd70f4 55fcb1d4ffa6df1b65625b8816e58f266390884a Mathias <mathias.ouanna@cnsi-sd.fr> 1677572209 +0100	commit: alerte Ticket V1 + modiff tag
+55fcb1d4ffa6df1b65625b8816e58f266390884a 1cd202b3277eda8e77786cfbccceb9857f2c24e9 Mathias <mathias.ouanna@cnsi-sd.fr> 1677572292 +0100	commit: modiff gitignore
+1cd202b3277eda8e77786cfbccceb9857f2c24e9 4a05c1e1d16c5cb579df7ce8f1e3739b9da2df21 Mathias <mathias.ouanna@cnsi-sd.fr> 1677572388 +0100	commit (merge): Merge branch 'master' into mathias/alertTicket
+4a05c1e1d16c5cb579df7ce8f1e3739b9da2df21 ae30500d96d8bff30be164e5c989018ae75b5fc1 Mathias <mathias.ouanna@cnsi-sd.fr> 1677573983 +0100	commit: all alerte v2
+ae30500d96d8bff30be164e5c989018ae75b5fc1 f7cd2a4aa7dda5bf78f30e5bec845ae6547d5b2a Mathias <mathias.ouanna@cnsi-sd.fr> 1678092110 +0100	commit: helper CSVGenerator to Package
+f7cd2a4aa7dda5bf78f30e5bec845ae6547d5b2a f7cd2a4aa7dda5bf78f30e5bec845ae6547d5b2a Mathias <mathias.ouanna@cnsi-sd.fr> 1678092125 +0100	reset: moving to HEAD
+f7cd2a4aa7dda5bf78f30e5bec845ae6547d5b2a ef57bd5faac12f0a5812480139e06e9df810349f Mathias <mathias.ouanna@cnsi-sd.fr> 1678093582 +0100	commit (merge): Merge branch 'master' into mathias/alertTicket
+ef57bd5faac12f0a5812480139e06e9df810349f 275d600b8c329b7d3c105d352d4a85b2dd0459ee Mathias <mathias.ouanna@cnsi-sd.fr> 1678093608 +0100	commit: export tag on parts file
+275d600b8c329b7d3c105d352d4a85b2dd0459ee 67d28ef0eb3e0284dfdb05c776701a9962cc7553 Mathias <mathias.ouanna@cnsi-sd.fr> 1678094008 +0100	checkout: moving from mathias/alertTicket to master
+67d28ef0eb3e0284dfdb05c776701a9962cc7553 e60e9d91faff49c366592e9653a3fbfeb8298269 Mathias <mathias.ouanna@cnsi-sd.fr> 1678094011 +0100	pull: Fast-forward
+e60e9d91faff49c366592e9653a3fbfeb8298269 e60e9d91faff49c366592e9653a3fbfeb8298269 Mathias <mathias.ouanna@cnsi-sd.fr> 1678094035 +0100	checkout: moving from master to mathias/amazon
+e60e9d91faff49c366592e9653a3fbfeb8298269 37723ef067d9ec42e4eba1aded63aef2e7668dca Mathias <mathias.ouanna@cnsi-sd.fr> 1678094106 +0100	commit: WIP : AmazonImportMessage
+37723ef067d9ec42e4eba1aded63aef2e7668dca 8f8182a6c0bb353453ebd8e902133ad69964f638 Mathias <mathias.ouanna@cnsi-sd.fr> 1678095764 +0100	commit: update composer, add amazon.fr in channelEnum, solve error phpstan in AmazonImportMessage
+8f8182a6c0bb353453ebd8e902133ad69964f638 840c0e25103842bb0f64a80baf31e7ecb64dba10 Mathias <mathias.ouanna@cnsi-sd.fr> 1678111141 +0100	commit: update AmazonimportMessage and composer.json
+840c0e25103842bb0f64a80baf31e7ecb64dba10 925282cf88b8af31042ea1d502fb1fb3a514dcb0 Mathias <mathias.ouanna@cnsi-sd.fr> 1678119052 +0100	commit: import message amazon v1
+925282cf88b8af31042ea1d502fb1fb3a514dcb0 dae5f074338d0a2f90b3c7f78db1cf49788db332 Mathias <mathias.ouanna@cnsi-sd.fr> 1678189230 +0100	commit: import amazon message
+dae5f074338d0a2f90b3c7f78db1cf49788db332 b825b7d419fbbed37c3466325ae6ab37b94c18f5 Mathias <mathias.ouanna@cnsi-sd.fr> 1678203702 +0100	commit: all Import Amazon message
+b825b7d419fbbed37c3466325ae6ab37b94c18f5 5efe93ae9d56cdfdea88c511466799862a525c8d Mathias <mathias.ouanna@cnsi-sd.fr> 1678204984 +0100	commit: send Message Amazon
+5efe93ae9d56cdfdea88c511466799862a525c8d 660ab7e709f5ce5662515311911990445200d4ea Mathias <mathias.ouanna@cnsi-sd.fr> 1678695452 +0100	pull --progress origin: Fast-forward
+660ab7e709f5ce5662515311911990445200d4ea 236c0ded4d016f39ad35f273cff445b8bbcbe105 Mathias <mathias.ouanna@cnsi-sd.fr> 1678717459 +0100	commit: modiff AmazonImportMessage + finish amazon send message + modiff .env.example
+236c0ded4d016f39ad35f273cff445b8bbcbe105 236c0ded4d016f39ad35f273cff445b8bbcbe105 Mathias <mathias.ouanna@cnsi-sd.fr> 1678717717 +0100	checkout: moving from mathias/amazon to mathias/defaultAnswersXChannels
+236c0ded4d016f39ad35f273cff445b8bbcbe105 ed35a29aa7b974586800c594411f47c7243f1cc9 Mathias <mathias.ouanna@cnsi-sd.fr> 1678718930 +0100	commit: can send empty select channel to select all channel
+ed35a29aa7b974586800c594411f47c7243f1cc9 002828ea0cbfa95359665526b05ac095be431e39 Mathias <mathias.ouanna@cnsi-sd.fr> 1678719890 +0100	commit: can select all channel if select is empty for tags
+002828ea0cbfa95359665526b05ac095be431e39 14099e58824eaa36fd645c924ca874c9db610d1d Mathias <mathias.ouanna@cnsi-sd.fr> 1678720586 +0100	commit: add channel view on tag list
+14099e58824eaa36fd645c924ca874c9db610d1d 236c0ded4d016f39ad35f273cff445b8bbcbe105 Mathias <mathias.ouanna@cnsi-sd.fr> 1678720951 +0100	checkout: moving from mathias/defaultAnswersXChannels to mathias/amazon
+236c0ded4d016f39ad35f273cff445b8bbcbe105 ff5c488e2c86829862ffb40c2254f8791fb19878 Mathias <mathias.ouanna@cnsi-sd.fr> 1678720958 +0100	merge master: Merge made by the 'recursive' strategy.
+ff5c488e2c86829862ffb40c2254f8791fb19878 a29075a72a63f6c89f336f9b6becaedce959683e Mathias <mathias.ouanna@cnsi-sd.fr> 1678721073 +0100	commit: delete Mail.blade + modif amazonImportMessage
+a29075a72a63f6c89f336f9b6becaedce959683e 14099e58824eaa36fd645c924ca874c9db610d1d Mathias <mathias.ouanna@cnsi-sd.fr> 1678721299 +0100	checkout: moving from mathias/amazon to mathias/defaultAnswersXChannels
+14099e58824eaa36fd645c924ca874c9db610d1d 94eca96e8cdf4ef5644ccb63e83e53f2a2632b29 Mathias <mathias.ouanna@cnsi-sd.fr> 1678721306 +0100	merge master: Merge made by the 'recursive' strategy.
+94eca96e8cdf4ef5644ccb63e83e53f2a2632b29 7da1a27eb73d5cae6b3b372d4169c938f0138b12 Mathias <mathias.ouanna@cnsi-sd.fr> 1678721526 +0100	checkout: moving from mathias/defaultAnswersXChannels to master
+7da1a27eb73d5cae6b3b372d4169c938f0138b12 7da1a27eb73d5cae6b3b372d4169c938f0138b12 Mathias <mathias.ouanna@cnsi-sd.fr> 1678721577 +0100	checkout: moving from master to mathias/DefaultAnswerTexteArea
+7da1a27eb73d5cae6b3b372d4169c938f0138b12 1a6ca044ac2b118bc48f401a951010b19cc367e5 Mathias <mathias.ouanna@cnsi-sd.fr> 1678723059 +0100	commit: auto resize texteArea
+1a6ca044ac2b118bc48f401a951010b19cc367e5 7da1a27eb73d5cae6b3b372d4169c938f0138b12 Mathias <mathias.ouanna@cnsi-sd.fr> 1678783236 +0100	checkout: moving from mathias/DefaultAnswerTexteArea to master
+7da1a27eb73d5cae6b3b372d4169c938f0138b12 53430b04526320fc0df103437578c5dadef3cfd6 Mathias <mathias.ouanna@cnsi-sd.fr> 1678783239 +0100	pull --progress origin: Fast-forward
+53430b04526320fc0df103437578c5dadef3cfd6 53430b04526320fc0df103437578c5dadef3cfd6 Mathias <mathias.ouanna@cnsi-sd.fr> 1678783290 +0100	checkout: moving from master to mathias/addTagOnThread
+53430b04526320fc0df103437578c5dadef3cfd6 53430b04526320fc0df103437578c5dadef3cfd6 Mathias <mathias.ouanna@cnsi-sd.fr> 1678787661 +0100	reset: moving to HEAD
+53430b04526320fc0df103437578c5dadef3cfd6 1dcabed7b72ae078e148061ee0d8e4f44ab8175f Mathias <mathias.ouanna@cnsi-sd.fr> 1678787661 +0100	merge master: Fast-forward
+1dcabed7b72ae078e148061ee0d8e4f44ab8175f b7576469efac4320bb9af8e0b1a09f6fca5f8dd4 Mathias <mathias.ouanna@cnsi-sd.fr> 1678791965 +0100	commit: check tagList for bot auto add Tag on thread + refacto on ticketController
+b7576469efac4320bb9af8e0b1a09f6fca5f8dd4 b7576469efac4320bb9af8e0b1a09f6fca5f8dd4 Mathias <mathias.ouanna@cnsi-sd.fr> 1678792149 +0100	reset: moving to HEAD
+b7576469efac4320bb9af8e0b1a09f6fca5f8dd4 1a6ca044ac2b118bc48f401a951010b19cc367e5 Mathias <mathias.ouanna@cnsi-sd.fr> 1678792149 +0100	checkout: moving from mathias/addTagOnThread to mathias/DefaultAnswerTexteArea
+1a6ca044ac2b118bc48f401a951010b19cc367e5 fae46c68c19d503ce109600a655130c15f04f2fb Mathias <mathias.ouanna@cnsi-sd.fr> 1678792190 +0100	commit (merge): Merge branch 'master' into mathias/DefaultAnswerTexteArea
+fae46c68c19d503ce109600a655130c15f04f2fb b7576469efac4320bb9af8e0b1a09f6fca5f8dd4 Mathias <mathias.ouanna@cnsi-sd.fr> 1678792238 +0100	checkout: moving from mathias/DefaultAnswerTexteArea to mathias/addTagOnThread
+b7576469efac4320bb9af8e0b1a09f6fca5f8dd4 d1841dc1abd86a2cb83805f3b4b53555a66412d3 Mathias <mathias.ouanna@cnsi-sd.fr> 1678793958 +0100	commit: modiff on tag.css + review bug on tag.php
+d1841dc1abd86a2cb83805f3b4b53555a66412d3 d1841dc1abd86a2cb83805f3b4b53555a66412d3 Mathias <mathias.ouanna@cnsi-sd.fr> 1678800694 +0100	reset: moving to HEAD
+d1841dc1abd86a2cb83805f3b4b53555a66412d3 1dcabed7b72ae078e148061ee0d8e4f44ab8175f Mathias <mathias.ouanna@cnsi-sd.fr> 1678800694 +0100	checkout: moving from mathias/addTagOnThread to master
+1dcabed7b72ae078e148061ee0d8e4f44ab8175f a17318b57c7248f1896282a7f31b16efe85189cd Mathias <mathias.ouanna@cnsi-sd.fr> 1678800700 +0100	pull --progress origin: Fast-forward
+a17318b57c7248f1896282a7f31b16efe85189cd a17318b57c7248f1896282a7f31b16efe85189cd Mathias <mathias.ouanna@cnsi-sd.fr> 1678800775 +0100	checkout: moving from master to mathias/infoRetourAmazon
+a17318b57c7248f1896282a7f31b16efe85189cd fae46c68c19d503ce109600a655130c15f04f2fb Mathias <mathias.ouanna@cnsi-sd.fr> 1678801034 +0100	checkout: moving from mathias/infoRetourAmazon to mathias/DefaultAnswerTexteArea
+fae46c68c19d503ce109600a655130c15f04f2fb 94eca96e8cdf4ef5644ccb63e83e53f2a2632b29 Mathias <mathias.ouanna@cnsi-sd.fr> 1678801036 +0100	checkout: moving from mathias/DefaultAnswerTexteArea to mathias/defaultAnswersXChannels
+94eca96e8cdf4ef5644ccb63e83e53f2a2632b29 69e398096ad8663e90d2337c0873405ddebcc017 Mathias <mathias.ouanna@cnsi-sd.fr> 1678804267 +0100	commit: optimisation selct tag X defaultAnswer
+69e398096ad8663e90d2337c0873405ddebcc017 a17318b57c7248f1896282a7f31b16efe85189cd Mathias <mathias.ouanna@cnsi-sd.fr> 1678804380 +0100	checkout: moving from mathias/defaultAnswersXChannels to mathias/infoRetourAmazon
+a17318b57c7248f1896282a7f31b16efe85189cd d0d95269138a1e4a1b87e3132ca0fa86b0644729 Mathias <mathias.ouanna@cnsi-sd.fr> 1678806892 +0100	merge mathias/addTagOnThread: Merge made by the 'recursive' strategy.
+d0d95269138a1e4a1b87e3132ca0fa86b0644729 1dd63bbf8350877bc23adfa45033f85ee86c8e0b Mathias <mathias.ouanna@cnsi-sd.fr> 1678810023 +0100	commit: WIP: add tag to ticket retour commande amazon
+1dd63bbf8350877bc23adfa45033f85ee86c8e0b d1841dc1abd86a2cb83805f3b4b53555a66412d3 Mathias <mathias.ouanna@cnsi-sd.fr> 1678868710 +0100	checkout: moving from mathias/infoRetourAmazon to mathias/addTagOnThread
+d1841dc1abd86a2cb83805f3b4b53555a66412d3 d1841dc1abd86a2cb83805f3b4b53555a66412d3 Mathias <mathias.ouanna@cnsi-sd.fr> 1678868720 +0100	reset: moving to HEAD
+d1841dc1abd86a2cb83805f3b4b53555a66412d3 daef774459597406a9b89b888dc2cebed22ff0f6 Mathias <mathias.ouanna@cnsi-sd.fr> 1678868720 +0100	merge master: Merge made by the 'recursive' strategy.
+daef774459597406a9b89b888dc2cebed22ff0f6 419e804cc020486d7a2dcf51fbbe427eeeb955fa Mathias <mathias.ouanna@cnsi-sd.fr> 1678868945 +0100	commit: use check taglist on thread for bot
+419e804cc020486d7a2dcf51fbbe427eeeb955fa 68d096e39bb006bb58e134f55f497a7bcd4bd9ba Mathias <mathias.ouanna@cnsi-sd.fr> 1678869404 +0100	commit: change find to findOrFail
+68d096e39bb006bb58e134f55f497a7bcd4bd9ba 1dd63bbf8350877bc23adfa45033f85ee86c8e0b Mathias <mathias.ouanna@cnsi-sd.fr> 1678870002 +0100	checkout: moving from mathias/addTagOnThread to mathias/infoRetourAmazon
+1dd63bbf8350877bc23adfa45033f85ee86c8e0b e3dbf1591eccf0170a64df6267cb55db3378fc9b Mathias <mathias.ouanna@cnsi-sd.fr> 1678870109 +0100	merge mathias/addTagOnThread: Merge made by the 'recursive' strategy.
+e3dbf1591eccf0170a64df6267cb55db3378fc9b 69e398096ad8663e90d2337c0873405ddebcc017 Mathias <mathias.ouanna@cnsi-sd.fr> 1678870387 +0100	checkout: moving from mathias/infoRetourAmazon to mathias/defaultAnswersXChannels
+69e398096ad8663e90d2337c0873405ddebcc017 e3dbf1591eccf0170a64df6267cb55db3378fc9b Mathias <mathias.ouanna@cnsi-sd.fr> 1678870526 +0100	checkout: moving from mathias/defaultAnswersXChannels to mathias/infoRetourAmazon
+e3dbf1591eccf0170a64df6267cb55db3378fc9b e222bd072b2f527b55f544389e504cdc9db019db Mathias <mathias.ouanna@cnsi-sd.fr> 1678895478 +0100	commit: make function to add comment with import amazon message
+e222bd072b2f527b55f544389e504cdc9db019db b17ec8402cf38b5a1401e7fa22e1e5290a27141e Mathias <mathias.ouanna@cnsi-sd.fr> 1678895856 +0100	commit (merge): Merge branch 'master' into mathias/infoRetourAmazon
+b17ec8402cf38b5a1401e7fa22e1e5290a27141e c87ce9e25a2cdb13c455075ee5d5dfad999e9f65 Mathias <mathias.ouanna@cnsi-sd.fr> 1678895973 +0100	checkout: moving from mathias/infoRetourAmazon to master
+c87ce9e25a2cdb13c455075ee5d5dfad999e9f65 c87ce9e25a2cdb13c455075ee5d5dfad999e9f65 Mathias <mathias.ouanna@cnsi-sd.fr> 1678896001 +0100	checkout: moving from master to mathias/ClickAndCall
+c87ce9e25a2cdb13c455075ee5d5dfad999e9f65 68d096e39bb006bb58e134f55f497a7bcd4bd9ba Mathias <mathias.ouanna@cnsi-sd.fr> 1678896309 +0100	checkout: moving from mathias/ClickAndCall to mathias/addTagOnThread
+68d096e39bb006bb58e134f55f497a7bcd4bd9ba 4f60f518b606ab5da4a377edae9c2bc26fc152dc Mathias <mathias.ouanna@cnsi-sd.fr> 1678896392 +0100	commit: change thread property type
+4f60f518b606ab5da4a377edae9c2bc26fc152dc 4f60f518b606ab5da4a377edae9c2bc26fc152dc Mathias <mathias.ouanna@cnsi-sd.fr> 1678896546 +0100	reset: moving to HEAD
+4f60f518b606ab5da4a377edae9c2bc26fc152dc e11e06877d8789d5c9bbf1a56a9cfa0d24daade7 Mathias <mathias.ouanna@cnsi-sd.fr> 1678896586 +0100	commit (merge): Merge branch 'master' into mathias/addTagOnThread
+e11e06877d8789d5c9bbf1a56a9cfa0d24daade7 b17ec8402cf38b5a1401e7fa22e1e5290a27141e Mathias <mathias.ouanna@cnsi-sd.fr> 1678896767 +0100	checkout: moving from mathias/addTagOnThread to mathias/infoRetourAmazon
+b17ec8402cf38b5a1401e7fa22e1e5290a27141e c87ce9e25a2cdb13c455075ee5d5dfad999e9f65 Mathias <mathias.ouanna@cnsi-sd.fr> 1678896799 +0100	checkout: moving from mathias/infoRetourAmazon to master
+c87ce9e25a2cdb13c455075ee5d5dfad999e9f65 123c836dc31074813b0ad3544ccaec02b14aa0c4 Mathias <mathias.ouanna@cnsi-sd.fr> 1678896859 +0100	pull --progress origin: Fast-forward
+123c836dc31074813b0ad3544ccaec02b14aa0c4 b17ec8402cf38b5a1401e7fa22e1e5290a27141e Mathias <mathias.ouanna@cnsi-sd.fr> 1678896863 +0100	checkout: moving from master to mathias/infoRetourAmazon
+b17ec8402cf38b5a1401e7fa22e1e5290a27141e 9bfeda9ff0bb7573b10b0af618f08fe0f68b5404 Mathias <mathias.ouanna@cnsi-sd.fr> 1678896891 +0100	commit (merge): Merge branch 'master' into mathias/infoRetourAmazon
+9bfeda9ff0bb7573b10b0af618f08fe0f68b5404 d00ecb675ddb80d50114c2a7455140674f978794 Mathias <mathias.ouanna@cnsi-sd.fr> 1678897031 +0100	commit: add down migration
+d00ecb675ddb80d50114c2a7455140674f978794 a0f3426e85926945d85b869081e5126684f50b00 Mathias <mathias.ouanna@cnsi-sd.fr> 1678897213 +0100	commit: delete commentaire
+a0f3426e85926945d85b869081e5126684f50b00 ebdce6fa368cf83cf4527f47736d3cd9bf963e05 Mathias <mathias.ouanna@cnsi-sd.fr> 1678897640 +0100	commit: add verif to add comment + beautify comment
+ebdce6fa368cf83cf4527f47736d3cd9bf963e05 b0351e24f1e44f1ab666219dca4a5aff9897890f Mathias <mathias.ouanna@cnsi-sd.fr> 1678897693 +0100	commit: delete date on comment
+b0351e24f1e44f1ab666219dca4a5aff9897890f ed2cf25a900fc3a867d4f041cf1c62731f258884 Mathias <mathias.ouanna@cnsi-sd.fr> 1679302746 +0100	commit (merge): Merge branch 'mathias/infoRetourAmazon' of ssh://git.cnsi-sd.net:2222/RoyalPriceTeam/crm into mathias/infoRetourAmazon
+ed2cf25a900fc3a867d4f041cf1c62731f258884 08af399fd323d0398cccd559ac76fe825f7c546d Mathias <mathias.ouanna@cnsi-sd.fr> 1679318064 +0100	pull --progress origin: Fast-forward
+08af399fd323d0398cccd559ac76fe825f7c546d c176a0ad1a275c866fed779886a5edd0c4e069e6 Mathias <mathias.ouanna@cnsi-sd.fr> 1679318281 +0100	commit: delete migration + delete fonction on models thread
+c176a0ad1a275c866fed779886a5edd0c4e069e6 9e2380c66e963d0de94116e05e93fe66208775de Mathias <mathias.ouanna@cnsi-sd.fr> 1679318319 +0100	commit: Update Thread.php
+9e2380c66e963d0de94116e05e93fe66208775de b145c16e3dd1ed12722acacf6dfca5a5c1339488 Mathias <mathias.ouanna@cnsi-sd.fr> 1679322375 +0100	merge origin/Ticket#617202-CRM-Refacto-import-messages-email2: Merge made by the 'recursive' strategy.
+b145c16e3dd1ed12722acacf6dfca5a5c1339488 b145c16e3dd1ed12722acacf6dfca5a5c1339488 Mathias <mathias.ouanna@cnsi-sd.fr> 1679326950 +0100	reset: moving to HEAD
+b145c16e3dd1ed12722acacf6dfca5a5c1339488 99587afde34e55304e96f91ab23b3baa71816e36 Mathias <mathias.ouanna@cnsi-sd.fr> 1679326950 +0100	merge origin/Ticket#617202-CRM-Refacto-import-messages-email2: Merge made by the 'recursive' strategy.
+99587afde34e55304e96f91ab23b3baa71816e36 ee62f508f0a5c125e1261abb2fbf3dfda9f6953a Mathias <mathias.ouanna@cnsi-sd.fr> 1679327444 +0100	commit: chang Stringer helpers name to Tools
+ee62f508f0a5c125e1261abb2fbf3dfda9f6953a 5fb94f581ee1a7a02269dfb389bd17c6ac2a48c5 Mathias <mathias.ouanna@cnsi-sd.fr> 1679327485 +0100	commit: refacto import amazon message
+5fb94f581ee1a7a02269dfb389bd17c6ac2a48c5 6d43abe3557301d308f77eb0ae265f4253a72f22 Mathias <mathias.ouanna@cnsi-sd.fr> 1679327743 +0100	commit (merge): Merge remote-tracking branch 'origin/Ticket#617202-CRM-Refacto-import-messages-email2' into mathias/infoRetourAmazon
+6d43abe3557301d308f77eb0ae265f4253a72f22 71d75393763b5fc3cdbcdc9b32dcad27ef1b7e10 Mathias <mathias.ouanna@cnsi-sd.fr> 1679327895 +0100	commit: resolve git build failed + add PHPDocs on abstractImportMailMessages
+71d75393763b5fc3cdbcdc9b32dcad27ef1b7e10 363f0e4e85fce097bb09c15d18b94a455140ed6b Mathias <mathias.ouanna@cnsi-sd.fr> 1679328218 +0100	commit: Update AmazonImportMessage.php
+363f0e4e85fce097bb09c15d18b94a455140ed6b 1fb2f7cf9b04f1d7b61fb85091f22208310bc248 Mathias <mathias.ouanna@cnsi-sd.fr> 1679390521 +0100	pull --progress origin: Fast-forward
+1fb2f7cf9b04f1d7b61fb85091f22208310bc248 3301f18733892f261ad1805bdf12ab64027e57f7 Mathias <mathias.ouanna@cnsi-sd.fr> 1679391045 +0100	commit: update refacto
+3301f18733892f261ad1805bdf12ab64027e57f7 982edbd055e07be975a858073a61c1cad345b71a Mathias <mathias.ouanna@cnsi-sd.fr> 1679391612 +0100	pull --progress origin: Fast-forward
+982edbd055e07be975a858073a61c1cad345b71a aa66b91ae9a97eb0e8e5b044e304fe029fef4109 Mathias <mathias.ouanna@cnsi-sd.fr> 1679394852 +0100	pull --progress origin: Fast-forward
+aa66b91ae9a97eb0e8e5b044e304fe029fef4109 fd0a439610f36abd7e10d99da5f6a08a7de85144 Mathias <mathias.ouanna@cnsi-sd.fr> 1679395066 +0100	commit: update bug migration
+fd0a439610f36abd7e10d99da5f6a08a7de85144 48e84192b4e4e1fd77d8607697f7fa406aeefed0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679395077 +0100	checkout: moving from mathias/infoRetourAmazon to master
+48e84192b4e4e1fd77d8607697f7fa406aeefed0 48e84192b4e4e1fd77d8607697f7fa406aeefed0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679395096 +0100	checkout: moving from master to mathias/AddLock
+48e84192b4e4e1fd77d8607697f7fa406aeefed0 48e84192b4e4e1fd77d8607697f7fa406aeefed0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679398485 +0100	reset: moving to HEAD
+48e84192b4e4e1fd77d8607697f7fa406aeefed0 fd0a439610f36abd7e10d99da5f6a08a7de85144 Mathias <mathias.ouanna@cnsi-sd.fr> 1679398485 +0100	checkout: moving from mathias/AddLock to mathias/infoRetourAmazon
+fd0a439610f36abd7e10d99da5f6a08a7de85144 126fbc599d1f33a8cbb08b3a8a65dcc78d107ea0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679404406 +0100	commit: resolve comment Alexis
+126fbc599d1f33a8cbb08b3a8a65dcc78d107ea0 c9fd1750144df4df4ae4196c12767d72567eef8c Mathias <mathias.ouanna@cnsi-sd.fr> 1679405092 +0100	commit: update and review
+c9fd1750144df4df4ae4196c12767d72567eef8c 48e84192b4e4e1fd77d8607697f7fa406aeefed0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679405277 +0100	checkout: moving from mathias/infoRetourAmazon to mathias/AddLock
+48e84192b4e4e1fd77d8607697f7fa406aeefed0 0aefce8b092b9529bb9aee856edc49e08e7f8295 Mathias <mathias.ouanna@cnsi-sd.fr> 1679405291 +0100	merge master: Fast-forward
+0aefce8b092b9529bb9aee856edc49e08e7f8295 a6427e8fd3ea2d932de0afd61bc9d56f1f9fdb4a Mathias <mathias.ouanna@cnsi-sd.fr> 1679405412 +0100	commit: add Lock on thread
+a6427e8fd3ea2d932de0afd61bc9d56f1f9fdb4a 0aefce8b092b9529bb9aee856edc49e08e7f8295 Mathias <mathias.ouanna@cnsi-sd.fr> 1679406247 +0100	checkout: moving from mathias/AddLock to master
+0aefce8b092b9529bb9aee856edc49e08e7f8295 1d9d09ed7431c89c02542ce9fcbff6107a301888 Mathias <mathias.ouanna@cnsi-sd.fr> 1679406257 +0100	pull --progress origin: Fast-forward
+1d9d09ed7431c89c02542ce9fcbff6107a301888 1d9d09ed7431c89c02542ce9fcbff6107a301888 Mathias <mathias.ouanna@cnsi-sd.fr> 1679406275 +0100	checkout: moving from master to mathias/UITag
+1d9d09ed7431c89c02542ce9fcbff6107a301888 599fb65790c3fac1a9f77e4c270a30c5a7913e77 Mathias <mathias.ouanna@cnsi-sd.fr> 1679415051 +0100	commit: add "Ajouter une ligne de tags" + add "Ajouter un tag" + delete button deleteTagList + Review style
+599fb65790c3fac1a9f77e4c270a30c5a7913e77 b473e9d28a78417bf31c69d0aed1d34bf43db453 Mathias <mathias.ouanna@cnsi-sd.fr> 1679415164 +0100	commit: WIP: tags autorized on ticket channel
+b473e9d28a78417bf31c69d0aed1d34bf43db453 2543ab47e1b35ed6a5b5b989b58b2dd8907634a7 Mathias <mathias.ouanna@cnsi-sd.fr> 1679901345 +0200	checkout: moving from mathias/UITag to master
+2543ab47e1b35ed6a5b5b989b58b2dd8907634a7 3ff7fb023469d5a1bfb752aa652fa2b66f2b1529 Mathias <mathias.ouanna@cnsi-sd.fr> 1679901347 +0200	pull --progress origin: Fast-forward
+3ff7fb023469d5a1bfb752aa652fa2b66f2b1529 3ff7fb023469d5a1bfb752aa652fa2b66f2b1529 Mathias <mathias.ouanna@cnsi-sd.fr> 1679901470 +0200	checkout: moving from master to 23-doc-fonctionnalites-tags
+3ff7fb023469d5a1bfb752aa652fa2b66f2b1529 b7fd6a78289e64f20a924c7937ae51fd7519d060 Mathias <mathias.ouanna@cnsi-sd.fr> 1679905715 +0200	commit: WIP: Rédaction documentation Tags
+b7fd6a78289e64f20a924c7937ae51fd7519d060 b473e9d28a78417bf31c69d0aed1d34bf43db453 Mathias <mathias.ouanna@cnsi-sd.fr> 1679905722 +0200	checkout: moving from 23-doc-fonctionnalites-tags to mathias/UITag
+b473e9d28a78417bf31c69d0aed1d34bf43db453 3e43d3d62742b794fa2aad7353db6be7bba95c2b Mathias <mathias.ouanna@cnsi-sd.fr> 1679907438 +0200	commit: update tags.css with magento base
+3e43d3d62742b794fa2aad7353db6be7bba95c2b d796df181e51cb5fa5c62976f9442ee32310dfe0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679908069 +0200	commit: button delete tag css update
+d796df181e51cb5fa5c62976f9442ee32310dfe0 d796df181e51cb5fa5c62976f9442ee32310dfe0 Mathias <mathias.ouanna@cnsi-sd.fr> 1679914396 +0200	reset: moving to HEAD
+d796df181e51cb5fa5c62976f9442ee32310dfe0 924766d570d054e48113ddf44593d089cb12f790 Mathias <mathias.ouanna@cnsi-sd.fr> 1679914397 +0200	merge master: Merge made by the 'recursive' strategy.
+924766d570d054e48113ddf44593d089cb12f790 58c7fa37d0392fb4728eb585da131812cf9b963b Mathias <mathias.ouanna@cnsi-sd.fr> 1679929634 +0200	commit: Seul les tags autorisés sur le canal actuel doivent être disponible dans la liste + WIP : gestion des tags
+58c7fa37d0392fb4728eb585da131812cf9b963b b7fd6a78289e64f20a924c7937ae51fd7519d060 Mathias <mathias.ouanna@cnsi-sd.fr> 1679987911 +0200	checkout: moving from mathias/UITag to 23-doc-fonctionnalites-tags
+b7fd6a78289e64f20a924c7937ae51fd7519d060 b7fd6a78289e64f20a924c7937ae51fd7519d060 Mathias <mathias.ouanna@cnsi-sd.fr> 1679988952 +0200	reset: moving to HEAD
+b7fd6a78289e64f20a924c7937ae51fd7519d060 58c7fa37d0392fb4728eb585da131812cf9b963b Mathias <mathias.ouanna@cnsi-sd.fr> 1679988952 +0200	checkout: moving from 23-doc-fonctionnalites-tags to mathias/UITag
+58c7fa37d0392fb4728eb585da131812cf9b963b b7fd6a78289e64f20a924c7937ae51fd7519d060 Mathias <mathias.ouanna@cnsi-sd.fr> 1679991057 +0200	checkout: moving from mathias/UITag to 23-doc-fonctionnalites-tags
+b7fd6a78289e64f20a924c7937ae51fd7519d060 b7fd6a78289e64f20a924c7937ae51fd7519d060 Mathias <mathias.ouanna@cnsi-sd.fr> 1679991076 +0200	reset: moving to HEAD
+b7fd6a78289e64f20a924c7937ae51fd7519d060 58c7fa37d0392fb4728eb585da131812cf9b963b Mathias <mathias.ouanna@cnsi-sd.fr> 1679991076 +0200	checkout: moving from 23-doc-fonctionnalites-tags to mathias/UITag
+58c7fa37d0392fb4728eb585da131812cf9b963b b7fd6a78289e64f20a924c7937ae51fd7519d060 Mathias <mathias.ouanna@cnsi-sd.fr> 1679991543 +0200	checkout: moving from mathias/UITag to 23-doc-fonctionnalites-tags
+b7fd6a78289e64f20a924c7937ae51fd7519d060 8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 Mathias <mathias.ouanna@cnsi-sd.fr> 1679992163 +0200	commit: WIP: update docs tag
+8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 58c7fa37d0392fb4728eb585da131812cf9b963b Mathias <mathias.ouanna@cnsi-sd.fr> 1679992219 +0200	checkout: moving from 23-doc-fonctionnalites-tags to mathias/UITag
+58c7fa37d0392fb4728eb585da131812cf9b963b 871fa4dcadf74960d75b6148924f6d385ccc2145 Mathias <mathias.ouanna@cnsi-sd.fr> 1680008749 +0200	merge master: Merge made by the 'recursive' strategy.
+871fa4dcadf74960d75b6148924f6d385ccc2145 8e86e8f395aeb348ae1f81f3f2659d2a0f05f3eb Mathias <mathias.ouanna@cnsi-sd.fr> 1680008998 +0200	commit: all review tag
+8e86e8f395aeb348ae1f81f3f2659d2a0f05f3eb 9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 Mathias <mathias.ouanna@cnsi-sd.fr> 1680009121 +0200	checkout: moving from mathias/UITag to master
+9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 Mathias <mathias.ouanna@cnsi-sd.fr> 1680009208 +0200	checkout: moving from master to mathias/importMessageNotCreatedInDB
+9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 Mathias <mathias.ouanna@cnsi-sd.fr> 1680009864 +0200	reset: moving to HEAD
+9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 8e86e8f395aeb348ae1f81f3f2659d2a0f05f3eb Mathias <mathias.ouanna@cnsi-sd.fr> 1680009864 +0200	checkout: moving from mathias/importMessageNotCreatedInDB to mathias/UITag
+8e86e8f395aeb348ae1f81f3f2659d2a0f05f3eb 198a1895a3bd6b7ce804f49c54ea09991973a317 Mathias <mathias.ouanna@cnsi-sd.fr> 1680011688 +0200	commit (merge): Merge branch 'master' into mathias/UITag
+198a1895a3bd6b7ce804f49c54ea09991973a317 9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 Mathias <mathias.ouanna@cnsi-sd.fr> 1680011843 +0200	checkout: moving from mathias/UITag to mathias/importMessageNotCreatedInDB
+9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 Mathias <mathias.ouanna@cnsi-sd.fr> 1680013264 +0200	reset: moving to HEAD
+9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 198a1895a3bd6b7ce804f49c54ea09991973a317 Mathias <mathias.ouanna@cnsi-sd.fr> 1680013264 +0200	checkout: moving from mathias/importMessageNotCreatedInDB to mathias/UITag
+198a1895a3bd6b7ce804f49c54ea09991973a317 c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 Mathias <mathias.ouanna@cnsi-sd.fr> 1680013398 +0200	commit: re set master etat tag and default answer
+c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 Mathias <mathias.ouanna@cnsi-sd.fr> 1680013767 +0200	checkout: moving from mathias/UITag to mathias/importMessageNotCreatedInDB
+9939fd0e1c34356b6a3ed0976e6358c8014ea7a8 4c287ce208269fda2984c349406d0a6be398c37f Mathias <mathias.ouanna@cnsi-sd.fr> 1680015287 +0200	commit: check not import message if not have message to import
+4c287ce208269fda2984c349406d0a6be398c37f c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 Mathias <mathias.ouanna@cnsi-sd.fr> 1680015803 +0200	checkout: moving from mathias/importMessageNotCreatedInDB to mathias/UITag
+c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 Mathias <mathias.ouanna@cnsi-sd.fr> 1680074464 +0200	checkout: moving from mathias/UITag to 23-doc-fonctionnalites-tags
+8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 Mathias <mathias.ouanna@cnsi-sd.fr> 1680074528 +0200	checkout: moving from 23-doc-fonctionnalites-tags to mathias/UITag
+c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 Mathias <mathias.ouanna@cnsi-sd.fr> 1680075314 +0200	checkout: moving from mathias/UITag to 23-doc-fonctionnalites-tags
+8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 Mathias <mathias.ouanna@cnsi-sd.fr> 1680077299 +0200	reset: moving to HEAD
+8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 Mathias <mathias.ouanna@cnsi-sd.fr> 1680077299 +0200	checkout: moving from 23-doc-fonctionnalites-tags to mathias/UITag
+c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 Mathias <mathias.ouanna@cnsi-sd.fr> 1680077552 +0200	checkout: moving from mathias/UITag to 23-doc-fonctionnalites-tags
+8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 Mathias <mathias.ouanna@cnsi-sd.fr> 1680077891 +0200	reset: moving to HEAD
+8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 Mathias <mathias.ouanna@cnsi-sd.fr> 1680077891 +0200	checkout: moving from 23-doc-fonctionnalites-tags to mathias/UITag
+c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 Mathias <mathias.ouanna@cnsi-sd.fr> 1680078096 +0200	reset: moving to HEAD
+c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 Mathias <mathias.ouanna@cnsi-sd.fr> 1680078096 +0200	checkout: moving from mathias/UITag to 23-doc-fonctionnalites-tags
+8121ae4f92e9acd23bced6f6aff2fa17bc0c8363 2852f0e18d8f09b0a26945aa63d58b2369cc3bad Mathias <mathias.ouanna@cnsi-sd.fr> 1680078668 +0200	commit: update tags doc
+2852f0e18d8f09b0a26945aa63d58b2369cc3bad c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 Mathias <mathias.ouanna@cnsi-sd.fr> 1680078851 +0200	checkout: moving from 23-doc-fonctionnalites-tags to mathias/UITag
+c9c8fd7a7a1fa1fff7bc96cb1a0075465f63f631 4c287ce208269fda2984c349406d0a6be398c37f Mathias <mathias.ouanna@cnsi-sd.fr> 1680078856 +0200	checkout: moving from mathias/UITag to mathias/importMessageNotCreatedInDB
+4c287ce208269fda2984c349406d0a6be398c37f efb25b48044f07c068860cda72be055e31834dc1 Mathias <mathias.ouanna@cnsi-sd.fr> 1680083744 +0200	commit: Update AbstractMiraklImportMessages.php
+efb25b48044f07c068860cda72be055e31834dc1 efb25b48044f07c068860cda72be055e31834dc1 Mathias <mathias.ouanna@cnsi-sd.fr> 1680095204 +0200	reset: moving to HEAD
+efb25b48044f07c068860cda72be055e31834dc1 f301aa975a628033935e00e95912920c71bb8702 Mathias <mathias.ouanna@cnsi-sd.fr> 1680095204 +0200	checkout: moving from mathias/importMessageNotCreatedInDB to master
+f301aa975a628033935e00e95912920c71bb8702 20071d969a9f7e3ccf8272bb70a03810a2b9ea49 Mathias <mathias.ouanna@cnsi-sd.fr> 1680095208 +0200	pull --progress origin: Fast-forward
+20071d969a9f7e3ccf8272bb70a03810a2b9ea49 20071d969a9f7e3ccf8272bb70a03810a2b9ea49 Mathias <mathias.ouanna@cnsi-sd.fr> 1680095264 +0200	checkout: moving from master to mathias/connexionMailV2
+20071d969a9f7e3ccf8272bb70a03810a2b9ea49 71258afee57037e77e45efadf09bd4c286f35c7e Mathias <mathias.ouanna@cnsi-sd.fr> 1680096043 +0200	commit: connexion mail v2 version smart tech
+71258afee57037e77e45efadf09bd4c286f35c7e a6427e8fd3ea2d932de0afd61bc9d56f1f9fdb4a Mathias <mathias.ouanna@cnsi-sd.fr> 1680096212 +0200	checkout: moving from mathias/connexionMailV2 to mathias/AddLock
+a6427e8fd3ea2d932de0afd61bc9d56f1f9fdb4a 2852f0e18d8f09b0a26945aa63d58b2369cc3bad Mathias <mathias.ouanna@cnsi-sd.fr> 1680096328 +0200	checkout: moving from mathias/AddLock to 23-doc-fonctionnalites-tags
+2852f0e18d8f09b0a26945aa63d58b2369cc3bad a6427e8fd3ea2d932de0afd61bc9d56f1f9fdb4a Mathias <mathias.ouanna@cnsi-sd.fr> 1680096484 +0200	checkout: moving from 23-doc-fonctionnalites-tags to mathias/AddLock
+a6427e8fd3ea2d932de0afd61bc9d56f1f9fdb4a c0d7b5d8dbc7198fcb48c9f505ad6a55ab4e54b3 Mathias <mathias.ouanna@cnsi-sd.fr> 1680096556 +0200	merge master: Merge made by the 'recursive' strategy.
+c0d7b5d8dbc7198fcb48c9f505ad6a55ab4e54b3 129dbabdcdee7d4bd25a40a088faef46b348a2a7 Mathias <mathias.ouanna@cnsi-sd.fr> 1680097574 +0200	commit: add package lock on All command
+129dbabdcdee7d4bd25a40a088faef46b348a2a7 129dbabdcdee7d4bd25a40a088faef46b348a2a7 Mathias <mathias.ouanna@cnsi-sd.fr> 1680098518 +0200	reset: moving to HEAD
+129dbabdcdee7d4bd25a40a088faef46b348a2a7 efb25b48044f07c068860cda72be055e31834dc1 Mathias <mathias.ouanna@cnsi-sd.fr> 1680098518 +0200	checkout: moving from mathias/AddLock to mathias/importMessageNotCreatedInDB
+efb25b48044f07c068860cda72be055e31834dc1 4af8559ffb6a0f095b14e529d73bf97267f34762 Mathias <mathias.ouanna@cnsi-sd.fr> 1680099980 +0200	commit: modif import mirakl
+4af8559ffb6a0f095b14e529d73bf97267f34762 eb11d9901e41f02431a9c2178e45ef0a8cf38c7f Mathias <mathias.ouanna@cnsi-sd.fr> 1680100097 +0200	commit: Update CdiscountImportMessages.php
+eb11d9901e41f02431a9c2178e45ef0a8cf38c7f 2852f0e18d8f09b0a26945aa63d58b2369cc3bad Mathias <mathias.ouanna@cnsi-sd.fr> 1680100309 +0200	checkout: moving from mathias/importMessageNotCreatedInDB to 23-doc-fonctionnalites-tags
+2852f0e18d8f09b0a26945aa63d58b2369cc3bad 9773b12f885db4ac803cc9a6a573b0c9bf2f53c0 Mathias <mathias.ouanna@cnsi-sd.fr> 1680100314 +0200	checkout: moving from 23-doc-fonctionnalites-tags to master
+9773b12f885db4ac803cc9a6a573b0c9bf2f53c0 9773b12f885db4ac803cc9a6a573b0c9bf2f53c0 Mathias <mathias.ouanna@cnsi-sd.fr> 1680100420 +0200	checkout: moving from master to 31-docs-admin
+9773b12f885db4ac803cc9a6a573b0c9bf2f53c0 129dbabdcdee7d4bd25a40a088faef46b348a2a7 Mathias <mathias.ouanna@cnsi-sd.fr> 1680100457 +0200	checkout: moving from 31-docs-admin to mathias/AddLock
+129dbabdcdee7d4bd25a40a088faef46b348a2a7 779d485844c30f9e95130ebfe27bf19183272cf0 Mathias <mathias.ouanna@cnsi-sd.fr> 1680100806 +0200	commit: new set value lock
+779d485844c30f9e95130ebfe27bf19183272cf0 779d485844c30f9e95130ebfe27bf19183272cf0 Mathias <mathias.ouanna@cnsi-sd.fr> 1680100817 +0200	reset: moving to HEAD
+779d485844c30f9e95130ebfe27bf19183272cf0 9773b12f885db4ac803cc9a6a573b0c9bf2f53c0 Mathias <mathias.ouanna@cnsi-sd.fr> 1680100817 +0200	checkout: moving from mathias/AddLock to 31-docs-admin
+9773b12f885db4ac803cc9a6a573b0c9bf2f53c0 61e8f9542c18eb7cb3f1629a8502afa8121db8e0 Mathias <mathias.ouanna@cnsi-sd.fr> 1680103196 +0200	commit: start plant
+61e8f9542c18eb7cb3f1629a8502afa8121db8e0 9773b12f885db4ac803cc9a6a573b0c9bf2f53c0 Mathias <mathias.ouanna@cnsi-sd.fr> 1680103236 +0200	reset: moving to 9773b12f885db4ac803cc9a6a573b0c9bf2f53c0
+9773b12f885db4ac803cc9a6a573b0c9bf2f53c0 240ac2e53dbfd87c6eafe00c434a5fe64cab6052 Mathias <mathias.ouanna@cnsi-sd.fr> 1680103258 +0200	commit: start plan
+240ac2e53dbfd87c6eafe00c434a5fe64cab6052 e56c6dc73827ace6f6adb9c461114db563b6f00b Mathias <mathias.ouanna@cnsi-sd.fr> 1680506273 +0200	checkout: moving from 31-docs-admin to 21-doc-fonctionnalites-relances-automatiques
+e56c6dc73827ace6f6adb9c461114db563b6f00b cc127bb803c065ca32253a8f2c9dc4799b5b7a0c Mathias <mathias.ouanna@cnsi-sd.fr> 1680509711 +0200	commit: WIP : docs revival
+cc127bb803c065ca32253a8f2c9dc4799b5b7a0c 80c62293512eac4d14b3989dacba68012f0aead1 Mathias <mathias.ouanna@cnsi-sd.fr> 1680509822 +0200	checkout: moving from 21-doc-fonctionnalites-relances-automatiques to master
+80c62293512eac4d14b3989dacba68012f0aead1 80c62293512eac4d14b3989dacba68012f0aead1 Mathias <mathias.ouanna@cnsi-sd.fr> 1680509848 +0200	checkout: moving from master to mathias/DateMiniImport
+80c62293512eac4d14b3989dacba68012f0aead1 80c62293512eac4d14b3989dacba68012f0aead1 Mathias <mathias.ouanna@cnsi-sd.fr> 1680511063 +0200	reset: moving to HEAD
+80c62293512eac4d14b3989dacba68012f0aead1 c9fd1750144df4df4ae4196c12767d72567eef8c Mathias <mathias.ouanna@cnsi-sd.fr> 1680511063 +0200	checkout: moving from mathias/DateMiniImport to mathias/infoRetourAmazon
+c9fd1750144df4df4ae4196c12767d72567eef8c 80c62293512eac4d14b3989dacba68012f0aead1 Mathias <mathias.ouanna@cnsi-sd.fr> 1680511073 +0200	merge master: Fast-forward
+80c62293512eac4d14b3989dacba68012f0aead1 0f0c0c12a3e39df9857dda9f04733e7613c71dda Mathias <mathias.ouanna@cnsi-sd.fr> 1680525180 +0200	commit: Modiff add comment and tag for retourn amazon
+0f0c0c12a3e39df9857dda9f04733e7613c71dda d0035783a230a43acad1570550302866c2a276f8 Mathias <mathias.ouanna@cnsi-sd.fr> 1680525642 +0200	commit: Update AmazonImportMessage.php
+d0035783a230a43acad1570550302866c2a276f8 80c62293512eac4d14b3989dacba68012f0aead1 Mathias <mathias.ouanna@cnsi-sd.fr> 1680525739 +0200	checkout: moving from mathias/infoRetourAmazon to mathias/DateMiniImport
+80c62293512eac4d14b3989dacba68012f0aead1 76c67a0c20bbd8f646f4c4b4f318bbd75b98bd7d Mathias <mathias.ouanna@cnsi-sd.fr> 1680527138 +0200	commit: Set date limit import secure
+76c67a0c20bbd8f646f4c4b4f318bbd75b98bd7d 682f7445f9a9c79a03eb378d895d519f72dc8b31 Mathias <mathias.ouanna@cnsi-sd.fr> 1680532420 +0200	commit: mise en place de la verif starter import date for all MP
+682f7445f9a9c79a03eb378d895d519f72dc8b31 89c14e83c867364261c96deb7be9654c1e9f9e73 Mathias <mathias.ouanna@cnsi-sd.fr> 1680532725 +0200	checkout: moving from mathias/DateMiniImport to master
+89c14e83c867364261c96deb7be9654c1e9f9e73 89c14e83c867364261c96deb7be9654c1e9f9e73 Mathias <mathias.ouanna@cnsi-sd.fr> 1680532755 +0200	checkout: moving from master to mathias/AddTagEndRevival
+89c14e83c867364261c96deb7be9654c1e9f9e73 69e398096ad8663e90d2337c0873405ddebcc017 Mathias <mathias.ouanna@cnsi-sd.fr> 1680533124 +0200	checkout: moving from mathias/AddTagEndRevival to mathias/defaultAnswersXChannels
+69e398096ad8663e90d2337c0873405ddebcc017 0c4e88a0334fdd3a08481da609f122f14c579a05 Mathias <mathias.ouanna@cnsi-sd.fr> 1680533319 +0200	commit (merge): Merge branch 'master' into mathias/defaultAnswersXChannels
+0c4e88a0334fdd3a08481da609f122f14c579a05 fa35e5a4df82b7b500a976da5e9fb937870dac3d Mathias <mathias.ouanna@cnsi-sd.fr> 1680534920 +0200	commit: WIP: select All channel for tag not in db
+fa35e5a4df82b7b500a976da5e9fb937870dac3d 682f7445f9a9c79a03eb378d895d519f72dc8b31 Mathias <mathias.ouanna@cnsi-sd.fr> 1680534936 +0200	checkout: moving from mathias/defaultAnswersXChannels to mathias/DateMiniImport
+682f7445f9a9c79a03eb378d895d519f72dc8b31 682f7445f9a9c79a03eb378d895d519f72dc8b31 Mathias <mathias.ouanna@cnsi-sd.fr> 1680592958 +0200	reset: moving to HEAD
+682f7445f9a9c79a03eb378d895d519f72dc8b31 cc127bb803c065ca32253a8f2c9dc4799b5b7a0c Mathias <mathias.ouanna@cnsi-sd.fr> 1680592958 +0200	checkout: moving from mathias/DateMiniImport to 21-doc-fonctionnalites-relances-automatiques
+cc127bb803c065ca32253a8f2c9dc4799b5b7a0c f4f20f5bfed21cef81f1b9d0b6e36d16d0d3a4d4 Mathias <mathias.ouanna@cnsi-sd.fr> 1680595839 +0200	commit: update revival docs
+f4f20f5bfed21cef81f1b9d0b6e36d16d0d3a4d4 682f7445f9a9c79a03eb378d895d519f72dc8b31 Mathias <mathias.ouanna@cnsi-sd.fr> 1680596450 +0200	checkout: moving from 21-doc-fonctionnalites-relances-automatiques to mathias/DateMiniImport
+682f7445f9a9c79a03eb378d895d519f72dc8b31 3e5e656319a47f6548e5dd629de99a83a1b2b7da Mathias <mathias.ouanna@cnsi-sd.fr> 1680596511 +0200	merge master: Merge made by the 'recursive' strategy.
+3e5e656319a47f6548e5dd629de99a83a1b2b7da 3e5e656319a47f6548e5dd629de99a83a1b2b7da Mathias <mathias.ouanna@cnsi-sd.fr> 1680596539 +0200	reset: moving to HEAD
+3e5e656319a47f6548e5dd629de99a83a1b2b7da 7b2a2e1284e555b007560aabb12485b8b2ec42af Mathias <mathias.ouanna@cnsi-sd.fr> 1680596539 +0200	checkout: moving from mathias/DateMiniImport to master
+7b2a2e1284e555b007560aabb12485b8b2ec42af 3e5e656319a47f6548e5dd629de99a83a1b2b7da Mathias <mathias.ouanna@cnsi-sd.fr> 1680596562 +0200	checkout: moving from master to mathias/DateMiniImport
+3e5e656319a47f6548e5dd629de99a83a1b2b7da 768aac3336c0e8680dcb16cf24bed980af7a32a5 Mathias <mathias.ouanna@cnsi-sd.fr> 1680597279 +0200	commit: refacto date mini import
+768aac3336c0e8680dcb16cf24bed980af7a32a5 3e5e656319a47f6548e5dd629de99a83a1b2b7da Mathias <mathias.ouanna@cnsi-sd.fr> 1680597294 +0200	reset: moving to 3e5e656319a47f6548e5dd629de99a83a1b2b7da
+3e5e656319a47f6548e5dd629de99a83a1b2b7da ef57772a3acf0e2922367961030189ca39c554c0 Mathias <mathias.ouanna@cnsi-sd.fr> 1680597299 +0200	commit: refacto date mini import
+ef57772a3acf0e2922367961030189ca39c554c0 89c14e83c867364261c96deb7be9654c1e9f9e73 Mathias <mathias.ouanna@cnsi-sd.fr> 1680597511 +0200	checkout: moving from mathias/DateMiniImport to mathias/AddTagEndRevival
+89c14e83c867364261c96deb7be9654c1e9f9e73 d8261ae16bad4034802e600bd47820b48f2bd9eb Mathias <mathias.ouanna@cnsi-sd.fr> 1680610675 +0200	commit: update revival table
+d8261ae16bad4034802e600bd47820b48f2bd9eb e004b42aedaf471af6d4bcff6e014a48695781ae Mathias <mathias.ouanna@cnsi-sd.fr> 1680610727 +0200	commit: ajout du selector de tag dans la configuration d'un revival
+e004b42aedaf471af6d4bcff6e014a48695781ae 4e29f1c7b08fd77afdab85c809de731ecc6fadeb Mathias <mathias.ouanna@cnsi-sd.fr> 1680610977 +0200	commit: controller revival update + preview tag table builder
+4e29f1c7b08fd77afdab85c809de731ecc6fadeb 5143f5334b47726da548b2f35e0f346e9141cdd8 Mathias <mathias.ouanna@cnsi-sd.fr> 1680610996 +0200	commit: gestion model + revival command
+5143f5334b47726da548b2f35e0f346e9141cdd8 90ed295bff2840536a617b11721a79754ad67676 Mathias <mathias.ouanna@cnsi-sd.fr> 1680611251 +0200	commit: Update Revival.php
+90ed295bff2840536a617b11721a79754ad67676 fa35e5a4df82b7b500a976da5e9fb937870dac3d Mathias <mathias.ouanna@cnsi-sd.fr> 1680611489 +0200	checkout: moving from mathias/AddTagEndRevival to mathias/defaultAnswersXChannels
+fa35e5a4df82b7b500a976da5e9fb937870dac3d 7b2a2e1284e555b007560aabb12485b8b2ec42af Mathias <mathias.ouanna@cnsi-sd.fr> 1680611504 +0200	checkout: moving from mathias/defaultAnswersXChannels to master
+7b2a2e1284e555b007560aabb12485b8b2ec42af 7b2a2e1284e555b007560aabb12485b8b2ec42af Mathias <mathias.ouanna@cnsi-sd.fr> 1680611521 +0200	checkout: moving from master to mathias/tagsXchannel
+7b2a2e1284e555b007560aabb12485b8b2ec42af da8ff00df8861e4c5372d6455b55c25d2d5a5258 Mathias <mathias.ouanna@cnsi-sd.fr> 1680615998 +0200	commit: update Tags & Default answer x Channel
+da8ff00df8861e4c5372d6455b55c25d2d5a5258 572ec6361cfe478a6e24b22cee4e9ee0127cea15 Mathias <mathias.ouanna@cnsi-sd.fr> 1680616577 +0200	commit: Update tags.blade.php
+572ec6361cfe478a6e24b22cee4e9ee0127cea15 d501e124fb7f169fbee672244a55f2158371d090 Mathias <mathias.ouanna@cnsi-sd.fr> 1680617797 +0200	commit: modiff variable's name
+d501e124fb7f169fbee672244a55f2158371d090 d501e124fb7f169fbee672244a55f2158371d090 Mathias <mathias.ouanna@cnsi-sd.fr> 1680620543 +0200	reset: moving to HEAD
+d501e124fb7f169fbee672244a55f2158371d090 8dd571714ab1a8b9ccb1eb22a61d173753312b56 Mathias <mathias.ouanna@cnsi-sd.fr> 1680620543 +0200	checkout: moving from mathias/tagsXchannel to master
+8dd571714ab1a8b9ccb1eb22a61d173753312b56 121ab01f44e7f1b24a3fff893ca79c5f24829f78 Mathias <mathias.ouanna@cnsi-sd.fr> 1680620550 +0200	pull --progress origin: Fast-forward
+121ab01f44e7f1b24a3fff893ca79c5f24829f78 121ab01f44e7f1b24a3fff893ca79c5f24829f78 Mathias <mathias.ouanna@cnsi-sd.fr> 1680620710 +0200	checkout: moving from master to mathias/ticket-addTag
+121ab01f44e7f1b24a3fff893ca79c5f24829f78 d501e124fb7f169fbee672244a55f2158371d090 Mathias <mathias.ouanna@cnsi-sd.fr> 1680620717 +0200	checkout: moving from mathias/ticket-addTag to mathias/tagsXchannel
+d501e124fb7f169fbee672244a55f2158371d090 d501e124fb7f169fbee672244a55f2158371d090 Mathias <mathias.ouanna@cnsi-sd.fr> 1680620729 +0200	reset: moving to HEAD
+d501e124fb7f169fbee672244a55f2158371d090 121ab01f44e7f1b24a3fff893ca79c5f24829f78 Mathias <mathias.ouanna@cnsi-sd.fr> 1680620729 +0200	checkout: moving from mathias/tagsXchannel to mathias/ticket-addTag
+121ab01f44e7f1b24a3fff893ca79c5f24829f78 63bbde2fd698ec56fe00f8b4e11c2ffb2603dd43 Mathias <mathias.ouanna@cnsi-sd.fr> 1680620733 +0200	commit: add Test_addTag dans les features tests
+63bbde2fd698ec56fe00f8b4e11c2ffb2603dd43 8850741be6bacc33bc51ff5bfbf12307a4015b4e Mathias <mathias.ouanna@cnsi-sd.fr> 1681197737 +0200	checkout: moving from mathias/ticket-addTag to 18-doc-bases-qu-est-ce-qu-un-ticket
+8850741be6bacc33bc51ff5bfbf12307a4015b4e 0bfad573bc0f1df96ab5bd40e054c390fda421aa Mathias <mathias.ouanna@cnsi-sd.fr> 1681201334 +0200	commit: start: qu'est-ce qu'un ticket
+0bfad573bc0f1df96ab5bd40e054c390fda421aa 63bbde2fd698ec56fe00f8b4e11c2ffb2603dd43 Mathias <mathias.ouanna@cnsi-sd.fr> 1681201383 +0200	checkout: moving from 18-doc-bases-qu-est-ce-qu-un-ticket to mathias/ticket-addTag
+63bbde2fd698ec56fe00f8b4e11c2ffb2603dd43 71cb9f780608df6e9db8aea81926fb754784ff08 Mathias <mathias.ouanna@cnsi-sd.fr> 1681202498 +0200	commit: add refresh object tag
+71cb9f780608df6e9db8aea81926fb754784ff08 71cb9f780608df6e9db8aea81926fb754784ff08 Mathias <mathias.ouanna@cnsi-sd.fr> 1681202946 +0200	checkout: moving from mathias/ticket-addTag to mathias/bugTagList
+71cb9f780608df6e9db8aea81926fb754784ff08 d501e124fb7f169fbee672244a55f2158371d090 Mathias <mathias.ouanna@cnsi-sd.fr> 1681203150 +0200	checkout: moving from mathias/bugTagList to mathias/tagsXchannel
+d501e124fb7f169fbee672244a55f2158371d090 6bd2adf0c9e29e3d1fca32b4413fa2067cd507f0 Mathias <mathias.ouanna@cnsi-sd.fr> 1681203680 +0200	commit: Update tags.blade.php
+6bd2adf0c9e29e3d1fca32b4413fa2067cd507f0 cf0ffb6b0d98acec3105dca5758456ea72da8af8 Mathias <mathias.ouanna@cnsi-sd.fr> 1681203729 +0200	merge master: Merge made by the 'recursive' strategy.
+cf0ffb6b0d98acec3105dca5758456ea72da8af8 71cb9f780608df6e9db8aea81926fb754784ff08 Mathias <mathias.ouanna@cnsi-sd.fr> 1681204617 +0200	checkout: moving from mathias/tagsXchannel to mathias/bugTagList
+71cb9f780608df6e9db8aea81926fb754784ff08 07cde87a0e5cac82ed6fe3387bbaef300d709573 Mathias <mathias.ouanna@cnsi-sd.fr> 1681205299 +0200	merge master: Fast-forward
+07cde87a0e5cac82ed6fe3387bbaef300d709573 21177bc68929441cf208e45cf4259ee8bc8ad859 Mathias <mathias.ouanna@cnsi-sd.fr> 1681205310 +0200	merge master: Fast-forward
+21177bc68929441cf208e45cf4259ee8bc8ad859 0a6e1bc6e56a70d262b6cd2bc67856c49feb4b6f Mathias <mathias.ouanna@cnsi-sd.fr> 1681217905 +0200	commit: correction bug sur le type de date verifier pour icoza
+0a6e1bc6e56a70d262b6cd2bc67856c49feb4b6f a43330e71cfb7ed7b69377fc7a6bbaa40d3f14c4 Mathias <mathias.ouanna@cnsi-sd.fr> 1681218589 +0200	commit: resolution de l'affichage de la liste de tag + bug recherche + change cursor type on line table builder
+a43330e71cfb7ed7b69377fc7a6bbaa40d3f14c4 21177bc68929441cf208e45cf4259ee8bc8ad859 Mathias <mathias.ouanna@cnsi-sd.fr> 1681218897 +0200	checkout: moving from mathias/bugTagList to master
+21177bc68929441cf208e45cf4259ee8bc8ad859 21177bc68929441cf208e45cf4259ee8bc8ad859 Mathias <mathias.ouanna@cnsi-sd.fr> 1681218945 +0200	checkout: moving from master to mathias/relanceAutov2
+21177bc68929441cf208e45cf4259ee8bc8ad859 b50dd097db267607a62deecd3c244e41598049b5 Mathias <mathias.ouanna@cnsi-sd.fr> 1681222484 +0200	commit: relance auto v2
+b50dd097db267607a62deecd3c244e41598049b5 24541d1fcfce761319ebfde00328179d61cc0392 Mathias <mathias.ouanna@cnsi-sd.fr> 1681222600 +0200	merge master: Merge made by the 'recursive' strategy.
+24541d1fcfce761319ebfde00328179d61cc0392 2ac9ac2157600f81a7feff08f7fa2ea140f8eecd Mathias <mathias.ouanna@cnsi-sd.fr> 1681225295 +0200	checkout: moving from mathias/relanceAutov2 to master
+2ac9ac2157600f81a7feff08f7fa2ea140f8eecd 2882c6147972fc939bb0dbc2a33f09178679d859 Mathias <mathias.ouanna@cnsi-sd.fr> 1681225298 +0200	pull --progress origin: Fast-forward
+2882c6147972fc939bb0dbc2a33f09178679d859 a43330e71cfb7ed7b69377fc7a6bbaa40d3f14c4 Mathias <mathias.ouanna@cnsi-sd.fr> 1681225325 +0200	checkout: moving from master to mathias/bugTagList
+a43330e71cfb7ed7b69377fc7a6bbaa40d3f14c4 2882c6147972fc939bb0dbc2a33f09178679d859 Mathias <mathias.ouanna@cnsi-sd.fr> 1681225354 +0200	merge master: Fast-forward
+2882c6147972fc939bb0dbc2a33f09178679d859 2882c6147972fc939bb0dbc2a33f09178679d859 Mathias <mathias.ouanna@cnsi-sd.fr> 1681284684 +0200	reset: moving to HEAD
+2882c6147972fc939bb0dbc2a33f09178679d859 0bfad573bc0f1df96ab5bd40e054c390fda421aa Mathias <mathias.ouanna@cnsi-sd.fr> 1681284684 +0200	checkout: moving from mathias/bugTagList to 18-doc-bases-qu-est-ce-qu-un-ticket
+0bfad573bc0f1df96ab5bd40e054c390fda421aa e5264fca5c54151b8cf8b8341aa8f43760014a5c Mathias <mathias.ouanna@cnsi-sd.fr> 1681287214 +0200	commit: Update qu-est-ce-qu-un-ticket.md
+e5264fca5c54151b8cf8b8341aa8f43760014a5c 104927bc561f284fe67005b0c13469d0aee4f9d2 Mathias <mathias.ouanna@cnsi-sd.fr> 1681287280 +0200	merge master: Merge made by the 'recursive' strategy.
+104927bc561f284fe67005b0c13469d0aee4f9d2 2882c6147972fc939bb0dbc2a33f09178679d859 Mathias <mathias.ouanna@cnsi-sd.fr> 1681287323 +0200	checkout: moving from 18-doc-bases-qu-est-ce-qu-un-ticket to mathias/bugTagList
+2882c6147972fc939bb0dbc2a33f09178679d859 2882c6147972fc939bb0dbc2a33f09178679d859 Mathias <mathias.ouanna@cnsi-sd.fr> 1681296242 +0200	reset: moving to HEAD
+2882c6147972fc939bb0dbc2a33f09178679d859 807ef7c433cc040828f9772e644f28fba4ac77f2 Mathias <mathias.ouanna@cnsi-sd.fr> 1681296242 +0200	checkout: moving from mathias/bugTagList to master
+807ef7c433cc040828f9772e644f28fba4ac77f2 2882c6147972fc939bb0dbc2a33f09178679d859 Mathias <mathias.ouanna@cnsi-sd.fr> 1681296550 +0200	checkout: moving from master to mathias/bugTagList
+2882c6147972fc939bb0dbc2a33f09178679d859 8ded63b0149024005efc31ab2aaa8baed2c3273f Mathias <mathias.ouanna@cnsi-sd.fr> 1681298628 +0200	commit: résolution bug affichage tagList
+8ded63b0149024005efc31ab2aaa8baed2c3273f 24541d1fcfce761319ebfde00328179d61cc0392 Mathias <mathias.ouanna@cnsi-sd.fr> 1681300211 +0200	checkout: moving from mathias/bugTagList to mathias/relanceAutov2
+24541d1fcfce761319ebfde00328179d61cc0392 24541d1fcfce761319ebfde00328179d61cc0392 Mathias <mathias.ouanna@cnsi-sd.fr> 1681300229 +0200	reset: moving to HEAD
+24541d1fcfce761319ebfde00328179d61cc0392 4a008a8fd1d6a60521e557e01ef09b8f6d26df53 Mathias <mathias.ouanna@cnsi-sd.fr> 1681300229 +0200	checkout: moving from mathias/relanceAutov2 to master
+4a008a8fd1d6a60521e557e01ef09b8f6d26df53 4a008a8fd1d6a60521e557e01ef09b8f6d26df53 Mathias <mathias.ouanna@cnsi-sd.fr> 1681300248 +0200	checkout: moving from master to mathias/relanceAutoV3
+4a008a8fd1d6a60521e557e01ef09b8f6d26df53 49befa2f6919a6bef3b547bfb5630a8cae052436 Mathias <mathias.ouanna@cnsi-sd.fr> 1681302847 +0200	commit: ajout de la vérification des valeur null à set a la fin d'un revival
+49befa2f6919a6bef3b547bfb5630a8cae052436 4a008a8fd1d6a60521e557e01ef09b8f6d26df53 Mathias <mathias.ouanna@cnsi-sd.fr> 1681303797 +0200	checkout: moving from mathias/relanceAutoV3 to master
+4a008a8fd1d6a60521e557e01ef09b8f6d26df53 4a008a8fd1d6a60521e557e01ef09b8f6d26df53 Mathias <mathias.ouanna@cnsi-sd.fr> 1681303818 +0200	checkout: moving from master to mathias/connexionMailTkg
+4a008a8fd1d6a60521e557e01ef09b8f6d26df53 4933dc519a5ebe4c5468105b973c9190ee3a1568 Mathias <mathias.ouanna@cnsi-sd.fr> 1681312314 +0200	commit: WIP: connexion mail tkg
+4933dc519a5ebe4c5468105b973c9190ee3a1568 104927bc561f284fe67005b0c13469d0aee4f9d2 Mathias <mathias.ouanna@cnsi-sd.fr> 1681715729 +0200	checkout: moving from mathias/connexionMailTkg to 18-doc-bases-qu-est-ce-qu-un-ticket
+104927bc561f284fe67005b0c13469d0aee4f9d2 25fb838b9ba08e42d1d2b60768129a7c121bfe89 Mathias <mathias.ouanna@cnsi-sd.fr> 1681715803 +0200	merge master: Fast-forward
+25fb838b9ba08e42d1d2b60768129a7c121bfe89 f2bb95de69ee07adaea9c5ef517744d71f6f8cc0 Mathias <mathias.ouanna@cnsi-sd.fr> 1681718558 +0200	commit: Update qu-est-ce-qu-un-ticket.md
+f2bb95de69ee07adaea9c5ef517744d71f6f8cc0 25fb838b9ba08e42d1d2b60768129a7c121bfe89 Mathias <mathias.ouanna@cnsi-sd.fr> 1681718567 +0200	reset: moving to 25fb838b9ba08e42d1d2b60768129a7c121bfe89
+25fb838b9ba08e42d1d2b60768129a7c121bfe89 99e31342f3302d11d1717ba1b10f009a444e9d42 Mathias <mathias.ouanna@cnsi-sd.fr> 1681718581 +0200	commit: wip: qu-est-ce-qu-un-ticket.md
+99e31342f3302d11d1717ba1b10f009a444e9d42 4933dc519a5ebe4c5468105b973c9190ee3a1568 Mathias <mathias.ouanna@cnsi-sd.fr> 1681718990 +0200	checkout: moving from 18-doc-bases-qu-est-ce-qu-un-ticket to mathias/connexionMailTkg
+4933dc519a5ebe4c5468105b973c9190ee3a1568 2dfeb9012be195d6b0392e9632b16a329d97898d Mathias <mathias.ouanna@cnsi-sd.fr> 1681719082 +0200	commit (merge): Merge branch 'master' into mathias/connexionMailTkg
+2dfeb9012be195d6b0392e9632b16a329d97898d 2dfeb9012be195d6b0392e9632b16a329d97898d Mathias <mathias.ouanna@cnsi-sd.fr> 1681802371 +0200	reset: moving to HEAD
+2dfeb9012be195d6b0392e9632b16a329d97898d 99e31342f3302d11d1717ba1b10f009a444e9d42 Mathias <mathias.ouanna@cnsi-sd.fr> 1681802371 +0200	checkout: moving from mathias/connexionMailTkg to 18-doc-bases-qu-est-ce-qu-un-ticket
+99e31342f3302d11d1717ba1b10f009a444e9d42 e7cb44e8e7bfed0fd8d5001d2f06a6c93768e430 Mathias <mathias.ouanna@cnsi-sd.fr> 1681805364 +0200	commit: WIP : docs qu'est ce qu'un ticket
+e7cb44e8e7bfed0fd8d5001d2f06a6c93768e430 2dfeb9012be195d6b0392e9632b16a329d97898d Mathias <mathias.ouanna@cnsi-sd.fr> 1681806515 +0200	checkout: moving from 18-doc-bases-qu-est-ce-qu-un-ticket to mathias/connexionMailTkg
+2dfeb9012be195d6b0392e9632b16a329d97898d 2dfeb9012be195d6b0392e9632b16a329d97898d Mathias <mathias.ouanna@cnsi-sd.fr> 1681813844 +0200	reset: moving to HEAD
+2dfeb9012be195d6b0392e9632b16a329d97898d 71258afee57037e77e45efadf09bd4c286f35c7e Mathias <mathias.ouanna@cnsi-sd.fr> 1681813844 +0200	checkout: moving from mathias/connexionMailTkg to mathias/connexionMailV2
+71258afee57037e77e45efadf09bd4c286f35c7e 71258afee57037e77e45efadf09bd4c286f35c7e Mathias <mathias.ouanna@cnsi-sd.fr> 1681813917 +0200	reset: moving to HEAD
+71258afee57037e77e45efadf09bd4c286f35c7e 2dfeb9012be195d6b0392e9632b16a329d97898d Mathias <mathias.ouanna@cnsi-sd.fr> 1681813917 +0200	checkout: moving from mathias/connexionMailV2 to mathias/connexionMailTkg
+2dfeb9012be195d6b0392e9632b16a329d97898d cb4caa017fb93223eac5b94102669c2bb2ecebd6 Mathias <mathias.ouanna@cnsi-sd.fr> 1681814092 +0200	commit: Update AmazonImportMessage.php
+cb4caa017fb93223eac5b94102669c2bb2ecebd6 ddd35f3150c6b95ca51ca48b2c8a51a79fc7b626 Mathias <mathias.ouanna@cnsi-sd.fr> 1681831464 +0200	commit: set connexion tkg
+ddd35f3150c6b95ca51ca48b2c8a51a79fc7b626 e7cb44e8e7bfed0fd8d5001d2f06a6c93768e430 Mathias <mathias.ouanna@cnsi-sd.fr> 1682320768 +0200	checkout: moving from mathias/connexionMailTkg to 18-doc-bases-qu-est-ce-qu-un-ticket
+e7cb44e8e7bfed0fd8d5001d2f06a6c93768e430 b21a293ec6a5bdfe26033182302258b5f6291e1f Mathias <mathias.ouanna@cnsi-sd.fr> 1682320813 +0200	merge master: Fast-forward
+b21a293ec6a5bdfe26033182302258b5f6291e1f ddd35f3150c6b95ca51ca48b2c8a51a79fc7b626 Mathias <mathias.ouanna@cnsi-sd.fr> 1682320930 +0200	checkout: moving from 18-doc-bases-qu-est-ce-qu-un-ticket to mathias/connexionMailTkg
+ddd35f3150c6b95ca51ca48b2c8a51a79fc7b626 15d6ef771e1de6e5335000806a2cdc0d8dc2d02e Mathias <mathias.ouanna@cnsi-sd.fr> 1682320941 +0200	merge master: Merge made by the 'recursive' strategy.
+15d6ef771e1de6e5335000806a2cdc0d8dc2d02e e7f7a94c1676eacc986448d6e670f22849e6b796 Mathias <mathias.ouanna@cnsi-sd.fr> 1682329440 +0200	commit: Update AbstractImportMailOAuthMessage.php
+e7f7a94c1676eacc986448d6e670f22849e6b796 49befa2f6919a6bef3b547bfb5630a8cae052436 Mathias <mathias.ouanna@cnsi-sd.fr> 1682329624 +0200	checkout: moving from mathias/connexionMailTkg to mathias/relanceAutoV3
+49befa2f6919a6bef3b547bfb5630a8cae052436 b21a293ec6a5bdfe26033182302258b5f6291e1f Mathias <mathias.ouanna@cnsi-sd.fr> 1682329636 +0200	merge master: Fast-forward
+b21a293ec6a5bdfe26033182302258b5f6291e1f 78bbff927ef46cc2f5372f7e51e0176f2fdeec91 Mathias <mathias.ouanna@cnsi-sd.fr> 1682332024 +0200	commit: modif value return is null
+78bbff927ef46cc2f5372f7e51e0176f2fdeec91 78bbff927ef46cc2f5372f7e51e0176f2fdeec91 Mathias <mathias.ouanna@cnsi-sd.fr> 1682348334 +0200	checkout: moving from mathias/relanceAutoV3 to mathias/ajaxRevival
+78bbff927ef46cc2f5372f7e51e0176f2fdeec91 78bbff927ef46cc2f5372f7e51e0176f2fdeec91 Mathias <mathias.ouanna@cnsi-sd.fr> 1682349557 +0200	checkout: moving from mathias/ajaxRevival to mathias/relanceAutoV3
+78bbff927ef46cc2f5372f7e51e0176f2fdeec91 785c100ca5bee875aff6becd1d2c8335958bc07e Mathias <mathias.ouanna@cnsi-sd.fr> 1682349611 +0200	commit: Partie ajax config revival
+785c100ca5bee875aff6becd1d2c8335958bc07e 785c100ca5bee875aff6becd1d2c8335958bc07e Mathias <mathias.ouanna@cnsi-sd.fr> 1682408850 +0200	reset: moving to HEAD
+785c100ca5bee875aff6becd1d2c8335958bc07e 9d032093801a3676c26db3096711f0d45ccd274d Mathias <mathias.ouanna@cnsi-sd.fr> 1682408850 +0200	merge master: Merge made by the 'recursive' strategy.
+9d032093801a3676c26db3096711f0d45ccd274d 5ef9a8da838b9a5db73c1360bdc3f5d548d97141 Mathias <mathias.ouanna@cnsi-sd.fr> 1682416542 +0200	commit: relance auto part2
+5ef9a8da838b9a5db73c1360bdc3f5d548d97141 fa79013944729332e7a91701523bfee0c1d6a051 Mathias <mathias.ouanna@cnsi-sd.fr> 1682417072 +0200	commit: Update TicketController.php
+fa79013944729332e7a91701523bfee0c1d6a051 1e50b90f9d0f612d61e747fc48192dcca5717e2a Mathias <mathias.ouanna@cnsi-sd.fr> 1682418263 +0200	checkout: moving from mathias/relanceAutoV3 to master
+1e50b90f9d0f612d61e747fc48192dcca5717e2a 050a181a9e15f8484efba4e30146fe16769fa1d4 Mathias <mathias.ouanna@cnsi-sd.fr> 1682418265 +0200	pull --progress origin: Fast-forward
+050a181a9e15f8484efba4e30146fe16769fa1d4 050a181a9e15f8484efba4e30146fe16769fa1d4 Mathias <mathias.ouanna@cnsi-sd.fr> 1682418316 +0200	checkout: moving from master to mathias/ticketHistorique
+050a181a9e15f8484efba4e30146fe16769fa1d4 f5fe7587b80c8a8cd9d8248eaebe06aa2eb0e31c Mathias <mathias.ouanna@cnsi-sd.fr> 1682516665 +0200	commit: create model
+f5fe7587b80c8a8cd9d8248eaebe06aa2eb0e31c 002fbf61442af9627f226df8ad4ccb918447a260 Mathias <mathias.ouanna@cnsi-sd.fr> 1682516689 +0200	commit: modification du model
+002fbf61442af9627f226df8ad4ccb918447a260 5d3876ad19ebd9d6a79ef2d2a43a57f4fa26da54 Mathias <mathias.ouanna@cnsi-sd.fr> 1682519685 +0200	commit: all historique
+5d3876ad19ebd9d6a79ef2d2a43a57f4fa26da54 fa79013944729332e7a91701523bfee0c1d6a051 Mathias <mathias.ouanna@cnsi-sd.fr> 1682520222 +0200	checkout: moving from mathias/ticketHistorique to mathias/relanceAutoV3
+fa79013944729332e7a91701523bfee0c1d6a051 56136061c96e7ad0402075715d3c6d1557cbe400 Mathias <mathias.ouanna@cnsi-sd.fr> 1682520315 +0200	commit: fix bug sav revival
+56136061c96e7ad0402075715d3c6d1557cbe400 6bc1d8ca3aeafe95ccd28b6d363c045f2c502e06 Mathias <mathias.ouanna@cnsi-sd.fr> 1682520329 +0200	merge master: Merge made by the 'recursive' strategy.
+6bc1d8ca3aeafe95ccd28b6d363c045f2c502e06 6bc1d8ca3aeafe95ccd28b6d363c045f2c502e06 Mathias <mathias.ouanna@cnsi-sd.fr> 1682520571 +0200	reset: moving to HEAD
+6bc1d8ca3aeafe95ccd28b6d363c045f2c502e06 e7f7a94c1676eacc986448d6e670f22849e6b796 Mathias <mathias.ouanna@cnsi-sd.fr> 1682520571 +0200	checkout: moving from mathias/relanceAutoV3 to mathias/connexionMailTkg
+e7f7a94c1676eacc986448d6e670f22849e6b796 5be3311b3cd348f0b7cb1ee2a66bd08eca0cfe39 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521221 +0200	commit (merge): Merge branch 'master' into mathias/connexionMailTkg
+5be3311b3cd348f0b7cb1ee2a66bd08eca0cfe39 6bc1d8ca3aeafe95ccd28b6d363c045f2c502e06 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521272 +0200	checkout: moving from mathias/connexionMailTkg to mathias/relanceAutoV3
+6bc1d8ca3aeafe95ccd28b6d363c045f2c502e06 d59f0154e24978ea32cb1272b2c006f48e458413 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521347 +0200	merge master: Merge made by the 'recursive' strategy.
+d59f0154e24978ea32cb1272b2c006f48e458413 5d3876ad19ebd9d6a79ef2d2a43a57f4fa26da54 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521364 +0200	checkout: moving from mathias/relanceAutoV3 to mathias/ticketHistorique
+5d3876ad19ebd9d6a79ef2d2a43a57f4fa26da54 af99bc3fc6528ea22e31f16ec3e780d3ff6fbbc3 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521370 +0200	merge master: Merge made by the 'recursive' strategy.
+af99bc3fc6528ea22e31f16ec3e780d3ff6fbbc3 5be3311b3cd348f0b7cb1ee2a66bd08eca0cfe39 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521379 +0200	checkout: moving from mathias/ticketHistorique to mathias/connexionMailTkg
+5be3311b3cd348f0b7cb1ee2a66bd08eca0cfe39 4ea49e4f434022284a69198b6ebfbb92b98cb413 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521417 +0200	commit (merge): Merge branch 'master' into mathias/connexionMailTkg
+4ea49e4f434022284a69198b6ebfbb92b98cb413 af99bc3fc6528ea22e31f16ec3e780d3ff6fbbc3 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521607 +0200	checkout: moving from mathias/connexionMailTkg to mathias/ticketHistorique
+af99bc3fc6528ea22e31f16ec3e780d3ff6fbbc3 d59f0154e24978ea32cb1272b2c006f48e458413 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521610 +0200	checkout: moving from mathias/ticketHistorique to mathias/relanceAutoV3
+d59f0154e24978ea32cb1272b2c006f48e458413 d2b504184cbc80136814e616f97a7d3f260e0f31 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521670 +0200	commit: update fix bug
+d2b504184cbc80136814e616f97a7d3f260e0f31 af99bc3fc6528ea22e31f16ec3e780d3ff6fbbc3 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521709 +0200	checkout: moving from mathias/relanceAutoV3 to mathias/ticketHistorique
+af99bc3fc6528ea22e31f16ec3e780d3ff6fbbc3 5f47c544c770217c04dbd636d04e94aeb63ff1c5 Mathias <mathias.ouanna@cnsi-sd.fr> 1682522387 +0200	commit: draft resolution des commentaires
+5f47c544c770217c04dbd636d04e94aeb63ff1c5 00ef390f56796b49492dbf786f14c796a3df2cdc Mathias <mathias.ouanna@cnsi-sd.fr> 1682523833 +0200	commit: all resolve
+00ef390f56796b49492dbf786f14c796a3df2cdc 1d7c47892a5dff9a86e65ad7971e49c2eadf5373 Mathias <mathias.ouanna@cnsi-sd.fr> 1683013565 +0200	commit: delete date on model
+1d7c47892a5dff9a86e65ad7971e49c2eadf5373 a24b0e8acfb54598583de6ef80db3dbf23b6a028 Mathias <mathias.ouanna@cnsi-sd.fr> 1683014079 +0200	commit: Update Ticket.php
+a24b0e8acfb54598583de6ef80db3dbf23b6a028 d3c70f963c69558cfdde69dc41d66666eaf207b5 Mathias <mathias.ouanna@cnsi-sd.fr> 1683024566 +0200	commit: ajout docs user + modification des traductions
+d3c70f963c69558cfdde69dc41d66666eaf207b5 d3c70f963c69558cfdde69dc41d66666eaf207b5 Mathias <mathias.ouanna@cnsi-sd.fr> 1683039202 +0200	reset: moving to HEAD
+d3c70f963c69558cfdde69dc41d66666eaf207b5 68f6e7eb412327eb0ec88ccd151f022a25ca769c Mathias <mathias.ouanna@cnsi-sd.fr> 1683039202 +0200	checkout: moving from mathias/ticketHistorique to master
+68f6e7eb412327eb0ec88ccd151f022a25ca769c 68f6e7eb412327eb0ec88ccd151f022a25ca769c Mathias <mathias.ouanna@cnsi-sd.fr> 1683039396 +0200	checkout: moving from master to mathias/avisDeSouffrance
+68f6e7eb412327eb0ec88ccd151f022a25ca769c d3c70f963c69558cfdde69dc41d66666eaf207b5 Mathias <mathias.ouanna@cnsi-sd.fr> 1683039502 +0200	checkout: moving from mathias/avisDeSouffrance to mathias/ticketHistorique
+d3c70f963c69558cfdde69dc41d66666eaf207b5 d3c70f963c69558cfdde69dc41d66666eaf207b5 Mathias <mathias.ouanna@cnsi-sd.fr> 1683039510 +0200	reset: moving to HEAD
+d3c70f963c69558cfdde69dc41d66666eaf207b5 68f6e7eb412327eb0ec88ccd151f022a25ca769c Mathias <mathias.ouanna@cnsi-sd.fr> 1683039510 +0200	checkout: moving from mathias/ticketHistorique to mathias/avisDeSouffrance
+68f6e7eb412327eb0ec88ccd151f022a25ca769c d0b1acfb4c196e9f46db47621bef56b93ef30a8e Mathias <mathias.ouanna@cnsi-sd.fr> 1683041014 +0200	commit: mise en place api + refacto comment first or create function
+d0b1acfb4c196e9f46db47621bef56b93ef30a8e d3c70f963c69558cfdde69dc41d66666eaf207b5 Mathias <mathias.ouanna@cnsi-sd.fr> 1683616618 +0200	checkout: moving from mathias/avisDeSouffrance to mathias/ticketHistorique
+d3c70f963c69558cfdde69dc41d66666eaf207b5 d0b1acfb4c196e9f46db47621bef56b93ef30a8e Mathias <mathias.ouanna@cnsi-sd.fr> 1683616835 +0200	checkout: moving from mathias/ticketHistorique to mathias/avisDeSouffrance
+d0b1acfb4c196e9f46db47621bef56b93ef30a8e 68f6e7eb412327eb0ec88ccd151f022a25ca769c Mathias <mathias.ouanna@cnsi-sd.fr> 1683617239 +0200	checkout: moving from mathias/avisDeSouffrance to master
+68f6e7eb412327eb0ec88ccd151f022a25ca769c 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1683617241 +0200	pull --progress origin: Fast-forward
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 d0b1acfb4c196e9f46db47621bef56b93ef30a8e Mathias <mathias.ouanna@cnsi-sd.fr> 1683617251 +0200	checkout: moving from master to mathias/avisDeSouffrance
+d0b1acfb4c196e9f46db47621bef56b93ef30a8e 4727e6e7c87d98f12b70ed709846d6e78a8de4fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683617257 +0200	merge master: Merge made by the 'recursive' strategy.
+4727e6e7c87d98f12b70ed709846d6e78a8de4fa 4727e6e7c87d98f12b70ed709846d6e78a8de4fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683622418 +0200	reset: moving to HEAD
+4727e6e7c87d98f12b70ed709846d6e78a8de4fa d3c70f963c69558cfdde69dc41d66666eaf207b5 Mathias <mathias.ouanna@cnsi-sd.fr> 1683622418 +0200	checkout: moving from mathias/avisDeSouffrance to mathias/ticketHistorique
+d3c70f963c69558cfdde69dc41d66666eaf207b5 a21b96f54976d4c4b36488fc6be8ad5945e9e124 Mathias <mathias.ouanna@cnsi-sd.fr> 1683622565 +0200	commit: Update Ticket.php
+a21b96f54976d4c4b36488fc6be8ad5945e9e124 4727e6e7c87d98f12b70ed709846d6e78a8de4fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683622632 +0200	checkout: moving from mathias/ticketHistorique to mathias/avisDeSouffrance
+4727e6e7c87d98f12b70ed709846d6e78a8de4fa 4727e6e7c87d98f12b70ed709846d6e78a8de4fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683622681 +0200	reset: moving to HEAD
+4727e6e7c87d98f12b70ed709846d6e78a8de4fa a21b96f54976d4c4b36488fc6be8ad5945e9e124 Mathias <mathias.ouanna@cnsi-sd.fr> 1683622681 +0200	checkout: moving from mathias/avisDeSouffrance to mathias/ticketHistorique
+a21b96f54976d4c4b36488fc6be8ad5945e9e124 1e96e82753f74069a188990b6a362d923fb9b041 Mathias <mathias.ouanna@cnsi-sd.fr> 1683622744 +0200	commit: Update User.php
+1e96e82753f74069a188990b6a362d923fb9b041 4727e6e7c87d98f12b70ed709846d6e78a8de4fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683623005 +0200	checkout: moving from mathias/ticketHistorique to mathias/avisDeSouffrance
+4727e6e7c87d98f12b70ed709846d6e78a8de4fa fff908573820ffdba57ae1d7edabb6d6192b449e Mathias <mathias.ouanna@cnsi-sd.fr> 1683623509 +0200	commit: Avis de souffrance V1
+fff908573820ffdba57ae1d7edabb6d6192b449e fff908573820ffdba57ae1d7edabb6d6192b449e Mathias <mathias.ouanna@cnsi-sd.fr> 1683645087 +0200	reset: moving to HEAD
+fff908573820ffdba57ae1d7edabb6d6192b449e 1e96e82753f74069a188990b6a362d923fb9b041 Mathias <mathias.ouanna@cnsi-sd.fr> 1683645087 +0200	checkout: moving from mathias/avisDeSouffrance to mathias/ticketHistorique
+1e96e82753f74069a188990b6a362d923fb9b041 1e96e82753f74069a188990b6a362d923fb9b041 Mathias <mathias.ouanna@cnsi-sd.fr> 1683645248 +0200	reset: moving to HEAD
+1e96e82753f74069a188990b6a362d923fb9b041 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1683645248 +0200	checkout: moving from mathias/ticketHistorique to master
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 1e96e82753f74069a188990b6a362d923fb9b041 Mathias <mathias.ouanna@cnsi-sd.fr> 1683645253 +0200	checkout: moving from master to mathias/ticketHistorique
+1e96e82753f74069a188990b6a362d923fb9b041 b7a341a42404ff0e973375e5635e5c794dc74ecd Mathias <mathias.ouanna@cnsi-sd.fr> 1683645259 +0200	commit: Update historiques.md
+b7a341a42404ff0e973375e5635e5c794dc74ecd fff908573820ffdba57ae1d7edabb6d6192b449e Mathias <mathias.ouanna@cnsi-sd.fr> 1683645502 +0200	checkout: moving from mathias/ticketHistorique to mathias/avisDeSouffrance
+fff908573820ffdba57ae1d7edabb6d6192b449e bc6a92bd2f4702172b002652e4d072a8f6bdf9fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683645519 +0200	commit: start docs
+bc6a92bd2f4702172b002652e4d072a8f6bdf9fa b7a341a42404ff0e973375e5635e5c794dc74ecd Mathias <mathias.ouanna@cnsi-sd.fr> 1683702922 +0200	checkout: moving from mathias/avisDeSouffrance to mathias/ticketHistorique
+b7a341a42404ff0e973375e5635e5c794dc74ecd bfe3b5b13c8ece34dca0816286dbfa19aa1477b2 Mathias <mathias.ouanna@cnsi-sd.fr> 1683703041 +0200	commit: delete comment if/else
+bfe3b5b13c8ece34dca0816286dbfa19aa1477b2 610682399e12e2e25d3b164b9d0e1ec0bf3e49e4 Mathias <mathias.ouanna@cnsi-sd.fr> 1683703117 +0200	commit: delete ticketHistory import
+610682399e12e2e25d3b164b9d0e1ec0bf3e49e4 6622e2b01ac2b023ce5cbfc08ed54b8429b6af05 Mathias <mathias.ouanna@cnsi-sd.fr> 1683704357 +0200	commit: historicals to histories
+6622e2b01ac2b023ce5cbfc08ed54b8429b6af05 9199b51efa2dd92d317cf6401b6b8ade5a4577ab Mathias <mathias.ouanna@cnsi-sd.fr> 1683704389 +0200	commit: delete select on query
+9199b51efa2dd92d317cf6401b6b8ade5a4577ab d779c1c3dc55107cf3639db79d46a9edda8d1e5b Mathias <mathias.ouanna@cnsi-sd.fr> 1683707224 +0200	commit: last modiff
+d779c1c3dc55107cf3639db79d46a9edda8d1e5b bc6a92bd2f4702172b002652e4d072a8f6bdf9fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683707955 +0200	checkout: moving from mathias/ticketHistorique to mathias/avisDeSouffrance
+bc6a92bd2f4702172b002652e4d072a8f6bdf9fa bc6a92bd2f4702172b002652e4d072a8f6bdf9fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683713178 +0200	reset: moving to HEAD
+bc6a92bd2f4702172b002652e4d072a8f6bdf9fa 4ea49e4f434022284a69198b6ebfbb92b98cb413 Mathias <mathias.ouanna@cnsi-sd.fr> 1683713178 +0200	checkout: moving from mathias/avisDeSouffrance to mathias/connexionMailTkg
+4ea49e4f434022284a69198b6ebfbb92b98cb413 43c4712360d5d456af88976da3cf9ed22b0e62c2 Mathias <mathias.ouanna@cnsi-sd.fr> 1683713186 +0200	merge master: Merge made by the 'recursive' strategy.
+43c4712360d5d456af88976da3cf9ed22b0e62c2 d779c1c3dc55107cf3639db79d46a9edda8d1e5b Mathias <mathias.ouanna@cnsi-sd.fr> 1683713212 +0200	checkout: moving from mathias/connexionMailTkg to mathias/ticketHistorique
+d779c1c3dc55107cf3639db79d46a9edda8d1e5b 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1683714859 +0200	checkout: moving from mathias/ticketHistorique to master
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1683714890 +0200	checkout: moving from master to mathias/messageAutoLivraisonPremium
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1683715946 +0200	reset: moving to HEAD
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 43c4712360d5d456af88976da3cf9ed22b0e62c2 Mathias <mathias.ouanna@cnsi-sd.fr> 1683715946 +0200	checkout: moving from mathias/messageAutoLivraisonPremium to mathias/connexionMailTkg
+43c4712360d5d456af88976da3cf9ed22b0e62c2 43c4712360d5d456af88976da3cf9ed22b0e62c2 Mathias <mathias.ouanna@cnsi-sd.fr> 1683720783 +0200	reset: moving to HEAD
+43c4712360d5d456af88976da3cf9ed22b0e62c2 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1683720783 +0200	checkout: moving from mathias/connexionMailTkg to mathias/messageAutoLivraisonPremium
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1683728282 +0200	reset: moving to HEAD
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 43c4712360d5d456af88976da3cf9ed22b0e62c2 Mathias <mathias.ouanna@cnsi-sd.fr> 1683728282 +0200	checkout: moving from mathias/messageAutoLivraisonPremium to mathias/connexionMailTkg
+43c4712360d5d456af88976da3cf9ed22b0e62c2 43c4712360d5d456af88976da3cf9ed22b0e62c2 Mathias <mathias.ouanna@cnsi-sd.fr> 1683875963 +0200	reset: moving to HEAD
+43c4712360d5d456af88976da3cf9ed22b0e62c2 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1683875963 +0200	checkout: moving from mathias/connexionMailTkg to mathias/messageAutoLivraisonPremium
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1683881712 +0200	reset: moving to HEAD
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 43c4712360d5d456af88976da3cf9ed22b0e62c2 Mathias <mathias.ouanna@cnsi-sd.fr> 1683881712 +0200	checkout: moving from mathias/messageAutoLivraisonPremium to mathias/connexionMailTkg
+43c4712360d5d456af88976da3cf9ed22b0e62c2 720e212437abebe91af4e5e226542ba3984e7ead Mathias <mathias.ouanna@cnsi-sd.fr> 1684221898 +0200	commit: refacto connexion mail
+720e212437abebe91af4e5e226542ba3984e7ead 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1684221938 +0200	checkout: moving from mathias/connexionMailTkg to mathias/messageAutoLivraisonPremium
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1684234661 +0200	reset: moving to HEAD
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 720e212437abebe91af4e5e226542ba3984e7ead Mathias <mathias.ouanna@cnsi-sd.fr> 1684234661 +0200	checkout: moving from mathias/messageAutoLivraisonPremium to mathias/connexionMailTkg
+720e212437abebe91af4e5e226542ba3984e7ead 720e212437abebe91af4e5e226542ba3984e7ead Mathias <mathias.ouanna@cnsi-sd.fr> 1684239024 +0200	reset: moving to HEAD
+720e212437abebe91af4e5e226542ba3984e7ead 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1684239024 +0200	checkout: moving from mathias/connexionMailTkg to mathias/messageAutoLivraisonPremium
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1684239058 +0200	reset: moving to HEAD
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 720e212437abebe91af4e5e226542ba3984e7ead Mathias <mathias.ouanna@cnsi-sd.fr> 1684239058 +0200	checkout: moving from mathias/messageAutoLivraisonPremium to mathias/connexionMailTkg
+720e212437abebe91af4e5e226542ba3984e7ead 5f5221cb5dabdf60ebe8f27f4d510bdf19796745 Mathias <mathias.ouanna@cnsi-sd.fr> 1684239071 +0200	checkout: moving from mathias/connexionMailTkg to mathias/messageAutoLivraisonPremium
+5f5221cb5dabdf60ebe8f27f4d510bdf19796745 83011380b5d1ec4d9c2032a56253448c60186683 Mathias <mathias.ouanna@cnsi-sd.fr> 1684321007 +0200	commit: commit reff for github
+83011380b5d1ec4d9c2032a56253448c60186683 17dcc4815b66d3cdac7b80f6a0d0df605db34eff Mathias <mathias.ouanna@cnsi-sd.fr> 1684321036 +0200	checkout: moving from mathias/messageAutoLivraisonPremium to master
+17dcc4815b66d3cdac7b80f6a0d0df605db34eff 83011380b5d1ec4d9c2032a56253448c60186683 Mathias <mathias.ouanna@cnsi-sd.fr> 1684326554 +0200	checkout: moving from master to mathias/messageAutoLivraisonPremium
+83011380b5d1ec4d9c2032a56253448c60186683 83011380b5d1ec4d9c2032a56253448c60186683 Mathias <mathias.ouanna@cnsi-sd.fr> 1684336335 +0200	reset: moving to HEAD
+83011380b5d1ec4d9c2032a56253448c60186683 17dcc4815b66d3cdac7b80f6a0d0df605db34eff Mathias <mathias.ouanna@cnsi-sd.fr> 1684336335 +0200	checkout: moving from mathias/messageAutoLivraisonPremium to master

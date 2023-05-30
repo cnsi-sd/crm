@@ -1,0 +1,11 @@
+0000000000000000000000000000000000000000 4a008a8fd1d6a60521e557e01ef09b8f6d26df53 Mathias <mathias.ouanna@cnsi-sd.fr> 1681303818 +0200	branch: Created from master
+4a008a8fd1d6a60521e557e01ef09b8f6d26df53 4933dc519a5ebe4c5468105b973c9190ee3a1568 Mathias <mathias.ouanna@cnsi-sd.fr> 1681312314 +0200	commit: WIP: connexion mail tkg
+4933dc519a5ebe4c5468105b973c9190ee3a1568 2dfeb9012be195d6b0392e9632b16a329d97898d Mathias <mathias.ouanna@cnsi-sd.fr> 1681719082 +0200	commit (merge): Merge branch 'master' into mathias/connexionMailTkg
+2dfeb9012be195d6b0392e9632b16a329d97898d cb4caa017fb93223eac5b94102669c2bb2ecebd6 Mathias <mathias.ouanna@cnsi-sd.fr> 1681814092 +0200	commit: Update AmazonImportMessage.php
+cb4caa017fb93223eac5b94102669c2bb2ecebd6 ddd35f3150c6b95ca51ca48b2c8a51a79fc7b626 Mathias <mathias.ouanna@cnsi-sd.fr> 1681831464 +0200	commit: set connexion tkg
+ddd35f3150c6b95ca51ca48b2c8a51a79fc7b626 15d6ef771e1de6e5335000806a2cdc0d8dc2d02e Mathias <mathias.ouanna@cnsi-sd.fr> 1682320941 +0200	merge master: Merge made by the 'recursive' strategy.
+15d6ef771e1de6e5335000806a2cdc0d8dc2d02e e7f7a94c1676eacc986448d6e670f22849e6b796 Mathias <mathias.ouanna@cnsi-sd.fr> 1682329440 +0200	commit: Update AbstractImportMailOAuthMessage.php
+e7f7a94c1676eacc986448d6e670f22849e6b796 5be3311b3cd348f0b7cb1ee2a66bd08eca0cfe39 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521221 +0200	commit (merge): Merge branch 'master' into mathias/connexionMailTkg
+5be3311b3cd348f0b7cb1ee2a66bd08eca0cfe39 4ea49e4f434022284a69198b6ebfbb92b98cb413 Mathias <mathias.ouanna@cnsi-sd.fr> 1682521417 +0200	commit (merge): Merge branch 'master' into mathias/connexionMailTkg
+4ea49e4f434022284a69198b6ebfbb92b98cb413 43c4712360d5d456af88976da3cf9ed22b0e62c2 Mathias <mathias.ouanna@cnsi-sd.fr> 1683713186 +0200	merge master: Merge made by the 'recursive' strategy.
+43c4712360d5d456af88976da3cf9ed22b0e62c2 720e212437abebe91af4e5e226542ba3984e7ead Mathias <mathias.ouanna@cnsi-sd.fr> 1684221898 +0200	commit: refacto connexion mail

@@ -3,7 +3,8 @@
 namespace App\Console\Commands\ImportMessages;
 
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
-use App\Jobs\SendMessage\AbstractSendMessage;
+use App\Helpers\Tools;
+use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
 use App\Models\Channel\DefaultAnswer;
 use App\Models\Ticket\Message;
@@ -24,7 +25,9 @@ abstract class AbstractImportMessages extends Command
     protected $description = 'Importing messages from Marketplace.';
 
     abstract protected function getCredentials(): array;
+
     abstract protected function initApiClient();
+
     abstract protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []);
 
     /**
@@ -55,10 +58,46 @@ abstract class AbstractImportMessages extends Command
     {
         $startDateFormat = "Y-m-d H:i:s";
         $starter_date = DateTime::createFromFormat($startDateFormat, env('STARTER_DATE_CRM'));
-        if(!$starter_date)
+        if (!$starter_date)
             throw new Exception('The environment variable isn\'t in the correct format or does not exist (expected format : ' . $startDateFormat . ')');
 
         return $starter_date < $messageDate;
+    }
+
+    protected function premiumDeliveryAutoReply(string $subject, Thread $thread)
+    {
+        $tigger_coditions = [
+            'prestationpremiumpaye',
+            'installation',
+            'livraisonetage',
+            'piedducamion',
+            'escalier',
+            'déballage',
+            'repriseecotaxe',
+            'repriseancienproduit'
+        ];
+
+        foreach ($tigger_coditions as $tigger_codition) {
+            $normalizedSubject = Tools::normalize($subject);
+
+            if (str_contains($normalizedSubject, $tigger_codition)) {
+                $defaultAnswer = DefaultAnswer::findOrFail(setting('message.prestaPremium'));
+                $messageQuerycount = Message::query()->where("thread_id", $thread->id)->where("content", $defaultAnswer->content)->count();
+                if ($messageQuerycount == 0) {
+                    $message = Message::firstOrCreate([
+                        'thread_id' => $thread->id,
+                        'content' => strip_tags($defaultAnswer->content)
+                    ],
+                        [
+                            'channel_message_number' => null,
+                            'user_id' => null,
+                            'author_type' => TicketMessageAuthorTypeEnum::SYSTEM,
+                        ]
+                    );
+                    AnswerToNewMessage::dispatch($message);
+                }
+            }
+        }
     }
 }
 

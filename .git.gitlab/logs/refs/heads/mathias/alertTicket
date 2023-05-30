@@ -1,0 +1,10 @@
+0000000000000000000000000000000000000000 df4a070b31d68737607579e2b8d7c191eca0b16b Mathias <mathias.ouanna@cnsi-sd.fr> 1677081333 +0100	branch: Created from mathias/integration-api-cdiscount
+df4a070b31d68737607579e2b8d7c191eca0b16b 4b87eca8a085624b3076a514763a08126a209830 Mathias <mathias.ouanna@cnsi-sd.fr> 1677081702 +0100	commit: start ticket alert
+4b87eca8a085624b3076a514763a08126a209830 e32add9f3e946673dc9ba87d002db6ab7afd70f4 Mathias <mathias.ouanna@cnsi-sd.fr> 1677081757 +0100	pull --progress origin: Fast-forward
+e32add9f3e946673dc9ba87d002db6ab7afd70f4 55fcb1d4ffa6df1b65625b8816e58f266390884a Mathias <mathias.ouanna@cnsi-sd.fr> 1677572209 +0100	commit: alerte Ticket V1 + modiff tag
+55fcb1d4ffa6df1b65625b8816e58f266390884a 1cd202b3277eda8e77786cfbccceb9857f2c24e9 Mathias <mathias.ouanna@cnsi-sd.fr> 1677572292 +0100	commit: modiff gitignore
+1cd202b3277eda8e77786cfbccceb9857f2c24e9 4a05c1e1d16c5cb579df7ce8f1e3739b9da2df21 Mathias <mathias.ouanna@cnsi-sd.fr> 1677572388 +0100	commit (merge): Merge branch 'master' into mathias/alertTicket
+4a05c1e1d16c5cb579df7ce8f1e3739b9da2df21 ae30500d96d8bff30be164e5c989018ae75b5fc1 Mathias <mathias.ouanna@cnsi-sd.fr> 1677573983 +0100	commit: all alerte v2
+ae30500d96d8bff30be164e5c989018ae75b5fc1 f7cd2a4aa7dda5bf78f30e5bec845ae6547d5b2a Mathias <mathias.ouanna@cnsi-sd.fr> 1678092110 +0100	commit: helper CSVGenerator to Package
+f7cd2a4aa7dda5bf78f30e5bec845ae6547d5b2a ef57bd5faac12f0a5812480139e06e9df810349f Mathias <mathias.ouanna@cnsi-sd.fr> 1678093582 +0100	commit (merge): Merge branch 'master' into mathias/alertTicket
+ef57bd5faac12f0a5812480139e06e9df810349f 275d600b8c329b7d3c105d352d4a85b2dd0459ee Mathias <mathias.ouanna@cnsi-sd.fr> 1678093608 +0100	commit: export tag on parts file

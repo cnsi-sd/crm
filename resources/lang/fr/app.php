@@ -278,6 +278,11 @@ return [
 
             'late_order_tag' => 'Tag retard de préparation',
         ],
+
+        'premium_delivery' => [
+            'premium_delivery' => 'Livraison premium',
+            'premium_reply'    => 'Réponse à envoyer : Prestation premium'
+        ]
     ],
 
     'default_answer' => [

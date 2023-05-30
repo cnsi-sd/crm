@@ -127,6 +127,8 @@ class AmazonImportMessage extends AbstractImportMailMessages
             default:
                 $this->importMessageByThread($ticket, $thread, $email);
         }
+        $this->premiumDeliveryAutoReply($email->subject, $thread);
+
         $this->logger->info('--- end import email');
     }
 
@@ -152,8 +154,12 @@ class AmazonImportMessage extends AbstractImportMailMessages
     protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []): void
     {
         $this->logger->info('Retrieve message from email');
-        $infoMail = $message_api_api->textHtml;
-        $message = AmazonBeautifierMail::getCustomerMessage($infoMail);
+        if(!$message_api_api->textPlain){
+            $infoMail = $message_api_api->textHtml;
+            $message = AmazonBeautifierMail::getCustomerMessage($infoMail);
+        } else {
+            $message = $message_api_api->textPlain;
+        }
 
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::OPENED;

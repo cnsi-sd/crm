@@ -1,0 +1,13 @@
+0000000000000000000000000000000000000000 484a131166d8f524f123a47ee650c9399ce37f70 Mathias <mathias.ouanna@cnsi-sd.fr> 1668610743 +0100	branch: Created from develop
+484a131166d8f524f123a47ee650c9399ce37f70 2f03b8f31b8954d3bce9ef1a6719d491032defed Mathias <mathias.ouanna@cnsi-sd.fr> 1668612804 +0100	commit: make import message and add in db
+2f03b8f31b8954d3bce9ef1a6719d491032defed c813c4620186ef2cec7a6f0efda0e5ceabf747e7 Mathias <mathias.ouanna@cnsi-sd.fr> 1668614546 +0100	commit: start generique import
+c813c4620186ef2cec7a6f0efda0e5ceabf747e7 fd04eadf1985be95ff91d09d673a789c089b494f Mathias <mathias.ouanna@cnsi-sd.fr> 1669043162 +0100	commit (merge): Merge branch '1-ticket-616208-crm-installation-template-hyper-creative' into mathias/importShowroomprivee
+fd04eadf1985be95ff91d09d673a789c089b494f 95a06112d5e1b5663d73c2f7b72276d1ee1d0b11 Mathias <mathias.ouanna@cnsi-sd.fr> 1669045974 +0100	commit: add enum
+95a06112d5e1b5663d73c2f7b72276d1ee1d0b11 a289fa271de20b2f3b71b271505b900912bfff47 Mathias <mathias.ouanna@cnsi-sd.fr> 1669113037 +0100	commit: import showroom messages
+a289fa271de20b2f3b71b271505b900912bfff47 25f638351d5ff62b30f2714a9ce2178a248a66d5 Mathias <mathias.ouanna@cnsi-sd.fr> 1669116647 +0100	commit: UPDATE ENUM
+25f638351d5ff62b30f2714a9ce2178a248a66d5 53ae63890b93dcb16d6d63457a5e0f54f0c5d735 Mathias <mathias.ouanna@cnsi-sd.fr> 1669133390 +0100	commit: make list mirakl import message
+53ae63890b93dcb16d6d63457a5e0f54f0c5d735 93580cb8987db0b8e6258cd9af65edd787250fe7 Mathias <mathias.ouanna@cnsi-sd.fr> 1669736484 +0100	commit: mirakl import message
+93580cb8987db0b8e6258cd9af65edd787250fe7 86d0133fd9bb3e0f4edbc926b8901fcb460b4064 Mathias <mathias.ouanna@cnsi-sd.fr> 1669798451 +0100	commit: resolve thread of merge request
+86d0133fd9bb3e0f4edbc926b8901fcb460b4064 af06691dd7a8249b0b484fb687aa63cbf85c387b Mathias <mathias.ouanna@cnsi-sd.fr> 1669799476 +0100	commit: Delete app.php
+af06691dd7a8249b0b484fb687aa63cbf85c387b 2405b84baf1fc8925d336f0ace0f55b3a7d24eb5 Mathias <mathias.ouanna@cnsi-sd.fr> 1669799515 +0100	commit (merge): Merge branch '1-ticket-616208-crm-installation-template-hyper-creative' into mathias/importShowroomprivee
+2405b84baf1fc8925d336f0ace0f55b3a7d24eb5 affa6148344ef68f24a9b8c242ec32cfc09f0ad1 Mathias <mathias.ouanna@cnsi-sd.fr> 1669803617 +0100	commit: conflit merge resolve and add mail translator

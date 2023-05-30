@@ -141,6 +141,10 @@ Breadcrumbs::for('bot_shipping_information', function (BreadcrumbTrail $trail) {
     $trail->parent('bot_home');
     $trail->push(__('app.bot.shipping_information.shipping_information'), route('bot_shipping_information'));
 });
+Breadcrumbs::for('bot_premium_delivery', function (BreadcrumbTrail $trail) {
+    $trail->parent('bot_home');
+    $trail->push(__('app.bot.premium_delivery.premium_delivery'), route('bot_premium_delivery'));
+});
 
 /** Misc Config */
 Breadcrumbs::for('misc_home', function (BreadcrumbTrail $trail) {

@@ -1,0 +1,4 @@
+0000000000000000000000000000000000000000 0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa Mathias <mathias.ouanna@cnsi-sd.fr> 1672761979 +0100	branch: Created from mathias/sendReplyOnTicket
+0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa 49f53c15866b5e791c218ae4d200de6a58c088e8 Mathias <mathias.ouanna@cnsi-sd.fr> 1672761994 +0100	commit: start send type
+49f53c15866b5e791c218ae4d200de6a58c088e8 91685bac379ee2d88fd6cfbb3da74be52deb635b Mathias <mathias.ouanna@cnsi-sd.fr> 1673270352 +0100	commit: send reply sms type
+91685bac379ee2d88fd6cfbb3da74be52deb635b 6fdb73222189cda54585bc480cc8ac9a28a68950 Mathias <mathias.ouanna@cnsi-sd.fr> 1673278756 +0100	commit: send type

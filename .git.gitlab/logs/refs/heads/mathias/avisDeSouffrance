@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 68f6e7eb412327eb0ec88ccd151f022a25ca769c Mathias <mathias.ouanna@cnsi-sd.fr> 1683039396 +0200	branch: Created from master
+68f6e7eb412327eb0ec88ccd151f022a25ca769c d0b1acfb4c196e9f46db47621bef56b93ef30a8e Mathias <mathias.ouanna@cnsi-sd.fr> 1683041014 +0200	commit: mise en place api + refacto comment first or create function
+d0b1acfb4c196e9f46db47621bef56b93ef30a8e 4727e6e7c87d98f12b70ed709846d6e78a8de4fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683617257 +0200	merge master: Merge made by the 'recursive' strategy.
+4727e6e7c87d98f12b70ed709846d6e78a8de4fa fff908573820ffdba57ae1d7edabb6d6192b449e Mathias <mathias.ouanna@cnsi-sd.fr> 1683623509 +0200	commit: Avis de souffrance V1
+fff908573820ffdba57ae1d7edabb6d6192b449e bc6a92bd2f4702172b002652e4d072a8f6bdf9fa Mathias <mathias.ouanna@cnsi-sd.fr> 1683645519 +0200	commit: start docs

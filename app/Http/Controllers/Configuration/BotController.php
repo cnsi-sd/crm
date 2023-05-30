@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Configuration;
 
 use App\Helpers\Alert;
 use App\Http\Controllers\AbstractController;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -61,5 +63,19 @@ class BotController extends AbstractController
         }
 
         return view('configuration.bot.shipping_information');
+    }
+
+    public function premium_delivery(Request $request): View|RedirectResponse
+    {
+        if ($request->exists('save')) {
+            setting(['bot.premium_delivery.active' => $request->has('active')]);
+            setting(['bot.premium_delivery.premium_reply' => $request->has('premium_reply_id')]);
+
+            setting()->save();
+
+            Alert::toastSuccess(__('app.bot.saved'));
+            return redirect()->route('bot_premium_delivery');
+        }
+        return view('configuration.bot.premiumDelivery');
     }
 }

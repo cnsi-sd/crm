@@ -1,0 +1,10 @@
+0000000000000000000000000000000000000000 51a5fac08cdafe1607d970e3e47ae5906f860cc9 Mathias <mathias.ouanna@cnsi-sd.fr> 1672216287 +0100	branch: Created from mathias/Ticket#616553-Relances-auto
+51a5fac08cdafe1607d970e3e47ae5906f860cc9 8e602f05a71eca5885c50715926b85138d176ecf Mathias <mathias.ouanna@cnsi-sd.fr> 1672216377 +0100	merge mathias/Ticket#616553-Relances-auto: Fast-forward
+8e602f05a71eca5885c50715926b85138d176ecf 00d40a9a3072812390584f70ca758ccff4c679e5 Mathias <mathias.ouanna@cnsi-sd.fr> 1672216875 +0100	commit (merge): Merge branch '2-ticket-616274-crm-interface-tous-les-tickets' into mathias/sendReplyOnTicket
+00d40a9a3072812390584f70ca758ccff4c679e5 322a58fa73fce90e0fe85f497eb02a0b88574a56 Mathias <mathias.ouanna@cnsi-sd.fr> 1672242948 +0100	commit: resolve conflit | Threads X Revival front&back | refacto fonction throwable
+322a58fa73fce90e0fe85f497eb02a0b88574a56 7887df977cb97bfe32d45f7f1dcd3eb177cb357a Mathias <mathias.ouanna@cnsi-sd.fr> 1672389075 +0100	commit: première modification
+7887df977cb97bfe32d45f7f1dcd3eb177cb357a 87345a194dab8d1ee0636c48fd3ec132683040dc Mathias <mathias.ouanna@cnsi-sd.fr> 1672408021 +0100	commit: lastest change
+87345a194dab8d1ee0636c48fd3ec132683040dc d1c7881df8ae84eddae17af0c51075d0d3ed8557 Mathias <mathias.ouanna@cnsi-sd.fr> 1672757476 +0100	merge mathias/DBSafeCommand: Fast-forward
+d1c7881df8ae84eddae17af0c51075d0d3ed8557 0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa Mathias <mathias.ouanna@cnsi-sd.fr> 1672757857 +0100	commit: Update AbstractMiraklImportMessage.php
+0ba3c9d9e83c2a82e6290a8e72d3231db1a4eafa 6fdb73222189cda54585bc480cc8ac9a28a68950 Mathias <mathias.ouanna@cnsi-sd.fr> 1673278783 +0100	merge mathias/send_type: Fast-forward
+6fdb73222189cda54585bc480cc8ac9a28a68950 e5e51d9f843dcb68824f0c502cb6506c1e2c6719 Mathias <mathias.ouanna@cnsi-sd.fr> 1673280208 +0100	commit: Update AbstractMiraklImportMessage.php

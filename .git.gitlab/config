@@ -1,0 +1,146 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = ssh://git@git.cnsi-sd.net:2222/RoyalPriceTeam/crm.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[branch "develop"]
+	remote = origin
+	merge = refs/heads/develop
+[branch "mathias/importShowroomprivee"]
+	remote = origin
+	merge = refs/heads/mathias/importShowroomprivee
+[branch "1-ticket-616208-crm-installation-template-hyper-creative"]
+	remote = origin
+	merge = refs/heads/1-ticket-616208-crm-installation-template-hyper-creative
+[branch "mathias/reponseParDefault"]
+	remote = origin
+	merge = refs/heads/mathias/reponseParDefault
+[branch "cnsi/logger/setup"]
+	remote = origin
+	merge = refs/heads/cnsi/logger/setup
+[branch "mathias/ticket#616435-CRM]-Permissions"]
+	remote = origin
+	merge = "refs/heads/mathias/ticket#616435-CRM]-Permissions"
+[branch "mathias/displayed-last-thread"]
+	remote = origin
+	merge = refs/heads/mathias/displayed-last-thread
+[branch "mathias/Ticket#616553-Relances-auto"]
+	remote = origin
+	merge = "refs/heads/mathias/Ticket#616553-Relances-auto"
+[branch "mathias/sendReplyOnTicket"]
+	remote = origin
+	merge = refs/heads/mathias/sendReplyOnTicket
+[branch "2-ticket-616274-crm-interface-tous-les-tickets"]
+	remote = origin
+	merge = refs/heads/2-ticket-616274-crm-interface-tous-les-tickets
+[branch "mathias/autoReply"]
+	remote = origin
+	merge = refs/heads/mathias/autoReply
+[branch "mathias/DBSafeCommand"]
+	remote = origin
+	merge = refs/heads/mathias/DBSafeCommand
+[branch "mathias/send_type"]
+	remote = origin
+	merge = refs/heads/mathias/send_type
+[branch "mathias/Tags"]
+	remote = origin
+	merge = refs/heads/mathias/Models-tags
+[branch "testmerge"]
+	remote = origin
+	merge = refs/heads/testmerge
+[branch "mathias/integration-api-cdiscount"]
+	remote = origin
+	merge = refs/heads/mathias/integration-api-cdiscount
+[branch "Ticket#616705-CRM-Fnac-Send-Message"]
+	remote = origin
+	merge = "refs/heads/Ticket#616705-CRM-Fnac-Send-Message"
+[branch "mathias/alertTicket"]
+	remote = origin
+	merge = refs/heads/mathias/alertTicket
+[branch "mathias/amazon"]
+	remote = origin
+	merge = refs/heads/mathias/amazon
+[branch "mathias/defaultAnswersXChannels"]
+	remote = origin
+	merge = refs/heads/mathias/defaultAnswersXChannels
+[branch "mathias/DefaultAnswerTexteArea"]
+	remote = origin
+	merge = refs/heads/mathias/DefaultAnswerTexteArea
+[branch "mathias/addTagOnThread"]
+	remote = origin
+	merge = refs/heads/mathias/addTagOnThread
+[branch "mathias/infoRetourAmazon"]
+	remote = origin
+	merge = refs/heads/mathias/infoRetourAmazon
+[branch "mathias/ClickAndCall"]
+	remote = origin
+	merge = refs/heads/mathias/ClickAndCall
+[branch "mathias/AddLock"]
+	remote = origin
+	merge = refs/heads/mathias/AddLock
+[branch "mathias/UITag"]
+	remote = origin
+	merge = refs/heads/mathias/UITag
+[branch "23-doc-fonctionnalites-tags"]
+	remote = origin
+	merge = refs/heads/23-doc-fonctionnalites-tags
+[branch "mathias/importMessageNotCreatedInDB"]
+	remote = origin
+	merge = refs/heads/mathias/importMessageNotCreatedInDB
+[branch "mathias/connexionMailV2"]
+	remote = origin
+	merge = refs/heads/mathias/connexionMailV2
+[branch "31-docs-admin"]
+	remote = origin
+	merge = refs/heads/31-docs-admin
+[branch "21-doc-fonctionnalites-relances-automatiques"]
+	remote = origin
+	merge = refs/heads/21-doc-fonctionnalites-relances-automatiques
+[branch "mathias/DateMiniImport"]
+	remote = origin
+	merge = refs/heads/mathias/DateMiniImport
+[branch "mathias/AddTagEndRevival"]
+	remote = origin
+	merge = refs/heads/mathias/AddTagEndRevival
+[branch "mathias/tagsXchannel"]
+	remote = origin
+	merge = refs/heads/mathias/tagsXchannel
+[branch "mathias/ticket-addTag"]
+	remote = origin
+	merge = refs/heads/mathias/ticket-addTag
+[branch "18-doc-bases-qu-est-ce-qu-un-ticket"]
+	remote = origin
+	merge = refs/heads/18-doc-bases-qu-est-ce-qu-un-ticket
+[branch "mathias/bugTagList"]
+	remote = origin
+	merge = refs/heads/mathias/bugTagList
+[branch "mathias/relanceAutov2"]
+	remote = origin
+	merge = refs/heads/mathias/relanceAutov2
+[branch "mathias/relanceAutoV3"]
+	remote = origin
+	merge = refs/heads/mathias/relanceAutoV3
+[branch "mathias/connexionMailTkg"]
+	remote = origin
+	merge = refs/heads/mathias/connexionMailTkg
+[branch "mathias/ajaxRevival"]
+	remote = origin
+	merge = refs/heads/mathias/ajaxRevival
+[branch "mathias/ticketHistorique"]
+	remote = origin
+	merge = refs/heads/mathias/ticketHistorique
+[branch "mathias/avisDeSouffrance"]
+	remote = origin
+	merge = refs/heads/mathias/avisDeSouffrance
+[branch "mathias/messageAutoLivraisonPremium"]
+	remote = origin
+	merge = refs/heads/mathias/messageAutoLivraisonPremium
+[remote "github"]
+	url = git@github.com:cnsi-sd/crm.git
+	fetch = +refs/heads/*:refs/remotes/github/*

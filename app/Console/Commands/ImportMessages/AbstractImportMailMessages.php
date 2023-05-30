@@ -102,7 +102,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
                 } catch (Exception $e) {
                     $this->logger->error('An error has occurred.', $e);
                     \App\Mail\Exception::sendErrorMail($e, $this->getName(), $this->description, $this->output);
-                    return;
+                    continue;
                 }
             }
         } catch (Exception $e){
