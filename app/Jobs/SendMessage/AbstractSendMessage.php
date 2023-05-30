@@ -31,7 +31,7 @@ abstract class AbstractSendMessage implements ShouldQueue
     final public function handle(): void
     {
         $this->replaceVariablesInMessages();
-//        $this->sendMessage();
+        $this->sendMessage();
     }
 
     private function replaceVariablesInMessages()

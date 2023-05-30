@@ -19,7 +19,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 {
     const SPAM_TAG = 'X-Spam-Tag';
     const SPAM_STATUS = 'X-Spam-Status';
-    const FROM_DATE_TRANSFORMATOR = ' - 2 days';
+    const FROM_DATE_TRANSFORMATOR = ' - 2 hours';
 
     const ALERT_LOCKED_SINCE = 600;
     const KILL_LOCKED_SINCE = 1200;
@@ -75,7 +75,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 
             $this->logger->info('--- Init filters ---');
             $emailIds = $this->search([
-                'ON' => $from_date,
+                'SINCE' => $from_date,
             ]);
 
             $this->logger->info('--- Get Emails details ---');

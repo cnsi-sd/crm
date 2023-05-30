@@ -26,7 +26,7 @@ class AnswerToNewMessage implements ShouldQueue
 
     private Message $message;
 
-    const DELAY = 1;
+    const DELAY = 10;
 
     public function __construct(Message $message)
     {
