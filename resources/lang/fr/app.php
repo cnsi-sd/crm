@@ -278,6 +278,12 @@ return [
 
             'late_order_tag' => 'Tag retard de préparation',
         ],
+
+        'sav' => [
+            'sav' => 'SAV',
+            'pem' => 'Message pour marque PEM/INFO ( petit colis )',
+            'gem' => 'Message pour marque GEM/TV ( gros colis )'
+        ]
     ],
 
     'default_answer' => [

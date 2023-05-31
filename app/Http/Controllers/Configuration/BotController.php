@@ -62,4 +62,8 @@ class BotController extends AbstractController
 
         return view('configuration.bot.shipping_information');
     }
+
+    public function sav(Request $request) {
+        return view('configuration.bot.sav');
+    }
 }

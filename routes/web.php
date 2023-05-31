@@ -95,6 +95,7 @@ Route::prefix('/')->group(function () {
             Route::match(['get', 'post'], 'acknowledgement', [BotController::class, 'acknowledgement'])->name('bot_acknowledgement')->can('bot_config');
             Route::match(['get', 'post'], 'invoice', [BotController::class, 'invoice'])->name('bot_invoice')->can('bot_config');
             Route::match(['get', 'post'], 'shippingInformation', [BotController::class, 'shipping_information'])->name('bot_shipping_information')->can('bot_config');
+            Route::match(['get', 'post'], 'sav', [BotController::class, 'sav'])->name('bot_sav')->can('bot_config');
         });
         Route::prefix('sav_notes')->group(function () {
             Route::match(['get', 'post'], '', [SavNoteController::class, 'list'])->name('sav_notes')->can('read', SavNote::class);
