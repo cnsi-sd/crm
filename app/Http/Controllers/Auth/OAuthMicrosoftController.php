@@ -58,6 +58,9 @@ class OAuthMicrosoftController extends AbstractController
                     ->with('error', 'Error requesting access token')
                     ->with('errorDetail', json_encode($e->getResponseBody()));
             }
+        } else {
+            return redirect('/')
+                ->with('error', 'No code fund');
         }
     }
 
