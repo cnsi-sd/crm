@@ -80,11 +80,11 @@ class AmazonImportMessage extends AbstractImportMailMessages
 
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @return bool
      * @throws Exception
      */
-    public function canImport($email): bool
+    public function canImport(EmailNormalized $email): bool
     {
         /*
          * No authorized subjects
@@ -114,10 +114,10 @@ class AmazonImportMessage extends AbstractImportMailMessages
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @return bool|string
      */
-    public function parseOrderId($email): bool|string
+    public function parseOrderId(EmailNormalized $email): bool|string
     {
         $pattern = '#(?<orderId>\d{3}-\d{7}-\d{7})#';
         preg_match($pattern, $email->getSubject(), $orderId);
@@ -136,12 +136,12 @@ class AmazonImportMessage extends AbstractImportMailMessages
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @param $mpOrder
      * @return void
      * @throws Exception
      */
-    protected function importEmail($email, $mpOrder): void
+    protected function importEmail(EmailNormalized $email, $mpOrder): void
     {
         $this->logger->info('--- start import email : ' . $email->getEmailId());
         $order = Order::getOrder($mpOrder, $this->channel);
@@ -160,10 +160,10 @@ class AmazonImportMessage extends AbstractImportMailMessages
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @return string
      */
-    protected function getSpecificActions($email): string
+    protected function getSpecificActions(EmailNormalized $email): string
     {
         $normalizedSubject = Tools::normalize($email->getSubject());
         if (str_contains($normalizedSubject, 'autorisationderetourpourlacommande'))

@@ -4,6 +4,7 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Console\Commands\ImportMessages\Connector\AmenConnector;
 use App\Console\Commands\ImportMessages\Connector\MicrosoftConnector;
+use App\Helpers\EmailNormalized;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
@@ -72,9 +73,6 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 
             $this->initApiClient();
 
-            $this->logger->info('--- Init filters ---');
-
-
             $this->logger->info('--- Get Emails details ---');
             foreach ($this->connector->getEmails($from_date) as $emailId => $email) {
                 try {
@@ -110,11 +108,11 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
 
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @return bool
      * @throws Exception
      */
-    protected function canImport($email): bool{
+    protected function canImport(EmailNormalized $email): bool{
 
         $starter_date = $this->checkMessageDate($email->getDate());
         if (!$starter_date)
@@ -148,19 +146,19 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @return bool|string
      */
-    protected function parseOrderId($email): bool|string
+    protected function parseOrderId(EmailNormalized $email): bool|string
     {
         return false;
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @return bool
      */
-    protected function isSpam($email): bool
+    protected function isSpam(EmailNormalized $email): bool
     {
         $spamSign = [self::SPAM_TAG, self::SPAM_STATUS];
         foreach ($spamSign as $spam){
@@ -173,20 +171,20 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @param string $mpOrder
      * @return void
      */
-    protected function importEmail($email, string $mpOrder): void {}
+    protected function importEmail(EmailNormalized $email, string $mpOrder): void {}
 
     /**
      * @param Ticket $ticket
      * @param Thread $thread
-     * @param $email
+     * @param EmailNormalized $email
      * @return void
      * @throws Exception
      */
-    protected function importMessageByThread(Ticket $ticket, Thread $thread, $email): void
+    protected function importMessageByThread(Ticket $ticket, Thread $thread, EmailNormalized $email): void
     {
         $this->logger->info('Check if this message is imported');
         if($this->isMessagesImported($email->getEmailId()))

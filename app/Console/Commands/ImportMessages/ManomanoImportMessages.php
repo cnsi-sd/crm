@@ -6,6 +6,7 @@ use App\Enums\Channel\ChannelEnum;
 use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
+use App\Helpers\EmailNormalized;
 use App\Helpers\TmpFile;
 use App\Jobs\Bot\AnswerToNewMessage;
 use App\Models\Channel\Channel;
@@ -67,10 +68,10 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @return bool|string
      */
-    protected function parseOrderId($email): bool|string
+    protected function parseOrderId(EmailNormalized $email): bool|string
     {
         $subject = $email->getSubject();
 

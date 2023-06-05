@@ -46,9 +46,9 @@ class OAuthMicrosoftController extends AbstractController
                 ]);
 
                 // stock $authCode en bdd
-                setting(['TKGAccessToken' => $accessToken->getToken()]);
-                setting(['TKGRefreshToken' => $accessToken->getRefreshToken()]);
-                setting(['TKGTokenExpiredTime' => $accessToken->getExpires()]);
+                setting(['MicrosoftAccessToken' => $accessToken->getToken()]);
+                setting(['MicrosoftRefreshToken' => $accessToken->getRefreshToken()]);
+                setting(['MicrosoftTokenExpiredTime' => $accessToken->getExpires()]);
                 setting()->save();
 
                 return redirect('/');

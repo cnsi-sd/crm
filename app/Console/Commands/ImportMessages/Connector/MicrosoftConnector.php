@@ -69,9 +69,9 @@ class MicrosoftConnector
                 'refresh_token' => setting('TKGRefreshToken')
             ]);
 
-            setting(['TKGAccessToken' => $accessToken->getToken()]);
-            setting(['TKGRefreshToken' => $accessToken->getRefreshToken()]);
-            setting(['TKGTokenExpiredTime' => $accessToken->getExpires()]);
+            setting(['MicrosoftGAccessToken' => $accessToken->getToken()]);
+            setting(['MicrosoftRefreshToken' => $accessToken->getRefreshToken()]);
+            setting(['MicrosoftTokenExpiredTime' => $accessToken->getExpires()]);
             setting()->save();
         }
         $this->accessToken = setting('TKGAccessToken');
