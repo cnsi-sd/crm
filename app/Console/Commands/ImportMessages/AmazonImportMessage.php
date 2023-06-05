@@ -33,7 +33,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
     const IMPORT = 'import';
     public function __construct()
     {
-        $this->signature = sprintf($this->signature, 'amazon') . ' {account?}';
+        $this->signature = sprintf($this->signature, 'amazon') . ' {account=1}';
         $this->channelName = ChannelEnum::AMAZON_FR;
         $this->reverse = true;
         parent::__construct();
@@ -46,24 +46,28 @@ class AmazonImportMessage extends AbstractImportMailMessages
     protected function getCredentials(): array
     {
         $accountNumber = $this->argument('account');
-        if (!in_array($accountNumber, [1,2,3]) && !is_null($accountNumber))
-            throw new Exception('Account not found');
 
-        $host = env('AMAZON_MAIL_URL');
-        $username = env('AMAZON_USERNAME');
-        $password = env('AMAZON_PASSWORD');
-        $client = env('AMAZON_CLIENT');
-
-        if ($accountNumber == 2){
-            $host = env('AMAZON_2_MAIL_URL');
-            $username = env('AMAZON_2_USERNAME');
-            $password = env('AMAZON_2_PASSWORD');
-            $client = env('AMAZON_2_CLIENT');
-        } elseif ($accountNumber == 3){
-            $host = env('AMAZON_3_MAIL_URL');
-            $username = env('AMAZON_3_USERNAME');
-            $password = env('AMAZON_3_PASSWORD');
-            $client = env('AMAZON_3_CLIENT');
+        switch ($accountNumber) {
+            case 1:
+                $host = env('AMAZON_MAIL_URL');
+                $username = env('AMAZON_USERNAME');
+                $password = env('AMAZON_PASSWORD');
+                $client = env('AMAZON_CLIENT');
+                break;
+            case 2:
+                $host = env('AMAZON_2_MAIL_URL');
+                $username = env('AMAZON_2_USERNAME');
+                $password = env('AMAZON_2_PASSWORD');
+                $client = env('AMAZON_2_CLIENT');
+                break;
+            case 3:
+                $host = env('AMAZON_3_MAIL_URL');
+                $username = env('AMAZON_3_USERNAME');
+                $password = env('AMAZON_3_PASSWORD');
+                $client = env('AMAZON_3_CLIENT');
+                break;
+            default:
+                throw new Exception('Account not found');
         }
 
         return [
@@ -216,7 +220,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
     private function addReturnOnTicket(Ticket $ticket, mixed $email): void
     {
         $tagId = setting('tag.retour_amazon');
-        $tag = Tag::findOrFail(146);
+        $tag = Tag::findOrFail($tagId);
         $ticket->addTag($tag);
 
         $returnComment = AmazonBeautifierMail::getReturnInformation($email->getContent());
