@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Configuration\AnswerOfferQuestionController;
 use App\Http\Controllers\Auth\OAuthMicrosoftController;
 use App\Http\Controllers\Configuration\BotController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
