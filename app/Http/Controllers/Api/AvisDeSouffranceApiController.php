@@ -41,9 +41,6 @@ class AvisDeSouffranceApiController extends AbstractApiController
             $channel = (new Channel())->getByName($request->input('channel'));
             $order = Order::getOrder($request->input('num_command'), $channel);
             $ticket = Ticket::getTicket($order, $channel);
-            Thread::getOrCreateThread($ticket,
-                Thread::DEFAULT_CHANNEL_NUMBER,
-                TicketAvisDeSouffranceTypeEnum::AVIS_DE_SOUFFRANCE . " - " . $request->input('num_command'));
             Comment::getOrCreate($ticket->id, 'Raison : ' . $request->input('message_souffrance'), TicketCommentTypeEnum::INFO_IMPORTANT);
 
             $tagId = setting('ticket.notice_of_suffering');
