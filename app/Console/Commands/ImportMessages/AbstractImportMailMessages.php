@@ -4,20 +4,14 @@ namespace App\Console\Commands\ImportMessages;
 
 use App\Console\Commands\ImportMessages\Connector\AmenConnector;
 use App\Console\Commands\ImportMessages\Connector\MicrosoftConnector;
-use App\Enums\Channel\ChannelEnum;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Lock\Lock;
 use Cnsi\Logger\Logger;
-use DateTime;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use PhpImap\Exceptions\InvalidParameterException;
-use PhpImap\IncomingMail;
-use PhpImap\Mailbox;
-use Webklex\PHPIMAP\ClientManager;
 
 abstract class AbstractImportMailMessages extends AbstractImportMessages
 {
