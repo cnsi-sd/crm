@@ -13,6 +13,7 @@ nav:
       - Import Incident : ticket/import-incident.md
       - Revival : ticket/revival.md
       - Alert ticket delay : ticket/alert-ticket-delay.md
+      - Avis de souffrance : ticket/avis-de-souffrance.md
   - Automatisation :
       - Réponses sur les offres Cdiscount : automatisation/reponses-questions-offres-cdiscount.md
       - Discussion clôturée : automatisation/discussion-cloturee.md

@@ -2,10 +2,10 @@
 
 namespace App\Models\Ticket;
 
+use App\Models\User\User;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\User\User;
 
 /**
  * @property int $id
@@ -19,19 +19,18 @@ use App\Models\User\User;
  *
  * @property Ticket $ticket
  */
-
 class Comment extends Model
 {
     protected $table = 'ticket_comments';
 
     protected $fillable = [
-      'ticket_id',
-      'user_id',
-      'content',
-      'displayed',
-      'type',
-      'created_at',
-      'updated_at'
+        'ticket_id',
+        'user_id',
+        'content',
+        'displayed',
+        'type',
+        'created_at',
+        'updated_at'
     ];
 
     public function ticket(): BelongsTo
@@ -42,5 +41,19 @@ class Comment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function getOrCreate(int $ticket_id, string $content, string $type, int|null $user_id = null)
+    {
+        return Comment::firstOrCreate(
+            [
+                'ticket_id' => $ticket_id,
+                'content' => $content
+            ],
+            [
+                'user_id' => $user_id,
+                'displayed' => 1,
+                'type' => $type,
+            ]);
     }
 }
