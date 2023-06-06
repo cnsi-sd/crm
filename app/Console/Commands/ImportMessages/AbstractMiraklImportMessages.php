@@ -179,7 +179,7 @@ abstract class AbstractMiraklImportMessages extends AbstractImportMessages
      * @param \App\Models\Ticket\Thread $thread
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $message_api, \App\Models\Ticket\Thread $thread, $attachments = [])
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, \App\Models\Ticket\Thread $thread, $attachments = []): mixed
     {
         $authorType = $message_api->getFrom()->getType();
 

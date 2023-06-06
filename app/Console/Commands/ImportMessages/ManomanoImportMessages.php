@@ -7,20 +7,14 @@ use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\EmailNormalized;
-use App\Helpers\TmpFile;
 use App\Jobs\Bot\AnswerToNewMessage;
-use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Attachments\Model\Document;
-use Cnsi\Logger\Logger;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use PhpImap\Exceptions\InvalidParameterException;
-use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 
 class ManomanoImportMessages extends AbstractImportMailMessages
@@ -50,11 +44,11 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @return bool
      * @throws Exception
      */
-    protected function canImport($email): bool
+    protected function canImport(EmailNormalized $email): bool
     {
         // Check if sender is "ne-pas-repondre@manomano.fr"
         if(str_contains($email->getSender(), 'repondre'))
@@ -84,11 +78,11 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @param string $mpOrder
      * @throws Exception
      */
-    protected function importEmail($email, string $mpOrder): void
+    protected function importEmail(EmailNormalized $email, string $mpOrder): void
     {
         $threadName = str_contains($email->getSender(), '@monechelle.zendesk.com') ? 'Support' : 'Client';
         $threadNumber = Str::before($email->getSender(), '@');
@@ -101,10 +95,10 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     }
 
     /**
-     * @param $email
+     * @param EmailNormalized $email
      * @return string
      */
-    public function getMessageContent($email): string
+    public function getMessageContent(EmailNormalized $email): string
     {
         $subject = $email->getSubject();
         if(empty($email->getTextPlain())) {
@@ -123,34 +117,38 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     }
 
     /**
-     * @throws Exception
+     * @param Ticket $ticket
+     * @param $message_api_api
+     * @param Thread $thread
+     * @param array $attachments
+     * @return mixed
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $email, Thread $thread, $attachments = []): void
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []): mixed
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        if(str_contains($email->getSender(),'support'))
+        if(str_contains($message_api_api->getSender(),'support'))
             $authorType = TicketMessageAuthorTypeEnum::OPERATOR;
         else
             $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
 
         $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
-            'channel_message_number' => $email->getEmailId(),
+            'channel_message_number' => $message_api_api->getEmailId(),
         ],
             [
                 'user_id' => null,
                 'author_type' => $authorType,
-                'content' => $this->getMessageContent($email),
+                'content' => $this->getMessageContent($message_api_api),
             ]
         );
 
-        if ($email->hasAttachments()) {
+        if ($message_api_api->hasAttachments()) {
             $this->logger->info('Download documents from message');
-            foreach ($email->getAttachments() as $attachment) {
+            foreach ($message_api_api->getAttachments() as $attachment) {
                 Document::doUpload($attachment->getTmpFile(), $message, MessageDocumentTypeEnum::OTHER, null, $attachment->getName());
             }
         }

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Connector;
+namespace App\Helpers\ImportMessages\Connector;
 
+use _PHPStan_67a5964bf\Nette\Utils\DateTime;
 use App\Helpers\EmailAttachementNormalized;
 use App\Helpers\EmailNormalized;
 use App\Helpers\TmpFile;
 use Cnsi\Logger\Logger;
-use DateTime;
+use Exception;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 class MicrosoftConnector
@@ -64,9 +65,9 @@ class MicrosoftConnector
             'scopes' => config('azure.scopes')
         ]);
 
-        if (setting('TKGAccessToken') !== null || setting('TKGTokenExpiredTime') !== null && setting('TKGTokenExpiredTime') < time()) {
+        if (setting('MicrosoftGAccessToken') !== null || setting('MicrosoftTokenExpiredTime') !== null && setting('MicrosoftTokenExpiredTime') < time()) {
             $accessToken = $oauthClient->getAccessToken('refresh_token', [
-                'refresh_token' => setting('TKGRefreshToken')
+                'refresh_token' => setting('MicrosoftRefreshToken')
             ]);
 
             setting(['MicrosoftGAccessToken' => $accessToken->getToken()]);
@@ -74,7 +75,7 @@ class MicrosoftConnector
             setting(['MicrosoftTokenExpiredTime' => $accessToken->getExpires()]);
             setting()->save();
         }
-        $this->accessToken = setting('TKGAccessToken');
+        $this->accessToken = setting('MicrosoftGAccessToken');
     }
 
     /**
@@ -82,7 +83,8 @@ class MicrosoftConnector
      */
     public function getEmails($from_date)
     {
-        $messageUrlGraph = 'https://graph.microsoft.com/v1.0/me/messages?top=100';
+        $this->logger->info('https://graph.microsoft.com/v1.0/me/messages?$search="received:' . $from_date . '"');
+        $messageUrlGraph = 'https://graph.microsoft.com/v1.0/me/messages?$search="received:' . $from_date . '"';
 
         $listEmails = [];
         $listAttachment = [];
@@ -95,44 +97,41 @@ class MicrosoftConnector
         curl_close($curl);
 
         if ($response === false) {
-            die('Erreur : ' . curl_error($curl));
+            throw new Exception('Erreur : ' . curl_error($curl));
         }
 
         $email_data = json_decode($response, true);
         if (!array_key_exists('error', $email_data)) {
             foreach ($email_data['value'] as $email) {
-                if (str_contains($email['sender']['emailAddress']['address'], 'amazon')){
+                if ($email['hasAttachments']) {
+                    $url = "https://graph.microsoft.com/v1.0/me/messages/{$email['id']}/attachments";
+                    $ch = curl_init($url);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                        "Authorization: Bearer {$this->accessToken}",
+                        "Content-Type: application/json"
+                    ));
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($ch);
+                    curl_close($ch);
 
-                    if ($email['hasAttachments']) {
-                        $url = "https://graph.microsoft.com/v1.0/me/messages/{$email['id']}/attachments";
-                        $ch = curl_init($url);
-                        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                            "Authorization: Bearer {$this->accessToken}",
-                            "Content-Type: application/json"
-                        ));
-                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                        $response = curl_exec($ch);
-                        curl_close($ch);
-
-                        $attachments = json_decode($response)->value;
-                        foreach ($attachments as $attachment) {
-                            $tmpFile = new TmpFile((string)$attachment->contentBytes);
-                            $listAttachment[] = new EmailAttachementNormalized($attachment->name, $tmpFile);
-                        }
+                    $attachments = json_decode($response)->value;
+                    foreach ($attachments as $attachment) {
+                        $tmpFile = new TmpFile((string)$attachment->contentBytes);
+                        $listAttachment[] = new EmailAttachementNormalized($attachment->name, $tmpFile);
                     }
                 }
-                $listEmails[$email['id']] = new EmailNormalized(
-                    $email['id'],
-                    new DateTime($email['receivedDateTime']),
-                    $email['sender']['emailAddress']['address'],
-                    $email['body']['content'],
-                    $email['from']['emailAddress']['address'],
-                    $email['subject'],
-                    $email['body']['content'],
-                    $listAttachment,
-                    $email['hasAttachments'],
-                );
             }
+
+            $listEmails[$email['id']] = (new EmailNormalized())
+                ->setEmailId($email['id'])
+                ->setDate(new DateTime($email['receivedDateTime']))
+                ->setSender($email['sender']['emailAddress']['address'])
+                ->setHeader($email['body']['content'])
+                ->setFromAddress($email['from']['emailAddress']['address'])
+                ->setSubject($email['subject'])
+                ->setHasAttachments($email['hasAttachments'])
+                ->setAttachments($listAttachment)
+                ->setContent($email['body']['content']);
         }
         return $listEmails;
     }

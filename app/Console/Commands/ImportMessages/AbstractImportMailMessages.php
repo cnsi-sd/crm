@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\ImportMessages;
 
-use App\Console\Commands\ImportMessages\Connector\AmenConnector;
-use App\Console\Commands\ImportMessages\Connector\MicrosoftConnector;
 use App\Helpers\EmailNormalized;
+use App\Helpers\ImportMessages\Connector\AmenConnector;
+use App\Helpers\ImportMessages\Connector\MicrosoftConnector;
 use App\Models\Channel\Channel;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
@@ -45,7 +45,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
         $this->connector = match ($credentials['client']) {
             'amen' => new AmenConnector($credentials, $this->logger),
             'microsoft' => new MicrosoftConnector($credentials, $this->logger),
-            default => throw new \Exception("Invalid client"),
+            default => throw new Exception("Invalid client"),
         };
     }
 
@@ -67,7 +67,7 @@ abstract class AbstractImportMailMessages extends AbstractImportMessages
         $this->logger->info('--- Start ---');
         try {
             $from_time = strtotime(date('d M Y H:i:s') . self::FROM_DATE_TRANSFORMATOR);
-            $from_date = date("d M Y H:i:s", $from_time);
+            $from_date = date("d/m/Y", $from_time);
 
             $this->logger->info('--- Init api client ---');
 

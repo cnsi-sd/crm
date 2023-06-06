@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Connector;
+namespace App\Helpers\ImportMessages\Connector;
 
-use _PHPStan_a3459023a\Nette\Utils\DateTime;
 use App\Helpers\EmailAttachementNormalized;
 use App\Helpers\EmailNormalized;
 use App\Helpers\TmpFile;
 use Cnsi\Logger\Logger;
+use DateTime;
 use PhpImap\Exceptions\InvalidParameterException;
 use PhpImap\Mailbox;
 
@@ -70,18 +70,17 @@ class AmenConnector
                     $listAttachment[] = new EmailAttachementNormalized($attachment->name, $tmpFile);
                 }
             }
-            $emails[$emailId] = new EmailNormalized(
-                $email->id,
-                new DateTime($email->date),
-                $email->senderAddress,
-                $email->headersRaw,
-                $email->fromAddress,
-                $email->subject,
-                $email->hasAttachments(),
-                $listAttachment,
-                $email->textHtml,
-                $email->textPlain
-            );
+            $emails[$emailId] = (new EmailNormalized())
+                ->setEmailId($email->id)
+                ->setDate(new DateTime($email->date))
+                ->setSender($email->senderAddress)
+                ->setHeader($email->headersRaw)
+                ->setFromAddress($email->fromAddress)
+                ->setSubject($email->subject)
+                ->setHasAttachments($email->hasAttachments())
+                ->setAttachments($listAttachment)
+                ->setContent($email->textHtml)
+                ->setTextPlain($email->textPlain);
         }
 
 

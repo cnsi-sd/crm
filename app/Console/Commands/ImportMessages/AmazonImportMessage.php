@@ -2,17 +2,15 @@
 
 namespace App\Console\Commands\ImportMessages;
 
-use App\Console\Commands\ImportMessages\Beautifier\AmazonBeautifierMail;
 use App\Enums\Channel\ChannelEnum;
 use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketCommentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
 use App\Helpers\EmailNormalized;
-use App\Helpers\TmpFile;
+use App\Helpers\importMessages\Beautifier\AmazonBeautifierMail;
 use App\Helpers\Tools;
 use App\Jobs\Bot\AnswerToNewMessage;
-use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Tags\Tag;
 use App\Models\Ticket\Comment;
@@ -20,12 +18,7 @@ use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Attachments\Model\Document;
-use Cnsi\Logger\Logger;
 use Exception;
-use Illuminate\Support\Facades\DB;
-use PhpImap\Exceptions\InvalidParameterException;
-use PhpImap\IncomingMail;
-use PhpImap\Mailbox;
 
 class AmazonImportMessage extends AbstractImportMailMessages
 {
@@ -86,6 +79,9 @@ class AmazonImportMessage extends AbstractImportMailMessages
      */
     public function canImport(EmailNormalized $email): bool
     {
+        if (!str_contains($email->getsender(), 'amazon'))
+            return false;
+
         /*
          * No authorized subjects
          */
@@ -177,9 +173,9 @@ class AmazonImportMessage extends AbstractImportMailMessages
      * @param EmailNormalized $message_api_api
      * @param Thread $thread
      * @param array $attachments
-     * @return void
+     * @return mixed
      */
-    protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []): void
+    protected function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []): mixed
     {
         $this->logger->info('Retrieve message from email');
         $infoMail = $message_api_api->getContent();
@@ -200,7 +196,7 @@ class AmazonImportMessage extends AbstractImportMailMessages
             ],
         );
 
-        if ($message_api_api->HasAttachments()) {
+        if ($message_api_api->hasAttachments()) {
             $this->logger->info('Download documents from message');
             foreach ($message_api_api->getAttachments() as $attachment) {
                 Document::doUpload($attachment->getTmpFile(), $message, MessageDocumentTypeEnum::OTHER, null, $attachment->getName());

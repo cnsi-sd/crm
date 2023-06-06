@@ -137,7 +137,7 @@ class FnacImportMessages extends AbstractImportMessages
     /**
      * @throws Exception
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread, $attachments = [])
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api, Thread $thread, $attachments = []): mixed
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::OPENED;

@@ -18,32 +18,6 @@ class EmailNormalized
     protected array $attachments;
 
     /**
-     * @param string $emailId
-     * @param \DateTime $date
-     * @param string $sender
-     * @param string $header
-     * @param string $fromAddress
-     * @param string $subject
-     * @param string|null $content
-     * @param bool $hasAttachments
-     * @param array $attachments
-     * @param string|null $textPlain
-     */
-    public function __construct(string $emailId, \DateTime $date, string $sender, string $header, string $fromAddress, string $subject, bool $hasAttachments, array $attachments, string|null $content = null, string|null $textPlain = null)
-    {
-        $this->emailId = $emailId;
-        $this->date = $date;
-        $this->sender = $sender;
-        $this->header = $header;
-        $this->fromAddress = $fromAddress;
-        $this->subject = $subject;
-        $this->content = $content;
-        $this->textPlain = $textPlain;
-        $this->hasAttachments = $hasAttachments;
-        $this->attachments = $attachments;
-    }
-
-    /**
      * @return string
      */
     public function getEmailId(): string
@@ -53,10 +27,12 @@ class EmailNormalized
 
     /**
      * @param string $emailId
+     * @return EmailNormalized
      */
-    public function setEmailId(string $emailId): void
+    public function setEmailId(string $emailId): EmailNormalized
     {
         $this->emailId = $emailId;
+        return $this;
     }
 
     /**
@@ -69,10 +45,12 @@ class EmailNormalized
 
     /**
      * @param \DateTime $date
+     * @return EmailNormalized
      */
-    public function setDate(\DateTime $date): void
+    public function setDate(\DateTime $date): EmailNormalized
     {
         $this->date = $date;
+        return $this;
     }
 
     /**
@@ -85,10 +63,12 @@ class EmailNormalized
 
     /**
      * @param string $sender
+     * @return EmailNormalized
      */
-    public function setSender(string $sender): void
+    public function setSender(string $sender): EmailNormalized
     {
         $this->sender = $sender;
+        return $this;
     }
 
     /**
@@ -101,10 +81,12 @@ class EmailNormalized
 
     /**
      * @param string $header
+     * @return EmailNormalized
      */
-    public function setHeader(string $header): void
+    public function setHeader(string $header): EmailNormalized
     {
         $this->header = $header;
+        return $this;
     }
 
     /**
@@ -117,10 +99,12 @@ class EmailNormalized
 
     /**
      * @param string $fromAddress
+     * @return EmailNormalized
      */
-    public function setFromAddress(string $fromAddress): void
+    public function setFromAddress(string $fromAddress): EmailNormalized
     {
         $this->fromAddress = $fromAddress;
+        return $this;
     }
 
     /**
@@ -133,10 +117,12 @@ class EmailNormalized
 
     /**
      * @param string $subject
+     * @return EmailNormalized
      */
-    public function setSubject(string $subject): void
+    public function setSubject(string $subject): EmailNormalized
     {
         $this->subject = $subject;
+        return $this;
     }
 
     /**
@@ -149,10 +135,12 @@ class EmailNormalized
 
     /**
      * @param string $content
+     * @return EmailNormalized
      */
-    public function setContent(string $content): void
+    public function setContent(string $content): EmailNormalized
     {
         $this->content = $content;
+        return $this;
     }
     /**
      * @return string
@@ -164,30 +152,34 @@ class EmailNormalized
 
     /**
      * @param string $textPlain
+     * @return EmailNormalized
      */
-    public function setTextPlain(string $textPlain): void
+    public function setTextPlain(string $textPlain): EmailNormalized
     {
         $this->textPlain = $textPlain;
+        return $this;
     }
 
     /**
      * @return bool
      */
-    public function HasAttachments(): bool
+    public function hasAttachments(): bool
     {
         return $this->hasAttachments;
     }
 
     /**
      * @param bool $hasAttachements
+     * @return EmailNormalized
      */
-    public function setHasAttachments(bool $hasAttachements): void
+    public function setHasAttachments(bool $hasAttachements): EmailNormalized
     {
         $this->hasAttachments = $hasAttachements;
+        return $this;
     }
 
     /**
-     * @return array
+     * @return EmailAttachementNormalized[]
      */
     public function getAttachments(): array
     {
@@ -196,10 +188,12 @@ class EmailNormalized
 
     /**
      * @param array $attachments
+     * @return EmailNormalized
      */
-    public function setAttachments(array $attachments): void
+    public function setAttachments(array $attachments): EmailNormalized
     {
         $this->attachments = $attachments;
+        return $this;
     }
 
 

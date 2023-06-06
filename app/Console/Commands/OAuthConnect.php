@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Connector;
+namespace App\Console\Commands;
 
+use App\Helpers\ImportMessages\Connector\MicrosoftConnector;
 use Illuminate\Console\Command;
 
 class OAuthConnect extends Command
