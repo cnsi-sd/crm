@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\OAuthMicrosoftController;
 use App\Http\Controllers\Configuration\BotController;
 use App\Http\Controllers\Configuration\DefaultAnswerController;
 use App\Http\Controllers\Configuration\MiscController;
@@ -124,6 +125,8 @@ Route::prefix('/')->group(function () {
     Route::post('/hastaglist', [TicketController::class, 'hasTagList'])->name('ticketHasTaglist');
     Route::post('/deleteThreadTagOnTagList', [TicketController::class, 'delete_tag'])->name('deleteTagListOnTicket');
 
+    // CALL CONNEXION
+    Route::get('/callback', [OAuthMicrosoftController::class, 'callback']);
     Route::post('/defaultAnswerListwithChannel', [RevivalController::class, 'listDefaultAnswer'])->name('list_default_answer');
     Route::post('/ajaxTagsRevival', [TagsController::class, 'ajax_tags_revival'])->name('ajaxShowTagsRevival');
     Route::post('/saveRevivalThread', [TicketController::class, 'save_revivalThread'])->name('saveRevivalThread');

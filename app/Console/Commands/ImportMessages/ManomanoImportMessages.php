@@ -6,20 +6,15 @@ use App\Enums\Channel\ChannelEnum;
 use App\Enums\MessageDocumentTypeEnum;
 use App\Enums\Ticket\TicketMessageAuthorTypeEnum;
 use App\Enums\Ticket\TicketStateEnum;
-use App\Helpers\TmpFile;
+use App\Helpers\EmailNormalized;
 use App\Jobs\Bot\AnswerToNewMessage;
-use App\Models\Channel\Channel;
 use App\Models\Channel\Order;
 use App\Models\Ticket\Message;
 use App\Models\Ticket\Thread;
 use App\Models\Ticket\Ticket;
 use Cnsi\Attachments\Model\Document;
-use Cnsi\Logger\Logger;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use PhpImap\Exceptions\InvalidParameterException;
-use PhpImap\IncomingMail;
 use PhpImap\Mailbox;
 
 class ManomanoImportMessages extends AbstractImportMailMessages
@@ -43,14 +38,20 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         return [
             'host' => env('MANOMANO_MAIL_URL'),
             'username' => env('MANOMANO_USERNAME'),
-            'password' => env('MANOMANO_PASSWORD')
+            'password' => env('MANOMANO_PASSWORD'),
+            'client' => env('MANOMANO_CLIENT')
         ];
     }
 
-    protected function canImport($email): bool
+    /**
+     * @param EmailNormalized $email
+     * @return bool
+     * @throws Exception
+     */
+    protected function canImport(EmailNormalized $email): bool
     {
         // Check if sender is "ne-pas-repondre@manomano.fr"
-        if(str_contains($email->senderAddress, 'repondre'))
+        if(str_contains($email->getSender(), 'repondre'))
             return false;
 
         // Check if there is an OrderId
@@ -60,9 +61,13 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         return parent::canImport($email);
     }
 
-    protected function parseOrderId($email): bool|string
+    /**
+     * @param EmailNormalized $email
+     * @return bool|string
+     */
+    protected function parseOrderId(EmailNormalized $email): bool|string
     {
-        $subject = $email->subject;
+        $subject = $email->getSubject();
 
         // get the orderId (Mxxxxxxxxxxxx pattern) in subject
         preg_match('/M(\d{12})/',$subject, $orderMatche);
@@ -73,15 +78,15 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     }
 
     /**
-     * @param IncomingMail $email
+     * @param EmailNormalized $email
      * @param string $mpOrder
      * @throws Exception
      */
-    protected function importEmail(IncomingMail $email, string $mpOrder): void
+    protected function importEmail(EmailNormalized $email, string $mpOrder): void
     {
-        $threadName = str_contains($email->senderAddress, '@monechelle.zendesk.com') ? 'Support' : 'Client';
-        $threadNumber = Str::before($email->senderAddress, '@');
-        $channel_data = ["email" => $email->senderAddress];
+        $threadName = str_contains($email->getSender(), '@monechelle.zendesk.com') ? 'Support' : 'Client';
+        $threadNumber = Str::before($email->getSender(), '@');
+        $channel_data = ["email" => $email->getSender()];
         $order      = Order::getOrder($mpOrder, $this->channel);
         $ticket     = Ticket::getTicket($order, $this->channel);
         $thread     = Thread::getOrCreateThread($ticket, $threadNumber, $threadName, $channel_data);
@@ -89,16 +94,20 @@ class ManomanoImportMessages extends AbstractImportMailMessages
         $this->importMessageByThread($ticket, $thread, $email);
     }
 
-    public function getMessageContent(IncomingMail $email): string
+    /**
+     * @param EmailNormalized $email
+     * @return string
+     */
+    public function getMessageContent(EmailNormalized $email): string
     {
-        $subject = $email->subject;
-        if(empty($email->textPlain)) {
-            $content = strip_tags($email->textHtml); // remove html
+        $subject = $email->getSubject();
+        if(empty($email->getTextPlain())) {
+            $content = strip_tags($email->getContent()); // remove html
             $content = preg_replace('/\s+/', ' ', $content); // remove whitespaces
             $content = preg_replace('/@(.*); }/', '',$content); // remove css
         }
         else {
-            $content = preg_replace('/(\v+)/', PHP_EOL, $email->textPlain);
+            $content = preg_replace('/(\v+)/', PHP_EOL, $email->getTextPlain());
         }
 
         if(str_contains($subject, 'Demande de facture'))
@@ -108,36 +117,39 @@ class ManomanoImportMessages extends AbstractImportMailMessages
     }
 
     /**
-     * @throws Exception
+     * @param Ticket $ticket
+     * @param $message_api_api
+     * @param Thread $thread
+     * @param array $attachments
+     * @return mixed
      */
-    public function convertApiResponseToMessage(Ticket $ticket, $email, Thread $thread, $attachments = [])
+    public function convertApiResponseToMessage(Ticket $ticket, $message_api_api, Thread $thread, $attachments = []): mixed
     {
         $this->logger->info('Set ticket\'s status to waiting admin');
         $ticket->state = TicketStateEnum::OPENED;
         $ticket->save();
         $this->logger->info('Ticket save');
 
-        if(str_contains($email->senderAddress,'support'))
+        if(str_contains($message_api_api->getSender(),'support'))
             $authorType = TicketMessageAuthorTypeEnum::OPERATOR;
         else
             $authorType = TicketMessageAuthorTypeEnum::CUSTOMER;
 
         $message = Message::firstOrCreate([
             'thread_id' => $thread->id,
-            'channel_message_number' => $email->messageId,
+            'channel_message_number' => $message_api_api->getEmailId(),
         ],
             [
                 'user_id' => null,
                 'author_type' => $authorType,
-                'content' => $this->getMessageContent($email),
+                'content' => $this->getMessageContent($message_api_api),
             ]
         );
 
-        if ($email->hasAttachments()) {
+        if ($message_api_api->hasAttachments()) {
             $this->logger->info('Download documents from message');
-            foreach ($email->getAttachments() as $attachment) {
-                $tmpFile = new TmpFile((string) $attachment->getContents());
-                Document::doUpload($tmpFile, $message, MessageDocumentTypeEnum::OTHER, null, $attachment->name);
+            foreach ($message_api_api->getAttachments() as $attachment) {
+                Document::doUpload($attachment->getTmpFile(), $message, MessageDocumentTypeEnum::OTHER, null, $attachment->getName());
             }
         }
 

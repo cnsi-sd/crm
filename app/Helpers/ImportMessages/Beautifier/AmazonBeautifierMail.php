@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\ImportMessages\Beautifier;
+namespace App\Helpers\importMessages\Beautifier;
 
 class AmazonBeautifierMail
 {
